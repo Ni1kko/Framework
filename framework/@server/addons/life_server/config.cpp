@@ -31,6 +31,11 @@ class CfgFunctions {
 
     class Life_System {
         tag = "life";
+        class Root {
+            file = "\life_server";
+            class preInit {preInit = 1;};
+        };
+
         class Wanted_Sys {
             file = "\life_server\Functions\WantedSystem";
             class wantedFetch {};
@@ -51,9 +56,18 @@ class CfgFunctions {
             file = "\life_server\Functions\Client";
         };
     };
+    class LifeFSM {
+        class FiniteStateMachine
+        {
+            file="\life_server\FSM";
+            class cleanup {ext=".fsm";};
+            class timeModule {ext=".fsm";};
+        };
+    };
 
     class TON_System {
         tag = "TON";
+
         class Systems {
             file = "\life_server\Functions\Systems";
             class managesc {};
@@ -77,6 +91,23 @@ class CfgFunctions {
             class recupkeyforHC {};
             class handleBlastingCharge {};
             class terrainSort {};
+            class fix_headgear {};
+            class setupHeadlessClient {};
+            class whoDoneIt {};
+            class index {};
+            class player_query {};
+            class isNumber {};
+            class clientGangKick {};
+            class clientGetKey {};
+            class clientGangLeader {};
+            class clientGangLeft {};
+            class cell_emsrequest {};
+            class cell_textmsg {};
+            class cell_textcop {};
+            class cell_textadmin {};
+            class cell_adminmsg {};
+            class cell_adminmsgall {};
+            class clientMessage {};
         };
 
         class Housing {
@@ -125,7 +156,7 @@ class CfgVehicles {
 
     class C_man_1 : Civilian_F {
         class EventHandlers: EventHandlers {
-            init = "(_this select 0) execVM ""\life_server\fix_headgear.sqf""";
+            init = "(_this select 0) spawn TON_fnc_fix_headgear;";
         };
     };
 };

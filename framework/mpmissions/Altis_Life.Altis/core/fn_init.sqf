@@ -17,7 +17,7 @@ waitUntil {!isNull (findDisplay 46)};
 enableSentences false;
 
 diag_log "[Life Client] Initialization Variables";
-[] call compile preprocessFileLineNumbers "core\configuration.sqf";
+[] call life_fnc_configuration;
 diag_log "[Life Client] Variables initialized";
 
 diag_log "[Life Client] Setting up Eventhandlers";
@@ -68,7 +68,7 @@ player setVariable ["playerSurrender", false, true];
 player setVariable ["realname", profileName, true];
 
 diag_log "[Life Client] Past Settings Init";
-[] execFSM "core\fsm\client.fsm";
+[] call life_fnc_client;
 diag_log "[Life Client] Executing client.fsm";
 
 (findDisplay 46) displayAddEventHandler ["KeyDown", "_this call life_fnc_keyHandler"];

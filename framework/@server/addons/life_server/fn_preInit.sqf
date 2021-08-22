@@ -17,7 +17,6 @@ _extDBNotLoaded = "";
 serv_sv_use = [];
 publicVariable "life_server_isReady";
 life_save_civilian_position = if (LIFE_SETTINGS(getNumber,"save_civilian_position") isEqualTo 0) then {false} else {true};
-fn_whoDoneIt = compile preprocessFileLineNumbers "\life_server\Functions\Systems\fn_whoDoneIt.sqf";
 
 /*
     Prepare the headless client.
@@ -28,7 +27,7 @@ HC_Life = false;
 publicVariable "HC_Life";
 
 if (EXTDB_SETTING(getNumber,"HeadlessSupport") isEqualTo 1) then {
-    [] execVM "\life_server\initHC.sqf";
+    [] spawn TON_fnc_setupHeadlessClient;
 };
 
 /*
@@ -126,7 +125,7 @@ master_group attachTo[bank_obj,[0,0,0]];
     };
 } forEach allUnits;
 
-[8,true,12] execFSM "\life_server\FSM\timeModule.fsm";
+[8,true,12] call LifeFSM_fnc_timeModule;
 
 life_adminLevel = 0;
 life_medicLevel = 0;
@@ -144,7 +143,25 @@ fed_bank setVariable ["safe",count playableUnits,true];
 
 /* Event handler for disconnecting players */
 addMissionEventHandler ["HandleDisconnect",{_this call TON_fnc_clientDisconnect; false;}];
-[] call compile preprocessFileLineNumbers "\life_server\functions.sqf";
+
+//--- 
+{publicVariable _x}forEach[
+    "TON_fnc_terrainSort",
+    "TON_fnc_player_query",
+    "TON_fnc_index",
+    "TON_fnc_isNumber",
+    "TON_fnc_clientGangKick",
+    "TON_fnc_clientGetKey",
+    "TON_fnc_clientGangLeader",
+    "TON_fnc_clientGangLeft",
+    "TON_fnc_cell_textmsg",
+    "TON_fnc_cell_textcop",
+    "TON_fnc_cell_textadmin",
+    "TON_fnc_cell_adminmsg",
+    "TON_fnc_cell_adminmsgall",
+    "TON_fnc_cell_emsrequest",
+    "TON_fnc_clientMessage"
+]; 
 
 /* Set OwnerID players for Headless Client */
 TON_fnc_requestClientID =
@@ -160,7 +177,7 @@ TON_fnc_requestClientID =
 /* Miscellaneous mission-required stuff */
 life_wanted_list = [];
 
-cleanupFSM = [] execFSM "\life_server\FSM\cleanup.fsm";
+cleanupFSM = [] LifeFSM_fnc_cleanup;
 
 [] spawn {
     for "_i" from 0 to 1 step 0 do {

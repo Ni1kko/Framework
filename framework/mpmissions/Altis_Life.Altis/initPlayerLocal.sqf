@@ -6,11 +6,7 @@
     Description:
     Starts the initialization of the player.
 */
-if (!hasInterface && !isServer) exitWith {
-    [] call compile preprocessFileLineNumbers "\life_hc\initHC.sqf";
-};
+if (!hasInterface && !isServer) exitWith {};
 
-CONST(BIS_fnc_endMission,BIS_fnc_endMission);
-
-[] execVM "core\init.sqf";
-[] execVM "briefing.sqf";
+[] spawn life_fnc_init;
+[] spawn life_fnc_briefing;
