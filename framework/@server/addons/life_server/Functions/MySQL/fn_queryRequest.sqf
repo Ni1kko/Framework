@@ -164,6 +164,6 @@ publicVariable "TON_fnc_playtime_values_request";
 _keyArr = missionNamespace getVariable [format ["%1_KEYS_%2",_uid,_side],[]];
 _queryResult pushBack _keyArr;
 
-_player setVariable ["BEGuid",compileFinal str _BEGuid,true]
+_player setVariable ["BEGuid",compileFinal str _BEGuid,true];
 
 _queryResult remoteExec ["SOCK_fnc_requestReceived",_ownerID];
