@@ -3,7 +3,6 @@ class Life_Clothing {
     name= "Life_Clothing";
     movingEnable = 1;
     enableSimulation = 1;
-    //onLoad = "[] execVM 'core\client\keychain\init.sqf'";
 
     class controlsBackground {
         class Life_RscTitleBackground: Life_RscText {

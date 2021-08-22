@@ -57,6 +57,7 @@ class CfgFunctions {
             class welcomeNotification {};
             class briefing {};
             class configuration {};
+            class setupStationService {};
         };
 
         class Actions {

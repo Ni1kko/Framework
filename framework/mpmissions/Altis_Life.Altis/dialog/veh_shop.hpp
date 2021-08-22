@@ -3,7 +3,6 @@ class Life_vehicle_shop {
     name= "life_impound_menu";
     movingEnable = 0;
     enableSimulation = 1;
-    //onLoad = "[] execVM 'core\client\keychain\init.sqf'";
 
     class controlsBackground {
         class Life_RscTitleBackground: Life_RscText {
