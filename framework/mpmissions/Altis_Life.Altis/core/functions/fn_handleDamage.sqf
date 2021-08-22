@@ -43,5 +43,4 @@ if (!isNull _source && {_source != _unit}) then {
     };
 };
 
-[] spawn life_fnc_hudUpdate;
 _damage;

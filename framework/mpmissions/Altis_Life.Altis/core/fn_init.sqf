@@ -11,7 +11,7 @@ diag_log format["------------------------------------------ Version %1 ---------
 diag_log "----------------------------------------------------------------------------------------------------";
 
 0 cutText[localize "STR_Init_ClientSetup","BLACK FADED",99999999];
-_timeStamp = diag_tickTime;
+private _timeStamp = diag_tickTime;
 
 waitUntil {!isNull (findDisplay 46)};
 enableSentences false;
@@ -118,7 +118,7 @@ if (life_HC_isActive) then {
     [getPlayerUID player, player getVariable ["realname", name player]] remoteExec ["life_fnc_wantedProfUpdate", RSERV];
 };
 
-[] call life_fnc_hudSetup;
+[] spawn life_fnc_hudSetup;
 
 diag_log "----------------------------------------------------------------------------------------------------";
 diag_log format ["               End of Altis Life Client Init :: Total Execution Time %1 seconds ",(diag_tickTime - _timeStamp)];

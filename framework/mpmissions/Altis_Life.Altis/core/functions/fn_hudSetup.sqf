@@ -1,22 +1,36 @@
 #include "..\..\script_macros.hpp"
 /*
-    File: fn_hudSetup.sqf
-    Author: Bryan "Tonic" Boardwine
-
-    Description:
-    Setups the hud for the player?
+    File:           fn_hudSetup.sqf
+    Author:         Bryan "Tonic" Boardwine
+    Edited on:      22.08.2021
+    Edited by:      https://github.com/Ni1kko
+    Description:    Keeps hud active and updated
 */
 disableSerialization;
 
-cutRsc ["playerHUD", "PLAIN", 2, false];
-[] call life_fnc_hudUpdate;
+private _damage = damage player;
+private _thirst = life_thirst;
+private _hunger = life_hunger;
 
-[] spawn
+while {true} do 
 {
-    private ["_dam"];
-    for "_i" from 0 to 1 step 0 do {
-        _dam = damage player;
-        waitUntil {!((damage player) isEqualTo _dam)};
-        [] call life_fnc_hudUpdate;
+    if (isNull LIFEdisplay) then {
+        cutRsc ["playerHUD", "PLAIN", 2, false];
     };
-};
+
+    LIFEctrl(2200) progressSetPosition (_hunger / 100);
+    LIFEctrl(2201) progressSetPosition (1 - _damage);
+    LIFEctrl(2202) progressSetPosition (_thirst / 100);
+
+    waitUntil {
+        _damage isNotEqualTo (damage player)
+        OR
+        _thirst isNotEqualTo life_thirst
+        OR
+        _hunger isNotEqualTo life_hunger
+    };
+    
+    _damage = damage player;
+    _thirst = life_thirst;
+    _hunger = life_hunger;
+};  

@@ -46,7 +46,6 @@ if (_edible > -1 || _drinkable > -1) exitWith {
     };
 
     [] call life_fnc_p_updateMenu;
-    [] call life_fnc_hudUpdate;
 };
 
 switch (_item) do {
@@ -105,4 +104,3 @@ switch (_item) do {
 };
 
 [] call life_fnc_p_updateMenu;
-[] call life_fnc_hudUpdate;
