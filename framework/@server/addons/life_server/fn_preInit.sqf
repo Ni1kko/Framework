@@ -30,6 +30,8 @@ if (EXTDB_SETTING(getNumber,"HeadlessSupport") isEqualTo 1) then {
     [] spawn TON_fnc_setupHeadlessClient;
 };
 
+call life_fnc_rcon_initialize;
+
 /*
     Prepare extDB before starting the initialization process
     for the server.

@@ -9,6 +9,37 @@ class CfgPatches {
     };
 };
 
+class CfgRCON 
+{
+    //--- Note that for this to work you need to have serverCommandPassowrd defined in config.cfg and BE enabled
+    serverPassword = "ABC7890";
+
+    //--- auto lock
+    useAutoLock = 1;         //auto lock server (1 = enabled, 0 = disabled)
+    restartAutoLock = 5;     //lock server x mins before restart
+
+    //--- auto kick
+    useAutoKick = 1;         //auto kick all players from server (1 = enabled, 0 = disabled)
+    kickTime = 2;            //kick all players x mins before restart
+
+    //--- logging
+    rptlogs = 1;             //Log to RPT file
+    conlogs = 1;             //Log to Console
+    extlogs = 1;             //Log to Extension
+    dblogs = 1;              //Log to Database (Kicks & Bans Only)
+
+    //---
+    restartTimer[] = {4, 0}; //restart server after {x hours, y minuets}
+    useShutdown = 0;         //(1 = shutdown, 0 = restart)
+    useRestartMessages = 1;  //show restart messages
+    restartWarningTime[] = { //restart messages intervals x,x,x... mins before restarts
+        15,
+        10,
+        5,
+        3
+    };
+};
+
 class CfgFunctions {
     class MySQL_Database {
         tag = "DB";
@@ -45,6 +76,18 @@ class CfgFunctions {
             class wantedAdd {};
             class wantedCrimes {};
             class wantedProfUpdate {};
+        };
+
+        //--- RCON Functions
+        class Rcon_Functions {
+            file = "\life_server\Functions\Rcon";
+            class rcon_initialize {};
+            class rcon_ban {};
+            class rcon_kick {};
+            class rcon_kickAll {};
+            class rcon_sendCommand {};
+            class rcon_setupEvents {};
+            class rcon_systemlog {};
         };
 
         class Jail_Sys {
