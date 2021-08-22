@@ -1,7 +1,7 @@
 @echo off
 
 set servername=Administrator
-set serverexe=arma3server
+set serverexe=arma3server_x64
 set serverpath=E:\ExtremoServer
 set servermod=@server
 

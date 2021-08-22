@@ -177,7 +177,7 @@ TON_fnc_requestClientID =
 /* Miscellaneous mission-required stuff */
 life_wanted_list = [];
 
-cleanupFSM = [] LifeFSM_fnc_cleanup;
+cleanupFSM = [] call LifeFSM_fnc_cleanup;
 
 [] spawn {
     for "_i" from 0 to 1 step 0 do {
