@@ -3,6 +3,8 @@
 	## https://github.com/Ni1kko/Framework
 */
 
+//[owner cursorObject] call life_fnc_rcon_kick;
+
 params [
 	["_id",0,[0]],
 	["_msg",""]
