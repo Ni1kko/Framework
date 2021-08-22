@@ -40,5 +40,6 @@ life_is_alive = true;
 player setVariable ["Revive",nil,true];
 player setVariable ["name",nil,true];
 player setVariable ["Reviving",nil,true];
+player setVariable ["BEGuid",life_corpse getVariable "BEGuid",true];
 [] call life_fnc_playerSkins;
 [] call SOCK_fnc_updateRequest;

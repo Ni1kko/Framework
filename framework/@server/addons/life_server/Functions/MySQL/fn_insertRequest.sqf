@@ -7,7 +7,7 @@
     Adds a player to the database upon first joining of the server.
     Recieves information from core\sesison\fn_insertPlayerInfo.sqf
 */
-private ["_queryResult","_query","_alias"];
+private ["_queryResult","_query","_alias","_BEGuid"];
 params [
     "_uid",
     "_name",
@@ -17,11 +17,14 @@ params [
 ];
 
 //Error checks
-if ((_uid isEqualTo "") || (_name isEqualTo "")) exitWith {systemChat "Bad UID or name";}; //Let the client be 'lost' in 'transaction'
+if (_uid isEqualTo "") exitWith {systemChat "Bad UID";};
+if (_name isEqualTo "") exitWith {systemChat "Bad name";};
 if (isNull _returnToSender) exitWith {systemChat "ReturnToSender is Null!";}; //No one to send this to!
 
-_query = format ["SELECT pid, name FROM players WHERE pid='%1'",_uid];
+_BEGuid = ('BEGuid' callExtension ("get:"+_uid));
 
+if (_BEGuid isEqualTo "") exitWith {systemChat "Bad BEGuid";};
+_query = format ["SELECT pid, name FROM players WHERE BEGuid='%1'",_BEGuid];
 
 _tickTime = diag_tickTime;
 _queryResult = [_query,2] call DB_fnc_asyncCall;
@@ -45,7 +48,8 @@ _money = [_money] call DB_fnc_numberSafe;
 _bank = [_bank] call DB_fnc_numberSafe;
 
 //Prepare the query statement..
-_query = format ["INSERT INTO players (pid, name, cash, bankacc, aliases, cop_licenses, med_licenses, civ_licenses, civ_gear, cop_gear, med_gear) VALUES('%1', '%2', '%3', '%4', '%5','""[]""','""[]""','""[]""','""[]""','""[]""','""[]""')",
+_query = format ["INSERT INTO players (BEGuid, pid, name, cash, bankacc, aliases, cop_licenses, med_licenses, civ_licenses, civ_gear, cop_gear, med_gear) VALUES('%1', '%2', '%3', '%4', '%5','%6','""[]""','""[]""','""[]""','""[]""','""[]""','""[]""')",
+    _BEGuid,
     _uid,
     _name,
     _money,

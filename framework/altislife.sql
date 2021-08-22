@@ -74,6 +74,7 @@ DELIMITER ;
 
 CREATE TABLE IF NOT EXISTS `players` (
     `uid`          INT NOT NULL AUTO_INCREMENT,
+    `BEGuid`       VARCHAR(32) NOT NULL,
     `pid`          VARCHAR(17) NOT NULL,
     `name`         VARCHAR(32) NOT NULL,
     `aliases`      TEXT NOT NULL,
@@ -102,6 +103,7 @@ CREATE TABLE IF NOT EXISTS `players` (
     
     PRIMARY KEY (`pid`),
     UNIQUE KEY `unique_uid` (`uid`),
+    UNIQUE KEY `unique_beguid` (`BEGuid`),
     INDEX `index_name` (`name`),
     INDEX `index_blacklist` (`blacklist`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;

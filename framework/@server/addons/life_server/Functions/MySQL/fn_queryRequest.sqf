@@ -11,26 +11,28 @@
     ARRAY - If array has 0 elements it should be handled as an error in client-side files.
     STRING - The request had invalid handles or an unknown error and is logged to the RPT.
 */
-private ["_uid","_side","_query","_queryResult","_tickTime","_tmp"];
+private ["_uid","_side","_query","_queryResult","_tickTime","_tmp","_BEGuid","_netID"];
 _uid = [_this,0,"",[""]] call BIS_fnc_param;
 _side = [_this,1,sideUnknown,[civilian]] call BIS_fnc_param;
-_ownerID = [_this,2,objNull,[objNull]] call BIS_fnc_param;
+_player = [_this,2,objNull,[objNull]] call BIS_fnc_param;
 
-if (isNull _ownerID) exitWith {};
+if (isNull _player) exitWith {};
 
 if (LIFE_SETTINGS(getNumber,"player_deathLog") isEqualTo 1) then {
-    _ownerID addMPEventHandler ["MPKilled", {_this call TON_fnc_whoDoneIt}];
+    _player addMPEventHandler ["MPKilled", {_this call TON_fnc_whoDoneIt}];
 };
 
-_ownerID = owner _ownerID;
+_ownerID = owner _player;
+_netID = netId _player;
+_BEGuid = ('BEGuid' callExtension ("get:"+_uid));
 
 _query = switch (_side) do {
     // West - 11 entries returned
-    case west: {format ["SELECT pid, name, cash, bankacc, adminlevel, donorlevel, cop_licenses, coplevel, cop_gear, blacklist, cop_stats, playtime FROM players WHERE pid='%1'",_uid];};
+    case west: {format ["SELECT pid, name, cash, bankacc, adminlevel, donorlevel, cop_licenses, coplevel, cop_gear, blacklist, cop_stats, playtime FROM players WHERE BEGuid='%1'",_BEGuid];};
     // Civilian - 12 entries returned
-    case civilian: {format ["SELECT pid, name, cash, bankacc, adminlevel, donorlevel, civ_licenses, arrested, civ_gear, civ_stats, civ_alive, civ_position, playtime FROM players WHERE pid='%1'",_uid];};
+    case civilian: {format ["SELECT pid, name, cash, bankacc, adminlevel, donorlevel, civ_licenses, arrested, civ_gear, civ_stats, civ_alive, civ_position, playtime FROM players WHERE BEGuid='%1'",_BEGuid];};
     // Independent - 10 entries returned
-    case independent: {format ["SELECT pid, name, cash, bankacc, adminlevel, donorlevel, med_licenses, mediclevel, med_gear, med_stats, playtime FROM players WHERE pid='%1'",_uid];};
+    case independent: {format ["SELECT pid, name, cash, bankacc, adminlevel, donorlevel, med_licenses, mediclevel, med_gear, med_stats, playtime FROM players WHERE BEGuid='%1'",_BEGuid];};
 };
 
 _tickTime = diag_tickTime;
@@ -161,5 +163,7 @@ publicVariable "TON_fnc_playtime_values_request";
 
 _keyArr = missionNamespace getVariable [format ["%1_KEYS_%2",_uid,_side],[]];
 _queryResult pushBack _keyArr;
+
+_player setVariable ["BEGuid",compileFinal str _BEGuid,true]
 
 _queryResult remoteExec ["SOCK_fnc_requestReceived",_ownerID];
