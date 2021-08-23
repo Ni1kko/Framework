@@ -18,3 +18,7 @@ if(isNil "life_var_rcon_messagequeue")then{
 reverse life_var_rcon_messagequeue;
 life_var_rcon_messagequeue pushBackUnique _message;
 reverse life_var_rcon_messagequeue;
+
+private _queuePos = life_var_rcon_messagequeue find _message;
+
+_queuePos
