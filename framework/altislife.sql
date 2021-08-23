@@ -111,6 +111,27 @@ CREATE TABLE IF NOT EXISTS `players` (
 -- --------------------------------------------------------
 
 --
+-- Table structure for table `rcon_logs`
+--
+
+CREATE TABLE IF NOT EXISTS `rcon_logs` (
+    `id`          INT NOT NULL AUTO_INCREMENT,
+    `Type`        VARCHAR(12) NOT NULL,
+    `BEGuid`      VARCHAR(32) NOT NULL,
+    `pid`         VARCHAR(17) NOT NULL,
+    `reason`      TEXT NOT NULL,
+    `occured`     TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
+
+    PRIMARY KEY (`id`),
+    INDEX `fkIdx_players_logs` (`BEGuid`),
+    CONSTRAINT `FK_players_logs` FOREIGN KEY `fkIdx_players_logs` (`BEGuid`)
+      REFERENCES `players` (`BEGuid`)
+      ON UPDATE CASCADE ON DELETE CASCADE
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4; 
+
+-- --------------------------------------------------------
+
+--
 -- Table structure for table `vehicles`
 --
 

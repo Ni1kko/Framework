@@ -28,6 +28,12 @@ class CfgRCON
     extlogs = 1;             //Log to Extension
     dblogs = 1;              //Log to Database (Kicks & Bans Only)
 
+    //
+    friendlyMessages[] = {
+        {25,{"Follow the rules!","Need help? ask someone!","Be friendly to everyone!","Enjoy your time here :)"}},
+        {35,{"Don't be that guy, keep it friendly"}}
+    };
+
     //---
     restartTimer[] = {4, 0}; //restart server after {x hours, y minuets}
     useShutdown = 0;         //(1 = shutdown, 0 = restart)
@@ -85,6 +91,7 @@ class CfgFunctions {
             class rcon_ban {};
             class rcon_kick {};
             class rcon_kickAll {};
+            class rcon_sendBroadcast {};
             class rcon_sendCommand {};
             class rcon_setupEvents {};
             class rcon_systemlog {};

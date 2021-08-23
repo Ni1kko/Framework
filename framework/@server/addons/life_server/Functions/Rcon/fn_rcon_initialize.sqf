@@ -10,10 +10,12 @@ life_var_rcon_RestartTime = ((_restartTime select 0) * 60) + (_restartTime selec
 life_var_rcon_KickTime = getNumber (configFile >> "CfgRCON" >> "kickTime");
 life_var_rcon_LockTime = getNumber (configFile >> "CfgRCON" >> "restartAutoLock");
 life_var_rcon_UseAutokick = getNumber (configFile >> "CfgRCON" >> "useAutoKick");
+life_var_rcon_FriendlyMessages = getArray(configFile >> "CfgRCON" >> "friendlyMessages");
 life_var_rcon_RestartMessages = false;
 life_var_rcon_passwordOK = false;
 life_var_rcon_serverLocked = false;
-life_var_rcon_RestartMode = false;
+life_var_rcon_RestartMode = 0;
+life_var_rcon_messagequeue = [];
 
 if (getNumber(configFile >> "CfgRCON" >> "useAutoLock") isEqualTo 1) then 
 {

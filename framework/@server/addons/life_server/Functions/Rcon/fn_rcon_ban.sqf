@@ -39,7 +39,7 @@ if(_uid isEqualTo "" || _ownerID < 3)exitwith{false};
 private _BEGuid = ('BEGuid' callExtension ("get:"+_uid));
 
 //ban target
-if(format["#beserver addban %1 %2 %3",_bEGuid, _mins, _msg] call life_fnc_rcon_sendCommand)then{
+if(format["#beserver addban %1 %2 %3",_BEGuid, _mins, _msg] call life_fnc_rcon_sendCommand)then{
 	"#beserver writeBans" call life_fnc_rcon_sendCommand;
 }else{
 	('#exec ban ' + str _ownerID) call life_fnc_rcon_sendCommand;
@@ -50,9 +50,9 @@ if(format["#beserver addban %1 %2 %3",_bEGuid, _mins, _msg] call life_fnc_rcon_s
 
 //log reason, time and beguid
 if(getNumber(configFile >> "CfgRCON" >> "dblogs") isEqualTo 1)then{
-		
+	[format ["INSERT INTO rcon_logs (Type, BEGuid, pid, reason) VALUES('BAN', '%1', '%2', '%3')",_BEGuid,_uid,_msg],1] call DB_fnc_asyncCall;	
 }else{
-	format["'%1' Banned Due To: %2",_bEGuid,_msg] call life_fnc_rcon_systemlog;
+	format["'%1' Banned Due To: %2",_BEGuid,_msg] call life_fnc_rcon_systemlog;
 };
 
 true

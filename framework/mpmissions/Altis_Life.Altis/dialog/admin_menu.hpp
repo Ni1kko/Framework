@@ -39,8 +39,8 @@ class life_admin_menu {
 
         class RscButtonMenu_2402: Life_RscButtonMenu {
             idc = -1;
-            text = "$STR_Admin_GetID";
-            onButtonClick = "[] call life_fnc_adminGetID;";
+            text = "kick-ban";
+            onButtonClick = "[]spawn{private _unit = lbData[2902,lbCurSel (2902)];_unit = call compile format [""%1"", _unit];if (isNil ""_unit"") exitWith {hint 'select a player'};if (isNull _unit) exitWith {hint 'select a player'};life_var_admintarget = _unit;createDialog ""Life_Admin_UserManagement"";};";
             x = 0.396875 * safezoneW + safezoneX;
             y = 0.643 * safezoneH + safezoneY;
             w = 0.061875 * safezoneW;
