@@ -19,8 +19,7 @@ private _rconlocked = life_var_rcon_serverLocked;
 
 //--- Broadcast event
 []spawn{
-	while {true} do {	
-		
+	while {true} do {
 		if(count life_var_rcon_messagequeue > 0)then{
 			//--- Send queued messages
 			{
@@ -29,7 +28,7 @@ private _rconlocked = life_var_rcon_serverLocked;
 				
 				//--- remove from queue
 				life_var_rcon_messagequeue deleteAt _forEachIndex;
-			} forEach life_var_rcon_messagequeue; 
+			} forEach life_var_rcon_messagequeue;
 		};
 		uiSleep 5;
 	};
@@ -42,27 +41,34 @@ if(!life_var_rcon_passwordOK)then{
 };
 
 if (_rconlocked && life_var_rcon_RestartMode isEqualTo 0) then{
-	"Lock Event: server will unlock soon!" call life_fnc_rcon_systemlog; 
+	"Lock Event: server will unlock soon!" call life_fnc_rcon_systemlog;
 };
+
+private _mins2hrsmins = compile "
+	private _hours = floor((_this * 60 ) / 60 / 60);
+	private _minutes = (((_this * 60 ) / 60 / 60) - _hours);
+	if(_minutes == 0)then{_minutes = 0.0001;};
+	_minutes = round(_minutes * 60);
+	[_hours,_minutes]
+";
 
 while {true} do {
 	private _serveruptime = round(call compile("extDB3" callExtension "9:UPTIME:MINUTES"));
 	private _rconuptime = round((diag_tickTime - _rconinittime) / 60);
+	private _timeTilRestart = life_var_rcon_RestartTime - _serveruptime;
 
 	//--- Main events
 	if(_serveruptime > 0 && _rconuptime > 0)then
-	{
-		private _timeTilRestart = life_var_rcon_RestartTime - _serveruptime;
- 
+	{ 
 		//--- Restart event (1min)
-		if (_serveruptime mod 1 isEqualTo 0) then 
-		{ 
+		if (_serveruptime mod 1 isEqualTo 0) then
+		{
 			//--- Needs unlocked
 			if (_rconlocked && life_var_rcon_RestartMode isEqualTo 0) then{
 				"#unlock" call life_fnc_rcon_sendCommand;
 				life_var_rcon_serverLocked = false;
 				_rconlocked = false;
-				"Lock Event: server unlocked and accepting players!" call life_fnc_rcon_systemlog; 
+				"Lock Event: server unlocked and accepting players!" call life_fnc_rcon_systemlog;
 			};
 
 			//--- Warning messages
@@ -115,7 +121,10 @@ while {true} do {
 		{
 			//--- Heartbeat event (3min)
 			if (_rconuptime mod 3 isEqualTo 0) then { 
-				format["Events heartbeat#%1, Thread Still Active - RCON UPTIME: (%2)mins",_heartbeat,_rconuptime] call life_fnc_rcon_systemlog; _heartbeat = _heartbeat + 1;
+				private _time = _rconuptime call _mins2hrsmins;
+				private _time2 = _timeTilRestart call _mins2hrsmins;
+				_heartbeat = _heartbeat + 1;
+				format["Events heartbeat#%1, Thread Still Active - RCON UPTIME: (%2h %3min) Next Restart In: (%4h %5min)",_heartbeat,_time#0,_time#1,_time2#0,_time2#1] call life_fnc_rcon_systemlog; 
 			};
 			
 			//--- Reload bans event (15mins)
@@ -126,7 +135,9 @@ while {true} do {
 			//--- player list event (30mins)
 			if (_serveruptime mod 30 isEqualTo 0) then {
 				"#beserver players" call life_fnc_rcon_sendCommand;
-			};
+				private _time = _timeTilRestart call _mins2hrsmins; 
+				format["Next Restart In: %1h %2min",_time#0,_time#1] call life_fnc_rcon_sendBroadcast; 
+			}; 
 
 			//--- messages event
 			if(count life_var_rcon_FriendlyMessages > 0)then{
