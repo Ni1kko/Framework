@@ -4,6 +4,7 @@
 */
 
 //"some message" call life_fnc_rcon_sendBroadcast
+if(!isServer)exitwith{false};
 
 params [
 	["_message","",[""]]

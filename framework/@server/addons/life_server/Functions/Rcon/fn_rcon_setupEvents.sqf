@@ -3,6 +3,9 @@
 	## https://github.com/Ni1kko/Framework
 */
 
+if(!isServer)exitwith{false};
+if(isRemoteExecuted)exitwith{false};
+
 "Events thread initializing" call life_fnc_rcon_systemlog;
 
 if(getNumber (configFile >> "CfgRCON" >> "useRestartMessages") isEqualTo 1)then{
@@ -18,28 +21,14 @@ private _rconinittime = diag_tickTime;
 private _rconlocked = life_var_rcon_serverLocked;
 private _rconshutdown = getNumber(configFile >> "CfgRCON" >> "useShutdown") isEqualTo 1;
 
-//--- Broadcast event
-[]spawn{
-	while {true} do {
-		if(count life_var_rcon_messagequeue > 0)then{
-			//--- Send queued messages
-			{
-				//--- broadcast queued message
-				format["#beserver Say -1 %1",_x] call life_fnc_rcon_sendCommand;
-				
-				//--- remove from queue
-				life_var_rcon_messagequeue deleteAt _forEachIndex;
-			} forEach life_var_rcon_messagequeue;
-		};
-		uiSleep 5;
-	};
-};
-
-"Events thread resumed: System fully initialized!" call life_fnc_rcon_systemlog;
-
 if(!life_var_rcon_passwordOK)then{
 	_rconlocked = false;
 };
+
+//--- Broadcast event
+[]spawn life_fnc_rcon_queuedmessages_thread;
+
+"Events thread resumed: System fully initialized!" call life_fnc_rcon_systemlog;
 
 if (_rconlocked && life_var_rcon_RestartMode isEqualTo 0) then{
 	"Lock Event: server will unlock soon!" call life_fnc_rcon_systemlog;
@@ -62,7 +51,7 @@ while {true} do {
 
 	//--- Main events
 	if(_serveruptime > 0 && _rconuptime > 0)then
-	{ 
+	{
 		//--- Restart event (1min)
 		if (_serveruptime mod 1 isEqualTo 0) then
 		{

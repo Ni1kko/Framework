@@ -15,7 +15,6 @@ class CfgRCON
     serverPassword = "ABC7890";
 
     //--- auto lock
-    useAutoLock = 1;         //auto lock server (1 = enabled, 0 = disabled)
     restartAutoLock = 5;     //lock server x mins before restart
 
     //--- auto kick
@@ -91,6 +90,7 @@ class CfgFunctions {
             class rcon_ban {};
             class rcon_kick {};
             class rcon_kickAll {};
+            class rcon_queuedmessages_thread {};
             class rcon_sendBroadcast {};
             class rcon_sendCommand {};
             class rcon_setupEvents {};

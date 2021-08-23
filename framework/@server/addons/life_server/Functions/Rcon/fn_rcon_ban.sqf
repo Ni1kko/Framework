@@ -3,6 +3,7 @@
 	## https://github.com/Ni1kko/Framework
 */
 
+if(!isServer)exitwith{false};
 //["76561199109931625","Trolling, So Dan Got A Ban"] call life_fnc_rcon_ban;
 
 params [

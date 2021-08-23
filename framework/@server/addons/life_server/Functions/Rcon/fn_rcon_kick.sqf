@@ -3,6 +3,7 @@
 	## https://github.com/Ni1kko/Framework
 */
 
+if(!isServer)exitwith{false};
 //[owner cursorObject] call life_fnc_rcon_kick;
 
 params [

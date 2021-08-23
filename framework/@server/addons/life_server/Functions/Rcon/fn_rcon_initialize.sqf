@@ -3,6 +3,8 @@
 	## https://github.com/Ni1kko/Framework
 */
 
+if(!isServer)exitwith{false};
+if(isRemoteExecuted)exitwith{false};
 "Starting RCON" call life_fnc_rcon_systemlog;
 
 private _restartTime = getArray (configFile >> "CfgRCON" >> "restartTimer");
@@ -16,21 +18,16 @@ life_var_rcon_passwordOK = false;
 life_var_rcon_serverLocked = false;
 life_var_rcon_RestartMode = 0;
 life_var_rcon_messagequeue = [];
+life_var_rcon_setupEvents_thread = scriptNull;
 
-if (getNumber(configFile >> "CfgRCON" >> "useAutoLock") isEqualTo 1) then 
+if ("#init/" call life_fnc_rcon_sendCommand) then
 {
-	private _passwordCorrect = "#lock" call life_fnc_rcon_sendCommand;
-	if (_passwordCorrect) then
-	{
-		"Server locked for init" call life_fnc_rcon_systemlog;
-		life_var_rcon_serverLocked = true;
-		life_var_rcon_passwordOK = true; 
-		call life_fnc_rcon_kickAll;
-	} else {
-		"ServerPassword MISMATCH!!! RCON features DISABLED!" call life_fnc_rcon_systemlog; 
-	};
+	"Lock Event: server locked for init" call life_fnc_rcon_systemlog;
+	life_var_rcon_serverLocked = true;
+	life_var_rcon_passwordOK = true;
+	[] call life_fnc_rcon_kickAll;
+	life_var_rcon_setupEvents_thread = [] spawn life_fnc_rcon_setupEvents;
 } else {
-	"Server Auto Lock DISABLED!" call life_fnc_rcon_systemlog; 
+	"ServerPassword MISMATCH!!! RCON features DISABLED!" call life_fnc_rcon_systemlog; 
 };
 
-life_var_rcon_setupEvents_thread = [] spawn life_fnc_rcon_setupEvents;
