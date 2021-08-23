@@ -16,6 +16,7 @@ waitUntil {(missionNamespace getVariable ["life_server_isReady",false])};
 private _heartbeat =  0;
 private _rconinittime = diag_tickTime;
 private _rconlocked = life_var_rcon_serverLocked;
+private _rconshutdown = getNumber(configFile >> "CfgRCON" >> "useShutdown") isEqualTo 1;
 
 //--- Broadcast event
 []spawn{
@@ -56,6 +57,8 @@ while {true} do {
 	private _serveruptime = round(call compile("extDB3" callExtension "9:UPTIME:MINUTES"));
 	private _rconuptime = round((diag_tickTime - _rconinittime) / 60);
 	private _timeTilRestart = life_var_rcon_RestartTime - _serveruptime;
+	private _timeRestart_hh_mm = _timeTilRestart call _mins2hrsmins; 
+	private _timeRestart = format["Next %1 In: %2h %3min",(if(_rconshutdown)then{'Shutdown'}else{'Restart'}),_timeRestart_hh_mm#0,_timeRestart_hh_mm#1];
 
 	//--- Main events
 	if(_serveruptime > 0 && _rconuptime > 0)then
@@ -77,7 +80,7 @@ while {true} do {
 					{ 
 						if (_timeTilRestart < _x) then {
 							format["Server is going to restart in %1 min! Log out before the restart to prevent gear loss.", _x] remoteExec ["hint",-2]; 
-							format["Server is going to restart in %1 min!", _x] call life_fnc_rcon_sendBroadcast;
+							format["Server is going to restart in %1!", _timeRestart] call life_fnc_rcon_sendBroadcast;
 							format["Restart Event: Warnings for %1min sent",_x] call life_fnc_rcon_systemlog;
 							life_var_rcon_RestartMessages deleteAt _forEachIndex;
 						};
@@ -106,7 +109,7 @@ while {true} do {
 						[] call life_fnc_rcon_kickAll;
 						"Kick Event: Everyone kicked for restart" call life_fnc_rcon_systemlog;
 						
-						if(getNumber(configFile >> "CfgRCON" >> "useShutdown") isEqualTo 1)then{
+						if(_rconshutdown)then{
 							'#shutdown' call life_fnc_rcon_sendCommand;
 						}else{
 							'#restart' call life_fnc_rcon_sendCommand;
@@ -122,9 +125,8 @@ while {true} do {
 			//--- Heartbeat event (3min)
 			if (_rconuptime mod 3 isEqualTo 0) then { 
 				private _time = _rconuptime call _mins2hrsmins;
-				private _time2 = _timeTilRestart call _mins2hrsmins;
 				_heartbeat = _heartbeat + 1;
-				format["Events heartbeat#%1, Thread Still Active - RCON UPTIME: (%2h %3min) Next Restart In: (%4h %5min)",_heartbeat,_time#0,_time#1,_time2#0,_time2#1] call life_fnc_rcon_systemlog; 
+				format["Events heartbeat#%1, Thread Still Active - RCON UPTIME: (%2h %3min) %4",_heartbeat,_time#0,_time#1,_timeRestart] call life_fnc_rcon_systemlog; 
 			};
 			
 			//--- Reload bans event (15mins)
@@ -135,8 +137,7 @@ while {true} do {
 			//--- player list event (30mins)
 			if (_serveruptime mod 30 isEqualTo 0) then {
 				"#beserver players" call life_fnc_rcon_sendCommand;
-				private _time = _timeTilRestart call _mins2hrsmins; 
-				format["Next Restart In: %1h %2min",_time#0,_time#1] call life_fnc_rcon_sendBroadcast; 
+				_timeRestart call life_fnc_rcon_sendBroadcast; 
 			}; 
 
 			//--- messages event
