@@ -45,9 +45,9 @@ private _mins2hrsmins = compile "
 while {true} do {
 	private _serveruptime = round(call compile("extDB3" callExtension "9:UPTIME:MINUTES"));
 	private _rconuptime = round((diag_tickTime - _rconinittime) / 60);
-	private _timeTilRestart = life_var_rcon_RestartTime - _serveruptime;
-	private _timeRestart_hh_mm = _timeTilRestart call _mins2hrsmins; 
-	private _timeRestart = format["Next %1 In: %2h %3min",(if(_rconshutdown)then{'Shutdown'}else{'Restart'}),_timeRestart_hh_mm#0,_timeRestart_hh_mm#1];
+	private _timeRestart = life_var_rcon_RestartTime - _serveruptime;
+	private _timeRestart_hh_mm = _timeRestart call _mins2hrsmins; 
+	private _timeRestart_message = format["Next %1 In: %2h %3min",(if(_rconshutdown)then{'Shutdown'}else{'Restart'}),_timeRestart_hh_mm#0,_timeRestart_hh_mm#1];
 
 	//--- Main events
 	if(_serveruptime > 0 && _rconuptime > 0)then
@@ -67,9 +67,9 @@ while {true} do {
 			if (typeName life_var_rcon_RestartMessages isEqualTo "ARRAY") then { 
 				if !(life_var_rcon_RestartMessages isEqualTo []) then {
 					{ 
-						if (_timeTilRestart < _x) then {
+						if (_timeRestart < _x) then {
 							format["Server is going to restart in %1 min! Log out before the restart to prevent gear loss.", _x] remoteExec ["hint",-2]; 
-							format["Server is going to restart in %1!", _timeRestart] call life_fnc_rcon_sendBroadcast;
+							format["Server is going to restart in %1!", _timeRestart_message] call life_fnc_rcon_sendBroadcast;
 							format["Restart Event: Warnings for %1min sent",_x] call life_fnc_rcon_systemlog;
 							life_var_rcon_RestartMessages deleteAt _forEachIndex;
 						};
@@ -78,7 +78,7 @@ while {true} do {
 			};
 
 			//--- Auto lock, kick & restart
-			if (_timeTilRestart < life_var_rcon_LockTime) then 
+			if (_timeRestart < life_var_rcon_LockTime) then 
 			{
 				//--- Auto Lock
 				if !(life_var_rcon_serverLocked) then {
@@ -91,7 +91,7 @@ while {true} do {
 				};
 
 				//--- Auto kick
-				if (_timeTilRestart < life_var_rcon_KickTime) then {
+				if (_timeRestart < life_var_rcon_KickTime) then {
 					if (life_var_rcon_RestartMode isNotEqualTo 2) then {
 						life_var_rcon_RestartMode = 2; 
 
@@ -126,7 +126,7 @@ while {true} do {
 			//--- player list event (30mins)
 			if (_serveruptime mod 30 isEqualTo 0) then {
 				"#beserver players" call life_fnc_rcon_sendCommand;
-				_timeRestart call life_fnc_rcon_sendBroadcast; 
+				_timeRestart_message call life_fnc_rcon_sendBroadcast; 
 			}; 
 
 			//--- messages event
