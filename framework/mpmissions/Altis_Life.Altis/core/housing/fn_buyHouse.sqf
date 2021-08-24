@@ -28,8 +28,8 @@ _action = [
 ] call BIS_fnc_guiMessage;
 
 if (_action) then {
-    if (BANK < (_houseCfg select 0)) exitWith {hint format [localize "STR_House_NotEnough"]};
-    BANK = BANK - (_houseCfg select 0);
+    if (life_var_bank < (_houseCfg select 0)) exitWith {hint format [localize "STR_House_NotEnough"]};
+    life_var_bank = life_var_bank - (_houseCfg select 0);
     [1] call SOCK_fnc_updatePartial;
 
     if (life_var_hc_connected) then {
@@ -40,9 +40,9 @@ if (_action) then {
 
     if (LIFE_SETTINGS(getNumber,"player_advancedLog") isEqualTo 1) then {
         if (LIFE_SETTINGS(getNumber,"battlEye_friendlyLogging") isEqualTo 1) then {
-            advanced_log = format [localize "STR_DL_AL_boughtHouse_BEF",[(_houseCfg select 0)] call life_fnc_numberText,[BANK] call life_fnc_numberText,[CASH] call life_fnc_numberText];
+            advanced_log = format [localize "STR_DL_AL_boughtHouse_BEF",[(_houseCfg select 0)] call life_fnc_numberText,[life_var_bank] call life_fnc_numberText,[life_var_cash] call life_fnc_numberText];
         } else {
-            advanced_log = format [localize "STR_DL_AL_boughtHouse",profileName,(getPlayerUID player),[(_houseCfg select 0)] call life_fnc_numberText,[BANK] call life_fnc_numberText,[CASH] call life_fnc_numberText];
+            advanced_log = format [localize "STR_DL_AL_boughtHouse",profileName,(getPlayerUID player),[(_houseCfg select 0)] call life_fnc_numberText,[life_var_bank] call life_fnc_numberText,[life_var_cash] call life_fnc_numberText];
         };
         publicVariableServer "advanced_log";
     };

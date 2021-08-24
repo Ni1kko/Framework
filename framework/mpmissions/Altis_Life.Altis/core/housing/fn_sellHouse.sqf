@@ -41,15 +41,15 @@ if (_action) then {
     deleteMarkerLocal format ["house_%1",_house getVariable "uid"];
     _house setVariable ["uid",nil,true];
 
-    BANK = BANK + (round((_houseCfg select 0)/2));
+    life_var_bank = life_var_bank + (round((_houseCfg select 0)/2));
     [1] call SOCK_fnc_updatePartial;
     _index = life_vehicles find _house;
 
     if (LIFE_SETTINGS(getNumber,"player_advancedLog") isEqualTo 1) then {
         if (LIFE_SETTINGS(getNumber,"battlEye_friendlyLogging") isEqualTo 1) then {
-            advanced_log = format [localize "STR_DL_AL_soldHouse_BEF",(round((_houseCfg select 0)/2)),[BANK] call life_fnc_numberText];
+            advanced_log = format [localize "STR_DL_AL_soldHouse_BEF",(round((_houseCfg select 0)/2)),[life_var_bank] call life_fnc_numberText];
         } else {
-            advanced_log = format [localize "STR_DL_AL_soldHouse",profileName,(getPlayerUID player),(round((_houseCfg select 0)/2)),[BANK] call life_fnc_numberText];
+            advanced_log = format [localize "STR_DL_AL_soldHouse",profileName,(getPlayerUID player),(round((_houseCfg select 0)/2)),[life_var_bank] call life_fnc_numberText];
             };
         publicVariableServer "advanced_log";
     };

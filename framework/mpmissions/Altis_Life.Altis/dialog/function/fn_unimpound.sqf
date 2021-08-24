@@ -34,7 +34,7 @@ switch (playerSide) do {
 _price = _purchasePrice * _storageFee;
 
 if (!(_price isEqualType 0) || _price < 1) then {_price = 500;};
-if (BANK < _price) exitWith {hint format [(localize "STR_Garage_CashError"),[_price] call life_fnc_numberText];};
+if (life_var_bank < _price) exitWith {hint format [(localize "STR_Garage_CashError"),[_price] call life_fnc_numberText];};
 
 if (life_garage_sp isEqualType []) then {
     if (life_var_hc_connected) then {
@@ -59,6 +59,6 @@ if (life_garage_sp isEqualType []) then {
 };
 
 hint localize "STR_Garage_SpawningVeh";
-BANK = BANK - _price;
+life_var_bank = life_var_bank - _price;
 [1] call SOCK_fnc_updatePartial;
 closeDialog 0;

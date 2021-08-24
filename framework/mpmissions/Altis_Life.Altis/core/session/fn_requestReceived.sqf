@@ -24,8 +24,8 @@ if ((_this select 0) isEqualTo "Error") exitWith {[] call SOCK_fnc_insertPlayerI
 if (!(getPlayerUID player isEqualTo (_this select 0))) exitWith {[] call SOCK_fnc_dataQuery;};
 
 //Parse basic player information.
-CASH = parseNumber (_this select 2);
-BANK = parseNumber (_this select 3);
+life_var_cash = parseNumber (_this select 2);
+life_var_bank = parseNumber (_this select 3);
 life_isdev = compileFinal "(getPlayerUID _this) in getArray(missionConfigFile >> ""enableDebugConsole"")";
 
 if (player call life_isdev) then{

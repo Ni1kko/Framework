@@ -12,6 +12,6 @@ params [
 ];
 
 if (_value isEqualTo 0 || _from isEqualTo "" || _from isEqualTo profileName) exitWith {}; //No
-BANK = BANK + _value;
+life_var_bank = life_var_bank + _value;
 [1] call SOCK_fnc_updatePartial;
 hint format [localize "STR_ATM_WireTransfer",_from,[_value] call life_fnc_numberText];

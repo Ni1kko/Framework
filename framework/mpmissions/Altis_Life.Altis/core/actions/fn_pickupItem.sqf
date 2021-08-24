@@ -20,7 +20,7 @@ if (isLocalized _itemName) then {
 
 if (playerSide isEqualTo west && _illegal isEqualTo 1) exitWith {
     titleText[format [localize "STR_NOTF_PickedEvidence",_itemName,[round(ITEM_SELLPRICE(_itemInfo select 0) / 2)] call life_fnc_numberText],"PLAIN"];
-    BANK = BANK + round(ITEM_SELLPRICE(_itemInfo select 0) / 2);
+    life_var_bank = life_var_bank + round(ITEM_SELLPRICE(_itemInfo select 0) / 2);
     deleteVehicle _this;
     [1] call SOCK_fnc_updatePartial;
     life_action_delay = time;

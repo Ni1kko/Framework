@@ -17,5 +17,5 @@ _price = round(1.7 * _dis);
 ["DeliverySucceeded",[format [(localize "STR_NOTF_Earned_1"),[_price] call life_fnc_numberText]]] call bis_fnc_showNotification;
 life_cur_task setTaskState "Succeeded";
 player removeSimpleTask life_cur_task;
-CASH = CASH + _price;
+life_var_cash = life_var_cash + _price;
 [0] call SOCK_fnc_updatePartial;

@@ -23,7 +23,7 @@ if (life_is_alive && !life_is_arrested) then {
     if (!life_is_alive && !life_is_arrested) then {
         if (LIFE_SETTINGS(getNumber,"save_civilian_positionStrict") isEqualTo 1) then {
             [] call life_fnc_startLoadout;
-            CASH = 0;
+            life_var_cash = 0;
             [0] call SOCK_fnc_updatePartial;
         };
         [] call life_fnc_spawnMenu;

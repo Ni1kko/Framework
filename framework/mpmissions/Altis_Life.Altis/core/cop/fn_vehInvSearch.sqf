@@ -33,7 +33,7 @@ _illegalValue = 0;
 _value = _illegalValue;
 if (_value > 0) then {
     [0,"STR_NOTF_VehContraband",true,[[_value] call life_fnc_numberText]] remoteExecCall ["life_fnc_broadcast",RCLIENT];
-    BANK = BANK + _value;
+    life_var_bank = life_var_bank + _value;
     [1] call SOCK_fnc_updatePartial;
     _vehicle setVariable ["Trunk",[[],0],true];
 } else {

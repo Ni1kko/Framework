@@ -34,7 +34,7 @@ if (_action) then {
         [_uid,_house,1] remoteExec ["TON_fnc_houseGarage",RSERV];
     };
 
-    BANK = BANK + _sellPrice;
+    life_var_bank = life_var_bank + _sellPrice;
     [1] call SOCK_fnc_updatePartial;
 
     _house setVariable ["garageBought",false,true];

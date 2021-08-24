@@ -16,5 +16,5 @@ if (_val == _total) then {
     titleText[format [localize "STR_Cop_BountyKill",[_val] call life_fnc_numberText,[_total] call life_fnc_numberText],"PLAIN"];
 };
 
-BANK = BANK + _val;
+life_var_bank = life_var_bank + _val;
 [1] call SOCK_fnc_updatePartial;

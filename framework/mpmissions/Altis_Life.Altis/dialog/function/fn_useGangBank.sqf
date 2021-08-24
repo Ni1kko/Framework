@@ -19,18 +19,18 @@ if (isNil {(group player) getVariable "gang_name"}) exitWith {hint localize "STR
 if (_value > 999999) exitWith {hint localize "STR_ATM_WithdrawMax";};
 if (_value < 1) exitWith {};
 if (!([str(_value)] call TON_fnc_isnumber)) exitWith {hint localize "STR_ATM_notnumeric"};
-if (_deposit && _value > CASH) exitWith {hint localize "STR_ATM_NotEnoughCash"};
+if (_deposit && _value > life_var_cash) exitWith {hint localize "STR_ATM_NotEnoughCash"};
 if (!_deposit && _value > _gFund) exitWith {hint localize "STR_ATM_NotEnoughFundsG"};
 
 if (_deposit) then {
-    CASH = CASH - _value;
+    life_var_cash = life_var_cash - _value;
     [] call life_fnc_atmMenu;
 };
 
 if (life_var_hc_connected) then {
-    [1,group player,_deposit,_value,player,CASH] remoteExecCall ["HC_fnc_updateGang",life_var_headlessClient]; //Update the database.
+    [1,group player,_deposit,_value,player,life_var_cash] remoteExecCall ["HC_fnc_updateGang",life_var_headlessClient]; //Update the database.
 } else {
-    [1,group player,_deposit,_value,player,CASH] remoteExecCall ["TON_fnc_updateGang",RSERV]; //Update the database.
+    [1,group player,_deposit,_value,player,life_var_cash] remoteExecCall ["TON_fnc_updateGang",RSERV]; //Update the database.
 };
 
 life_action_delay = time;

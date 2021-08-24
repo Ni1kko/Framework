@@ -7,15 +7,15 @@
     Pays the ticket.
 */
 if (isNil "life_ticket_val" || isNil "life_ticket_cop") exitWith {};
-if (CASH < life_ticket_val) exitWith {
-    if (BANK < life_ticket_val) exitWith {
+if (life_var_cash < life_ticket_val) exitWith {
+    if (life_var_bank < life_ticket_val) exitWith {
         hint localize "STR_Cop_Ticket_NotEnough";
         [1,"STR_Cop_Ticket_NotEnoughNOTF",true,[profileName]] remoteExecCall ["life_fnc_broadcast",life_ticket_cop];
         closeDialog 0;
     };
 
     hint format [localize "STR_Cop_Ticket_Paid",[life_ticket_val] call life_fnc_numberText];
-    BANK = BANK - life_ticket_val;
+    life_var_bank = life_var_bank - life_ticket_val;
     [1] call SOCK_fnc_updatePartial;
     life_ticket_paid = true;
 
@@ -31,7 +31,7 @@ if (CASH < life_ticket_val) exitWith {
     closeDialog 0;
 };
 
-CASH = CASH - life_ticket_val;
+life_var_cash = life_var_cash - life_ticket_val;
 [0] call SOCK_fnc_updatePartial;
 life_ticket_paid = true;
 

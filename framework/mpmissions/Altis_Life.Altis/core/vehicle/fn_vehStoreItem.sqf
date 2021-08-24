@@ -28,7 +28,7 @@ if (_ctrl == "goldbar" && {!(life_trunk_vehicle isKindOf "LandVehicle")}) exitWi
 
 if (_ctrl == "money") then {
     _index = [_ctrl,_inv] call TON_fnc_index;
-    if (CASH < _num) exitWith {hint localize "STR_NOTF_notEnoughCashToStoreInVeh";};
+    if (life_var_cash < _num) exitWith {hint localize "STR_NOTF_notEnoughCashToStoreInVeh";};
     if (_index isEqualTo -1) then {
         _inv pushBack [_ctrl,_num];
     } else {
@@ -36,7 +36,7 @@ if (_ctrl == "money") then {
         _inv set[_index,[_ctrl,_val + _num]];
     };
 
-    CASH = CASH - _num;
+    life_var_cash = life_var_cash - _num;
     [0] call SOCK_fnc_updatePartial;
     life_trunk_vehicle setVariable ["Trunk",[_inv,(_veh_data select 1) + _itemWeight],true];
     [life_trunk_vehicle] call life_fnc_vehInventory;

@@ -31,7 +31,7 @@ if (_car distance player > 10 && !(isNull objectParent player)) exitWith {
 };
 
 private _fuelCost = uiNamespace getVariable ["fuel_cost",0];
-if ((BANK - (_fueltoput * _fuelCost)) > 0) then {
+if ((life_var_bank - (_fueltoput * _fuelCost)) > 0) then {
     life_is_processing = true;
     //Setup our progress bar.
     disableSerialization;
@@ -55,7 +55,7 @@ if ((BANK - (_fueltoput * _fuelCost)) > 0) then {
         };
     };
     private _toPay = floor((_fueltoput * _fuelCost) * _cP);
-    BANK = BANK - _toPay; //pay the received fuel
+    life_var_bank = life_var_bank - _toPay; //pay the received fuel
     [_car,_cP * _setfuel] remoteExecCall ["life_fnc_setFuel",_car]; //update the fuel
     "progressBar" cutText ["","PLAIN"];
     if (_car distance player > 10 || !(isNull objectParent player)) then {

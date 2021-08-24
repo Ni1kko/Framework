@@ -75,7 +75,7 @@ life_is_alive = false;
 life_delivery_in_progress = false;
 life_thirst = 100;
 life_hunger = 100;
-CASH = 0;
+life_var_cash = 0;
 
 life_istazed = false;
 life_isknocked = false;

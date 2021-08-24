@@ -14,5 +14,5 @@ params [
 if (isNull _unit || {!(_unit isEqualTo life_ticket_unit)}) exitWith {}; //NO
 if (isNull _cop || {!(_cop isEqualTo player)}) exitWith {}; //Double NO
 
-BANK = BANK + _value;
+life_var_bank = life_var_bank + _value;
 [1] call SOCK_fnc_updatePartial;

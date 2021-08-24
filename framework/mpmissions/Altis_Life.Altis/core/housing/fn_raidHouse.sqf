@@ -69,7 +69,7 @@ _value = 0;
 
 if (_value > 0) then {
     [0,"STR_House_Raid_Successful",true,[[_value] call life_fnc_numberText]] remoteExecCall ["life_fnc_broadcast",RCLIENT];
-    BANK = BANK + round(_value / 2);
+    life_var_bank = life_var_bank + round(_value / 2);
     [1] call SOCK_fnc_updatePartial;
 
     _house setVariable ["Trunk",[_houseInvData,_houseInvVal],true];

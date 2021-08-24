@@ -16,8 +16,8 @@ _price = 0;
     };
 } forEach life_clothing_purchase;
 
-if (_price > CASH) exitWith {titleText[localize "STR_Shop_NotEnoughClothes","PLAIN"];};
-CASH = CASH - _price;
+if (_price > life_var_cash) exitWith {titleText[localize "STR_Shop_NotEnoughClothes","PLAIN"];};
+life_var_cash = life_var_cash - _price;
 [0] call SOCK_fnc_updatePartial;
 
 life_clothesPurchased = true;

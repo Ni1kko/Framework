@@ -24,7 +24,7 @@ if ((_itemInfo select 6) != "CfgVehicles") then {
 if (_bad != "") exitWith {hint _bad};
 
 if ((uiNamespace getVariable ["Weapon_Shop_Filter",0]) isEqualTo 1) then {
-    CASH = CASH + _price;
+    life_var_cash = life_var_cash + _price;
     [_item,false] call life_fnc_handleItem;
     hint parseText format [localize "STR_Shop_Weapon_Sold",_itemInfo select 1,[_price] call life_fnc_numberText];
     [nil,(uiNamespace getVariable ["Weapon_Shop_Filter",0])] call life_fnc_weaponShopFilter; //Update the menu.
@@ -37,7 +37,7 @@ if ((uiNamespace getVariable ["Weapon_Shop_Filter",0]) isEqualTo 1) then {
         _action = [
             format [(localize "STR_Shop_Virt_Gang_FundsMSG")+ "<br/><br/>" +(localize "STR_Shop_Virt_Gang_Funds")+ " <t color='#8cff9b'>$%1</t><br/>" +(localize "STR_Shop_Virt_YourFunds")+ " <t color='#8cff9b'>$%2</t>",
                 [(group player getVariable "gang_bank")] call life_fnc_numberText,
-                [CASH] call life_fnc_numberText
+                [life_var_cash] call life_fnc_numberText
             ],
             localize "STR_Shop_Virt_YourorGang",
             localize "STR_Shop_Virt_UI_GangFunds",
@@ -58,15 +58,15 @@ if ((uiNamespace getVariable ["Weapon_Shop_Filter",0]) isEqualTo 1) then {
 
 
         } else {
-            if (_price > CASH) exitWith {hint localize "STR_NOTF_NotEnoughMoney"};
+            if (_price > life_var_cash) exitWith {hint localize "STR_NOTF_NotEnoughMoney"};
             hint parseText format [localize "STR_Shop_Weapon_BoughtItem",_itemInfo select 1,[_price] call life_fnc_numberText];
-            CASH = CASH - _price;
+            life_var_cash = life_var_cash - _price;
             [_item,true] call life_fnc_handleItem;
         };
     } else {
-        if (_price > CASH) exitWith {hint localize "STR_NOTF_NotEnoughMoney"};
+        if (_price > life_var_cash) exitWith {hint localize "STR_NOTF_NotEnoughMoney"};
         hint parseText format [localize "STR_Shop_Weapon_BoughtItem",_itemInfo select 1,[_price] call life_fnc_numberText];
-        CASH = CASH - _price;
+        life_var_cash = life_var_cash - _price;
         [_item,true] call life_fnc_handleItem;
     };
 };

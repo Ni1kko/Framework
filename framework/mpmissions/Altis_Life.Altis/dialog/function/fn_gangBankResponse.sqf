@@ -12,5 +12,5 @@ if (remoteExecutedOwner != ([2,life_var_headlessClient] select life_var_hc_conne
 if (_value isEqualTo -1) exitWith {};
 
 hint format [localize "STR_ATM_WithdrawSuccessG",[_value] call life_fnc_numberText];
-CASH = CASH + _value;
+life_var_cash = life_var_cash + _value;
 [] call life_fnc_atmMenu;

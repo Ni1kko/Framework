@@ -125,9 +125,9 @@ if (LIFE_SETTINGS(getNumber,"drop_weapons_onDeath") isEqualTo 0) then {
 if (side _killer isEqualTo west && !(playerSide isEqualTo west)) then {
     life_copRecieve = _killer;
     //Did I rob the federal reserve?
-    if (!life_use_atm && {CASH > 0}) then {
-        [format [localize "STR_Cop_RobberDead",[CASH] call life_fnc_numberText]] remoteExecCall ["life_fnc_broadcast",RCLIENT];
-        CASH = 0;
+    if (!life_use_atm && {life_var_cash > 0}) then {
+        [format [localize "STR_Cop_RobberDead",[life_var_cash] call life_fnc_numberText]] remoteExecCall ["life_fnc_broadcast",RCLIENT];
+        life_var_cash = 0;
     };
 };
 
@@ -141,7 +141,7 @@ life_action_inUse = false;
 life_hunger = 100;
 life_thirst = 100;
 life_carryWeight = 0;
-CASH = 0;
+life_var_cash = 0;
 life_is_alive = false;
 
 [player,life_settings_enableSidechannel,playerSide] remoteExecCall ["TON_fnc_manageSC",RSERV];

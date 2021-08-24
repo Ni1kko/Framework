@@ -67,7 +67,7 @@ _target setVariable ["Revive", true, true];
 
 if (playerSide isEqualTo independent) then {
     titleText[format [localize "STR_Medic_RevivePayReceive", _targetName,[_reviveCost] call life_fnc_numberText], "PLAIN"];
-    BANK = BANK + _reviveCost;
+    life_var_bank = life_var_bank + _reviveCost;
     [1] call SOCK_fnc_updatePartial;
 };
 

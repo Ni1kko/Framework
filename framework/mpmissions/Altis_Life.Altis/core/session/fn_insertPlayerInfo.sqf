@@ -25,7 +25,7 @@ switch (playerSide) do {
 };
 
 if (life_var_hc_connected) then {
-    [getPlayerUID player,profileName,CASH,_bank,player] remoteExecCall ["HC_fnc_insertRequest",life_var_headlessClient];
+    [getPlayerUID player,profileName,life_var_cash,_bank,player] remoteExecCall ["HC_fnc_insertRequest",life_var_headlessClient];
 } else {
-    [getPlayerUID player,profileName,CASH,_bank,player] remoteExecCall ["DB_fnc_insertRequest",RSERV];
+    [getPlayerUID player,profileName,life_var_cash,_bank,player] remoteExecCall ["DB_fnc_insertRequest",RSERV];
 };

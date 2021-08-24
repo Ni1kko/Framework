@@ -15,8 +15,8 @@ _price = M_CONFIG(getNumber,"Licenses",_type,"price");
 _sideFlag = M_CONFIG(getText,"Licenses",_type,"side");
 _varName = LICENSE_VARNAME(_type,_sideFlag);
 
-if (CASH < _price) exitWith {hint format [localize "STR_NOTF_NE_1",[_price] call life_fnc_numberText,localize _displayName];};
-CASH = CASH - _price;
+if (life_var_cash < _price) exitWith {hint format [localize "STR_NOTF_NE_1",[_price] call life_fnc_numberText,localize _displayName];};
+life_var_cash = life_var_cash - _price;
 
 [0] call SOCK_fnc_updatePartial;
 
