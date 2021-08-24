@@ -48,7 +48,7 @@ if(_insertPlayer)then{
     ["CREATE", "players", 
         [//What
             ["serverID", 		["DB","INT", (call life_var_serverID)] call life_fnc_database_parse],
-            ["BEGuid", 			_BEGuid],
+            ["BEGuid", 			["DB","STRING", _BEGuid] call life_fnc_database_parse],
             ["pid", 			["DB","STRING", _uid] call life_fnc_database_parse],
             ["name", 			["DB","STRING", _name] call life_fnc_database_parse],
             ["cash", 			["DB","A2NET", 0] call life_fnc_database_parse],
