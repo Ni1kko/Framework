@@ -85,16 +85,16 @@ if (!_isVehicle) then {
         titleText[localize "STR_ISTR_Lock_Success","PLAIN"];
         life_vehicles pushBack _curTarget;
 
-        if (life_HC_isActive) then {
-            [getPlayerUID player,profileName,"487"] remoteExecCall ["HC_fnc_wantedAdd",HC_Life];
+        if (life_var_hc_connected) then {
+            [getPlayerUID player,profileName,"487"] remoteExecCall ["HC_fnc_wantedAdd",life_var_headlessClient];
         } else {
             [getPlayerUID player,profileName,"487"] remoteExecCall ["life_fnc_wantedAdd",RSERV];
         };
 
     } else {
 
-        if (life_HC_isActive) then {
-            [getPlayerUID player,profileName,"215"] remoteExecCall ["HC_fnc_wantedAdd",HC_Life];
+        if (life_var_hc_connected) then {
+            [getPlayerUID player,profileName,"215"] remoteExecCall ["HC_fnc_wantedAdd",life_var_headlessClient];
         } else {
             [getPlayerUID player,profileName,"215"] remoteExecCall ["life_fnc_wantedAdd",RSERV];
         };

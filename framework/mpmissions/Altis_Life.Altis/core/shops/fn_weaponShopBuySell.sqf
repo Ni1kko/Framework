@@ -50,8 +50,8 @@ if ((uiNamespace getVariable ["Weapon_Shop_Filter",0]) isEqualTo 1) then {
             group player setVariable ["gang_bank",_funds,true];
             [_item,true] call life_fnc_handleItem;
 
-            if (life_HC_isActive) then {
-                [1,group player] remoteExecCall ["HC_fnc_updateGang",HC_Life];
+            if (life_var_hc_connected) then {
+                [1,group player] remoteExecCall ["HC_fnc_updateGang",life_var_headlessClient];
             } else {
                 [1,group player] remoteExecCall ["TON_fnc_updateGang",RSERV];
             };

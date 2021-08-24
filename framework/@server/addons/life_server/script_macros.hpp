@@ -27,8 +27,8 @@
 #define EXTDB "extDB3" callExtension
 #define EXTDB_SETTING(TYPE,SETTING) TYPE(missionConfigFile >> "CfgServer" >> SETTING)
 #define EXTDB_FAILED(MESSAGE) \
-    life_server_extDB_notLoaded = [true,##MESSAGE]; \
-    publicVariable "life_server_extDB_notLoaded"; \
+    life_var_database_error = [true,##MESSAGE]; \
+    publicVariable "life_var_database_error"; \
     diag_log MESSAGE;
 
 //Display Macros

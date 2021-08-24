@@ -9,17 +9,17 @@
 HC_UID = nil;
 
 // JIP integration of an hc
-"life_HC_isActive" addPublicVariableEventHandler {
+"life_var_hc_connected" addPublicVariableEventHandler {
     if (_this select 1) then {
         HC_UID = getPlayerUID hc_1;
-        HC_Life = owner hc_1;
-        publicVariable "HC_Life";
-        HC_Life publicVariableClient "serv_sv_use";
+        life_var_headlessClient = owner hc_1;
+        publicVariable "life_var_headlessClient";
+        life_var_headlessClient publicVariableClient "life_var_severVehicles";
         cleanupFSM setFSMVariable ["stopfsm",true];
         terminate cleanup;
         terminate aiSpawn;
         [true] call TON_fnc_transferOwnership;
-        HC_Life publicVariableClient "animals";
+        life_var_headlessClient publicVariableClient "animals";
         diag_log "Headless client is connected and ready to work!";
     };
 };
@@ -27,10 +27,10 @@ HC_UID = nil;
 HC_DC = addMissionEventHandler ["PlayerDisconnected",
     {
         if (!isNil "HC_UID" && {_uid == HC_UID}) then {
-            life_HC_isActive = false;
-            publicVariable "life_HC_isActive";
-            HC_Life = false;
-            publicVariable "HC_Life";
+            life_var_hc_connected = false;
+            publicVariable "life_var_hc_connected";
+            life_var_headlessClient = false;
+            publicVariable "life_var_headlessClient";
             cleanup = [] spawn TON_fnc_cleanup;
             cleanupFSM = [] execFSM "\life_server\FSM\cleanup.fsm";
             [false] call TON_fnc_transferOwnership;

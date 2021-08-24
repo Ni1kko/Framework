@@ -27,8 +27,8 @@ private _mTwPos = getArray(_config >> "garageSpawnPos");
 life_garage_sp = [(_garageObj modelToWorld _mTwPos),((getDir _garageObj) + _dir)];
 life_garage_type = _type;
 
-if (life_HC_isActive) then {
-    [getPlayerUID player,playerSide,_type,player] remoteExec ["HC_fnc_getVehicles",HC_Life];
+if (life_var_hc_connected) then {
+    [getPlayerUID player,playerSide,_type,player] remoteExec ["HC_fnc_getVehicles",life_var_headlessClient];
 } else {
     [getPlayerUID player,playerSide,_type,player] remoteExec ["TON_fnc_getVehicles",RSERV];
 };

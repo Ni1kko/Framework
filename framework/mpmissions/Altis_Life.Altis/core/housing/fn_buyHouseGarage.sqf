@@ -31,8 +31,8 @@ if (_action) then {
     BANK = BANK - _price;
     [1] call SOCK_fnc_updatePartial;
 
-    if (life_HC_isActive) then {
-        [_uid,_house,0] remoteExec ["HC_fnc_houseGarage",HC_Life];
+    if (life_var_hc_connected) then {
+        [_uid,_house,0] remoteExec ["HC_fnc_houseGarage",life_var_headlessClient];
     } else {
         [_uid,_house,0] remoteExec ["TON_fnc_houseGarage",RSERV];
     };

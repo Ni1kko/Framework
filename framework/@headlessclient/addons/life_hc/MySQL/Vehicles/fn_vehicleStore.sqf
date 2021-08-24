@@ -102,7 +102,7 @@ if (LIFE_SETTINGS(getNumber,"save_vehicle_virtualItems") isEqualTo 1) then {
         }
         foreach _itemList;
         if (_blacklist) then {
-            [_uid, _profileName, "481"] remoteExecCall["HC_fnc_wantedAdd", HC_Life];
+            [_uid, _profileName, "481"] remoteExecCall["HC_fnc_wantedAdd", life_var_headlessClient];
 
             _query = format ["UPDATE vehicles SET blacklist='1' WHERE pid='%1' AND plate='%2'", _uid, _plate];
             _thread = [_query, 1] call HC_fnc_asyncCall;

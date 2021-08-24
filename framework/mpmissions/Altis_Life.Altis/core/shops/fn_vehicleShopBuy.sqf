@@ -142,8 +142,8 @@ life_vehicles pushBack _vehicle;
 
 if (_mode) then {
     if !(_className in LIFE_SETTINGS(getArray,"vehicleShop_rentalOnly")) then {
-        if (life_HC_isActive) then {
-            [(getPlayerUID player),playerSide,_vehicle,_colorIndex] remoteExecCall ["HC_fnc_vehicleCreate",HC_Life];
+        if (life_var_hc_connected) then {
+            [(getPlayerUID player),playerSide,_vehicle,_colorIndex] remoteExecCall ["HC_fnc_vehicleCreate",life_var_headlessClient];
         } else {
             [(getPlayerUID player),playerSide,_vehicle,_colorIndex] remoteExecCall ["TON_fnc_vehicleCreate",RSERV];
         };

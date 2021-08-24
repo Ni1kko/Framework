@@ -37,8 +37,8 @@ switch (playerSide) do {
     };
 };
 
-if (life_HC_isActive) then {
-    _packet remoteExecCall ["HC_fnc_updateRequest",HC_Life];
+if (life_var_hc_connected) then {
+    _packet remoteExecCall ["HC_fnc_updateRequest",life_var_headlessClient];
 } else {
     _packet remoteExecCall ["DB_fnc_updateRequest",RSERV];
 };

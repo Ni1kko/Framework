@@ -32,8 +32,8 @@ if (_action) then {
     BANK = BANK - (_houseCfg select 0);
     [1] call SOCK_fnc_updatePartial;
 
-    if (life_HC_isActive) then {
-        [_uid,_house] remoteExec ["HC_fnc_addHouse",HC_Life];
+    if (life_var_hc_connected) then {
+        [_uid,_house] remoteExec ["HC_fnc_addHouse",life_var_headlessClient];
     } else {
         [_uid,_house] remoteExec ["TON_fnc_addHouse",RSERV];
     };

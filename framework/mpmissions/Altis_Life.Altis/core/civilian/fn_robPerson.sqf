@@ -14,8 +14,8 @@ if (isNull _robber) exitWith {}; //No one to return it to?
 if (CASH > 0) then {
     [CASH,player,_robber] remoteExecCall ["life_fnc_robReceive",_robber];
 
-    if (life_HC_isActive) then {
-        [getPlayerUID _robber,_robber getVariable ["realname",name _robber],"211"] remoteExecCall ["HC_fnc_wantedAdd",HC_Life];
+    if (life_var_hc_connected) then {
+        [getPlayerUID _robber,_robber getVariable ["realname",name _robber],"211"] remoteExecCall ["HC_fnc_wantedAdd",life_var_headlessClient];
     } else {
         [getPlayerUID _robber,_robber getVariable ["realname",name _robber],"211"] remoteExecCall ["life_fnc_wantedAdd",RSERV];
     };

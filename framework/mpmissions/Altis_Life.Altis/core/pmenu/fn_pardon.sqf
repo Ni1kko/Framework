@@ -18,8 +18,8 @@ if (isNil "_data") exitWith {};
 if (!(_data isEqualType [])) exitWith {};
 if (_data isEqualTo []) exitWith {};
 
-if (life_HC_isActive) then {
-    [(_data select 0)] remoteExecCall ["HC_fnc_wantedRemove",HC_Life];
+if (life_var_hc_connected) then {
+    [(_data select 0)] remoteExecCall ["HC_fnc_wantedRemove",life_var_headlessClient];
 } else {
     [(_data select 0)] remoteExecCall ["life_fnc_wantedRemove",RSERV];
 };

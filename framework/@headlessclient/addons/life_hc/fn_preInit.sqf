@@ -11,17 +11,17 @@ if (EXTDB_SETTING(getNumber,"HeadlessSupport") isEqualTo 0) exitWith {};
 
 _extDBNotLoaded = "";
 
-life_save_civilian_position = if (LIFE_SETTINGS(getNumber,"save_civilian_position") isEqualTo 0) then {false} else {true};
+life_var_saveCivPos = if (LIFE_SETTINGS(getNumber,"save_civilian_position") isEqualTo 0) then {false} else {true};
 
-if (isNil {uiNamespace getVariable "life_sql_id"}) then {
-    life_sql_id = round(random(9999));
-    CONSTVAR(life_sql_id);
-    uiNamespace setVariable ["life_sql_id",life_sql_id];
+if (isNil {uiNamespace getVariable "life_var_databaseID"}) then {
+    life_var_databaseID = round(random(9999));
+    CONSTVAR(life_var_databaseID);
+    uiNamespace setVariable ["life_var_databaseID",life_var_databaseID];
 
     try {
         _result = EXTDB format ["9:ADD_DATABASE:%1",EXTDB_SETTING(getText,"DatabaseName")];
         if (!(_result isEqualTo "[1]")) then {throw "extDB3: Error with Database Connection"};
-        _result = EXTDB format ["9:ADD_DATABASE_PROTOCOL:%2:SQL:%1:TEXT2",FETCH_CONST(life_sql_id),EXTDB_SETTING(getText,"DatabaseName")];
+        _result = EXTDB format ["9:ADD_DATABASE_PROTOCOL:%2:SQL:%1:TEXT2",FETCH_CONST(life_var_databaseID),EXTDB_SETTING(getText,"DatabaseName")];
         if (!(_result isEqualTo "[1]")) then {throw "extDB3: Error with Database Connection"};
     } catch {
         diag_log _exception;
@@ -32,8 +32,8 @@ if (isNil {uiNamespace getVariable "life_sql_id"}) then {
     EXTDB "9:LOCK";
     diag_log "extDB3: Connected to Database";
 } else {
-    life_sql_id = uiNamespace getVariable "life_sql_id";
-    CONSTVAR(life_sql_id);
+    life_var_databaseID = uiNamespace getVariable "life_var_databaseID";
+    CONSTVAR(life_var_databaseID);
     diag_log "extDB3: Still Connected to Database";
 };
 
@@ -115,12 +115,12 @@ CONSTVAR(HC_MPAllowedFuncs);
 [] spawn {
     for "_i" from 0 to 1 step 0 do {
         uiSleep 60;
-        publicVariableServer "serv_sv_use";
+        publicVariableServer "life_var_severVehicles";
     };
 };
 
-life_HC_isActive = true;
-publicVariable "life_HC_isActive";
+life_var_hc_connected = true;
+publicVariable "life_var_hc_connected";
 diag_log "----------------------------------------------------------------------------------------------------";
 diag_log format ["                 End of Altis Life HC Init :: Total Execution Time %1 seconds ",(diag_tickTime) - _timeStamp];
 diag_log "----------------------------------------------------------------------------------------------------";

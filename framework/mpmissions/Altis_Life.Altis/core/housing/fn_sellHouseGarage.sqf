@@ -28,8 +28,8 @@ _action = [
 
 if (_action) then {
 
-    if (life_HC_isActive) then {
-        [_uid,_house,1] remoteExec ["HC_fnc_houseGarage",HC_Life];
+    if (life_var_hc_connected) then {
+        [_uid,_house,1] remoteExec ["HC_fnc_houseGarage",life_var_headlessClient];
     } else {
         [_uid,_house,1] remoteExec ["TON_fnc_houseGarage",RSERV];
     };

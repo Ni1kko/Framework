@@ -26,8 +26,8 @@ _spikeStrip setDamage 1;
 life_action_spikeStripPickup = player addAction[localize "STR_ISTR_Spike_Pack",life_fnc_packupSpikes,"",0,false,false,"",
 ' _spikes = nearestObjects[getPos player,["Land_Razorwire_F"],8] select 0; !isNil "_spikes" && !isNil {(_spikes getVariable "item")}'];
 
-if (life_HC_isActive) then {
-    [_spikeStrip] remoteExec ["HC_fnc_spikeStrip",HC_Life]; //Send it to the HeadlessClient for monitoring.
+if (life_var_hc_connected) then {
+    [_spikeStrip] remoteExec ["HC_fnc_spikeStrip",life_var_headlessClient]; //Send it to the HeadlessClient for monitoring.
 } else {
     [_spikeStrip] remoteExec ["TON_fnc_spikeStrip",RSERV]; //Send it to the server for monitoring.
 };

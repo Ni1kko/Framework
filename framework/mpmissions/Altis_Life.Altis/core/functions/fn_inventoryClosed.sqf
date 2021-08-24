@@ -16,8 +16,8 @@ params [
 if (isNull _container) exitWith {};
 
 if ((typeOf _container) in ["Box_IND_Grenades_F", "B_supplyCrate_F"]) exitWith {
-    if (life_HC_isActive) then {
-        [_container] remoteExecCall ["HC_fnc_updateHouseContainers", HC_Life];
+    if (life_var_hc_connected) then {
+        [_container] remoteExecCall ["HC_fnc_updateHouseContainers", life_var_headlessClient];
     } else {
         [_container] remoteExecCall ["TON_fnc_updateHouseContainers", RSERV];
     };
@@ -27,8 +27,8 @@ if ((typeOf _container) in ["Box_IND_Grenades_F", "B_supplyCrate_F"]) exitWith {
 
 if (LIFE_SETTINGS(getNumber, "save_vehicle_inventory") isEqualTo 1) exitWith {
     if (_container isKindOf "Car" || {_container isKindOf "Air"} || {_container isKindOf "Ship"}) then {
-        if (life_HC_isActive) then {
-            [_container, 1] remoteExecCall ["HC_fnc_vehicleUpdate", HC_Life];
+        if (life_var_hc_connected) then {
+            [_container, 1] remoteExecCall ["HC_fnc_vehicleUpdate", life_var_headlessClient];
         } else {
             [_container, 1] remoteExecCall ["TON_fnc_vehicleUpdate", RSERV];
         };

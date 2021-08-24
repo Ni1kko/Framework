@@ -15,8 +15,8 @@ _side = playerSide;
 cutText[format [localize "STR_Session_Query",_uid],"BLACK FADED"];
 0 cutFadeOut 999999999;
 
-if (life_HC_isActive) then {
-    [_uid,_side,_sender] remoteExec ["HC_fnc_queryRequest",HC_Life];
+if (life_var_hc_connected) then {
+    [_uid,_side,_sender] remoteExec ["HC_fnc_queryRequest",life_var_headlessClient];
 } else {
     [_uid,_side,_sender] remoteExec ["DB_fnc_queryRequest",RSERV];
 };

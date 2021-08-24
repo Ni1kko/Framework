@@ -24,7 +24,7 @@ if (isNull _returnToSender) exitWith {systemChat "ReturnToSender is Null!";}; //
 _BEGuid = ('BEGuid' callExtension ("get:"+_uid));
 
 if (_BEGuid isEqualTo "") exitWith {systemChat "Bad BEGuid";};
-_query = format ["SELECT pid, name FROM players WHERE BEGuid='%1'",_BEGuid];
+_query = format ["SELECT pid, name, serverID FROM players WHERE BEGuid='%1'",_BEGuid];
 
 _tickTime = diag_tickTime;
 _queryResult = [_query,2] call DB_fnc_asyncCall;
@@ -48,7 +48,8 @@ _money = [_money] call DB_fnc_numberSafe;
 _bank = [_bank] call DB_fnc_numberSafe;
 
 //Prepare the query statement..
-_query = format ["INSERT INTO players (BEGuid, pid, name, cash, bankacc, aliases, cop_licenses, med_licenses, civ_licenses, civ_gear, cop_gear, med_gear) VALUES('%1', '%2', '%3', '%4', '%5','%6','""[]""','""[]""','""[]""','""[]""','""[]""','""[]""')",
+_query = format ["INSERT INTO players (serverID, BEGuid, pid, name, cash, bankacc, aliases, cop_licenses, med_licenses, civ_licenses, civ_gear, cop_gear, med_gear) VALUES('%1', '%2', '%3', '%4', '%5','%6','%7','""[]""','""[]""','""[]""','""[]""','""[]""','""[]""')",
+    (call life_var_serverID),
     _BEGuid,
     _uid,
     _name,

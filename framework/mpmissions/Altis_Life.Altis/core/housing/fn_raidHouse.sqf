@@ -74,8 +74,8 @@ if (_value > 0) then {
 
     _house setVariable ["Trunk",[_houseInvData,_houseInvVal],true];
 
-    if (life_HC_isActive) then {
-        [_house] remoteExecCall ["HC_fnc_updateHouseTrunk",HC_Life];
+    if (life_var_hc_connected) then {
+        [_house] remoteExecCall ["HC_fnc_updateHouseTrunk",life_var_headlessClient];
     } else {
         [_house] remoteExecCall ["TON_fnc_updateHouseTrunk",RSERV];
     };

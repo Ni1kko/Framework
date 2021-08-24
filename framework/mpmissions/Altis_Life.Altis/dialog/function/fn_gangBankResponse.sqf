@@ -8,7 +8,7 @@
 params [
     ["_value",-1,[0]]
 ];
-if (remoteExecutedOwner != ([2,HC_Life] select life_HC_isActive)) exitWith {};
+if (remoteExecutedOwner != ([2,life_var_headlessClient] select life_var_hc_connected)) exitWith {};
 if (_value isEqualTo -1) exitWith {};
 
 hint format [localize "STR_ATM_WithdrawSuccessG",[_value] call life_fnc_numberText];

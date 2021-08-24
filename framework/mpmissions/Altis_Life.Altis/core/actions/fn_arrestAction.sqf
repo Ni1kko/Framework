@@ -15,8 +15,8 @@ if (!isPlayer _unit) exitWith {}; //Not a human
 if (!(_unit getVariable "restrained")) exitWith {}; //He's not restrained.
 if (!((side _unit) in [civilian,independent])) exitWith {}; //Not a civ
 
-if (life_HC_isActive) then {
-    [getPlayerUID _unit,_unit,player,false] remoteExecCall ["HC_fnc_wantedBounty",HC_Life];
+if (life_var_hc_connected) then {
+    [getPlayerUID _unit,_unit,player,false] remoteExecCall ["HC_fnc_wantedBounty",life_var_headlessClient];
 } else {
     [getPlayerUID _unit,_unit,player,false] remoteExecCall ["life_fnc_wantedBounty",RSERV];
 };

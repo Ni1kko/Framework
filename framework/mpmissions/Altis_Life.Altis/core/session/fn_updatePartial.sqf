@@ -56,8 +56,8 @@ switch (_mode) do {
     };
 };
 
-if (life_HC_isActive) then {
-    _packet remoteExecCall ["HC_fnc_updatePartial",HC_Life];
+if (life_var_hc_connected) then {
+    _packet remoteExecCall ["HC_fnc_updatePartial",life_var_headlessClient];
 } else {
     _packet remoteExecCall ["DB_fnc_updatePartial",RSERV];
 };

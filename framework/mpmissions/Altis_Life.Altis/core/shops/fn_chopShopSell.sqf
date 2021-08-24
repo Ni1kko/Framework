@@ -16,8 +16,8 @@ if (isNull _vehicle) exitWith {};
 systemChat localize "STR_Shop_ChopShopSelling";
 life_action_inUse = true;
 
-if (life_HC_isActive) then {
-    [player,_vehicle,_price] remoteExecCall ["HC_fnc_chopShopSell",HC_Life];
+if (life_var_hc_connected) then {
+    [player,_vehicle,_price] remoteExecCall ["HC_fnc_chopShopSell",life_var_headlessClient];
 } else {
     [player,_vehicle,_price] remoteExecCall ["TON_fnc_chopShopSell",RSERV];
 };

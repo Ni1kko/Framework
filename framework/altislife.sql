@@ -66,6 +66,23 @@ END$$
 
 DELIMITER ;
 
+--
+-- Table structure for table `servers`
+--
+
+CREATE TABLE IF NOT EXISTS `servers` (
+    `serverID`        INT NOT NULL AUTO_INCREMENT,
+    `hardwareID`      VARCHAR(64) NOT NULL,
+    `name`            VARCHAR(255) NOT NULL,
+    `world`           VARCHAR(64) NOT NULL,
+    `maxplayercount`  INT NOT NULL DEFAULT 0,
+    `restartcount`    INT NOT NULL DEFAULT 0,
+    `runtime`         INT NOT NULL DEFAULT 0,
+    `lastactive`      TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    PRIMARY KEY (`serverID`),
+    UNIQUE KEY `unique_serverid` (`serverID`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
 -- --------------------------------------------------------
 
 --
@@ -74,6 +91,7 @@ DELIMITER ;
 
 CREATE TABLE IF NOT EXISTS `players` (
     `uid`          INT NOT NULL AUTO_INCREMENT,
+    `serverID`     INT NOT NULL,
     `BEGuid`       VARCHAR(32) NOT NULL,
     `pid`          VARCHAR(17) NOT NULL,
     `name`         VARCHAR(32) NOT NULL,
@@ -104,6 +122,9 @@ CREATE TABLE IF NOT EXISTS `players` (
     PRIMARY KEY (`pid`),
     UNIQUE KEY `unique_uid` (`uid`),
     UNIQUE KEY `unique_beguid` (`BEGuid`),
+    UNIQUE KEY `unique_serverid` (`serverID`),
+    INDEX `fkIdx_server_id` (`serverID`),
+    CONSTRAINT `FK_server_id` FOREIGN KEY `fkIdx_server_id` (`serverID`) REFERENCES `servers` (`serverID`) ON UPDATE CASCADE ON DELETE CASCADE,
     INDEX `index_name` (`name`),
     INDEX `index_blacklist` (`blacklist`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
@@ -127,7 +148,7 @@ CREATE TABLE IF NOT EXISTS `rcon_logs` (
     CONSTRAINT `FK_players_logs` FOREIGN KEY `fkIdx_players_logs` (`BEGuid`)
       REFERENCES `players` (`BEGuid`)
       ON UPDATE CASCADE ON DELETE CASCADE
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4; 
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 -- --------------------------------------------------------
 

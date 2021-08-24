@@ -27,8 +27,8 @@ if (_deposit) then {
     [] call life_fnc_atmMenu;
 };
 
-if (life_HC_isActive) then {
-    [1,group player,_deposit,_value,player,CASH] remoteExecCall ["HC_fnc_updateGang",HC_Life]; //Update the database.
+if (life_var_hc_connected) then {
+    [1,group player,_deposit,_value,player,CASH] remoteExecCall ["HC_fnc_updateGang",life_var_headlessClient]; //Update the database.
 } else {
     [1,group player,_deposit,_value,player,CASH] remoteExecCall ["TON_fnc_updateGang",RSERV]; //Update the database.
 };

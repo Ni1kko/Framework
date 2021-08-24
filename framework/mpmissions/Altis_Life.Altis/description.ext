@@ -39,8 +39,7 @@ unsafeCVL = 1; // Allows createVehicleLocal to be executed in Multiplayer
 #include "dialog\MasterHandler.hpp"
 #include "config\Config_Master.hpp"
 
-class CfgServer {
-    DatabaseName = "altislife"; //Config name that'll be grep in the extdb-conf.ini. Default: [altislife]
+class CfgServer { 
     DebugMode = 0; //Enable many server/hc debugging logs. Default: 0 (1 = Enabled / 0 = Disabled)
     HeadlessSupport = 0; //Enable/Disable Headless client support. Default: 1 (1 = Enabled / 0 = Disabled)
     /*
@@ -445,7 +444,7 @@ class CfgRemoteExec {
     #define ANYONE 0
     #define CLIENT 1
     #define SERVER 2
-    #define HC HC_Life
+    #define HC life_var_headlessClient
     
     class Functions {
         // RemoteExec modes:

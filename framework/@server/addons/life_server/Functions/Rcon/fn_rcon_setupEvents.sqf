@@ -14,7 +14,7 @@ if(getNumber (configFile >> "CfgRCON" >> "useRestartMessages") isEqualTo 1)then{
 
 "Events thread paused: Waiting for server to load!" call life_fnc_rcon_systemlog;
 
-waitUntil {(missionNamespace getVariable ["life_server_isReady",false])};
+waitUntil {(missionNamespace getVariable ["life_var_serverLoaded",false])};
 
 private _heartbeat =  0;
 private _rconinittime = diag_tickTime;
@@ -52,17 +52,21 @@ while {true} do {
 	//--- Main events
 	if(_serveruptime > 0 && _rconuptime > 0)then
 	{
-		//--- Restart event (1min)
-		if (_serveruptime mod 1 isEqualTo 0) then
+		//--- Unlock event (30 secs)
+		if (_serveruptime mod 0.5 isEqualTo 0 && _rconlocked) then
 		{
 			//--- Needs unlocked
-			if (_rconlocked && life_var_rcon_RestartMode isEqualTo 0) then{
+			if (life_var_rcon_RestartMode isEqualTo 0) then{
 				"#unlock" call life_fnc_rcon_sendCommand;
 				life_var_rcon_serverLocked = false;
 				_rconlocked = false;
 				"Lock Event: server unlocked and accepting players!" call life_fnc_rcon_systemlog;
 			};
+		};
 
+		//--- Restart event (1min)
+		if (_serveruptime mod 1 isEqualTo 0) then
+		{
 			//--- Warning messages
 			if (typeName life_var_rcon_RestartMessages isEqualTo "ARRAY") then { 
 				if !(life_var_rcon_RestartMessages isEqualTo []) then {

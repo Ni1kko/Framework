@@ -58,6 +58,7 @@ class CfgFunctions {
             class insertRequest{};
             class updateRequest{};
             class mresToArray {};
+            class loadServer {};
             class insertVehicle {};
             class bool {};
             class mresString {};
@@ -95,6 +96,13 @@ class CfgFunctions {
             class rcon_sendCommand {};
             class rcon_setupEvents {};
             class rcon_systemlog {};
+        };
+
+        //--- Database Functions
+        class Database_Functions
+        {
+            file = "\life_server\Functions\Database";
+            class database_initialize {};
         };
 
         class Jail_Sys {
