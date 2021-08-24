@@ -8,11 +8,11 @@
     meant to keep the network traffic down with large sums of data flowing
     through remoteExec
 */
-private ["_mode","_packet","_array","_flag"];
-_mode = param [0,0,[0]];
-_packet = [getPlayerUID player,playerSide,nil,_mode];
-_array = [];
-_flag = switch (playerSide) do {case west: {"cop"}; case civilian: {"civ"}; case independent: {"med"};};
+
+private _mode = param [0,-1];
+private _flag = switch (playerSide) do {case west: {"cop"}; case civilian: {"civ"}; case independent: {"med"};};
+
+private _packet = [player,_mode];
 
 switch (_mode) do {
     case 0: {
@@ -24,6 +24,8 @@ switch (_mode) do {
     };
 
     case 2: {
+        private _array = [];
+
         {
             _varName = LICENSE_VARNAME(configName _x,_flag);
             _array pushBack [_varName,LICENSE_VALUE(configName _x,_flag)];
@@ -39,7 +41,7 @@ switch (_mode) do {
 
     case 4: {
         _packet set[2,life_is_alive];
-        _packet set[4,getPosATL player];
+        _packet set[3,getPosATL player];
     };
 
     case 5: {
@@ -48,7 +50,7 @@ switch (_mode) do {
 
     case 6: {
         _packet set[2,life_var_cash];
-        _packet set[4,life_var_bank];
+        _packet set[3,life_var_bank];
     };
 
     case 7: {
@@ -56,8 +58,4 @@ switch (_mode) do {
     };
 };
 
-if (life_var_hc_connected) then {
-    _packet remoteExecCall ["HC_fnc_updatePartial",life_var_headlessClient];
-} else {
-    _packet remoteExecCall ["DB_fnc_updatePartial",RSERV];
-};
+_packet remoteExecCall ["DB_fnc_updatePartial",RSERV];

@@ -126,7 +126,6 @@ _res
 			["pid", 			["DB","STRING", "76561198276956558"] call life_fnc_database_parse],
 			["name", 			["DB","STRING", "nikko test"] call life_fnc_database_parse],
 			["cash", 			["DB","A2NET", 0] call life_fnc_database_parse],
-			["bankacc", 		["DB","A2NET", 10000] call life_fnc_database_parse],
 			["aliases", 		["DB","ARRAY", ["nikko test"]] call life_fnc_database_parse],
 			["cop_licenses", 	["DB","ARRAY", []] call life_fnc_database_parse],
 			["med_licenses", 	["DB","ARRAY", []] call life_fnc_database_parse],
@@ -139,26 +138,25 @@ _res
 
 	["READ", "players", [
 		[//What
-			"serverID", "BEGuid", "pid", "name", "cash", "bankacc"
+			"serverID", "BEGuid", "pid", "name", "cash"
 		],
 		[//Where
-			["BEGuid",["DB","STRING", "092dd37cc6d0e2781ea42ee334debd28"] call life_fnc_database_parse]
+			["BEGuid",str("092dd37cc6d0e2781ea42ee334debd28")]
 		]
 	],true]call life_fnc_database_request;
 
 	["UPDATE", "players", [
 		[//What
-			["cash",["DB","A2NET", 500] call life_fnc_database_parse],
-			["bankacc",["DB","A2NET", 99999] call life_fnc_database_parse]	
+			["cash",["DB","A2NET", 500] call life_fnc_database_parse]
 		],
 		[//Where
-			["BEGuid",["DB","STRING", "092dd37cc6d0e2781ea42ee334debd28"] call life_fnc_database_parse]
+			["BEGuid",str("092dd37cc6d0e2781ea42ee334debd28")]
 		]
 	]]call life_fnc_database_request;
 	
 	["DELETE", "players", [
 		[//Where
-			["BEGuid",["DB","STRING", "092dd37cc6d0e2781ea42ee334debd28"] call life_fnc_database_parse]
+			["BEGuid",str("092dd37cc6d0e2781ea42ee334debd28")]
 		]
 	],true]call life_fnc_database_request;
 

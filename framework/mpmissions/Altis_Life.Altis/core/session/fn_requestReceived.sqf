@@ -23,87 +23,131 @@ if (count _this isEqualTo 0) exitWith {[] call SOCK_fnc_insertPlayerInfo;};
 if ((_this select 0) isEqualTo "Error") exitWith {[] call SOCK_fnc_insertPlayerInfo;};
 if (!(getPlayerUID player isEqualTo (_this select 0))) exitWith {[] call SOCK_fnc_dataQuery;};
 
-//Parse basic player information.
-life_var_cash = parseNumber (_this select 2);
-life_var_bank = parseNumber (_this select 3);
 life_isdev = compileFinal "(getPlayerUID _this) in getArray(missionConfigFile >> ""enableDebugConsole"")";
 
-if (player call life_isdev) then{
-    life_adminlevel = compileFinal str(99);
-}else{
-    CONST(life_adminlevel,(_this select 4));
-};
-
-
-if (LIFE_SETTINGS(getNumber,"donor_level") isEqualTo 1) then {
-    CONST(life_donorlevel,(_this select 5));
-} else {
-    CONST(life_donorlevel,0);
-};
-
-//Loop through licenses
-if (count (_this select 6) > 0) then {
-    {missionNamespace setVariable [(_x select 0),(_x select 1)];} forEach (_this select 6);
-};
-
-//Parse side specific information.
 switch (playerSide) do {
     case west: {
-        CONST(life_coplevel,(_this select 7));
-        CONST(life_medicLevel,0);
-        life_blacklisted = _this select 9;
+        //--- Cash
+        life_var_cash = _this#2;
+        //--- Admin 
+        if (player call life_isdev) then{
+            life_adminlevel = compileFinal str(99);
+        }else{
+            life_adminlevel = compileFinal str(_this#3);
+        };
+        //--- Donator
+        if (LIFE_SETTINGS(getNumber,"donor_level") isEqualTo 1) then {
+            life_donorlevel = compileFinal str(_this#4);
+        } else {
+            life_donorlevel = compileFinal str(0);
+        };
+        //--- Licenses
+        if (count (_this#5) > 0) then {
+            {missionNamespace setVariable [_x#0,_x#1]} forEach (_this#5);
+        };
+        //--- Cop
+        life_coplevel = compileFinal str(_this#6);
+        life_medicLevel = compileFinal str(0);
+        //--- Gear
+        life_gear = _this#7;
+        //--- Blacklist
+        life_blacklisted = _this#8;
+        //--- Stats
         if (LIFE_SETTINGS(getNumber,"save_playerStats") isEqualTo 1) then {
-            life_hunger = ((_this select 10) select 0);
-            life_thirst = ((_this select 10) select 1);
-            player setDamage ((_this select 10) select 2);
+            life_hunger = ((_this#9)#0);
+            life_thirst = ((_this#9)#1);
+            player setDamage ((_this#9)#2);
         };
     };
-
-    case civilian: {
-        life_is_arrested = _this select 7;
-        CONST(life_coplevel, 0);
-        CONST(life_medicLevel, 0);
-        life_houses = _this select (_count - 3);
-        if (LIFE_SETTINGS(getNumber,"save_playerStats") isEqualTo 1) then {
-            life_hunger = ((_this select 9) select 0);
-            life_thirst = ((_this select 9) select 1);
-            player setDamage ((_this select 9) select 2);
+    case independent: {
+        //--- Cash
+        life_var_cash = _this#2;
+        //--- Admin 
+        if (player call life_isdev) then{
+            life_adminlevel = compileFinal str(99);
+        }else{
+            life_adminlevel = compileFinal str(_this#3);
         };
-
-        //Position
+        //--- Donator
+        if (LIFE_SETTINGS(getNumber,"donor_level") isEqualTo 1) then {
+            life_donorlevel = compileFinal str(_this#4);
+        } else {
+            life_donorlevel = compileFinal str(0);
+        };
+        //--- Licenses
+        if (count (_this#5) > 0) then {
+            {missionNamespace setVariable [_x#0,_x#1]} forEach (_this#5);
+        };
+        //--- Medic 
+        life_coplevel = compileFinal str(0);
+        life_medicLevel = compileFinal str(_this#6);
+        //--- Gear
+        life_gear = _this#7;
+        //--- Stats
+        if (LIFE_SETTINGS(getNumber,"save_playerStats") isEqualTo 1) then {
+            life_hunger = ((_this#8)#0);
+            life_thirst = ((_this#8)#1);
+            player setDamage ((_this#8)#2);
+        };
+    };
+    default {
+        //--- Cash
+        life_var_cash = _this#2;
+        //--- Admin 
+        if (player call life_isdev) then{
+            life_adminlevel = compileFinal str(99);
+        }else{
+            life_adminlevel = compileFinal str(_this#3);
+        };
+        //--- Donator
+        if (LIFE_SETTINGS(getNumber,"donor_level") isEqualTo 1) then {
+            life_donorlevel = compileFinal str(_this#4);
+        } else {
+            life_donorlevel = compileFinal str(0);
+        };
+        //--- Licenses
+        if (count (_this#5) > 0) then {
+            {missionNamespace setVariable [_x#0,_x#1]} forEach (_this#5);
+        };
+        //--- Arrested
+        life_is_arrested = _this#6;
+        life_coplevel = compileFinal str(0);
+        life_medicLevel = compileFinal str(0);
+        //--- Gear
+        life_gear = _this#7;
+        //--- Stats
+        if (LIFE_SETTINGS(getNumber,"save_playerStats") isEqualTo 1) then {
+            life_hunger = ((_this#8)#0);
+            life_thirst = ((_this#8)#1);
+            player setDamage ((_this#8)#2);
+        };
+        //--- Position
         if (LIFE_SETTINGS(getNumber,"save_civilian_position") isEqualTo 1) then {
-            life_is_alive = _this select 10;
-            life_civ_position = _this select 11;
+            //--- Alive
+            life_is_alive = _this#9;
+            life_civ_position = _this#10;
             if (life_is_alive) then {
                 if !(count life_civ_position isEqualTo 3) then {diag_log format ["[requestReceived] Bad position received. Data: %1",life_civ_position];life_is_alive =false;};
                 if (life_civ_position distance (getMarkerPos "respawn_civilian") < 300) then {life_is_alive = false;};
             };
         };
-
+       
+        //--- Houses
+        life_houses = _this select (_count - 3);
         {
             _house = nearestObject [(call compile format ["%1",(_x select 0)]), "House"];
             life_vehicles pushBack _house;
         } forEach life_houses;
+        [] spawn life_fnc_initHouses;
 
+        //--- Gang
         life_gangData = _this select (_count - 2);
         if !(count life_gangData isEqualTo 0) then {
             [] spawn life_fnc_initGang;
         };
-        [] spawn life_fnc_initHouses;
-    };
-
-    case independent: {
-        CONST(life_medicLevel,(_this select 7));
-        CONST(life_coplevel,0);
-        if (LIFE_SETTINGS(getNumber,"save_playerStats") isEqualTo 1) then {
-            life_hunger = ((_this select 9) select 0);
-            life_thirst = ((_this select 9) select 1);
-            player setDamage ((_this select 9) select 2);
-        };
     };
 };
 
-life_gear = _this select 8;
 call life_fnc_loadGear;
 
 if (count (_this select (_count - 1)) > 0) then {

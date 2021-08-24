@@ -92,12 +92,11 @@ CREATE TABLE IF NOT EXISTS `servers` (
 CREATE TABLE IF NOT EXISTS `players` (
     `uid`          INT NOT NULL AUTO_INCREMENT,
     `serverID`     INT NOT NULL,
-    `BEGuid`       VARCHAR(32) NOT NULL,
+    `BEGuid`       VARCHAR(64) NOT NULL,
     `pid`          VARCHAR(17) NOT NULL,
     `name`         VARCHAR(32) NOT NULL,
     `aliases`      TEXT NOT NULL,
     `cash`         INT NOT NULL DEFAULT 0,
-    `bankacc`      INT NOT NULL DEFAULT 0,
     `coplevel`     ENUM('0','1','2','3','4','5','6','7','8','9','10','11','12') NOT NULL DEFAULT '0',
     `mediclevel`   ENUM('0','1','2','3','4','5','6','7','8','9','10') NOT NULL DEFAULT '0',
     `civ_licenses` TEXT NOT NULL,
@@ -125,6 +124,23 @@ CREATE TABLE IF NOT EXISTS `players` (
     CONSTRAINT `FK_server_id` FOREIGN KEY `fkIdx_server_id` (`serverID`) REFERENCES `servers` (`serverID`) ON UPDATE CASCADE ON DELETE CASCADE,
     INDEX `index_name` (`name`),
     INDEX `index_blacklist` (`blacklist`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `players`
+--
+CREATE TABLE IF NOT EXISTS `bankaccounts` (
+    `accountID`   INT NOT NULL AUTO_INCREMENT,
+    `BEGuid`      VARCHAR(64) NOT NULL,
+    `funds`       INT NOT NULL DEFAULT 0, 
+    
+    PRIMARY KEY (`accountID`),
+    INDEX `fkIdx_players_bankaccounts` (`BEGuid`),
+    CONSTRAINT `FK_players_bankaccounts` FOREIGN KEY `fkIdx_players_bankaccounts` (`BEGuid`)
+      REFERENCES `players` (`BEGuid`)
+      ON UPDATE CASCADE ON DELETE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 -- --------------------------------------------------------

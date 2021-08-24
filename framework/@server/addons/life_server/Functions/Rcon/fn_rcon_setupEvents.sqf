@@ -51,22 +51,18 @@ while {true} do {
 
 	//--- Main events
 	if(_serveruptime > 0 && _rconuptime > 0)then
-	{
-		//--- Unlock event (30 secs)
-		if (_serveruptime mod 0.5 isEqualTo 0 && _rconlocked) then
+	{ 
+		//--- Restart event (1min)
+		if (_serveruptime mod 1 isEqualTo 0) then
 		{
 			//--- Needs unlocked
-			if (life_var_rcon_RestartMode isEqualTo 0) then{
+			if (life_var_rcon_RestartMode isEqualTo 0 && _rconlocked) then{
 				"#unlock" call life_fnc_rcon_sendCommand;
 				life_var_rcon_serverLocked = false;
 				_rconlocked = false;
 				"Lock Event: server unlocked and accepting players!" call life_fnc_rcon_systemlog;
 			};
-		};
-
-		//--- Restart event (1min)
-		if (_serveruptime mod 1 isEqualTo 0) then
-		{
+			
 			//--- Warning messages
 			if (typeName life_var_rcon_RestartMessages isEqualTo "ARRAY") then { 
 				if !(life_var_rcon_RestartMessages isEqualTo []) then {

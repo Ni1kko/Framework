@@ -11,84 +11,68 @@
     ARRAY - If array has 0 elements it should be handled as an error in client-side files.
     STRING - The request had invalid handles or an unknown error and is logged to the RPT.
 */
-private ["_uid","_side","_query","_queryResult","_tickTime","_tmp","_BEGuid","_netID"];
-_uid = [_this,0,"",[""]] call BIS_fnc_param;
-_side = [_this,1,sideUnknown,[civilian]] call BIS_fnc_param;
-_player = [_this,2,objNull,[objNull]] call BIS_fnc_param;
+params [
+    ["_player",objNull,[objNull]]
+];
 
 if (isNull _player) exitWith {};
 
 if (LIFE_SETTINGS(getNumber,"player_deathLog") isEqualTo 1) then {
     _player addMPEventHandler ["MPKilled", {_this call TON_fnc_whoDoneIt}];
 };
+ 
+private _uid = getPlayerUID _player;
+private _side = side _player;
+private _ownerID = owner _player;
+private _netID = netId _player;
+private _BEGuid = ('BEGuid' callExtension ("get:"+_uid));
+private _queryBankResult = ["READ", "bankaccounts", [["funds"],[["BEGuid",str _BEGuid]]],true]call life_fnc_database_request;
+private _queryResult = ["READ", "players", [
+    (switch (_side) do { 
+        case west:        {["pid", "name", "cash", "adminlevel", "donorlevel", "cop_licenses", "coplevel", "cop_gear", "blacklist", "cop_stats", "playtime"]};
+        case independent: {["pid", "name", "cash", "adminlevel", "donorlevel", "med_licenses", "mediclevel", "med_gear", "med_stats, playtime"]};
+        default           {["pid", "name", "cash", "adminlevel", "donorlevel", "civ_licenses", "arrested", "civ_gear", "civ_stats", "civ_alive", "civ_position", "playtime"]};
+    }),
+    [
+        ["BEGuid",str _BEGuid],
+        ["pid",_uid]
+    ]
+],true]call life_fnc_database_request;
 
-_ownerID = owner _player;
-_netID = netId _player;
-_BEGuid = ('BEGuid' callExtension ("get:"+_uid));
-
-_query = switch (_side) do {
-    // West - 11 entries returned
-    case west: {format ["SELECT pid, name, cash, bankacc, adminlevel, donorlevel, cop_licenses, coplevel, cop_gear, blacklist, cop_stats, playtime FROM players WHERE BEGuid='%1'",_BEGuid];};
-    // Civilian - 12 entries returned
-    case civilian: {format ["SELECT pid, name, cash, bankacc, adminlevel, donorlevel, civ_licenses, arrested, civ_gear, civ_stats, civ_alive, civ_position, playtime FROM players WHERE BEGuid='%1'",_BEGuid];};
-    // Independent - 10 entries returned
-    case independent: {format ["SELECT pid, name, cash, bankacc, adminlevel, donorlevel, med_licenses, mediclevel, med_gear, med_stats, playtime FROM players WHERE BEGuid='%1'",_BEGuid];};
+if (_queryResult isEqualTo ["DB:Read:Task-failure",false]) exitWith {
+    diag_log format ["Error reading player: %1",_BEGuid];
 };
 
-_tickTime = diag_tickTime;
-_queryResult = [_query,2] call DB_fnc_asyncCall;
-
-if (EXTDB_SETTING(getNumber,"DebugMode") isEqualTo 1) then {
-    diag_log "------------- Client Query Request -------------";
-    diag_log format ["QUERY: %1",_query];
-    diag_log format ["Time to complete: %1 (in seconds)",(diag_tickTime - _tickTime)];
-    diag_log format ["Result: %1",_queryResult];
-    diag_log "------------------------------------------------";
+if (_queryBankResult isEqualTo ["DB:Read:Task-failure",false]) exitWith {
+    diag_log format ["Error reading player-bank: %1",_BEGuid];
 };
 
-if (_queryResult isEqualType "") exitWith {
+if (count _queryResult isEqualTo 0 || count _queryBankResult isEqualTo 0) exitWith {
     [] remoteExecCall ["SOCK_fnc_insertPlayerInfo",_ownerID];
-};
+}; 
 
-if (count _queryResult isEqualTo 0) exitWith {
-    [] remoteExecCall ["SOCK_fnc_insertPlayerInfo",_ownerID];
-};
-
-//Blah conversion thing from a2net->extdb
-_tmp = _queryResult select 2;
-_queryResult set[2,[_tmp] call DB_fnc_numberSafe];
-_tmp = _queryResult select 3;
-_queryResult set[3,[_tmp] call DB_fnc_numberSafe];
-
-//Parse licenses (Always index 6)
-_new = [(_queryResult select 6)] call DB_fnc_mresToArray;
-if (_new isEqualType "") then {_new = call compile format ["%1", _new];};
-_queryResult set[6,_new];
-
-//Convert tinyint to boolean
-_old = _queryResult select 6;
-for "_i" from 0 to (count _old)-1 do {
-    _data = _old select _i;
-    _old set[_i,[_data select 0, ([_data select 1,1] call DB_fnc_bool)]];
-};
-
-_queryResult set[6,_old];
-
-_new = [(_queryResult select 8)] call DB_fnc_mresToArray;
-if (_new isEqualType "") then {_new = call compile format ["%1", _new];};
-_queryResult set[8,_new];
-//Parse data for specific side.
+private _return = _queryResult select [0,2];
 switch (_side) do {
     case west: {
-        _queryResult set[9,([_queryResult select 9,1] call DB_fnc_bool)];
+        //--- Cash
+        _return pushBack (["GAME","A2NET", (_queryResult#2)] call life_fnc_database_parse);
+        //--- Admin 
+        _return pushBack (["GAME","INT", (_queryResult#3)] call life_fnc_database_parse);
+        //--- Donator
+        _return pushBack (["GAME","INT", (_queryResult#4)] call life_fnc_database_parse);
+        //--- Licenses
+        _return pushBack ((["GAME","ARRAY", _queryResult#5] call life_fnc_database_parse) apply{[_x#0,["GAME","BOOL", _x#1] call life_fnc_database_parse]});
+        //--- Cop 
+        _return pushBack (["GAME","INT", (_queryResult#6)] call life_fnc_database_parse);
+        //--- Gear
+        _return pushBack (["GAME","ARRAY", (_queryResult#7)] call life_fnc_database_parse);
+        //--- Blacklist
+        _return pushBack (["GAME","BOOL", (_queryResult#8)] call life_fnc_database_parse);
+        //--- Stats
+        _return pushBack (["GAME","ARRAY", (_queryResult#9)] call life_fnc_database_parse);
 
-        //Parse Stats
-        _new = [(_queryResult select 10)] call DB_fnc_mresToArray;
-        if (_new isEqualType "") then {_new = call compile format ["%1", _new];};
-        _queryResult set[10,_new];
-
-        //Playtime
-        _new = [(_queryResult select 11)] call DB_fnc_mresToArray;
+        //--- Playtime
+        private _new = ["GAME","ARRAY", (_queryResult#10)] call life_fnc_database_parse;
         if (_new isEqualType "") then {_new = call compile format ["%1", _new];};
         _index = TON_fnc_playtime_values_request find [_uid, _new];
         if (_index != -1) then {
@@ -99,24 +83,59 @@ switch (_side) do {
             TON_fnc_playtime_values_request pushBack [_uid, _new];
         };
         [_uid,_new select 0] call TON_fnc_setPlayTime;
+        
     };
-
-    case civilian: {
-        _queryResult set[7,([_queryResult select 7,1] call DB_fnc_bool)];
-
-        //Parse Stats
-        _new = [(_queryResult select 9)] call DB_fnc_mresToArray;
+    case independent: {
+        //--- Cash
+        _return pushBack (["GAME","A2NET", (_queryResult#2)] call life_fnc_database_parse);
+        //--- Admin 
+        _return pushBack (["GAME","INT", (_queryResult#3)] call life_fnc_database_parse);
+        //--- Donator
+        _return pushBack (["GAME","INT", (_queryResult#4)] call life_fnc_database_parse);
+        //--- Licenses
+        _return pushBack ((["GAME","ARRAY", _queryResult#5] call life_fnc_database_parse) apply{[_x#0,["GAME","BOOL", _x#1] call life_fnc_database_parse]});
+        //--- Medic 
+        _return pushBack (["GAME","INT", (_queryResult#6)] call life_fnc_database_parse);
+        //--- Gear
+        _return pushBack (["GAME","ARRAY", (_queryResult#7)] call life_fnc_database_parse);
+        //--- Stats
+        _return pushBack (["GAME","ARRAY", (_queryResult#8)] call life_fnc_database_parse);
+        
+        //--- Playtime
+        private _new = ["GAME","ARRAY", (_queryResult#9)] call life_fnc_database_parse;
         if (_new isEqualType "") then {_new = call compile format ["%1", _new];};
-        _queryResult set[9,_new];
-
-        //Position
-        _queryResult set[10,([_queryResult select 10,1] call DB_fnc_bool)];
-        _new = [(_queryResult select 11)] call DB_fnc_mresToArray;
-        if (_new isEqualType "") then {_new = call compile format ["%1", _new];};
-        _queryResult set[11,_new];
-
-        //Playtime
-        _new = [(_queryResult select 12)] call DB_fnc_mresToArray;
+        _index = TON_fnc_playtime_values_request find [_uid, _new];
+        if !(_index isEqualTo -1) then {
+            TON_fnc_playtime_values_request set[_index,-1];
+            TON_fnc_playtime_values_request = TON_fnc_playtime_values_request - [-1];
+            TON_fnc_playtime_values_request pushBack [_uid, _new];
+        } else {
+            TON_fnc_playtime_values_request pushBack [_uid, _new];
+        };
+        [_uid,_new select 1] call TON_fnc_setPlayTime;
+        
+    };
+    default {
+        //--- Cash
+        _return pushBack (["GAME","A2NET", (_queryResult#2)] call life_fnc_database_parse);
+        //--- Admin 
+        _return pushBack (["GAME","INT", (_queryResult#3)] call life_fnc_database_parse);
+        //--- Donator
+        _return pushBack (["GAME","INT", (_queryResult#4)] call life_fnc_database_parse);
+        //--- Licenses
+        _return pushBack ((["GAME","ARRAY", _queryResult#5] call life_fnc_database_parse) apply{[_x#0,["GAME","BOOL", _x#1] call life_fnc_database_parse]});
+        //--- Arrested
+        _return pushBack (["GAME","BOOL", (_queryResult#6)] call life_fnc_database_parse);
+        //--- Gear
+        _return pushBack (["GAME","ARRAY", (_queryResult#7)] call life_fnc_database_parse);
+        //--- Stats
+        _return pushBack (["GAME","ARRAY", (_queryResult#8)] call life_fnc_database_parse);
+        //--- Alive
+        _return pushBack (["GAME","BOOL", (_queryResult#9)] call life_fnc_database_parse);
+        //--- Position
+        _return pushBack (["GAME","ARRAY", (_queryResult#10)] call life_fnc_database_parse);
+        //--- Playtime
+        private _new = ["GAME","ARRAY", (_queryResult#10)] call life_fnc_database_parse;
         if (_new isEqualType "") then {_new = call compile format ["%1", _new];};
         _index = TON_fnc_playtime_values_request find [_uid, _new];
         if (_index != -1) then {
@@ -128,42 +147,29 @@ switch (_side) do {
         };
         [_uid,_new select 2] call TON_fnc_setPlayTime;
 
-        /* Make sure nothing else is added under here */
-        _houseData = _uid spawn TON_fnc_fetchPlayerHouses;
+        //--- Houses
+        private _houseData = _uid spawn TON_fnc_fetchPlayerHouses;
         waitUntil {scriptDone _houseData};
-        _queryResult pushBack (missionNamespace getVariable [format ["houses_%1",_uid],[]]);
-        _gangData = _uid spawn TON_fnc_queryPlayerGang;
+        _return pushBack (missionNamespace getVariable [format ["houses_%1",_uid],[]]);
+        
+        //--- Gang
+        private _gangData = _uid spawn TON_fnc_queryPlayerGang;
         waitUntil{scriptDone _gangData};
-        _queryResult pushBack (missionNamespace getVariable [format ["gang_%1",_uid],[]]);
-
-    };
-
-    case independent: {
-        //Parse Stats
-        _new = [(_queryResult select 9)] call DB_fnc_mresToArray;
-        if (_new isEqualType "") then {_new = call compile format ["%1", _new];};
-        _queryResult set[9,_new];
-
-        //Playtime
-        _new = [(_queryResult select 10)] call DB_fnc_mresToArray;
-        if (_new isEqualType "") then {_new = call compile format ["%1", _new];};
-        _index = TON_fnc_playtime_values_request find [_uid, _new];
-        if !(_index isEqualTo -1) then {
-            TON_fnc_playtime_values_request set[_index,-1];
-            TON_fnc_playtime_values_request = TON_fnc_playtime_values_request - [-1];
-            TON_fnc_playtime_values_request pushBack [_uid, _new];
-        } else {
-            TON_fnc_playtime_values_request pushBack [_uid, _new];
-        };
-        [_uid,_new select 1] call TON_fnc_setPlayTime;
+        _return pushBack (missionNamespace getVariable [format ["gang_%1",_uid],[]]);
     };
 };
 
+//--- Keychain
+_return pushBack (missionNamespace getVariable [format ["%1_KEYS_%2",_uid,_side],[]]);
+
+//--- Bank 
+[missionNamespace,["life_var_bank",(["GAME","A2NET", (_queryBankResult#0)] call life_fnc_database_parse)]] remoteExec ["setVariable",_ownerID];
+
+//--- Broadcast playtime
 publicVariable "TON_fnc_playtime_values_request";
 
-_keyArr = missionNamespace getVariable [format ["%1_KEYS_%2",_uid,_side],[]];
-_queryResult pushBack _keyArr;
-
+//--- BEGuid
 _player setVariable ["BEGuid",compileFinal str _BEGuid,true];
 
-_queryResult remoteExec ["SOCK_fnc_requestReceived",_ownerID];
+//--- Return
+_return remoteExec ["SOCK_fnc_requestReceived",_ownerID];

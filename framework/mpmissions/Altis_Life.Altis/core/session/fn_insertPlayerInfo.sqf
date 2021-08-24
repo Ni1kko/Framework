@@ -8,24 +8,8 @@
     Setup data gets sent to life_server\Functions\MySQL\fn_insertRequest.sqf
 */
 if (life_session_completed) exitWith {}; //Why did this get executed when the client already initialized? Fucking arma...
-cutText[localize "STR_Session_QueryFail","BLACK FADED"];
+
+cutText["The server didn't find a database record matching your BEGuid, attempting to add player into our database.","BLACK FADED"];
 0 cutFadeOut 9999999;
-private ["_bank"];
 
-switch (playerSide) do {
-    case west: {
-        _bank = LIFE_SETTINGS(getNumber,"bank_cop");
-    };
-    case civilian: {
-        _bank = LIFE_SETTINGS(getNumber,"bank_civ");
-    };
-    case independent: {
-        _bank = LIFE_SETTINGS(getNumber,"bank_med");
-    };
-};
-
-if (life_var_hc_connected) then {
-    [getPlayerUID player,profileName,life_var_cash,_bank,player] remoteExecCall ["HC_fnc_insertRequest",life_var_headlessClient];
-} else {
-    [getPlayerUID player,profileName,life_var_cash,_bank,player] remoteExecCall ["DB_fnc_insertRequest",RSERV];
-};
+[player] remoteExecCall ["DB_fnc_insertRequest",2];

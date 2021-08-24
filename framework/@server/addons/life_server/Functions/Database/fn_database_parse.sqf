@@ -30,14 +30,6 @@ switch (_mode) do {
 				}forEach _val;
 				_val = str(str(toString _val));
 			};
-			case "BOOL-HASHMAP": //Hashmap => (MYSQL conversion)
-			{     
-				for "_i" from 0 to count(_val)-1 do {
-					private _bool = ["DB","BOOL", (_val select _i) select 1] call life_fnc_database_parse;
-					_val set[_i,[(_val select _i) select 0,_bool]];
-				};
-				_val = ["DB","ARRAY", _val] call life_fnc_database_parse;
-			};
 			case "STRING": //String => (MYSQL Real-Escape)
 			{   
 				_val = toArray _val;
@@ -58,7 +50,7 @@ switch (_mode) do {
 				_val = if (typeName _val isEqualTo "ARRAY") then {_val} else {[]};
 				_val = if (count _val isEqualTo 3) then {_val} else {[0,0,0]};
         		_val = ["DB","ARRAY", _val] call life_fnc_database_parse;
-			};
+			}; 
 			case "BOOL": //Bool => (MYSQL Tiny-int)
 			{
 				if (_val isEqualType 0) then {
@@ -102,15 +94,6 @@ switch (_mode) do {
 
 				while {typeName _val isEqualTo "STRING"} do {
 					_val = call compile _val;	
-				};
-			};
-			case "BOOL-HASHMAP": //Hashmap => (MYSQL conversion)
-			{     
-				_val = ["GAME","ARRAY", _val] call life_fnc_database_parse;
-
-				for "_i" from 0 to (count _val)-1 do {
-					private _bool = ["GAME","BOOL", (_val select _i) select 1] call life_fnc_database_parse;
-					_val set[_i,[(_val select _i) select 0, _bool]]; 
 				};
 			};
 			case "STRING": //MYSQL Real-Escape => (String)
