@@ -39,6 +39,7 @@ if!(call life_fnc_database_initialize)exitwith{};
 private _serverDatabaseInit = [] spawn DB_fnc_loadServer;
 waitUntil{scriptDone _serverDatabaseInit};
 
+//--- Connection Event Handlers
 life_var_clientConnected =    addMissionEventHandler ['PlayerConnected',    life_fnc_event_playerConnected,    []];
 life_var_clientDisconnected = addMissionEventHandler ["PlayerDisconnected", life_fnc_event_playerDisconnected, []];
 
