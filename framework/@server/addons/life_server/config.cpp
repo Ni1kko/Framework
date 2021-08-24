@@ -107,6 +107,14 @@ class CfgFunctions {
             class database_parse {};
         };
 
+        //--- Events Functions
+        class Events_Functions
+        {
+            file = "\life_server\Functions\Events";
+            class event_playerConnected {};
+            class event_playerDisconnected {};
+        };
+
         class Jail_Sys {
             file = "\life_server\Functions\Jail";
             class jailSys {};

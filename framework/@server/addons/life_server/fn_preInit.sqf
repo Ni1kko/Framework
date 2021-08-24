@@ -39,6 +39,9 @@ if!(call life_fnc_database_initialize)exitwith{};
 private _serverDatabaseInit = [] spawn DB_fnc_loadServer;
 waitUntil{scriptDone _serverDatabaseInit};
 
+life_var_clientConnected =    addMissionEventHandler ['PlayerConnected',    life_fnc_event_playerConnected,    []];
+life_var_clientDisconnected = addMissionEventHandler ["PlayerDisconnected", life_fnc_event_playerDisconnected, []];
+
 /* Map-based server side initialization. */
 master_group attachTo[bank_obj,[0,0,0]];
 
