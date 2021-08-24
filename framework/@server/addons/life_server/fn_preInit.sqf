@@ -3,11 +3,12 @@
     File: init.sqf
     Author: Bryan "Tonic" Boardwine
 
-    Edit: Nanou for HeadlessClient optimization.
-    Please read support for more informations.
-
     Description:
     Initialize the server and required systems.
+    
+    Edits by:
+    ## Nanou - HeadlessClient optimization.
+    ## Nikko Renolds - https://github.com/Ni1kko/Framework
 */
 
 if(!canSuspend)exitwith{_this spawn life_fnc_preInit; true};

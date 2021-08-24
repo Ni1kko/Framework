@@ -122,8 +122,6 @@ CREATE TABLE IF NOT EXISTS `players` (
     PRIMARY KEY (`pid`),
     UNIQUE KEY `unique_uid` (`uid`),
     UNIQUE KEY `unique_beguid` (`BEGuid`),
-    UNIQUE KEY `unique_serverid` (`serverID`),
-    INDEX `fkIdx_server_id` (`serverID`),
     CONSTRAINT `FK_server_id` FOREIGN KEY `fkIdx_server_id` (`serverID`) REFERENCES `servers` (`serverID`) ON UPDATE CASCADE ON DELETE CASCADE,
     INDEX `index_name` (`name`),
     INDEX `index_blacklist` (`blacklist`)

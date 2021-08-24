@@ -103,6 +103,8 @@ class CfgFunctions {
         {
             file = "\life_server\Functions\Database";
             class database_initialize {};
+            class database_request {};
+            class database_parse {};
         };
 
         class Jail_Sys {

@@ -4,7 +4,6 @@
 */
 
 if(!isServer)exitwith{false};
-if(isRemoteExecuted)exitwith{false};
 
 life_var_database_error = false;
 

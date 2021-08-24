@@ -5,82 +5,106 @@
     Description:
     Takes partial data of a player and updates it, this is meant to be
     less network intensive towards data flowing through it for updates.
+    
+    Edits by:
+    ## Nikko Renolds
+	## https://github.com/Ni1kko/Framework
 */
-private ["_uid","_side","_value","_value1","_value2","_mode","_query"];
-_uid = [_this,0,"",[""]] call BIS_fnc_param;
-_side = [_this,1,sideUnknown,[civilian]] call BIS_fnc_param;
-_mode = [_this,3,-1,[0]] call BIS_fnc_param;
+ 
+private _uid = param [0,"",[""]];
+private _side = param [1,sideUnknown,[sideUnknown]];
 
 if (_uid isEqualTo "" || _side isEqualTo sideUnknown) exitWith {}; //Bad.
-_query = "";
 
-switch (_mode) do {
+switch (param [3,-1]) do {
     case 0: {
-        _value = [_this,2,0,[0]] call BIS_fnc_param;
-        _value = [_value] call DB_fnc_numberSafe;
-        _query = format ["UPDATE players SET cash='%1' WHERE pid='%2'",_value,_uid];
+        ["UPDATE", "players", [
+            [//What
+                ["cash",["DB","A2NET", param [2,0]] call life_fnc_database_parse]
+            ],
+            [//Where
+                ["pid",_uid]
+            ]
+        ]]call life_fnc_database_request;
     };
 
-    case 1: {
-        _value = [_this,2,0,[0]] call BIS_fnc_param;
-        _value = [_value] call DB_fnc_numberSafe;
-        _query = format ["UPDATE players SET bankacc='%1' WHERE pid='%2'",_value,_uid];
+    case 1: { 
+        ["UPDATE", "players", [
+            [//What
+                ["bankacc",["DB","A2NET", param [2,0]] call life_fnc_database_parse]	
+            ],
+            [//Where
+                ["pid",_uid]
+            ]
+        ]]call life_fnc_database_request;
     };
 
     case 2: {
-        _value = [_this,2,[],[[]]] call BIS_fnc_param;
-        //Does something license related but I can't remember I only know it's important?
-        for "_i" from 0 to count(_value)-1 do {
-            _bool = [(_value select _i) select 1] call DB_fnc_bool;
-            _value set[_i,[(_value select _i) select 0,_bool]];
-        };
-        _value = [_value] call DB_fnc_mresArray;
-        switch (_side) do {
-            case west: {_query = format ["UPDATE players SET cop_licenses='%1' WHERE pid='%2'",_value,_uid];};
-            case civilian: {_query = format ["UPDATE players SET civ_licenses='%1' WHERE pid='%2'",_value,_uid];};
-            case independent: {_query = format ["UPDATE players SET med_licenses='%1' WHERE pid='%2'",_value,_uid];};
-        };
+        ["UPDATE", "players", [
+            [//What
+                [(switch (_side) do {
+                    case west: {"cop_licenses"};
+                    case independent: {"med_licenses"]};
+                    default {"civ_licenses"};
+                }),["DB","BOOL-HASHMAP", param [2,[]]] call life_fnc_database_parse]	
+            ],
+            [//Where
+                ["pid",_uid]
+            ]
+        ]]call life_fnc_database_request;
     };
 
     case 3: {
-        _value = [_this,2,[],[[]]] call BIS_fnc_param;
-        _value = [_value] call DB_fnc_mresArray;
-        switch (_side) do {
-            case west: {_query = format ["UPDATE players SET cop_gear='%1' WHERE pid='%2'",_value,_uid];};
-            case civilian: {_query = format ["UPDATE players SET civ_gear='%1' WHERE pid='%2'",_value,_uid];};
-            case independent: {_query = format ["UPDATE players SET med_gear='%1' WHERE pid='%2'",_value,_uid];};
-        };
+        ["UPDATE", "players", [
+            [//What
+                [(switch (_side) do {
+                    case west: {"cop_gear"};
+                    case independent: {"med_gear"]};
+                    default {"civ_gear"};
+                }),["DB","ARRAY", param [2,[]]] call life_fnc_database_parse]	
+            ],
+            [//Where
+                ["pid",_uid]
+            ]
+        ]]call life_fnc_database_request;
     };
 
     case 4: {
-        _value = [_this,2,false,[true]] call BIS_fnc_param;
-        _value = [_value] call DB_fnc_bool;
-        _value2 = [_this,4,[],[[]]] call BIS_fnc_param;
-        _value2 = if (count _value2 isEqualTo 3) then {_value2} else {[0,0,0]};
-        _value2 = [_value2] call DB_fnc_mresArray;
-        _query = format ["UPDATE players SET civ_alive='%1', civ_position='%2' WHERE pid='%3'",_value,_value2,_uid];
+        ["UPDATE", "players", [
+            [//What
+                ["civ_alive",   ["DB","BOOL", param [2,false]] call life_fnc_database_parse],	
+                ["civ_position",["DB","POSITION", param [4,[]]] call life_fnc_database_parse]	
+            ],
+            [//Where
+                ["pid",_uid]
+            ]
+        ]]call life_fnc_database_request;
     };
 
     case 5: {
-        _value = [_this,2,false,[true]] call BIS_fnc_param;
-        _value = [_value] call DB_fnc_bool;
-        _query = format ["UPDATE players SET arrested='%1' WHERE pid='%2'",_value,_uid];
+        ["UPDATE", "players", [
+            [//What
+                ["arrested",["DB","BOOL", param [2,0]] call life_fnc_database_parse]
+            ],
+            [//Where
+                ["pid",_uid]
+            ]
+        ]]call life_fnc_database_request;
     };
 
     case 6: {
-        _value1 = [_this,2,0,[0]] call BIS_fnc_param;
-        _value2 = [_this,4,0,[0]] call BIS_fnc_param;
-        _value1 = [_value1] call DB_fnc_numberSafe;
-        _value2 = [_value2] call DB_fnc_numberSafe;
-        _query = format ["UPDATE players SET cash='%1', bankacc='%2' WHERE pid='%3'",_value1,_value2,_uid];
+        ["UPDATE", "players", [
+            [//What
+                ["cash",["DB","A2NET", param [2,0]] call life_fnc_database_parse],
+                ["bankacc",["DB","A2NET", param [4,0]] call life_fnc_database_parse]
+            ],
+            [//Where
+                ["pid",_uid]
+            ]
+        ]]call life_fnc_database_request;
     };
 
     case 7: {
-        _array = [_this,2,[],[[]]] call BIS_fnc_param;
-        [_uid,_side,_array,0] call TON_fnc_keyManagement;
+        [_uid,_side,param [2,0],0] call TON_fnc_keyManagement;
     };
 };
-
-if (_query isEqualTo "") exitWith {};
-
-[_query,1] call DB_fnc_asyncCall;
