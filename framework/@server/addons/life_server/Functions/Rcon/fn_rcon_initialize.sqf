@@ -31,3 +31,4 @@ if ("#init/" call life_fnc_rcon_sendCommand) then
 	"ServerPassword MISMATCH!!! RCON features DISABLED!" call life_fnc_rcon_systemlog; 
 };
 
+true

@@ -32,8 +32,8 @@ if (EXTDB_SETTING(getNumber,"HeadlessSupport") isEqualTo 1) then {
     [] spawn TON_fnc_setupHeadlessClient;
 };
 
-call life_fnc_rcon_initialize;
-call life_fnc_database_initialize;
+if!(call life_fnc_rcon_initialize)exitwith{};
+if!(call life_fnc_database_initialize)exitwith{};
 
 private _serverDatabaseInit = [] spawn DB_fnc_loadServer;
 waitUntil{scriptDone _serverDatabaseInit};
