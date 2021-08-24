@@ -30,7 +30,14 @@ if(_msg isNotEqualTo "")then
 
 	//log reason, time and beguid
 	if(getNumber(configFile >> "CfgRCON" >> "dblogs") isEqualTo 1)then{
-		[format ["INSERT INTO rcon_logs (Type, BEGuid, pid, reason) VALUES('KICK', '%1', '%2', '%3')",_BEGuid,_uid,_msg],1] call DB_fnc_asyncCall;	
+		["CREATE", "rcon_logs", 
+			[
+				["Type", 			["DB","STRING", "KICK"] call life_fnc_database_parse],
+				["BEGuid", 			["DB","STRING", _BEGuid] call life_fnc_database_parse],
+				["pid", 			["DB","STRING", _uid] call life_fnc_database_parse],
+				["reason", 			["DB","STRING", _msg] call life_fnc_database_parse]
+			]
+		] call life_fnc_database_request;
 	}else{
 		format["'%1' Kicked Due To: %2",_BEGuid,_msg] call life_fnc_rcon_systemlog;
 	};

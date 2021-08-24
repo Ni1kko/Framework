@@ -33,14 +33,20 @@ publicVariable "life_var_database_error";
 if (life_var_database_error) exitWith {false};
 
 /* Run stored procedures for SQL side cleanup */
-["CALL resetLifeVehicles",1] call DB_fnc_asyncCall;
-["CALL deleteDeadVehicles",1] call DB_fnc_asyncCall;
-["CALL deleteOldHouses",1] call DB_fnc_asyncCall;
-["CALL deleteOldGangs",1] call DB_fnc_asyncCall;
+["CALL", "resetLifeVehicles"]call life_fnc_database_request;
+["CALL", "deleteDeadVehicles"]call life_fnc_database_request;
+["CALL", "deleteOldHouses"]call life_fnc_database_request;
+["CALL", "deleteOldGangs"]call life_fnc_database_request;
 
 if (getNumber(missionConfigFile >> "Life_Settings" >> "save_civilian_position_restart") isEqualTo 1) then {
-    ["UPDATE players SET civ_alive = '0' WHERE civ_alive = '1'",1] call DB_fnc_asyncCall;
+    ["UPDATE", "players", [
+		[//What
+			["civ_alive",["DB","BOOL", false] call life_fnc_database_parse]
+		],
+		[//Where
+			["civ_alive",["DB","BOOL", true] call life_fnc_database_parse]
+		]
+	]]call life_fnc_database_request;
 };
-
 
 true

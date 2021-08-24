@@ -160,4 +160,6 @@ _res
 		]
 	],true]call life_fnc_database_request;
 
+	["CALL", "deleteOldGangs"]call life_fnc_database_request;
+
 */
