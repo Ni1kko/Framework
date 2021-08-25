@@ -23,7 +23,7 @@ if (count _serverQueryResult isEqualTo 0) then {
     };
 };
 if(_serverQueryTries >= _serverQueryMaxTries)exitwith{
-    diag_log "database `servers` error. life_backend/fn_preInit.sqf";
+    diag_log "database `servers` error. @server\addons\life_backend\Functions\MySQL\fn_loadServer.sqf";
     '#shutdown' call life_fnc_rcon_sendCommand;
 };
 
@@ -37,7 +37,7 @@ _serverQueryResult params [
 ];
 
 if(_serverID isEqualTo -1)exitwith{
-    diag_log "database `servers` column `serverID` error. life_backend/fn_preInit.sqf";
+    diag_log "database `servers` column `serverID` @server\addons\life_backend\Functions\MySQL\fn_loadServer.sqf";
     '#shutdown' call life_fnc_rcon_sendCommand;
 };
 
@@ -45,13 +45,12 @@ life_var_serverID = compileFinal str _serverID;
 life_var_serverMaxPlayers = _maxplayercount;
 life_var_serverRuntime = _runtime;
 life_var_serverRestarts = (_restartcount + 1);
+life_var_serverCurrentPlayers = [];
 
 private _updateServerQuery = format["UPDATE servers SET restartcount='%1' WHERE serverID='%2'",life_var_serverRestarts,_serverID];
-
 if(serverName isNotEqualTo _name OR worldName isNotEqualTo _world)then{
    _updateServerQuery = format["UPDATE servers SET name='%1', world='%2', restartcount='%3'  WHERE serverID='%4'",serverName,worldName,life_var_serverRestarts,_serverID];
 };
-
 [_updateServerQuery,1] call DB_fnc_asyncCall;
  
 terminate (missionNamespace getVariable ["life_var_runtime_thread",scriptNull]);

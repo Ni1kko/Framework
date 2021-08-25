@@ -15,24 +15,46 @@ params [
     ["_customArgs",[]] 		            // User-Defined - custom passed args (since Arma 3 v2.03) 
 ];
 
-waitUntil {!isNil "life_var_serverLoaded" AND !isNil "life_var_rcon_serverLocked"};
+//--- Not a player
+if(_ownerID < 4)exitWith{};
 
-private _totalPlayerCount = count allPlayers;
+//--- Server ready
+waitUntil {!isNil "life_var_serverLoaded" AND {!isNil "life_var_rcon_serverLocked" AND {!isNil "life_var_serverCurrentPlayers"}}};
 
 //--- Rcon boot
 if(life_var_rcon_serverLocked)exitWith{ 
 	[_ownerID,"Joined before server unlocked"] call life_fnc_rcon_kick;
 };
 
+//--- Fucking arma... player isn't registered as player yet. FML
+private _player = objNull;
+waitUntil{
+	uiSleep 0.2;
+	_player = [selectRandom [_ownerID,_steamID]] call life_fnc_util_getPlayerObject;
+	!isNull _player
+};
+
+//--- Get BEGuid
+private _BEGuid = ('BEGuid' callExtension ("get:"+_steamID));
+if(_BEGuid isEqualTo "")exitWith{
+	[_ownerID,"Error calculating players BEGuid"] call life_fnc_rcon_kick;
+};
+
+//--- Set BEGuid
+_player setVariable ["BEGUID",compileFinal str _BEGuid,true];
+
+//--- Update current players
+life_var_serverCurrentPlayers pushBackUnique [_BEGuid,_steamID];
+private _serverQuery = [
+	["currentplayers", ["DB","INT",count(life_var_serverCurrentPlayers)] call life_fnc_database_parse]
+];
+
 //--- Update max players
+private _totalPlayerCount = (count allPlayers);
 if(_totalPlayerCount > life_var_serverMaxPlayers)then{
 	life_var_serverMaxPlayers = _totalPlayerCount;
-	["UPDATE", "servers", [
-		[//What
-			["maxplayercount", ["DB","INT", life_var_serverMaxPlayers] call life_fnc_database_parse]
-		],
-		[//Where
-			["serverID", ["DB","INT", (call life_var_serverID)] call life_fnc_database_parse]
-		]
-	]]call life_fnc_database_request;
+	_serverQuery pushBack ["maxplayercount", ["DB","INT", life_var_serverMaxPlayers] call life_fnc_database_parse];
 };
+
+//--- Send query
+["UPDATE", "servers", [_serverQuery,[["serverID", ["DB","INT", (call life_var_serverID)] call life_fnc_database_parse]]]]call life_fnc_database_request;

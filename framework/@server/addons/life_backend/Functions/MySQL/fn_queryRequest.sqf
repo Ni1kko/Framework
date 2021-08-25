@@ -160,9 +160,6 @@ _return pushBack (missionNamespace getVariable [format ["%1_KEYS_%2",_uid,_side]
 //--- Bank 
 [missionNamespace,["life_var_bank",(["GAME","A2NET", (_queryBankResult#0)] call life_fnc_database_parse)]] remoteExec ["setVariable",_ownerID];
 
-//--- Set BEGuid
-_player setVariable ["BEGUID",compileFinal str _BEGuid,true];
-
 //--- Broadcast playtime
 publicVariable "TON_fnc_playtime_values_request";
 
