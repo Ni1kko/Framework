@@ -12,3 +12,25 @@ params [
     ["_directPlayIDStr","",[""]],		// String - same as _id but in string format, so could be exactly compared to user marker ids. (since Arma 3 v1.95) 
     ["_customArgs",[]] 		            // User-Defined - custom passed args (since Arma 3 v2.03) 
 ];
+
+//--- Get BEGuid
+private _BEGuid = ('BEGuid' callExtension ("get:"+_steamID));
+if(_BEGuid isEqualTo "")exitWith{};
+
+//--- Update current players
+private _playerData = [_name,_BEGuid,_steamID];
+private _playerIndex = life_var_serverCurrentPlayers find _playerData;
+if(_playerIndex isNotEqualTo -1)then{ 
+   if((life_var_serverCurrentPlayers deleteAt _playerIndex) isEqualTo _playerData)then{
+        //--- Send query
+        ["UPDATE", "servers", [
+            [
+                ["currentplayers", ["DB","ARRAY",life_var_serverCurrentPlayers] call life_fnc_database_parse]
+            ],
+            [
+                ["serverID", ["DB","INT", (call life_var_serverID)] call life_fnc_database_parse]
+            ]
+        ]]call life_fnc_database_request;
+        diag_log format ["[Player Logout]: `%1` - (%2) - (%3) ", _name, _BEGuid, _steamID];
+   };
+};

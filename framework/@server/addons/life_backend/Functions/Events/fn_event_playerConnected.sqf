@@ -19,7 +19,7 @@ params [
 if(_ownerID < 4)exitWith{};
 
 //--- Server ready
-waitUntil {!isNil "life_var_serverLoaded" AND {!isNil "life_var_rcon_serverLocked" AND {!isNil "life_var_serverCurrentPlayers"}}};
+waitUntil {!isNil "life_var_serverLoaded" AND {!isNil "life_var_rcon_serverLocked" AND {isFinal "life_var_serverID"}}};
 
 //--- Rcon boot
 if(life_var_rcon_serverLocked)exitWith{ 
@@ -43,12 +43,18 @@ if(_BEGuid isEqualTo "")exitWith{
 //--- Set BEGuid
 _player setVariable ["BEGUID",compileFinal str _BEGuid,true];
 
-//--- Update current players
-life_var_serverCurrentPlayers pushBackUnique [_BEGuid,_steamID];
-private _serverQuery = [
-	["currentplayers", ["DB","INT",count(life_var_serverCurrentPlayers)] call life_fnc_database_parse]
-];
+//--- Send query
+private _serverQuery = [];
 
+//--- Update current players
+private _playerData = [_name,_BEGuid,_steamID];
+private _playerIndex = life_var_serverCurrentPlayers find _playerData;
+if(_playerIndex isEqualTo -1)then{ 
+	if((life_var_serverCurrentPlayers pushBackUnique _playerData) isNotEqualTo -1)then{
+		_serverQuery  pushback ["currentplayers", ["DB","ARRAY",life_var_serverCurrentPlayers] call life_fnc_database_parse];
+	};
+};
+ 
 //--- Update max players
 private _totalPlayerCount = (count allPlayers);
 if(_totalPlayerCount > life_var_serverMaxPlayers)then{
@@ -57,4 +63,8 @@ if(_totalPlayerCount > life_var_serverMaxPlayers)then{
 };
 
 //--- Send query
-["UPDATE", "servers", [_serverQuery,[["serverID", ["DB","INT", (call life_var_serverID)] call life_fnc_database_parse]]]]call life_fnc_database_request;
+if(count _serverQuery > 0)then{
+	["UPDATE", "servers", [_serverQuery,[["serverID", ["DB","INT", (call life_var_serverID)] call life_fnc_database_parse]]]]call life_fnc_database_request;
+};
+
+diag_log format ["[Player Login]: `%1` - (%2) - (%3)", _name, _BEGuid, _steamID];

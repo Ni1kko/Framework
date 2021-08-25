@@ -27,6 +27,7 @@ DROP PROCEDURE IF EXISTS `deleteOldHouses`;
 DROP PROCEDURE IF EXISTS `deleteOldGangs`;
 DROP PROCEDURE IF EXISTS `deleteOldContainers`;
 DROP PROCEDURE IF EXISTS `deleteOldWanted`;
+DROP PROCEDURE IF EXISTS `resetActivePlayerList`;
 
 DELIMITER $$
 --
@@ -64,6 +65,11 @@ BEGIN
   DELETE FROM `wanted` WHERE `active` = 0;
 END$$
 
+CREATE DEFINER=CURRENT_USER PROCEDURE `resetActivePlayerList`()
+BEGIN
+  UPDATE `servers` SET `currentplayers`=  '"[]"';
+END$$
+
 DELIMITER ;
 
 --
@@ -75,6 +81,7 @@ CREATE TABLE IF NOT EXISTS `servers` (
     `hardwareID`      VARCHAR(64) NOT NULL,
     `name`            VARCHAR(255) NOT NULL,
     `world`           VARCHAR(64) NOT NULL,
+    `currentplayers`  TEXT NOT NULL,
     `maxplayercount`  INT NOT NULL DEFAULT 0,
     `restartcount`    INT NOT NULL DEFAULT 0,
     `runtime`         INT NOT NULL DEFAULT 0,

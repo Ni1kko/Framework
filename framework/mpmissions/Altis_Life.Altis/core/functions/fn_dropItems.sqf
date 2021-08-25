@@ -88,7 +88,7 @@ _unit = _this select 0;
             };
         };
 
-        case "life_cash": {
+        case "life_var_cash": {
             if (life_var_cash > 0) then {
                 _pos = _unit modelToWorld[0,3,0];
                 _pos = [(_pos select 0),(_pos select 1),0];
@@ -112,4 +112,4 @@ _unit = _this select 0;
             };
         };
     };
-} forEach (("true" configClasses (missionConfigFile >> "VirtualItems")) + ["life_cash"]);
+} forEach (("true" configClasses (missionConfigFile >> "VirtualItems")) + ["life_var_cash"]);
