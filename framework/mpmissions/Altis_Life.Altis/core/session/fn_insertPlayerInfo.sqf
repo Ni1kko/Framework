@@ -5,7 +5,7 @@
 
     Description:
     Upon first join inital player data is sent to the server and added to the database.
-    Setup data gets sent to life_server\Functions\MySQL\fn_insertRequest.sqf
+    Setup data gets sent to life_backend\Functions\MySQL\fn_insertRequest.sqf
 */
 if (life_session_completed) exitWith {}; //Why did this get executed when the client already initialized? Fucking arma...
 
