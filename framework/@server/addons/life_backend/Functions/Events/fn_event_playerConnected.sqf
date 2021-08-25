@@ -47,7 +47,7 @@ _player setVariable ["BEGUID",compileFinal str _BEGuid,true];
 private _serverQuery = [];
 
 //--- Update current players
-private _playerData = [_name,_BEGuid,_steamID];
+private _playerData = [_name,_BEGuid];
 private _playerIndex = life_var_serverCurrentPlayers find _playerData;
 if(_playerIndex isEqualTo -1)then{ 
 	if((life_var_serverCurrentPlayers pushBackUnique _playerData) isNotEqualTo -1)then{

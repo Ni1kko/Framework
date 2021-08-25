@@ -8,7 +8,6 @@ params [
 ];
  
 if(!isServer)exitwith{false};
-if(isRemoteExecuted)exitwith{false};
 if(count _logmessage < 2)exitwith{false};
 
 _logmessage = format["[RCON SYSTEM]: %1",_logmessage];

@@ -4,7 +4,6 @@
 */
 
 if(!isServer)exitwith{false};
-if(isRemoteExecuted)exitwith{false};
 
 private _playableSlotsNumber = 0;
 

@@ -18,7 +18,7 @@ private _BEGuid = ('BEGuid' callExtension ("get:"+_steamID));
 if(_BEGuid isEqualTo "")exitWith{};
 
 //--- Update current players
-private _playerData = [_name,_BEGuid,_steamID];
+private _playerData = [_name,_BEGuid];
 private _playerIndex = life_var_serverCurrentPlayers find _playerData;
 if(_playerIndex isNotEqualTo -1)then{ 
    if((life_var_serverCurrentPlayers deleteAt _playerIndex) isEqualTo _playerData)then{
