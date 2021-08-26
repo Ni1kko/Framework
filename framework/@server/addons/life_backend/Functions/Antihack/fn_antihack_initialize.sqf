@@ -313,7 +313,7 @@ try {
 
 	life_var_antihack_loaded = true;
 }catch {
-	[_exception] call life_fnc_antihack_systemlog;
+	[format["Exception: %1",_exception]] call life_fnc_antihack_systemlog;
 	
 	life_var_antihack_loaded = false;
 };

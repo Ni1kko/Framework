@@ -4,7 +4,7 @@
 */
 
 params [
-	["_logmessage","",[""]],
+	["_logmessage",""],
 	["_logparams",[]]
 ];
  
