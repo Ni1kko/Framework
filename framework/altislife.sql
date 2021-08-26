@@ -171,6 +171,25 @@ CREATE TABLE IF NOT EXISTS `rcon_logs` (
       ON UPDATE CASCADE ON DELETE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
+--
+-- Table structure for table `antihack_logs`
+--
+
+CREATE TABLE IF NOT EXISTS `antihack_logs` (
+    `id`          INT NOT NULL AUTO_INCREMENT,
+    `Type`        VARCHAR(12) NOT NULL,
+    `BEGuid`      VARCHAR(32) NOT NULL,
+    `steamID`     VARCHAR(17) NOT NULL,
+    `log`         TEXT NOT NULL,
+    `occured`     TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
+
+    PRIMARY KEY (`id`),
+    INDEX `fkIdx_players_ah_logs` (`BEGuid`),
+    CONSTRAINT `FK_players_ah_logs` FOREIGN KEY `fkIdx_players_ah_logs` (`BEGuid`)
+      REFERENCES `players` (`BEGuid`)
+      ON UPDATE CASCADE ON DELETE CASCADE
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
 -- --------------------------------------------------------
 
 --
