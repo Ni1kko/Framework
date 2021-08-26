@@ -7,17 +7,17 @@ if(!isServer)exitwith{false};
 //[owner cursorObject] call life_fnc_rcon_kick;
 
 params [
-	["_id",0,[0]],
+	["_id","",["",0]],
 	["_msg",""]
 ];
 
-if(_msg isNotEqualTo "")then
-{
+if(typeName _id isEqualTo "STRING")then{
 	private _player = [_id] call life_fnc_util_getPlayerObject;
 	private _uid = getPlayerUID _player; 
+	_id = owner _player;
 
 	//opps error
-	if(isNull _player || _uid isEqualTo "" || _id < 3)exitwith{};
+	if(isNull _player || _uid isEqualTo "" || _ownerID < 3 || _msg isEqualTo "")exitwith{};
 
 	//get targets beguid
 	private _BEGuid = ('BEGuid' callExtension ("get:"+_uid));

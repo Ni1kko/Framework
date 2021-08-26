@@ -131,7 +131,7 @@ life_var_runtime_thread = []spawn{
                 life_var_serverRuntime = (life_var_serverRuntime + _scale);
                 ["UPDATE", "servers", [
                     [
-                        ["runtime",["DB","INT", life_var_serverRuntime] call life_fnc_database_parse], 
+                        ["runtime",["DB","INT", life_var_serverRuntime] call life_fnc_database_parse]
                     ],
                     [//Where
                         ["serverID",["DB","INT",(call life_var_serverID)] call life_fnc_database_parse]
