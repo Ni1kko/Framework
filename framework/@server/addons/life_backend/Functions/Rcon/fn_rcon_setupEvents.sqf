@@ -119,7 +119,7 @@ while {true} do {
 			if (_rconuptime mod 3 isEqualTo 0) then { 
 				private _time = _rconuptime call _mins2hrsmins;
 				_heartbeat = _heartbeat + 1;
-				format["Events heartbeat#%1, Thread Still Active - RCON UPTIME: (%2h %3min) %4",_heartbeat,_time#0,_time#1,_timeRestart] call life_fnc_rcon_systemlog; 
+				format["Events heartbeat#%1, Thread Still Active - RCON UPTIME: (%2h %3min) %4",_heartbeat,_time#0,_time#1,_timeRestart_message] call life_fnc_rcon_systemlog; 
 			};
 			
 			//--- Reload bans event (15mins)

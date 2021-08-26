@@ -44,9 +44,7 @@ if(_var call _savedvar)then{
 		};
 	};
 }else{
-	_randomVars pushBackUnique _var;
-};
-
-uiNamespace setVariable ["randomVars",_randomVars];
+	_var call _savevar;
+}; 
 
 _var
