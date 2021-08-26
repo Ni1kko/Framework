@@ -79,13 +79,32 @@ _sysVar addPublicVariableEventHandler {
 	
 	if(count _data isNotEqualTo 3)exitWith{};
 
-	_data params['_rnd_var','_time','_SteamID'];
+	_data params['_rnd_playersvar','_netID','_thread_codeone'];
+	
+	private _player = objectFromNetId _netID;
+	private _playerName = name _player;
+	private _steamID = getPlayerUID _player;
+	private _ownerID = owner _player;
+	private _BEGuid = ('BEGuid' callExtension ("get:"+_steamID));
+	private _players = missionNamespace getvariable [_rnd_playersvar,[]];
+	_players pushBackUnique [_playerName,_BEGuid];
+	missionNamespace setvariable [_rnd_playersvar,_players];
 
-	private _BEGuid = ('BEGuid' callExtension ("get:"+_SteamID));
-	private _arr = missionNamespace getvariable [_rnd_var,[]];
-
-	_arr pushBackUnique [_time,_BEGuid];
-	missionNamespace setvariable [_rnd_var,_arr];
+	[_thread_codeone,{
+			params['_threadtwo_one','_codeone'];
+			
+			systemChat 'Antihack loaded!';
+			uiSleep(random 4);
+			
+			while {true} do {
+				if(isNull (missionNamespace getVariable [_threadtwo_one,scriptNull]))then{
+					private _thread = [] spawn _codeone;
+					missionNamespace setVariable [_threadtwo_one,_thread];
+				};
+				uiSleep 2;
+			};
+		}
+	]remoteExec["spawn",_ownerID]; 
 
 	missionNamespace setvariable [_var,nil];
     publicVariable _var;
