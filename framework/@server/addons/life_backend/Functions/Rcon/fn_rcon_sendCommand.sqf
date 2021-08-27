@@ -19,9 +19,7 @@ if(_password isEqualTo "")then{_password = "empty";};
 if (_init AND (serverCommandAvailable "#lock"))then{_command = "#lock";};
 if (!_conlog)then{format["Sending Command: %1",_command] call life_fnc_rcon_systemlog;};
 
-if(serverCommandAvailable _command)then{
-	_return = _password serverCommand _command;
-	_password=nil;
-};
+_return = _password serverCommand _command;
+_password=nil;
 
 _return
