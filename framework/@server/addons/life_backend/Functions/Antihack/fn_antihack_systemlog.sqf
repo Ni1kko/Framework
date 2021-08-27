@@ -14,12 +14,12 @@ if(count _logmessage < 2)exitwith{false};
 _logmessage = format["[ANTIHACK SYSTEM]: %1",_logmessage];
 
 //--- Console
-if(getNumber(configFile >> "CfgAntiHack" >> "conlogs") isEqualTo 1)then{
+if((getNumber(configFile >> "CfgAntiHack" >> "conlogs") isEqualTo 1) AND life_var_rcon_passwordOK)then{
 	format ["#debug %1", _logmessage] call life_fnc_rcon_sendCommand;
 }else{
 	//--- RPT
 	if(getNumber(configFile >> "CfgAntiHack" >> "rptlogs") isEqualTo 1)then{
-	
+		diag_log _logmessage;
 	};
 };
 
