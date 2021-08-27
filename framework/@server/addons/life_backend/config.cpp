@@ -67,7 +67,8 @@ class CfgAntiHack
     checknamebadchars = 1;  //
     checknameblacklist = 1;  //
     
-
+    use_databaseadmins = 1;  //
+    use_debugconadmins = 0;  //
 
     serverlanguage = 'English';
 
