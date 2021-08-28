@@ -19,8 +19,8 @@ class CfgExtDB
     extlogs = 0;             //Log to Extension
 
     //--- Misc
-    debugMode = 0;          //Enable many server/hc debugging logs. Default: 0 (1 = Enabled / 0 = Disabled)
-    headlessclient = 0;     //headlessclient is set to 1 (enabled), the server will run without fault when no Headless Client is connected. However, it will support the Headless Client if you choose to connect one.
+    debugMode = 1;          //Enable many server/hc debugging logs. Default: 0 (1 = Enabled / 0 = Disabled)
+    headlessclient = 1;     //headlessclient is set to 1 (enabled), the server will run without fault when no Headless Client is connected. However, it will support the Headless Client if you choose to connect one.
     headlessclients[] = {
         "76561198276956558"
     };

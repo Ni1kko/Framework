@@ -36,7 +36,7 @@ if (count _units isEqualTo 0) exitWith {[_list] remoteExec ["life_fnc_wantedList
 
 private _query = format ["SELECT wantedID, wantedName FROM wanted WHERE active='1' AND wantedID in (%1)",_inStatement];
 private _queryResult = [_query,2,true] call life_fnc_database_rawasync_request;
-if (EXTDB_SETTING(getNumber,"DebugMode") isEqualTo 1) then {
+if (getNumber(configFile >> "CfgExtDB" >> "debugMode") isEqualTo 1) then {
     diag_log format ["Query: %1",_query];
 };
 

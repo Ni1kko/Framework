@@ -39,11 +39,6 @@ unsafeCVL = 1; // Allows createVehicleLocal to be executed in Multiplayer
 #include "dialog\MasterHandler.hpp"
 #include "config\Config_Master.hpp"
 
-class CfgServer { 
-    DebugMode = 0; //Enable many server/hc debugging logs. Default: 0 (1 = Enabled / 0 = Disabled)
-   
-};
-
 class RscTitles {
     #include "dialog\progress.hpp"
     #include "dialog\hud_nameTags.hpp"

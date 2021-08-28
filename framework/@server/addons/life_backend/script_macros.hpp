@@ -22,12 +22,6 @@
 #define CONST(var1,var2) var1 = compileFinal (if (var2 isEqualType "") then {var2} else {str(var2)})
 #define CONSTVAR(var) var = compileFinal (if (var isEqualType "") then {var} else {str(var)})
 #define FETCH_CONST(var) (call var)
-#define EXTDB "extDB3" callExtension
-#define EXTDB_SETTING(TYPE,SETTING) TYPE(missionConfigFile >> "CfgServer" >> SETTING)
-#define EXTDB_FAILED(MESSAGE) \
-    extdb_var_database_error = [true,##MESSAGE]; \
-    publicVariable "extdb_var_database_error"; \
-    diag_log MESSAGE;
 
 //Display Macros
 #define CONTROL(disp,ctrl) ((findDisplay ##disp) displayCtrl ##ctrl)

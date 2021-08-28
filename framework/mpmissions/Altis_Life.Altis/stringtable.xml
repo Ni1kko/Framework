@@ -26,14 +26,14 @@
 			<Chinesesimp>等待服务器准备就绪...</Chinesesimp>
         </Key>
         <Key ID="STR_Init_ExtdbFail">
-            <Original>extDB failed to load, please contact an administrator.</Original>
+            <Original>Database failed to load, please contact an administrator.</Original>
             <Czech></Czech>
-            <Spanish>extDB no se pudo cargar, por favor contacte a un administrador.</Spanish>
+            <Spanish>Database no se pudo cargar, por favor contacte a un administrador.</Spanish>
             <Russian></Russian>
-            <German>extDB konnte nicht geladen werden, wenden Sie sich bitte an einen Administrator.</German>
-            <Italian>C'è stato un'errore con extDB, perfavore contatta un amministratore.</Italian>
-            <French>extDB ne s'est pas lancé correctement. Veuillez contacter un administrateur.</French>
-            <Portuguese>O extDB falhou ao carregar, por favor, contacte um administrador.</Portuguese>
+            <German>Database konnte nicht geladen werden, wenden Sie sich bitte an einen Administrator.</German>
+            <Italian>C'è stato un'errore con Database, perfavore contatta un amministratore.</Italian>
+            <French>Database ne s'est pas lancé correctement. Veuillez contacter un administrateur.</French>
+            <Portuguese>O Database falhou ao carregar, por favor, contacte um administrador.</Portuguese>
             <Polish></Polish>
 			<Chinesesimp>数据加载失败，请联系管理员。</Chinesesimp>
         </Key>
