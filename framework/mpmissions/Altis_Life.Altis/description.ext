@@ -33,7 +33,7 @@ showHUD[] = {
 
 enableDebugConsole[] = {"76561199109931625", "76561198147157388"};
 allowFunctionsRecompile = 0; // 0: disabled - 1: enabled. Default: 0
-allowFunctionsLog = 1;// Allow RPT loging
+allowFunctionsLog = 0;// Allow RPT loging
 unsafeCVL = 1; // Allows createVehicleLocal to be executed in Multiplayer
 
 #include "dialog\MasterHandler.hpp"

@@ -6,13 +6,7 @@
 if(!isServer)exitwith{false};
 if(isFinal "extdb_var_database_key")exitwith{false};
 
-private _profile = getText(configFile >> "CfgExtDB" >> "profile");
-private _sqlcustom = getNumber(configFile >> "CfgExtDB" >> "sqlcustom") isEqualTo 1;
-private _sqlcustomfile = getText(configFile >> "CfgExtDB" >> "sqlcustomfile");
-private _procedures =  getArray(configFile >> "CfgExtDB" >> "startup_procedures");
-private _headless =  getNumber(configFile >> "CfgExtDB" >> "headlessclient") isEqualTo 1;
-private _resetplayer = getNumber(missionConfigFile >> "Life_Settings" >> "save_civilian_position_restart") isEqualTo 1;
-private _databasekey = round(random 99999);
+private _config = (configFile >> "CfgExtDB");
 
 extdb_var_database_error = false;
 extdb_var_database_key = nil;
@@ -25,10 +19,21 @@ extdb_var_database_headless_clientconnected = -1;
 extdb_var_database_headless_clientdisconnected = -1;
 
 try {
-	//---Version
+	
+	//--- Config
+	if(!isClass _config) throw "Config not found";
+	private _profile = getText(_config >> "profile");
+	private _sqlcustom = getNumber(_config >> "sqlcustom") isEqualTo 1;
+	private _sqlcustomfile = getText(_config >> "sqlcustomfile");
+	private _procedures =  getArray(_config >> "startup_procedures");
+	private _headless =  getNumber(_config >> "headlessclient") isEqualTo 1;
+	private _resetplayer = getNumber(missionConfigFile >> "Life_Settings" >> "save_civilian_position_restart") isEqualTo 1;
+	private _databasekey = round(random 99999);
+
+	//--- Version
 	private _versionRes = parseNumber("extDB3" callExtension "9:VERSION");
 	if(_versionRes < 1.031) throw "Error with extDB3";
- 	format ["ExtDB V%1 Loaded",_profile] call life_fnc_database_systemlog;
+ 	format ["ExtDB V%1 Loaded",_versionRes] call life_fnc_database_systemlog;
 
 	//--- Profile
 	private _profileRes = "extDB3" callExtension format ["9:ADD_DATABASE:%1",_profile];
@@ -49,6 +54,27 @@ try {
 	private _lockedRes = "extDB3" callExtension "9:LOCK_STATUS";
 	if(_protocolRes isNotEqualTo "[1]" OR _protocolRes isNotEqualTo "[1]") throw "Error Locking Database Profile";
 	format ["Profile (%1) Locked",_profile] call life_fnc_database_systemlog;
+	 
+	//--- Connection OKAY
+	extdb_var_database_prepared = compileFinal str(_sqlcustom);
+	extdb_var_database_key = compileFinal str(_databasekey); 
+	format["Database Connected Using Profile: (%1)", _profile] call life_fnc_database_systemlog;
+
+	//--- Setup server to support headless clients
+	if (_headless) then {
+		[] call life_fnc_database_initializeHC;
+	};
+
+	//--- Reset players life after restart
+	if (_resetplayer) then {
+		_procedures pushBackUnique "resetPlayersLife";
+	};
+
+	//--- Run stored procedures for SQL side cleanup
+	{
+		["CALL", _x]call life_fnc_database_request;
+		format["Executing procedure (%1)", _x] call life_fnc_database_systemlog;
+	} forEach _procedures;
 } catch { 
 	_exception call life_fnc_database_systemlog;
 	extdb_var_database_error = true;
@@ -57,29 +83,5 @@ try {
 //--- Broadcast database variables to clients
 publicVariable "extdb_var_database_error";
 publicVariable "extdb_var_database_headless_clients";
-
-//--- Connection Failed
-if (extdb_var_database_error) exitWith {false};
-
-//--- Connection OKAY
-extdb_var_database_prepared = compileFinal str(_sqlcustom);
-extdb_var_database_key = compileFinal str(_databasekey); 
-format["Database Connected Using Profile: (%1)", _profile] call life_fnc_database_systemlog;
-
-//--- Setup server to support headless clients
-if (_headless) then {
-    [] spawn life_fnc_database_initializeHC;
-};
-
-//--- Reset players life after restart
-if (_resetplayer) then {
-	_procedures pushBackUnique "resetPlayersLife";
-};
-
-//--- Run stored procedures for SQL side cleanup
-{
-	["CALL", _x]call life_fnc_database_request;
-	format["Executing procedure (%1)", _x] call life_fnc_database_systemlog;
-} forEach _procedures;
 
 true
