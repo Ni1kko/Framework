@@ -38,6 +38,7 @@ try {
 	private _checknamebadchars = getNumber(_config >> "checknamebadchars") isEqualTo 1;
 	private _checknameblacklist = getNumber(_config >> "checknameblacklist") isEqualTo 1;
 	private _checklanguage = getNumber(_config >> "checklanguage") isEqualTo 1;
+	private _interuptinfo = getNumber(_config >> "use_interuptinfo") isEqualTo 1;
 	private _serverlanguage = getText(_config >> "serverlanguage");
 	private _nameblacklist = getArray(_config >> "nameblacklist");
 	private _detectedvariables = getArray(_config >> "detectedvariables");
@@ -50,6 +51,7 @@ try {
 		"_rnd_playersvar",
 		"_rnd_useRcon",
 		"_rnd_admins",
+		"_rnd_isadmin",
 		"_rnd_adminlvl",
 		"_rnd_steamID",
 		"_rnd_netID",
@@ -58,7 +60,7 @@ try {
 		"_rnd_threadtwo",
 		"_rnd_threadtwo_one",
 		"_rnd_threadinterupt",
-		"_rnd_threadtwo_one",
+		"_rnd_threadtwo_two",
 		"_rnd_threadthree_gvars",
 		"_rnd_threadthree_objvars",
 		"_rnd_threadthree_pvars",
@@ -70,9 +72,7 @@ try {
 		"_rnd_banme",
 		"_rnd_runserver",
 		"_rnd_runglobal",
-		"_rnd_runtarget",
-		"_rnd_ahserver_init",
-		"_rnd_ahserver_endvar"
+		"_rnd_runtarget"
 	];
 
 	//--- create random vars
@@ -81,26 +81,22 @@ try {
 	_tempvars resize (count _rndvars); 
 	_tempvars params (_rndvars apply {private _ret=[_x,call life_fnc_util_randomString];[format["`%1` => `%2`",_ret#0,_ret#1]]call life_fnc_antihack_systemlog;_ret});
 	_tempvars =nil;
-	  
-	//--- antihack server expression
-	private _antihackserver = "
-		"+_rnd_ahserver_init+" = compileFinal str(serverTime);
-		publicVariable '"+_rnd_ahserver_init+"';
-		
-		'"+_rnd_ahserver_endvar+"';
-	";
-
+	 
 	//--- antihack expression
 	private _antihackclient = "
 		if(!isNull(missionNamespace getVariable ['"+_rnd_threadone+"',scriptNull]))exitWith{};
-
-		waitUntil {!isNull player && {getClientStateNumber >= 8}};
+		if(isFinal '"+_rnd_kickme+"')then{'System ran twice, possible hacker' call "+_rnd_kickme+";};
+		if(isFinal '"+_rnd_banme+"')then{'System ran twice, possible hacker' call "+_rnd_banme+";};
 
 		"+_rnd_useRcon+" = " + str _rconReady + ";
-		"+_rnd_steamID+" =     getPlayerUID player;
-		"+_rnd_netID+" =       netId player;
 		"+_rnd_admins+" = " +  str _admins +";
-		"+_rnd_adminlvl+" =  compileFinal ""private _lvl = 0;{if(_this isEqualTo _x#1 || _this isEqualTo _x#2)exitWith{_lvl = _x#0;}}forEach "+_rnd_admins+";_lvl"";
+		"+_rnd_adminlvl+" = compileFinal ""private _lvl = 0;{if(_this isEqualTo _x#1 || _this isEqualTo _x#2)exitWith{_lvl = _x#0;}}forEach "+_rnd_admins+";_lvl"";
+		"+_rnd_isadmin+" = (call "+_rnd_adminlvl+") > 0;
+
+		waitUntil {!isNull player && {getClientStateNumber >= 8}};
+		
+		"+_rnd_steamID+" =   getPlayerUID player;
+		"+_rnd_netID+" =     netId player;
 		"+_rnd_sendreq+" =   compileFinal """+ _rnd_netVar + " = [_this#0,"+_rnd_steamID+",_this#1];publicVariable '" + _rnd_netVar + "';"";
 		"+_rnd_kickme+" =    compileFinal ""if("+_rnd_useRcon +")then{['kick',_this] call "+_rnd_sendreq+";}else{endMission 'END1';};"";
 		"+_rnd_banme+" =     compileFinal ""if("+_rnd_useRcon +")then{['ban',_this] call "+_rnd_sendreq+"}else{_this call "+_rnd_kickme+";};"";
@@ -108,19 +104,152 @@ try {
 		"+_rnd_runglobal+" = compileFinal ""['run-global',[_this#1,_this#0]] call "+_rnd_sendreq+";"";
 		"+_rnd_runtarget+" = compileFinal ""['run-target',[_this#0,_this#2,_this#1]] call "+_rnd_sendreq+";"";
 		
-		if(typeName(missionNamespace getVariable ['"+_rnd_threadone+"','']) isNotEqualTo 'STRING')then{
-			['System ran twice, possible hacker'] call "+_rnd_kickme+";
-		};
-
 		"+_rnd_threadone+" = [] spawn 
 		{
 			[format['%1 Joined',name player],'systemChat'] call "+_rnd_runglobal+";
-			if(('"+_rnd_steamID+"' call "+_rnd_adminlvl+") >= 5)exitWith{};";
-			systemChat 'Antihack Thread#1 Active!';
+			if(('"+_rnd_steamID+"' call "+_rnd_adminlvl+") >= 5)exitWith{diag_log 'Antihack Thread#1 Active!';};"; 
+			if(_checkdetectedmenus)then{
+				_antihackclient = _antihackclient + "
+					terminate (missionNamespace getVariable ['"+_rnd_threadtwo_one+"',scriptNull]);
+					"+_rnd_threadtwo_one+" = [] spawn{
+						waitUntil{(!isNull (findDisplay 49)) && (!isNull (findDisplay 602))};  
+						(findDisplay 49) closeDisplay 2; (findDisplay 602) closeDisplay 2;
+						'Opened Esacpe & Inventory Menus | Possible Inventory Glitch' call "+_rnd_kickme+";
+					};
+				";
+			};
+			_antihackclient = _antihackclient + "
+			while {true} do {";
+				if(_checkvehicleweapon)then{ 
+					_antihackclient = _antihackclient + "
+						if(vehicle player != player) then {
+							if(local (vehicle player)) then {
+								_vehWeps = getArray(configFile >> 'cfgVehicles' >> typeof (vehicle player) >> 'weapons');
+								_hasWeps = (weapons (vehicle player));
+								if !(_vehWeps isEqualTo _hasWeps) then {
+									deleteVehicle (vehicle player);
+									format['%1s Vehicle has: (%2) Should have: (%3) | Vehicle Weapon Hack',name player,_hasWeps,_vehWeps] call "+_rnd_banme+";
+								};
+							};
+						}; 
+					";
+				};
+				_antihackclient = _antihackclient + "
+				uiSleep (random [1,2,5]);
+			};
+		};
+	
+		"+_rnd_codeone+" =  compileFinal ""
+			if(('"+_rnd_steamID+"' call "+_rnd_adminlvl+") >= 3)exitWith{diag_log 'Antihack Codeone Active!';};";
+			if(_checkrecoil)then{
+				_antihackclient = _antihackclient + "
+					private _recoil = unitRecoilCoefficient player;
+				";
+			};
+			if(_checksway)then{ 
+				_antihackclient = _antihackclient + "
+					private _sway = getCustomAimCoef player;
+				";
+			};
+			if(_checkmapEH)then{ 
+				_antihackclient = _antihackclient + "
+					private _mapClickEH = -1;
+					private _eh = -1;
+				";
+			};
+			_antihackclient = _antihackclient + "	
+			while {true} do {";
+				if(_checkmapEH)then{ 
+					_antihackclient = _antihackclient + "
+						_eh = addMissionEventHandler['MapSingleClick', {}];
+						if (_eh > _mapClickEH) then {
+							if (_mapClickEH == -1) then {
+								_mapClickEH = _eh;
+							}else{
+								format['%1 EventHandlers Changed! - %2, should be %3 | MapSingleClick Cheat',name player,_eh,_mapClickEH] call "+_rnd_banme+";
+							};
+						};
+						removeAllMissionEventHandlers 'MapSingleClick';
+					";
+				};
+				if(_checkterraingrid)then{
+					_antihackclient = _antihackclient + " 
+						if(getTerrainGrid >= 50) then {
+							format['%1 Has No Grass! %1 Has TerrainGrid set to %2 | No Grass Cheat',name player,getTerrainGrid] call "+_rnd_banme+";
+						};
+					";
+				};
+				if(_checkrecoil)then{ 
+					_antihackclient = _antihackclient + "
+						if(unitRecoilCoefficient player != _recoil && unitRecoilCoefficient player != 1) then { 
+							format['%1 Recoil Changed! - %2 Should Be %3 | Recoil Cheat',name player,unitRecoilCoefficient player,_recoil] call "+_rnd_banme+";
+						};
+					";
+				}; 
+				if(_checkspeed)then{ 
+					_antihackclient = _antihackclient + "
+						_speedCount = 0; 
+						if (isNull objectParent player) then {
+							_speedCount = if (speed player > 30) then {_speedCount + 1} else {0};
+							if (_speedCount > 10) then {
+								[format['%1 Moved Too Fat! - Moving at %2 on foot for over 5 seconds | Speed Hack',name player,speed player]] call "+_rnd_banme+";
+							};
+						}else{
+							_speedCount = 0;
+						}; 
+					";
+				}; 
+				if(_checkdamage)then{ 
+					_antihackclient = _antihackclient + "
+						if(!isDamageAllowed player) then { 
+							format['%1 Has Invincibility! %1 Has AllowDamage set to %2 | GodMode Cheat',name player,isDamageAllowed player] call "+_rnd_banme+";
+						};
+					";
+				}; 
+				if(_checksway)then{ 
+					_antihackclient = _antihackclient + "
+						if(getCustomAimCoef player != _sway && getCustomAimCoef player != 1)then{
+							format['%1 WeaponSway Changed! %2 Should Be  %3 | No Sway Cheat',name player,getCustomAimCoef player,_sway] call "+_rnd_banme+";
+						};
+					";
+				}; 
+				_antihackclient = _antihackclient + "
+				uiSleep 1;
+			};
+		"";";
+
+		if(_interuptinfo)then{
+			_antihackclient = _antihackclient + " 
+				"+_rnd_codetwo+" = compileFinal ""
+					if("+_rnd_isadmin+")then{diag_log 'Antihack Codetwo Active!'};
+					while{true}do{
+						waitUntil{!(isNull (findDisplay 49))};
+						private _text = '';   
+						waitUntil{
+							private _textNew = format['%1 Life AntiCheat | Total Players Online (%3/%4) | Guid: (%2)',worldName,call(player getVariable ['BEGUID',{''}]), count(allPlayers - entities 'HeadlessClient_F'),((playableSlotsNumber west) + (playableSlotsNumber independent) + (playableSlotsNumber civilian)  + (playableSlotsNumber east) + 1)];  
+							if(_text isNotEqualTo _textNew)then{
+								_text = _textNew;
+								((findDisplay 49) displayCtrl 120) ctrlSetText _text;
+							};
+							uiSleep 0.2;
+							isNull (findDisplay 49)
+						};
+					};
+				"";
+			";
+		};
+
+		_antihackclient = _antihackclient + "
+		"+_rnd_threadtwo+" = [] spawn 
+		{
+			if("+_rnd_isadmin+")then{diag_log 'Antihack Thread#2 Active!'};
+			terminate (missionNamespace getVariable ['"+_rnd_threadtwo_one+"',scriptNull]);
+			terminate (missionNamespace getVariable ['"+_rnd_threadinterupt+"',scriptNull]);";
+			
 			if(_checklanguage)then{ 
 				_antihackclient = _antihackclient + "
-					if !(toLower(language) isEqualTo toLower("+str _serverlanguage+"))then{ 
-						['Bad Language! ' + (language) + ' Is Not Allowed'] call "+_rnd_kickme+";
+					if (toLower(language) isNotEqualTo toLower("+_serverlanguage+"))then{ 
+						format['Bad Language! %1 Is Not Allowed',language] call "+_rnd_kickme+";
 					};
 				";
 			};
@@ -150,148 +279,20 @@ try {
 				_antihackclient = _antihackclient + "
 					{
 						if([profileName, _x] call BIS_fnc_inString)exitWith{
-							['Bad Name! ' + (_x) + ' Is Not Allowed'] call "+_rnd_kickme+";  
+							format['Bad Name! %1 Is Not Allowed',_x] call "+_rnd_kickme+";  
 						};
 					}forEach "+str _nameblacklist+";
 				";
 			};
-			if(_checkdetectedmenus)then{
-				_antihackclient = _antihackclient + "
-					terminate (missionNamespace getVariable ['"+_rnd_threadtwo_one+"',scriptNull]);
-					"+_rnd_threadtwo_one+" = [] spawn{
-						waitUntil{(!isNull (findDisplay 49)) && (!isNull (findDisplay 602))};  
-						(findDisplay 49) closeDisplay 2; (findDisplay 602) closeDisplay 2;
-						['Opened Esacpe & Inventory Menus | Possible Inventory Glitch'] call "+_rnd_kickme+";
-					};
-				";
-			};
-			_antihackclient = _antihackclient + "
-			while {true} do {";
-				if(_checkvehicleweapon)then{ 
-					_antihackclient = _antihackclient + "
-						if(vehicle player != player) then {
-							if(local (vehicle player)) then {
-								_vehWeps = getArray(configFile >> 'cfgVehicles' >> typeof (vehicle player) >> 'weapons');
-								_hasWeps = (weapons (vehicle player));
-								if !(_vehWeps isEqualTo _hasWeps) then {
-									deleteVehicle (vehicle player);
-									[format['%1s Vehicle has: (%2) Should have: (%3) | Vehicle Weapon Hack',name player,str(_hasWeps),str(_vehWeps)]] call "+_rnd_banme+";
-								};
-							};
-						}; 
-					";
-				};
-				_antihackclient = _antihackclient + "
-				uiSleep (random [1,2,5]);
-			};
-		};
 
-		"+_rnd_codeone+" =  compileFinal ""
-			if(('"+_rnd_steamID+"' call "+_rnd_adminlvl+") >= 3)exitWith{};";
-			systemChat 'Antihack Codeone Active!';
-			if(_checkrecoil)then{
-				_antihackclient = _antihackclient + "
-					private _recoil = unitRecoilCoefficient player;
-				";
-			};
-			if(_checksway)then{ 
-				_antihackclient = _antihackclient + "
-					private _sway = getCustomAimCoef player;
-				";
-			};
-			if(_checkmapEH)then{ 
-				_antihackclient = _antihackclient + "
-					private _mapClickEH = -1;
-					private _eh = -1;
-				";
-			};
-			_antihackclient = _antihackclient + "	
-			while {true} do {";
-				if(_checkmapEH)then{ 
-					_antihackclient = _antihackclient + "
-						_eh = addMissionEventHandler['MapSingleClick', {}];
-						if (_eh > _mapClickEH) then {
-							if (_mapClickEH == -1) then {
-								_mapClickEH = _eh;
-							}else{
-								[format['%1 EventHandlers Changed! - %2, should be %3 | MapSingleClick Cheat',name player,_eh,_mapClickEH]] call "+_rnd_banme+";
-							};
-						};
-						removeAllMissionEventHandlers 'MapSingleClick';
-					";
-				};
-				if(_checkterraingrid)then{
-					_antihackclient = _antihackclient + " 
-						if(getTerrainGrid >= 50) then {
-							[format['%1 Has No Grass! %1 Has TerrainGrid set to %2 | No Grass Cheat',name player,str(getTerrainGrid)]] call "+_rnd_banme+";
-						};
-					";
-				};
-				if(_checkrecoil)then{ 
-					_antihackclient = _antihackclient + "
-						if(unitRecoilCoefficient player != _recoil && unitRecoilCoefficient player != 1) then { 
-							[format['%1 Recoil Changed! - %2 Should Be %3 | Recoil Cheat',name player,str(unitRecoilCoefficient player),_recoil]] call "+_rnd_banme+";
-						};
-					";
-				}; 
-				if(_checkspeed)then{ 
-					_antihackclient = _antihackclient + "
-						_speedCount = 0; 
-						if (isNull objectParent player) then {
-							_speedCount = if (speed player > 30) then {_speedCount + 1} else {0};
-							if (_speedCount > 10) then {
-								[format['%1 Moved Too Fat! - Moving at %2 on foot for over 5 seconds | Speed Hack',name player,speed player]] call "+_rnd_banme+";
-							};
-						}else{
-							_speedCount = 0;
-						}; 
-					";
-				}; 
-				if(_checkdamage)then{ 
-					_antihackclient = _antihackclient + "
-						if(!isDamageAllowed player) then { 
-							[format['%1 Has Invincibility! %1 Has AllowDamage set to %2 | GodMode Cheat',name player,str(isDamageAllowed player)]] call "+_rnd_banme+";
-						};
-					";
-				}; 
-				if(_checksway)then{ 
-					_antihackclient = _antihackclient + "
-						if(getCustomAimCoef player != _sway && getCustomAimCoef player != 1)then{
-							[format['%1 WeaponSway Changed! %2 Should Be  %3 | No Sway Cheat',name player,str(getCustomAimCoef player),str _sway]] call "+_rnd_banme+";
-						}; 
-					";
-				}; 
-				_antihackclient = _antihackclient + "
-				uiSleep 1;
-			};
-		"";
-
-		"+_rnd_threadtwo+" = [] spawn 
-		{
-			systemChat 'Antihack Thread#2 Active!';
-			terminate (missionNamespace getVariable ['"+_rnd_threadtwo_one+"',scriptNull]);
-			terminate (missionNamespace getVariable ['"+_rnd_threadinterupt+"',scriptNull]);
-			
-			"+_rnd_codetwo+" = compileFinal ""
-				systemChat 'Antihack Codetwo Active!';
-				private _space = toArray (' ');for '_i' from 0 to (_this)-1 do{_space pushBack (32);};_space = (toString _space); 
-				while{true}do{
-					waitUntil{!(isNull (findDisplay 49))};
-					((findDisplay 49) displayCtrl 120) ctrlSetText 'Life AntiCheat';
-					((findDisplay 49) displayCtrl 115025) ctrlSetText format['%1Life Anti',_space];
-					((findDisplay 49) displayCtrl 115035) ctrlSetText 'Cheat Online';
-					waitUntil{(isNull (findDisplay 49))};      
-				}; 
-			"";
-
-			"+_rnd_ahvar+" = ['"+_rnd_playersvar+"',"+_rnd_netID+", ['"+_rnd_threadtwo_one+"',"+_rnd_codeone+"]];";
+			_antihackclient = _antihackclient + ""+_rnd_ahvar+" = ['"+_rnd_playersvar+"',"+_rnd_netID+", ['"+_rnd_threadtwo_two+"',"+_rnd_codeone+"]];";
 			
 			if(_checkdetectedmenus)then{
 				_antihackclient = _antihackclient + "
 					{
 						[_x] spawn {
 							waitUntil{!isNull (findDisplay _this)};
-							[format['%1 Has Opened A Bad Menu: %1 | Script Kiddie',name player,_this]] call "+_rnd_banme+";
+							format['%1 Has Opened A Bad Menu: %1 | Script Kiddie',name player,_this] call "+_rnd_banme+";
 						};
 					}forEach " + str _detectedmenus + ";
 				";
@@ -301,44 +302,42 @@ try {
 					{
 						_x spawn {
 							waitUntil{!isNil _this};
-							[format['badvar `%1` found, possible hacker']] call "+_rnd_banme+";
+							format['badvar `%1` found, possible hacker',_this] call "+_rnd_banme+";
 						};
 					} forEach "+str _detectedvariables+";
 				";
 			};
-			_antihackclient = _antihackclient + "
-			
-			systemChat 'Antihack loading!';
-			"+_rnd_sysvar+" = "+_rnd_ahvar+";
-			publicVariable '"+_rnd_sysvar+"';
 
+			_antihackclient = _antihackclient + ""+_rnd_sysvar+" = "+_rnd_ahvar+";
+			
+			uiSleep (random[4,5,7]);
+			systemChat 'Antihack loading!';
+			publicVariable '"+_rnd_sysvar+"';
 			waitUntil {isNil {missionNamespace getVariable '"+_rnd_sysvar+"'}};
 			"+_rnd_ahvar+" = random(99999);
-			
+
 			while {true} do {
-				if(isNull (missionNamespace getVariable ['"+_rnd_threadinterupt+"',scriptNull]))then{
-					"+_rnd_threadinterupt+" = (42) spawn "+_rnd_codetwo+";
-				};
-				if(isNil {missionNamespace getVariable '"+_rnd_ahvar+"'})then{
-					['`_rnd_ahvar` nil, possible hacker'] call "+_rnd_banme+";
-				};
+				uiSleep 2;";
+					if(_interuptinfo)then{
+						_antihackclient = _antihackclient + "
+							if(isNull (missionNamespace getVariable ['"+_rnd_threadinterupt+"',scriptNull]))then{
+								"+_rnd_threadinterupt+" = [] spawn "+_rnd_codetwo+";
+							};
+						";
+					};
+					_antihackclient = _antihackclient + "
+				uiSleep 2;
+					if(isNil {missionNamespace getVariable '"+_rnd_ahvar+"'})then{
+						'`_rnd_ahvar` nil, possible hacker' call "+_rnd_banme+";
+					};
 				uiSleep 2;
 			};
 		};
 
 		waitUntil{isNull(missionNamespace getVariable ['"+_rnd_threadone+"',scriptNull])};
-		['Main thread terminated, possible hacker'] call "+_rnd_kickme+";
+		'Main thread terminated, possible hacker' call "+_rnd_kickme+";
 	";
 	
-	//--- compile antihackserver expression
-	_antihackserver = compile _antihackserver;
-
-	//--- something broke with antihackserver expression\code
-	if(isNil "_antihackserver")throw "Failed to compile antihackserver";
-
-	//--- setup antihackserver
-	if((call _antihackserver) isNotEqualTo _rnd_ahserver_endvar) throw "Failed to load antihackserver. Bad endvar";
-
 	//--- something broke with antihackclient expression
 	if(isNil "_antihackclient")throw "Failed to load antihack";
 
@@ -356,7 +355,6 @@ try {
 };
 
 _antihackclient = nil;
-_antihackserver = nil;
 
 if(life_var_antihack_loaded)then{
 	["System fully initialized!"] call life_fnc_antihack_systemlog;

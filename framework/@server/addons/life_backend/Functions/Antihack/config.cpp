@@ -14,7 +14,7 @@ class CfgAntiHack
     conlogs = 1;             //Log to Console
     extlogs = 1;             //Log to Extension
     dblogs = 1;              //Log to Database (Kicks & Bans Only)
-
+    
     //--- options
     checklanguage = 1;       //check for language
     checkrecoil = 1;         //check for weapon recoil hack              Notes: (admins excluded)

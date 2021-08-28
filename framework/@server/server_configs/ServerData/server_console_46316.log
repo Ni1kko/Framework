@@ -1,0 +1,339 @@
+﻿21:01:17 BattlEye Server: Initialized (v1.218)
+21:01:18 Game Port: 2302, Steam Query Port: 2303
+21:01:20 UPNP initialized
+21:01:20 Mission Altis_Life.Altis read from bank.
+21:01:20 Host identity created.
+21:01:20 BattlEye Server: Config entry: RConPassword ABC7890
+21:01:20 BattlEye Server: Config entry: MaxPing 250
+21:01:20 BattlEye Server: Ping detection currently not working, MaxPing command disabled
+21:01:20 Roles assigned.
+21:01:20 Reading mission ...
+21:01:31 Mission read.
+21:01:31 Game started.
+21:01:31 Successfull attempt to execute serverCommand '#lock' by server.
+21:01:31 Successfull attempt to execute serverCommand '#debug [RCON SYSTEM]: Sending Command: #kick 0' by server.
+21:01:31 Successfull attempt to execute serverCommand '#kick 0' by server.
+21:01:31 Successfull attempt to execute serverCommand '#debug [RCON SYSTEM]: Sending Command: #kick 1' by server.
+21:01:31 Successfull attempt to execute serverCommand '#kick 1' by server.
+21:01:31 Successfull attempt to execute serverCommand '#debug [RCON SYSTEM]: Sending Command: #kick 2' by server.
+21:01:31 Successfull attempt to execute serverCommand '#kick 2' by server.
+21:01:31 Successfull attempt to execute serverCommand '#debug [RCON SYSTEM]: Sending Command: #kick 3' by server.
+21:01:31 Successfull attempt to execute serverCommand '#kick 3' by server.
+21:01:31 Successfull attempt to execute serverCommand '#debug [RCON SYSTEM]: Sending Command: #kick 4' by server.
+21:01:31 Successfull attempt to execute serverCommand '#kick 4' by server.
+21:01:31 Successfull attempt to execute serverCommand '#debug [RCON SYSTEM]: Sending Command: #kick 5' by server.
+21:01:31 Successfull attempt to execute serverCommand '#kick 5' by server.
+21:01:31 Successfull attempt to execute serverCommand '#debug [RCON SYSTEM]: Sending Command: #kick 6' by server.
+21:01:31 Successfull attempt to execute serverCommand '#kick 6' by server.
+21:01:31 Successfull attempt to execute serverCommand '#debug [RCON SYSTEM]: Sending Command: #kick 7' by server.
+21:01:31 Successfull attempt to execute serverCommand '#kick 7' by server.
+21:01:31 Successfull attempt to execute serverCommand '#debug [RCON SYSTEM]: Sending Command: #kick 8' by server.
+21:01:31 Successfull attempt to execute serverCommand '#kick 8' by server.
+21:01:31 Successfull attempt to execute serverCommand '#debug [RCON SYSTEM]: Sending Command: #kick 9' by server.
+21:01:31 Successfull attempt to execute serverCommand '#kick 9' by server.
+21:01:31 Successfull attempt to execute serverCommand '#debug [RCON SYSTEM]: Sending Command: #kick 10' by server.
+21:01:31 Successfull attempt to execute serverCommand '#kick 10' by server.
+21:01:31 Successfull attempt to execute serverCommand '#debug [RCON SYSTEM]: Sending Command: #kick 11' by server.
+21:01:31 Successfull attempt to execute serverCommand '#kick 11' by server.
+21:01:31 Successfull attempt to execute serverCommand '#debug [RCON SYSTEM]: Sending Command: #kick 12' by server.
+21:01:31 Successfull attempt to execute serverCommand '#kick 12' by server.
+21:01:31 Successfull attempt to execute serverCommand '#debug [RCON SYSTEM]: Sending Command: #kick 13' by server.
+21:01:31 Successfull attempt to execute serverCommand '#kick 13' by server.
+21:01:31 Successfull attempt to execute serverCommand '#debug [RCON SYSTEM]: Sending Command: #kick 14' by server.
+21:01:31 Successfull attempt to execute serverCommand '#kick 14' by server.
+21:01:31 Successfull attempt to execute serverCommand '#debug [RCON SYSTEM]: Sending Command: #kick 15' by server.
+21:01:31 Successfull attempt to execute serverCommand '#kick 15' by server.
+21:01:31 Successfull attempt to execute serverCommand '#debug [RCON SYSTEM]: Sending Command: #kick 16' by server.
+21:01:31 Successfull attempt to execute serverCommand '#kick 16' by server.
+21:01:31 Successfull attempt to execute serverCommand '#debug [RCON SYSTEM]: Sending Command: #kick 17' by server.
+21:01:31 Successfull attempt to execute serverCommand '#kick 17' by server.
+21:01:31 Successfull attempt to execute serverCommand '#debug [RCON SYSTEM]: Sending Command: #kick 18' by server.
+21:01:31 Successfull attempt to execute serverCommand '#kick 18' by server.
+21:01:31 Successfull attempt to execute serverCommand '#debug [RCON SYSTEM]: Sending Command: #kick 19' by server.
+21:01:31 Successfull attempt to execute serverCommand '#kick 19' by server.
+21:01:31 Successfull attempt to execute serverCommand '#debug [RCON SYSTEM]: Sending Command: #kick 20' by server.
+21:01:31 Successfull attempt to execute serverCommand '#kick 20' by server.
+21:01:31 Successfull attempt to execute serverCommand '#debug [RCON SYSTEM]: Sending Command: #kick 21' by server.
+21:01:31 Successfull attempt to execute serverCommand '#kick 21' by server.
+21:01:31 Successfull attempt to execute serverCommand '#debug [RCON SYSTEM]: Sending Command: #kick 22' by server.
+21:01:31 Successfull attempt to execute serverCommand '#kick 22' by server.
+21:01:31 Successfull attempt to execute serverCommand '#debug [RCON SYSTEM]: Sending Command: #kick 23' by server.
+21:01:31 Successfull attempt to execute serverCommand '#kick 23' by server.
+21:01:31 Successfull attempt to execute serverCommand '#debug [RCON SYSTEM]: Sending Command: #kick 24' by server.
+21:01:31 Successfull attempt to execute serverCommand '#kick 24' by server.
+21:01:31 Successfull attempt to execute serverCommand '#debug [RCON SYSTEM]: Sending Command: #kick 25' by server.
+21:01:31 Successfull attempt to execute serverCommand '#kick 25' by server.
+21:01:31 Successfull attempt to execute serverCommand '#debug [RCON SYSTEM]: Sending Command: #kick 26' by server.
+21:01:31 Successfull attempt to execute serverCommand '#kick 26' by server.
+21:01:31 Successfull attempt to execute serverCommand '#debug [RCON SYSTEM]: Sending Command: #kick 27' by server.
+21:01:31 Successfull attempt to execute serverCommand '#kick 27' by server.
+21:01:31 Successfull attempt to execute serverCommand '#debug [RCON SYSTEM]: Sending Command: #kick 28' by server.
+21:01:31 Successfull attempt to execute serverCommand '#kick 28' by server.
+21:01:31 Successfull attempt to execute serverCommand '#debug [RCON SYSTEM]: Sending Command: #kick 29' by server.
+21:01:31 Successfull attempt to execute serverCommand '#kick 29' by server.
+21:01:31 Successfull attempt to execute serverCommand '#debug [RCON SYSTEM]: Sending Command: #kick 30' by server.
+21:01:31 Successfull attempt to execute serverCommand '#kick 30' by server.
+21:01:31 Successfull attempt to execute serverCommand '#debug [RCON SYSTEM]: Sending Command: #kick 31' by server.
+21:01:31 Successfull attempt to execute serverCommand '#kick 31' by server.
+21:01:31 Successfull attempt to execute serverCommand '#debug [RCON SYSTEM]: Sending Command: #kick 32' by server.
+21:01:31 Successfull attempt to execute serverCommand '#kick 32' by server.
+21:01:31 Successfull attempt to execute serverCommand '#debug [RCON SYSTEM]: Sending Command: #kick 33' by server.
+21:01:31 Successfull attempt to execute serverCommand '#kick 33' by server.
+21:01:31 Successfull attempt to execute serverCommand '#debug [RCON SYSTEM]: Sending Command: #kick 34' by server.
+21:01:31 Successfull attempt to execute serverCommand '#kick 34' by server.
+21:01:31 Successfull attempt to execute serverCommand '#debug [RCON SYSTEM]: Sending Command: #kick 35' by server.
+21:01:31 Successfull attempt to execute serverCommand '#kick 35' by server.
+21:01:31 Successfull attempt to execute serverCommand '#debug [RCON SYSTEM]: Sending Command: #kick 36' by server.
+21:01:31 Successfull attempt to execute serverCommand '#kick 36' by server.
+21:01:31 Successfull attempt to execute serverCommand '#debug [RCON SYSTEM]: Sending Command: #kick 37' by server.
+21:01:31 Successfull attempt to execute serverCommand '#kick 37' by server.
+21:01:31 Successfull attempt to execute serverCommand '#debug [RCON SYSTEM]: Sending Command: #kick 38' by server.
+21:01:31 Successfull attempt to execute serverCommand '#kick 38' by server.
+21:01:31 Successfull attempt to execute serverCommand '#debug [RCON SYSTEM]: Sending Command: #kick 39' by server.
+21:01:31 Successfull attempt to execute serverCommand '#kick 39' by server.
+21:01:31 Successfull attempt to execute serverCommand '#debug [RCON SYSTEM]: Sending Command: #kick 40' by server.
+21:01:31 Successfull attempt to execute serverCommand '#kick 40' by server.
+21:01:31 Successfull attempt to execute serverCommand '#debug [RCON SYSTEM]: Sending Command: #kick 41' by server.
+21:01:31 Successfull attempt to execute serverCommand '#kick 41' by server.
+21:01:31 Successfull attempt to execute serverCommand '#debug [RCON SYSTEM]: Sending Command: #kick 42' by server.
+21:01:31 Successfull attempt to execute serverCommand '#kick 42' by server.
+21:01:31 Successfull attempt to execute serverCommand '#debug [RCON SYSTEM]: Sending Command: #kick 43' by server.
+21:01:31 Successfull attempt to execute serverCommand '#kick 43' by server.
+21:01:31 Successfull attempt to execute serverCommand '#debug [RCON SYSTEM]: Sending Command: #kick 44' by server.
+21:01:31 Successfull attempt to execute serverCommand '#kick 44' by server.
+21:01:31 Successfull attempt to execute serverCommand '#debug [RCON SYSTEM]: Sending Command: #kick 45' by server.
+21:01:31 Successfull attempt to execute serverCommand '#kick 45' by server.
+21:01:31 Successfull attempt to execute serverCommand '#debug [RCON SYSTEM]: Sending Command: #kick 46' by server.
+21:01:31 Successfull attempt to execute serverCommand '#kick 46' by server.
+21:01:31 Successfull attempt to execute serverCommand '#debug [RCON SYSTEM]: Sending Command: #kick 47' by server.
+21:01:31 Successfull attempt to execute serverCommand '#kick 47' by server.
+21:01:31 Successfull attempt to execute serverCommand '#debug [RCON SYSTEM]: Sending Command: #kick 48' by server.
+21:01:31 Successfull attempt to execute serverCommand '#kick 48' by server.
+21:01:31 Successfull attempt to execute serverCommand '#debug [RCON SYSTEM]: Sending Command: #kick 49' by server.
+21:01:31 Successfull attempt to execute serverCommand '#kick 49' by server.
+21:01:31 Successfull attempt to execute serverCommand '#debug [RCON SYSTEM]: Sending Command: #kick 50' by server.
+21:01:31 Successfull attempt to execute serverCommand '#kick 50' by server.
+21:01:31 Successfull attempt to execute serverCommand '#debug [RCON SYSTEM]: Sending Command: #kick 51' by server.
+21:01:31 Successfull attempt to execute serverCommand '#kick 51' by server.
+21:01:31 Successfull attempt to execute serverCommand '#debug [RCON SYSTEM]: Sending Command: #kick 52' by server.
+21:01:31 Successfull attempt to execute serverCommand '#kick 52' by server.
+21:01:31 Successfull attempt to execute serverCommand '#debug [RCON SYSTEM]: Sending Command: #kick 53' by server.
+21:01:31 Successfull attempt to execute serverCommand '#kick 53' by server.
+21:01:31 Successfull attempt to execute serverCommand '#debug [RCON SYSTEM]: Sending Command: #kick 54' by server.
+21:01:31 Successfull attempt to execute serverCommand '#kick 54' by server.
+21:01:31 Successfull attempt to execute serverCommand '#debug [RCON SYSTEM]: Sending Command: #kick 55' by server.
+21:01:31 Successfull attempt to execute serverCommand '#kick 55' by server.
+21:01:31 Successfull attempt to execute serverCommand '#debug [RCON SYSTEM]: Sending Command: #kick 56' by server.
+21:01:31 Successfull attempt to execute serverCommand '#kick 56' by server.
+21:01:31 Successfull attempt to execute serverCommand '#debug [RCON SYSTEM]: Sending Command: #kick 57' by server.
+21:01:31 Successfull attempt to execute serverCommand '#kick 57' by server.
+21:01:31 Successfull attempt to execute serverCommand '#debug [RCON SYSTEM]: Sending Command: #kick 58' by server.
+21:01:31 Successfull attempt to execute serverCommand '#kick 58' by server.
+21:01:31 Successfull attempt to execute serverCommand '#debug [RCON SYSTEM]: Sending Command: #kick 59' by server.
+21:01:31 Successfull attempt to execute serverCommand '#kick 59' by server.
+21:01:31 Successfull attempt to execute serverCommand '#debug [RCON SYSTEM]: Sending Command: #kick 60' by server.
+21:01:31 Successfull attempt to execute serverCommand '#kick 60' by server.
+21:01:31 Successfull attempt to execute serverCommand '#debug [RCON SYSTEM]: Sending Command: #kick 61' by server.
+21:01:31 Successfull attempt to execute serverCommand '#kick 61' by server.
+21:01:31 Successfull attempt to execute serverCommand '#debug [RCON SYSTEM]: Sending Command: #kick 62' by server.
+21:01:31 Successfull attempt to execute serverCommand '#kick 62' by server.
+21:01:31 Successfull attempt to execute serverCommand '#debug [RCON SYSTEM]: Sending Command: #kick 63' by server.
+21:01:31 Successfull attempt to execute serverCommand '#kick 63' by server.
+21:01:31 Successfull attempt to execute serverCommand '#debug [RCON SYSTEM]: Sending Command: #kick 64' by server.
+21:01:31 Successfull attempt to execute serverCommand '#kick 64' by server.
+21:01:31 Successfull attempt to execute serverCommand '#debug [RCON SYSTEM]: Sending Command: #kick 65' by server.
+21:01:31 Successfull attempt to execute serverCommand '#kick 65' by server.
+21:01:31 Successfull attempt to execute serverCommand '#debug [RCON SYSTEM]: Sending Command: #kick 66' by server.
+21:01:31 Successfull attempt to execute serverCommand '#kick 66' by server.
+21:01:31 Successfull attempt to execute serverCommand '#debug [RCON SYSTEM]: Sending Command: #kick 67' by server.
+21:01:31 Successfull attempt to execute serverCommand '#kick 67' by server.
+21:01:31 Successfull attempt to execute serverCommand '#debug [RCON SYSTEM]: Sending Command: #kick 68' by server.
+21:01:31 Successfull attempt to execute serverCommand '#kick 68' by server.
+21:01:31 Successfull attempt to execute serverCommand '#debug [RCON SYSTEM]: Sending Command: #kick 69' by server.
+21:01:31 Successfull attempt to execute serverCommand '#kick 69' by server.
+21:01:31 Successfull attempt to execute serverCommand '#debug [RCON SYSTEM]: Sending Command: #kick 70' by server.
+21:01:31 Successfull attempt to execute serverCommand '#kick 70' by server.
+21:01:31 Successfull attempt to execute serverCommand '#debug [RCON SYSTEM]: Sending Command: #kick 71' by server.
+21:01:31 Successfull attempt to execute serverCommand '#kick 71' by server.
+21:01:31 Successfull attempt to execute serverCommand '#debug [RCON SYSTEM]: Sending Command: #kick 72' by server.
+21:01:31 Successfull attempt to execute serverCommand '#kick 72' by server.
+21:01:31 Successfull attempt to execute serverCommand '#debug [RCON SYSTEM]: Sending Command: #kick 73' by server.
+21:01:31 Successfull attempt to execute serverCommand '#kick 73' by server.
+21:01:31 Successfull attempt to execute serverCommand '#debug [RCON SYSTEM]: Sending Command: #kick 74' by server.
+21:01:31 Successfull attempt to execute serverCommand '#kick 74' by server.
+21:01:31 Successfull attempt to execute serverCommand '#debug [RCON SYSTEM]: Sending Command: #kick 75' by server.
+21:01:31 Successfull attempt to execute serverCommand '#kick 75' by server.
+21:01:31 Successfull attempt to execute serverCommand '#debug [RCON SYSTEM]: Sending Command: #kick 76' by server.
+21:01:31 Successfull attempt to execute serverCommand '#kick 76' by server.
+21:01:31 Successfull attempt to execute serverCommand '#debug [RCON SYSTEM]: Sending Command: #kick 77' by server.
+21:01:31 Successfull attempt to execute serverCommand '#kick 77' by server.
+21:01:31 Successfull attempt to execute serverCommand '#debug [RCON SYSTEM]: Sending Command: #kick 78' by server.
+21:01:31 Successfull attempt to execute serverCommand '#kick 78' by server.
+21:01:31 Successfull attempt to execute serverCommand '#debug [RCON SYSTEM]: Sending Command: #kick 79' by server.
+21:01:31 Successfull attempt to execute serverCommand '#kick 79' by server.
+21:01:31 Successfull attempt to execute serverCommand '#debug [RCON SYSTEM]: Sending Command: #kick 80' by server.
+21:01:31 Successfull attempt to execute serverCommand '#kick 80' by server.
+21:01:31 Successfull attempt to execute serverCommand '#debug [RCON SYSTEM]: Sending Command: #kick 81' by server.
+21:01:31 Successfull attempt to execute serverCommand '#kick 81' by server.
+21:01:31 Successfull attempt to execute serverCommand '#debug [RCON SYSTEM]: Sending Command: #kick 82' by server.
+21:01:31 Successfull attempt to execute serverCommand '#kick 82' by server.
+21:01:31 Successfull attempt to execute serverCommand '#debug [RCON SYSTEM]: Sending Command: #kick 83' by server.
+21:01:31 Successfull attempt to execute serverCommand '#kick 83' by server.
+21:01:31 Successfull attempt to execute serverCommand '#debug [RCON SYSTEM]: Sending Command: #kick 84' by server.
+21:01:31 Successfull attempt to execute serverCommand '#kick 84' by server.
+21:01:31 Successfull attempt to execute serverCommand '#debug [RCON SYSTEM]: Sending Command: #kick 85' by server.
+21:01:31 Successfull attempt to execute serverCommand '#kick 85' by server.
+21:01:31 Successfull attempt to execute serverCommand '#debug [RCON SYSTEM]: Sending Command: #kick 86' by server.
+21:01:31 Successfull attempt to execute serverCommand '#kick 86' by server.
+21:01:31 Successfull attempt to execute serverCommand '#debug [RCON SYSTEM]: Sending Command: #kick 87' by server.
+21:01:31 Successfull attempt to execute serverCommand '#kick 87' by server.
+21:01:31 Successfull attempt to execute serverCommand '#debug [RCON SYSTEM]: Sending Command: #kick 88' by server.
+21:01:31 Successfull attempt to execute serverCommand '#kick 88' by server.
+21:01:31 Successfull attempt to execute serverCommand '#debug [RCON SYSTEM]: Sending Command: #kick 89' by server.
+21:01:31 Successfull attempt to execute serverCommand '#kick 89' by server.
+21:01:31 Successfull attempt to execute serverCommand '#debug [RCON SYSTEM]: Sending Command: #kick 90' by server.
+21:01:31 Successfull attempt to execute serverCommand '#kick 90' by server.
+21:01:31 Successfull attempt to execute serverCommand '#debug [RCON SYSTEM]: Sending Command: #kick 91' by server.
+21:01:31 Successfull attempt to execute serverCommand '#kick 91' by server.
+21:01:31 Successfull attempt to execute serverCommand '#debug [RCON SYSTEM]: Sending Command: #kick 92' by server.
+21:01:31 Successfull attempt to execute serverCommand '#kick 92' by server.
+21:01:31 Successfull attempt to execute serverCommand '#debug [RCON SYSTEM]: Sending Command: #kick 93' by server.
+21:01:31 Successfull attempt to execute serverCommand '#kick 93' by server.
+21:01:31 Successfull attempt to execute serverCommand '#debug [RCON SYSTEM]: Sending Command: #kick 94' by server.
+21:01:31 Successfull attempt to execute serverCommand '#kick 94' by server.
+21:01:31 Successfull attempt to execute serverCommand '#debug [RCON SYSTEM]: Sending Command: #kick 95' by server.
+21:01:31 Successfull attempt to execute serverCommand '#kick 95' by server.
+21:01:31 Successfull attempt to execute serverCommand '#debug [RCON SYSTEM]: Sending Command: #kick 96' by server.
+21:01:31 Successfull attempt to execute serverCommand '#kick 96' by server.
+21:01:31 Successfull attempt to execute serverCommand '#debug [RCON SYSTEM]: Sending Command: #kick 97' by server.
+21:01:31 Successfull attempt to execute serverCommand '#kick 97' by server.
+21:01:31 Successfull attempt to execute serverCommand '#debug [RCON SYSTEM]: Sending Command: #kick 98' by server.
+21:01:31 Successfull attempt to execute serverCommand '#kick 98' by server.
+21:01:31 Successfull attempt to execute serverCommand '#debug [RCON SYSTEM]: Sending Command: #kick 99' by server.
+21:01:31 Successfull attempt to execute serverCommand '#kick 99' by server.
+21:01:31 Successfull attempt to execute serverCommand '#debug [RCON SYSTEM]: Sending Command: #kick 100' by server.
+21:01:31 Successfull attempt to execute serverCommand '#kick 100' by server.
+21:01:31 Successfull attempt to execute serverCommand '#debug [RCON SYSTEM]: Sending Command: #kick 101' by server.
+21:01:31 Successfull attempt to execute serverCommand '#kick 101' by server.
+21:01:31 Successfull attempt to execute serverCommand '#debug [RCON SYSTEM]: Sending Command: #kick 102' by server.
+21:01:31 Successfull attempt to execute serverCommand '#kick 102' by server.
+21:01:31 Successfull attempt to execute serverCommand '#debug [RCON SYSTEM]: Sending Command: #kick 103' by server.
+21:01:31 Successfull attempt to execute serverCommand '#kick 103' by server.
+21:01:31 Successfull attempt to execute serverCommand '#debug [RCON SYSTEM]: Sending Command: #kick 104' by server.
+21:01:31 Successfull attempt to execute serverCommand '#kick 104' by server.
+21:01:31 Successfull attempt to execute serverCommand '#debug [RCON SYSTEM]: Sending Command: #kick 105' by server.
+21:01:31 Successfull attempt to execute serverCommand '#kick 105' by server.
+21:01:31 Successfull attempt to execute serverCommand '#debug [RCON SYSTEM]: Sending Command: #kick 106' by server.
+21:01:31 Successfull attempt to execute serverCommand '#kick 106' by server.
+21:01:31 Successfull attempt to execute serverCommand '#debug [RCON SYSTEM]: Sending Command: #kick 107' by server.
+21:01:31 Successfull attempt to execute serverCommand '#kick 107' by server.
+21:01:31 Successfull attempt to execute serverCommand '#debug [RCON SYSTEM]: Sending Command: #kick 108' by server.
+21:01:31 Successfull attempt to execute serverCommand '#kick 108' by server.
+21:01:31 Successfull attempt to execute serverCommand '#debug [RCON SYSTEM]: Sending Command: #kick 109' by server.
+21:01:31 Successfull attempt to execute serverCommand '#kick 109' by server.
+21:01:31 Successfull attempt to execute serverCommand '#debug [RCON SYSTEM]: Sending Command: #kick 110' by server.
+21:01:31 Successfull attempt to execute serverCommand '#kick 110' by server.
+21:01:31 Successfull attempt to execute serverCommand '#debug [RCON SYSTEM]: Sending Command: #kick 111' by server.
+21:01:31 Successfull attempt to execute serverCommand '#kick 111' by server.
+21:01:31 Successfull attempt to execute serverCommand '#debug [RCON SYSTEM]: Sending Command: #kick 112' by server.
+21:01:31 Successfull attempt to execute serverCommand '#kick 112' by server.
+21:01:31 Successfull attempt to execute serverCommand '#debug [RCON SYSTEM]: Sending Command: #kick 113' by server.
+21:01:31 Successfull attempt to execute serverCommand '#kick 113' by server.
+21:01:31 Successfull attempt to execute serverCommand '#debug [RCON SYSTEM]: Sending Command: #kick 114' by server.
+21:01:31 Successfull attempt to execute serverCommand '#kick 114' by server.
+21:01:31 Successfull attempt to execute serverCommand '#debug [RCON SYSTEM]: Sending Command: #kick 115' by server.
+21:01:31 Successfull attempt to execute serverCommand '#kick 115' by server.
+21:01:31 Successfull attempt to execute serverCommand '#debug [RCON SYSTEM]: Sending Command: #kick 116' by server.
+21:01:31 Successfull attempt to execute serverCommand '#kick 116' by server.
+21:01:31 Successfull attempt to execute serverCommand '#debug [RCON SYSTEM]: Sending Command: #kick 117' by server.
+21:01:31 Successfull attempt to execute serverCommand '#kick 117' by server.
+21:01:31 Successfull attempt to execute serverCommand '#debug [RCON SYSTEM]: Sending Command: #kick 118' by server.
+21:01:31 Successfull attempt to execute serverCommand '#kick 118' by server.
+21:01:31 Successfull attempt to execute serverCommand '#debug [RCON SYSTEM]: Sending Command: #kick 119' by server.
+21:01:31 Successfull attempt to execute serverCommand '#kick 119' by server.
+21:01:31 Successfull attempt to execute serverCommand '#debug [RCON SYSTEM]: Sending Command: #kick 120' by server.
+21:01:31 Successfull attempt to execute serverCommand '#kick 120' by server.
+21:01:31 Successfull attempt to execute serverCommand '#debug [RCON SYSTEM]: Sending Command: #kick 121' by server.
+21:01:31 Successfull attempt to execute serverCommand '#kick 121' by server.
+21:01:31 Successfull attempt to execute serverCommand '#debug [DATABASE SYSTEM]: ExtDB V1.031 Loaded' by server.
+21:01:31 Successfull attempt to execute serverCommand '#debug [DATABASE SYSTEM]: Profile (altislife) Loaded' by server.
+21:01:31 Successfull attempt to execute serverCommand '#debug [DATABASE SYSTEM]: SQLRaw Protocol Loaded' by server.
+21:01:31 Successfull attempt to execute serverCommand '#debug [DATABASE SYSTEM]: Profile (altislife) Locked' by server.
+21:01:31 Successfull attempt to execute serverCommand '#debug [DATABASE SYSTEM]: Database Connected Using Profile: (altislife)' by server.
+21:01:31 Successfull attempt to execute serverCommand '#debug [DATABASE SYSTEM]: Waiting for headless client [76561198276956558] to connect' by server.
+21:01:31 Successfull attempt to execute serverCommand '#debug [DATABASE SYSTEM]: Executing procedure (resetLifeVehicles)' by server.
+21:01:31 Successfull attempt to execute serverCommand '#debug [DATABASE SYSTEM]: Executing procedure (deleteDeadVehicles)' by server.
+21:01:31 Successfull attempt to execute serverCommand '#debug [DATABASE SYSTEM]: Executing procedure (deleteOldHouses)' by server.
+21:01:31 Successfull attempt to execute serverCommand '#debug [DATABASE SYSTEM]: Executing procedure (deleteOldGangs)' by server.
+21:01:31 Successfull attempt to execute serverCommand '#debug [RCON SYSTEM]: Events thread initializing' by server.
+21:01:31 Successfull attempt to execute serverCommand '#debug [RCON SYSTEM]: Events thread paused: Waiting for server to load!' by server.
+21:01:31 Successfull attempt to execute serverCommand '#debug [ANTIHACK SYSTEM]: Starting AntiHack!' by server.
+21:01:31 Successfull attempt to execute serverCommand '#debug [ANTIHACK SYSTEM]: RCON Functions Enabled!' by server.
+21:01:31 Successfull attempt to execute serverCommand '#debug [ANTIHACK SYSTEM]: `_rnd_ahvar` => `w16z5tp381`' by server.
+21:01:31 Successfull attempt to execute serverCommand '#debug [ANTIHACK SYSTEM]: `_rnd_sysvar` => `w9pN16Ol2ZP`' by server.
+21:01:31 Successfull attempt to execute serverCommand '#debug [ANTIHACK SYSTEM]: `_rnd_playersvar` => `s8hL0h66nt`' by server.
+21:01:31 Successfull attempt to execute serverCommand '#debug [ANTIHACK SYSTEM]: `_rnd_useRcon` => `nJ73yy8Y48`' by server.
+21:01:31 Successfull attempt to execute serverCommand '#debug [ANTIHACK SYSTEM]: `_rnd_admins` => `v4C9N0njs6`' by server.
+21:01:31 Successfull attempt to execute serverCommand '#debug [ANTIHACK SYSTEM]: `_rnd_adminlvl` => `u2a8M2461GH`' by server.
+21:01:31 Successfull attempt to execute serverCommand '#debug [ANTIHACK SYSTEM]: `_rnd_steamID` => `x33T6F37S2`' by server.
+21:01:31 Successfull attempt to execute serverCommand '#debug [ANTIHACK SYSTEM]: `_rnd_netID` => `zHQ4010981`' by server.
+21:01:31 Successfull attempt to execute serverCommand '#debug [ANTIHACK SYSTEM]: `_rnd_netVar` => `fK4Rc8fB127`' by server.
+21:01:31 Successfull attempt to execute serverCommand '#debug [ANTIHACK SYSTEM]: `_rnd_threadone` => `c302uh36nb3`' by server.
+21:01:31 Successfull attempt to execute serverCommand '#debug [ANTIHACK SYSTEM]: `_rnd_threadtwo` => `m225KK0708a4`' by server.
+21:01:31 Successfull attempt to execute serverCommand '#debug [ANTIHACK SYSTEM]: `_rnd_threadtwo_one` => `l144gc4cs6`' by server.
+21:01:31 Successfull attempt to execute serverCommand '#debug [ANTIHACK SYSTEM]: `_rnd_threadinterupt` => `c15yq7g9H0`' by server.
+21:01:31 Successfull attempt to execute serverCommand '#debug [ANTIHACK SYSTEM]: `_rnd_threadtwo_two` => `lj5A234d5a2`' by server.
+21:01:31 Successfull attempt to execute serverCommand '#debug [ANTIHACK SYSTEM]: `_rnd_threadthree_gvars` => `sqo2Az5L5i`' by server.
+21:01:31 Successfull attempt to execute serverCommand '#debug [ANTIHACK SYSTEM]: `_rnd_threadthree_objvars` => `k1I5X9pR19b7`' by server.
+21:01:31 Successfull attempt to execute serverCommand '#debug [ANTIHACK SYSTEM]: `_rnd_threadthree_pvars` => `d3R67341L5d`' by server.
+21:01:31 Successfull attempt to execute serverCommand '#debug [ANTIHACK SYSTEM]: `_rnd_threadthree_uivars` => `x388lebve1`' by server.
+21:01:31 Successfull attempt to execute serverCommand '#debug [ANTIHACK SYSTEM]: `_rnd_codeone` => `hK9857z6a3y4`' by server.
+21:01:31 Successfull attempt to execute serverCommand '#debug [ANTIHACK SYSTEM]: `_rnd_codetwo` => `cTK194yR66`' by server.
+21:01:31 Successfull attempt to execute serverCommand '#debug [ANTIHACK SYSTEM]: `_rnd_sendreq` => `alm3xLb893`' by server.
+21:01:31 Successfull attempt to execute serverCommand '#debug [ANTIHACK SYSTEM]: `_rnd_kickme` => `aCn0J5OpX7`' by server.
+21:01:31 Successfull attempt to execute serverCommand '#debug [ANTIHACK SYSTEM]: `_rnd_banme` => `k09dy624eHg8`' by server.
+21:01:31 Successfull attempt to execute serverCommand '#debug [ANTIHACK SYSTEM]: `_rnd_runserver` => `z5H346cO0R`' by server.
+21:01:31 Successfull attempt to execute serverCommand '#debug [ANTIHACK SYSTEM]: `_rnd_runglobal` => `fIe6NY99OX6`' by server.
+21:01:31 Successfull attempt to execute serverCommand '#debug [ANTIHACK SYSTEM]: `_rnd_runtarget` => `m1v2DmW8Q1`' by server.
+21:01:31 Successfull attempt to execute serverCommand '#debug [ANTIHACK SYSTEM]: `_rnd_ahserver_init` => `xpN8a4g0Jv`' by server.
+21:01:31 Successfull attempt to execute serverCommand '#debug [ANTIHACK SYSTEM]: `_rnd_ahserver_endvar` => `n6vsE8E5Sq`' by server.
+21:01:31 Successfull attempt to execute serverCommand '#debug [ANTIHACK SYSTEM]: System fully initialized!' by server.
+21:01:32 Successfull attempt to execute serverCommand '#debug [ANTIHACK SYSTEM]: Compiling Antihack Thread' by server.
+21:01:32 Successfull attempt to execute serverCommand '#debug [ANTIHACK SYSTEM]: Antihack Thread Compiled... compile took 0.000999451 seconds' by server.
+21:01:32 Successfull attempt to execute serverCommand '#debug [RCON SYSTEM]: Events thread resumed: System fully initialized!' by server.
+21:01:32 Successfull attempt to execute serverCommand '#debug [RCON SYSTEM]: Lock Event: server will unlock soon!' by server.
+21:02:32 Successfull attempt to execute serverCommand '#debug [RCON SYSTEM]: Sending Command: #unlock' by server.
+21:02:32 Successfull attempt to execute serverCommand '#unlock' by server.
+21:02:32 Successfull attempt to execute serverCommand '#debug [RCON SYSTEM]: Lock Event: server unlocked and accepting players!' by server.
+21:02:36 Nikko uses modified data file
+21:02:36 BattlEye Server: Player #0 Nikko (192.168.0.121:2316) connected
+21:02:36 Player Nikko connecting.
+21:02:37 BattlEye Server: Connected to BE Master
+21:02:38 BattlEye Server: Player #0 Nikko - BE GUID: aa5f0cad25d8668cf430a41dfc52b986
+21:02:39 Player Nikko connected (id=76561199109931625).
+21:02:39 BattlEye Server: Verified GUID (aa5f0cad25d8668cf430a41dfc52b986) of player #0 Nikko
+21:04:32 Successfull attempt to execute serverCommand '#debug [RCON SYSTEM]: Events heartbeat#1, Thread Still Active - RCON UPTIME: (0h 3min) Next Shutdown In: 3h 57min' by server.
+21:06:45 Successfull attempt to execute serverCommand '#debug [ANTIHACK SYSTEM]: Nikko WeaponSway Changed! 0.2 Should Be  1 | No Sway Cheat' by server.
+21:06:45 Successfull attempt to execute serverCommand '#debug [RCON SYSTEM]: Sending Command: #beserver addban aa5f0cad25d8668cf430a41dfc52b986 0 Nikko WeaponSway Changed! 0.2 Should Be  1 | No Sway Cheat' by server.
+21:06:45 Successfull attempt to execute serverCommand '#beserver addban aa5f0cad25d8668cf430a41dfc52b986 0 Nikko WeaponSway Changed! 0.2 Should Be  1 | No Sway Cheat' by server.
+21:06:45 Successfull attempt to execute serverCommand '#debug [RCON SYSTEM]: Sending Command: #beserver writeBans' by server.
+21:06:45 Successfull attempt to execute serverCommand '#beserver writeBans' by server.
+21:06:45 Successfull attempt to execute serverCommand '#debug [RCON SYSTEM]: Sending Command: #kick 4' by server.
+21:06:45 Successfull attempt to execute serverCommand '#kick 4' by server.
+21:06:45 Player Nikko disconnected.
+21:06:45 BattlEye Server: Player #0 Nikko disconnected
+21:07:02 Nikko uses modified data file
+21:07:02 BattlEye Server: Player #0 Nikko (192.168.0.121:2316) connected
+21:07:02 Player Nikko connecting.
+21:07:04 BattlEye Server: Player #0 Nikko - BE GUID: aa5f0cad25d8668cf430a41dfc52b986
+21:07:04 Player  kicked off by BattlEye: Admin Ban (Nikko WeaponSway Changed! 0.2 Should Be  1 | No Sway Cheat)
+21:07:04 Player Nikko disconnected.
+21:07:32 Successfull attempt to execute serverCommand '#debug [RCON SYSTEM]: Events heartbeat#2, Thread Still Active - RCON UPTIME: (0h 6min) Next Shutdown In: 3h 54min' by server.
+21:10:32 Successfull attempt to execute serverCommand '#debug [RCON SYSTEM]: Events heartbeat#3, Thread Still Active - RCON UPTIME: (0h 9min) Next Shutdown In: 3h 51min' by server.
+21:13:32 Successfull attempt to execute serverCommand '#debug [RCON SYSTEM]: Events heartbeat#4, Thread Still Active - RCON UPTIME: (0h 12min) Next Shutdown In: 3h 48min' by server.
+21:15:49 Nikko uses modified data file
+21:15:49 BattlEye Server: Player #0 Nikko (127.0.0.1:2316) connected
+21:15:49 Player Nikko connecting.
+21:15:51 BattlEye Server: Player #0 Nikko - BE GUID: aa5f0cad25d8668cf430a41dfc52b986
+21:15:51 Player  kicked off by BattlEye: Admin Ban (Nikko WeaponSway Changed! 0.2 Should Be  1 | No Sway Cheat)
+21:15:51 Player Nikko disconnected.

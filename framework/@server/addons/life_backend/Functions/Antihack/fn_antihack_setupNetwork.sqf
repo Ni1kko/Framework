@@ -91,15 +91,15 @@ _sysVar addPublicVariableEventHandler {
 	missionNamespace setvariable [_rnd_playersvar,_players];
 
 	[_thread_codeone,{
-			params['_threadtwo_one','_codeone'];
+			params['_threadtwo_two','_codeone'];
 			
 			systemChat 'Antihack loaded!';
 			uiSleep(random 4);
 			
 			while {true} do {
-				if(isNull (missionNamespace getVariable [_threadtwo_one,scriptNull]))then{
+				if(isNull (missionNamespace getVariable [_threadtwo_two,scriptNull]))then{
 					private _thread = [] spawn _codeone;
-					missionNamespace setVariable [_threadtwo_one,_thread];
+					missionNamespace setVariable [_threadtwo_two,_thread];
 				};
 				uiSleep 2;
 			};

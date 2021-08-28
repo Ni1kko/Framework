@@ -10,9 +10,8 @@
     ## Nanou - HeadlessClient optimization.
     ## Nikko Renolds - https://github.com/Ni1kko/Framework
 */
-
 if(!canSuspend)exitwith{_this spawn life_fnc_preInit; true};
- 
+
 private _timeStamp = diag_tickTime;
 diag_log "----------------------------------------------------------------------------------------------------";
 diag_log "------------------------------------- loading life backend -----------------------------------------";

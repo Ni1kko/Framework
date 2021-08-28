@@ -40,6 +40,7 @@ class CfgFunctions {
         {
             file = "\life_backend\Functions\Database";
             class database_initialize {preInit = 1;};
+            class database_initializeHC {};
             class database_rawasync_request {};
             class database_prepared_request {};
             class database_request {};
