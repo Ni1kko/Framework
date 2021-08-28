@@ -3,8 +3,8 @@
 	## https://github.com/Ni1kko/Framework
 */
 
-if(!isServer)exitwith{false};
-if(isRemoteExecuted)exitwith{false};
+if(!isServer)exitwith{false}; 
+if(!isNil "life_var_rcon_serverLocked")exitwith{false};
 
 private _restartTime = getArray (configFile >> "CfgRCON" >> "restartTimer");
 life_var_rcon_RestartTime = ((_restartTime select 0) * 60) + (_restartTime select 1);

@@ -4,14 +4,18 @@
 */
 
 if(!isServer)exitwith{false};
+if(!canSuspend)exitwith{[]spawn life_fnc_antihack_initialize};
 if(missionNamespace getVariable ["life_var_antihack_loaded",false])exitwith{false};
-if(isRemoteExecuted)exitwith{[remoteExecutedOwner,"RemoteExecuted `fn_antihack_initialize.sqf`"] call life_fnc_rcon_ban;};
+if(isRemoteExecuted AND life_var_rcon_passwordOK)exitwith{[remoteExecutedOwner,"RemoteExecuted `fn_antihack_initialize.sqf`"] call life_fnc_rcon_ban;};
 
+waitUntil {!isNil "life_var_rcon_passwordOK"};
 ["Starting AntiHack!"] call life_fnc_antihack_systemlog;
 
 life_var_antihack_loaded = false;
 life_var_antihack_networkReady = false;
  
+waitUntil {isFinal "extdb_var_database_key"};
+
 try {
 	private _config = (configFile >> "CfgAntiHack");
 	private _admins = call life_fnc_antihack_getAdmins;

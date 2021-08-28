@@ -2,7 +2,7 @@ class CfgPatches {
     class Database {
         units[] = {};
         weapons[] = {};
-        requiredAddons[] = {};
+        requiredAddons[] = {"Rcon"};
         authors[] = {"Torndeco","Ni1kko"};
     };
 };

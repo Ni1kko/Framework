@@ -26,10 +26,7 @@ TON_fnc_playtime_values = [];
 TON_fnc_playtime_values_request = [];
 life_var_corpses = [];
 publicVariable "life_var_serverLoaded";
-
-if!(call life_fnc_rcon_initialize)exitwith{};
 waitUntil {isFinal "extdb_var_database_key"};
-if!(call life_fnc_antihack_initialize)exitwith{};
 
 //--- Server info
 private _serverDatabaseInit = [] spawn DB_fnc_loadServer;

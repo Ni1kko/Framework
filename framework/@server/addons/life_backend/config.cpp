@@ -11,86 +11,6 @@ class CfgPatches {
 
 rptFileLimit=1;
 
-class CfgRCON 
-{
-    //--- Note that for this to work you need to have serverCommandPassowrd defined in config.cfg and BE enabled
-    serverPassword = "ABC7890";
-
-    //--- auto lock
-    restartAutoLock = 5;     //lock server x mins before restart
-
-    //--- auto kick
-    useAutoKick = 1;         //auto kick all players from server (1 = enabled, 0 = disabled)
-    kickTime = 2;            //kick all players x mins before restart
-
-    //--- logging
-    rptlogs = 1;             //Log to RPT file
-    conlogs = 1;             //Log to Console
-    extlogs = 1;             //Log to Extension
-    dblogs = 1;              //Log to Database (Kicks & Bans Only)
-
-    //
-    friendlyMessages[] = {
-        {25,{"Follow the rules!","Need help? ask someone!","Be friendly to everyone!","Enjoy your time here :)"}},
-        {35,{"Don't be that guy, keep it friendly"}}
-    };
-
-    //---
-    restartTimer[] = {4, 0}; //restart server after {x hours, y minuets}
-    useShutdown = 1;         //(1 = shutdown, 0 = restart)
-    useRestartMessages = 1;  //show restart messages
-    restartWarningTime[] = { //restart messages intervals x,x,x... mins before restarts
-        15,
-        10,
-        5,
-        3
-    };
-};
-
-class CfgAntiHack
-{
-    //--- logging
-    rptlogs = 1;             //Log to RPT file
-    conlogs = 1;             //Log to Console
-    extlogs = 1;             //Log to Extension
-    dblogs = 1;              //Log to Database (Kicks & Bans Only)
-
-    //--- options
-    checklanguage = 1;       //check for language
-    checkrecoil = 1;         //check for weapon recoil hack              Notes: (admins excluded)
-    checkspeed = 1;          //check for walking speed hack              Notes: (admins excluded)
-    checkdamage = 1;         //check for god mode hack                   Notes: (admins excluded)
-    checksway = 1;           //check for weapon sway hack                Notes: (admins excluded)
-    checkmapEH = 1;          //check for added map event handlers        Notes: (admin lvl 3 and above excluded)
-    checkvehicleweapon = 1;  //check for added vehicle weapons           Notes: (admin lvl 5 and above excluded)
-    checkterraingrid = 1;    //
-    checkdetectedmenus = 1;  //
-    checkdetectedvariables = 1;  //
-    checknamebadchars = 1;  //
-    checknameblacklist = 1;  //
-    
-    use_databaseadmins = 1;  //
-    use_debugconadmins = 0;  //
-    use_interuptinfo = 1;
-
-    serverlanguage = 'English';
-
-    //--- 
-    nameblacklist[] = {
-        'Admin','Administor'
-    };
-
-    //--- bad menu IDD's
-    detectedmenus[] = {
-        
-    };
-
-    //--- bad variables
-    detectedvariables[] = {
-        'test_ah_var'
-    };
-};
-
 class CfgFunctions {
     class MySQL_Database {
         tag = "DB";
@@ -128,31 +48,7 @@ class CfgFunctions {
             class wantedCrimes {};
             class wantedProfUpdate {};
         };
-
-        //--- RCON Functions
-        class Rcon_Functions {
-            file = "\life_backend\Functions\Rcon";
-            class rcon_initialize {};
-            class rcon_ban {};
-            class rcon_kick {};
-            class rcon_kickAll {};
-            class rcon_queuedmessages_thread {};
-            class rcon_sendBroadcast {};
-            class rcon_sendCommand {};
-            class rcon_setupEvents {};
-            class rcon_systemlog {};
-        };
-
-        //--- Antihack Functions
-        class Antihack_Functions
-        {
-            file = "\life_backend\Functions\Antihack";
-            class antihack_initialize {};
-            class antihack_systemlog {};
-            class antihack_setupNetwork {};
-            class antihack_getAdmins {};
-        };
-
+        
         //--- Events Functions
         class Events_Functions
         {
