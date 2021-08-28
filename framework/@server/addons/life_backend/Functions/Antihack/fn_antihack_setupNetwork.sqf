@@ -113,8 +113,55 @@ _sysVar addPublicVariableEventHandler {
 //---
 life_var_antihack_networkReady = true;
 
+private _sendAntiHack = {
+	params ['_code'];
+	{  
+		["",_code] remoteExec ["spawn", owner _x];
+	} forEach allPlayers - entities "HeadlessClient_F";
+};
+
+private _transferAntiHack = {
+	[[_this#0,_this#1],{
+		params ['_code','_func'];
+		diag_log "Anticheat Thread Loaded";
+		while {true} do {
+			_code call _func;
+			uiSleep (random [3,5,7]);
+		};
+	}] remoteExec ["spawn", _this#2];
+};
+
+private _getHeadlessclient = {
+	private _object = objNull;
+	{  
+		if(getPlayerUID _x isEqualTo _this)exitWith{
+			_object = _x;
+		};
+	} forEach entities "HeadlessClient_F";
+	_object
+};
+
+private _selectedHC = [];
+private _headlessclient =objNull;
+
 //--- Send Compiled Code
 while {true} do {
-	["",_antihack] remoteExec ["spawn", -2];
+	
+	//Verify HC
+	if(isNull _headlessclient AND count extdb_var_database_headless_clients > 0)then{
+		_selectedHC = selectRandom extdb_var_database_headless_clients;
+		_headlessclient = (_selectedHC#0) call _getHeadlessclient;
+	};
+
+	//Send AH
+	if(!isNull _headlessclient)then{
+		[_antihack, _sendAntiHack, owner _headlessclient] call _transferAntiHack;
+		waitUntil {uiSleep 5; isNull((_selectedHC#0) call _getHeadlessclient)};
+		_selectedHC = [];
+		_headlessclient = objNull;
+	}else{
+		_antihack call _sendAntiHack;
+	};
+
 	uiSleep (random [3,5,7]);
 };
