@@ -19,8 +19,8 @@ group player setVariable ["gang_members",_members,true];
 
 [player,group player] remoteExec ["TON_fnc_clientGangLeft",player];
 
-if (life_var_hc_connected) then {
-    [4,group player] remoteExec ["HC_fnc_updateGang",life_var_headlessClient]; //Update the database.
+if (count extdb_var_database_headless_clients > 0) then {
+    [4,group player] remoteExec ["HC_fnc_updateGang",extdb_var_database_headless_client]; //Update the database.
 } else {
     [4,group player] remoteExec ["TON_fnc_updateGang",RSERV]; //Update the database.
 };

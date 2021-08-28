@@ -97,8 +97,8 @@ if (life_boltcutter_uses >= 5) then {
 _building setVariable [format ["bis_disabled_Door_%1",_door],0,true]; //Unlock the door.
 _building setVariable ["locked",false,true];
 
-if (life_var_hc_connected) then {
-    [getPlayerUID player,profileName,"459"] remoteExecCall ["HC_fnc_wantedAdd",life_var_headlessClient];
+if (count extdb_var_database_headless_clients > 0) then {
+    [getPlayerUID player,profileName,"459"] remoteExecCall ["HC_fnc_wantedAdd",extdb_var_database_headless_client];
 } else {
     [getPlayerUID player,profileName,"459"] remoteExecCall ["life_fnc_wantedAdd",RSERV];
 };

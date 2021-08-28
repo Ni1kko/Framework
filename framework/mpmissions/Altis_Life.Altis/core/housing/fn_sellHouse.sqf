@@ -31,8 +31,8 @@ _action = [
 if (_action) then {
     _house setVariable ["house_sold",true,true];
 
-    if (life_var_hc_connected) then {
-        [_house] remoteExecCall ["HC_fnc_sellHouse",life_var_headlessClient];
+    if (count extdb_var_database_headless_clients > 0) then {
+        [_house] remoteExecCall ["HC_fnc_sellHouse",extdb_var_database_headless_client];
     } else {
         [_house] remoteExecCall ["TON_fnc_sellHouse",RSERV];
     };
@@ -71,8 +71,8 @@ if (_action) then {
         {
             _x setVariable ["Trunk",nil,true];
 
-            if (life_var_hc_connected) then {
-                [_x] remoteExecCall ["HC_fnc_sellHouseContainer",life_var_headlessClient];
+            if (count extdb_var_database_headless_clients > 0) then {
+                [_x] remoteExecCall ["HC_fnc_sellHouseContainer",extdb_var_database_headless_client];
             } else {
                 [_x] remoteExecCall ["TON_fnc_sellHouseContainer",RSERV];
             };

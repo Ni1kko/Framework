@@ -20,8 +20,6 @@ diag_log format["------------------------------------------ Version %1 ---------
 diag_log "----------------------------------------------------------------------------------------------------";
 
 life_var_serverLoaded = false;
-life_var_hc_connected = false;
-life_var_headlessClient = false;
 life_var_saveCivPos = (LIFE_SETTINGS(getNumber,"save_civilian_position") isEqualTo 1);
 life_var_severVehicles = [];
 TON_fnc_playtime_values = [];
@@ -29,14 +27,11 @@ TON_fnc_playtime_values_request = [];
 life_var_corpses = [];
 publicVariable "life_var_serverLoaded";
 
-if (EXTDB_SETTING(getNumber,"HeadlessSupport") isEqualTo 1) then {
-    [] spawn TON_fnc_setupHeadlessClient;
-};
-
 if!(call life_fnc_rcon_initialize)exitwith{};
-if!(call life_fnc_database_initialize)exitwith{};
+waitUntil {isFinal "extdb_var_database_key"};
 if!(call life_fnc_antihack_initialize)exitwith{};
 
+//--- Server info
 private _serverDatabaseInit = [] spawn DB_fnc_loadServer;
 waitUntil{scriptDone _serverDatabaseInit};
 
@@ -150,9 +145,7 @@ cleanup = [] spawn TON_fnc_cleanup;
     "TON_fnc_cell_emsrequest",
     "TON_fnc_clientMessage",
     "TON_fnc_playtime_values_request",
-    "TON_fnc_playtime_values",
-    "life_var_hc_connected",
-    "life_var_headlessClient"
+    "TON_fnc_playtime_values"
 ];
 
 /* Setup the federal reserve building(s) */

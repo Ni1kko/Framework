@@ -29,9 +29,9 @@ diag_log "[Life Client] Setting up user actions";
 diag_log "[Life Client] User actions completed";
 
 diag_log "[Life Client] Waiting for the server to be ready...";
-waitUntil {!isNil "life_var_serverLoaded" && {!isNil "life_var_database_error"}};
+waitUntil {!isNil "life_var_serverLoaded" && {!isNil "extdb_var_database_error"}};
 
-if (life_var_database_error) exitWith {
+if (extdb_var_database_error) exitWith {
     0 cutText [localize "STR_Init_ExtdbFail","BLACK FADED",99999999];
 };
 
@@ -112,8 +112,8 @@ publicVariableServer "life_fnc_RequestClientId";
 
 } forEach getArray (missionConfigFile >> "disableChannels");
 
-if (life_var_hc_connected) then {
-    [getPlayerUID player, player getVariable ["realname", name player]] remoteExec ["HC_fnc_wantedProfUpdate", life_var_headlessClient];
+if (count extdb_var_database_headless_clients > 0) then {
+    [getPlayerUID player, player getVariable ["realname", name player]] remoteExec ["HC_fnc_wantedProfUpdate", extdb_var_database_headless_client];
 } else {
     [getPlayerUID player, player getVariable ["realname", name player]] remoteExec ["life_fnc_wantedProfUpdate", RSERV];
 };

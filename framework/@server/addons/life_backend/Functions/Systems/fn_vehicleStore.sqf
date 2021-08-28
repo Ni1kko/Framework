@@ -46,7 +46,7 @@ if (_impound) exitWith {
         };
     } else {    // no free repairs!
         _query = format ["UPDATE vehicles SET active='0', fuel='%3', damage='%4' WHERE pid='%1' AND plate='%2'",_uid , _plate, _fuel, _damage];
-        _thread = [_query,1] call DB_fnc_asyncCall;
+        _thread = [_query,1] call life_fnc_database_rawasync_request;
 
         if (!isNil "_vehicle" && {!isNull _vehicle}) then {
             deleteVehicle _vehicle;
@@ -80,7 +80,7 @@ if (LIFE_SETTINGS(getNumber,"save_vehicle_virtualItems") isEqualTo 1) then {
         private ["_isIllegal", "_blacklist"];
         _blacklist = false;
         _profileQuery = format ["SELECT name FROM players WHERE pid='%1'", _uid];
-        _profileName = [_profileQuery, 2] call DB_fnc_asyncCall;
+        _profileName = [_profileQuery, 2] call life_fnc_database_rawasync_request;
         _profileName = _profileName select 0;
 
         {
@@ -103,7 +103,7 @@ if (LIFE_SETTINGS(getNumber,"save_vehicle_virtualItems") isEqualTo 1) then {
         if (_blacklist) then {
             [_uid, _profileName, "481"] remoteExecCall["life_fnc_wantedAdd", RSERV];
             _query = format ["UPDATE vehicles SET blacklist='1' WHERE pid='%1' AND plate='%2'", _uid, _plate];
-            _thread = [_query, 1] call DB_fnc_asyncCall;
+            _thread = [_query, 1] call life_fnc_database_rawasync_request;
         };
 
     }
@@ -141,7 +141,7 @@ _cargo = [_cargo] call DB_fnc_mresArray;
 
 // update
 _query = format ["UPDATE vehicles SET active='0', inventory='%3', gear='%4', fuel='%5', damage='%6' WHERE pid='%1' AND plate='%2'", _uid, _plate, _trunk, _cargo, _fuel, _damage];
-_thread = [_query,1] call DB_fnc_asyncCall;
+_thread = [_query,1] call life_fnc_database_rawasync_request;
 
 if (!isNil "_vehicle" && {!isNull _vehicle}) then {
     deleteVehicle _vehicle;

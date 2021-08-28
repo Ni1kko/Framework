@@ -9,6 +9,8 @@ class CfgPatches {
     };
 };
 
+rptFileLimit=1;
+
 class CfgRCON 
 {
     //--- Note that for this to work you need to have serverCommandPassowrd defined in config.cfg and BE enabled
@@ -69,6 +71,7 @@ class CfgAntiHack
     
     use_databaseadmins = 1;  //
     use_debugconadmins = 0;  //
+    use_interuptinfo = 1;
 
     serverlanguage = 'English';
 
@@ -97,7 +100,6 @@ class CfgFunctions {
             class numberSafe {};
             class mresArray {};
             class queryRequest{};
-            class asyncCall{};
             class insertRequest{};
             class updateRequest{};
             class mresToArray {};
@@ -149,15 +151,6 @@ class CfgFunctions {
             class antihack_systemlog {};
             class antihack_setupNetwork {};
             class antihack_getAdmins {};
-        };
-
-        //--- Database Functions
-        class Database_Functions
-        {
-            file = "\life_backend\Functions\Database";
-            class database_initialize {};
-            class database_request {};
-            class database_parse {};
         };
 
         //--- Events Functions
@@ -221,7 +214,6 @@ class CfgFunctions {
             class handleBlastingCharge {};
             class terrainSort {};
             class fix_headgear {};
-            class setupHeadlessClient {};
             class whoDoneIt {};
             class index {};
             class player_query {};

@@ -31,7 +31,7 @@ private _servIndex = life_var_severVehicles find _vid;
 private _query = format ["SELECT id, side, classname, type, pid, alive, active, plate, color, inventory, gear, fuel, damage, blacklist FROM vehicles WHERE id='%1' AND pid='%2'",_vid,_pid];
 
 private _tickTime = diag_tickTime;
-private _queryResult = [_query,2] call DB_fnc_asyncCall;
+private _queryResult = [_query,2] call life_fnc_database_rawasync_request;
 
 if (EXTDB_SETTING(getNumber,"DebugMode") isEqualTo 1) then {
     diag_log "------------- Client Query Request -------------";
@@ -78,7 +78,7 @@ private _damage = [call compile (_vInfo select 12)] call DB_fnc_mresToArray;
 private _wasIllegal = _vInfo select 13;
 _wasIllegal = if (_wasIllegal isEqualTo 1) then { true } else { false };
 
-[_query,1] call DB_fnc_asyncCall;
+[_query,1] call life_fnc_database_rawasync_request;
 
 private "_vehicle";
 if (_sp isEqualType "") then {
@@ -134,7 +134,7 @@ if (LIFE_SETTINGS(getNumber,"save_vehicle_virtualItems") isEqualTo 1) then {
         [1,"STR_NOTF_BlackListedVehicle",true,[_location,_name]] remoteExecCall ["life_fnc_broadcast",west];
 
         _query = format ["UPDATE vehicles SET blacklist='0' WHERE id='%1' AND pid='%2'",_vid,_pid];
-        [_query,1] call DB_fnc_asyncCall;
+        [_query,1] call life_fnc_database_rawasync_request;
     };
 } else {
     _vehicle setVariable ["Trunk",[[],0],true];

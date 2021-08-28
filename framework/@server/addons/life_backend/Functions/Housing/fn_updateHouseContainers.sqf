@@ -21,4 +21,4 @@ _cargo = [_cargo] call DB_fnc_mresArray;
 
 _query = format ["UPDATE containers SET gear='%1' WHERE id='%2'",_cargo,_containerID];
 
-[_query,1] call DB_fnc_asyncCall;
+[_query,1] call life_fnc_database_rawasync_request;

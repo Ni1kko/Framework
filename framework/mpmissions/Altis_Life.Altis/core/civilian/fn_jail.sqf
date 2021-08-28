@@ -53,8 +53,8 @@ if (LIFE_SETTINGS(getNumber,"jail_seize_inventory") isEqualTo 1) then {
     {player removeMagazine _x} forEach (magazines player);
 };
 
-if (life_var_hc_connected) then {
-    [player,_bad] remoteExecCall ["HC_fnc_jailSys",life_var_headlessClient];
+if (count extdb_var_database_headless_clients > 0) then {
+    [player,_bad] remoteExecCall ["HC_fnc_jailSys",extdb_var_database_headless_client];
 } else {
     [player,_bad] remoteExecCall ["life_fnc_jailSys",RSERV];
 };

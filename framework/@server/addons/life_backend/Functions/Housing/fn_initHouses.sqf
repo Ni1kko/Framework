@@ -5,11 +5,11 @@
     Initalizes house setup when player joins the server.
 */
 private ["_queryResult","_query","_count","_blacklistedHouses","_blacklistedGarages"];
-_count = (["SELECT COUNT(*) FROM houses WHERE owned='1'",2] call DB_fnc_asyncCall) select 0;
+_count = (["SELECT COUNT(*) FROM houses WHERE owned='1'",2] call life_fnc_database_rawasync_request) select 0;
 
 for [{_x=0},{_x<=_count},{_x=_x+10}] do {
     _query = format ["SELECT houses.id, houses.pid, houses.pos, players.name, houses.garage FROM houses INNER JOIN players WHERE houses.owned='1' AND houses.pid = players.pid LIMIT %1,10",_x];
-    _queryResult = [_query,2,true] call DB_fnc_asyncCall;
+    _queryResult = [_query,2,true] call life_fnc_database_rawasync_request;
     if (count _queryResult isEqualTo 0) exitWith {};
     {
         _pos = call compile format ["%1",_x select 2];

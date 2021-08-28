@@ -31,8 +31,8 @@ if (_action) then {
     _diff = [_box,1,life_carryWeight,life_maxWeight] call life_fnc_calWeightDiff;
     if (_diff isEqualTo 0) exitWith {hint localize "STR_NOTF_InvFull"};
 
-    if (life_var_hc_connected) then {
-        [_container] remoteExecCall ["HC_fnc_deleteDBContainer",life_var_headlessClient];
+    if (count extdb_var_database_headless_clients > 0) then {
+        [_container] remoteExecCall ["HC_fnc_deleteDBContainer",extdb_var_database_headless_client];
     } else {
         [_container] remoteExecCall ["TON_fnc_deleteDBContainer",RSERV];
     };

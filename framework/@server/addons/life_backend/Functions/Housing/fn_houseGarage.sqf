@@ -29,4 +29,4 @@ if (EXTDB_SETTING(getNumber,"DebugMode") isEqualTo 1) then {
     diag_log format ["Query: %1",_query];
 };
 
-[_query,1] call DB_fnc_asyncCall;
+[_query,1] call life_fnc_database_rawasync_request;

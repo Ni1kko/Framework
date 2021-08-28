@@ -70,6 +70,11 @@ BEGIN
   UPDATE `servers` SET `currentplayers`=  '"[]"';
 END$$
 
+CREATE DEFINER=CURRENT_USER PROCEDURE `resetPlayersLife`()
+BEGIN
+  UPDATE `players` SET `civ_alive`= 0 WHERE `civ_alive` = 1;
+END$$
+
 DELIMITER ;
 
 --

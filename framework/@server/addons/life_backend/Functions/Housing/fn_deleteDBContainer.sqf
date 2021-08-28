@@ -22,7 +22,7 @@ if (_containerID isEqualTo -1) then {
 _container setVariable ["container_id",nil,true];
 _container setVariable ["container_owner",nil,true];
 
-[_query,1] call DB_fnc_asyncCall;
+[_query,1] call life_fnc_database_rawasync_request;
 
-["CALL deleteOldContainers",1] call DB_fnc_asyncCall;
+["CALL deleteOldContainers",1] call life_fnc_database_rawasync_request;
 deleteVehicle _container;

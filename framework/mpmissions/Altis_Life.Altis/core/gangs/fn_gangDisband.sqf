@@ -18,8 +18,8 @@ _action = [
 if (_action) then {
     hint localize "STR_GNOTF_DisbandGangPro";
 
-    if (life_var_hc_connected) then {
-        [group player] remoteExec ["HC_fnc_removeGang",life_var_headlessClient];
+    if (count extdb_var_database_headless_clients > 0) then {
+        [group player] remoteExec ["HC_fnc_removeGang",extdb_var_database_headless_client];
     } else {
         [group player] remoteExec ["TON_fnc_removeGang",RSERV];
     };

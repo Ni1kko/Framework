@@ -29,8 +29,8 @@ if (_action) then {
     group player selectLeader _unit;
     [_unit,group player] remoteExec ["TON_fnc_clientGangLeader",_unit]; //Boot that bitch!
 
-    if (life_var_hc_connected) then {
-        [3,group player] remoteExec ["HC_fnc_updateGang",life_var_headlessClient]; //Update the database.
+    if (count extdb_var_database_headless_clients > 0) then {
+        [3,group player] remoteExec ["HC_fnc_updateGang",extdb_var_database_headless_client]; //Update the database.
     } else {
         [3,group player] remoteExec ["TON_fnc_updateGang",RSERV]; //Update the database.
     };

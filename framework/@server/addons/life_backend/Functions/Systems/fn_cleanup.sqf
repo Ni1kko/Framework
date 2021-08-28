@@ -47,7 +47,7 @@ for "_i" from 0 to 1 step 0 do {
 
                     _query = format ["UPDATE vehicles SET active='0', fuel='%3' WHERE pid='%1' AND plate='%2'",_uid,_plate,_fuel];
 
-                    [_query,1] call DB_fnc_asyncCall;
+                    [_query,1] call life_fnc_database_rawasync_request;
                 };
             };
         };

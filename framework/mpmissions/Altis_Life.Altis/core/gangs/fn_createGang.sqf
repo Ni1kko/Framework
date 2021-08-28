@@ -19,8 +19,8 @@ _badChar = false;
 if (_badChar) exitWith {hint localize "STR_GNOTF_IncorrectChar";};
 if (life_var_bank < (LIFE_SETTINGS(getNumber,"gang_price"))) exitWith {hint format [localize "STR_GNOTF_NotEnoughMoney",[((LIFE_SETTINGS(getNumber,"gang_price")) - life_var_bank)] call life_fnc_numberText];};
 
-if (life_var_hc_connected) then {
-    [player,getPlayerUID player,_gangName] remoteExec ["HC_fnc_insertGang",life_var_headlessClient];
+if (count extdb_var_database_headless_clients > 0) then {
+    [player,getPlayerUID player,_gangName] remoteExec ["HC_fnc_insertGang",extdb_var_database_headless_client];
 } else {
     [player,getPlayerUID player,_gangName] remoteExec ["TON_fnc_insertGang",RSERV];
 };

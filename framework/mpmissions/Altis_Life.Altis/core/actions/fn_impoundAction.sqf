@@ -52,8 +52,8 @@ if (count crew _vehicle isEqualTo 0) then {
 
     life_impound_inuse = true;
 
-    if (life_var_hc_connected) then {
-        [_vehicle,true,player] remoteExec ["HC_fnc_vehicleStore",life_var_headlessClient];
+    if (count extdb_var_database_headless_clients > 0) then {
+        [_vehicle,true,player] remoteExec ["HC_fnc_vehicleStore",extdb_var_database_headless_client];
     } else {
         [_vehicle,true,player] remoteExec ["TON_fnc_vehicleStore",RSERV];
     };

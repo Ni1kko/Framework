@@ -17,8 +17,8 @@ if (isNull _unit) exitWith {};
 
 [1,"STR_Wanted_AddP",true,[_unit getVariable ["realname",name _unit],_amount,getPlayerUID _unit]] remoteExecCall ["life_fnc_broadcast",RCLIENT];
 
-if (life_var_hc_connected) then {
-    [getPlayerUID _unit,_unit getVariable ["realname",name _unit],_amount] remoteExecCall ["HC_fnc_wantedAdd",life_var_headlessClient];
+if (count extdb_var_database_headless_clients > 0) then {
+    [getPlayerUID _unit,_unit getVariable ["realname",name _unit],_amount] remoteExecCall ["HC_fnc_wantedAdd",extdb_var_database_headless_client];
 } else {
     [getPlayerUID _unit,_unit getVariable ["realname",name _unit],_amount] remoteExecCall ["life_fnc_wantedAdd",RSERV];
 };

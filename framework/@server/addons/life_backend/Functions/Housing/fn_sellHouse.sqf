@@ -25,6 +25,6 @@ _house setVariable ["house_id",nil,true];
 _house setVariable ["house_owner",nil,true];
 _house setVariable ["garageBought",false,true];
 
-[_query,1] call DB_fnc_asyncCall;
+[_query,1] call life_fnc_database_rawasync_request;
 _house setVariable ["house_sold",nil,true];
-["CALL deleteOldHouses",1] call DB_fnc_asyncCall;
+["CALL deleteOldHouses",1] call life_fnc_database_rawasync_request;

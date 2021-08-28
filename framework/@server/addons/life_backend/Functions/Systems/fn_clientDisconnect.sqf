@@ -20,7 +20,7 @@ if (life_var_saveCivPos && {side _unit isEqualTo civilian}) then {
         private _position = getPosATL _unit;
         if ((getMarkerPos "respawn_civilian" distance _position) > 300) then {
             private _alive = alive _unit;
-            if (life_var_hc_connected) then {[_uid,civilian,_alive,4,_position] remoteExec ["HC_fnc_updatePartial",life_var_headlessClient]} else {[_uid,civilian,_alive,4,_position] spawn DB_fnc_updatePartial};
+            if (count extdb_var_database_headless_clients > 0) then {[_uid,civilian,_alive,4,_position] remoteExec ["HC_fnc_updatePartial",extdb_var_database_headless_client]} else {[_uid,civilian,_alive,4,_position] spawn DB_fnc_updatePartial};
         };
     };
 };

@@ -23,7 +23,7 @@ switch (_mode) do {
 			_columns pushBack (_x#0);
 			_values pushBack (_x#1);
 		} forEach _params; 
-		_qstring = ("1:" + str(call life_var_databaseID) + ":INSERT INTO " + _table + " (" + (_columns joinString ",") + ")VALUES(" + (_values joinString ",") + ")");
+		_qstring = ("1:" + str(call extdb_var_database_key) + ":INSERT INTO " + _table + " (" + (_columns joinString ",") + ")VALUES(" + (_values joinString ",") + ")");
 		_res = ["DB:Create:Task-completed",true];
 		//"1:464:INSERT INTO players (name,aliases,playerid,cash,safe)VALUES(Nikko2,""[``test``]"",76561198276956558,0,10000)"
 	};
@@ -31,7 +31,7 @@ switch (_mode) do {
 	{
 		private _columns = (_params#0) joinString ",";
 		private _clauses = [];{_clauses pushBack (_x joinString "=")} forEach (_params#1);
-		_qstring = ("2:" + str(call life_var_databaseID) + ":SELECT " + _columns + " FROM " + _table);
+		_qstring = ("2:" + str(call extdb_var_database_key) + ":SELECT " + _columns + " FROM " + _table);
 		if(count _clauses > 0)then{_qstring = _qstring + (" WHERE " + (_clauses joinString " AND "));};
 		//"2:464:SELECT name,cash,safe FROM players WHERE playerid=76561199109931625"
 	};
@@ -39,7 +39,7 @@ switch (_mode) do {
 	{ 
 		private _columns = [];{_columns pushBack (_x joinString "=")} forEach (_params#0);
 		private _clauses = [];{_clauses pushBack (_x joinString "=")} forEach (_params#1);
-		_qstring = ("1:" + str(call life_var_databaseID) + ":UPDATE " + _table + " SET " + (_columns joinString ","));
+		_qstring = ("1:" + str(call extdb_var_database_key) + ":UPDATE " + _table + " SET " + (_columns joinString ","));
 		if(count _clauses > 0)then{_qstring = _qstring + (" WHERE " + (_clauses joinString " AND "));};
 		_res = ["DB:Update:Task-completed",true];
 		//"1:464:UPDATE players SET cash=500,safe=99999 WHERE playerid=76561199109931625"
@@ -47,20 +47,20 @@ switch (_mode) do {
 	case "DELETE": 
 	{  
 		private _clauses = [];{_clauses pushBack (_x joinString "=")} forEach (_params#0);
-		_qstring = ("1:" + str(call life_var_databaseID) + ":DELETE FROM " + _table);
+		_qstring = ("1:" + str(call extdb_var_database_key) + ":DELETE FROM " + _table);
 		if(count _clauses > 0)then{_qstring = _qstring + (" WHERE " + (_clauses joinString " AND "));};
 		_res = ["DB:Delete:Task-completed",true];
 		//"1:464:DELETE FROM vehicles WHERE id=1"
 	};
 	case "CALL": 
 	{  
-		_qstring = ("1:" + str(call life_var_databaseID) + ":CALL " + _table);
+		_qstring = ("1:" + str(call extdb_var_database_key) + ":CALL " + _table);
 		_res = ["DB:Call:Task-completed",true];
 		//"1:464:CALL deleteOldGangs"
 	};
 	default
 	{
-		_qstring = ("2:" + str(call life_var_databaseID) + ":" + _mode);
+		_qstring = ("2:" + str(call extdb_var_database_key) + ":" + _mode);
 	};
 };
 

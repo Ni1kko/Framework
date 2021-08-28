@@ -37,8 +37,8 @@ switch (playerSide) do {
     };
 };
 
-if (life_var_hc_connected) then {
-    _packet remoteExecCall ["HC_fnc_updateRequest",life_var_headlessClient];
+if (count extdb_var_database_headless_clients > 0) then {
+    _packet remoteExecCall ["HC_fnc_updateRequest",extdb_var_database_headless_client];
 } else {
     _packet remoteExecCall ["DB_fnc_updateRequest",RSERV];
 };

@@ -43,8 +43,8 @@ if ([true,_type,_amount] call life_fnc_handleInv) then {
             _funds = _funds - (_price * _amount);
             group player setVariable ["gang_bank",_funds,true];
 
-            if (life_var_hc_connected) then {
-                [1,group player] remoteExecCall ["HC_fnc_updateGang",life_var_headlessClient];
+            if (count extdb_var_database_headless_clients > 0) then {
+                [1,group player] remoteExecCall ["HC_fnc_updateGang",extdb_var_database_headless_client];
             } else {
                 [1,group player] remoteExecCall ["TON_fnc_updateGang",RSERV];
             };

@@ -5,7 +5,6 @@
 
 if(!isServer)exitwith{false};
 if(isRemoteExecuted)exitwith{false};
-"Starting RCON" call life_fnc_rcon_systemlog;
 
 private _restartTime = getArray (configFile >> "CfgRCON" >> "restartTimer");
 life_var_rcon_RestartTime = ((_restartTime select 0) * 60) + (_restartTime select 1);
@@ -19,6 +18,8 @@ life_var_rcon_serverLocked = false;
 life_var_rcon_RestartMode = 0;
 life_var_rcon_messagequeue = [];
 life_var_rcon_setupEvents_thread = scriptNull;
+
+"Starting RCON" call life_fnc_rcon_systemlog;
 
 if ("#init/" call life_fnc_rcon_sendCommand) then
 {

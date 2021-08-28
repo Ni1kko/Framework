@@ -90,8 +90,8 @@ _unit spawn {
 //Make the killer wanted
 if (!isNull _killer && {!(_killer isEqualTo _unit)} && {!(side _killer isEqualTo west)} && {alive _killer}) then {
     if (vehicle _killer isKindOf "LandVehicle") then {
-        if (life_var_hc_connected) then {
-            [getPlayerUID _killer,_killer getVariable ["realname",name _killer],"187V"] remoteExecCall ["HC_fnc_wantedAdd",life_var_headlessClient];
+        if (count extdb_var_database_headless_clients > 0) then {
+            [getPlayerUID _killer,_killer getVariable ["realname",name _killer],"187V"] remoteExecCall ["HC_fnc_wantedAdd",extdb_var_database_headless_client];
         } else {
             [getPlayerUID _killer,_killer getVariable ["realname",name _killer],"187V"] remoteExecCall ["life_fnc_wantedAdd",RSERV];
         };
@@ -101,8 +101,8 @@ if (!isNull _killer && {!(_killer isEqualTo _unit)} && {!(side _killer isEqualTo
             [2] remoteExecCall ["life_fnc_removeLicenses",_killer];
         };
     } else {
-        if (life_var_hc_connected) then {
-            [getPlayerUID _killer,_killer getVariable ["realname",name _killer],"187"] remoteExecCall ["HC_fnc_wantedAdd",life_var_headlessClient];
+        if (count extdb_var_database_headless_clients > 0) then {
+            [getPlayerUID _killer,_killer getVariable ["realname",name _killer],"187"] remoteExecCall ["HC_fnc_wantedAdd",extdb_var_database_headless_client];
         } else {
             [getPlayerUID _killer,_killer getVariable ["realname",name _killer],"187"] remoteExecCall ["life_fnc_wantedAdd",RSERV];
         };

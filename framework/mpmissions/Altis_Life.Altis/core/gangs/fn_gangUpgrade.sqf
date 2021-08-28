@@ -31,8 +31,8 @@ if (_action) then {
     group player setVariable ["gang_maxMembers",_slotUpgrade,true];
     hint parseText format [localize "STR_GNOTF_UpgradeSuccess",_maxMembers,_slotUpgrade,[_upgradePrice] call life_fnc_numberText];
 
-    if (life_var_hc_connected) then {
-        [2,group player] remoteExec ["HC_fnc_updateGang",life_var_headlessClient];
+    if (count extdb_var_database_headless_clients > 0) then {
+        [2,group player] remoteExec ["HC_fnc_updateGang",extdb_var_database_headless_client];
     } else {
         [2,group player] remoteExec ["TON_fnc_updateGang",RSERV];
     };

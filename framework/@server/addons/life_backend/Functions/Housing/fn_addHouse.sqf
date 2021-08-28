@@ -20,11 +20,11 @@ if (EXTDB_SETTING(getNumber,"DebugMode") isEqualTo 1) then {
     diag_log format ["Query: %1",_query];
 };
 
-[_query,1] call DB_fnc_asyncCall;
+[_query,1] call life_fnc_database_rawasync_request;
 
 uiSleep 0.3;
 
 _query = format ["SELECT id FROM houses WHERE pos='%1' AND pid='%2' AND owned='1'",_housePos,_uid];
-_queryResult = [_query,2] call DB_fnc_asyncCall;
+_queryResult = [_query,2] call life_fnc_database_rawasync_request;
 //systemChat format ["House ID assigned: %1",_queryResult select 0];
 _house setVariable ["house_id",(_queryResult select 0),true];

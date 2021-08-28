@@ -91,5 +91,5 @@ switch (_mode) do {
 };
 
 if (!isNil "_query") then {
-    [_query,1] call DB_fnc_asyncCall;
+    [_query,1] call life_fnc_database_rawasync_request;
 };

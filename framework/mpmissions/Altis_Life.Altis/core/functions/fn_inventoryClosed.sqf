@@ -16,10 +16,10 @@ params [
 if (isNull _container) exitWith {};
 
 if ((typeOf _container) in ["Box_IND_Grenades_F", "B_supplyCrate_F"]) exitWith {
-    if (life_var_hc_connected) then {
-        [_container] remoteExecCall ["HC_fnc_updateHouseContainers", life_var_headlessClient];
+    if (count extdb_var_database_headless_clients > 0) then {
+        [_container] remoteExecCall ["HC_fnc_updateHouseContainers", extdb_var_database_headless_client];
     } else {
-        [_container] remoteExecCall ["TON_fnc_updateHouseContainers", RSERV];
+        [_container] remoteExecCall ["TON_fnc_updateHouseContainers", 2];
     };
 
     [3] call SOCK_fnc_updatePartial;
@@ -27,10 +27,10 @@ if ((typeOf _container) in ["Box_IND_Grenades_F", "B_supplyCrate_F"]) exitWith {
 
 if (LIFE_SETTINGS(getNumber, "save_vehicle_inventory") isEqualTo 1) exitWith {
     if (_container isKindOf "Car" || {_container isKindOf "Air"} || {_container isKindOf "Ship"}) then {
-        if (life_var_hc_connected) then {
-            [_container, 1] remoteExecCall ["HC_fnc_vehicleUpdate", life_var_headlessClient];
+        if (count extdb_var_database_headless_clients > 0) then {
+            [_container, 1] remoteExecCall ["HC_fnc_vehicleUpdate", extdb_var_database_headless_client];
         } else {
-            [_container, 1] remoteExecCall ["TON_fnc_vehicleUpdate", RSERV];
+            [_container, 1] remoteExecCall ["TON_fnc_vehicleUpdate", 2];
         };
     };
 

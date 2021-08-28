@@ -15,7 +15,7 @@ params [
 if (_uid isEqualTo "") exitWith {};
 
 _query = format ["SELECT pid, pos, classname, inventory, gear, dir, id FROM containers WHERE pid='%1' AND owned='1'",_uid];
-_containers = [_query,2,true] call DB_fnc_asyncCall;
+_containers = [_query,2,true] call life_fnc_database_rawasync_request;
 
 _containerss = [];
 {
@@ -73,7 +73,7 @@ _containerss = [];
 } forEach _containers;
 
 _query = format ["SELECT pid, pos FROM houses WHERE pid='%1' AND owned='1'",_uid];
-_houses = [_query,2,true] call DB_fnc_asyncCall;
+_houses = [_query,2,true] call life_fnc_database_rawasync_request;
 
 _return = [];
 {

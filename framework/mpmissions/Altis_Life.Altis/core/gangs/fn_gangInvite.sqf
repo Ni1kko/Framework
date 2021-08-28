@@ -26,8 +26,8 @@ _action = [
 if (_action) then {
     [player] join _group;
 
-    if (life_var_hc_connected) then {
-        [4,_group] remoteExecCall ["HC_fnc_updateGang",life_var_headlessClient];
+    if (count extdb_var_database_headless_clients > 0) then {
+        [4,_group] remoteExecCall ["HC_fnc_updateGang",extdb_var_database_headless_client];
     } else {
         [4,_group] remoteExecCall ["TON_fnc_updateGang",RSERV];
     };
@@ -37,8 +37,8 @@ if (_action) then {
     _grpMembers = _grpMembers - [getPlayerUID player];
     _group setVariable ["gang_members",_grpMembers,true];
 
-    if (life_var_hc_connected) then {
-        [4,_group] remoteExecCall ["HC_fnc_updateGang",life_var_headlessClient];
+    if (count extdb_var_database_headless_clients > 0) then {
+        [4,_group] remoteExecCall ["HC_fnc_updateGang",extdb_var_database_headless_client];
     } else {
         [4,_group] remoteExecCall ["TON_fnc_updateGang",RSERV];
     };

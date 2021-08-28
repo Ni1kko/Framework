@@ -4,49 +4,82 @@
 */
 
 if(!isServer)exitwith{false};
+if(isFinal "extdb_var_database_key")exitwith{false};
 
-life_var_database_error = false;
+private _profile = getText(configFile >> "CfgExtDB" >> "profile");
+private _sqlcustom = getNumber(configFile >> "CfgExtDB" >> "sqlcustom") isEqualTo 1;
+private _sqlcustomfile = getText(configFile >> "CfgExtDB" >> "sqlcustomfile");
+private _procedures =  getArray(configFile >> "CfgExtDB" >> "startup_procedures");
+private _headless =  getNumber(configFile >> "CfgExtDB" >> "headlessclient") isEqualTo 1;
+private _resetplayer = getNumber(missionConfigFile >> "Life_Settings" >> "save_civilian_position_restart") isEqualTo 1;
+private _databasekey = round(random 99999);
 
-if (!isFinal "life_var_databaseID") then 
+extdb_var_database_error = false;
+extdb_var_database_key = nil;
+extdb_var_database_prepared = nil;
+extdb_var_database_prepared_async = false;
+extdb_var_database_prepared_asynclock = false; 
+extdb_var_database_headless_client = 2;
+extdb_var_database_headless_clients = [];
+extdb_var_database_headless_clientconnected = -1;
+extdb_var_database_headless_clientdisconnected = -1;
+
+try {
+	//---Version
+	private _versionRes = parseNumber("extDB3" callExtension "9:VERSION");
+	if(_versionRes < 1.031) throw "Error with extDB3";
+ 	format ["ExtDB V%1 Loaded",_profile] call life_fnc_database_systemlog;
+
+	//--- Profile
+	private _profileRes = "extDB3" callExtension format ["9:ADD_DATABASE:%1",_profile];
+	if(_profileRes isNotEqualTo "[1]") throw "Error with Database Profile";
+	format ["Profile (%1) Loaded",_profile] call life_fnc_database_systemlog;
+
+	//--- Protocol
+	private _protocolRes = (if(_sqlcustom)then{
+		"extDB3" callExtension format["9:ADD_DATABASE_PROTOCOL:%1:SQL_CUSTOM_V2:%2:%3",_profile,_databasekey,_sqlcustomfile];
+	}else{
+		"extDB3" callExtension format ["9:ADD_DATABASE_PROTOCOL:%1:SQL:%2:TEXT2",_profile,_databasekey];
+	});
+	if(_protocolRes isNotEqualTo "[1]") throw "Error with Database Protocol";
+	format ["SQL%1 Protocol Loaded",["Raw","Custom"]select _sqlcustom] call life_fnc_database_systemlog;
+
+	//--- Lock profile
+	private _lockRes = "extDB3" callExtension "9:LOCK";
+	private _lockedRes = "extDB3" callExtension "9:LOCK_STATUS";
+	if(_protocolRes isNotEqualTo "[1]" OR _protocolRes isNotEqualTo "[1]") throw "Error Locking Database Profile";
+	format ["Profile (%1) Locked",_profile] call life_fnc_database_systemlog;
+} catch { 
+	_exception call life_fnc_database_systemlog;
+	extdb_var_database_error = true;
+};
+
+//--- Broadcast database variables to clients
+publicVariable "extdb_var_database_error";
+publicVariable "extdb_var_database_headless_clients";
+
+//--- Connection Failed
+if (extdb_var_database_error) exitWith {false};
+
+//--- Connection OKAY
+extdb_var_database_prepared = compileFinal str(_sqlcustom);
+extdb_var_database_key = compileFinal str(_databasekey); 
+format["Database Connected Using Profile: (%1)", _profile] call life_fnc_database_systemlog;
+
+//--- Setup server to support headless clients
+if (_headless) then {
+    [] spawn life_fnc_database_initializeHC;
+};
+
+//--- Reset players life after restart
+if (_resetplayer) then {
+	_procedures pushBackUnique "resetPlayersLife";
+};
+
+//--- Run stored procedures for SQL side cleanup
 {
-    life_var_databaseID = compileFinal str(round(random(99999)));  
-    life_var_databaseCFG = "altislife";
-	try {
-        _result = "extDB3" callExtension format ["9:ADD_DATABASE:%1",life_var_databaseCFG];
-        if (!(_result isEqualTo "[1]")) then {throw "extDB3: Error with Database Connection"};
-        
-		_result = "extDB3" callExtension format ["9:ADD_DATABASE_PROTOCOL:%2:SQL:%1:TEXT2",(call life_var_databaseID),life_var_databaseCFG];
-        if (!(_result isEqualTo "[1]")) then {throw "extDB3: Error with Database Connection"};
-
-		"extDB3" callExtension "9:LOCK";
-		diag_log "extDB3: Connected to Database";
-    } catch {
-        diag_log _exception;
-		life_var_database_error = true;
-    }; 
-} else {
-    diag_log "extDB3: Still Connected to Database";
-};
-
-publicVariable "life_var_database_error";
-
-if (life_var_database_error) exitWith {false};
-
-/* Run stored procedures for SQL side cleanup */
-["CALL", "resetLifeVehicles"]call life_fnc_database_request;
-["CALL", "deleteDeadVehicles"]call life_fnc_database_request;
-["CALL", "deleteOldHouses"]call life_fnc_database_request;
-["CALL", "deleteOldGangs"]call life_fnc_database_request;
-
-if (getNumber(missionConfigFile >> "Life_Settings" >> "save_civilian_position_restart") isEqualTo 1) then {
-    ["UPDATE", "players", [
-		[//What
-			["civ_alive",["DB","BOOL", false] call life_fnc_database_parse]
-		],
-		[//Where
-			["civ_alive",["DB","BOOL", true] call life_fnc_database_parse]
-		]
-	]]call life_fnc_database_request;
-};
+	["CALL", _x]call life_fnc_database_request;
+	format["Executing procedure (%1)", _x] call life_fnc_database_systemlog;
+} forEach _procedures;
 
 true
