@@ -32,7 +32,7 @@ class CfgRCON
     };
 
     //---
-    restartTimer[] = {4, 0}; //restart server after {x hours, y minuets}
+    restartTimer[] = {4, 0}; //restart server after {x hours, y minutes}
     useShutdown = 1;         //(1 = shutdown, 0 = restart)
     useRestartMessages = 1;  //show restart messages
     restartWarningTime[] = { //restart messages intervals x,x,x... mins before restarts

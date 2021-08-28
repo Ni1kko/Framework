@@ -42,13 +42,14 @@ private _mins2hrsmins = compile "
 	[_hours,_minutes]
 ";
 
+
 while {true} do {
 	private _serveruptime = round(call compile("extDB3" callExtension "9:UPTIME:MINUTES"));
-	private _rconuptime = round((diag_tickTime - _rconinittime) / 60);
+	private _rconuptime = round((diag_tickTime - _rconinittime) / 60);;
 	private _timeRestart = life_var_rcon_RestartTime - _serveruptime;
 	private _timeRestart_hh_mm = _timeRestart call _mins2hrsmins; 
 	private _timeRestart_message = format["Next %1 In: %2h %3min",(if(_rconshutdown)then{'Shutdown'}else{'Restart'}),_timeRestart_hh_mm#0,_timeRestart_hh_mm#1];
-
+	
 	//--- Main events
 	if(_serveruptime > 0 && _rconuptime > 0)then
 	{ 
@@ -58,12 +59,16 @@ while {true} do {
 			//--- Needs unlocked
 			if (life_var_rcon_RestartMode isEqualTo 0 && _rconlocked) then{
 				"#unlock" call life_fnc_rcon_sendCommand;
-				life_var_rcon_serverLocked = false;
-				publicVariable "life_var_rcon_serverLocked";
 				_rconlocked = false;
 				"Lock Event: server unlocked and accepting players!" call life_fnc_rcon_systemlog;
 			};
-			
+
+			//--- Uptime
+			if(life_var_rcon_upTime isNotEqualTo _rconuptime)then{
+				life_var_rcon_upTime = _rconuptime;
+				publicVariable "life_var_rcon_upTime";
+			};
+
 			//--- Warning messages
 			if (typeName life_var_rcon_RestartMessages isEqualTo "ARRAY") then { 
 				if !(life_var_rcon_RestartMessages isEqualTo []) then {
@@ -87,8 +92,6 @@ while {true} do {
 					"Lock Event: Server locked for restart" call life_fnc_rcon_systemlog;
 					"You will be kicked off the server due to a restart." remoteExec ["hint",-2]; 
 					"Server locked, You will be kicked soon" call life_fnc_rcon_sendBroadcast;
-					life_var_rcon_serverLocked = true;
-					publicVariable "life_var_rcon_serverLocked";
 					life_var_rcon_RestartMode = 1;
 					publicVariable "life_var_rcon_RestartMode";
 				};

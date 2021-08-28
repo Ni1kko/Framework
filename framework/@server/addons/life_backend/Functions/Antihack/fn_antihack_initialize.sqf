@@ -72,7 +72,8 @@ try {
 		"_rnd_banme",
 		"_rnd_runserver",
 		"_rnd_runglobal",
-		"_rnd_runtarget"
+		"_rnd_runtarget",
+		"_rnd_mins2hrsmins"
 	];
 
 	//--- create random vars
@@ -216,22 +217,40 @@ try {
 				_antihackclient = _antihackclient + "
 				uiSleep 1;
 			};
-		"";";
+		"";
 
+		"+_rnd_mins2hrsmins+" = compile ""
+			private _hours = floor((_this * 60 ) / 60 / 60);
+			private _minutes = (((_this * 60 ) / 60 / 60) - _hours);
+			if(_minutes == 0)then{_minutes = 0.0001;};
+			_minutes = round(_minutes * 60);
+			[_hours,_minutes]
+		"";
+		
+		";
+	
 		if(_interuptinfo)then{
 			_antihackclient = _antihackclient + " 
 				"+_rnd_codetwo+" = compileFinal ""
 					if("+_rnd_isadmin+")then{diag_log 'Antihack Codetwo Active!'};
 					while{true}do{
 						waitUntil{!(isNull (findDisplay 49))};
-						private _text = '';   
+						private _text = '';";
+						_antihackclient = _antihackclient + "
 						waitUntil{
-							private _textNew = format['%1 Life AntiCheat | Total Players Online (%3/%4) | Guid: (%2)',worldName,call(player getVariable ['BEGUID',{''}]), count(allPlayers - entities 'HeadlessClient_F'),((playableSlotsNumber west) + (playableSlotsNumber independent) + (playableSlotsNumber civilian)  + (playableSlotsNumber east) + 1)];  
+							private _textNew = format['%1 Life AntiCheat | Total Players Online (%3/%4) | Guid: (%2)',worldName,call(player getVariable ['BEGUID',{''}]), count(allPlayers - entities 'HeadlessClient_F'),((playableSlotsNumber west) + (playableSlotsNumber independent) + (playableSlotsNumber civilian)  + (playableSlotsNumber east) + 1)];";
+							if(_rconReady)then{ 
+								_antihackclient = _antihackclient + " 
+									private _timeRestart = (life_var_rcon_RestartTime - life_var_rcon_upTime) call "+_rnd_mins2hrsmins+";  
+									_textNew = format['%1 | Server Restart In: %2h %3min',_textNew,_timeRestart#0,_timeRestart#1];
+								";
+							};
+							_antihackclient = _antihackclient + "
 							if(_text isNotEqualTo _textNew)then{
 								_text = _textNew;
 								((findDisplay 49) displayCtrl 120) ctrlSetText _text;
 							};
-							uiSleep 0.2;
+							uiSleep 2;
 							isNull (findDisplay 49)
 						};
 					};
