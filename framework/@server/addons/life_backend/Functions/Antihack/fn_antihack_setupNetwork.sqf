@@ -10,13 +10,17 @@ if(isRemoteExecuted)exitwith{[remoteExecutedOwner,"RemoteExecuted `fn_antihack_s
 params[
 	["_antihack","",[""]],
 	["_netVar","",[""]],
-	["_sysVar","",[""]]
+	["_sysVar","",[""]],
+	["_hcvar","",[""]]
 ];
 
 if(_antihack isEqualTo "" || _netVar isEqualTo "")exitwith{false};
 
-//--- Compile Antihack
+private _selectedHC = [];
+private _headlessclient =objNull;
 private _compiletime = diag_tickTime;
+
+//--- Compile Antihack
 ["Compiling Antihack Thread"] call life_fnc_antihack_systemlog;
 _antihack = compile _antihack;
 [format["Antihack Thread Compiled... compile took %1 seconds",(diag_tickTime - _compiletime)]] call life_fnc_antihack_systemlog;
@@ -110,9 +114,10 @@ _sysVar addPublicVariableEventHandler {
     publicVariable _var;
 };
 
-//---
+//--- Is ready to transfer main code
 life_var_antihack_networkReady = true;
 
+//--- Sends given code to all clients
 private _sendAntiHack = {
 	params ['_code'];
 	{  
@@ -120,17 +125,23 @@ private _sendAntiHack = {
 	} forEach allPlayers - entities "HeadlessClient_F";
 };
 
+//--- Starts new thread on given ownerID that loops and sends given code to all clients
 private _transferAntiHack = {
+	life_var_antihack_networkReady = false; 
+	missionNamespace setVariable [_this#2, _this#3];
 	[[_this#0,_this#1],{
 		params ['_code','_func'];
 		diag_log "Anticheat Thread Loaded";
+		life_var_antihack_networkReady = true;
+		publicVariableServer "life_var_antihack_networkReady";
 		while {true} do {
 			_code call _func;
 			uiSleep (random [3,5,7]);
 		};
-	}] remoteExec ["spawn", _this#2];
+	}] remoteExec ["spawn", _this#3];
 };
 
+//--- Gets HC Object from given steamID
 private _getHeadlessclient = {
 	private _object = objNull;
 	{  
@@ -141,27 +152,25 @@ private _getHeadlessclient = {
 	_object
 };
 
-private _selectedHC = [];
-private _headlessclient =objNull;
-
-//--- Send Compiled Code
-while {true} do {
-	
-	//Verify HC
+//--- Send/Transfer Compiled Code
+while {true} do 
+{
+	//Get HC if connected
 	if(isNull _headlessclient AND count extdb_var_database_headless_clients > 0)then{
 		_selectedHC = selectRandom extdb_var_database_headless_clients;
 		_headlessclient = (_selectedHC#0) call _getHeadlessclient;
 	};
-
-	//Send AH
+	
+	//Transfer AH Sending To HC
 	if(!isNull _headlessclient)then{
-		[_antihack, _sendAntiHack, owner _headlessclient] call _transferAntiHack;
+		[_antihack, _sendAntiHack, _hcvar, owner _headlessclient] call _transferAntiHack;
 		waitUntil {uiSleep 5; isNull((_selectedHC#0) call _getHeadlessclient)};
-		_selectedHC = [];
+		missionNamespace setVariable [_hcvar, -100];
+		life_var_antihack_networkReady = true;
 		_headlessclient = objNull;
-	}else{
+		_selectedHC = [];
+	}else{//Send AH To Clients
 		_antihack call _sendAntiHack;
+		uiSleep (random [3,5,7]);
 	};
-
-	uiSleep (random [3,5,7]);
 };

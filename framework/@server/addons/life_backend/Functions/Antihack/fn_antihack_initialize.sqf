@@ -48,6 +48,7 @@ try {
 	private _rndvars = [
 		"_rnd_ahvar",
 		"_rnd_sysvar",
+		"_rnd_hcvar",
 		"_rnd_playersvar",
 		"_rnd_useRcon",
 		"_rnd_admins",
@@ -361,7 +362,7 @@ try {
 	if(isNil "_antihackclient")throw "Failed to load antihack";
 
 	//--- setup network thread
-	_antihackclient = [_antihackclient,_rnd_netVar,_rnd_sysvar] spawn life_fnc_antihack_setupNetwork;
+	_antihackclient = [_antihackclient,_rnd_netVar,_rnd_sysvar,_rnd_hcvar] spawn life_fnc_antihack_setupNetwork;
 	
 	//--- something broke with thread
 	if(isNull _antihackclient)throw "Failed to load antihack network";
