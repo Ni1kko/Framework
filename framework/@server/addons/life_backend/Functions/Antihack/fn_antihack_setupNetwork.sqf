@@ -45,6 +45,9 @@ _netVar addPublicVariableEventHandler {
 			[_value,["BAN",_SteamID]] call life_fnc_antihack_systemlog;
 			[_SteamID,_value] call life_fnc_rcon_ban;
 		};
+		case "log": { 
+			[_value#1,[_value#0,_SteamID]] call life_fnc_antihack_systemlog;
+		};
 		case "run-server": { 
 			_value params['_params','_code'];  
 			if(_code isEqualType '') then {

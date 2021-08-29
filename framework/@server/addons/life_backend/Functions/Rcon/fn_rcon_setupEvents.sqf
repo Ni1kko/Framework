@@ -45,7 +45,7 @@ private _mins2hrsmins = compile "
 
 while {true} do {
 	private _serveruptime = round(call compile("extDB3" callExtension "9:UPTIME:MINUTES"));
-	private _rconuptime = round((diag_tickTime - _rconinittime) / 60);;
+	private _rconuptime = round((diag_tickTime - _rconinittime) / 60);
 	private _timeRestart = life_var_rcon_RestartTime - _serveruptime;
 	private _timeRestart_hh_mm = _timeRestart call _mins2hrsmins; 
 	private _timeRestart_message = format["Next %1 In: %2h %3min",(if(_rconshutdown)then{'Shutdown'}else{'Restart'}),_timeRestart_hh_mm#0,_timeRestart_hh_mm#1];
