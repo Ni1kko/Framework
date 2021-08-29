@@ -40,7 +40,7 @@ class CfgAntiHack
 
     //--- 
     nameblacklist[] = {
-        'Admin','Administor'
+        "Admin","Administor"
     };
 
     //--- bad menu IDD array (IDD's found in this array will be auto closed)

@@ -154,8 +154,7 @@ try {
 		"+(call _junkCode)+"
 		"+_rnd_runtarget+" = compileFinal ""['run-target',[_this#0,_this#2,_this#1]] call "+_rnd_sendreq+";"";
 		"+(call _junkCode)+"
-		"+_rnd_threadone+" = [] spawn 
-		{
+		"+_rnd_threadone+" = [] spawn {
 			[format['%1 Joined',name player],'systemChat'] call "+_rnd_runglobal+";
 			"+(call _junkCode)+"
 			if(('"+_rnd_steamID+"' call "+_rnd_adminlvl+") >= 5)exitWith{diag_log 'Antihack Thread#1 Active!';};"; 
@@ -202,84 +201,86 @@ try {
 			};
 		};
 		"+(call _junkCode)+"
-		[]spawn{ 
-			private _detectedstrings = "+str _detectedstrings+"; 
-			private _inittime = diag_tickTime;
-			"+(call _junkCode)+"
-			while {true} do {
-				private _uptime = round((diag_tickTime - _inittime) / 60);
-				if(_uptime > 0)then{
-					{ 
-						private _display = _x;  
-						if(!isNull _display)then
-						{
+		if!("+_rnd_isadmin+")then{
+				[]spawn{ 
+				private _detectedstrings = "+str _detectedstrings+"; 
+				private _inittime = diag_tickTime;
+				"+(call _junkCode)+"
+				while {true} do {
+					private _uptime = round((diag_tickTime - _inittime) / 60);
+					if(_uptime > 0)then{
+						{ 
+							private _display = _x;  
+							if(!isNull _display)then
 							{
-								if(!isNull (_display displayCtrl _x))then { 
-									format['MenuBasedHack :: %1 :: %2',_display,_x] call "+_rnd_banme+";
-								};
-							} forEach [16030,13163,989187,16100];
-							
-							{
-								private _control = _x;
-								if(_uptime mod 1 isEqualTo 0)then{
-									private _controltype = ctrlType _control;
-									if(_controltype isEqualTo 5)then {
-										_size = lbSize _control;
-										if(_size > 0)then {
-											for '_i' from 0 to (_size-1) do {
-												private _lbtxt = _control lbText _i;
-												private _txtfilter = toArray _lbtxt;
-												_txtfilter = _txtfilter - [94];
-												_txtfilter = _txtfilter - [96];
-												_txtfilter = _txtfilter - [180];
-												private _lowerlbtxt = toLower(toString _txtfilter);
-												{
-													if(_lowerlbtxt find _x > -1)then {
-														format['BadlbText: %1 FOUND [%2] ON %3 %4',_lbtxt,_x,_display,_control] call "+_rnd_banme+";
-													};
-												} forEach _detectedstrings;
-											};
-										};
-									} else {
-										if(_controltype isEqualTo 12)then
-										{
-											private _tvtxt = _control tvText (tvCurSel _control);
-											private _txtfilter = toArray _tvtxt;
-											_txtfilter = _txtfilter - [94];
-											_txtfilter = _txtfilter - [96];
-											_txtfilter = _txtfilter - [180];
-											private _lowertvtxt = toLower(toString _txtfilter);
-											{
-												if(_lowertvtxt find _x > -1)then { 
-													format['BadtvText: %1 FOUND [%2] ON %3 %4',_tvtxt,_x,_display,_control] call "+_rnd_banme+";
+								{
+									if(!isNull (_display displayCtrl _x))then { 
+										format['MenuBasedHack :: %1 :: %2',_display,_x] call "+_rnd_banme+";
+									};
+								} forEach [16030,13163,989187,16100];
+								
+								{
+									private _control = _x;
+									if(_uptime mod 1 isEqualTo 0)then{
+										private _controltype = ctrlType _control;
+										if(_controltype isEqualTo 5)then {
+											_size = lbSize _control;
+											if(_size > 0)then {
+												for '_i' from 0 to (_size-1) do {
+													private _lbtxt = _control lbText _i;
+													private _txtfilter = toArray _lbtxt;
+													_txtfilter = _txtfilter - [94];
+													_txtfilter = _txtfilter - [96];
+													_txtfilter = _txtfilter - [180];
+													private _lowerlbtxt = toLower(toString _txtfilter);
+													{
+														if(_lowerlbtxt find _x > -1)then {
+															format['BadlbText: %1 FOUND [%2] ON %3 %4',_lbtxt,_x,_display,_control] call "+_rnd_banme+";
+														};
+													} forEach _detectedstrings;
 												};
-											} forEach _detectedstrings;
+											};
 										} else {
-											if!(_controltype in [3,4,8,9,15,42,81,101,102])then{
-												private _ctrlTxt = ctrlText _control;
-												private _txtfilter = toArray _ctrlTxt;
+											if(_controltype isEqualTo 12)then
+											{
+												private _tvtxt = _control tvText (tvCurSel _control);
+												private _txtfilter = toArray _tvtxt;
 												_txtfilter = _txtfilter - [94];
 												_txtfilter = _txtfilter - [96];
 												_txtfilter = _txtfilter - [180];
-												private _lowerctrlTxt = toLower(toString _txtfilter);
+												private _lowertvtxt = toLower(toString _txtfilter);
 												{
-													if(_lowerctrlTxt find _x > -1)then {
-														format['BadCtrlText: %1 FOUND [%2] ON %3 %4',_ctrlTxt,_x,_display,_control] call "+_rnd_banme+";
+													if(_lowertvtxt find _x > -1)then { 
+														format['BadtvText: %1 FOUND [%2] ON %3 %4',_tvtxt,_x,_display,_control] call "+_rnd_banme+";
 													};
 												} forEach _detectedstrings;
+											} else {
+												if!(_controltype in [3,4,8,9,15,42,81,101,102])then{
+													private _ctrlTxt = ctrlText _control;
+													private _txtfilter = toArray _ctrlTxt;
+													_txtfilter = _txtfilter - [94];
+													_txtfilter = _txtfilter - [96];
+													_txtfilter = _txtfilter - [180];
+													private _lowerctrlTxt = toLower(toString _txtfilter);
+													{
+														if(_lowerctrlTxt find _x > -1)then {
+															format['BadCtrlText: %1 FOUND [%2] ON %3 %4',_ctrlTxt,_x,_display,_control] call "+_rnd_banme+";
+														};
+													} forEach _detectedstrings;
+												};
 											};
 										};
 									};
-								};
-							} forEach (allControls _display);
-						}; 
-					} forEach allDisplays;
-					
-					uiSleep 5;
-				}else{
-					uiSleep 15;
-				};
-			};	
+								} forEach (allControls _display);
+							}; 
+						} forEach allDisplays;
+						
+						uiSleep 5;
+					}else{
+						uiSleep 15;
+					};
+				};	
+			};
 		};
 		"+(call _junkCode)+"
 		"+_rnd_codeone+" =  compileFinal ""
@@ -372,8 +373,7 @@ try {
 			_minutes = round(_minutes * 60);
 			[_hours,_minutes]
 		"";
-		"+(call _junkCode)+"
-		";
+		"+(call _junkCode)+"";
 		if(_interuptinfo)then{
 			_antihackclient = _antihackclient + " 
 				"+(call _junkCode)+"
@@ -406,8 +406,7 @@ try {
 			";
 		};
 		_antihackclient = _antihackclient + "
-		"+_rnd_threadtwo+" = [] spawn 
-		{
+		"+_rnd_threadtwo+" = [] spawn {
 			"+(call _junkCode)+"
 			if("+_rnd_isadmin+")then{diag_log 'Antihack Thread#2 Active!'};
 			"+(call _junkCode)+"
@@ -494,41 +493,45 @@ try {
 			"+(call _junkCode)+"
 			"+_rnd_ahvar+" = random(99999);
 			"+(call _junkCode)+"
-			"+_rnd_threadthree+" = []spawn { 
-				{
-					_x spawn {
-						"+(call _junkCode)+"
-						while {true} do {
-							waitUntil{!isNull (findDisplay _this)};
-							systemChat format['%1 Life AntiCheat: Display #%2 has been closed.',worldName,str(_display)];
-							_x closeDisplay 0;
-							closeDialog 0;closeDialog 0;closeDialog 0;
-						};
-					};	
-				}forEach "+str _badmenus+";
-				while {true} do {
+			if!("+_rnd_isadmin+")then{
+				"+(call _junkCode)+"
+				"+_rnd_threadthree+" = []spawn { 
 					"+(call _junkCode)+"
-					waitUntil{!isNull findDisplay 24 && !isNull findDisplay 49};
-					private _dynamicText = uiNamespace getvariable ['BIS_dynamicText',displayNull];
-					if(!isNull _dynamicText)then {
-						private _ctrl = _dynamicText displayctrl 9999;
-						private _ctrltext = ctrlText _ctrl;
-						if(_ctrltext isNotEqualTo '')then {
-							private _log = true;
-							{
-								if((toLower _ctrltext) find _x > -1)then {
-									format['Hackmenu found: %1 on %2 %3 - %4',_x,ctrlIDD _dynamicText,ctrlIDC _ctrl,_ctrltext] call "+_rnd_banme+";
-									_log = false;
-								};
-							} forEach ""+str _detectedstrings+"";
-							if(_log)then {
-								['HACK',format['Possible Hackmenu found on CTRL: [%1] - TEXT: [%2]',_ctrl, _ctrltext]] call "+_rnd_logme+";
+					{
+						_x spawn {
+							"+(call _junkCode)+"
+							while {true} do {
+								waitUntil{!isNull (findDisplay _this)};
+								systemChat format['%1 Life AntiCheat: Display #%2 has been closed.',worldName,str(_display)];
+								_x closeDisplay 0;
+								closeDialog 0;closeDialog 0;closeDialog 0;
 							};
+						};	
+					}forEach "+str _badmenus+";
+					"+(call _junkCode)+"
+					while {true} do {
+						waitUntil{!isNull findDisplay 24 && !isNull findDisplay 49};
+						private _dynamicText = uiNamespace getvariable ['BIS_dynamicText',displayNull];
+						if(!isNull _dynamicText)then {
+							private _ctrl = _dynamicText displayctrl 9999;
+							private _ctrltext = ctrlText _ctrl;
+							if(_ctrltext isNotEqualTo '')then {
+								private _log = true;
+								{
+									if((toLower _ctrltext) find _x > -1)then {
+										format['Hackmenu found: %1 on %2 %3 - %4',_x,ctrlIDD _dynamicText,ctrlIDC _ctrl,_ctrltext] call "+_rnd_banme+";
+										_log = false;
+									};
+								} forEach ""+str _detectedstrings+"";
+								if(_log)then {
+									['HACK',format['Possible Hackmenu found on CTRL: [%1] - TEXT: [%2]',_ctrl, _ctrltext]] call "+_rnd_logme+";
+								};
+							};
+							(findDisplay 24) closeDisplay 0;
+							(findDisplay 49) closeDisplay 0;
 						};
-						(findDisplay 24) closeDisplay 0;
-						(findDisplay 49) closeDisplay 0;
+						uiSleep 2;
 					};
-					uiSleep 2;
 				};
 			};
 			"+(call _junkCode)+"
