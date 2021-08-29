@@ -10,33 +10,39 @@ class CfgPatches {
 class CfgAntiHack
 {
     //--- logging
-    rptlogs = 1;             //Log to RPT file
-    conlogs = 1;             //Log to Console
-    extlogs = 1;             //Log to Extension
-    dblogs = 1;              //Log to Database (Kicks & Bans Only)
-    
+    rptlogs = 1;                //Log to RPT file
+    conlogs = 1;                //Log to Console
+    extlogs = 1;                //Log to Extension
+    dblogs = 1;                 //Log to Database (Kicks & Bans Only)
+    dblogtypes[] = {            //Types of logs to save to database (0 = disabled, 1 enabled)
+        { "KICK",   1 },
+        { "BAN",    1 },
+        { "HACK",   1 },
+        { "ADMIN",  1 }
+    };
+
     //--- options
-    checklanguage = 1;       //check for language
-    checkrecoil = 1;         //check for weapon recoil hack              Notes: (admins excluded)
-    checkspeed = 1;          //check for walking speed hack              Notes: (admins excluded)
-    checkdamage = 1;         //check for god mode hack                   Notes: (admins excluded)
-    checksway = 1;           //check for weapon sway hack                Notes: (admins excluded)
-    checkmapEH = 1;          //check for added map event handlers        Notes: (admin lvl 3 and above excluded)
-    checkvehicleweapon = 1;  //check for added vehicle weapons           Notes: (admin lvl 5 and above excluded)
-    checkterraingrid = 1;    //
-    checkmemoryhack = 1;  //
-    checkdetectedmenus = 1;  //
-    checkdetectedvariables = 1;  //
-    checknamebadchars = 1;  //
-    checknameblacklist = 1;  //
-   
-    use_interuptinfo = 1; //Custom escape menu text
+    checklanguage = 1;           //check for language                        Notes: (admin lvl 1 and above excluded)
+    checknamebadchars = 1;       //check for bad chars in players names      Notes: (admin lvl 1 and above excluded, bad chars can break BattleEye, Database, and many more things in arma)
+    checknameblacklist = 1;      //check for blacklisted profile name        Notes: (admin lvl 1 and above excluded)
+    checkrecoil = 1;             //check for weapon recoil hack              Notes: (admin lvl 1 and above excluded)
+    checkspeed = 1;              //check for walking speed hack              Notes: (admin lvl 3 and above excluded)
+    checkdamage = 1;             //check for god mode hack                   Notes: (admin lvl 3 and above excluded)
+    checksway = 1;               //check for weapon sway hack                Notes: (admin lvl 3 and above excluded)
+    checkmapEH = 1;              //check for added map event handlers        Notes: (admin lvl 3 and above excluded)
+    checkterraingrid = 1;        //check for no grass hack                   Notes: (admin lvl 3 and above excluded)
+    checkvehicleweapon = 1;      //check for added vehicle weapons           Notes: (admin lvl 5 and above excluded)
+    checkmemoryhack = 1;         //check for memoryhacks                     Notes: (admin lvl 5 and above excluded)
+    checkdetectedmenus = 1;      //check for known hack menus                Notes: (admin lvl 6 and above excluded)          
+    checkdetectedvariables = 1;  //check for known hack variables            Notes: (admin lvl 7 and above excluded)   
+    
+    use_interuptinfo = 1;        //Custom escape menu text
     
     //--- Admins
-    use_databaseadmins = 1;  // Get all admins LVL 1 to LVL 99 from DB
-    use_debugconadmins = 0;  // Get all admins from descrption.ext
+    use_databaseadmins = 1;      // Get all admins LVL 1 to LVL 99 from DB
+    use_debugconadmins = 0;      // Get all admins from descrption.ext
 
-    serverlanguage = 'English'; //Language all clients must have, if (checklanguage = 1)
+    serverlanguage = 'English';  //Language all clients must have, if (checklanguage = 1)
 
     //--- 
     nameblacklist[] = {

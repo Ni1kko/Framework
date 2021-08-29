@@ -35,7 +35,7 @@ try {
 	private _checkmapEH = getNumber(_config >> "checkmapEH") isEqualTo 1;
 	private _checkvehicleweapon = getNumber(_config >> "checkvehicleweapon") isEqualTo 1; 
 	private _checkterraingrid = getNumber(_config >> "checkterraingrid") isEqualTo 1;
-	private _checkdetectedmenus = getNumber(_config >> "checkdetectedvariables") isEqualTo 1;
+	private _checkdetectedmenus = getNumber(_config >> "checkdetectedmenus") isEqualTo 1;
 	private _checkdetectedvariables = getNumber(_config >> "checkdetectedvariables") isEqualTo 1;
 	private _checknamebadchars = getNumber(_config >> "checknamebadchars") isEqualTo 1;
 	private _checknameblacklist = getNumber(_config >> "checknameblacklist") isEqualTo 1;
@@ -416,42 +416,48 @@ try {
 			if(_checklanguage)then{ 
 				_antihackclient = _antihackclient + "
 					"+(call _junkCode)+"
-					if (toLower(language) isNotEqualTo toLower("+_serverlanguage+"))then{ 
-						format['Bad Language! %1 Is Not Allowed',language] call "+_rnd_kickme+";
+					if !("+_rnd_isadmin+")then{
+						if (toLower(language) isNotEqualTo toLower("+_serverlanguage+"))then{ 
+							format['Bad Language! %1 Is Not Allowed',language] call "+_rnd_kickme+";
+						};
 					};
 				";
 			};
 			if(_checknamebadchars)then{
 				_antihackclient = _antihackclient + "
 					"+(call _junkCode)+"
-					_chars = [];
-					_lang =	 toLower(language);
-					_badchar = false;
-					"+(call _junkCode)+"
-					if (_lang in ['english','german','italian','spanish'])then{
-						_chars = ['Ă','Å','Ć','Č','Ċ','Đ','È','Ę','Ğ','Ģ','Ħ','Ï','Ĩ','Ĵ','ĵ','ĸ','Ŀ','Ľ','Ņ','Ŋ','Ő','Ô','Þ','Ř','Ş','Ţ','Ů','Û','Ŵ','Ŷ','Ż'];
-					}else{
-						_chars = switch(_lang)do{
-							case 'russian': {['Ă','Å','Ć','Č','Ċ','Đ','È','Ę','Ğ','Ģ','Ħ','Ï','Ĩ','Ĵ','ĵ','Ŀ','Ľ','Ņ','Ŋ','Ő','Ô','Þ','Ř','Ş','Ţ','Ů','Û','Ŵ','Ŷ','Ż']};
-							case 'french':  {['Ă','Å','Ć','Č','Ċ','Đ','Ę','Ğ','Ģ','Ħ','Ĩ','Ĵ','ĵ','ĸ','Ŀ','Ľ','Ņ','Ŋ','Ő','Þ','Ř','Ş','Ţ','Ů','Ŵ','Ŷ','Ż']}; 
-							case 'polish':  {['Ă','Å','Ć','Č','Ċ','Đ','È','Ę','Ğ','Ģ','Ħ','Ï','Ĩ','Ĵ','ĵ','Ŀ','Ľ','Ņ','Ŋ','Ő','Ô','Þ','Ř','Ş','Ţ','Ů','Û','Ŵ','Ŷ']}; 
-							case 'czech':   {['Ă','Å','Ć','Ċ','Đ','È','Ę','Ğ','Ģ','Ħ','Ï','Ĩ','Ĵ','ĵ','ĸ','Ŀ','Ľ','Ņ','Ŋ','Ő','Ô','Þ','Ş','Ţ','Û','Ŵ','Ŷ','Ż']};    
-							default {[]};
-						}; 
+					if !("+_rnd_isadmin+")then{
+						_chars = [];
+						_lang =	 toLower(language);
+						_badchar = false;
+						"+(call _junkCode)+"
+						if (_lang in ['english','german','italian','spanish'])then{
+							_chars = ['Ă','Å','Ć','Č','Ċ','Đ','È','Ę','Ğ','Ģ','Ħ','Ï','Ĩ','Ĵ','ĵ','ĸ','Ŀ','Ľ','Ņ','Ŋ','Ő','Ô','Þ','Ř','Ş','Ţ','Ů','Û','Ŵ','Ŷ','Ż'];
+						}else{
+							_chars = switch(_lang)do{
+								case 'russian': {['Ă','Å','Ć','Č','Ċ','Đ','È','Ę','Ğ','Ģ','Ħ','Ï','Ĩ','Ĵ','ĵ','Ŀ','Ľ','Ņ','Ŋ','Ő','Ô','Þ','Ř','Ş','Ţ','Ů','Û','Ŵ','Ŷ','Ż']};
+								case 'french':  {['Ă','Å','Ć','Č','Ċ','Đ','Ę','Ğ','Ģ','Ħ','Ĩ','Ĵ','ĵ','ĸ','Ŀ','Ľ','Ņ','Ŋ','Ő','Þ','Ř','Ş','Ţ','Ů','Ŵ','Ŷ','Ż']}; 
+								case 'polish':  {['Ă','Å','Ć','Č','Ċ','Đ','È','Ę','Ğ','Ģ','Ħ','Ï','Ĩ','Ĵ','ĵ','Ŀ','Ľ','Ņ','Ŋ','Ő','Ô','Þ','Ř','Ş','Ţ','Ů','Û','Ŵ','Ŷ']}; 
+								case 'czech':   {['Ă','Å','Ć','Ċ','Đ','È','Ę','Ğ','Ģ','Ħ','Ï','Ĩ','Ĵ','ĵ','ĸ','Ŀ','Ľ','Ņ','Ŋ','Ő','Ô','Þ','Ş','Ţ','Û','Ŵ','Ŷ','Ż']};    
+								default {[]};
+							}; 
+						};
+						"+(call _junkCode)+"
+						{if([_x, profileName,false]call BIS_fnc_inString)exitWith{_badchar = true;}}foreach _chars;
+						if(_badchar)then{[('Bad Name! Char: (' + (_x) + ') Is Not Allowed')] call "+_rnd_kickme+";};
 					};
-					"+(call _junkCode)+"
-					{if([_x, profileName,false]call BIS_fnc_inString)exitWith{_badchar = true;}}foreach _chars;
-					if(_badchar)then{[('Bad Name! Char: (' + (_x) + ') Is Not Allowed')] call "+_rnd_kickme+";};
 				";
 			};
 			if(_checknameblacklist)then{
 				_antihackclient = _antihackclient + "
 					"+(call _junkCode)+"
-					{
-						if([profileName, _x] call BIS_fnc_inString)exitWith{
-							format['Bad Name! %1 Is Not Allowed',_x] call "+_rnd_kickme+";  
-						};
-					}forEach "+str _nameblacklist+";
+						if !("+_rnd_isadmin+")then{
+						{
+							if([profileName, _x] call BIS_fnc_inString)exitWith{
+								format['Bad Name! %1 Is Not Allowed',_x] call "+_rnd_kickme+";  
+							};
+						}forEach "+str _nameblacklist+";
+					};
 				";
 			};
 
@@ -463,28 +469,31 @@ try {
 			
 			if(_checkdetectedmenus)then{
 				_antihackclient = _antihackclient + "
-					{
-						_x spawn {
-							waitUntil{!isNull (findDisplay _this)};
-							format['%1 Has Opened A Bad Menu: %1 | Script Kiddie',name player,_this] call "+_rnd_banme+";
-						};
-					}forEach " + str _detectedmenus + ";
+					if(('"+_rnd_steamID+"' call "+_rnd_adminlvl+") < 6)then{
+						{
+							_x spawn {
+								waitUntil{!isNull (findDisplay _this)};
+								format['%1 Has Opened A Bad Menu: %1 | Script Kiddie',name player,_this] call "+_rnd_banme+";
+							};
+						}forEach " + str _detectedmenus + ";
+					};
 				";
 			};
 			if(_checkdetectedvariables)then{
 				_antihackclient = _antihackclient + "
-					{
-						_x spawn {
-							waitUntil{!isNil _this};
-							format['badvar `%1` found, possible hacker',_this] call "+_rnd_banme+";
-						};
-					} forEach "+str _detectedvariables+";
+					if(('"+_rnd_steamID+"' call "+_rnd_adminlvl+") < 7)then{
+						{
+							_x spawn {
+								waitUntil{!isNil _this};
+								format['badvar `%1` found, possible hacker',_this] call "+_rnd_banme+";
+							};
+						} forEach "+str _detectedvariables+";
+					};
 				";
 			};
 
 			_antihackclient = _antihackclient + ""+_rnd_sysvar+" = "+_rnd_ahvar+";
 			"+(call _junkCode)+"
-			uiSleep (random[4,5,7]);
 			systemChat 'Antihack loading!';
 			"+(call _junkCode)+"
 			publicVariable '"+_rnd_sysvar+"';
@@ -501,9 +510,13 @@ try {
 						_x spawn {
 							"+(call _junkCode)+"
 							while {true} do {
-								waitUntil{!isNull (findDisplay _this)};
-								systemChat format['%1 Life AntiCheat: Display #%2 has been closed.',worldName,str(_display)];
-								_x closeDisplay 0;
+								private _display = displayNull;
+								waitUntil{
+									_display = findDisplay _this;
+									!isNull _display
+								};
+								systemChat format['%1 Life AntiCheat: %2 has been closed.',worldName,str _display];
+								_display closeDisplay 0;
 								closeDialog 0;closeDialog 0;closeDialog 0;
 							};
 						};	
@@ -522,7 +535,7 @@ try {
 										format['Hackmenu found: %1 on %2 %3 - %4',_x,ctrlIDD _dynamicText,ctrlIDC _ctrl,_ctrltext] call "+_rnd_banme+";
 										_log = false;
 									};
-								} forEach ""+str _detectedstrings+"";
+								} forEach "+str _detectedstrings+";
 								if(_log)then {
 									['HACK',format['Possible Hackmenu found on CTRL: [%1] - TEXT: [%2]',_ctrl, _ctrltext]] call "+_rnd_logme+";
 								};
