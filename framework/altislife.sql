@@ -164,7 +164,7 @@ CREATE TABLE IF NOT EXISTS `bankaccounts` (
 CREATE TABLE IF NOT EXISTS `rcon_logs` (
     `id`          INT NOT NULL AUTO_INCREMENT,
     `Type`        VARCHAR(12) NOT NULL,
-    `BEGuid`      VARCHAR(32) NOT NULL,
+    `BEGuid`      VARCHAR(64) NOT NULL,
     `pid`         VARCHAR(17) NOT NULL,
     `reason`      TEXT NOT NULL,
     `occured`     TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
@@ -183,7 +183,7 @@ CREATE TABLE IF NOT EXISTS `rcon_logs` (
 CREATE TABLE IF NOT EXISTS `antihack_logs` (
     `id`          INT NOT NULL AUTO_INCREMENT,
     `Type`        VARCHAR(12) NOT NULL,
-    `BEGuid`      VARCHAR(32) NOT NULL,
+    `BEGuid`      VARCHAR(64) NOT NULL,
     `steamID`     VARCHAR(17) NOT NULL,
     `log`         TEXT NOT NULL,
     `occured`     TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
