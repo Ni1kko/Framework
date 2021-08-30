@@ -2,7 +2,7 @@ class CfgPatches {
     class Antihack {
         units[] = {};
         weapons[] = {};
-        requiredAddons[] = {"Database","Rcon"};
+        requiredAddons[] = {"Database","Rcon","Admin"};
         authors[] = {"Ni1kko"};
     };
 };
@@ -13,7 +13,7 @@ class CfgAntiHack
     rptlogs = 1;                //Log to RPT file
     conlogs = 1;                //Log to Console
     extlogs = 1;                //Log to Extension
-    dblogs = 1;                 //Log to Database (Kicks & Bans Only)
+    dblogs = 1;                 //Log to Database
     dblogtypes[] = {            //Types of logs to save to database (0 = disabled, 1 enabled)
         { "KICK",   1 },
         { "BAN",    1 },

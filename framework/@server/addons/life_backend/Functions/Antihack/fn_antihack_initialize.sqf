@@ -853,6 +853,8 @@ try {
 	if(isNull _antihackclient)throw "Failed to load antihack network";
 
 	life_var_antihack_loaded = true;
+
+	[_admins,_rconReady]spawn life_fnc_admin_initialize;
 }catch {
 	[format["Exception: %1",_exception]] call life_fnc_antihack_systemlog;
 	
