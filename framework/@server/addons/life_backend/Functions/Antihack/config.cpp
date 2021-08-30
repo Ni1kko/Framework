@@ -25,26 +25,37 @@ class CfgAntiHack
     checklanguage = 1;           //check for language                        Notes: (admin lvl 1 and above excluded)
     checknamebadchars = 1;       //check for bad chars in players names      Notes: (admin lvl 1 and above excluded, bad chars can break BattleEye, Database, and many more things in arma)
     checknameblacklist = 1;      //check for blacklisted profile name        Notes: (admin lvl 1 and above excluded)
+    checkteleport = 1;           //check for teleportion hack                Notes: (admin lvl 1 and above excluded)
     checkrecoil = 1;             //check for weapon recoil hack              Notes: (admin lvl 1 and above excluded)
+    checkgear = 1;               //check for bad gear                        Notes: (admin lvl 3 and above excluded)
+    checkuniform = 1;            //check for bad uniform                     Notes: (admin lvl 3 and above excluded)
+    checkheadgear = 1;           //check for bad headgear                    Notes: (admin lvl 3 and above excluded)
+    checkgoggles = 1;            //check for bad goggles                     Notes: (admin lvl 3 and above excluded)
+    checkvests = 1;              //check for bad vests                       Notes: (admin lvl 3 and above excluded)
+    checkbackpacks = 1;          //check for bad backpacks                   Notes: (admin lvl 3 and above excluded)
+    checkweapon = 1;             //check for bad weapons                     Notes: (admin lvl 3 and above excluded)
+    checkweaponattachments = 1;  //check for bad weapons attachments         Notes: (admin lvl 3 and above excluded)
     checkspeed = 1;              //check for walking speed hack              Notes: (admin lvl 3 and above excluded)
     checkdamage = 1;             //check for god mode hack                   Notes: (admin lvl 3 and above excluded)
     checksway = 1;               //check for weapon sway hack                Notes: (admin lvl 3 and above excluded)
     checkmapEH = 1;              //check for added map event handlers        Notes: (admin lvl 3 and above excluded)
     checkterraingrid = 1;        //check for no grass hack                   Notes: (admin lvl 3 and above excluded)
+    checkvehicle = 1;            //check for added vehicles                  Notes: (admin lvl 4 and above excluded)
     checkvehicleweapon = 1;      //check for added vehicle weapons           Notes: (admin lvl 5 and above excluded)
     checkmemoryhack = 1;         //check for memoryhacks                     Notes: (admin lvl 5 and above excluded)
     checkdetectedmenus = 1;      //check for known hack menus                Notes: (admin lvl 6 and above excluded)          
     checkdetectedvariables = 1;  //check for known hack variables            Notes: (admin lvl 7 and above excluded)   
     
-    use_interuptinfo = 1;        //Custom escape menu text
     
     //--- Admins
     use_databaseadmins = 1;      // Get all admins LVL 1 to LVL 99 from DB
     use_debugconadmins = 0;      // Get all admins from descrption.ext
 
+    //--- Misc
+    use_interuptinfo = 1;        //Custom escape menu text
     serverlanguage = 'English';  //Language all clients must have, if (checklanguage = 1)
-
-    //--- 
+    
+    //--- names that you dont want players to use
     nameblacklist[] = {
         "Admin","Administor"
     };
@@ -136,6 +147,46 @@ class CfgAntiHack
         "dmcheats.de","kichdm","_news_banner","fucked up","lystics menu","rsccombo_2100","\dll\datmalloc","rsclistbox_1501","rsclistbox_1500","\dll\tcmalloc_bi","___newbpass","updated_playerlist","recking_ki","gg_ee_ff","ggggg_eeeee_fffff","listening to jack",
         "_altislifeh4x","antifrezze","ownscripts","ownscripted","mesnu","mystic_","init re","init life re","spoody","gef_","throx_","_adasaasasa","_dsfnsjf","cheatmenu","in54nity","markad","fuck_me_","_v4fin","gggg_eeee_ffff","mord all","teleport all","__byass",
         "a3randvar","infinite ammo","player markers","+ _code +","randomvar","i can break these cuffs","give 100k","kill all","grimbae","pony menu","35sp","c4sh","t e l e p o r t","> c�p","> ammo","titanmods","jaymenu","eject eve","hacked by "
+    };
+
+    //---
+    uniformwhitelist[]= {
+
+	};
+
+    //---
+	headgearwhitelist[]= {
+
+	};
+
+    //---
+	goggleswhitelist[]= {
+
+	};
+
+    //---
+	vestwhitelist[]= {
+
+	};
+
+    //---
+	backpackwhitelist[]= {
+
+	};
+
+    //---
+    vehiclewhitelist[]={
+
+    };
+
+    //---
+    weaponwhitelist[]={
+
+    };
+    
+    //---
+    weaponattacmentwhitelist[]={
+
     };
 };
 

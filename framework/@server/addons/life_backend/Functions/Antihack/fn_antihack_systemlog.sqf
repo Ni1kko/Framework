@@ -12,16 +12,16 @@ if(!isServer)exitwith{false};
 if(count _logmessage < 2)exitwith{false};
 
 private _config = configFile >> "CfgAntiHack";
-
-_logmessage = format["[ANTIHACK SYSTEM]: %1",_logmessage];
+private _logmessage2 = format["[ANTIHACK SYSTEM]: %1",_logmessage];
+private _logs = uiNamespace getVariable ["life_var_antihack_logs",[]];
 
 //--- Console
 if((getNumber(_config >> "conlogs") isEqualTo 1) AND life_var_rcon_passwordOK)then{
-	format ["#debug %1", _logmessage] call life_fnc_rcon_sendCommand;
+	format ["#debug %1", _logmessage2] call life_fnc_rcon_sendCommand;
 }else{
 	//--- RPT
 	if(getNumber(_config >> "rptlogs") isEqualTo 1)then{
-		diag_log _logmessage;
+		diag_log _logmessage2;
 	};
 };
 
@@ -40,6 +40,9 @@ if(getNumber(_config >> "dblogs") isEqualTo 1)then{
 
 		if(_type == "" || _steamID == "" || _msg == "")exitWith{};
 		if !([toUpper _type,1] in getArray(_config >> "dblogtypes"))exitWith{};
+		
+		_logs pushback _logmessage;
+		uiNamespace setVariable ["life_var_antihack_logs",_logs];
 		
 		private _BEGuid = ('BEGuid' callExtension ("get:"+_SteamID));
 

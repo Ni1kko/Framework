@@ -8,6 +8,9 @@
 private ["_spCfg","_sp","_spawnPos"];
 closeDialog 0;
 cutText ["","BLACK IN"];
+
+player setVariable ["life_var_teleported",true,true];
+
 if (life_spawn_point isEqualTo []) then {
     private ["_sp","_spCfg"];
     _spCfg = [playerSide] call life_fnc_spawnPointCfg;
@@ -59,4 +62,7 @@ if (life_firstSpawn) then {
     life_firstSpawn = false;
     [] call life_fnc_welcomeNotification;
 };
+
 [] call life_fnc_playerSkins;
+
+player setVariable ["life_var_teleported",false,true];

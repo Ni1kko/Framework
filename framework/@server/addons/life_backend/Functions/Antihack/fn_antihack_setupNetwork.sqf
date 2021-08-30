@@ -35,7 +35,7 @@ _netVar addPublicVariableEventHandler {
 	if(count _data isEqualTo 0)exitWith{};
 
 	_data params['_key','_SteamID','_value'];
-
+	
 	switch (_key) do {
 		case "kick": {
 			[_value,["KICK",_SteamID]] call life_fnc_antihack_systemlog;
