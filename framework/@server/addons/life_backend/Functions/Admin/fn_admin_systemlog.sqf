@@ -50,7 +50,7 @@ if(getNumber(_config >> "dblogs") isEqualTo 1)then{
 				["Type", 	["DB","STRING", toUpper _type] call life_fnc_database_parse],
 				["BEGuid", 	["DB","STRING", _BEGuid] call life_fnc_database_parse],
 				["steamID", ["DB","STRING", _steamID] call life_fnc_database_parse],
-				["log", 	["DB","TEXT", _logmessage] call life_fnc_database_parse]
+				["log", 	"'"""+_logmessage+"""'"]
 			]
 		] call life_fnc_database_request;
 	};
