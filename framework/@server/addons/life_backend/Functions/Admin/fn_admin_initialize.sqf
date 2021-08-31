@@ -1129,9 +1129,9 @@ try {
 				_x params ['_type','_message','_steamID']; 
 				private _index = _log lbAdd format['%1 | %2',_steamID, _message];
 				private _color = switch (toUpper _type) do {
-					case 'BAN':  {[1,   0,   0,   1]};
-					case 'KICK': {[1,   1,   0,   1]};
-					case 'HACK': {[1,   0.5, 3,   1]};
+					case 'BAN':  {[1,   1,   0,   1]};
+					case 'KICK': {[1,   0.5, 3,   1]};
+					case 'HACK': {[1,   0,   0,   1]};
 					case 'INFO': {[0.2, 0.2, 0.2, 1]};	
 					default      {[1,   1,   1,   1]};
 				};
