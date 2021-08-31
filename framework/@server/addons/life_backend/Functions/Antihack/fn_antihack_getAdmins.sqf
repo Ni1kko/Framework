@@ -25,7 +25,7 @@ if(isClass _config)then{
 		{
 			private _BEGuid = ('BEGuid' callExtension ("get:"+_x));
 			if ((str _admins) find _BEGuid isEqualTo -1)then{
-				_admins pushBackUnique [99,_BEGuid,_x]; 
+				_admins pushBackUnique [99,_x,_BEGuid]; 
 			};
 		}forEach getArray(missionConfigFile >> "enableDebugConsole");
 	};

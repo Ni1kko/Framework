@@ -132,6 +132,17 @@ try {
 		}else{
 			_checkweapon = false;
 		};
+
+		private _configLoadouts = missionConfigFile >> "Loadouts";
+		if(isClass _configLoadouts) then{
+			for "_i" from 0 to ((count _configLoadouts) -1) do{
+				{
+					_weaponclasses pushBackUnique toLower(_x#0);
+				}forEach getArray(_configLoadouts >> configName (_configLoadouts select _i)  >> "weapon"); 
+			};
+		}else{
+			_checkweapon = false;
+		};
 	};
 
 	//--- Setup allowed gear
@@ -186,6 +197,44 @@ try {
 		}else{
 			_checkgear = false;
 		};
+
+		private _configLoadouts = missionConfigFile >> "Loadouts";
+		if(isClass _configLoadouts) then{
+			//--- Allowed uniforms
+			if(_checkuniform)then{
+				for "_i" from 0 to ((count _configLoadouts) -1) do{
+					{
+						_uniformclasses pushBackUnique toLower(_x#0);
+					}forEach getArray(_configLoadouts >> configName (_configLoadouts select _i)  >> "uniform"); 
+				};
+			};
+			//--- Allowed headgear
+			if(_checkheadgear)then{
+				for "_i" from 0 to ((count _configLoadouts) -1) do{
+					{
+						_headgearclasses pushBackUnique toLower(_x#0);
+					}forEach getArray(_configLoadouts >> configName (_configLoadouts select _i)  >> "headgear"); 
+				};
+			};
+			//--- Allowed vests
+			if(_checkvests)then{
+				for "_i" from 0 to ((count _configLoadouts) -1) do{
+					{
+						_vestclasses pushBackUnique toLower(_x#0);
+					}forEach getArray(_configLoadouts >> configName (_configLoadouts select _i)  >> "vest"); 
+				};
+			};
+			//--- Allowed backpacks
+			if(_checkbackpacks)then{
+				for "_i" from 0 to ((count _configLoadouts) -1) do{
+					{
+						_backpacksclasses pushBackUnique toLower(_x#0);
+					}forEach getArray(_configLoadouts >> configName (_configLoadouts select _i)  >> "backpack"); 
+				};
+			};
+		}else{
+			_checkgear = false;
+		};
 	};
 	
 	//--- random vars ref
@@ -219,20 +268,18 @@ try {
 		"_rnd_kickme",
 		"_rnd_banme",
 		"_rnd_logme",
-		"_rnd_runserver",
-		"_rnd_runglobal",
-		"_rnd_runtarget",
 		"_rnd_mins2hrsmins",
 		"_rnd_vehicleclasses",
-		"_rnd_vehicleclasses",
 		"_rnd_weaponclasses",
-		"_rnd_weaponattachments"
+		"_rnd_weaponattachments",
+		"_rnd_admincode"
 	];
 
 	//--- create random vars
 	if(isNil "life_fnc_util_randomString") throw "Random string function not found";
 	private _tempvars = [];
 	{_detectedstrings pushBackUnique _x} forEach _rndvars;
+	_detectedvariables pushBackUnique _rnd_admincode;
 	_tempvars resize (count _rndvars);
 	_tempvars params (_rndvars apply {private _ret=[_x,call life_fnc_util_randomString];[format["`%1` => `%2`",_ret#0,_ret#1]]call life_fnc_antihack_systemlog;_ret});
 	_tempvars =nil;
@@ -251,27 +298,23 @@ try {
 
 	//--- antihack expression
 	private _antihackclient = "
-		if(!isNull(missionNamespace getVariable ['"+_rnd_threadone+"',scriptNull]))exitWith{};
+		if(!isNull(missionNamespace getVariable ['"+_rnd_threadtwo+"',scriptNull]))exitWith{};
 		if(isFinal '"+_rnd_kickme+"')then{'System ran twice, possible hacker' call "+_rnd_kickme+";};
 		if(isFinal '"+_rnd_banme+"')then{'System ran twice, possible hacker' call "+_rnd_banme+";};
 		"+(call _junkCode)+"
 		"+_rnd_useRcon+" = " + str _rconReady + ";
 		"+_rnd_admins+" = " +  str _admins +";
 		"+(call _junkCode)+"
-		"+_rnd_adminlvl+" = compileFinal ""private _lvl = 0;{if(_this isEqualTo _x#1 || _this isEqualTo _x#2)exitWith{_lvl = _x#0;}}forEach "+_rnd_admins+";_lvl"";
-		"+_rnd_isadmin+" = (call "+_rnd_adminlvl+") > 0;
-		"+(call _junkCode)+"
 		waitUntil {!isNull player && {getClientStateNumber >= 8}};
 		"+(call _junkCode)+"
 		"+_rnd_steamID+" =   getPlayerUID player;
 		"+_rnd_netID+" =     netId player;
+		"+_rnd_adminlvl+" =  compileFinal ""private _lvl = 0;{if("+_rnd_steamID+" isEqualTo _x#1)exitWith{_lvl = _x#0;}}forEach "+_rnd_admins+";_lvl"";
+		"+_rnd_isadmin+" =   (call "+_rnd_adminlvl+") > 0;
 		"+_rnd_sendreq+" =   compileFinal """+ _rnd_netVar + " = [_this#0,"+_rnd_steamID+",_this#1];publicVariable '" + _rnd_netVar + "';"";
 		"+_rnd_kickme+" =    compileFinal ""if("+_rnd_useRcon +")then{['kick',_this] call "+_rnd_sendreq+";}else{endMission 'END1';};"";
 		"+_rnd_banme+" =     compileFinal ""if("+_rnd_useRcon +")then{['ban',_this] call "+_rnd_sendreq+"}else{_this call "+_rnd_kickme+";};"";
 		"+_rnd_logme+" =     compileFinal ""['log',_this] call "+_rnd_sendreq+";"";
-		"+_rnd_runserver+" = compileFinal ""['run-server',[_this#1,_this#0]] call "+_rnd_sendreq+";"";
-		"+_rnd_runglobal+" = compileFinal ""['run-global',[_this#1,_this#0]] call "+_rnd_sendreq+";"";
-		"+_rnd_runtarget+" = compileFinal ""['run-target',[_this#0,_this#2,_this#1]] call "+_rnd_sendreq+";"";
 		"+(call _junkCode)+"
 		"+_rnd_vehicleclasses+" = "+str _vehicleclasses+";
 		"+_rnd_weaponclasses+" = "+str _weaponclasses+";
@@ -287,7 +330,7 @@ try {
 		 
 		"+_rnd_codeone+" =  compileFinal ""
 			"+(call _junkCode)+"
-			if(('"+_rnd_steamID+"' call "+_rnd_adminlvl+") >= 3)exitWith{diag_log 'Antihack Codeone Active!';};
+			if((call "+_rnd_adminlvl+") >= 3)exitWith{diag_log 'Antihack Codeone Active!';};
 			"+(call _junkCode)+" 
 			";
 			if(_checkrecoil)then{
@@ -377,7 +420,7 @@ try {
 				};
 				if(_checkvehicle) then {
 					_antihackclient = _antihackclient + "
-						if(('"+_rnd_steamID+"' call "+_rnd_adminlvl+") < 4)then{
+						if((call "+_rnd_adminlvl+") < 4)then{
 							private _vehicle = vehicle player;
 							if(_vehicle != player) then {
 								private _uuid = _vehicle getVariable ['oUUID',''];
@@ -458,8 +501,7 @@ try {
 
 		"+_rnd_threadone+" = [] spawn 
 		{
-			[format['%1 Joined',name player],'systemChat'] call "+_rnd_runglobal+";
-			if(('"+_rnd_steamID+"' call "+_rnd_adminlvl+") >= 5)exitWith{diag_log 'Antihack Thread#1 Active!';};
+			if((call "+_rnd_adminlvl+") >= 5)exitWith{diag_log 'Antihack Thread#1 Active!';};
 			"+(call _junkCode)+"";
 
 			if(_checkdetectedmenus)then{
@@ -510,7 +552,6 @@ try {
 			if("+_rnd_isadmin+")then{diag_log 'Antihack Thread#2 Active!'};
 			"+(call _junkCode)+"
 
-			terminate (missionNamespace getVariable ['"+_rnd_threadtwo_one+"',scriptNull]);
 			terminate (missionNamespace getVariable ['"+_rnd_threadinterupt+"',scriptNull]);
 			"+_rnd_ahvar+" = ['"+_rnd_playersvar+"',"+_rnd_netID+", ['"+_rnd_threadtwo_two+"',"+_rnd_codeone+"]];";
 			
@@ -563,7 +604,7 @@ try {
 			};
 			if(_checkdetectedmenus)then{
 				_antihackclient = _antihackclient + "
-					if(('"+_rnd_steamID+"' call "+_rnd_adminlvl+") < 6)then{
+					if((call "+_rnd_adminlvl+") < 6)then{
 						{
 							_x spawn {
 								waitUntil{!isNull (findDisplay _this)};
@@ -575,7 +616,7 @@ try {
 			};
 			if(_checkdetectedvariables)then{
 				_antihackclient = _antihackclient + "
-					if(('"+_rnd_steamID+"' call "+_rnd_adminlvl+") < 7)then{
+					if((call "+_rnd_adminlvl+") < 1)then{
 						{
 							_x spawn {
 								waitUntil{!isNil _this};
@@ -624,6 +665,12 @@ try {
 			"+(call _junkCode)+"
 			publicVariable '"+_rnd_sysvar+"';
 			waitUntil {isNil {missionNamespace getVariable '"+_rnd_sysvar+"'}};
+			[] spawn {
+				if((call "+_rnd_adminlvl+") <= 0)exitWith{};
+				"+(call _junkCode)+"
+				waitUntil{!isNil '"+_rnd_admincode+"'};
+				["+_rnd_steamID+"] spawn "+_rnd_admincode+";
+			};
 			"+(call _junkCode)+"
 			"+_rnd_ahvar+" = random(99999);
 			"+(call _junkCode)+"
@@ -696,7 +743,7 @@ try {
 
 		"+_rnd_threadfour+" = []spawn
 		{
-			if(('"+_rnd_steamID+"' call "+_rnd_adminlvl+") >= 3)exitWith{diag_log 'Antihack Thread#4 Active!';}; 
+			if((call "+_rnd_adminlvl+") >= 3)exitWith{diag_log 'Antihack Thread#4 Active!';}; 
 			private _detectedstrings = "+str _detectedstrings+"; 
 			private _inittime = diag_tickTime;
 			"+(call _junkCode)+"
@@ -779,7 +826,7 @@ try {
 		
 		"+_rnd_threadfive+" = []spawn
 		{
-			if(('"+_rnd_steamID+"' call "+_rnd_adminlvl+") >= 4)exitWith{diag_log 'Antihack Thread#5 Active!';};
+			if((call "+_rnd_adminlvl+") >= 4)exitWith{diag_log 'Antihack Thread#5 Active!';};
 			while {true} do {";
 				if(_checkgear)then{
 					if(_checkuniform)then{
@@ -839,7 +886,7 @@ try {
 		};
 		
 		"+(call _junkCode)+"
-		waitUntil{isNull(missionNamespace getVariable ['"+_rnd_threadone+"',scriptNull])};
+		waitUntil{isNull(missionNamespace getVariable ['"+_rnd_threadtwo+"',scriptNull])};
 		'Main thread terminated, possible hacker' call "+_rnd_kickme+";
 	";
 	
@@ -854,7 +901,7 @@ try {
 
 	life_var_antihack_loaded = true;
 
-	[_admins,_rconReady]spawn life_fnc_admin_initialize;
+	[_admins,_rconReady,_rnd_netVar,_rnd_admincode]spawn life_fnc_admin_initialize;
 }catch {
 	[format["Exception: %1",_exception]] call life_fnc_antihack_systemlog;
 	

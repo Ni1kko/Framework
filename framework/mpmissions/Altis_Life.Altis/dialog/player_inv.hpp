@@ -258,7 +258,7 @@ class playerSettings {
         class ButtonAdminMenu: Life_RscButtonMenu {
             idc = 2021;
             text = "$STR_PM_AdminMenu";
-            onButtonClick = "closeDialog 0; createDialog ""life_admin_menu"";";
+            onButtonClick = "[]spawn{if(isNil 'life_fnc_admin_showmenu')exitWith{hint 'Admin menu is stil loading, try again in a 1-2 mins'};closeDialog 0;[]spawn life_fnc_admin_showmenu;}";
             x = 0.1 + (6.25 / 40) + (1 / 250 / (safezoneW / safezoneH));
             y = 0.805;
             w = (6.25 / 40);

@@ -13,7 +13,7 @@ if(count _logmessage < 2)exitwith{false};
 
 private _config = configFile >> "CfgAdmin";
 private _logmessage2 = format["[ADMIN SYSTEM]: %1",_logmessage];
-private _logs = uiNamespace getVariable ["life_var_admin_logs",[]];
+private _logs = missionNamespace getVariable ["life_var_admin_logs",[]];
 
 //--- Console
 if((getNumber(_config >> "conlogs") isEqualTo 1) AND life_var_rcon_passwordOK)then{
@@ -41,7 +41,9 @@ if(getNumber(_config >> "dblogs") isEqualTo 1)then{
 		if(_type == "" || _steamID == "" || _msg == "")exitWith{};
 	 
 		_logs pushback _logmessage;
-		uiNamespace setVariable ["life_var_admin_logs",_logs];
+		life_var_admin_logs = _logs;
+		publicVariable "life_var_admin_logs";
+	 
 		
 		private _BEGuid = ('BEGuid' callExtension ("get:"+_SteamID));
 

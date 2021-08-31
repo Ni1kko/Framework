@@ -31,45 +31,64 @@ _netVar addPublicVariableEventHandler {
 		["_var",""],
 		["_data", []]
 	];
-	
-	if(count _data isEqualTo 0)exitWith{};
 
-	_data params['_key','_SteamID','_value'];
-	
-	switch (_key) do {
-		case "kick": {
-			[_value,["KICK",_SteamID]] call life_fnc_antihack_systemlog;
-			[_SteamID,_value] call life_fnc_rcon_kick;
-		};
-		case "ban": { 
-			[_value,["BAN",_SteamID]] call life_fnc_antihack_systemlog;
-			[_SteamID,_value] call life_fnc_rcon_ban;
-		};
-		case "log": { 
-			[_value#1,[_value#0,_SteamID]] call life_fnc_antihack_systemlog;
-		};
-		case "run-server": { 
-			_value params['_params','_code'];  
-			if(_code isEqualType '') then {
-				_code = missionNamespace getVariable [_funcName,{}];
+	private _config = (configFile >> "CfgAntiHack");
+
+	if(count _data isEqualTo 3)then
+	{
+		_data params['_key','_SteamID','_value'];
+		
+		if(isNil '_key' || {typeName _key isNotEqualTo "STRING"})exitWith{};
+		if(isNil '_SteamID' || {typeName _SteamID isNotEqualTo "STRING" || {count _SteamID isNotEqualTo 17}})exitWith{};
+		if(isNil '_value' || {!(typeName _value in ["STRING","ARRAY"])})exitWith{};
+
+		//---
+		private _adminlvl = 0;
+		private _admins = call life_fnc_antihack_getAdmins;
+		private _BEGuid = ('BEGuid' callExtension ('get:'+_SteamID));
+		{if(_SteamID isEqualTo _x#1 || {_BEGuid isEqualTo _x#2})exitWith{_adminlvl = _x#0;}}forEach _admins;
+		
+		//---
+		if(_adminlvl > 0 || _key in ["kick","ban","log"])then{
+			switch (_key) do {
+				case "kick": {
+					[_value,["KICK",_SteamID]] call life_fnc_antihack_systemlog;
+					[_SteamID,_value] call life_fnc_rcon_kick;
+				};
+				case "ban": { 
+					[_value,["BAN",_SteamID]] call life_fnc_antihack_systemlog;
+					[_SteamID,_value] call life_fnc_rcon_ban;
+				};
+				case "log": { 
+					[_value#1,[_value#0,_SteamID]] call life_fnc_antihack_systemlog;
+				};
+				case "run-server": {
+					_value params['_params','_code'];  
+					if(_code isEqualType '') then {
+						_code = missionNamespace getVariable [_code,{}];
+					};
+					_params spawn _code;
+				};
+				case "run-target": { 
+					_value params['_target','_params','_code']; 
+					if(_code isEqualType '') then {
+						_params remoteExec [_code,_target];
+					} else {
+						[_params,_code] remoteExec ['call',_target];
+					};
+				};
+				case "run-global": { 
+					_value params['_params','_code'];
+					if(_code isEqualType '') then {
+						_params remoteExec [_code,0];
+					} else {
+						[_params,_code] remoteExec ['call',0];
+					}; 
+				};
 			};
-			_params spawn _code; 
-		};
-		case "run-target": { 
-			_value params['_target','_params','_code']; 
-			if(_code isEqualType '') then {
-				_params remoteExec [_code,_target];
-			} else {
-				[_params,_code] remoteExec ['call',_target];
-			};
-		};
-		case "run-global": { 
-			_value params['_params','_code'];
-			if(_code isEqualType '') then {
-				_params remoteExec [_code,0];
-			} else {
-				[_params,_code] remoteExec ['call',0];
-			}; 
+		}else{
+			[format['Attempted to execute restricted function %1 = %2',_this#0,_this#1],["HACK",_SteamID]] call life_fnc_antihack_systemlog;
+			[_SteamID,format['Attempted using restricted antihack network function `%1`',_key]] call life_fnc_rcon_kick;
 		};
 	};
 
@@ -100,8 +119,8 @@ _sysVar addPublicVariableEventHandler {
 	[_thread_codeone,{
 			params['_threadtwo_two','_codeone'];
 			
-			systemChat 'Antihack loaded!';
 			uiSleep(random 4);
+			systemChat 'Antihack loaded!';
 			
 			while {true} do {
 				if(isNull (missionNamespace getVariable [_threadtwo_two,scriptNull]))then{
