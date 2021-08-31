@@ -28,6 +28,7 @@ DROP PROCEDURE IF EXISTS `deleteOldGangs`;
 DROP PROCEDURE IF EXISTS `deleteOldContainers`;
 DROP PROCEDURE IF EXISTS `deleteOldWanted`;
 DROP PROCEDURE IF EXISTS `resetActivePlayerList`;
+DROP PROCEDURE IF EXISTS `resetPlayersLife`;
 
 DELIMITER $$
 --
