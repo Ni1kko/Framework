@@ -7,6 +7,7 @@ AsYetUntitled, Modifed BY: <b>@Ni1kko</b>
  
 # Features:
   - Antihack
+  - Admin-tools
   - Police, Civ and Medic roles 
   - Banking System
   - Virtual Item system 
@@ -14,4 +15,5 @@ AsYetUntitled, Modifed BY: <b>@Ni1kko</b>
   - Housing System 
   - Persistent wanted system
   - RCON
+  - DB Logging
   - Many more.
