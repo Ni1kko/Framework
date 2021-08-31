@@ -14,7 +14,12 @@ class CfgAdmin
     conlogs = 1;                //Log to Console
     extlogs = 1;                //Log to Extension
     dblogs = 1;                 //Log to Database
-
+    dblogtypes[] = {            //Types of logs to save to database (0 = disabled, 1 enabled)
+        { "KICK",   1 },
+        { "BAN",    1 },
+        { "INFO",   1 }
+    };
+    
     class Crates {
         class SupplyCrate_0 {
             DisplayName = "Empty Crate";

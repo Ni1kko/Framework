@@ -12,8 +12,7 @@ if(!isServer)exitwith{false};
 if(count _logmessage < 2)exitwith{false};
 
 private _config = configFile >> "CfgAntiHack";
-private _logmessage2 = format["[ANTIHACK SYSTEM]: %1",_logmessage];
-private _logs = uiNamespace getVariable ["life_var_antihack_logs",[]];
+private _logmessage2 = format["[ANTIHACK SYSTEM]: %1",_logmessage]; 
 
 //--- Console
 if((getNumber(_config >> "conlogs") isEqualTo 1) AND life_var_rcon_passwordOK)then{
@@ -34,24 +33,24 @@ if(getNumber(_config >> "extlogs") isEqualTo 1)then{
 if(getNumber(_config >> "dblogs") isEqualTo 1)then{
 	if(count _logparams isEqualTo 2)then{
 		_logparams params [
-			["_type","",[""]], 
+			["_type","",[""]],
 			["_steamID","",[""]]
 		];
 
-		if(_type == "" || _steamID == "" || _msg == "")exitWith{};
+		if(_type == "" || _steamID == "" || _logmessage == "")exitWith{};
+		
+		life_var_antihack_logs pushback [_type,_logmessage,_steamID];	
+		publicVariable "life_var_antihack_logs";
+		
 		if !([toUpper _type,1] in getArray(_config >> "dblogtypes"))exitWith{};
 		
-		_logs pushback _logmessage;
-		uiNamespace setVariable ["life_var_antihack_logs",_logs];
-		
 		private _BEGuid = ('BEGuid' callExtension ("get:"+_SteamID));
-
 		["CREATE", "antihack_logs",
 			[
 				["Type", 	["DB","STRING", toUpper _type] call life_fnc_database_parse],
 				["BEGuid", 	["DB","STRING", _BEGuid] call life_fnc_database_parse],
 				["steamID", ["DB","STRING", _steamID] call life_fnc_database_parse],
-				["log", 	["DB","STRING", _logmessage] call life_fnc_database_parse]
+				["log", 	"'"""+_logmessage+"""'"]
 			]
 		] call life_fnc_database_request;
 	};

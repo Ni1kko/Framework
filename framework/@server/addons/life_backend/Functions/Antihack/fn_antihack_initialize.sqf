@@ -3,17 +3,19 @@
 	## https://github.com/Ni1kko/Framework
 */
 
+waitUntil {!isNil "life_var_rcon_passwordOK"};
+
 if(!isServer)exitwith{false};
 if(!canSuspend)exitwith{[]spawn life_fnc_antihack_initialize};
 if(missionNamespace getVariable ["life_var_antihack_loaded",false])exitwith{false};
 if(isRemoteExecuted AND life_var_rcon_passwordOK)exitwith{[remoteExecutedOwner,"RemoteExecuted `fn_antihack_initialize.sqf`"] call life_fnc_rcon_ban;};
 
-waitUntil {!isNil "life_var_rcon_passwordOK"};
 ["Starting AntiHack!"] call life_fnc_antihack_systemlog;
 
 life_var_antihack_loaded = false;
 life_var_antihack_networkReady = false;
- 
+life_var_antihack_logs = [];
+
 waitUntil {isFinal "extdb_var_database_key"};
 
 try {
@@ -36,6 +38,7 @@ try {
 
 	//--- Get Config
 	if(!isClass _config) throw "Config not found";
+	private _dbLogs = getNumber(_config >> "dblogs") isEqualTo 1;
 	private _checkrecoil = getNumber(_config >> "checkrecoil") isEqualTo 1;
 	private _checkspeed = getNumber(_config >> "checkspeed") isEqualTo 1;
 	private _checkdamage = getNumber(_config >> "checkdamage") isEqualTo 1;
@@ -237,6 +240,15 @@ try {
 		};
 	};
 	
+	//--- Load logs
+	if(_dbLogs)then{
+		private _logs = ["READ", "antihack_logs",[["Type","log","steamID"],[]],false] call life_fnc_database_request;
+		{
+			life_var_antihack_logs pushback _x;
+		}forEach _logs;
+	};
+	publicVariable "life_var_antihack_logs";
+
 	//--- random vars ref
 	private _rndvars = [
 		"_rnd_ahvar",
@@ -299,8 +311,8 @@ try {
 	//--- antihack expression
 	private _antihackclient = "
 		if(!isNull(missionNamespace getVariable ['"+_rnd_threadtwo+"',scriptNull]))exitWith{};
-		if(isFinal '"+_rnd_kickme+"')then{'System ran twice, possible hacker' call "+_rnd_kickme+";};
-		if(isFinal '"+_rnd_banme+"')then{'System ran twice, possible hacker' call "+_rnd_banme+";};
+		if(isFinal '"+_rnd_kickme+"')then{private _log = 'System ran twice, possible hacker'; _log call "+_rnd_kickme+";['HACK',_log] call "+_rnd_logme+";};
+		if(isFinal '"+_rnd_banme+"')then{private _log = 'System ran twice, possible hacker'; _log call "+_rnd_banme+";['HACK',_log] call "+_rnd_logme+";};
 		"+(call _junkCode)+"
 		"+_rnd_useRcon+" = " + str _rconReady + ";
 		"+_rnd_admins+" = " +  str _admins +";
@@ -314,7 +326,7 @@ try {
 		"+_rnd_sendreq+" =   compileFinal """+ _rnd_netVar + " = [_this#0,"+_rnd_steamID+",_this#1];publicVariable '" + _rnd_netVar + "';"";
 		"+_rnd_kickme+" =    compileFinal ""if("+_rnd_useRcon +")then{['kick',_this] call "+_rnd_sendreq+";}else{endMission 'END1';};"";
 		"+_rnd_banme+" =     compileFinal ""if("+_rnd_useRcon +")then{['ban',_this] call "+_rnd_sendreq+"}else{_this call "+_rnd_kickme+";};"";
-		"+_rnd_logme+" =     compileFinal ""['log',_this] call "+_rnd_sendreq+";"";
+		"+_rnd_logme+" =     compileFinal ""['log',['ANTIHACK',_this#0,_this#1]] call "+_rnd_sendreq+";"";
 		"+(call _junkCode)+"
 		"+_rnd_vehicleclasses+" = "+str _vehicleclasses+";
 		"+_rnd_weaponclasses+" = "+str _weaponclasses+";
@@ -359,7 +371,9 @@ try {
 							if (_mapClickEH == -1) then {
 								_mapClickEH = _eh;
 							}else{
-								format['%1 EventHandlers Changed! - %2, should be %3 | MapSingleClick Cheat',name player,_eh,_mapClickEH] call "+_rnd_banme+";
+								private _log = format['EventHandlers Changed! - %1, should be %2 | MapSingleClick Cheat',_eh,_mapClickEH]; 
+								_log call "+_rnd_banme+";
+								['HACK',_log] call "+_rnd_logme+";
 							};
 						};
 						removeAllMissionEventHandlers 'MapSingleClick';
@@ -368,7 +382,9 @@ try {
 				if(_checkterraingrid)then{
 					_antihackclient = _antihackclient + " 
 						if(getTerrainGrid >= 50) then {
-							format['%1 Has No Grass! %1 Has TerrainGrid set to %2 | No Grass Cheat',name player,getTerrainGrid] call "+_rnd_banme+";
+							private _log = format['No Grass! TerrainGrid set to %1 | No Grass Cheat',getTerrainGrid]; 
+							_log call "+_rnd_banme+";
+							['HACK',_log] call "+_rnd_logme+";
 						};
 					";
 				};
@@ -376,10 +392,14 @@ try {
 					_antihackclient = _antihackclient + "
 						if(unitRecoilCoefficient player != _recoil)then{
 							if(unitRecoilCoefficient player == 0) then {
-								'Weapon Recoil Disabled! | No Recoil Cheat' call "+_rnd_banme+";
+								private _log = 'Weapon Recoil Disabled! | No Recoil Cheat'; 
+								_log call "+_rnd_banme+";
+								['HACK',_log] call "+_rnd_logme+";
 							}else{
 								if(unitRecoilCoefficient player != 1)then{
-									format['Recoil Changed! %1 Should Be  %2 | No Recoil Cheat',unitRecoilCoefficient player,_recoil] call "+_rnd_banme+";
+									private _log = format['Recoil Changed! %1 Should Be  %2 | No Recoil Cheat',unitRecoilCoefficient player,_recoil]; 
+									_log call "+_rnd_banme+";
+									['HACK',_log] call "+_rnd_logme+";
 								};
 							};
 						};
@@ -391,7 +411,9 @@ try {
 						if (isNull objectParent player) then {
 							_speedCount = if (speed player > 30) then {_speedCount + 1} else {0};
 							if (_speedCount > 10) then {
-								[format['%1 Moved Too Fat! - Moving at %2 on foot for over 5 seconds | Speed Hack',name player,speed player]] call "+_rnd_banme+";
+								private _log = format['Moved Too Fast! - Moving at %1 on foot for over 5 seconds | Speed Hack',speed player]; 
+								_log call "+_rnd_banme+";
+								['HACK',_log] call "+_rnd_logme+";
 							};
 						}else{
 							_speedCount = 0;
@@ -401,7 +423,9 @@ try {
 				if(_checkdamage)then{ 
 					_antihackclient = _antihackclient + "
 						if(!isDamageAllowed player) then { 
-							format['%1 Has Invincibility! %1 Has AllowDamage set to %2 | GodMode Cheat',name player,isDamageAllowed player] call "+_rnd_banme+";
+							private _log = format['Invincibility! AllowDamage set to %1',isDamageAllowed player]; 
+							_log call "+_rnd_banme+";
+							['HACK',_log] call "+_rnd_logme+";
 						};
 					";
 				}; 
@@ -409,10 +433,14 @@ try {
 					_antihackclient = _antihackclient + "
 						if(getCustomAimCoef player != _sway)then{
 							if(getCustomAimCoef player == 0) then {
-								'Weapon Sway Disabled! | No Sway Cheat' call "+_rnd_banme+";
+								private _log = 'Weapon Sway Disabled!'; 
+								_log call "+_rnd_banme+";
+								['HACK',_log] call "+_rnd_logme+";
 							}else{
 								if(getCustomAimCoef player != 1)then{
-									format['%1 WeaponSway Changed! %2 Should Be  %3 | No Sway Cheat',name player,getCustomAimCoef player,_sway] call "+_rnd_banme+";
+									private _log = format['WeaponSway Changed! %1 Should Be %2',getCustomAimCoef player,_sway]; 
+									_log call "+_rnd_banme+";
+									['HACK',_log] call "+_rnd_logme+";
 								};
 							};
 						};
@@ -425,12 +453,10 @@ try {
 							if(_vehicle != player) then {
 								private _uuid = _vehicle getVariable ['oUUID',''];
 								if(_uuid isEqualTo '' || !(toLower(typeName _vehicle) in "+_rnd_vehicleclasses+")) then {
-									[[netId _vehicle],{
-										private _vehicle = objectFromNetId(param[0,'']);
-										deleteVehicle _vehicle;
-										"+ _rnd_netVar + " = ['ban',"+_rnd_steamID+",format['Unit in not allowed vehicle! Vehicle type: %1 | Vehicle Hack',typeOf _vehicle]];
-										publicVariable '" + _rnd_netVar + "';
-									}] remoteExecCall ['call',2];
+									[[netId _vehicle],{private _vehicle = objectFromNetId(param[0,'']);deleteVehicle _vehicle;}] remoteExecCall ['call',2];
+									private _log = format['Bad vehicle: %1',typeOf _vehicle]; 
+									_log call "+_rnd_banme+";
+									['HACK',_log] call "+_rnd_logme+";
 								};
 							};
 						};
@@ -441,7 +467,9 @@ try {
 						private _weapon = currentWeapon player;
 						if(_weapon isNotEqualTo '')then{
 							if !(_weapon in "+_rnd_weaponclasses+") then {
-								format['Player is using weapon: %1 | Weapon Hack',_weapon] call "+_rnd_banme+";
+								private _log = format['Bad weapon: %1',_weapon]; 
+								_log call "+_rnd_banme+";
+								['HACK',_log] call "+_rnd_logme+";
 							};
 						};
 					";
@@ -453,7 +481,9 @@ try {
 									if(count _attachments > 0)then{
 										{
 											if !(_x in "+_rnd_weaponattachments+") then {
-												format['Player is using weapon attachment: %1 | Weapon attachment Hack',_x] call "+_rnd_banme+";
+												private _log = format['Bad weapon attachment: %1',_x]; 
+												_log call "+_rnd_banme+";
+												['HACK',_log] call "+_rnd_logme+";
 											};	
 										}forEach _attachments;
 									};
@@ -510,7 +540,9 @@ try {
 					"+_rnd_threadtwo_one+" = [] spawn{
 						waitUntil{(!isNull (findDisplay 49)) && (!isNull (findDisplay 602))};  
 						(findDisplay 49) closeDisplay 2; (findDisplay 602) closeDisplay 2;
-						'Opened Esacpe & Inventory Menus | Possible Inventory Glitch' call "+_rnd_kickme+";
+						private _log = 'Opened Esacpe & Inventory Menus | Possible Inventory Glitch'; 
+						_log call "+_rnd_kickme+";
+						['HACK',_log] call "+_rnd_logme+";
 					};
 				";
 			};
@@ -525,7 +557,9 @@ try {
 								_hasWeps = (weapons (vehicle player));
 								if !(_vehWeps isEqualTo _hasWeps) then {
 									deleteVehicle (vehicle player);
-									format['%1s Vehicle has: (%2) Should have: (%3) | Vehicle Weapon Hack',name player,_hasWeps,_vehWeps] call "+_rnd_banme+";
+									private _log = format['Bad Vehicle Weapons: (%1) Should have: (%2)',_hasWeps,_vehWeps]; 
+									_log call "+_rnd_banme+";
+									['HACK',_log] call "+_rnd_logme+";
 								};
 							};
 						}; 
@@ -537,7 +571,9 @@ try {
 							private _currentHM = "+str _memoryhacks_client+"#_forEachIndex;
 							private _clientHM = toArray(call compile (_currentHM#0));
 							if(_clientHM isNotEqualTo _x)then{
-								format['Memoryhack %1 %2 changed: %3, %4', _currentHM#1, _currentHM#2, toString _clientHM, toString _x] call "+_rnd_banme+";
+								private _log = format['Memoryhack %1 %2 changed: %3, %4', _currentHM#1, _currentHM#2, toString _clientHM, toString _x]; 
+								_log call "+_rnd_banme+";
+								['HACK',_log] call "+_rnd_logme+";
 							};
 						} forEach "+str _memoryhacks_server+";
 					";
@@ -560,7 +596,9 @@ try {
 					"+(call _junkCode)+"
 					if !("+_rnd_isadmin+")then{
 						if (toLower(language) isNotEqualTo toLower("+_serverlanguage+"))then{ 
-							format['Bad Language! %1 Is Not Allowed',language] call "+_rnd_kickme+";
+							_log = format['Bad Language! %1 Is Not Allowed',language];
+							_log call "+_rnd_kickme+";
+							['KICK',_log] call "+_rnd_logme+";
 						};
 					};
 				";
@@ -586,7 +624,11 @@ try {
 						};
 						"+(call _junkCode)+"
 						{if([_x, profileName,false]call BIS_fnc_inString)exitWith{_badchar = true;}}foreach _chars;
-						if(_badchar)then{[('Bad Name! Char: (' + (_x) + ') Is Not Allowed')] call "+_rnd_kickme+";};
+						if(_badchar)then{
+							private _log = format['Bad Name! Char: %1 Is Not Allowed',_x];
+							_log call "+_rnd_kickme+";
+							['KICK',_log] call "+_rnd_logme+";
+						};
 					};
 				";
 			};
@@ -596,7 +638,9 @@ try {
 						if !("+_rnd_isadmin+")then{
 						{
 							if([profileName, _x] call BIS_fnc_inString)exitWith{
-								format['Bad Name! %1 Is Not Allowed',_x] call "+_rnd_kickme+";  
+								private _log = format['Bad Name! %1 Is Not Allowed',_x];
+								_log call "+_rnd_kickme+";
+								['KICK',_log] call "+_rnd_logme+";
 							};
 						}forEach "+str _nameblacklist+";
 					};
@@ -608,7 +652,9 @@ try {
 						{
 							_x spawn {
 								waitUntil{!isNull (findDisplay _this)};
-								format['%1 Has Opened A Bad Menu: %1 | Script Kiddie',name player,_this] call "+_rnd_banme+";
+								private _log = format['Bad Menu: %1',_this];
+								_log call "+_rnd_banme+";
+								['HACK',_log] call "+_rnd_logme+";
 							};
 						}forEach " + str _detectedmenus + ";
 					};
@@ -620,7 +666,9 @@ try {
 						{
 							_x spawn {
 								waitUntil{!isNil _this};
-								format['badvar `%1` found, possible hacker',_this] call "+_rnd_banme+";
+								private _log = format['Bad Var: %1',_this]; 
+								_log call "+_rnd_banme+";
+								['HACK',_log] call "+_rnd_logme+";
 							};
 						} forEach "+str _detectedvariables+";
 					};
@@ -650,7 +698,9 @@ try {
 
 								if((_distance > _maxSpeed * _checkTime) && life_is_alive && (player == (driver _newVehicle)) && local _newVehicle) then {
 									if!(player getVariable ['life_var_teleported',false]) then {
-										format['Unit Moved Too Fast! Player moved %1 meters, in %2 seconds! (Max Allowed Speed: %3) | Teleport Cheat',_distance,_checkTime,_maxSpeed] call "+_rnd_banme+";
+										private _log = format['Player teleported: moved %1 meters, in %2 seconds! (Max Allowed Speed: %3)',_distance,_checkTime,_maxSpeed]; 
+										_log call "+_rnd_banme+";
+										['HACK',_log] call "+_rnd_logme+";
 									};
 								};
 							};
@@ -688,7 +738,9 @@ try {
 					_antihackclient = _antihackclient + "
 				uiSleep 2;
 					if(isNil {missionNamespace getVariable '"+_rnd_ahvar+"'})then{
-						'`_rnd_ahvar` nil, possible hacker' call "+_rnd_banme+";
+						private _log = '`_rnd_ahvar` nil';
+						_log call "+_rnd_banme+";
+						['HACK',_log] call "+_rnd_logme+";
 					};
 				uiSleep 2;
 			};
@@ -726,12 +778,14 @@ try {
 						private _log = true;
 						{
 							if((toLower _ctrltext) find _x > -1)then {
-								format['Hackmenu found: %1 on %2 %3 - %4',_x,ctrlIDD _dynamicText,ctrlIDC _ctrl,_ctrltext] call "+_rnd_banme+";
+								private _logmsg = format['Hackmenu found: %1 on %2 %3 - %4',_x,ctrlIDD _dynamicText,ctrlIDC _ctrl,_ctrltext]; 
+								_logmsg call "+_rnd_banme+";
+								['HACK',_logmsg] call "+_rnd_logme+";
 								_log = false;
 							};
 						} forEach "+str _detectedstrings+";
 						if(_log)then {
-							['HACK',format['Possible Hackmenu found on CTRL: [%1] - TEXT: [%2]',_ctrl, _ctrltext]] call "+_rnd_logme+";
+							['INFO',format['Possible Hackmenu found on CTRL: [%1] - TEXT: [%2]',_ctrl, _ctrltext]] call "+_rnd_logme+";
 						};
 					};
 					(findDisplay 24) closeDisplay 0;
@@ -756,8 +810,10 @@ try {
 						if(!isNull _display)then
 						{
 							{
-								if(!isNull (_display displayCtrl _x))then { 
-									format['MenuBasedHack :: %1 :: %2',_display,_x] call "+_rnd_banme+";
+								if(!isNull (_display displayCtrl _x))then {
+									private _log = format['MenuBasedHack: %1 - %2',_display,_x]; 
+									_log call "+_rnd_banme+";
+									['HACK',_log] call "+_rnd_logme+";
 								};
 							} forEach [16030,13163,989187,16100];
 							
@@ -777,7 +833,9 @@ try {
 												private _lowerlbtxt = toLower(toString _txtfilter);
 												{
 													if(_lowerlbtxt find _x > -1)then {
-														format['BadlbText: %1 FOUND [%2] ON %3 %4',_lbtxt,_x,_display,_control] call "+_rnd_banme+";
+														private _log = format['BadlbText: %1 FOUND [%2] ON %3 %4',_lbtxt,_x,_display,_control]; 
+														_log call "+_rnd_banme+";
+														['HACK',_log] call "+_rnd_logme+";
 													};
 												} forEach _detectedstrings;
 											};
@@ -793,7 +851,9 @@ try {
 											private _lowertvtxt = toLower(toString _txtfilter);
 											{
 												if(_lowertvtxt find _x > -1)then { 
-													format['BadtvText: %1 FOUND [%2] ON %3 %4',_tvtxt,_x,_display,_control] call "+_rnd_banme+";
+													private _log = format['BadtvText: %1 FOUND [%2] ON %3 %4',_tvtxt,_x,_display,_control]; 
+													_log call "+_rnd_banme+";
+													['HACK',_log] call "+_rnd_logme+";
 												};
 											} forEach _detectedstrings;
 										} else {
@@ -806,7 +866,9 @@ try {
 												private _lowerctrlTxt = toLower(toString _txtfilter);
 												{
 													if(_lowerctrlTxt find _x > -1)then {
-														format['BadCtrlText: %1 FOUND [%2] ON %3 %4',_ctrlTxt,_x,_display,_control] call "+_rnd_banme+";
+														private _log = format['BadCtrlText: %1 FOUND [%2] ON %3 %4',_ctrlTxt,_x,_display,_control]; 
+														_log call "+_rnd_banme+";
+														['HACK',_log] call "+_rnd_logme+";
 													};
 												} forEach _detectedstrings;
 											};
@@ -834,7 +896,9 @@ try {
 							private _uniform = uniform player;
 							if(_uniform isNotEqualTo '')then{
 								if !(toLower(_uniform) in "+str _uniformclasses+")then{
-									format['Gearhack Uniform: `%1` in not allowed',_uniform] call "+_rnd_banme+";
+									private _log = format['Gearhack Bad Uniform: `%1` in not allowed',_uniform]; 
+									_log call "+_rnd_banme+";
+									['HACK',_log] call "+_rnd_logme+";
 								};
 							};
 						";
@@ -844,7 +908,9 @@ try {
 							private _headgear = headgear player;
 							if(_headgear isNotEqualTo '')then{
 								if !(toLower(_headgear) in "+str _headgearclasses+")then{
-									format['Gearhack Headgear: `%1` in not allowed',_headgear] call "+_rnd_banme+";
+									private _log = format['Gearhack Bad Headgear: `%1` in not allowed',_headgear]; 
+									_log call "+_rnd_banme+";
+									['HACK',_log] call "+_rnd_logme+";
 								};
 							};
 						";
@@ -854,7 +920,9 @@ try {
 							private _goggles = goggles player;
 							if(_goggles isNotEqualTo '')then{
 								if !(toLower(_goggles) in "+str _gogglesclasses+")then{
-									format['Gearhack Goggles: `%1` in not allowed',_goggles] call "+_rnd_banme+";
+									private _log = format['Gearhack Bad Goggles: `%1` in not allowed',_goggles]; 
+									_log call "+_rnd_banme+";
+									['HACK',_log] call "+_rnd_logme+";
 								};
 							};
 						";
@@ -864,7 +932,9 @@ try {
 							private _vest = vest player;
 							if (_vest isNotEqualTo '')then{
 								if !(toLower(_vest) in "+str _vestclasses+")then{
-									format['Gearhack Vest: `%1` in not allowed',_vest] call "+_rnd_banme+";
+									private _log = format['Gearhack Bad Vest: `%1` in not allowed',_vest]; 
+									_log call "+_rnd_banme+";
+									['HACK',_log] call "+_rnd_logme+"; 
 								};
 							};
 						";
@@ -874,7 +944,9 @@ try {
 							private _backpack = backpack player;
 							if(_backpack isNotEqualTo '')then{
 								if !(toLower(_backpack) in "+str _backpacksclasses+")then{
-									format['Gearhack Backpack: `%1` in not allowed',_backpack] call "+_rnd_banme+";
+									private _log = format['Gearhack Bad Backpack: `%1` in not allowed',_backpack]; 
+									_log call "+_rnd_banme+";
+									['HACK',_log] call "+_rnd_logme+"; 
 								};
 							};
 						";
@@ -887,7 +959,9 @@ try {
 		
 		"+(call _junkCode)+"
 		waitUntil{isNull(missionNamespace getVariable ['"+_rnd_threadtwo+"',scriptNull])};
-		'Main thread terminated, possible hacker' call "+_rnd_kickme+";
+		private _log = 'Main thread terminated, possible hacker';
+		_log call "+_rnd_kickme+";
+		['HACK',_log] call "+_rnd_logme+";
 	";
 	
 	//--- something broke with antihackclient expression
@@ -900,6 +974,7 @@ try {
 	if(isNull _antihackclient)throw "Failed to load antihack network";
 
 	life_var_antihack_loaded = true;
+	_antihackclient = nil;
 
 	[_admins,_rconReady,_rnd_netVar,_rnd_admincode]spawn life_fnc_admin_initialize;
 }catch {
@@ -907,8 +982,6 @@ try {
 	
 	life_var_antihack_loaded = false;
 };
-
-_antihackclient = nil;
 
 if(life_var_antihack_loaded)then{
 	["System fully initialized!"] call life_fnc_antihack_systemlog;

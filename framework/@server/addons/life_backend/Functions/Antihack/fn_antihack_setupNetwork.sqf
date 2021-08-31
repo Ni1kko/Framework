@@ -52,15 +52,20 @@ _netVar addPublicVariableEventHandler {
 		if(_adminlvl > 0 || _key in ["kick","ban","log"])then{
 			switch (_key) do {
 				case "kick": {
-					[_value,["KICK",_SteamID]] call life_fnc_antihack_systemlog;
+					//[_value,["KICK",_SteamID]] call life_fnc_antihack_systemlog;
 					[_SteamID,_value] call life_fnc_rcon_kick;
 				};
 				case "ban": { 
-					[_value,["BAN",_SteamID]] call life_fnc_antihack_systemlog;
+					//[_value,["BAN",_SteamID]] call life_fnc_antihack_systemlog;
 					[_SteamID,_value] call life_fnc_rcon_ban;
 				};
 				case "log": { 
-					[_value#1,[_value#0,_SteamID]] call life_fnc_antihack_systemlog;
+					private _data = [_value#2,[_value#1,_SteamID]];
+					if((_value#0) isEqualTo "ADMIN")then{
+						_data call life_fnc_admin_systemlog;
+					}else{
+						_data call life_fnc_antihack_systemlog;
+					};
 				};
 				case "run-server": {
 					_value params['_params','_code'];  

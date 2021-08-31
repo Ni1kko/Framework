@@ -18,7 +18,7 @@ class CfgAntiHack
         { "KICK",   1 },
         { "BAN",    1 },
         { "HACK",   1 },
-        { "ADMIN",  1 }
+        { "INFO",   1 }
     };
 
     //--- options

@@ -3,20 +3,33 @@
 	## https://github.com/Ni1kko/Framework
 */
 
+params ['_admins','_rconReady','_rnd_netVar','_rnd_admincode'];
+
 if(!isServer)exitwith{false}; 
 if(missionNamespace getVariable ["life_var_admin_loaded",false])exitwith{false};
 if(isRemoteExecuted AND life_var_rcon_passwordOK)exitwith{[remoteExecutedOwner,"RemoteExecuted `fn_admin_initialize.sqf`"] call life_fnc_rcon_ban;};
-params ['_admins','_rconReady','_rnd_netVar','_rnd_admincode'];
- 
+
 ["Starting Serveside Code!"] call life_fnc_admin_systemlog;
 
 life_var_admin_loaded = false;
+life_var_admin_logs = [];
 
 try {
 	private _config = (configFile >> "CfgAdmin"); 
-	 
+	private _tempvars = [];
+
 	//--- Get Config
 	if(!isClass _config) throw "Config not found";
+	private _dbLogs = getNumber(_config >> "dblogs") isEqualTo 1;
+
+	//--- Load logs
+	if(_dbLogs)then{
+		private _logs = ["READ", "admin_logs",[["Type","log","steamID"],[]],false] call life_fnc_database_request;
+		{
+			life_var_admin_logs pushback _x;
+		}forEach _logs;
+	};
+	publicVariable "life_var_admin_logs";
 
 	//--- random vars ref
 	private _rndvars = [
@@ -79,12 +92,19 @@ try {
 		"_rnd_drawmarkers_evh",
 		"_rnd_drawicons",
 		"_rnd_drawicons_evh",
-		"_rnd_mapsingleclick"
+		"_rnd_mapsingleclick",
+		"_rnd_adminmenu_getstringinput",
+		"_rnd_adminmenu_inputkeyevent",
+		"_rnd_adminmenu_inputctrl",
+		"_rnd_adminmenu_inputsubmittedtext",
+		"_rnd_adminmenu_inputsubmittedentry",
+		"_rnd_adminmenu_getposfrommap",
+		"_rnd_adminmenu_spectateevent",
+		"_rnd_adminmenu_mappos"
 	];
 
 	//--- create random vars
 	if(isNil "life_fnc_util_randomString") throw "Random string function not found";
-	private _tempvars = [];
 	_tempvars resize (count _rndvars);
 	_tempvars params (_rndvars apply {private _ret=[_x,call life_fnc_util_randomString];[format["`%1` => `%2`",_ret#0,_ret#1]]call life_fnc_admin_systemlog;_ret});
 	_tempvars =nil;
@@ -108,7 +128,7 @@ try {
 		"+_rnd_runtarget+" = 	 compileFinal ""['run-target',[_this#0,_this#2,_this#1]] call "+_rnd_sendreq+";"";
 		"+_rnd_kick+" =    		 compileFinal ""if("+_rnd_useRcon +")then{['kick',_this#0,_this#1] call "+_rnd_sendreqtarget+";}else{endMission 'END1';};"";
 		"+_rnd_ban+" =     		 compileFinal ""if("+_rnd_useRcon +")then{['ban',_this#0,_this#1] call "+_rnd_sendreqtarget+";}else{_this call "+_rnd_kick+";};"";
-		"+_rnd_log+" =     		 compileFinal ""['log',_this] call "+_rnd_sendreq+";"";
+		"+_rnd_log+" =     		 compileFinal ""['log',['ADMIN',_this#0,_this#1]] call "+_rnd_sendreq+";"";
 
 		if(_steamID isNotEqualTo "+_rnd_steamID+" || '' in [_steamID,"+_rnd_steamID+"])exitWith{
 			['kick','Error steamID mismatch, Possible hacker'] call "+_rnd_sendreq+";
@@ -311,12 +331,78 @@ try {
 			} forEach allPlayers;
 			_target;
 		"";
+		"+_rnd_adminmenu_getstringinput+" = compileFinal ""
+			disableserialization;
+			if(!isNil '"+_rnd_adminmenu_inputkeyevent+"') exitWith {};
+			
+			private _display = findDisplay 1776;
+			private _ctrl = _display ctrlCreate ['RscEdit',-1];
+			_ctrl ctrlSetPosition [0,0.475,1,0.05];
+			_ctrl ctrlSetBackgroundColor [0.10,0.10,0.10,1];
+			_ctrl ctrlSetText 'Enter Message Here & Press Enter';
+			_ctrl ctrlCommit 0;
+			uiNamespace setVariable ['"+_rnd_adminmenu_inputctrl+"',_ctrl];
+			
+			"+_rnd_adminmenu_inputsubmittedentry+" = false;
+			"+_rnd_adminmenu_inputsubmittedtext+" = '';
+			"+_rnd_adminmenu_inputkeyevent+" = _display displayAddEventHandler ['KeyDown',{
+				params['_display','_key'];
+				
+				if(_key == 0x1C) exitWith {
+					_display displayRemoveEventHandler ['KeyDown',"+_rnd_adminmenu_inputkeyevent+"];
+					"+_rnd_adminmenu_inputkeyevent+" = nil;
+					private _ctrl = uiNamespace getVariable '"+_rnd_adminmenu_inputctrl+"';
+					"+_rnd_adminmenu_inputsubmittedtext+" = ctrlText _ctrl;
+					"+_rnd_adminmenu_inputsubmittedentry+" = true;
+					ctrlDelete _ctrl;
+					true;
+				};
+				false;
+			}];
+			waitUntil{"+_rnd_adminmenu_inputsubmittedentry+" || isNull _display};
+			if(isNull _display) exitWith {
+				"+_rnd_adminmenu_inputsubmittedentry+" = nil;
+				"+_rnd_adminmenu_inputkeyevent+" = nil;
+				"+_rnd_adminmenu_inputsubmittedtext+" = nil;
+				'';
+			};
+			private _text = "+_rnd_adminmenu_inputsubmittedtext+";
+			"+_rnd_adminmenu_inputsubmittedtext+" = nil;
+			"+_rnd_adminmenu_inputsubmittedentry+" = nil;
+			_text;
+		"";
+		"+_rnd_adminmenu_getposfrommap+" = compileFinal ""
+			player linkitem 'itemMap';
+			closeDialog 0;
+			openMap true;
+			if(!isNil '"+_rnd_adminmenu_mappos+"') then {
+				"+_rnd_adminmenu_mappos+" = [0,0,0];
+			};
+			"+_rnd_adminmenu_mappos+" = [];
+			onMapSingleClick '
+				openMap false;
+				[] spawn LYS_fnc_OpenMenu;
+				"+_rnd_adminmenu_mappos+" = _pos;
+				onMapSingleClick "+_rnd_mapsingleclick+";
+			';
+			waitUntil{!("+_rnd_adminmenu_mappos+" isEqualTo [])};
+			_pos = "+_rnd_adminmenu_mappos+";
+			"+_rnd_adminmenu_mappos+" = nil;
+			_pos;
+		"";
 		"+_rnd_adminmenugetfunctions+" = compileFinal ""
 			private _godmode = {
 				systemChat 'test';
+				if("+_rnd_godmodetoggle+")then{
+					player allowDamage false;
+					['INFO','Enabled Invincibility'] call "+_rnd_log+";
+				}else{
+					player allowDamage true;
+				};
 			};
 			private _infammo = { 
 				if("+_rnd_infinteammotoggle+") then {
+					['INFO','Enabled infinte ammo'] call "+_rnd_log+";
 					while{"+_rnd_infinteammotoggle+"} do {
 						(vehicle player) setVehicleAmmo 1;
 						UiSleep 0.1;
@@ -329,9 +415,13 @@ try {
 				_sway = getCustomAimCoef player; 
 				player setUnitRecoilCoefficient (if(_toggle) then {life_var_OldRecoil = _recoil;0} else {life_var_OldRecoil});
 				player setCustomAimCoef (if(_toggle) then {life_var_OldSway = _sway;0} else {life_var_OldSway});
+				if(_toggle)then{
+					['INFO','Enabled no recoil'] call "+_rnd_log+";
+				};
 			};
 			private _fastfire = {
-				if("+_rnd_fastfiretoggle+") then {
+				if("+_rnd_fastfiretoggle+") then { 
+					['INFO','Enabled fastfire'] call "+_rnd_log+";
 					while{"+_rnd_fastfiretoggle+"} do {
 						(vehicle player) setWeaponReloadingTime [gunner (vehicle player), currentMuzzle (gunner (vehicle player)), 0];
 						UiSleep 0.001;
@@ -345,23 +435,38 @@ try {
 			private _arsenal = {
 				closeDialog 0;
 				['Open',true] spawn bis_fnc_arsenal;
+				['INFO','Opened Arsenal'] call "+_rnd_log+";
 			};
 			private _heal = {
 				resetCamShake; 
-				player setDamage 0; 
+				player setDamage 0;
+				['INFO','SelfHealed'] call "+_rnd_log+";
 			};
 			private _repaircurs = {
+				if(isNull cursorTarget)exitwith{};
 				cursorTarget setDamage 0;
+				if(damage cursorTarget isEqualTo 0)then{
+					['INFO',format['Repaired (%1)',typeOf(_object)]] call "+_rnd_log+";
+				};
 			};
-			private	_deletecurs = {
-				private _object = cursorTarget;
-				[{
-					params['_object']; 
-					deleteVehicle _object;
-				},[_object]] call "+_rnd_runserver+";
+			private	_deletecurs = { 
+				if(isNull cursorTarget)exitwith{};
+				[] spawn{
+					private _object = cursorTarget;
+					private _type = typeOf _object;
+					[{
+						params['_object']; 
+						deleteVehicle _object;
+					},[_object]] call "+_rnd_runserver+"; 
+					uiSleep 15;
+					if(isNull _object)then{
+						['INFO',format['Deleted (%1)',_type]] call "+_rnd_log+";
+					};
+				};
 			};
 			private _vehgod = {
-				if("+_rnd_vehgod_toggle+") then {
+				if("+_rnd_vehgod_toggle+") then { 
+					['INFO',format['Enabled Vehicle Invincibility On Their (%1)',typeOf(vehicle player)]] call "+_rnd_log+";
 					while{"+_rnd_vehgod_toggle+"} do {
 						waitUntil{vehicle player != player || !"+_rnd_vehgod_toggle+"};
 						_veh = vehicle player;
@@ -372,7 +477,8 @@ try {
 				};
 			};
 			private _vehboost = {
-				if("+_rnd_vehboost_toggle+") then {
+				if("+_rnd_vehboost_toggle+") then { 
+					['INFO',format['Boosted Thier (%1)',typeOf(vehicle player)]] call "+_rnd_log+";
 					while{"+_rnd_vehboost_toggle+"} do {
 						if(vehicle player != player) then {
 							if(inputAction 'carFastForward' > 0) then {
@@ -386,7 +492,9 @@ try {
 				};
 			};
 			private _vehrepair = {
-				if(vehicle player != player) then {vehicle player setDamage 0;};
+				if(vehicle player != player) exitWith {};
+				vehicle player setDamage 0;
+				['INFO',format['Repaired Their (%1)',typeOf(vehicle player)]] call "+_rnd_log+";
 			};
 			private _invisible = {
 				params['_toggle'];
@@ -394,10 +502,14 @@ try {
 					params['_unit','_toggle'];
 					_unit hideObjectGlobal _toggle;
 				},[player,_toggle]] call "+_rnd_runserver+";
+				if(_toggle)then{
+					['INFO','Went Invisible'] call "+_rnd_log+";
+				};
 			};
 			private _freecam = {
 				closeDialog 0;
 				call BIS_fnc_Camera;
+				['INFO','Opened freecam'] call "+_rnd_log+";
 			};
 			private _healtarg = {
 				private _target = call "+_rnd_adminmenu_getselectedtarget+";
@@ -406,13 +518,16 @@ try {
 					resetCamShake;
 					player setDamage 0;
 				}] call "+_rnd_runtarget+";
+				['INFO',format['Healed %1',getPlayerUID _target]] call "+_rnd_log+";
 			};
 			private _repairtarg = {
 				private _target = call "+_rnd_adminmenu_getselectedtarget+";
 				if(isNull _target) exitWith {};
+				if(vehicle player == player) exitWith {};
 				[_target,{
 					if(vehicle player != player) then {vehicle player setDamage 0;};
-				}] call "+_rnd_runtarget+";
+				}] call "+_rnd_runtarget+"; 
+				['INFO',format['Repaired %1 (%2)',getPlayerUID _target, typeOf(vehicle player)]] call "+_rnd_log+";
 			};
 			private _viewSteamInfo = {
 				private _target = call "+_rnd_adminmenu_getselectedtarget+";
@@ -424,13 +539,46 @@ try {
 					} else {
 						hint format ['UID: %1 \n---------------------------------------------------',_uid];
 					};
+					['INFO',format['Requested %1 Steam Information',getPlayerUID _target]] call "+_rnd_log+";
 				};
 			};
 			private _viewinventory = {
-				_target = call "+_rnd_adminmenu_getselectedtarget+";
+				private _target = call "+_rnd_adminmenu_getselectedtarget+";
 				if(isNull _target) exitWith {};
 				closeDialog 0;
 				createGearDialog [_target,'RscDisplayInventory'];
+				['INFO',format['Viewed %1 Inventory',getPlayerUID _target]] call "+_rnd_log+";
+			};
+			private _toggle_weaponMenu = {
+				disableserialization;
+				params['_toggle'];
+				private _display = findDisplay 1776;
+				private _objs = _display displayctrl 1780;
+				private _mainList = _display displayCtrl 1776;
+				
+				lbClear _objs;
+				if(_toggle) then {
+					[_objs,1] call "+_rnd_adminmenu_updateobjlist+";
+					if(ctrlShown _objs) then {
+						Vehicle_Menu_Toggle = false;
+						Crate_Menu_Toggle = false;
+						for '_i' from 0 to (lbSize _mainList)-1 do {
+							private _index = _mainList lbData _i;
+							if(_index != '') then {
+								private _j = parseNumber _index;
+								private _funcData = "+_rnd_adminmenufunctions+" select _j;
+								private _text = _funcData select 0;
+								if(_text == 'Vehicle Menu' || _text == 'Supply Crate(s)') then {
+									_mainList lbSetColor [_i,"+_rnd_toggleoffcolor+"];
+								};
+							};
+						};
+					} else {
+						_objs ctrlShow true;
+					};
+				} else {
+					_objs ctrlShow false;
+				};
 			};
 			private _toggle_vehicleMenu = {
 				disableserialization;
@@ -438,7 +586,6 @@ try {
 				private _display = findDisplay 1776;
 				private _objs = _display displayctrl 1780; 
 				private _mainList = _display displayCtrl 1776;
-				
 				lbClear _objs;
 				if(_toggle) then {
 					[_objs,0] call "+_rnd_adminmenu_updateobjlist+";
@@ -446,12 +593,42 @@ try {
 						Weapon_Menu_Toggle = false;
 						Crate_Menu_Toggle = false;
 						for '_i' from 0 to (lbSize _mainList)-1 do {
-							_index = _mainList lbData _i;
+							private _index = _mainList lbData _i;
 							if(_index != '') then {
-								_j = parseNumber _index;
-								_funcData = "+_rnd_adminmenufunctions+" select _j;
-								_text = _funcData select 0;
+								private _j = parseNumber _index;
+								private _funcData = "+_rnd_adminmenufunctions+" select _j;
+								private _text = _funcData select 0;
 								if(_text == 'Weapon Menu' || _text == 'Supply Crate(s)') then {
+									_mainList lbSetColor [_i,"+_rnd_toggleoffcolor+"];
+								};
+							};
+						};
+					} else {
+						_objs ctrlShow true;
+					};
+				} else {
+					_objs ctrlShow false;
+				};
+			};
+			private _toggle_supplies = {
+				disableserialization;
+				params['_toggle'];
+				private _display = findDisplay 1776;
+				private _objs = _display displayctrl 1780;
+				private _mainList = _display displayCtrl 1776;
+				lbClear _objs;
+				if(_toggle) then {
+					[_objs,2] call "+_rnd_adminmenu_updateobjlist+";
+					if(ctrlShown _objs) then {
+						Weapon_Menu_Toggle = false;
+						Vehicle_Menu_Toggle = false;
+						for '_i' from 0 to (lbSize _mainList)-1 do {
+							private _index = _mainList lbData _i;
+							if(_index != '') then {
+								private _j = parseNumber _index;
+								private _funcData = "+_rnd_adminmenufunctions+" select _j;
+								private _text = _funcData select 0;
+								if(_text == 'Weapon Menu' || _text == 'Vehicle Menu') then {
 									_mainList lbSetColor [_i,"+_rnd_toggleoffcolor+"];
 								};
 							};
@@ -478,6 +655,192 @@ try {
 				params['_toggle'];
 				((findDisplay 1776) displayCtrl 1778) ctrlShow _toggle;
 			};
+			private _airdrop = {
+				private _pos = call "+_rnd_adminmenu_getposfrommap+";
+				if(_pos isEqualTo [0,0,0]) exitWith {};
+				[{
+					params ['_location'];
+
+
+				},[_pos]] call "+_rnd_runserver+";
+				['INFO','Requested airdrop'] call "+_rnd_log+";
+			};
+			private _messageall = {
+				private _input = call "+_rnd_adminmenu_getstringinput+";
+				if(_input == '') exitWith {};
+				['Admin Message\n\n' + _input] remoteExec ['hint',0];
+				['INFO',format ['Messaged Everyone With %1',_input]] call "+_rnd_log+";
+			};
+			private _messagetarget = {
+				private _target = call "+_rnd_adminmenu_getselectedtarget+";
+				if(isNull _target) exitWith {};
+				private _input = call "+_rnd_adminmenu_getstringinput+";
+				if(_input == '') exitWith {};
+				['Admin Message\n\n' + _input] remoteExec ['hint',_target];
+				['INFO',format ['Messaged %1 With %2',getPlayerUID _target,_input]] call "+_rnd_log+";
+			};
+			private _bantarget = {
+				private _target = call "+_rnd_adminmenu_getselectedtarget+";
+				if(isNull _target) exitWith {};
+				private _reason = call "+_rnd_adminmenu_getstringinput+";
+				if(_reason == '') then {};
+				[getplayeruid _target,_reason] call "+_rnd_ban+";
+				['INFO',format ['Banned %1 For %2',getPlayerUID _target,_reason]] call "+_rnd_log+";
+			};
+			private _kicktarget = {
+				private _target = call "+_rnd_adminmenu_getselectedtarget+";
+				if(isNull _target) exitWith {};
+				private _reason = call "+_rnd_adminmenu_getstringinput+";
+				if(_reason == '') then {};
+				[getplayeruid _target,_reason] call "+_rnd_kick+";
+				['INFO',format ['Kicked %1 For %2',getPlayerUID _target,_reason]] call "+_rnd_log+";
+			};
+			private _knockout = {
+				private _target = call "+_rnd_adminmenu_getselectedtarget+";
+				if(isNull _target) exitWith {};
+				[_target,{ 
+
+				}] call "+_rnd_runtarget+";
+				['INFO',format ['Knocked out %1',getPlayerUID _target]] call "+_rnd_log+";
+			};
+			private _killtarg = {
+				private _target = call "+_rnd_adminmenu_getselectedtarget+";
+				if(isNull _target) exitWith {};
+				[_target,{
+					player setDamage 1;
+				}] call "+_rnd_runtarget+";
+				['INFO',format ['Killed %1',getPlayerUID _target]] call "+_rnd_log+";
+			};
+			private _breaklegs = {
+				private _target = call "+_rnd_adminmenu_getselectedtarget+";
+				if(isNull _target) exitWith {};
+				[_target,{
+					player setHitPointDamage ['HitLegs',1];
+				}] call "+_rnd_runtarget+";
+				['INFO',format ['Broke %1 legs',getPlayerUID _target]] call "+_rnd_log+";
+			};
+			private _spectate = {
+				private _target = call "+_rnd_adminmenu_getselectedtarget+";
+				if(isNull _target) exitWith {};
+				closeDialog 0;		
+				if(!isNil '"+_rnd_adminmenu_spectateevent+"') then {
+					(findDisplay 46) displayRemoveEventHandler ['KeyDown',"+_rnd_adminmenu_spectateevent+"];
+				};
+				_target switchCamera 'EXTERNAL';
+				"+_rnd_adminmenu_spectateevent+" = (findDisplay 46) displayAddEventHandler ['KeyDown',{
+					params['_display','_key'];
+					if(_key == 0x01) exitWith {
+						player switchCamera 'EXTERNAL';
+						(findDisplay 46) displayRemoveEventHandler ['KeyDown',"+_rnd_adminmenu_spectateevent+"];
+						"+_rnd_adminmenu_spectateevent+" = nil;
+						true;
+					};
+					false;
+				}];
+				['INFO',format ['Spectated %1',getPlayerUID _target]] call "+_rnd_log+";
+			};
+			private _lockinput = {
+				private _target = call "+_rnd_adminmenu_getselectedtarget+";
+				if(isNull _target) exitWith {};
+				[_target,{
+					disableUserInput true;
+				}] call "+_rnd_runtarget+";
+				['INFO',format ['Locked %1 Input',getPlayerUID _target]] call "+_rnd_log+";
+			};
+			private _unlockinput = {
+				private _target = call "+_rnd_adminmenu_getselectedtarget+";
+				if(isNull _target) exitWith {};
+				[_target,{
+					disableUserInput false;
+				}] call "+_rnd_runtarget+";
+				['INFO',format ['Unlocked %1 Input',getPlayerUID _target]] call "+_rnd_log+";
+			};
+			private _blackscreen = {
+				private _target = call "+_rnd_adminmenu_getselectedtarget+";
+				if(isNull _target) exitWith {};
+				[_target,{
+					1776 cutText ['','BLACK FADED'];
+				}] call "+_rnd_runtarget+";
+				['INFO',format ['Blackscreen %1',getPlayerUID _target]] call "+_rnd_log+";
+			};
+			private _clearscreen = {
+				private _target = call "+_rnd_adminmenu_getselectedtarget+";
+				if(isNull _target) exitWith {};
+				[_target,{
+					1776 cutText ['','PLAIN'];
+				}] call "+_rnd_runtarget+";
+				['INFO',format ['Cleared %1 Blackscreen',getPlayerUID _target]] call "+_rnd_log+";
+			};
+			private _tphere = {
+				private _target = call "+_rnd_adminmenu_getselectedtarget+";
+				if(isNull _target) exitWith {}; 
+				_target setVariable ['life_var_teleported',true,true];
+				private _oldPos = (getPosATL _target);
+				private _newpos = (getPosATL player);
+				if((vehicle player) != player) then {
+					_target moveInAny (vehicle player);
+					if(vehicle _target != vehicle player) then {
+						private _pos = (getPos (vehicle player)) findEmptyPosition [0,20];
+						if(_pos != []) then {
+							_newpos = _pos;
+							_target setPos _newpos;
+						} else {
+							_target setPosATL _newpos;
+						};
+					};
+				} else {
+					_target setPosATL _newpos;
+				}; 
+				['INFO',format ['Teleported %1 %2Meters to there location',getPlayerUID _target,_oldPos distance2D _newpos]] call "+_rnd_log+";
+				_target spawn { 
+					uiSleep 5;
+					_this setVariable ['life_var_teleported',false,true];
+				};
+			};
+			private _tpto = {
+				private _target = call "+_rnd_adminmenu_getselectedtarget+";
+				if(isNull _target) exitWith {};
+				player setVariable ['life_var_teleported',true,true];
+				private _oldPos = (getPosATL player);
+				private _newpos = (getPosATL _target);
+				if((vehicle _target) != _target) then {
+					_freeSpace = {(vehicle player) emptyPositions _x} forEach ['Commander','Driver','Gunner','Cargo'];
+					if(_freeSpace > 0) then {
+						player moveInAny (vehicle _target);
+						_newpos = getPos (vehicle _target);
+					} else {
+						_newpos = getPos (vehicle _target);
+						player setPos [_newpos select 0,_newpos select 1,0];
+					};
+				} else {
+					player setPosATL _newpos;
+				};
+				['INFO',format ['Teleported %1Meters to %2 location',_oldPos distance2D _newpos,getPlayerUID _target]] call "+_rnd_log+";
+				player spawn { 
+					uiSleep 5;
+					_this setVariable ['life_var_teleported',false,true];
+				};
+			};
+			private _lockserv = {
+				[{
+					'#lock' call life_fnc_rcon_sendCommand
+				}] call "+_rnd_runserver+";
+				hint 'Server Locked!';
+				['INFO','Locked Server'] call "+_rnd_log+";
+			};
+			private _unlockserv = {
+				[{
+					'#unlock' call life_fnc_rcon_sendCommand
+				}] call "+_rnd_runserver+";
+				hint 'Server Unlocked!';
+				['INFO','Unlocked Server'] call "+_rnd_log+";
+			};
+			private _restart = {
+				[{
+					
+				}] call "+_rnd_runserver+";
+				['INFO','Restarted Server'] call "+_rnd_log+";
+			};
 			"+_rnd_adminmenufunctions+" = [
 				['- Main',0],
 					['God Mode',1,_godmode,'"+_rnd_godmodetoggle+"'],
@@ -492,8 +855,20 @@ try {
 
 				['- Players',0],
 					['Show Players',1,_toggle_players,'"+_rnd_playermenutoggle+"'],
+					['TP Here',2,_tphere],
+					['TP To',2,_tpto], 
+					['Ban',2,_bantarget],
+					['Kick',2,_kicktarget],
+					['Knockout',2,_knockout],
+					['Break Legs',2,_breaklegs],
+					['Kill',2,_killtarg],
 					['Repair',2,_repairtarg],
 					['Heal',2,_healtarg],
+					['Message',2,_messagetarget],
+					['Lock Input',2,_lockinput],
+					['Unlock Input',2,_unlockinput],
+					['Black Screen',2,_blackscreen],
+					['Clear Screen',2,_clearscreen],
 
 				['- Vehicles',0],
 					['God Mode',1,_vehgod,'"+_rnd_vehgod_toggle+"'],
@@ -501,7 +876,10 @@ try {
 					['Repair',2,_vehrepair],
 
 				['- Spawning',0],
+					['Weapon Menu',1,_toggle_weaponMenu,'"+_rnd_weaponmenutoggle+"'],
 					['Vehicle Menu',1,_toggle_vehicleMenu,'"+_rnd_vehiclemenutoggle+"'],
+					['Supply Crate(s)',1,_toggle_supplies,'"+_rnd_cratemenutoggle+"'],
+					['Airdrop',2,_airdrop],
 
 				['- Icons',0],
 					['Player Icons',1,{},'"+_rnd_playericonstoggle+"'],
@@ -516,13 +894,19 @@ try {
 					['AI Markers',1,{},'"+_rnd_aimarkerstoggle+"'],
 
 				['- Recon',0],
+					['Spectate',2,_spectate],
 					['Invisibility',1,_invisible,'"+_rnd_invisibilitytoggle+"'],
 					['FreeCam',2,_freecam],
 					['View Steam Info',2,_viewSteamInfo],
 					['View Inventory',2,_viewinventory],
 					['Show Logs',1,_toggle_logs,'"+_rnd_hacklogtoggle+"'],
-
 				
+				['- Server',0],
+					['Restart',2,_restart],
+					['Lock',2,_lockserv],
+					['Unlock',2,_unlockserv], 
+					['Mass Message',2,_messageall],
+ 
 
 				[format['%1 Admin Menu By: Lystic & Ni1kko',worldName],0]
 			];
@@ -578,9 +962,8 @@ try {
 			if("+_rnd_weaponmenutoggle+") then 
 			{
 				private _object = 'groundweaponholder' createVehicle [0,0,0];
-				private _object setposatl getposatl player; 
+				_object setPosATL (getPosATL player); 
 				private _item = _classname;
-				
 				if(isClass (configFile >> 'CfgWeapons' >> _item)) then {
 					if((toLower(_item) find 'tacs_' == 0) || (toLower(_item) find 'item' == 0) || (toLower(_item) find 'h_' == 0) || (toLower(_item) find 'u_' == 0) || (toLower(_item) find 'v_' == 0) || (toLower(_item) find 'minedetector' == 0) || (toLower(_item) find 'binocular' == 0) || (toLower(_item) find 'rangefinder' == 0) || (toLower(_item) find 'NVGoggles' == 0) || (toLower(_item) find 'laserdesignator' == 0) || (toLower(_item) find 'firstaidkit' == 0) || (toLower(_item) find 'medkit' == 0) || (toLower(_item) find 'toolkit' == 0) || (toLower(_item) find 'muzzle_' == 0) || (toLower(_item) find 'optic_' == 0) || (toLower(_item) find 'acc_' == 0) || (toLower(_item) find 'bipod_' == 0)) then {
 						_object addItemCargoGlobal [_item,1];
@@ -737,27 +1120,25 @@ try {
 			};
 
 			_log ctrlShow "+_rnd_hacklogtoggle+";
-			private _index = _log lbAdd '        Log List';
+			private _index = _log lbAdd '- Server Log List';
 			_log lbSetColor[_index,"+_rnd_titlecolor+"];
 	
-			private _logs = missionNamespace getVariable ['life_var_admin_logs',[]];
-			for '_i' from 0 to (count(_logs) - 1) do {
-				private _message = _logs select _i;
-				private _array = _message splitString '| ';
-				private _type = _array select 0;
-				private _uid = _array select 1;
-				private _reason = _array select 2;
-				private _color = switch (toLower(_type)) do {
-					case 'ban': {[1,0,0,1]};
-					case 'kick': {[1,1,0,1]};
-					case 'servere': {[1,0.5,3,0,1]};
-					case 'info': {[0.2,0.2,0.2,1]};	
-					default {[1,1,1,1]};
-				}; 
-				private _index = _log lbAdd _message;
-				_log lbSetData [_index,'LogMessage_' + (str (_i))];
+			private _adminlogs = missionNamespace getVariable ['life_var_admin_logs',[]];
+			private _antihacklogs = missionNamespace getVariable ['life_var_antihack_logs',[]]; 
+			{
+				_x params ['_type','_message','_steamID']; 
+				private _index = _log lbAdd format['%1 | %2',_steamID, _message];
+				private _color = switch (toUpper _type) do {
+					case 'BAN':  {[1,   0,   0,   1]};
+					case 'KICK': {[1,   1,   0,   1]};
+					case 'HACK': {[1,   0.5, 3,   1]};
+					case 'INFO': {[0.2, 0.2, 0.2, 1]};	
+					default      {[1,   1,   1,   1]};
+				};
+				_log lbSetData [_index,'LogMessage_' + (str (_forEachIndex))];
 				_log lbSetColor [_index,_color];
-			};
+				_log lbSetColorRight [_index,_color];
+			} forEach (_adminlogs + _antihacklogs);
 		"";
 		"+_rnd_init+" = compileFinal ""
 			if(("+_rnd_steamID+" call "+_rnd_getadminlvl+") <= 0) exitwith{};
@@ -792,13 +1173,13 @@ try {
 		"+_rnd_admins+" = compileFinal str("+str _admins+");
 		"+_rnd_getadminlvl+" = compileFinal ""private _lvl = 0;{if(_this isEqualTo _x#1 || _this isEqualTo _x#2)exitWith{_lvl = _x#0;};}forEach (call "+_rnd_admins+");_lvl"";
 		"+_rnd_adminconnected+" = compileFinal ""
-			params['_name','_steamID','_ownerID',_adminlvl];
+			params['_name','_steamID','_ownerID','_adminlvl'];
 			if(_adminlvl <= 0)exitWith{};
 			['Admin connected'] call life_fnc_admin_systemlog;
 			_ownerID publicVariableClient '"+_rnd_admincode+"';
 		"";
 		"+_rnd_admindisconnected+" = compileFinal ""
-			params['_name','_steamID','_ownerID',_adminlvl];
+			params['_name','_steamID','_ownerID','_adminlvl'];
 			if(_adminlvl <= 0)exitWith{};
 			['Admin disconnected'] call life_fnc_admin_systemlog;
 		"";
@@ -830,7 +1211,7 @@ try {
 				['_customArgs',[]]
 			];
  
-			private _adminlvl = _steamID call "+_rnd_adminlvl+";
+			private _adminlvl = _steamID call "+_rnd_getadminlvl+";
 			private _isadmin = _adminlvl > 0;
 
 			if(!_isadmin)exitWith{['Player disconnected'] call life_fnc_admin_systemlog;};
