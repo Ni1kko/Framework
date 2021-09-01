@@ -42,7 +42,7 @@ unsafeCVL = 1; // Allows createVehicleLocal to be executed in Multiplayer
 class RscTitles {
     #include "dialog\progress.hpp"
     #include "dialog\hud_nameTags.hpp"
-    #include "dialog\hud_stats.hpp"
+    #include "dialog\RscPlayerHUD.hpp"
 };
 
 class CfgFunctions {
