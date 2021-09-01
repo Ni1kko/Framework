@@ -60,9 +60,12 @@ if (life_spawn_point isEqualTo []) then {
 
 if (life_firstSpawn) then {
     life_firstSpawn = false;
-    [] call life_fnc_welcomeNotification;
+    //[] call life_fnc_welcomeNotification;
 };
 
 [] call life_fnc_playerSkins;
 
-player setVariable ["life_var_teleported",false,true];
+[]spawn{
+    uiSleep 5;
+    player setVariable ["life_var_teleported",false,true];
+};
