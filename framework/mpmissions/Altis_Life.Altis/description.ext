@@ -121,25 +121,7 @@ class CfgFunctions {
             class ticketAction {};
             class unrestrain {};
         };
-
-        class Admin {
-            file = "core\admin";
-            class adminCompensate {};
-            class adminDebugCon {};
-            class adminFreeze {};
-            class adminBan {};
-            class adminKick {};
-            class adminGodMode {};
-            class adminid {};
-            class admininfo {};
-            class adminMarkers {};
-            class adminMenu {};
-            class adminQuery {};
-            class adminSpectate {};
-            class adminTeleport {};
-            class adminTpHere {};
-        };
-
+        
         class Civilian {
             file = "core\civilian";
             class civMarkers {};
@@ -475,8 +457,6 @@ class CfgRemoteExec {
         /* Client only functions */
             F(life_fnc_AAN,CLIENT)
             F(life_fnc_addVehicle2Chain,CLIENT)
-            F(life_fnc_adminID,CLIENT)
-            F(life_fnc_adminInfo,CLIENT)
             F(life_fnc_bountyReceive,CLIENT)
             JIP(life_fnc_copLights,CLIENT)
             F(life_fnc_copSearch,CLIENT)

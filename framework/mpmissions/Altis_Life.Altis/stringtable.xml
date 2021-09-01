@@ -981,30 +981,6 @@
             <Polish>You can't gather this resource with this vehicle!</Polish>
 			<Chinesesimp>你不能用这载具收集这个资源！</Chinesesimp>
         </Key>
-        <Key ID="STR_NOTF_adminDebugCon">
-            <Original>You have no business using this.</Original>
-            <Czech>Nemáš podnikání pomocí tohoto.</Czech>
-            <French>Vous n'avez pas le niveau pour utiliser la console.</French>
-            <Spanish>No tienes permiso de usar esto.</Spanish>
-            <Italian>Non hai il permesso di farlo.</Italian>
-            <Polish>Nie masz działalność z wykorzystaniem tego produktu.</Polish>
-            <Portuguese>Você não tem nenhum negócio usando isto.</Portuguese>
-            <Russian>У вас нет бизнеса с помощью этого.</Russian>
-            <German>Du hast hier nichts verloren!</German>
-			<Chinesesimp>您无权这样做。</Chinesesimp>
-        </Key>
-        <Key ID="STR_NOTF_adminHasOpenedDebug">
-            <Original>Admin %1 has opened the debug console.</Original>
-            <Czech>Admin %1 otevřel ladění konzoli.</Czech>
-            <French>Administrateur %1 a ouvert la console de debug.</French>
-            <Spanish>Administrador %1 ha abierto la consola de depuración.</Spanish>
-            <Italian>Admin %1 ha aperto la console di debug.</Italian>
-            <Polish>Administrator %1 otworzył konsoli debugowania.</Polish>
-            <Portuguese>Administrador %1 abriu o console de depuração.</Portuguese>
-            <Russian>Администратор %1 открыл консоль отладки.</Russian>
-            <German>Admin %1 hat die Debug-Konsole geöffnet.</German>
-			<Chinesesimp>管理员 %1 已打开调试控制台。</Chinesesimp>
-        </Key>
         <Key ID="STR_NOTF_cannotDropKeys">
             <Original>You cannot drop keys to a vehicle which is locked and you are inside of.</Original>
             <Czech>You cannot drop keys to a vehicle which is locked and you are inside of.</Czech>

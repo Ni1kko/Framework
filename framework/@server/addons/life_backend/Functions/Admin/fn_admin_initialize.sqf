@@ -397,9 +397,11 @@ try {
 			private _godmode = {
 				systemChat 'test';
 				if("+_rnd_godmodetoggle+")then{
+					titleText [localize 'STR_ANOTF_godModeOn','PLAIN']; titleFadeOut 2;
 					player allowDamage false;
 					['INFO','Enabled Invincibility'] call "+_rnd_log+";
-				}else{
+				}else{ 
+					titleText [localize 'STR_ANOTF_godModeOff','PLAIN']; titleFadeOut 2;
 					player allowDamage true;
 				};
 			};
