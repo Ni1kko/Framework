@@ -826,21 +826,32 @@ try {
 			};
 			private _lockserv = {
 				[{
-					'#lock' call life_fnc_rcon_sendCommand
+					'#lock' call life_fnc_rcon_sendCommand;
 				}] call "+_rnd_runserver+";
 				hint 'Server Locked!';
 				['INFO','Locked Server'] call "+_rnd_log+";
 			};
 			private _unlockserv = {
 				[{
-					'#unlock' call life_fnc_rcon_sendCommand
+					'#unlock' call life_fnc_rcon_sendCommand;
 				}] call "+_rnd_runserver+";
 				hint 'Server Unlocked!';
 				['INFO','Unlocked Server'] call "+_rnd_log+";
 			};
 			private _restart = {
 				[{
-					
+					'#lock' call life_fnc_rcon_sendCommand;
+					[]spawn{
+						[[],{
+							if(!hasInterface)exitWith{}; 
+							[] call SOCK_fnc_updateRequest; 
+							hint 'Admin Restart, Data saved... You will be kicked';
+						}]remoteExec ['call',-2];
+						uiSleep 45;
+						[] call life_fnc_rcon_kickAll;
+						uiSleep 5;
+						'#shutdown' call life_fnc_rcon_sendCommand;
+					};
 				}] call "+_rnd_runserver+";
 				['INFO','Restarted Server'] call "+_rnd_log+";
 			};
