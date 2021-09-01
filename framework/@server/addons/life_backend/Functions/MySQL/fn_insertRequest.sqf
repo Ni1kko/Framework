@@ -65,13 +65,7 @@ if(_insertPlayer)then{
 
 //--- Add new player bankaccount to database
 if(_insertBank)then{
-    private _funds = getNumber(missionConfigFile >> "Life_Settings" >> (
-        switch (side _player) do {
-            case independent: {"bank_med"};
-            case west: {"bank_cop"};
-            default {"bank_civ"}
-        }
-    ));
+    private _funds = getNumber(missionConfigFile >> "Life_Settings" >> "startingFunds");
     ["CREATE", "bankaccounts", 
         [
             ["BEGuid", 			["DB","STRING", _BEGuid] call life_fnc_database_parse],

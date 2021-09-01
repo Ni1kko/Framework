@@ -91,7 +91,6 @@ class CfgFunctions {
             class managesc {};
             class cleanup {};
             class huntingZone {};
-            class getID {};
             class vehicleCreate {};
             class spawnVehicle {};
             class getVehicles {};
