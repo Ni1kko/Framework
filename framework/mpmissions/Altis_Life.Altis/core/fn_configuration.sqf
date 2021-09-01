@@ -43,6 +43,29 @@ life_canpay_bail = true;
 life_storagePlacing = scriptNull;
 life_hideoutBuildings = [];
 life_firstSpawn = true;
+life_var_newlife = false;
+life_var_earplugs = false;
+life_var_autorun = false;
+life_var_combat = false;
+
+//Hud
+life_var_hud_threads = nil;
+life_var_hud_layer1shown = false; 
+life_var_hud_layer1mode = 0;
+life_var_hud_partyespmode = 0;
+life_var_hud_eventhandle = -1;
+life_var_hud_lastgrprendered_at = diag_tickTime;
+life_var_hud_laststatsrendered_at = diag_tickTime;
+life_var_hud_lastvehrendered_at = diag_tickTime;
+life_var_hud_lastrendered_muzzle = "";
+life_var_hud_lastrendered_grenadeclassname = "";
+life_var_hud_lastrendered_vehclassname = "";
+life_var_hud_lastrendered_vehfueltanksize = 0; 
+life_var_hud_activelayer = 1;
+life_var_hud_thirst_lastval = 100;
+life_var_hud_hunger_lastval = 100;
+life_var_hud_lastlocation = "";
+life_var_hud_waypoints = [];
 
 //Settings
 life_settings_enableNewsBroadcast = profileNamespace getVariable ["life_enableNewsBroadcast", true];

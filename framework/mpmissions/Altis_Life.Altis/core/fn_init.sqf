@@ -118,7 +118,7 @@ if (count extdb_var_database_headless_clients > 0) then {
     [getPlayerUID player, player getVariable ["realname", name player]] remoteExec ["life_fnc_wantedProfUpdate", RSERV];
 };
 
-[] spawn life_fnc_hudSetup;
+[true] call life_fnc_gui_hook_management;
 
 diag_log "----------------------------------------------------------------------------------------------------";
 diag_log format ["               End of Altis Life Client Init :: Total Execution Time %1 seconds ",(diag_tickTime - _timeStamp)];

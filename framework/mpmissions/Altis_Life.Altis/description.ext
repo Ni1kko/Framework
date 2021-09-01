@@ -238,7 +238,6 @@ class CfgFunctions {
             class handleInv {};
             class handleItem {};
             class hideObj {};
-            class hudSetup {};
             class inventoryClosed {};
             class inventoryOpened {};
             class isUIDActive {};
@@ -282,6 +281,19 @@ class CfgFunctions {
             class gangNewLeader {};
             class gangUpgrade {};
             class initGang {};
+        };
+
+        class Gui {
+            file = "core\gui"; 
+            class gui_hook_management {}; 
+            class gui_renderGrenadePanel {};
+            class gui_renderGroupPanel {};
+            class gui_renderNotifications {};
+            class gui_renderPartyESP {};
+            class gui_renderStatsPanel {};
+            class gui_renderVehiclePanel {};
+            class gui_renderWaypoints {};
+            class gui_renderWeaponPanel {};
         };
 
         class Housing {
@@ -400,6 +412,16 @@ class CfgFunctions {
             class weaponShopMags {};
             class weaponShopMenu {};
             class weaponShopSelection {};
+        };
+
+        class Utils {
+            file = "core\utils";
+            class util_math_round {};
+            class util_array_toLower {};
+            class util_getVehicleRole {};
+            class util_getNearestLocationName {};
+            class util_needsReload {};
+            class util_getTerrainGradient {};
         };
 
         class Vehicle {
