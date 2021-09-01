@@ -21,6 +21,8 @@ try {
 	//--- Get Config
 	if(!isClass _config) throw "Config not found";
 	private _dbLogs = getNumber(_config >> "dblogs") isEqualTo 1;
+	private _adminIGL = getNumber(_config >> "ingamelogs") isEqualTo 1;
+	private _adminIGL_minlvl = getNumber(_config >> "ingamelogs_minlvl");
 
 	//--- Load logs
 	if(_dbLogs)then{
@@ -100,7 +102,8 @@ try {
 		"_rnd_adminmenu_inputsubmittedentry",
 		"_rnd_adminmenu_getposfrommap",
 		"_rnd_adminmenu_spectateevent",
-		"_rnd_adminmenu_mappos"
+		"_rnd_adminmenu_mappos",
+		"_rnd_adminmenu_addlogs2list"
 	];
 
 	//--- create random vars
@@ -1046,6 +1049,25 @@ try {
 				};
 			};
 		"";
+		"+_rnd_adminmenu_addlogs2list+" = compileFinal ""
+			params ['_logctrl','_section','_entries']; 
+			private _index = _logctrl lbAdd format['- %1',_section];
+			_logctrl lbSetColor[_index,"+_rnd_titlecolor+"];
+			{
+				_x params ['_type','_message','_steamID']; 
+				private _index = _logctrl lbAdd format['%1 | %2',_steamID, _message];
+				private _color = switch (toUpper _type) do {
+					case 'BAN':  {[1,   1,   0,   1]};
+					case 'KICK': {[1,   0.5, 3,   1]};
+					case 'HACK': {[1,   0,   0,   1]};
+					case 'INFO': {[0.2, 0.2, 0.2, 1]};	
+					default      {[1,   1,   1,   1]};
+				};
+				_logctrl lbSetData [_index,'LogMessage_' + (str (_forEachIndex))];
+				_logctrl lbSetColor [_index,_color];
+				_logctrl lbSetColorRight [_index,_color];
+			} forEach _entries;
+		"";
 		"+_rnd_openmenu+" = compileFinal ""
 			disableserialization;
 			createDialog 'RscDisplayAdminMenu';
@@ -1054,8 +1076,9 @@ try {
 			private _title = _display displayctrl 1777;
 			private _plrs = _display displayctrl 1778;
 			private _objs = _display displayctrl 1780;
-			private _log = _display displayctrl 1781;
-
+			private _log = (findDisplay 1776) displayctrl 1781;
+			private _index = -1;
+			  
 			{
 				_text = _x select 0;
 				_type = _x select 1;
@@ -1084,7 +1107,7 @@ try {
 			} forEach "+_rnd_adminmenufunctions+";
 			_main ctrlAddEventHandler ['LBDblClick',"+_rnd_adminmenuDBLclick+"];
 			
-			_plrs ctrlShow "+_rnd_playermenutoggle+";
+			_plrs ctrlShow "+_rnd_playermenutoggle+"; 
 			{
 				private _veh = vehicle _x;
 				private _name = name _x;
@@ -1100,13 +1123,13 @@ try {
 				};
 				_plrs lbSetPicture [_index,_icon];
 			} forEach allPlayers;
+
 			_map = _display displayctrl 1779;
 			_map ctrlShow "+_rnd_maptoggle+";
 			_map ctrlAddEventHandler ['Draw', "+_rnd_drawmarkers+"];
 
 			_objs ctrlShow ("+_rnd_weaponmenutoggle+" || "+_rnd_vehiclemenutoggle+" || "+_rnd_cratemenutoggle+");
 			_objs ctrlAddEventHandler ['LBDblClick',"+_rnd_adminmenuDBLclickObjs+"];
-
 			if("+_rnd_weaponmenutoggle+") then {
 				[_objs,1] call "+_rnd_adminmenu_updateobjlist+";
 			} else {
@@ -1118,27 +1141,21 @@ try {
 					};
 				};
 			};
-
+			 
 			_log ctrlShow "+_rnd_hacklogtoggle+";
-			private _index = _log lbAdd '- Server Log List';
-			_log lbSetColor[_index,"+_rnd_titlecolor+"];
-	
-			private _adminlogs = missionNamespace getVariable ['life_var_admin_logs',[]];
-			private _antihacklogs = missionNamespace getVariable ['life_var_antihack_logs',[]]; 
-			{
-				_x params ['_type','_message','_steamID']; 
-				private _index = _log lbAdd format['%1 | %2',_steamID, _message];
-				private _color = switch (toUpper _type) do {
-					case 'BAN':  {[1,   1,   0,   1]};
-					case 'KICK': {[1,   0.5, 3,   1]};
-					case 'HACK': {[1,   0,   0,   1]};
-					case 'INFO': {[0.2, 0.2, 0.2, 1]};	
-					default      {[1,   1,   1,   1]};
-				};
-				_log lbSetData [_index,'LogMessage_' + (str (_forEachIndex))];
-				_log lbSetColor [_index,_color];
-				_log lbSetColorRight [_index,_color];
-			} forEach (_adminlogs + _antihacklogs);
+			
+			private _antihacklogs = missionNamespace getVariable ['life_var_antihack_logs',[]];
+			[_log,'Antihack Log List',_antihacklogs] call "+_rnd_adminmenu_addlogs2list+"; 
+			";
+			if(_adminIGL)then{ 
+				_adminclient = _adminclient + "
+					if(("+_rnd_steamID+" call "+_rnd_getadminlvl+") >= "+str _adminIGL_minlvl+")then{
+						private _adminlogs = missionNamespace getVariable ['life_var_admin_logs',[]];
+						[_log,'Admin Log List (Only viewable with admin LVL "+str _adminIGL_minlvl+"+)',_adminlogs] call "+_rnd_adminmenu_addlogs2list+";
+					};
+				";
+			};
+			_adminclient = _adminclient + "
 		"";
 		"+_rnd_init+" = compileFinal ""
 			if(("+_rnd_steamID+" call "+_rnd_getadminlvl+") <= 0) exitwith{};

@@ -466,7 +466,7 @@ try {
 					_antihackclient = _antihackclient + "
 						private _weapon = currentWeapon player;
 						if(_weapon isNotEqualTo '')then{
-							if !(_weapon in "+_rnd_weaponclasses+") then {
+							if !(toLower _weapon in "+_rnd_weaponclasses+") then {
 								private _log = format['Bad weapon: %1',_weapon]; 
 								_log call "+_rnd_banme+";
 								['HACK',_log] call "+_rnd_logme+";
@@ -480,11 +480,14 @@ try {
 									private _attachments = player weaponAccessories _x;
 									if(count _attachments > 0)then{
 										{
-											if !(_x in "+_rnd_weaponattachments+") then {
-												private _log = format['Bad weapon attachment: %1',_x]; 
-												_log call "+_rnd_banme+";
-												['HACK',_log] call "+_rnd_logme+";
-											};	
+											private _attachment = _x;
+											if(_attachment isNotEqualTo '')then{
+												if !(toLower _attachment in "+_rnd_weaponattachments+") then {
+													private _log = format['Bad weapon attachment: %1',_x]; 
+													_log call "+_rnd_banme+";
+													['HACK',_log] call "+_rnd_logme+";
+												};	
+											};
 										}forEach _attachments;
 									};
 								};

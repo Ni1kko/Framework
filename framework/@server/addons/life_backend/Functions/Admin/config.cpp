@@ -19,6 +19,8 @@ class CfgAdmin
         { "BAN",    1 },
         { "INFO",   1 }
     };
+    ingamelogs = 1;         //Enable or disable logged admins actions in game (Still wrote to database even if this is disabled)
+    ingamelogs_minlvl = 10; //Needed level to view admin logs in game
     
     class Crates {
         class SupplyCrate_0 {

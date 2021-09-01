@@ -38,10 +38,12 @@ if(getNumber(_config >> "dblogs") isEqualTo 1)then{
 		];
 
 		if(_type == "" || _steamID == "" || _logmessage == "")exitWith{};
- 
-		life_var_admin_logs pushback [_type,_logmessage,_steamID];
-		publicVariable "life_var_admin_logs";
 
+		if(getNumber(_config >> "ingamelogs") isEqualTo 1)then{
+			life_var_admin_logs pushback [_type,_logmessage,_steamID];
+			publicVariable "life_var_admin_logs";
+		};
+		
 		if !([toUpper _type,1] in getArray(_config >> "dblogtypes"))exitWith{};
 		
 		private _BEGuid = ('BEGuid' callExtension ("get:"+_SteamID));
