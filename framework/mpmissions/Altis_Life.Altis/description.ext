@@ -206,6 +206,9 @@ class CfgFunctions {
             class accType {};
             class actionKeyHandler {};
             class animSync {};
+            class autoruninit {};
+            class autorunswitch {};
+            class autoruntoggle {};
             class calWeightDiff {};
             class checkMap {};
             class clearVehicleAmmo {};
@@ -223,7 +226,8 @@ class CfgFunctions {
             class inventoryClosed {};
             class inventoryOpened {};
             class isUIDActive {};
-            class keyHandler {};
+            class keyupHandler {};
+            class keydownHandler {};
             class loadDeadGear {};
             class loadGear {};
             class nearATM {};
@@ -398,6 +402,7 @@ class CfgFunctions {
 
         class Utils {
             file = "core\utils";
+            class util_canautorun {};
             class util_math_round {};
             class util_array_toLower {};
             class util_getVehicleRole {};

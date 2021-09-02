@@ -47,6 +47,9 @@ life_var_newlife = false;
 life_var_earplugs = false;
 life_var_autorun = false;
 life_var_combat = false;
+life_var_autorun_thread = scriptNull;
+life_var_autorun_inventoryOpened = false; 
+life_var_autorun_interrupt = false;
 
 //Hud
 life_var_hud_threads = nil;

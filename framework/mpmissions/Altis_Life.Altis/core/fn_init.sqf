@@ -71,7 +71,8 @@ diag_log "[Life Client] Past Settings Init";
 [] call life_fnc_client;
 diag_log "[Life Client] Executing client.fsm";
 
-(findDisplay 46) displayAddEventHandler ["KeyDown", "_this call life_fnc_keyHandler"];
+(findDisplay 46) displayAddEventHandler ["KeyDown", "_this call life_fnc_keydownHandler"];
+(findDisplay 46) displayAddEventHandler ["KeyUp", "_this call life_fnc_keyupHandler"];
 [player, life_settings_enableSidechannel, playerSide] remoteExecCall ["TON_fnc_manageSC", RSERV];
 
 [] spawn life_fnc_survival;
@@ -89,7 +90,12 @@ diag_log "[Life Client] Executing client.fsm";
 addMissionEventHandler ["EachFrame", life_fnc_playerTags];
 addMissionEventHandler ["EachFrame", life_fnc_revealObjects];
 
-if (LIFE_SETTINGS(getNumber,"enable_fatigue") isEqualTo 0) then {player enableFatigue false;};
+if (LIFE_SETTINGS(getNumber,"enable_fatigue") isEqualTo 0) then {
+    player enableFatigue false;
+    if (LIFE_SETTINGS(getNumber,"enable_autorun") isEqualTo 1) then {
+        [] spawn life_fnc_autoruninit;
+    }; 
+};
 if (LIFE_SETTINGS(getNumber,"pump_service") isEqualTo 1) then {
     [] spawn life_fnc_setupStationService;
 };
