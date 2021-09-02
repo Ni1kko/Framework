@@ -129,7 +129,7 @@ switch (_side) do {
         //--- Alive
         _return pushBack (["GAME","BOOL", (_queryResult#10)] call life_fnc_database_parse);
         //--- Position
-        _return pushBack (["GAME","POSITION", (_queryResult#11)] call life_fnc_database_parse);
+        _return pushBack (["GAME","ARRAY", (_queryResult#11)] call life_fnc_database_parse);
         //--- Playtime
         private _playtimenew = ["GAME","ARRAY", (_queryResult#12)] call life_fnc_database_parse; 
         private _playtimeindex = TON_fnc_playtime_values_request find [_uid, _playtimenew];
