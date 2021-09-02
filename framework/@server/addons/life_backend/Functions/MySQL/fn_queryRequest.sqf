@@ -29,9 +29,9 @@ private _BEGuid = ('BEGuid' callExtension ("get:"+_uid));
 private _queryBankResult = ["READ", "bankaccounts", [["funds"],[["BEGuid",str _BEGuid]]],true]call life_fnc_database_request;
 private _queryResult = ["READ", "players", [
     (switch (_side) do { 
-        case west:        {["pid", "name", "cash", "adminlevel", "donorlevel", "cop_licenses", "coplevel", "cop_gear", "blacklist", "cop_stats", "playtime"]};
-        case independent: {["pid", "name", "cash", "adminlevel", "donorlevel", "med_licenses", "mediclevel", "med_gear", "med_stats, playtime"]};
-        default           {["pid", "name", "cash", "adminlevel", "donorlevel", "civ_licenses", "arrested", "civ_gear", "civ_stats", "civ_alive", "civ_position", "playtime"]};
+        case west:        {["pid", "name", "cash", "adminlevel", "donorlevel", "virtualitems", "cop_licenses", "coplevel", "cop_gear", "blacklist", "cop_stats", "playtime"]};
+        case independent: {["pid", "name", "cash", "adminlevel", "donorlevel", "virtualitems", "med_licenses", "mediclevel", "med_gear", "med_stats, playtime"]};
+        default           {["pid", "name", "cash", "adminlevel", "donorlevel", "virtualitems", "civ_licenses", "arrested", "civ_gear", "civ_stats", "alive", "position", "playtime"]};
     }),
     [
         ["BEGuid",str _BEGuid],
@@ -61,18 +61,18 @@ switch (_side) do {
         //--- Donator
         _return pushBack (["GAME","INT", (_queryResult#4)] call life_fnc_database_parse);
         //--- Licenses
-        _return pushBack ((["GAME","ARRAY", _queryResult#5] call life_fnc_database_parse) apply{[_x#0,["GAME","BOOL", _x#1] call life_fnc_database_parse]});
+        _return pushBack ((["GAME","ARRAY", _queryResult#6] call life_fnc_database_parse) apply{[_x#0,["GAME","BOOL", _x#1] call life_fnc_database_parse]});
         //--- Cop 
-        _return pushBack (["GAME","INT", (_queryResult#6)] call life_fnc_database_parse);
+        _return pushBack (["GAME","INT", (_queryResult#7)] call life_fnc_database_parse);
         //--- Gear
-        _return pushBack (["GAME","ARRAY", (_queryResult#7)] call life_fnc_database_parse);
+        _return pushBack [(["GAME","ARRAY", (_queryResult#8)] call life_fnc_database_parse),["GAME","ARRAY", (_queryResult#5)] call life_fnc_database_parse];
         //--- Blacklist
-        _return pushBack (["GAME","BOOL", (_queryResult#8)] call life_fnc_database_parse);
+        _return pushBack (["GAME","BOOL", (_queryResult#9)] call life_fnc_database_parse);
         //--- Stats
-        _return pushBack (["GAME","ARRAY", (_queryResult#9)] call life_fnc_database_parse);
+        _return pushBack (["GAME","ARRAY", (_queryResult#10)] call life_fnc_database_parse);
 
         //--- Playtime
-        private _playtimenew = ["GAME","ARRAY", (_queryResult#10)] call life_fnc_database_parse;
+        private _playtimenew = ["GAME","ARRAY", (_queryResult#11)] call life_fnc_database_parse;
         private _playtimeindex = TON_fnc_playtime_values_request find [_uid, _playtimenew];
         if (_playtimeindex != -1) then {
             TON_fnc_playtime_values_request set[_playtimeindex,-1];
@@ -91,16 +91,16 @@ switch (_side) do {
         //--- Donator
         _return pushBack (["GAME","INT", (_queryResult#4)] call life_fnc_database_parse);
         //--- Licenses
-        _return pushBack ((["GAME","ARRAY", _queryResult#5] call life_fnc_database_parse) apply{[_x#0,["GAME","BOOL", _x#1] call life_fnc_database_parse]});
+        _return pushBack ((["GAME","ARRAY", _queryResult#6] call life_fnc_database_parse) apply{[_x#0,["GAME","BOOL", _x#1] call life_fnc_database_parse]});
         //--- Medic 
-        _return pushBack (["GAME","INT", (_queryResult#6)] call life_fnc_database_parse);
+        _return pushBack (["GAME","INT", (_queryResult#7)] call life_fnc_database_parse);
         //--- Gear
-        _return pushBack (["GAME","ARRAY", (_queryResult#7)] call life_fnc_database_parse);
+        _return pushBack [(["GAME","ARRAY", (_queryResult#8)] call life_fnc_database_parse),["GAME","ARRAY", (_queryResult#5)] call life_fnc_database_parse];
         //--- Stats
-        _return pushBack (["GAME","ARRAY", (_queryResult#8)] call life_fnc_database_parse);
+        _return pushBack (["GAME","ARRAY", (_queryResult#9)] call life_fnc_database_parse);
         
         //--- Playtime
-        private _playtimenew = ["GAME","ARRAY", (_queryResult#9)] call life_fnc_database_parse;
+        private _playtimenew = ["GAME","ARRAY", (_queryResult#10)] call life_fnc_database_parse;
         private _playtimeindex = TON_fnc_playtime_values_request find [_uid, _playtimenew];
         if !(_playtimeindex isEqualTo -1) then {
             TON_fnc_playtime_values_request set[_playtimeindex,-1];
@@ -119,19 +119,19 @@ switch (_side) do {
         //--- Donator
         _return pushBack (["GAME","INT", (_queryResult#4)] call life_fnc_database_parse);
         //--- Licenses
-        _return pushBack ((["GAME","ARRAY", _queryResult#5] call life_fnc_database_parse) apply{[_x#0,["GAME","BOOL", _x#1] call life_fnc_database_parse]});
+        _return pushBack ((["GAME","ARRAY", _queryResult#6] call life_fnc_database_parse) apply{[_x#0,["GAME","BOOL", _x#1] call life_fnc_database_parse]});
         //--- Arrested
-        _return pushBack (["GAME","BOOL", (_queryResult#6)] call life_fnc_database_parse);
+        _return pushBack (["GAME","BOOL", (_queryResult#7)] call life_fnc_database_parse);
         //--- Gear
-        _return pushBack (["GAME","ARRAY", (_queryResult#7)] call life_fnc_database_parse);
+        _return pushBack [(["GAME","ARRAY", (_queryResult#8)] call life_fnc_database_parse),["GAME","ARRAY", (_queryResult#5)] call life_fnc_database_parse];
         //--- Stats
-        _return pushBack (["GAME","ARRAY", (_queryResult#8)] call life_fnc_database_parse);
+        _return pushBack (["GAME","ARRAY", (_queryResult#9)] call life_fnc_database_parse);
         //--- Alive
-        _return pushBack (["GAME","BOOL", (_queryResult#9)] call life_fnc_database_parse);
+        _return pushBack (["GAME","BOOL", (_queryResult#10)] call life_fnc_database_parse);
         //--- Position
-        _return pushBack (["GAME","POSITION", (_queryResult#10)] call life_fnc_database_parse);
+        _return pushBack (["GAME","POSITION", (_queryResult#11)] call life_fnc_database_parse);
         //--- Playtime
-        private _playtimenew = ["GAME","ARRAY", (_queryResult#11)] call life_fnc_database_parse; 
+        private _playtimenew = ["GAME","ARRAY", (_queryResult#12)] call life_fnc_database_parse; 
         private _playtimeindex = TON_fnc_playtime_values_request find [_uid, _playtimenew];
         if (_playtimeindex != -1) then {
             TON_fnc_playtime_values_request set[_playtimeindex,-1];

@@ -53,6 +53,7 @@ if(_insertPlayer)then{
             ["name", 			["DB","STRING", _name] call life_fnc_database_parse],
             ["cash", 			["DB","A2NET", 0] call life_fnc_database_parse],
             ["aliases", 		["DB","ARRAY", [_name]] call life_fnc_database_parse],
+            ["virtualitems", 	["DB","ARRAY", []] call life_fnc_database_parse],
             ["cop_licenses", 	["DB","ARRAY", []] call life_fnc_database_parse],
             ["med_licenses", 	["DB","ARRAY", []] call life_fnc_database_parse],
             ["civ_licenses", 	["DB","ARRAY", []] call life_fnc_database_parse],

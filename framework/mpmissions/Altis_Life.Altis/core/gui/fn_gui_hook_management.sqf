@@ -1,10 +1,8 @@
 /*
-    File:           fn_hudSetup.sqf
-    Author:         Bryan "Tonic" Boardwine
-    Edited on:      22.08.2021
-    Edited by:      https://github.com/Ni1kko
-    Description:    Keeps hud active and updated
+	## Nikko Renolds
+	## https://github.com/Ni1kko/Framework
 */
+
 disableSerialization;
 
 params [

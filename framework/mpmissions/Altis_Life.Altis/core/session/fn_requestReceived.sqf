@@ -49,7 +49,9 @@ switch (playerSide) do {
         life_coplevel = compileFinal str(_this#6);
         life_medicLevel = compileFinal str(0);
         //--- Gear
-        life_gear = _this#7;
+        life_var_loadout = _this#7#0;
+        //--- VirtualItems
+        life_var_vitems  = _this#7#1;
         //--- Blacklist
         life_blacklisted = _this#8;
         //--- Stats
@@ -82,7 +84,9 @@ switch (playerSide) do {
         life_coplevel = compileFinal str(0);
         life_medicLevel = compileFinal str(_this#6);
         //--- Gear
-        life_gear = _this#7;
+        life_var_loadout = _this#7#0;
+        //--- VirtualItems
+        life_var_vitems  = _this#7#1;
         //--- Stats
         if (LIFE_SETTINGS(getNumber,"save_playerStats") isEqualTo 1) then {
             life_hunger = ((_this#8)#0);
@@ -114,7 +118,9 @@ switch (playerSide) do {
         life_coplevel = compileFinal str(0);
         life_medicLevel = compileFinal str(0);
         //--- Gear
-        life_gear = _this#7;
+        life_var_loadout = _this#7#0;
+        //--- VirtualItems
+        life_var_vitems  = _this#7#1;
         //--- Stats
         if (LIFE_SETTINGS(getNumber,"save_playerStats") isEqualTo 1) then {
             life_hunger = ((_this#8)#0);
@@ -125,10 +131,10 @@ switch (playerSide) do {
         if (LIFE_SETTINGS(getNumber,"save_civilian_position") isEqualTo 1) then {
             //--- Alive
             life_is_alive = _this#9;
-            life_civ_position = _this#10;
+            life_position = _this#10;
             if (life_is_alive) then {
-                if !(count life_civ_position isEqualTo 3) then {diag_log format ["[requestReceived] Bad position received. Data: %1",life_civ_position];life_is_alive =false;};
-                if (life_civ_position distance (getMarkerPos "respawn_civilian") < 300) then {life_is_alive = false;};
+                if !(count life_position isEqualTo 3) then {diag_log format ["[requestReceived] Bad position received. Data: %1",life_position];life_is_alive =false;};
+                if (life_position distance (getMarkerPos "respawn_civilian") < 300) then {life_is_alive = false;};
             };
         };
        
@@ -148,8 +154,8 @@ switch (playerSide) do {
     };
 };
 
-call life_fnc_loadGear;
-
+[] call life_fnc_loadGear;
+ 
 if (count (_this select (_count - 1)) > 0) then {
     {life_vehicles pushBack _x;} forEach (_this select (_count - 1));
 };

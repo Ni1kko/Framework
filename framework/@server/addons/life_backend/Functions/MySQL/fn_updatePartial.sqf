@@ -78,8 +78,8 @@ switch (param [1,-1]) do {
     case 4: {
         ["UPDATE", "players", [
             [//What
-                ["civ_alive",   ["DB","BOOL", param [2,false]] call life_fnc_database_parse],	
-                ["civ_position",["DB","POSITION", param [3,[]]] call life_fnc_database_parse]	
+                ["alive",   ["DB","BOOL", param [2,false]] call life_fnc_database_parse],	
+                ["position",["DB","POSITION", param [3,[]]] call life_fnc_database_parse]	
             ],
             [//Where
                 ["pid",_uid]

@@ -73,7 +73,7 @@ END$$
 
 CREATE DEFINER=CURRENT_USER PROCEDURE `resetPlayersLife`()
 BEGIN
-  UPDATE `players` SET `civ_alive`= 0 WHERE `civ_alive` = 1;
+  UPDATE `players` SET `alive`= 0 WHERE `alive` = 1;
 END$$
 
 DELIMITER ;
@@ -112,6 +112,7 @@ CREATE TABLE IF NOT EXISTS `players` (
     `cash`         INT NOT NULL DEFAULT 0,
     `coplevel`     ENUM('0','1','2','3','4','5','6','7','8','9','10','11','12') NOT NULL DEFAULT '0',
     `mediclevel`   ENUM('0','1','2','3','4','5','6','7','8','9','10') NOT NULL DEFAULT '0',
+    `virtualitems` TEXT NOT NULL,
     `civ_licenses` TEXT NOT NULL,
     `cop_licenses` TEXT NOT NULL,
     `med_licenses` TEXT NOT NULL,
@@ -125,8 +126,8 @@ CREATE TABLE IF NOT EXISTS `players` (
     `adminlevel`   ENUM('0','1','2','3','4','5','6','7','8','9','10')  NOT NULL DEFAULT '0',
     `donorlevel`   ENUM('0','1','2','3')  NOT NULL DEFAULT '0',
     `blacklist`    TINYINT NOT NULL DEFAULT 0,
-    `civ_alive`    TINYINT NOT NULL DEFAULT 0,
-    `civ_position` VARCHAR(32) NOT NULL DEFAULT '"[]"',
+    `alive`    TINYINT NOT NULL DEFAULT 0,
+    `position` VARCHAR(32) NOT NULL DEFAULT '"[]"',
     `playtime`     VARCHAR(32) NOT NULL DEFAULT '"[0,0,0]"',
     `insert_time`  TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     `last_seen`    TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
