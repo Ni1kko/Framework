@@ -29,7 +29,7 @@ switch (param [1,-1]) do {
                 ["cash",["DB","A2NET", param [2,0]] call life_fnc_database_parse]
             ],
             [//Where
-                ["pid",_uid]
+                ["BEGuid",str _BEGuid]
             ]
         ]]call life_fnc_database_request;
     };
@@ -55,7 +55,7 @@ switch (param [1,-1]) do {
                 }),["DB","ARRAY", ((param [2,0]) apply{[_x#0,["DB","BOOL", _x#1] call life_fnc_database_parse]})] call life_fnc_database_parse]	
             ],
             [//Where
-                ["pid",_uid]
+                ["BEGuid",str _BEGuid]
             ]
         ]]call life_fnc_database_request;
     };
@@ -70,7 +70,7 @@ switch (param [1,-1]) do {
                 }),["DB","ARRAY", param [2,[]]] call life_fnc_database_parse]	
             ],
             [//Where
-                ["pid",_uid]
+                ["BEGuid",str _BEGuid]
             ]
         ]]call life_fnc_database_request;
     };
@@ -82,7 +82,7 @@ switch (param [1,-1]) do {
                 ["position",["DB","POSITION", param [3,[]]] call life_fnc_database_parse]	
             ],
             [//Where
-                ["pid",_uid]
+                ["BEGuid",str _BEGuid]
             ]
         ]]call life_fnc_database_request;
     };
@@ -93,7 +93,7 @@ switch (param [1,-1]) do {
                 ["arrested",["DB","BOOL", param [2,0]] call life_fnc_database_parse]
             ],
             [//Where
-                ["pid",_uid]
+                ["BEGuid",str _BEGuid]
             ]
         ]]call life_fnc_database_request;
     };
@@ -104,7 +104,7 @@ switch (param [1,-1]) do {
                 ["cash",["DB","A2NET", param [2,0]] call life_fnc_database_parse]
             ],
             [//Where
-                ["pid",_uid]
+                ["BEGuid",str _BEGuid]
             ]
         ]]call life_fnc_database_request;
         ["UPDATE", "bankaccounts", [

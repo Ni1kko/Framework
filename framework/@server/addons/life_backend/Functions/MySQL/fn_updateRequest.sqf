@@ -1,10 +1,6 @@
 /*
-    File: fn_updateRequest.sqf
-    Author: Bryan "Tonic" Boardwine
-
-    Description:
-    Updates ALL player information in the database.
-    Information gets passed here from the client side file: core\session\fn_updateRequest.sqf
+	## Nikko Renolds
+	## https://github.com/Ni1kko/Framework
 */
 
 params [
@@ -65,6 +61,7 @@ _gear params ['_loadout','_virtualitems'];
         ["playtime", 	                    ["DB","ARRAY", _playtime] call life_fnc_database_parse]
     ],
     [
-        ["BEGuid",str _BEGuid]
+        ["BEGuid",str _BEGuid],
+        ["pid",_uid]
     ]
 ]]call life_fnc_database_request;
