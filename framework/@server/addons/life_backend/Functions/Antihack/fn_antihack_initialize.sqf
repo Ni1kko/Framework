@@ -510,20 +510,26 @@ try {
 						waitUntil{!(isNull (findDisplay 49))};
 						private _text = '';";
 						_antihackclient = _antihackclient + "
-						waitUntil{
-							private _upTime = life_var_rcon_upTime;
+						waitUntil{ 
+							private _RestartTime = life_var_rcon_RestartTime;
 							private _players = count(allPlayers - entities 'HeadlessClient_F');
 							private _text = format['%1 Life AntiCheat | Total Players Online (%3/%4) | Guid: (%2)',worldName,call(player getVariable ['BEGUID',{''}]), _players,((playableSlotsNumber west) + (playableSlotsNumber independent) + (playableSlotsNumber civilian)  + (playableSlotsNumber east) + 1)];";
 							if(_rconReady)then
 							{ 
 								_antihackclient = _antihackclient + " 
-									private _timeRestart = (life_var_rcon_RestartTime - _upTime) call "+_rnd_mins2hrsmins+";  
-									_text = format['%1 | Server Restart In: %2h %3min',_text,_timeRestart#0,_timeRestart#1];
+									if(_RestartTime > 0)then{
+										private _timeRestart = _RestartTime call "+_rnd_mins2hrsmins+";  
+										if((_timeRestart#0) > 0)then{
+											_text = format['%1 | Server Restart In: %2h %3mins',_text,_timeRestart#0,_timeRestart#1];
+										}else{
+											_text = format['%1 | Server Restart In: %2mins',_text,_timeRestart#1];
+										};
+									};
 								";
 							};
 							_antihackclient = _antihackclient + "
 							((findDisplay 49) displayCtrl 120) ctrlSetText _text;
-							isNull (findDisplay 49) || (life_var_rcon_upTime isNotEqualTo _upTime) || (_players isNotEqualTo count(allPlayers - entities 'HeadlessClient_F'))
+							isNull (findDisplay 49) || (life_var_rcon_RestartTime isNotEqualTo _RestartTime) || (_players isNotEqualTo count(allPlayers - entities 'HeadlessClient_F'))
 						};
 					};
 				"";

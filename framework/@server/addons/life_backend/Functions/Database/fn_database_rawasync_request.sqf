@@ -12,6 +12,8 @@ if (call extdb_var_database_prepared)exitWith{
     diag_log "extDB3: Protocol Error, cant use `life_fnc_database_rawasync_request` with SQL Custom";
 };
 
+if(life_var_rcon_RestartMode > 0)exitWith{false};
+
 private _queryStmt = [_this,0,"",[""]] call BIS_fnc_param;
 private _mode = [_this,1,1,[0]] call BIS_fnc_param;
 private _multiarr = [_this,2,false,[false]] call BIS_fnc_param;

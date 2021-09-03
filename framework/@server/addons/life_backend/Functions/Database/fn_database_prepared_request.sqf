@@ -12,6 +12,8 @@ if !(call extdb_var_database_prepared)exitWith{
     diag_log "extDB3: Protocol Error, cant use `extdb_fnc_preparedCall` with SQL Raw";
 };
 
+if(life_var_rcon_RestartMode > 0)exitWith{false};
+
 waitUntil {uiSleep (random .25); !extdb_var_database_preparedAsync};
 
 extdb_var_database_preparedAsync = true;

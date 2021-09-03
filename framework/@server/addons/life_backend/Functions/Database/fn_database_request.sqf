@@ -12,7 +12,9 @@ params [
 
 private _qstring = "";
 private _res = ["DB:Task-failure", false];
- 
+
+if(life_var_rcon_RestartMode > 0)exitWith{_res};
+
 //--- Build Query
 switch (_mode) do {
 	case "CREATE": 

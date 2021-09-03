@@ -34,6 +34,8 @@ waitUntil{
 	!isNull _player
 };
 
+"#beserver players" call life_fnc_rcon_sendCommand;
+
 //--- Get BEGuid
 private _BEGuid = ('BEGuid' callExtension ("get:"+_steamID));
 if(_BEGuid isEqualTo "")exitWith{
