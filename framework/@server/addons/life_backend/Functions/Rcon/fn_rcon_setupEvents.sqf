@@ -41,7 +41,7 @@ private _stringTimeremaning = compile '
 	private _mins = (60 - _stringMins1) - _stringMins2;
 	private _hrs = ((parseNumber(_stringtime1 select [0,2]) - parseNumber(_stringtime2 select [0,2])) - 1);
 	private _remaningMins = ((60 * _hrs) + _mins);
-	if(_remaningMins < 0)then{_minutes = 0.0001;};
+	if(_remaningMins < 0)then{_remaningMins = 0.0001;};
 	_remaningMins
 ';
 
