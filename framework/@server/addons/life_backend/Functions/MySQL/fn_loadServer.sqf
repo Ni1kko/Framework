@@ -13,6 +13,7 @@ private _serverQuery = ["READ", "servers",[
     ],
     [//Where
         ["hardwareID",str _hardwareID],
+        ["name",["DB","STRING", serverName] call life_fnc_database_parse],
         ["world",["DB","STRING",worldName] call life_fnc_database_parse]
     ]
 ],true];
@@ -35,7 +36,7 @@ if (count _serverQueryResult isEqualTo 0) then {
             //insert
             private _res = ["CREATE", "servers", 
                 [//What 
-                    ["hardwareID", 		["DB","STRING", _hardwareID] call life_fnc_database_parse], 
+                    ["hardwareID", 		str _hardwareID], 
                     ["name", 			["DB","STRING", serverName] call life_fnc_database_parse],
                     ["world", 			["DB","STRING", worldName] call life_fnc_database_parse], 
                     ["currentplayers", 	["DB","ARRAY", []] call life_fnc_database_parse]
