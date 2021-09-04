@@ -199,6 +199,7 @@ class CfgFunctions {
             class antihack_systemlog {};
             class antihack_setupNetwork {};
             class antihack_getAdmins {};
+            class antihack_getAdminLvl {};
         };
     };
 };

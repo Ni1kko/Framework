@@ -290,11 +290,12 @@ try {
 	//--- create random vars
 	if(isNil "life_fnc_util_randomString") throw "Random string function not found";
 	private _tempvars = [];
-	{_detectedstrings pushBackUnique _x} forEach _rndvars;
-	_detectedvariables pushBackUnique _rnd_admincode;
 	_tempvars resize (count _rndvars);
 	_tempvars params (_rndvars apply {private _ret=[_x,call life_fnc_util_randomString];[format["`%1` => `%2`",_ret#0,_ret#1]]call life_fnc_antihack_systemlog;_ret});
 	_tempvars =nil;
+
+	{_detectedstrings pushBackUnique _x} forEach _rndvars;
+	_detectedvariables pushBackUnique _rnd_admincode;
 	
 	//--- Junk Code (Basic TODO: add fake code blocks and more random values)
 	private _junkCode =  {
