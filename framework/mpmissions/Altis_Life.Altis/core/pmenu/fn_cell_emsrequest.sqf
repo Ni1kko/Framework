@@ -6,7 +6,7 @@ if (_length > 400) exitWith {hint localize "STR_CELLMSG_LIMITEXCEEDED";ctrlShow[
 _to = "EMS Units";
 if (_msg isEqualTo "") exitWith {hint localize "STR_CELLMSG_EnterMSG";ctrlShow[3022,true];};
 
-[_msg,name player,5,mapGridPosition player,player] remoteExecCall ["TON_fnc_clientMessage",independent];
+[independent,_msg,name player,5,mapGridPosition player,player] remoteExecCall ["TON_fnc_clientMessageRequest",2];
 [] call life_fnc_cellphone;
 hint format [localize "STR_CELLMSG_ToEMS",_to,_msg];
 ctrlShow[3022,true];

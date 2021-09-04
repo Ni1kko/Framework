@@ -11,7 +11,7 @@ if (isNull _to) exitWith {ctrlShow[3015,true];};
 if (isNil "_to") exitWith {ctrlShow[3015,true];};
 if (_msg isEqualTo "") exitWith {hint localize "STR_CELLMSG_EnterMSG";ctrlShow[3015,true];};
 
-[_msg,name player,0] remoteExecCall ["TON_fnc_clientMessage",_to];
+[_to,_msg,name player,0,getPlayerUID player] remoteExecCall ["TON_fnc_clientMessageRequest",2];
 [] call life_fnc_cellphone;
 hint format [localize "STR_CELLMSG_ToPerson",name _to,_msg];
 ctrlShow[3015,true];

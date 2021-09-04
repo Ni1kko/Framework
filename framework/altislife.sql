@@ -143,6 +143,26 @@ CREATE TABLE IF NOT EXISTS `players` (
 -- --------------------------------------------------------
 
 --
+-- Table structure for table `cellphone_messages`
+--
+
+CREATE TABLE IF NOT EXISTS `cellphone_messages` (
+    `id`          INT NOT NULL AUTO_INCREMENT,
+    `sender`      VARCHAR(64) NOT NULL,
+    `receiver`    VARCHAR(64) NOT NULL,
+    `message`     TEXT NOT NULL,
+    `sent_at`     TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    `read_at`     TIMESTAMP NULL,
+    PRIMARY KEY (`id`),
+    INDEX `fkIdx_players_cellmsgsender` (`sender`),
+    INDEX `fkIdx_players_cellmsgreceiver` (`receiver`),
+    CONSTRAINT `FK_players_cellmsgsender` FOREIGN KEY `fkIdx_players_cellmsgsender` (`sender`) REFERENCES `players` (`BEGuid`) ON UPDATE CASCADE ON DELETE CASCADE,
+    CONSTRAINT `FK_players_cellmsgreceiver` FOREIGN KEY `fkIdx_players_cellmsgreceiver` (`receiver`) REFERENCES `players` (`BEGuid`) ON UPDATE CASCADE ON DELETE CASCADE
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+-- --------------------------------------------------------
+
+--
 -- Table structure for table `players`
 --
 CREATE TABLE IF NOT EXISTS `bankaccounts` (

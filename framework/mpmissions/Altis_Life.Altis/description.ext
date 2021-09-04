@@ -347,6 +347,12 @@ class CfgFunctions {
         class Player_Menu {
             file = "core\pmenu";
             class cellphone {};
+            class cell_emsrequest {};
+            class cell_textmsg {};
+            class cell_textcop {};
+            class cell_textadmin {};
+            class cell_adminmsg {};
+            class cell_adminmsgall {};
             class giveItem {};
             class giveMoney {};
             class keyDrop {};
@@ -513,12 +519,12 @@ class CfgRemoteExec {
             F(TON_fnc_clientGangLeader,CLIENT)
             F(TON_fnc_clientGangLeft,CLIENT)
             F(TON_fnc_clientGetKey,CLIENT)
-            F(TON_fnc_clientMessage,CLIENT)
             F(TON_fnc_player_query,CLIENT)
 
         /* Server only functions */
             F(life_fnc_rcon_ban,SERVER)
             F(life_fnc_rcon_kick,SERVER)
+            F(TON_fnc_clientMessageRequest,SERVER)
             F(DB_fnc_insertRequest,SERVER)
             F(DB_fnc_queryRequest,SERVER)
             F(DB_fnc_updatePartial,SERVER)

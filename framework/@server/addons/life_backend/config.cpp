@@ -117,13 +117,7 @@ class CfgFunctions {
             class clientGetKey {};
             class clientGangLeader {};
             class clientGangLeft {};
-            class cell_emsrequest {};
-            class cell_textmsg {};
-            class cell_textcop {};
-            class cell_textadmin {};
-            class cell_adminmsg {};
-            class cell_adminmsgall {};
-            class clientMessage {};
+            class clientMessageRequest {};
         };
 
         class Housing {

@@ -133,13 +133,6 @@ cleanup = [] spawn TON_fnc_cleanup;
     "TON_fnc_clientGetKey",
     "TON_fnc_clientGangLeader",
     "TON_fnc_clientGangLeft",
-    "TON_fnc_cell_textmsg",
-    "TON_fnc_cell_textcop",
-    "TON_fnc_cell_textadmin",
-    "TON_fnc_cell_adminmsg",
-    "TON_fnc_cell_adminmsgall",
-    "TON_fnc_cell_emsrequest",
-    "TON_fnc_clientMessage",
     "TON_fnc_playtime_values_request",
     "TON_fnc_playtime_values"
 ];
