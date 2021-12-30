@@ -17,7 +17,6 @@ if(getNumber (configFile >> "CfgRCON" >> "useRestartMessages") isEqualTo 1)then{
 waitUntil {(missionNamespace getVariable ["life_var_serverLoaded",false])};
 
 private _heartbeat =  0;
-private _rconinittime = diag_tickTime;
 private _rconlocked = life_var_rcon_serverLocked;
 private _rconshutdown = getNumber(configFile >> "CfgRCON" >> "useShutdown") isEqualTo 1;
 
@@ -42,23 +41,11 @@ private _mins2hrsmins = compile "
 	[_hrs,_mins]
 ";
 
-private _stringTimeremaning = compile '
-	params ["_stringtime1","_stringtime2"]; 
-	private _stringMins1 = parseNumber(_stringtime1 select [3,2]);
-	private _stringMins2 = parseNumber(_stringtime2 select [3,2]);
-	private _mins = (60 - _stringMins1) - _stringMins2;
-	private _hrs = ((parseNumber(_stringtime1 select [0,2]) - parseNumber(_stringtime2 select [0,2])) - 1);
-	private _remaningMins = ((60 * _hrs) + _mins);
-	if(_remaningMins < 0)then{_remaningMins = 0.0001;};
-	_remaningMins
-';
-
 while {true} do {
-	private _realtime = (((parseSimpleArray("extDB3" callExtension "9:LOCAL_TIME")#1) select [3,2]) apply {if(_x < 10)then{"0" + str _x}else{str _x}}) joinString ":";
-	private _serveruptime = round(parseNumber("extDB3" callExtension "9:UPTIME:MINUTES"));
-	private _rconuptime = round((diag_tickTime - _rconinittime) / 60);
-	//private _timeRestart = parseNumber('Time' callExtension format["subtract-%1,%2",life_var_rcon_nextRestart,_realtime]);
-	private _timeRestart = [life_var_rcon_nextRestart,_realtime] call _stringTimeremaning;
+	private _realtime = false call life_fnc_rcon_getRealTime;
+	private _serveruptime = false call life_fnc_database_getUpTime;
+	private _rconuptime = call life_fnc_rcon_getUpTime;
+	private _timeRestart = [_realtime, life_var_rcon_nextRestart] call life_fnc_rcon_subtractTime;
 	
 	private _timeRestart_hh_mm = _timeRestart call _mins2hrsmins;
 	private _timeRestart_message = format["Next %1 In: %2h %3min",(if(_rconshutdown)then{'Shutdown'}else{'Restart'}),_timeRestart_hh_mm#0,_timeRestart_hh_mm#1];
