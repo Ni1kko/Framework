@@ -20,16 +20,17 @@ life_var_rcon_upTime = 0;
 life_var_rcon_RealTime = "12:00";
 life_var_rcon_messagequeue = [];
 life_var_rcon_setupEvents_thread = scriptNull;
-life_var_rcon_nextRestart = "";
+life_var_rcon_nextRestart = "12:00";
 
 "Starting RCON" call life_fnc_rcon_systemlog;
 
 private _dateTime = (call compile ("extDB3" callExtension "9:LOCAL_TIME")) select 1;	
 private _time = ((_dateTime select [3,2]) apply {if(_x < 10)then{"0" + str _x}else{str _x}}) joinString ":";
- 
+
 {
-	life_var_rcon_nextRestart = _x;
-	if(parseNumber(_x select [0,2]) > parseNumber(_time select [0,2]))exitWith{};
+	if(parseNumber('Time' callExtension format["subtract-%1,%2",_x,_time]) > 0)exitWith{
+		life_var_rcon_nextRestart = _x;
+	};
 } forEach life_var_rcon_RestartTimes;
 
 {publicVariable _x} forEach [

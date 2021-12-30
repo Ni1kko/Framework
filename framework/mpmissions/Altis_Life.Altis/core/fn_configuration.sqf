@@ -70,6 +70,12 @@ life_var_hud_hunger_lastval = 100;
 life_var_hud_lastlocation = "";
 life_var_hud_waypoints = [];
 
+//cellphone
+life_cellphone_contacts = [];
+life_cellphone_messages = [];
+life_cellphone_receiver = [];
+life_cellphone_filterWorking = false;
+
 //Settings
 life_settings_enableNewsBroadcast = profileNamespace getVariable ["life_enableNewsBroadcast", true];
 life_settings_enableSidechannel = profileNamespace getVariable ["life_enableSidechannel", true];

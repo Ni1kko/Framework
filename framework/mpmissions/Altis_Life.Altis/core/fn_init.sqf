@@ -125,6 +125,7 @@ if (count extdb_var_database_headless_clients > 0) then {
 };
 
 [true] call life_fnc_gui_hook_management;
+[] spawn life_fnc_cellphone;//temp
 
 diag_log "----------------------------------------------------------------------------------------------------";
 diag_log format ["               End of Altis Life Client Init :: Total Execution Time %1 seconds ",(diag_tickTime - _timeStamp)];

@@ -29,6 +29,7 @@ DROP PROCEDURE IF EXISTS `deleteOldContainers`;
 DROP PROCEDURE IF EXISTS `deleteOldWanted`;
 DROP PROCEDURE IF EXISTS `resetActivePlayerList`;
 DROP PROCEDURE IF EXISTS `resetPlayersLife`;
+DROP PROCEDURE IF EXISTS `deleteCellMessages`;
 
 DELIMITER $$
 --
@@ -75,6 +76,11 @@ CREATE DEFINER=CURRENT_USER PROCEDURE `resetPlayersLife`()
 BEGIN
   UPDATE `players` SET `alive`= 0 WHERE `alive` = 1;
 END$$
+
+CREATE DEFINER=CURRENT_USER PROCEDURE `deleteCellMessages` ()  BEGIN
+  DELETE FROM `cellphone_messages` WHERE `remove` = 0;
+END$$
+
 
 DELIMITER ;
 
@@ -152,7 +158,7 @@ CREATE TABLE IF NOT EXISTS `cellphone_messages` (
     `receiver`    VARCHAR(64) NOT NULL,
     `message`     TEXT NOT NULL,
     `sent_at`     TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
-    `read_at`     TIMESTAMP NULL,
+    `remove`      TINYINT NOT NULL DEFAULT 0,
     PRIMARY KEY (`id`),
     INDEX `fkIdx_players_cellmsgsender` (`sender`),
     INDEX `fkIdx_players_cellmsgreceiver` (`receiver`),

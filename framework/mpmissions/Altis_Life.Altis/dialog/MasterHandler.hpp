@@ -11,7 +11,7 @@
 #include "veh_shop.hpp"
 #include "shops.hpp"
 #include "RscDisplayAdminMenu.hpp"
-#include "cell_phone.hpp"
+#include "RscDisplayCellPhone.hpp"
 #include "wanted_list.hpp"
 #include "ticket.hpp"
 #include "clothing.hpp"

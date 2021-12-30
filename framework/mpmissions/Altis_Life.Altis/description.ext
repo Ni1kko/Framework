@@ -347,12 +347,6 @@ class CfgFunctions {
         class Player_Menu {
             file = "core\pmenu";
             class cellphone {};
-            class cell_emsrequest {};
-            class cell_textmsg {};
-            class cell_textcop {};
-            class cell_textadmin {};
-            class cell_adminmsg {};
-            class cell_adminmsgall {};
             class giveItem {};
             class giveMoney {};
             class keyDrop {};
