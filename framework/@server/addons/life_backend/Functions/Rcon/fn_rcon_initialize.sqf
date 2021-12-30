@@ -28,7 +28,8 @@ private _dateTime = (call compile ("extDB3" callExtension "9:LOCAL_TIME")) selec
 private _time = ((_dateTime select [3,2]) apply {if(_x < 10)then{"0" + str _x}else{str _x}}) joinString ":";
 
 {
-	if(parseNumber('Time' callExtension format["subtract-%1,%2",_x,_time]) > 0)exitWith{
+	//if(parseNumber('Time' callExtension format["subtract-%1,%2",_x,_time]) > 0)exitWith{
+	if(parseNumber(_x select [0,2]) > parseNumber(_time select [0,2]))exitWith{
 		life_var_rcon_nextRestart = _x;
 	};
 } forEach life_var_rcon_RestartTimes;
