@@ -463,7 +463,7 @@ try {
 										['HACK',_log] call "+_rnd_logme+";
 									};
 								}else{
-									if(call "+_rnd_adminlvl+" < 0)then{ 
+									if(call "+_rnd_adminlvl+" < 1)then{ 
 										systemChat 'Admin Vehicle, No accses allowed';
 										player moveOut _vehicle;
 										_vehicle lock true;
