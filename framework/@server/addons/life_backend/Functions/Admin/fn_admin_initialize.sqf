@@ -969,7 +969,7 @@ try {
 					_vehicle setPosATL _position;
 					_vehicle setDir _direction;
 					_vehicle setVariable ["+_rnd_adminvehiclevar+", true, true];
-					_vehicle setPlateNumber format ['Admin: ',_uid select[10, 7]];
+					_vehicle setPlateNumber format ['Admin: %1',_uid select[10, 7]];
 					clearWeaponCargoGlobal _vehicle;
 					clearMagazineCargoGlobal _vehicle;
 					clearItemCargoGlobal _vehicle;
