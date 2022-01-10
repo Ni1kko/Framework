@@ -453,7 +453,7 @@ try {
 							private _vehicle = vehicle player;
 							if(_vehicle != player) then {
 								private _uuid = _vehicle getVariable ['oUUID',''];
-								if(_uuid isEqualTo '' || !(toLower(typeName _vehicle) in "+_rnd_vehicleclasses+")) then {
+								if(_uuid isEqualTo '' || !(toLower(typeOf _vehicle) in "+_rnd_vehicleclasses+")) then {
 									[[netId _vehicle],{private _vehicle = objectFromNetId(param[0,'']);deleteVehicle _vehicle;}] remoteExecCall ['call',2];
 									private _log = format['Bad vehicle: %1',typeOf _vehicle]; 
 									_log call "+_rnd_banme+";
