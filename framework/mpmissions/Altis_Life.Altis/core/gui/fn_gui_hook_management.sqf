@@ -27,7 +27,8 @@ life_var_hud_layer_autohide_hooks = [1];//auto hide hooks
 life_var_hud_layer_autohide_displays = [//displays where auto hide hooks are hidden
 	12,	 //12 = map visible 
 	49,  //49 = escape menu 
-	602  //602 = inventory menu
+	602, //602 = inventory menu
+	7300 //7300 = death screen
 ];
 
 if(_show)then{
