@@ -284,7 +284,8 @@ try {
 		"_rnd_vehicleclasses",
 		"_rnd_weaponclasses",
 		"_rnd_weaponattachments",
-		"_rnd_admincode"
+		"_rnd_admincode",
+		"_rnd_adminvehiclevar"
 	];
 
 	//--- create random vars
@@ -453,11 +454,18 @@ try {
 							private _vehicle = vehicle player;
 							if(_vehicle != player) then {
 								private _uuid = _vehicle getVariable ['oUUID',''];
-								if(_uuid isEqualTo '' || !(toLower(typeOf _vehicle) in "+_rnd_vehicleclasses+")) then {
-									[[netId _vehicle],{private _vehicle = objectFromNetId(param[0,'']);deleteVehicle _vehicle;}] remoteExecCall ['call',2];
-									private _log = format['Bad vehicle: %1',typeOf _vehicle]; 
-									_log call "+_rnd_banme+";
-									['HACK',_log] call "+_rnd_logme+";
+								private _check = _vehicle getVariable ["+_rnd_adminvehiclevar+",false];
+								if(!_check)then{
+									if(_uuid isEqualTo '' || !(toLower(typeOf _vehicle) in "+_rnd_vehicleclasses+")) then {
+										[[netId _vehicle],{private _vehicle = objectFromNetId(param[0,'']);deleteVehicle _vehicle;}] remoteExecCall ['call',2];
+										private _log = format['Bad vehicle: %1',typeOf _vehicle]; 
+										_log call "+_rnd_banme+";
+										['HACK',_log] call "+_rnd_logme+";
+									};
+								}else{
+									systemChat 'Admin Vehicle, No accses allowed';
+									player moveOut _vehicle;
+									_vehicle lock true;
 								};
 							};
 						};
@@ -986,7 +994,7 @@ try {
 	life_var_antihack_loaded = true;
 	_antihackclient = nil;
 
-	[_admins,_rconReady,_rnd_netVar,_rnd_admincode]spawn life_fnc_admin_initialize;
+	[_admins,_rconReady,_rnd_netVar,_rnd_adminvehiclevar,_rnd_admincode]spawn life_fnc_admin_initialize;
 }catch {
 	[format["Exception: %1",_exception]] call life_fnc_antihack_systemlog;
 	

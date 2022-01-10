@@ -3,7 +3,7 @@
 	## https://github.com/Ni1kko/Framework
 */
 
-params ['_admins','_rconReady','_rnd_netVar','_rnd_admincode'];
+params ['_admins','_rconReady','_rnd_netVar','_rnd_adminvehiclevar','_rnd_admincode'];
 
 if(!isServer)exitwith{false}; 
 if(missionNamespace getVariable ["life_var_admin_loaded",false])exitwith{false};
@@ -968,6 +968,8 @@ try {
 					_vehicle = _classname createVehicle [0,0,0];
 					_vehicle setPosATL _position;
 					_vehicle setDir _direction;
+					_vehicle setVariable ["+_rnd_adminvehiclevar+", true, true];
+					_vehicle setPlateNumber format ['Admin: '_uid select[10, 7]];
 					clearWeaponCargoGlobal _vehicle;
 					clearMagazineCargoGlobal _vehicle;
 					clearItemCargoGlobal _vehicle;
