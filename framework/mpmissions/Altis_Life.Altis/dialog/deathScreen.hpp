@@ -55,8 +55,8 @@ class DeathScreen {
             idc = 7301;
             colorBackground[] = {0,0,0,0.5};
             text = "";
-            x = 0.4175 * safezoneW + safezoneX;
-            y = 0.7 * safezoneH + safezoneY;
+            x = 0.407187 * safezoneW + safezoneX;
+            y = 0.962 * safezoneH + safezoneY;
             w = 0.4;
             h = (1 / 25);
         };
