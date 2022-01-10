@@ -69,6 +69,7 @@ switch (true) do {
         life_bail_paid = false;
 
         hint localize "STR_Jail_Paid";
+        player setVariable ["life_var_teleported",true,true];
         player setPos (getMarkerPos "jail_release");
 
         if (count extdb_var_database_headless_clients > 0) then {
@@ -103,10 +104,14 @@ switch (true) do {
         } else {
             [getPlayerUID player] remoteExecCall ["life_fnc_wantedRemove", RSERV];
         };
-
+        player setVariable ["life_var_teleported",true,true];
         player setPos (getMarkerPos "jail_release");
         [5] call SOCK_fnc_updatePartial;
     };
 };
 
 player forceWalk false; // Enable running & jumping
+[]spawn{
+    uiSleep 5;
+    player setVariable ["life_var_teleported",false,true];
+};

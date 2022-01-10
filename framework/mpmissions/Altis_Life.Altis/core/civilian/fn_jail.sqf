@@ -20,6 +20,8 @@ _illegalItems = LIFE_SETTINGS(getArray,"jail_seize_vItems");
 player setVariable ["restrained",false,true];
 player setVariable ["Escorting",false,true];
 player setVariable ["transporting",false,true];
+player setVariable ["life_var_teleported",true,true];
+
 
 titleText[localize "STR_Jail_Warn","PLAIN"];
 hint localize "STR_Jail_LicenseNOTF";
@@ -60,3 +62,7 @@ if (count extdb_var_database_headless_clients > 0) then {
 };
 
 [5] call SOCK_fnc_updatePartial;
+[]spawn{
+    uiSleep 5;
+    player setVariable ["life_var_teleported",false,true];
+};

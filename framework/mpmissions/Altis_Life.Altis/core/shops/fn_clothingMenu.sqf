@@ -12,6 +12,7 @@ params ["","","",["_shop","",[""]]];
 
 if (_shop isEqualTo "") exitWith {};
 if !(isNull objectParent player) exitWith {titleText[localize "STR_NOTF_ActionInVehicle","PLAIN"];};
+player setVariable ["life_var_teleported",true,true];
 
 /* License check & config validation */
 if !(isClass(missionConfigFile >> "Clothing" >> _shop)) exitWith {}; //Bad config entry.
@@ -310,3 +311,7 @@ if ((life_clothing_purchase select 4) isEqualTo -1) then {
 
 life_clothing_purchase = [-1,-1,-1,-1,-1];
 [] call life_fnc_saveGear;
+[]spawn{
+    uiSleep 5;
+    player setVariable ["life_var_teleported",false,true];
+};
