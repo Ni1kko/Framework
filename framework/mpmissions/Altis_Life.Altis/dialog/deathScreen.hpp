@@ -1,137 +1,66 @@
-class DeathScreen
+class RscDisplayDeathScreen
 {
-	idd = 7300;
-	name = "Life_Death_Screen";
-	movingEnable = 0;
-    enableSimulation = 1;
-
-	class controlsBackground {
-		class RscText_1000: Life_RscText
-			{
-				idc = -1;
-				x = 0.29375 * safezoneW + safezoneX;
-				y = 0.00500001 * safezoneH + safezoneY;
-				w = 0.4125 * safezoneW;
-				h = 0.165 * safezoneH;
-				colorBackground[] = {0,0,0,0.7};
-				colorActive[] = {0,0,0,0.7};
-			};
-		class RscText_1001: Life_RscText
+	idd=7300;
+	movingEnable=0;
+  	fadein=0;
+	duration = 10e10;
+  	fadeout=0;
+	name="RscDisplayDeathScreen";
+	onLoad = "uiNamespace setVariable ['RscDisplayDeathScreen',_this select 0]";
+	onUnload = "uiNamespace setVariable ['RscDisplayDeathScreen', objNull]";
+	onDestroy = "uiNamespace setVariable ['RscDisplayDeathScreen', objNull]";
+	objects[]={};
+	
+	class controlsBackground
+	{
+		class DeathPicture: RscPicture
 		{
 			idc = -1;
-			text = "You have been killed, here's how:"; //--- ToDo: Localize;
-			x = 0.29375 * safezoneW + safezoneX;
-			y = 0.00500001 * safezoneH + safezoneY;
-			w = 0.4125 * safezoneW;
-			h = 0.022 * safezoneH;
-			colorBackground[] = {0,0,0,1};
-			colorActive[] = {0,0,0,1};
-			class Attributes
-			{
-				align = "center";
-			};
-		};
+			text = "\textures\blood.paa";
+			x = 0.2375 * safezoneW + safezoneX;
+			y = 0.15 * safezoneH + safezoneY;
+			w = 0.525 * safezoneW;
+			h = 0.7 * safezoneH;
+			colorBackground[] = {0,0,0,0};
+		};		
 	};
-	class controls {
+	
+	class Controls
+	{
 
-		  class MedicsOnline: Life_RscText {
-            idc = 7304;
-            colorBackground[] = {0,0,0,0};
-            text = "Medics Online: 1";
-            x = 0.005 * safezoneW + safezoneX;
-            y = 0.015 * safezoneH + safezoneY;
-            w = 0.8;
-            h = (1 / 25);
-        };
-
-        class MedicsNearby: Life_RscText {
-            idc = 7305;
-            colorBackground[] = {0,0,0,0};
-            text = "Medics Nearby: No";
-            x = 0.005 * safezoneW + safezoneX;
-            y = 0.040 * safezoneH + safezoneY;
-            w = 0.8;
-            h = (1 / 25);
-        };
-		class RscText_1002: Life_RscText
+		class txt_top_left: RscStructuredText
 		{
-			idc = 7310;
-			text = "Killed by:"; //--- ToDo: Localize;
-			x = 0.298906 * safezoneW + safezoneX;
-			y = 0.038 * safezoneH + safezoneY;
-			w = 0.402187 * safezoneW;
-			h = 0.022 * safezoneH;
-			class Attributes
-			{
-				align = "center";
-			};
+			idc = 66601;
+			x = 0 * safezoneW + safezoneX;
+			y = 0 * safezoneH + safezoneY;
+			w = 0.5 * safezoneW;
+			h = 0.11 * safezoneH;
 		};
-		class RscText_1003: LIfe_RscText
+		class txt_top_right: RscStructuredText
 		{
-			idc = 7311;
-			text = "Weapon:"; //--- ToDo: Localize;
-			x = 0.298906 * safezoneW + safezoneX;
-			y = 0.071 * safezoneH + safezoneY;
-			w = 0.402187 * safezoneW;
-			h = 0.022 * safezoneH;
-			class Attributes
-			{
-				align = "center";
-			};
-		};
-		class RscText_1004: Life_RscText
-		{
-			idc = 7312;
-			text = "Distance: "; //--- ToDo: Localize;
-			x = 0.298906 * safezoneW + safezoneX;
-			y = 0.104 * safezoneH + safezoneY;
-			w = 0.402187 * safezoneW;
-			h = 0.022 * safezoneH;
-			class Attributes
-			{
-				align = "center";
-			};
-		};
-		class RscText_1005: Life_RscText
-		{
-			idc = 7301;
-			text = "Respawn Timer"; //--- ToDo: Localize;
-			x = 0.298906 * safezoneW + safezoneX;
-			y = 0.137 * safezoneH + safezoneY;
-			w = 0.402187 * safezoneW;
-			h = 0.022 * safezoneH;
-			class Attributes
-			{
-				align = "center";
-			};
-		};
-		class RscButtonMenu_2400: Life_RscButtonMenu
-		{
-			idc = 7303;
-			text = "Request Medic"; //--- ToDo: Localize;
-			onButtonClick = "[] call life_fnc_requestMedic;";
-			x = 0.29375 * safezoneW + safezoneX;
-			y = 0.17 * safezoneH + safezoneY;
-			w = 0.20625 * safezoneW;
-			h = 0.022 * safezoneH;
-			class Attributes
-			{
-				align = "center";
-			};
-		};
-		class RscButtonMenu_2401: Life_RscButtonMenu
-		{
-			idc = 7302;
-			text = "Start New Life"; //--- ToDo: Localize;
-			onButtonClick = "closeDialog 0; life_respawned = true; [] call life_fnc_spawnMenu;";
+			idc = 66602;
 			x = 0.5 * safezoneW + safezoneX;
-			y = 0.17 * safezoneH + safezoneY;
-			w = 0.20625 * safezoneW;
-			h = 0.022 * safezoneH;
-			class Attributes
-			{
-				align = "center";
-			};
+			y = 0 * safezoneH + safezoneY;
+			w = 0.5 * safezoneW;
+			h = 0.11 * safezoneH;			
 		};
+		class txt_bottom_left: RscStructuredText
+		{
+			idc = 66603;
+			x = 0 * safezoneW + safezoneX;
+			y = 0.89 * safezoneH + safezoneY;
+			w = 0.5 * safezoneW;
+			h = 0.11 * safezoneH;
+			colorBackground[] = {0,0,0,0.5};
+		};		
+		class txt_bottom_right: RscStructuredText
+		{
+			idc = 66604;
+			x = 0.5 * safezoneW + safezoneX;
+			y = 0.89 * safezoneH + safezoneY;
+			w = 0.5 * safezoneW;
+			h = 0.11 * safezoneH;
+			colorBackground[] = {0,0,0,0.5};		
+		};	
 	};
 };

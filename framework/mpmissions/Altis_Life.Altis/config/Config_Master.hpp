@@ -215,6 +215,13 @@ class Life_Settings {
     
 };
 
+class life_timers
+{
+    respawn      = 10;//Secs till player can respawn
+    bleedout  = 2; //Mins till player bleeds out
+    resurrect = 1; //Mins till player can resurrect
+};
+
 #include "Config_Clothing.hpp"
 #include "Config_Licenses.hpp"
 #include "Config_Vehicles.hpp"

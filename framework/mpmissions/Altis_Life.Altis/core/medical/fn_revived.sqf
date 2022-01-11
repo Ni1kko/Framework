@@ -1,11 +1,13 @@
 #include "..\..\script_macros.hpp"
 /*
-    File: fn_revived.sqf
-    Author: Bryan "Tonic" Boardwine
 
-    Description:
-    THANK YOU JESUS I WAS SAVED!
+	Function: 	life_fnc_revived
+	Project: 	Misty Peaks RPG
+	Author:     Tonic, Merrick, Nikko, Affect & IceEagle132
+	Github:		https://github.com/AsYetUntitled/Framework
+	
 */
+
 private ["_medic","_dir","_reviveCost"];
 _medic = param [0,"Unknown Medic",[""]];
 _reviveCost = LIFE_SETTINGS(getNumber,"revive_fee");
@@ -37,9 +39,23 @@ deleteVehicle life_corpse;
 life_action_inUse = false;
 life_is_alive = true;
 
+player setUnconscious false;
+player playMoveNow "amovpercmstpsnonwnondnon";
+
+["RscDisplayDeathScreen"] call UnionClient_system_gui_DestroyRscLayer;
+
+player setDamage 0;
+
+player setVariable ["medicStatus",nil,true];
 player setVariable ["Revive",nil,true];
 player setVariable ["name",nil,true];
 player setVariable ["Reviving",nil,true];
 player setVariable ["BEGuid",life_corpse getVariable "BEGuid",true];
+player setVariable ["lifeState","HEALTHY",true];
+
 [] call life_fnc_playerSkins;
 [] call SOCK_fnc_updateRequest;
+
+2 fadeSound 1;
+cutText ["You come to your senses ...", "BLACK IN", 5];
+uiSleep 4;

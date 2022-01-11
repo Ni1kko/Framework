@@ -84,13 +84,14 @@ if(!_suicide)then{
 life_deathCamera  = "CAMERA" camCreate (getPosATL _unit);
 showCinemaBorder false;
 life_deathCamera cameraEffect ["Internal","Back"];
-createDialog "DeathScreen";
+//createDialog "DeathScreen";
 life_deathCamera camSetTarget _unit;
 life_deathCamera camSetRelPos [0,22,22];
 life_deathCamera camSetFOV .5;
 life_deathCamera camSetFocus [50,0];
 life_deathCamera camCommit 0;
 
+/*
 //-- block escape as would close this display on escape key pressed
 (findDisplay 7300) displaySetEventHandler ["KeyDown","if((_this select 1) == 1) then {true}"];
 
@@ -137,7 +138,6 @@ if(ctrlShown _KilledDistance)then{
 };
 
 
-
 //Create a thread for something?
 _unit spawn {
     private ["_maxTime","_RespawnBtn","_Timer"];
@@ -166,8 +166,11 @@ _unit spawn {
     waitUntil {round(_requestTime - time) <= 0 || isNull _this};
     _requestBtn ctrlEnable true;
 };
+*/
 
-[] spawn life_fnc_deathScreen;
+if (!isNull (findDisplay 49)) then {(findDisplay 49) closeDisplay 0} else {closeDialog 0};
+
+[_unit] spawn life_fnc_deathScreen;
 
 //Create a thread to follow with some what precision view of the corpse.
 [_unit] spawn {

@@ -1,26 +1,17 @@
-#include "..\..\script_macros.hpp"
 /*
-    File: fn_requestMedic.sqf
-    Author: Bryan "Tonic" Boardwine
 
-    Description:
-    N/A
+	Function: 	life_fnc_requestMedic
+	Project: 	Misty Peaks RPG
+	Author:     Tonic, Merrick, Nikko, Affect & IceEagle132
+	Github:		https://github.com/AsYetUntitled/Framework
+	
 */
-private "_medicsOnline";
-_medicsOnline = {!(_x isEqualTo player) && {side _x isEqualTo independent} && {alive _x}} count playableUnits > 0; //Check if medics (indep) are in the room.
 
-life_corpse setVariable ["Revive",false,true]; //Set the corpse to a revivable state.
-if (_medicsOnline) then {
-    //There is medics let's send them the request.
-    [life_corpse,profileName] remoteExecCall ["life_fnc_medicRequest",independent];
-} else {
-    //No medics were online, send it to the police.
-    [life_corpse,profileName] remoteExecCall ["life_fnc_medicRequest",west];
-};
 
-//Create a thread to monitor duration since last request (prevent spammage).
-[] spawn  {
-    ((findDisplay 7300) displayCtrl 7303) ctrlEnable false;
-    sleep (2 * 60);
-    ((findDisplay 7300) displayCtrl 7303) ctrlEnable true;
-};
+if (life_var_medicstatus >= 0) exitWith {titleText["You have already sent a request","PLAIN"]};
+
+[player,player getVariable ["realname",""]] remoteExecCall ["life_fnc_medicRequest",if (playersNumber east > 0) then {east} else {west}];
+
+life_var_medicstatus = 0;
+player setVariable ["medicStatus",life_var_medicstatus,true];
+player setVariable ["Revive",false,true];

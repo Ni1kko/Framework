@@ -198,6 +198,9 @@ class CfgFunctions {
             class useGangBank {};
             class vehicleGarage {};
             class wireTransfer {};
+            class hasDisplay {};
+            class createRscLayer {};
+            class destroyRscLayer {};
         };
 
         class Functions {
@@ -321,6 +324,7 @@ class CfgFunctions {
         class Medical_System {
             file = "core\medical";
             class deathScreen {};
+            class deathScreenKeyHandler {};
             class medicLights {};
             class medicMarkers {};
             class medicRequest {};

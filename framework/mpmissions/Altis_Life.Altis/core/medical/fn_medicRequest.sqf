@@ -1,16 +1,21 @@
 /*
-    File: fn_medicRequest.sqf
-    Author: Bryan "Tonic" Boardwine
 
-    Description:
-    Notifies the medics that someone has requested emergency and prompts them
-    if they want to take the request or not.
+	Function: 	life_fnc_medicRequest
+	Project: 	Misty Peaks RPG
+	Author:     Tonic, Merrick, Nikko, Affect & IceEagle132
+	Github:		https://github.com/AsYetUntitled/Framework
+	
 */
-params [
-    ["_caller",objNull,[objNull]],
-    ["_callerName","Unknown Player",[""]]
-];
 
-if (isNull _caller) exitWith {}; //Bad data
+if (!params[
+	["_caller",objNull,[objNull]],
+	["_callerName","Unknown Player",[""]]
+]) exitWith {};
 
-["MedicalRequestEmerg",[format [localize "STR_Medic_Request",_callerName]]] call BIS_fnc_showNotification;
+if (isNull _caller) exitWith {};
+
+player reveal _caller;
+
+[missionNamespace,["life_var_medicstatusby",player getVariable ["realname",""]]] remoteExec ["setVariable",owner _caller];
+
+["MedicalRequestEmerg",[format[localize "STR_Medic_Request",_callerName]]] call BIS_fnc_showNotification;

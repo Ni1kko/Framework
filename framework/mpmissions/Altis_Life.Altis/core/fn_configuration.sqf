@@ -70,6 +70,10 @@ life_var_hud_hunger_lastval = 100;
 life_var_hud_lastlocation = "";
 life_var_hud_waypoints = [];
 
+//Death system
+life_var_medicstatus = -1;
+life_var_medicstatusby = "";
+
 //cellphone
 life_cellphone_contacts = [];
 life_cellphone_messages = [];
