@@ -1006,6 +1006,7 @@ try {
 					params['_classname','_position','_direction'];
 					private _crateClass = getText(configFile >> 'CfgAdmin' >> 'Crates' >> _classname >> 'CrateClass');
 					private _items = getArray(configFile >> 'CfgAdmin' >> 'Crates' >> _classname >> 'Items');
+					private _vitems = getArray(configFile >> 'CfgAdmin' >> 'Crates' >> _classname >> 'VItems');
 					private _crate = createVehicle [_crateClass, _position, [], 0.5, 'NONE'];
 					_crate setDir _direction;
 					
@@ -1013,6 +1014,16 @@ try {
 						_crate addItemCargoGlobal _x;
 					} forEach _items;
 
+					 
+					{ 
+						private _var = format ['life_inv_%1',[missionConfigFile >> 'VirtualItems' >> _x#0 >> 'variable'] call BIS_fnc_returnConfigEntry];
+						private _ci = _crate getVariable [_var,0];
+						if(_ci > 0)then{
+							_x set[1, _ci];
+						};
+						_crate setVariable [_var, _x#1, true];
+					} forEach _vitems;
+ 
 				},[_classname,_position,_direction]] call "+_rnd_runserver+";				
 			};
 		"";
