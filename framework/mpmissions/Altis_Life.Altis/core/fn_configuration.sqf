@@ -73,6 +73,9 @@ life_var_hud_waypoints = [];
 //Death system
 life_var_medicstatus = -1;
 life_var_medicstatusby = "";
+life_var_bleeding = false;
+life_var_pain_shock = false;
+life_var_critHit = false;
 
 //cellphone
 life_cellphone_contacts = [];

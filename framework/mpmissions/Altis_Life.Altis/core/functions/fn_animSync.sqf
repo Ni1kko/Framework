@@ -1,13 +1,20 @@
 /*
-    File: fn_animSync.sqf
-    Author:
 
-    Description:
-
+	Function: 	life_fnc_animSync
+	Project: 	Misty Peaks RPG
+	Author:     Tonic, Merrick, Nikko, Affect & IceEagle132
+	Github:		https://github.com/AsYetUntitled/Framework
+	
 */
-private ["_unit","_anim"];
-_unit = [_this,0,objNull,[objNull]] call BIS_fnc_param;
-_anim = [_this,1,"",[""]] call BIS_fnc_param;
-_cancelOwner = [_this,2,false,[true]] call BIS_fnc_param;
-if (isNull _unit || {(local _unit && _cancelOwner)}) exitWith {};
-_unit switchMove _anim;
+
+params [
+	["_unit",objNull,[objnull]],
+	["_anim","",[""]],
+	["_isSwitchMove",true],
+	["_isPlayMove",true]
+];
+
+if (isNull _unit) exitWith {};
+
+if (_isSwitchMove) then {_unit switchMove _anim};
+if (_isPlayMove) then {_unit playMove _anim};
