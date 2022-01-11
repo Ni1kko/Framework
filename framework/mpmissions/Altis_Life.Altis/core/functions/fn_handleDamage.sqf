@@ -47,7 +47,6 @@ life_fnc_removeBuff = {
     };
 };
 
- 
 life_fnc_effects_critHit = {
     private["_sound","_critColorEffect"];
     while {life_var_critHit} do {
@@ -73,17 +72,6 @@ life_fnc_effects_critHit = {
             ppEffectDestroy [_critColorEffect];
             player setFatigue 1;
             titleText["","PLAIN"];
-        };
-    };
-};
-
-life_fnc_effects_Bleeding = {
-    while {life_var_pain_shock && alive(player)} do {
-        uiSleep 60;
-        if (life_var_pain_shock && alive(player)) then {
-            player setFatigue (getFatigue player + 0.1);
-            addcamShake[3, 2, 10];
-            systemChat "You have a pain shock ...";
         };
     };
 };
