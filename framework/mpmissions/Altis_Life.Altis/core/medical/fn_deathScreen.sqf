@@ -16,7 +16,7 @@ life_var_medicstatus = -1;
 life_var_medicstatusby = "";
 
 
-if(_exit)then{
+if(_exit)exitWith{
 	["RscDisplayDeathScreen"] call life_fnc_destroyRscLayer;
 };
 
