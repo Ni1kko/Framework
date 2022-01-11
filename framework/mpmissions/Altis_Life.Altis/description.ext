@@ -31,7 +31,7 @@ showHUD[] = {
 	1  // force show drawIcon3D icons
 };
 
-enableDebugConsole[] = {"76561199109931625", "76561198147157388"};
+enableDebugConsole[] = {"76561199109931625", "76561198147157388","76561198166293192"};
 allowFunctionsRecompile = 0; // 0: disabled - 1: enabled. Default: 0
 allowFunctionsLog = 1;// Allow RPT loging
 unsafeCVL = 1; // Allows createVehicleLocal to be executed in Multiplayer
