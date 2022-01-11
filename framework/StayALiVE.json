@@ -1,0 +1,15 @@
+{
+  "Port": 2302,
+  "ProfileName": "Admin",
+  "ProfilesPath": "E:\\ExtremoServer\\@server\\server_configs\\serverData",
+  "CfgsPath": "E:\\ExtremoServer\\@server\\server_configs",
+  "CfgPerformance": "A3_Performance.cfg",
+  "CfgDedicatedServer": "A3_DedicatedServer.cfg",
+  "ServerMods": [
+    "@server"
+  ],
+  "EnableHyperThreading": true,
+  "EnableLargePage": true,
+  "EnableExperimentalAlg": true,
+  "EnableAutoInit": true
+}

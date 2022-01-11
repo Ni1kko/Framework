@@ -1,1 +1,0 @@
-﻿-port=2302 -profiles=E:\ExtremoServer\@server\server_configs\serverData -name=Admin -cfg=E:\ExtremoServer\@server\server_configs\A3_Performance.cfg -config=E:\ExtremoServer\@server\server_configs\A3_DedicatedServer.cfg -servermod=@server -enableHT -hugepages -bandwidthAlg=2 -autoinit
