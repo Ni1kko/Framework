@@ -25,9 +25,13 @@ if(param [1,false])exitWith{
 				[] call life_fnc_spawnMenu;
 				waitUntil{!isNull (findDisplay 38500)};
 				waitUntil{isNull (findDisplay 38500)};
+				player setVariable ["lifeState","HEALTHY",true];
 				life_is_alive = true;
 			};
 		};
+	}else{
+		player setVariable ["lifeState","HEALTHY",true];
+		life_is_alive = true;
 	};
 };
 

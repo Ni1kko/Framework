@@ -18,9 +18,6 @@ life_var_cash = 0; //Make sure we don't get our cash back.
 life_respawned = false;
 player playMove "AmovPercMstpSnonWnonDnon";
 
-life_corpse setVariable ["Revive",nil,true];
-life_corpse setVariable ["name",nil,true];
-life_corpse setVariable ["Reviving",nil,true];
 player setVariable ["Revive",nil,true];
 player setVariable ["name",nil,true];
 player setVariable ["Reviving",nil,true];

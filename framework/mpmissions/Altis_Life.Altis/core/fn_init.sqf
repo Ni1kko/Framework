@@ -66,6 +66,7 @@ player setVariable ["Escorting", false, true];
 player setVariable ["transporting", false, true];
 player setVariable ["playerSurrender", false, true];
 player setVariable ["realname", profileName, true];
+player setVariable ["lifeState","HEALTHY",true];
 
 diag_log "[Life Client] Past Settings Init";
 [] call life_fnc_client;
