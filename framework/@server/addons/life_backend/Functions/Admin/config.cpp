@@ -26,24 +26,105 @@ class CfgAdmin
         class SupplyCrate_0 {
             DisplayName = "Empty Crate";
             CrateClass = "Box_East_Support_F"; 
-            Items[] = {};
+            Items[] = {
+                "ItemWatch",
+                "ItemCompass",
+                "ItemCompass"
+            };
+            VItems[] = {
+                ["waterBottle",1], 
+                ["rabbit",1], 
+                ["apple"],1, 
+                ["redgull",1], 
+                ["tbacon",1], 
+                ["pickaxe",1], 
+                ["toolkit",1], 
+                ["fuelFull",1], 
+                ["peach",1],
+                ["rabbit_raw",1], 
+                ["hen_raw",1], 
+                ["rooster_raw",1], 
+                ["sheep_raw",1], 
+                ["goat_raw",1] 
+            };
+    
         };
         class SupplyCrate_1 {
             DisplayName = "Building Supplies";
             CrateClass = "Box_NATO_Support_F";
 
-            Items[] = {};
+            Items[] = {
+                "ItemWatch",
+                "ItemCompass",
+                "ItemCompass"
+            };
+            VItems[] = {
+                ["waterBottle",1], 
+                ["rabbit",1], 
+                ["apple"],1, 
+                ["redgull",1], 
+                ["tbacon",1], 
+                ["pickaxe",1], 
+                ["toolkit",1], 
+                ["fuelFull",1], 
+                ["peach",1],
+                ["rabbit_raw",1], 
+                ["hen_raw",1], 
+                ["rooster_raw",1], 
+                ["sheep_raw",1], 
+                ["goat_raw",1] 
+            };
         };
         class SupplyCrate_2 {
             DisplayName = "Food Supplies";
             CrateClass = "Box_NATO_Support_F";
 
-            Items[] = {};
+            Items[] = {
+                "ItemWatch",
+                "ItemCompass",
+                "ItemCompass"
+            };
+            VItems[] = {
+                ["waterBottle",1], 
+                ["rabbit",1], 
+                ["apple"],1, 
+                ["redgull",1], 
+                ["tbacon",1], 
+                ["pickaxe",1], 
+                ["toolkit",1], 
+                ["fuelFull",1], 
+                ["peach",1],
+                ["rabbit_raw",1], 
+                ["hen_raw",1], 
+                ["rooster_raw",1], 
+                ["sheep_raw",1], 
+                ["goat_raw",1] 
+            };
         };
         class SupplyCrate_3 {
             DisplayName = "Medical Supplies";
             CrateClass = "Box_NATO_Support_F";
-            Items[] = {};
+            Items[] = {
+                "ItemWatch",
+                "ItemCompass",
+                "ItemCompass"
+            };
+            VItems[] = {
+                ["waterBottle",1], 
+                ["rabbit",1], 
+                ["apple"],1, 
+                ["redgull",1], 
+                ["tbacon",1], 
+                ["pickaxe",1], 
+                ["toolkit",1], 
+                ["fuelFull",1], 
+                ["peach",1],
+                ["rabbit_raw",1], 
+                ["hen_raw",1], 
+                ["rooster_raw",1], 
+                ["sheep_raw",1], 
+                ["goat_raw",1] 
+            };
         };
     };
    
