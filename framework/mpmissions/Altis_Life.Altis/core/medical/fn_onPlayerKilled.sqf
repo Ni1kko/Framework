@@ -10,7 +10,9 @@ params [
     ["_unit",objNull,[objNull]],
     ["_killer",objNull,[objNull]]
 ];
+
 disableSerialization;
+
 diag_log format ["You got killed by %1(%2)",_killer getVariable["realname",""],getPlayerUID _killer];
 if  !((vehicle _unit) isEqualTo _unit) then {
     UnAssignVehicle _unit;
@@ -32,152 +34,7 @@ if (dialog) then {
     closeDialog 0;
 };
 
-private _getWeaponName = {
-	private _player = param[0,player];
-	private _weapon = "";
-	if(isPlayer _player) then {
-		private _weaponInfo = [currentWeapon _player] call life_fnc_fetchCfgDetails;
-		if(count _weaponInfo > 1) then {
-			_weapon = _weaponInfo select 1;
-		};
-	};
-	_weapon
-};
-
-private _getGroupName = {
-	switch (side param[0,player]) do 
-	{
-		case west:{"Police"};
-		case independent:{"Medic"};
-		default
-		{
-			if(((group _killer) getVariable["gang_name",""]) == "") then {
-				""
-			} else {
-				"" + ((group _killer) getVariable["gang_name",""])
-			};
-		};
-	};
-};
- 
-private _suicide = (_killer isEqualTo player);
-
-private _groupName = [] call _getGroupName;
-private _killerWeapon = "";
-private _deathtype = 0;
-
-if(!_suicide)then{
-	if(!isNull _killer)then{
-		_deathtype = 1;
-		if((_killer isKindOf "landVehicle") || (_killer isKindOf "Ship") || (_killer isKindOf "Air")) then {
-			_killerWeapon = format["%1 (Vehicle)", getText(configFile >> "CfgVehicles" >> typeOf (vehicle _killer) >> "displayName")];
-		} else {
-			_killerWeapon = [_killer] call _getWeaponName;
-		};
-	}else{
-		_deathtype = 2;
-	};
-	_groupName = [_killer] call _getGroupName;
-};
-
-//Setup our camera view
-life_deathCamera  = "CAMERA" camCreate (getPosATL _unit);
-showCinemaBorder false;
-life_deathCamera cameraEffect ["Internal","Back"];
-//createDialog "DeathScreen";
-life_deathCamera camSetTarget _unit;
-life_deathCamera camSetRelPos [0,22,22];
-life_deathCamera camSetFOV .5;
-life_deathCamera camSetFocus [50,0];
-life_deathCamera camCommit 0;
-
-/*
-//-- block escape as would close this display on escape key pressed
-(findDisplay 7300) displaySetEventHandler ["KeyDown","if((_this select 1) == 1) then {true}"];
-
-//-- get ui controls
-_Killedby = ((findDisplay 7300) displayCtrl 7310);
-_KilledWeapon = ((findDisplay 7300) displayCtrl 7311);
-_KilledDistance = ((findDisplay 7300) displayCtrl 7312);
-
-//-- toggle controls depending on death type
-_KilledWeapon ctrlShow (_deathtype isNotEqualTo 2);
-_KilledDistance ctrlShow (_deathtype isNotEqualTo 2);
-
-//-- render the death reason
-_Killedby ctrlSetText (switch _deathtype do {
-    case 1: { format [
-        [
-            "Killed by: %1 (%2)", 
-            "Killed by: %1"
-        ] select (_groupName isEqualTo ""),
-        _killer getVariable["realname",""],
-        _groupName
-    ]};
-    case 2: { selectRandom [
-        "You died because... Arma.",
-        "You died because the universe hates him.",
-        "You died a mysterious death.",
-        "You died and nobody knows why.",
-        "You died because that's why.",
-        "You died because You was very unlucky.",
-        "You died due to Arma bugs and is probably very salty right now.",
-        "You died an awkward death.",
-        "You died. Yes, You is dead. Like really dead-dead."
-    ]};
-    default {"Commited suicide"};
-});
-//-- render the name of that weapon that was used to kill the player
-if(ctrlShown _KilledWeapon)then{
-	_KilledWeapon ctrlSetText format ["Weapon: %1",_killerWeapon];
-};
-
-//-- render distance betwwen player and killer
-if(ctrlShown _KilledDistance)then{
-	_KilledDistance ctrlSetText format ["Distance: %1m",[floor( _killer distance _unit)] call life_fnc_numberText];
-};
-
-
-//Create a thread for something?
-_unit spawn {
-    private ["_maxTime","_RespawnBtn","_Timer"];
-    disableSerialization;
-    _RespawnBtn = ((findDisplay 7300) displayCtrl 7302);
-    _Timer = ((findDisplay 7300) displayCtrl 7301);
-    if (LIFE_SETTINGS(getNumber,"respawn_timer") < 5) then {
-        _maxTime = time + 5;
-    } else {
-        _maxTime = time + LIFE_SETTINGS(getNumber,"respawn_timer");
-    };
-    _RespawnBtn ctrlEnable false;
-    waitUntil {
-        _Timer ctrlSetText format [localize "STR_Medic_Respawn",[(_maxTime - time),"MM:SS"] call BIS_fnc_secondsToString];
-        round(_maxTime - time) <= 0 || isNull _this
-    };
-    _RespawnBtn ctrlEnable true;
-    _Timer ctrlSetText localize "STR_Medic_Respawn_2";
-};
-
-_unit spawn {
-    disableSerialization;
-    private _requestBtn = ((findDisplay 7300) displayCtrl 7303);
-    _requestBtn ctrlEnable false;
-    private _requestTime = time + 5;
-    waitUntil {round(_requestTime - time) <= 0 || isNull _this};
-    _requestBtn ctrlEnable true;
-};
-*/
-
-if (!isNull (findDisplay 49)) then {(findDisplay 49) closeDisplay 0} else {closeDialog 0};
-
 [_unit] spawn life_fnc_deathScreen;
-
-//Create a thread to follow with some what precision view of the corpse.
-[_unit] spawn {
-    private ["_unit"];
-    _unit = _this select 0;
-    waitUntil {if (speed _unit isEqualTo 0) exitWith {true}; if(!isNil "life_deathCamera" AND  {!isNull life_deathCamera})then{life_deathCamera camSetTarget _unit; life_deathCamera camSetRelPos [0,3.5,4.5]; life_deathCamera camCommit 0;}; };
-};
 
 //Make the killer wanted
 if (!isNull _killer && {!(_killer isEqualTo _unit)} && {!(side _killer isEqualTo west)} && {alive _killer}) then {
