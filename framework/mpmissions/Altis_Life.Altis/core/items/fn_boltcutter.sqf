@@ -39,7 +39,7 @@ if ((nearestObject [_pos,"Land_Dome_Big_F"]) == _building || (nearestObject [_po
     [0,"STR_ISTR_Bolt_AlertHouse",true,[profileName]] remoteExecCall ["life_fnc_broadcast",RCLIENT];
 };
 
-life_action_inUse = true;
+life_var_isBusy = true;
 //Setup the progress bar
 disableSerialization;
 _title = localize "STR_ISTR_Bolt_Process";
@@ -83,11 +83,11 @@ for "_i" from 0 to 1 step 0 do {
 //Kill the UI display and check for various states
 "progressBar" cutText ["","PLAIN"];
 player playActionNow "stop";
-if (!alive player || life_istazed || life_isknocked) exitWith {life_action_inUse = false;};
-if (player getVariable ["restrained",false]) exitWith {life_action_inUse = false;};
-if (life_interrupted) exitWith {life_interrupted = false; titleText[localize "STR_NOTF_ActionCancel","PLAIN"]; life_action_inUse = false;};
+if (!alive player || life_istazed || life_isknocked) exitWith {life_var_isBusy = false;};
+if (player getVariable ["restrained",false]) exitWith {life_var_isBusy = false;};
+if (life_interrupted) exitWith {life_interrupted = false; titleText[localize "STR_NOTF_ActionCancel","PLAIN"]; life_var_isBusy = false;};
 life_boltcutter_uses = life_boltcutter_uses + 1;
-life_action_inUse = false;
+life_var_isBusy = false;
 
 if (life_boltcutter_uses >= 5) then {
     [false,"boltcutter",1] call life_fnc_handleInv;

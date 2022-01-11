@@ -10,7 +10,7 @@ private ["_curTarget","_distance","_isVehicle","_title","_progressBar","_cP","_t
 _curTarget = cursorObject;
 life_interrupted = false;
 
-if (life_action_inUse) exitWith {};
+if (life_var_isBusy) exitWith {};
 if (isNull _curTarget) exitWith {}; //Bad type
 _distance = ((boundingBox _curTarget select 1) select 0) + 2;
 if (player distance _curTarget > _distance) exitWith {}; //Too far
@@ -24,7 +24,7 @@ if (!_isVehicle && !(_curTarget getVariable ["restrained",false])) exitWith {};
 if (_curTarget getVariable "NPC") exitWith {hint localize "STR_NPC_Protected"};
 
 _title = format [localize "STR_ISTR_Lock_Process",if (!_isVehicle) then {"Handcuffs"} else {getText(configFile >> "CfgVehicles" >> (typeOf _curTarget) >> "displayName")}];
-life_action_inUse = true; //Lock out other actions
+life_var_isBusy = true; //Lock out other actions
 
 //Setup the progress bar
 disableSerialization;
@@ -67,13 +67,13 @@ for "_i" from 0 to 1 step 0 do {
 "progressBar" cutText ["","PLAIN"];
 player playActionNow "stop";
 
-if (!alive player || life_istazed || life_isknocked) exitWith {life_action_inUse = false;};
-if (player getVariable ["restrained",false]) exitWith {life_action_inUse = false;};
-if (!isNil "_badDistance") exitWith {titleText[localize "STR_ISTR_Lock_TooFar","PLAIN"]; life_action_inUse = false;};
-if (life_interrupted) exitWith {life_interrupted = false; titleText[localize "STR_NOTF_ActionCancel","PLAIN"]; life_action_inUse = false;};
-if (!([false,"lockpick",1] call life_fnc_handleInv)) exitWith {life_action_inUse = false;};
+if (!alive player || life_istazed || life_isknocked) exitWith {life_var_isBusy = false;};
+if (player getVariable ["restrained",false]) exitWith {life_var_isBusy = false;};
+if (!isNil "_badDistance") exitWith {titleText[localize "STR_ISTR_Lock_TooFar","PLAIN"]; life_var_isBusy = false;};
+if (life_interrupted) exitWith {life_interrupted = false; titleText[localize "STR_NOTF_ActionCancel","PLAIN"]; life_var_isBusy = false;};
+if (!([false,"lockpick",1] call life_fnc_handleInv)) exitWith {life_var_isBusy = false;};
 
-life_action_inUse = false;
+life_var_isBusy = false;
 
 if (!_isVehicle) then {
     _curTarget setVariable ["restrained",false,true];

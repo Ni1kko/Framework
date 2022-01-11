@@ -38,7 +38,7 @@ _near_units = [];
 } forEach _near_units;
 
 _mstatus ctrlSetStructuredText parseText format ["<img size='1.3' image='icons\ico_bank.paa'/> <t size='0.8px'>$%1</t><br/><img size='1.2' image='icons\ico_money.paa'/> <t size='0.8'>$%2</t>",[life_var_bank] call life_fnc_numberText,[life_var_cash] call life_fnc_numberText];
-ctrlSetText[2009,format ["Weight: %1 / %2", life_carryWeight, life_maxWeight]];
+ctrlSetText[2009,format ["Weight: %1 / %2", life_var_carryWeight, life_maxWeight]];
 
 {
     if (ITEM_VALUE(configName _x) > 0) then {

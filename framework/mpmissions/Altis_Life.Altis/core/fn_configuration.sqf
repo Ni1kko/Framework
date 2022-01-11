@@ -22,11 +22,11 @@ life_redgull_effect = time;
 life_is_processing = false;
 life_bail_paid = false;
 life_impound_inuse = false;
-life_action_inUse = false;
+life_var_isBusy = false;
 life_spikestrip = objNull;
 life_knockout = false;
 life_interrupted = false;
-life_respawned = false;
+life_var_respawned = false;
 life_removeWanted = false;
 life_action_gathering = false;
 life_god = false;
@@ -100,7 +100,7 @@ life_clothing_purchase = [-1, -1, -1, -1, -1];
 *****************************
 */
 life_maxWeight = LIFE_SETTINGS(getNumber, "total_maxWeight");
-life_carryWeight = 0; //Represents the players current inventory weight (MUST START AT 0).
+life_var_carryWeight = 0; //Represents the players current inventory weight (MUST START AT 0).
 
 /*
 *****************************
@@ -108,12 +108,12 @@ life_carryWeight = 0; //Represents the players current inventory weight (MUST ST
 *****************************
 */
 life_net_dropped = false;
-life_use_atm = true;
+life_var_ATMEnabled = true;
 life_is_arrested = false;
 life_is_alive = false;
 life_delivery_in_progress = false;
-life_thirst = 100;
-life_hunger = 100;
+life_var_thirst = 100;
+life_var_hunger = 100;
 life_var_cash = 0;
 
 life_istazed = false;

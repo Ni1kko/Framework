@@ -19,7 +19,7 @@ _door = [_house] call life_fnc_nearestDoor;
 if (_door isEqualTo 0) exitWith {hint localize "STR_Cop_NotaDoor"};
 if ((_house getVariable [format ["bis_disabled_Door_%1",_door],0]) isEqualTo 0) exitWith {hint localize "STR_House_Raid_DoorUnlocked"};
 
-life_action_inUse = true;
+life_var_isBusy = true;
 
 //Setup the progress bar
 disableSerialization;
@@ -57,9 +57,9 @@ for "_i" from 0 to 1 step 0 do {
 "progressBar" cutText ["","PLAIN"];
 player playActionNow "stop";
 
-if (!alive player) exitWith {life_action_inUse = false;};
-if (life_interrupted) exitWith {life_interrupted = false; titleText[localize "STR_NOTF_ActionCancel","PLAIN"]; life_action_inUse = false;};
+if (!alive player) exitWith {life_var_isBusy = false;};
+if (life_interrupted) exitWith {life_interrupted = false; titleText[localize "STR_NOTF_ActionCancel","PLAIN"]; life_var_isBusy = false;};
 
-life_action_inUse = false;
+life_var_isBusy = false;
 _house animateSource [format ["Door_%1_source", _door], 1];
 _house setVariable [format ["bis_disabled_Door_%1",_door],0,true]; //Unlock the door.

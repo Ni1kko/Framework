@@ -9,7 +9,7 @@
 */
 private ["_curObject","_isWater","_CrateModelNames","_crate","_fish","_animal","_whatIsIt","_handle"];
 _curObject = cursorObject;
-if (life_action_inUse) exitWith {}; //Action is in use, exit to prevent spamming.
+if (life_var_isBusy) exitWith {}; //Action is in use, exit to prevent spamming.
 if (life_interrupted) exitWith {life_interrupted = false;};
 _isWater = surfaceIsWater (visiblePositionASL player);
 
@@ -72,12 +72,12 @@ if (_curObject isKindOf "House_F" && {player distance _curObject < 12} || ((near
 
 if (dialog) exitWith {}; //Don't bother when a dialog is open.
 if !(isNull objectParent player) exitWith {}; //He's in a vehicle, cancel!
-life_action_inUse = true;
+life_var_isBusy = true;
 
 //Temp fail safe.
 [] spawn {
     sleep 60;
-    life_action_inUse = false;
+    life_var_isBusy = false;
 };
 
 //Check if it's a dead body.

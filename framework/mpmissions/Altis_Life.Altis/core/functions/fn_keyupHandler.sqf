@@ -28,7 +28,7 @@ if ((_keyCode in (actionKeys "GetOver") || _keyCode in (actionKeys "salute") || 
     true;
 };
 
-if (life_action_inUse) exitWith {
+if (life_var_isBusy) exitWith {
     if (!life_interrupted && _keyCode in _interruptionKeys) then {
         if (life_var_autorun) then {
             ["abort"] call life_fnc_autoruntoggle;
@@ -170,7 +170,7 @@ switch (_keyCode) do
 	case DIK_9: { _stopPropagation = true; };
 	case DIK_0: 
 	{ 
-		if (!dialog && !(player getVariable ["restrained",false]) && {!life_action_inUse}) then  {
+		if (!dialog && !(player getVariable ["restrained",false]) && {!life_var_isBusy}) then  {
 			["toggle"] call life_fnc_autoruntoggle;
 		};
         _stopPropagation = true;
@@ -200,7 +200,7 @@ switch (_keyCode) do
 	};
 	case DIK_T: 
 	{
-        if (!_altState && {!_controlState} && {!dialog} && {!life_action_inUse} && {!(player getVariable ["playerSurrender",false])} && {!(player getVariable ["restrained",false])} && {!life_isknocked} && {!life_istazed}) then {
+        if (!_altState && {!_controlState} && {!dialog} && {!life_var_isBusy} && {!(player getVariable ["playerSurrender",false])} && {!(player getVariable ["restrained",false])} && {!life_isknocked} && {!life_istazed}) then {
             if (!(isNull objectParent player) && alive vehicle player) then {
                 if ((vehicle player) in life_vehicles) then {
                     [vehicle player] spawn life_fnc_openInventory;
@@ -217,7 +217,7 @@ switch (_keyCode) do
                     };
                 } else {
                     _list = ["landVehicle","Air","Ship"];
-                    if (KINDOF_ARRAY(cursorObject,_list) && {player distance cursorObject < 7} && {isNull objectParent player} && {alive cursorObject} && {!life_action_inUse}) then {
+                    if (KINDOF_ARRAY(cursorObject,_list) && {player distance cursorObject < 7} && {isNull objectParent player} && {alive cursorObject} && {!life_var_isBusy}) then {
                         if (cursorObject in life_vehicles || {locked cursorObject isEqualTo 0}) then {
                             [cursorObject] spawn life_fnc_openInventory;
                         };
@@ -228,7 +228,7 @@ switch (_keyCode) do
     };
 	case DIK_Y: 
 	{
-        if (!_altState && !_controlState && !dialog && !(player getVariable ["restrained",false]) && {!life_action_inUse}) then {
+        if (!_altState && !_controlState && !dialog && !(player getVariable ["restrained",false]) && {!life_var_isBusy}) then {
             [] call life_fnc_p_openMenu;
         };
     };
@@ -521,14 +521,14 @@ switch (_keyCode) do
 			}; 
             hint format ["PartyESP Mode %1",life_var_hud_partyespmode];
 		}else{
-			if (!life_action_inUse) then {
+			if (!life_var_isBusy) then {
 				if (life_var_autorun) then {
 					["abort"] call life_fnc_autoruntoggle;
 				};
 				[] spawn  {
 					private _handle = [] spawn life_fnc_actionKeyHandler;
 					waitUntil {scriptDone _handle};
-					life_action_inUse = false;
+					life_var_isBusy = false;
 				};
 			};
 		};

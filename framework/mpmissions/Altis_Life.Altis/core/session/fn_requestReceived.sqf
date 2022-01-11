@@ -56,8 +56,8 @@ switch (playerSide) do {
         life_blacklisted = _this#8;
         //--- Stats
         if (LIFE_SETTINGS(getNumber,"save_playerStats") isEqualTo 1) then {
-            life_hunger = ((_this#9)#0);
-            life_thirst = ((_this#9)#1);
+            life_var_hunger = ((_this#9)#0);
+            life_var_thirst = ((_this#9)#1);
             player setDamage ((_this#9)#2);
         };
     };
@@ -89,8 +89,8 @@ switch (playerSide) do {
         life_var_vitems  = _this#7#1;
         //--- Stats
         if (LIFE_SETTINGS(getNumber,"save_playerStats") isEqualTo 1) then {
-            life_hunger = ((_this#8)#0);
-            life_thirst = ((_this#8)#1);
+            life_var_hunger = ((_this#8)#0);
+            life_var_thirst = ((_this#8)#1);
             player setDamage ((_this#8)#2);
         };
     };
@@ -123,8 +123,8 @@ switch (playerSide) do {
         life_var_vitems  = _this#7#1;
         //--- Stats
         if (LIFE_SETTINGS(getNumber,"save_playerStats") isEqualTo 1) then {
-            life_hunger = ((_this#8)#0);
-            life_thirst = ((_this#8)#1);
+            life_var_hunger = ((_this#8)#0);
+            life_var_thirst = ((_this#8)#1);
             player setDamage ((_this#8)#2);
         };
         //--- Position

@@ -6,8 +6,8 @@
 disableSerialization;
 
 //-- Thrist Notifcation
-if(life_var_hud_thirst_lastval != round life_thirst)then{
-	life_var_hud_thirst_lastval = round life_thirst; 
+if(life_var_hud_thirst_lastval != round life_var_thirst)then{
+	life_var_hud_thirst_lastval = round life_var_thirst; 
 	switch (life_var_hud_thirst_lastval) do {
 		case 45: {hint "Throat is really dry getting";};
 		case 25: {hint "I should get somthing to drink";};
@@ -17,8 +17,8 @@ if(life_var_hud_thirst_lastval != round life_thirst)then{
 }; 
 
 //-- Hunger Notifcation 
-if(life_var_hud_hunger_lastval != round life_hunger)then{
-	life_var_hud_hunger_lastval = round life_hunger; 
+if(life_var_hud_hunger_lastval != round life_var_hunger)then{
+	life_var_hud_hunger_lastval = round life_var_hunger; 
 	switch (life_var_hud_hunger_lastval) do {
 		case 45: {hint "Was that my belly? maybe i should eat somthing";};
 		case 25: {hint "I should get somthing to eat";};

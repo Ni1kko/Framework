@@ -27,7 +27,7 @@ _old = life_trunk_vehicle getVariable "Trunk";
 if (_index isEqualTo -1) exitWith {};
 _value = _data select _index select 1;
 if (_num > _value) exitWith {hint localize "STR_MISC_NotEnough"};
-_num = [_ctrl,_num,life_carryWeight,life_maxWeight] call life_fnc_calWeightDiff;
+_num = [_ctrl,_num,life_var_carryWeight,life_maxWeight] call life_fnc_calWeightDiff;
 if (_num isEqualTo 0) exitWith {hint localize "STR_NOTF_InvFull"};
 _weight = ([_ctrl] call life_fnc_itemWeight) * _num;
 if (_ctrl == "money") then {

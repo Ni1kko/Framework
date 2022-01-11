@@ -15,7 +15,7 @@ if (_item isEqualTo "" || _num isEqualTo 0) exitWith {false};
 _var = ITEM_VARNAME(_item);
 
 if (_math) then {
-    _diff = [_item,_num,life_carryWeight,life_maxWeight] call life_fnc_calWeightDiff;
+    _diff = [_item,_num,life_var_carryWeight,life_maxWeight] call life_fnc_calWeightDiff;
     _num = _diff;
     if (_num <= 0) exitWith {false};
 };
@@ -24,11 +24,11 @@ _value = ITEM_VALUE(_item);
 
 if (_math) then {
     //Lets add!
-    if ((life_carryWeight + _weight) <= life_maxWeight) then {
+    if ((life_var_carryWeight + _weight) <= life_maxWeight) then {
         missionNamespace setVariable [_var,(_value + _num)];
 
         if ((missionNamespace getVariable _var) > _value) then {
-            life_carryWeight = life_carryWeight + _weight;
+            life_var_carryWeight = life_var_carryWeight + _weight;
             _return = true;
         } else {
             _return = false;
@@ -40,7 +40,7 @@ if (_math) then {
         missionNamespace setVariable [_var,(_value - _num)];
 
         if ((missionNamespace getVariable _var) < _value) then {
-            life_carryWeight = life_carryWeight - _weight;
+            life_var_carryWeight = life_var_carryWeight - _weight;
             _return = true;
         } else {_return = false;};
     };

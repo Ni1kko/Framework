@@ -14,7 +14,7 @@ private _vehicle = objectFromNetId (_control lbData (lbCurSel _control));
 if (isNull _vehicle) exitWith {};
 
 systemChat localize "STR_Shop_ChopShopSelling";
-life_action_inUse = true;
+life_var_isBusy = true;
 
 if (count extdb_var_database_headless_clients > 0) then {
     [player,_vehicle,_price] remoteExecCall ["HC_fnc_chopShopSell",extdb_var_database_headless_client];

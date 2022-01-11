@@ -24,12 +24,12 @@ for "_i" from 0 to 1 step 0 do
 {
    //--- THIRST
     if ((time - _waterTime) > 900 && life_is_alive && {!_immortal}) then {
-        if (life_thirst < 2) then {
+        if (life_var_thirst < 2) then {
             player setDamage 1; hint localize "STR_NOTF_DrinkMSG_Death";
         } else {
-            life_thirst = life_thirst - 10;
-            if (life_thirst < 2) then {player setDamage 1; hint localize "STR_NOTF_DrinkMSG_Death";};
-            switch (life_thirst) do  {
+            life_var_thirst = life_var_thirst - 10;
+            if (life_var_thirst < 2) then {player setDamage 1; hint localize "STR_NOTF_DrinkMSG_Death";};
+            switch (life_var_thirst) do  {
                 case 30: {hint localize "STR_NOTF_DrinkMSG_1";};
                 case 20: {
                     hint localize "STR_NOTF_DrinkMSG_2";
@@ -47,12 +47,12 @@ for "_i" from 0 to 1 step 0 do
     
     //--- HUNGER
     if ((time - _foodTime) > 1250 && life_is_alive && {!_immortal}) then {
-        if (life_hunger < 2) then {
+        if (life_var_hunger < 2) then {
             player setDamage 1; hint localize "STR_NOTF_EatMSG_Death";
         } else {
-            life_hunger = life_hunger - 10;
-            if (life_hunger < 2) then {player setDamage 1; hint localize "STR_NOTF_EatMSG_Death";};
-            switch (life_hunger) do {
+            life_var_hunger = life_var_hunger - 10;
+            if (life_var_hunger < 2) then {player setDamage 1; hint localize "STR_NOTF_EatMSG_Death";};
+            switch (life_var_hunger) do {
                 case 30: {hint localize "STR_NOTF_EatMSG_1";};
                 case 20: {hint localize "STR_NOTF_EatMSG_2";};
                 case 10: {
@@ -82,7 +82,7 @@ for "_i" from 0 to 1 step 0 do
     };
 
     //--- CARRY WEIGHT
-    if (life_carryWeight > life_maxWeight && {!isForcedWalk player} && {!_immortal}) then {
+    if (life_var_carryWeight > life_maxWeight && {!isForcedWalk player} && {!_immortal}) then {
         player forceWalk true;
         if (LIFE_SETTINGS(getNumber,"enable_fatigue") isEqualTo 1) then {player setFatigue 1;};
         hint localize "STR_NOTF_MaxWeight";
@@ -100,8 +100,8 @@ for "_i" from 0 to 1 step 0 do
             _walkDis = _walkDis + 1;
             if (_walkDis isEqualTo 700) then {
                 _walkDis = 0;
-                life_thirst = life_thirst - random [0,2,7];
-                life_hunger = life_hunger - random [0,2,7];
+                life_var_thirst = life_var_thirst - random [0,2,7];
+                life_var_hunger = life_var_hunger - random [0,2,7];
             };
         };
         _lastPos = visiblePosition player;

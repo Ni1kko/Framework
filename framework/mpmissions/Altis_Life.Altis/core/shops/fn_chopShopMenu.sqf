@@ -6,7 +6,7 @@
     Description:
     Opens & initializes the chop shop menu.
 */
-if (life_action_inUse) exitWith {hint localize "STR_NOTF_ActionInProc"};
+if (life_var_isBusy) exitWith {hint localize "STR_NOTF_ActionInProc"};
 if !(playerSide isEqualTo civilian) exitWith {hint localize "STR_NOTF_notAllowed"};
 
 disableSerialization;

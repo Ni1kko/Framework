@@ -9,30 +9,14 @@
 private ["_handle"];
 //Reset our weight and other stuff
 
-life_action_inUse = false;
-life_use_atm = true;
-life_hunger = 100;
-life_thirst = 100;
-life_carryWeight = 0;
+life_var_isBusy = false;
+life_var_ATMEnabled = true;
+life_var_hunger = 100;
+life_var_thirst = 100;
+life_var_carryWeight = 0;
 life_var_cash = 0; //Make sure we don't get our cash back.
-life_respawned = false;
+life_var_respawned = false;
 player playMove "AmovPercMstpSnonWnonDnon";
-
-player setVariable ["Revive",nil,true];
-player setVariable ["name",nil,true];
-player setVariable ["Reviving",nil,true];
-player setVariable ["BEGuid",life_corpse getVariable "BEGuid",true];
-
-[] call life_fnc_startLoadout;
-
-//Cleanup of weapon containers near the body & hide it.
-if (!isNull life_corpse) then {
-    private "_containers";
-    life_corpse setVariable ["Revive",true,true];
-    _containers = nearestObjects[life_corpse,["WeaponHolderSimulated"],5];
-    {deleteVehicle _x;} forEach _containers; //Delete the containers.
-    deleteVehicle life_corpse;
-};
 
 //Bad boy
 if (life_is_arrested) exitWith {
@@ -44,25 +28,29 @@ if (life_is_arrested) exitWith {
 
 //Johnny law got me but didn't let the EMS revive me, reward them half the bounty.
 if (!isNil "life_copRecieve") then {
-
-    if (count extdb_var_database_headless_clients > 0) then {
-        [getPlayerUID player,player,life_copRecieve,true] remoteExecCall ["HC_fnc_wantedBounty",extdb_var_database_headless_client];
-    } else {
-        [getPlayerUID player,player,life_copRecieve,true] remoteExecCall ["life_fnc_wantedBounty",RSERV];
-    };
-
+    [getPlayerUID player,player,life_copRecieve,true] remoteExecCall ["life_fnc_wantedBounty",RSERV];
     life_copRecieve = nil;
 };
 
 //So I guess a fellow gang member, cop or myself killed myself so get me off that Altis Most Wanted
 if (life_removeWanted) then {
-
-    if (count extdb_var_database_headless_clients > 0) then {
-        [getPlayerUID player] remoteExecCall ["HC_fnc_wantedRemove",extdb_var_database_headless_client];
-    } else {
-        [getPlayerUID player] remoteExecCall ["life_fnc_wantedRemove",RSERV];
-    };
-
+    [getPlayerUID player] remoteExecCall ["life_fnc_wantedRemove",RSERV];
 };
 
+//Set some vars on our new body.
+player setVariable ["restrained",false,true];
+player setVariable ["Escorting",false,true];
+player setVariable ["transporting",false,true];
+player setVariable ["playerSurrender",false,true];
+player setVariable ["steam64id",getPlayerUID player,true]; //Reset the UID.
+player setVariable ["realname",profileName,true]; //Reset the players name.
+
+[] call life_fnc_startLoadout;
+[] call life_fnc_setupActions;
+ 
+[_unit,life_settings_enableSidechannel,playerSide] remoteExecCall ["TON_fnc_manageSC",RSERV];
+if (LIFE_SETTINGS(getNumber,"enable_fatigue") isEqualTo 0) then {player enableFatigue false;};
+
+player playMoveNow "AmovPpneMstpSrasWrflDnon";
+ 
 [] call SOCK_fnc_updateRequest;

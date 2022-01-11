@@ -45,9 +45,9 @@ if (life_shop_type isEqualTo "drugdealer") then {
 
 if (life_shop_type isEqualTo "gold" && (LIFE_SETTINGS(getNumber,"noatm_timer")) > 0) then {
     [] spawn {
-        life_use_atm = false;
+        life_var_ATMEnabled = false;
         sleep ((LIFE_SETTINGS(getNumber,"noatm_timer")) * 60);
-        life_use_atm = true;
+        life_var_ATMEnabled = true;
     };
 };
 

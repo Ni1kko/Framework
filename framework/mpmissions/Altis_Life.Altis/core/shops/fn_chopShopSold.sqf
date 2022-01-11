@@ -11,7 +11,7 @@ params [
     ["_displayName","",[""]]
 ];
 
-life_action_inUse = false;
+life_var_isBusy = false;
 
 if (_price > 0) then {
     life_var_cash = life_var_cash + _price;

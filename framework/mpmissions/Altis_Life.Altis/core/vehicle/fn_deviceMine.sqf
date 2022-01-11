@@ -20,12 +20,12 @@ if (fuel _vehicle isEqualTo 0) exitWith {
 };
 
 closeDialog 0; //Close the interaction menu.
-life_action_inUse = true; //Lock out the interaction menu for a bit..
+life_var_isBusy = true; //Lock out the interaction menu for a bit..
 
 _weight = [_vehicle] call life_fnc_vehicleWeight;
 if ((_weight select 1) >= (_weight select 0)) exitWith {
     hint localize "STR_NOTF_DeviceFull";
-    life_action_inUse = false;
+    life_var_isBusy = false;
 };
 
 //check if we are in the resource zone for any of the resources
@@ -74,13 +74,13 @@ for "_i" from 0 to count(_resourceCfg)-1 do {
 
 if (_zone isEqualTo "") exitWith {
     hint localize "STR_NOTF_notNearResource";
-    life_action_inUse = false;
+    life_var_isBusy = false;
 };
 
 _vehicle setVariable ["mining",true,true]; //Lock the device
 _vehicle remoteExec ["life_fnc_soundDevice",RCLIENT]; //Broadcast the 'mining' sound of the device for nearby units.
 
-life_action_inUse = false; //Unlock it since it's going to do it's own thing...
+life_var_isBusy = false; //Unlock it since it's going to do it's own thing...
 
 for "_i" from 0 to 1 step 0 do {
     if (!alive _vehicle || isNull _vehicle) exitWith {};

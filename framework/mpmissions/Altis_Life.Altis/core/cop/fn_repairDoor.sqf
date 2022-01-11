@@ -24,7 +24,7 @@ for "_i" from 1 to _doors do {
 if (_door isEqualTo 0) exitWith {hint localize "STR_Cop_NotaDoor"}; //Not near a door to be broken into.
 _doorN = _building getVariable [format ["bis_disabled_Door_%1",_door],0];
 if (_doorN isEqualTo 1) exitWith {hint localize "STR_House_FedDoor_Locked"};
-life_action_inUse = true;
+life_var_isBusy = true;
 
 closeDialog 0;
 //Setup the progress bar
@@ -66,9 +66,9 @@ for "_i" from 0 to 1 step 0 do {
 //Kill the UI display and check for various states
 "progressBar" cutText ["","PLAIN"];
 player playActionNow "stop";
-if (!alive player) exitWith {life_action_inUse = false;};
-if (life_interrupted) exitWith {life_interrupted = false; titleText[localize "STR_NOTF_ActionCancel","PLAIN"]; life_action_inUse = false;};
-life_action_inUse = false;
+if (!alive player) exitWith {life_var_isBusy = false;};
+if (life_interrupted) exitWith {life_interrupted = false; titleText[localize "STR_NOTF_ActionCancel","PLAIN"]; life_var_isBusy = false;};
+life_var_isBusy = false;
 
 _building animateSource [format ["Door_%1_source", _door], 0];
 _building setVariable [format ["bis_disabled_Door_%1",_door],1,true]; //Lock the door.

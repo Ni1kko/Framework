@@ -10,12 +10,12 @@
     Note: Dialog helps stop a few issues regarding money loss.
 */
 private ["_healCost","_action"];
-if (life_action_inUse) exitWith {};
+if (life_var_isBusy) exitWith {};
 if ((damage player) < 0.01) exitWith {hint localize "STR_NOTF_HS_FullHealth"};
 _healCost = LIFE_SETTINGS(getNumber,"hospital_heal_fee");
 if (life_var_cash < _healCost) exitWith {hint format [localize "STR_NOTF_HS_NoCash",[_healCost] call life_fnc_numberText];};
 
-life_action_inUse = true;
+life_var_isBusy = true;
 _action = [
     format [localize "STR_NOTF_HS_PopUp",[_healCost] call life_fnc_numberText],
     localize "STR_NOTF_HS_TITLE",
@@ -27,13 +27,13 @@ if (_action) then {
     titleText[localize "STR_NOTF_HS_Healing","PLAIN"];
     closeDialog 0;
     uiSleep 8;
-    if (player distance (_this select 0) > 5) exitWith {life_action_inUse = false; titleText[localize "STR_NOTF_HS_ToFar","PLAIN"]};
+    if (player distance (_this select 0) > 5) exitWith {life_var_isBusy = false; titleText[localize "STR_NOTF_HS_ToFar","PLAIN"]};
     titleText[localize "STR_NOTF_HS_Healed","PLAIN"];
     player setDamage 0;
     life_var_cash = life_var_cash - _healCost;
-    life_action_inUse = false;
+    life_var_isBusy = false;
 } else {
     hint localize "STR_NOTF_ActionCancel";
     closeDialog 0;
-    life_action_inUse = false;
+    life_var_isBusy = false;
 };

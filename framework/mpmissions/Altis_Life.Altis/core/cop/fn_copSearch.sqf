@@ -6,7 +6,7 @@
     Description:
     Returns information on the search.
 */
-life_action_inUse = false;
+life_var_isBusy = false;
 private ["_license","_guns","_gun"];
 params [
     ["_civ",objNull,[objNull]],

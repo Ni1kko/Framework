@@ -34,10 +34,10 @@ life_is_alive = false;
 
 [_unit] call life_fnc_dropItems;
 
-life_action_inUse = false;
-life_hunger = 100;
-life_thirst = 100;
-life_carryWeight = 0;
+life_var_isBusy = false;
+life_var_hunger = 100;
+life_var_thirst = 100;
+life_var_carryWeight = 0;
 life_var_cash = 0;
 
 //close the esc dialog
@@ -83,7 +83,7 @@ if (LIFE_SETTINGS(getNumber,"drop_weapons_onDeath") isEqualTo 0) then {
 if (side _killer isEqualTo west && !(playerSide isEqualTo west)) then {
     life_copRecieve = _killer;
     //Did I rob the federal reserve?
-    if (!life_use_atm && {life_var_cash > 0}) then {
+    if (!life_var_ATMEnabled && {life_var_cash > 0}) then {
         [format [localize "STR_Cop_RobberDead",[life_var_cash] call life_fnc_numberText]] remoteExecCall ["life_fnc_broadcast",RCLIENT];
         life_var_cash = 0;
     };

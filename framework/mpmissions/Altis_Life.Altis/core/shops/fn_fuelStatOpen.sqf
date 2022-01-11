@@ -8,7 +8,7 @@
     Open dialog Pump.
 */
 
-if (dialog || life_action_inUse || life_is_processing) exitWith {};
+if (dialog || life_var_isBusy || life_is_processing) exitWith {};
 
 private _fuelStations = nearestObjects [player, ["Land_fs_feed_F", "Land_FuelStation_01_pump_F", "Land_FuelStation_02_pump_F"], 10];
 if (_fuelstations isEqualTo []) exitWith {};
@@ -17,7 +17,7 @@ private _vehicleList = nearestObjects [player, ["Car","Air"], 10];
 if (_vehicleList isEqualTo []) exitWith {hint localize "STR_NOTF_VehicleNear"};
 
 createDialog "Life_FuelStat";
-life_action_inUse = true;
+life_var_isBusy = true;
 
 private _fuelCost = LIFE_SETTINGS(getNumber,"fuel_cost");
 uiNamespace setVariable ["fuel_cost",_fuelCost];

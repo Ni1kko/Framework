@@ -332,7 +332,6 @@ class CfgFunctions {
             class medicSiren {};
             class medicSirenLights {};
             class onPlayerKilled {};
-            class onPlayerRespawn {};
             class requestMedic {};
             class respawned {};
             class revived {};

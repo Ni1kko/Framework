@@ -12,7 +12,7 @@ life_interrupted = false;
 if (isNull _veh) exitWith {};
 if ((_veh isKindOf "Car") || (_veh isKindOf "Ship") || (_veh isKindOf "Air")) then {
     if (life_inv_toolkit > 0) then {
-        life_action_inUse = true;
+        life_var_isBusy = true;
         _displayName = FETCH_CONFIG2(getText,"CfgVehicles",(typeOf _veh),"displayName");
         _upp = format [localize "STR_NOTF_Repairing",_displayName];
 
@@ -43,10 +43,10 @@ if ((_veh isKindOf "Car") || (_veh isKindOf "Ship") || (_veh isKindOf "Air")) th
             if (life_interrupted) exitWith {};
         };
 
-        life_action_inUse = false;
+        life_var_isBusy = false;
         "progressBar" cutText ["","PLAIN"];
         player playActionNow "stop";
-        if (life_interrupted) exitWith {life_interrupted = false; titleText[localize "STR_NOTF_ActionCancel","PLAIN"]; life_action_inUse = false;};
+        if (life_interrupted) exitWith {life_interrupted = false; titleText[localize "STR_NOTF_ActionCancel","PLAIN"]; life_var_isBusy = false;};
         if !(isNull objectParent player) exitWith {titleText[localize "STR_NOTF_ActionInVehicle","PLAIN"];};
 
         _sideRepairArray = LIFE_SETTINGS(getArray,"vehicle_infiniteRepair");

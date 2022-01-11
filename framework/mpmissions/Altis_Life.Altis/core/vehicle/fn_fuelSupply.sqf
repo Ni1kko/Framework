@@ -15,14 +15,14 @@ closeDialog 0;
 if (_vehicle getVariable ["fuelTankWork",false]) exitWith {titleText[localize "STR_FuelTank_InUse","PLAIN"]};
 if !(local _vehicle) exitWith {titleText[localize "STR_MISC_VehLocal","PLAIN"]};
 
-life_action_inUse = true;
+life_var_isBusy = true;
 
 private _vehTank = _vehicle getVariable ["fuelTank",[]];
 
 if (_vehTank isEqualTo []) exitWith {
     _vehicle setVariable ["fuelTank",[(getNumber(missionConfigFile >> "LifeCfgVehicles" >> (typeOf _vehicle) >> "vFuelSpace")),0],true];
     titleText[localize "STR_FuelTank_Empty","PLAIN"];
-    life_action_inUse = false;
+    life_var_isBusy = false;
 };
 
 _vehTank params [
@@ -31,11 +31,11 @@ _vehTank params [
 ];
 if (_fuelState isEqualTo 0) exitWith {
     titleText[localize "STR_FuelTank_Empty","PLAIN"];
-    life_action_inUse = false;
+    life_var_isBusy = false;
 };
 
 private _trucks = (nearestObjects [_vehicle, ["C_Van_01_fuel_F","I_Truck_02_fuel_F","B_Truck_01_fuel_F"], 100]) findIf {_x getVariable ["fuelTankWork",false]};
-if !(_trucks isEqualTo -1) exitWith {titleText[localize "STR_FuelTank_AnotherInUse","PLAIN"]; life_action_inUse = false};
+if !(_trucks isEqualTo -1) exitWith {titleText[localize "STR_FuelTank_AnotherInUse","PLAIN"]; life_var_isBusy = false};
 
 private _fuelFeedState = 0;
 private _random = floor((random 11000) + 1500);
@@ -56,14 +56,14 @@ private _random = floor((random 11000) + 1500);
         };
     };   
 } forEach (nearestObjects [_vehicle, ["Land_FuelStation_Feed_F","Land_fs_feed_F"], 100]);
-if (_fuelFeedState isEqualTo 0) exitWith {titleText [localize "STR_FuelTank_FeedFull","PLAIN"]; life_action_inUse = false;};
+if (_fuelFeedState isEqualTo 0) exitWith {titleText [localize "STR_FuelTank_FeedFull","PLAIN"]; life_var_isBusy = false;};
 
 private _shortest = 100000;
 {
     private _distance = _vehicle distance (getMarkerPos _x);
     if (_distance < _shortest) then {_shortest = _distance};
 } forEach ["fuel_storage_1","fuel_storage_2"];
-if (_shortest < 1000) exitWith {titleText [localize "STR_FuelTank_PipeLine","PLAIN"]; life_action_inUse = false;};
+if (_shortest < 1000) exitWith {titleText [localize "STR_FuelTank_PipeLine","PLAIN"]; life_var_isBusy = false;};
 
 private _pricem = getNumber(missionConfigFile >> "Life_Settings" >> "fuelTank_winMultiplier");
 private _price = floor((((floor(_shortest / 100) * 100) / 1337) * _pricem) * 100) / 100;
@@ -71,7 +71,7 @@ private _win = 0;
 
 _vehicle setVariable ["fuelTankWork",true,true];
 _vehicle remoteExec ["life_fnc_soundDevice",-2];
-life_action_inUse = false;
+life_var_isBusy = false;
 
 disableSerialization;
 "progressBar" cutRsc ["life_progress","PLAIN"];

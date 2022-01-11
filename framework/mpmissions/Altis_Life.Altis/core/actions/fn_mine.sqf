@@ -8,7 +8,7 @@
         Same as fn_gather,but it allows use of probabilities for mining.
     */
 private ["_maxGather", "_resource", "_amount", "_requiredItem", "_mined"];
-if (life_action_inUse) exitWith {};
+if (life_var_isBusy) exitWith {};
 if !(isNull objectParent player) exitWith {};
 if (player getVariable "restrained") exitWith {
     hint localize "STR_NOTF_isrestrained";
@@ -17,7 +17,7 @@ _exit = false;
 if (player getVariable "playerSurrender") exitWith {
     hint localize "STR_NOTF_surrender";
 };
-life_action_inUse = true;
+life_var_isBusy = true;
 _zone = "";
 _requiredItem = "";
 
@@ -60,7 +60,7 @@ for "_i" from 0 to count(_resourceCfg)-1 do {
 };
 
 if (_zone isEqualTo "") exitWith {
-    life_action_inUse = false;
+    life_var_isBusy = false;
 };
 
 if (_requiredItem != "") then {
@@ -72,20 +72,20 @@ if (_requiredItem != "") then {
                 titleText[(localize "STR_NOTF_Pickaxe"), "PLAIN"];
             };
         };
-        life_action_inUse = false;
+        life_var_isBusy = false;
         _exit = true;
   };
 };
 
 if (_exit) exitWith {
-    life_action_inUse = false;
+    life_var_isBusy = false;
 };
 
 _amount = round(random(_maxGather)) + 1;
-_diff = [_mined, _amount, life_carryWeight, life_maxWeight] call life_fnc_calWeightDiff;
+_diff = [_mined, _amount, life_var_carryWeight, life_maxWeight] call life_fnc_calWeightDiff;
 if (_diff isEqualTo 0) exitWith {
     hint localize "STR_NOTF_InvFull";
-    life_action_inUse = false;
+    life_var_isBusy = false;
 };
 
 [player,"mining",35,1] remoteExecCall ["life_fnc_say3D",RCLIENT];
@@ -104,4 +104,4 @@ if (([true, _mined, _diff] call life_fnc_handleInv)) then {
 };
 
 sleep 2.5;
-life_action_inUse = false;
+life_var_isBusy = false;

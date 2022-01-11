@@ -42,7 +42,7 @@ for "_i" from 0 to 1 step 0 do {
     private _saveButton = CONTROL(49,103);
     _saveButton ctrlSetText "";
 
-    _respawnButton buttonSetAction "player setDamage 1; life_respawned = true;";
+    _respawnButton buttonSetAction "player setDamage 1; life_var_respawned = true;";
     
     //Extras
     if (LIFE_SETTINGS(getNumber,"escapeMenu_displayExtras") isEqualTo 1) then {

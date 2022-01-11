@@ -13,7 +13,7 @@ _val = _this select 1;
 _item = _this select 2;
 _from = _this select 3;
 
-_diff = [_item,(parseNumber _val),life_carryWeight,life_maxWeight] call life_fnc_calWeightDiff;
+_diff = [_item,(parseNumber _val),life_var_carryWeight,life_maxWeight] call life_fnc_calWeightDiff;
 
 if (!(_diff isEqualTo (parseNumber _val))) then {
     if ([true,_item,_diff] call life_fnc_handleInv) then {

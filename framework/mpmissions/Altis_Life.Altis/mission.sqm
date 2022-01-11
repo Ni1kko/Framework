@@ -19959,7 +19959,7 @@ class Mission
 			class Attributes
 			{
 				skill=0.60000002;
-				init="this allowDamage false; this enableSimulation false; this addAction[localize""STR_Process_Marijuana"",life_fnc_processAction,""marijuana"",0,false,false,"""",'  _b = (nearestObjects[getPosATL player,[""Land_u_Barracks_V2_F"",""Land_i_Barracks_V2_F""],25]) select 0;  life_inv_cannabis > 0 && !life_is_processing && !life_action_inUse && !isNil {_b getVariable ""gangOwner""} && {(_b getVariable ""gangOwner"") == (group player)} && playerSide isEqualTo civilian ']; this setVariable [""realname"",""Marijuana Processing""];";
+				init="this allowDamage false; this enableSimulation false; this addAction[localize""STR_Process_Marijuana"",life_fnc_processAction,""marijuana"",0,false,false,"""",'  _b = (nearestObjects[getPosATL player,[""Land_u_Barracks_V2_F"",""Land_i_Barracks_V2_F""],25]) select 0;  life_inv_cannabis > 0 && !life_is_processing && !life_var_isBusy && !isNil {_b getVariable ""gangOwner""} && {(_b getVariable ""gangOwner"") == (group player)} && playerSide isEqualTo civilian ']; this setVariable [""realname"",""Marijuana Processing""];";
 				name="mari_processor";
 			};
 			id=639;
@@ -21199,7 +21199,7 @@ class Mission
 			class Attributes
 			{
 				skill=0.60000002;
-				init="this allowDamage false; this enableSimulation false; this addAction[localize""STR_Process_Cocaine"",life_fnc_processAction,""cocaine"",0,false,false,"""",' _b = (nearestObjects[getPosATL player,[""Land_u_Barracks_V2_F"",""Land_i_Barracks_V2_F""],25]) select 0; life_inv_cocaineUnprocessed > 0 && !life_is_processing && !life_action_inUse && !isNil {_b getVariable ""gangOwner""} && {(_b getVariable ""gangOwner"") == (group player)} && playerSide isEqualTo civilian ']; this setVariable [""realname"",""Cocaine Processing""];";
+				init="this allowDamage false; this enableSimulation false; this addAction[localize""STR_Process_Cocaine"",life_fnc_processAction,""cocaine"",0,false,false,"""",' _b = (nearestObjects[getPosATL player,[""Land_u_Barracks_V2_F"",""Land_i_Barracks_V2_F""],25]) select 0; life_inv_cocaineUnprocessed > 0 && !life_is_processing && !life_var_isBusy && !isNil {_b getVariable ""gangOwner""} && {(_b getVariable ""gangOwner"") == (group player)} && playerSide isEqualTo civilian ']; this setVariable [""realname"",""Cocaine Processing""];";
 				name="coke_processor";
 			};
 			id=669;
@@ -22438,7 +22438,7 @@ class Mission
 			class Attributes
 			{
 				skill=0.60000002;
-				init="this allowDamage false; this enableSimulation false; this addAction[localize""STR_Process_Heroin"",life_fnc_processAction,""heroin"",0,false,false,"""",' _b = (nearestObjects[getPosATL player,[""Land_u_Barracks_V2_F"",""Land_i_Barracks_V2_F""],25]) select 0; life_inv_heroinUnprocessed > 0 && !life_is_processing && !life_action_inUse && !isNil {_b getVariable ""gangOwner""} && {(_b getVariable ""gangOwner"") == (group player)} && playerSide isEqualTo civilian ']; this setVariable [""realname"",""Heroin Processing""];";
+				init="this allowDamage false; this enableSimulation false; this addAction[localize""STR_Process_Heroin"",life_fnc_processAction,""heroin"",0,false,false,"""",' _b = (nearestObjects[getPosATL player,[""Land_u_Barracks_V2_F"",""Land_i_Barracks_V2_F""],25]) select 0; life_inv_heroinUnprocessed > 0 && !life_is_processing && !life_var_isBusy && !isNil {_b getVariable ""gangOwner""} && {(_b getVariable ""gangOwner"") == (group player)} && playerSide isEqualTo civilian ']; this setVariable [""realname"",""Heroin Processing""];";
 				name="heroin_processor";
 			};
 			id=699;
@@ -30577,7 +30577,7 @@ class Mission
 					class Attributes
 					{
 						skill=0.60000002;
-						init="this enableSimulation false; this allowDamage false; this addAction[localize""STR_Process_Oil"",life_fnc_processAction,""oil"",0,false,false,"""",' life_inv_oilUnprocessed > 0 && !life_is_processing && !life_action_inUse',5]; this addAction[format [""%1 ($%2)"",localize (getText(missionConfigFile >> ""Licenses"" >> ""oil"" >> ""displayName"")), [(getNumber(missionConfigFile >> ""Licenses"" >> ""oil"" >> ""price""))] call life_fnc_numberText],life_fnc_buyLicense,""oil"",0,false,false,"""",' !license_civ_oil && playerSide isEqualTo civilian ',5];";
+						init="this enableSimulation false; this allowDamage false; this addAction[localize""STR_Process_Oil"",life_fnc_processAction,""oil"",0,false,false,"""",' life_inv_oilUnprocessed > 0 && !life_is_processing && !life_var_isBusy',5]; this addAction[format [""%1 ($%2)"",localize (getText(missionConfigFile >> ""Licenses"" >> ""oil"" >> ""displayName"")), [(getNumber(missionConfigFile >> ""Licenses"" >> ""oil"" >> ""price""))] call life_fnc_numberText],life_fnc_buyLicense,""oil"",0,false,false,"""",' !license_civ_oil && playerSide isEqualTo civilian ',5];";
 						disableSimulation=1;
 					};
 					id=953;
@@ -30902,7 +30902,7 @@ class Mission
 					class Attributes
 					{
 						skill=0.60000002;
-						init="this enableSimulation false; this allowDamage false; this addAction[localize""STR_Process_Iron"",life_fnc_processAction,""iron"",0,false,false,"""",' life_inv_ironUnrefined > 0 && !life_is_processing && !life_action_inUse',5]; this addAction[format [""%1 ($%2)"",localize (getText(missionConfigFile >> ""Licenses"" >> ""iron"" >> ""displayName"")), [(getNumber(missionConfigFile >> ""Licenses"" >> ""iron"" >> ""price""))] call life_fnc_numberText],life_fnc_buyLicense,""iron"",0,false,false,"""",' !license_civ_iron && playerSide isEqualTo civilian ',5];";
+						init="this enableSimulation false; this allowDamage false; this addAction[localize""STR_Process_Iron"",life_fnc_processAction,""iron"",0,false,false,"""",' life_inv_ironUnrefined > 0 && !life_is_processing && !life_var_isBusy',5]; this addAction[format [""%1 ($%2)"",localize (getText(missionConfigFile >> ""Licenses"" >> ""iron"" >> ""displayName"")), [(getNumber(missionConfigFile >> ""Licenses"" >> ""iron"" >> ""price""))] call life_fnc_numberText],life_fnc_buyLicense,""iron"",0,false,false,"""",' !license_civ_iron && playerSide isEqualTo civilian ',5];";
 						disableSimulation=1;
 					};
 					id=957;
@@ -30982,7 +30982,7 @@ class Mission
 					class Attributes
 					{
 						skill=0.60000002;
-						init="removeAllWeapons this; this allowDamage false; this enableSimulation false; this addAction[localize""STR_MAR_Drug_Dealer"",life_fnc_virt_menu,""drugdealer"",0,false,false,"""",' isNull objectParent player && player distance _target < 5 && playerSide isEqualTo civilian ',5]; this addAction[localize""STR_MAR_Question_Dealer"",life_fnc_questionDealer,"""",0,false,false,"""",' isNull objectParent player && player distance _target < 5 && playerSide isEqualTo west && !life_action_inUse ',5];";
+						init="removeAllWeapons this; this allowDamage false; this enableSimulation false; this addAction[localize""STR_MAR_Drug_Dealer"",life_fnc_virt_menu,""drugdealer"",0,false,false,"""",' isNull objectParent player && player distance _target < 5 && playerSide isEqualTo civilian ',5]; this addAction[localize""STR_MAR_Question_Dealer"",life_fnc_questionDealer,"""",0,false,false,"""",' isNull objectParent player && player distance _target < 5 && playerSide isEqualTo west && !life_var_isBusy ',5];";
 						name="Dealer_1";
 						disableSimulation=1;
 					};
@@ -31369,7 +31369,7 @@ class Mission
 					class Attributes
 					{
 						skill=0.60000002;
-						init="this enableSimulation false; this allowDamage false; this addAction[localize""STR_Process_Marijuana"",life_fnc_processAction,""marijuana"",0,false,false,"""",' life_inv_cannabis > 0 && !life_is_processing && !life_action_inUse',5]; this addAction[format [""%1 ($%2)"",localize (getText(missionConfigFile >> ""Licenses"" >> ""marijuana"" >> ""displayName"")), [(getNumber(missionConfigFile >> ""Licenses"" >> ""marijuana"" >> ""price""))] call life_fnc_numberText],life_fnc_buyLicense,""marijuana"",0,false,false,"""",' !license_civ_marijuana && playerSide isEqualTo civilian ',5];";
+						init="this enableSimulation false; this allowDamage false; this addAction[localize""STR_Process_Marijuana"",life_fnc_processAction,""marijuana"",0,false,false,"""",' life_inv_cannabis > 0 && !life_is_processing && !life_var_isBusy',5]; this addAction[format [""%1 ($%2)"",localize (getText(missionConfigFile >> ""Licenses"" >> ""marijuana"" >> ""displayName"")), [(getNumber(missionConfigFile >> ""Licenses"" >> ""marijuana"" >> ""price""))] call life_fnc_numberText],life_fnc_buyLicense,""marijuana"",0,false,false,"""",' !license_civ_marijuana && playerSide isEqualTo civilian ',5];";
 						disableSimulation=1;
 					};
 					id=963;
@@ -31691,7 +31691,7 @@ class Mission
 					class Attributes
 					{
 						skill=0.60000002;
-						init="removeAllWeapons this; this allowDamage false; this enableSimulation false; this addAction[localize""STR_MAR_Drug_Dealer"",life_fnc_virt_menu,""drugdealer"",0,false,false,"""",' isNull objectParent player && player distance _target < 5 && playerSide isEqualTo civilian ',5]; this addAction[localize""STR_MAR_Question_Dealer"",life_fnc_questionDealer,"""",0,false,false,"""",' isNull objectParent player && player distance _target < 5 && playerSide isEqualTo west && !life_action_inUse ',5];";
+						init="removeAllWeapons this; this allowDamage false; this enableSimulation false; this addAction[localize""STR_MAR_Drug_Dealer"",life_fnc_virt_menu,""drugdealer"",0,false,false,"""",' isNull objectParent player && player distance _target < 5 && playerSide isEqualTo civilian ',5]; this addAction[localize""STR_MAR_Question_Dealer"",life_fnc_questionDealer,"""",0,false,false,"""",' isNull objectParent player && player distance _target < 5 && playerSide isEqualTo west && !life_var_isBusy ',5];";
 						name="Dealer_2";
 						disableSimulation=1;
 					};
@@ -34371,7 +34371,7 @@ class Mission
 					class Attributes
 					{
 						skill=0.60000002;
-						init="removeAllWeapons this; this allowDamage false; this enableSimulation false; this addAction[localize""STR_MAR_Drug_Dealer"",life_fnc_virt_menu,""drugdealer"",0,false,false,"""",' isNull objectParent player && player distance _target < 5 && playerSide isEqualTo civilian ',5]; this addAction[localize""STR_MAR_Question_Dealer"",life_fnc_questionDealer,"""",0,false,false,"""",' isNull objectParent player && player distance _target < 5 && playerSide isEqualTo west && !life_action_inUse ',5];";
+						init="removeAllWeapons this; this allowDamage false; this enableSimulation false; this addAction[localize""STR_MAR_Drug_Dealer"",life_fnc_virt_menu,""drugdealer"",0,false,false,"""",' isNull objectParent player && player distance _target < 5 && playerSide isEqualTo civilian ',5]; this addAction[localize""STR_MAR_Question_Dealer"",life_fnc_questionDealer,"""",0,false,false,"""",' isNull objectParent player && player distance _target < 5 && playerSide isEqualTo west && !life_var_isBusy ',5];";
 						name="Dealer_3";
 						disableSimulation=1;
 					};
@@ -34900,7 +34900,7 @@ class Mission
 					class Attributes
 					{
 						skill=0.60000002;
-						init="this enableSimulation false; this allowDamage false; this addAction[localize""STR_Process_Diamond"",life_fnc_processAction,""diamond"",0,false,false,"""",' life_inv_diamondUncut > 0 && !life_is_processing && !life_action_inUse',5]; this addAction[format [""%1 ($%2)"",localize (getText(missionConfigFile >> ""Licenses"" >> ""diamond"" >> ""displayName"")), [(getNumber(missionConfigFile >> ""Licenses"" >> ""diamond"" >> ""price""))] call life_fnc_numberText],life_fnc_buyLicense,""diamond"",0,false,false,"""",' !license_civ_diamond && playerSide isEqualTo civilian ',5];";
+						init="this enableSimulation false; this allowDamage false; this addAction[localize""STR_Process_Diamond"",life_fnc_processAction,""diamond"",0,false,false,"""",' life_inv_diamondUncut > 0 && !life_is_processing && !life_var_isBusy',5]; this addAction[format [""%1 ($%2)"",localize (getText(missionConfigFile >> ""Licenses"" >> ""diamond"" >> ""displayName"")), [(getNumber(missionConfigFile >> ""Licenses"" >> ""diamond"" >> ""price""))] call life_fnc_numberText],life_fnc_buyLicense,""diamond"",0,false,false,"""",' !license_civ_diamond && playerSide isEqualTo civilian ',5];";
 						disableSimulation=1;
 					};
 					id=1010;
@@ -35141,7 +35141,7 @@ class Mission
 					class Attributes
 					{
 						skill=0.60000002;
-						init="this enableSimulation false; this allowDamage false; this addAction[localize""STR_Process_Copper"",life_fnc_processAction,""copper"",0,false,false,"""",' life_inv_copperUnrefined > 0 && !life_is_processing && !life_action_inUse',5]; this addAction[format [""%1 ($%2)"",localize (getText(missionConfigFile >> ""Licenses"" >> ""copper"" >> ""displayName"")), [(getNumber(missionConfigFile >> ""Licenses"" >> ""copper"" >> ""price""))] call life_fnc_numberText],life_fnc_buyLicense,""copper"",0,false,false,"""",' !license_civ_copper && playerSide isEqualTo civilian ',5];";
+						init="this enableSimulation false; this allowDamage false; this addAction[localize""STR_Process_Copper"",life_fnc_processAction,""copper"",0,false,false,"""",' life_inv_copperUnrefined > 0 && !life_is_processing && !life_var_isBusy',5]; this addAction[format [""%1 ($%2)"",localize (getText(missionConfigFile >> ""Licenses"" >> ""copper"" >> ""displayName"")), [(getNumber(missionConfigFile >> ""Licenses"" >> ""copper"" >> ""price""))] call life_fnc_numberText],life_fnc_buyLicense,""copper"",0,false,false,"""",' !license_civ_copper && playerSide isEqualTo civilian ',5];";
 						disableSimulation=1;
 					};
 					id=1013;
@@ -35382,7 +35382,7 @@ class Mission
 					class Attributes
 					{
 						skill=0.60000002;
-						init="this enableSimulation false; this allowDamage false; this addAction[localize""STR_MAR_Process_Sand"",life_fnc_processAction,""sand"",0,false,false,"""",' life_inv_sand > 0 && !life_is_processing && !life_action_inUse',5]; this addAction[format [""%1 ($%2)"",localize (getText(missionConfigFile >> ""Licenses"" >> ""sand"" >> ""displayName"")), [(getNumber(missionConfigFile >> ""Licenses"" >> ""sand"" >> ""price""))] call life_fnc_numberText],life_fnc_buyLicense,""sand"",0,false,false,"""",' !license_civ_sand && playerSide isEqualTo civilian ',5];";
+						init="this enableSimulation false; this allowDamage false; this addAction[localize""STR_MAR_Process_Sand"",life_fnc_processAction,""sand"",0,false,false,"""",' life_inv_sand > 0 && !life_is_processing && !life_var_isBusy',5]; this addAction[format [""%1 ($%2)"",localize (getText(missionConfigFile >> ""Licenses"" >> ""sand"" >> ""displayName"")), [(getNumber(missionConfigFile >> ""Licenses"" >> ""sand"" >> ""price""))] call life_fnc_numberText],life_fnc_buyLicense,""sand"",0,false,false,"""",' !license_civ_sand && playerSide isEqualTo civilian ',5];";
 						disableSimulation=1;
 					};
 					id=1016;
@@ -35586,7 +35586,7 @@ class Mission
 					class Attributes
 					{
 						skill=0.60000002;
-						init="this enableSimulation false; this allowDamage false; this addAction[localize""STR_Process_Salt"",life_fnc_processAction,""salt"",0,false,false,"""",' life_inv_saltUnrefined > 0 && !life_is_processing && !life_action_inUse',5]; this addAction[format [""%1 ($%2)"",localize (getText(missionConfigFile >> ""Licenses"" >> ""salt"" >> ""displayName"")), [(getNumber(missionConfigFile >> ""Licenses"" >> ""salt"" >> ""price""))] call life_fnc_numberText],life_fnc_buyLicense,""salt"",0,false,false,"""",' !license_civ_salt && playerSide isEqualTo civilian ',5];";
+						init="this enableSimulation false; this allowDamage false; this addAction[localize""STR_Process_Salt"",life_fnc_processAction,""salt"",0,false,false,"""",' life_inv_saltUnrefined > 0 && !life_is_processing && !life_var_isBusy',5]; this addAction[format [""%1 ($%2)"",localize (getText(missionConfigFile >> ""Licenses"" >> ""salt"" >> ""displayName"")), [(getNumber(missionConfigFile >> ""Licenses"" >> ""salt"" >> ""price""))] call life_fnc_numberText],life_fnc_buyLicense,""salt"",0,false,false,"""",' !license_civ_salt && playerSide isEqualTo civilian ',5];";
 						disableSimulation=1;
 					};
 					id=1019;
@@ -36032,7 +36032,7 @@ class Mission
 					class Attributes
 					{
 						skill=0.60000002;
-						init="this enableSimulation false; this allowDamage false; this addAction[localize""STR_Process_Heroin"",life_fnc_processAction,""heroin"",0,false,false,"""",' life_inv_heroinUnprocessed > 0 && !life_is_processing && !life_action_inUse',5]; this addAction[format [""%1 ($%2)"",localize (getText(missionConfigFile >> ""Licenses"" >> ""heroin"" >> ""displayName"")), [(getNumber(missionConfigFile >> ""Licenses"" >> ""heroin"" >> ""price""))] call life_fnc_numberText],life_fnc_buyLicense,""heroin"",0,false,false,"""",' !license_civ_heroin && playerSide isEqualTo civilian ',5];";
+						init="this enableSimulation false; this allowDamage false; this addAction[localize""STR_Process_Heroin"",life_fnc_processAction,""heroin"",0,false,false,"""",' life_inv_heroinUnprocessed > 0 && !life_is_processing && !life_var_isBusy',5]; this addAction[format [""%1 ($%2)"",localize (getText(missionConfigFile >> ""Licenses"" >> ""heroin"" >> ""displayName"")), [(getNumber(missionConfigFile >> ""Licenses"" >> ""heroin"" >> ""price""))] call life_fnc_numberText],life_fnc_buyLicense,""heroin"",0,false,false,"""",' !license_civ_heroin && playerSide isEqualTo civilian ',5];";
 						disableSimulation=1;
 					};
 					id=1025;
@@ -36558,7 +36558,7 @@ class Mission
 					class Attributes
 					{
 						skill=0.60000002;
-						init="this enableSimulation false; this allowDamage false; this addAction[localize""STR_Process_Cocaine"",life_fnc_processAction,""cocaine"",0,false,false,"""",' life_inv_cocaineUnprocessed > 0 && !life_is_processing && !life_action_inUse',5]; this addAction[format [""%1 ($%2)"",localize (getText(missionConfigFile >> ""Licenses"" >> ""cocaine"" >> ""displayName"")), [(getNumber(missionConfigFile >> ""Licenses"" >> ""cocaine"" >> ""price""))] call life_fnc_numberText],life_fnc_buyLicense,""cocaine"",0,false,false,"""",' !license_civ_cocaine && playerSide isEqualTo civilian ',5];";
+						init="this enableSimulation false; this allowDamage false; this addAction[localize""STR_Process_Cocaine"",life_fnc_processAction,""cocaine"",0,false,false,"""",' life_inv_cocaineUnprocessed > 0 && !life_is_processing && !life_var_isBusy',5]; this addAction[format [""%1 ($%2)"",localize (getText(missionConfigFile >> ""Licenses"" >> ""cocaine"" >> ""displayName"")), [(getNumber(missionConfigFile >> ""Licenses"" >> ""cocaine"" >> ""price""))] call life_fnc_numberText],life_fnc_buyLicense,""cocaine"",0,false,false,"""",' !license_civ_cocaine && playerSide isEqualTo civilian ',5];";
 						disableSimulation=1;
 					};
 					id=1032;
@@ -36780,7 +36780,7 @@ class Mission
 					class Attributes
 					{
 						skill=0.60000002;
-						init="this enableSimulation false; this allowDamage false; this addAction[localize""STR_MAR_Process_Rock"",life_fnc_processAction,""cement"",0,false,false,"""",' life_inv_rock > 0 && !life_is_processing && !life_action_inUse',5]; this addAction[format [""%1 ($%2)"",localize (getText(missionConfigFile >> ""Licenses"" >> ""cement"" >> ""displayName"")), [(getNumber(missionConfigFile >> ""Licenses"" >> ""cement"" >> ""price""))] call life_fnc_numberText],life_fnc_buyLicense,""cement"",0,false,false,"""",' !license_civ_cement && playerSide isEqualTo civilian ',5];";
+						init="this enableSimulation false; this allowDamage false; this addAction[localize""STR_MAR_Process_Rock"",life_fnc_processAction,""cement"",0,false,false,"""",' life_inv_rock > 0 && !life_is_processing && !life_var_isBusy',5]; this addAction[format [""%1 ($%2)"",localize (getText(missionConfigFile >> ""Licenses"" >> ""cement"" >> ""displayName"")), [(getNumber(missionConfigFile >> ""Licenses"" >> ""cement"" >> ""price""))] call life_fnc_numberText],life_fnc_buyLicense,""cement"",0,false,false,"""",' !license_civ_cement && playerSide isEqualTo civilian ',5];";
 						disableSimulation=1;
 					};
 					id=1035;

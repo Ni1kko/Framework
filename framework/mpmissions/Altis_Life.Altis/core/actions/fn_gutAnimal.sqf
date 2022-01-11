@@ -12,7 +12,7 @@ if (isNull _animalCorpse) exitWith {}; //Object passed is null?
 
 life_interrupted = false;
 if (player distance _animalCorpse > 3.5) exitWith {}; //WTF need check with nearest objects I love Arma
-life_action_inUse = true;
+life_var_isBusy = true;
 
 switch (typeOf _animalCorpse) do {
     case "Hen_random_F": {_displayName = localize "STR_ANIM_chicken"; _item = "hen_raw";};
@@ -23,7 +23,7 @@ switch (typeOf _animalCorpse) do {
     default {_displayName = ""; _item = "";};
 };
 
-if (_displayName isEqualTo "") exitWith {life_action_inUse = false;};
+if (_displayName isEqualTo "") exitWith {life_var_isBusy = false;};
 
 _upp = format [localize "STR_NOTF_Gutting",_displayName];
 //Setup our progress bar.
@@ -53,11 +53,11 @@ for "_i" from 0 to 1 step 0 do {
     if (life_interrupted) exitWith {};
 };
 
-life_action_inUse = false;
+life_var_isBusy = false;
 "progressBar" cutText ["","PLAIN"];
 player playActionNow "stop";
-if (isNull _animalCorpse) exitWith {life_action_inUse = false;};
-if (life_interrupted) exitWith {life_interrupted = false; titleText[localize "STR_NOTF_ActionCancel","PLAIN"]; life_action_inUse = false;};
+if (isNull _animalCorpse) exitWith {life_var_isBusy = false;};
+if (life_interrupted) exitWith {life_interrupted = false; titleText[localize "STR_NOTF_ActionCancel","PLAIN"]; life_var_isBusy = false;};
 if !(isNull objectParent player) exitWith {titleText[localize "STR_NOTF_ActionInVehicle","PLAIN"];};
 
 if ([true,_item,1] call life_fnc_handleInv) then {

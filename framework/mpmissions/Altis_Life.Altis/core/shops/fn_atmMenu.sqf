@@ -8,7 +8,7 @@
 */
 private ["_units","_type"];
 
-if (!life_use_atm) exitWith {
+if (!life_var_ATMEnabled) exitWith {
     hint format [localize "STR_Shop_ATMRobbed",(LIFE_SETTINGS(getNumber,"noatm_timer"))];
 };
 

@@ -25,7 +25,7 @@ _robber = false;
     };
 } forEach ("getNumber(_x >> 'illegal') isEqualTo 1" configClasses (missionConfigFile >> "VirtualItems"));
 
-if (!life_use_atm) then  {
+if (!life_var_ATMEnabled) then  {
     life_var_cash = 0;
     _robber = true;
 };

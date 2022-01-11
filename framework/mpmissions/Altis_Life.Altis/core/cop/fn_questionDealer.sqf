@@ -9,7 +9,7 @@
 private ["_sellers","_crimes","_names"];
 _sellers = (_this select 0) getVariable ["sellers",[]];
 if (count _sellers isEqualTo 0) exitWith {hint localize "STR_Cop_DealerQuestion"}; //No data.
-life_action_inUse = true;
+life_var_isBusy = true;
 _crimes = LIFE_SETTINGS(getArray,"crimes");
 
 _names = "";
@@ -30,4 +30,4 @@ _names = "";
 
 hint parseText format [(localize "STR_Cop_DealerMSG")+ "<br/><br/>%1",_names];
 (_this select 0) setVariable ["sellers",[],true];
-life_action_inUse = false;
+life_var_isBusy = false;

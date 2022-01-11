@@ -10,7 +10,7 @@ private "_vault";
 _vault = _this select 0;
 if (!(_vault getVariable ["safe_open",false])) exitWith {hint localize "STR_Cop_VaultLocked"};
 
-life_action_inUse = true;
+life_var_isBusy = true;
 
 //Setup the progress bar
 disableSerialization;
@@ -48,10 +48,10 @@ for "_i" from 0 to 1 step 0 do {
 //Kill the UI display and check for various states
 "progressBar" cutText ["","PLAIN"];
 player playActionNow "stop";
-if (!alive player) exitWith {life_action_inUse = false;};
-if (life_interrupted) exitWith {life_interrupted = false; titleText[localize "STR_NOTF_ActionCancel","PLAIN"]; life_action_inUse = false;};
+if (!alive player) exitWith {life_var_isBusy = false;};
+if (life_interrupted) exitWith {life_interrupted = false; titleText[localize "STR_NOTF_ActionCancel","PLAIN"]; life_var_isBusy = false;};
 
-life_action_inUse = false;
+life_var_isBusy = false;
 
 _vault setVariable ["safe_open",false,true];
 hint localize "STR_Cop_VaultRepaired";

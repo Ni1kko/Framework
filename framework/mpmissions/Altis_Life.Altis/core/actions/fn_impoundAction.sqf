@@ -18,7 +18,7 @@ if (_vehicleData isEqualTo 0) exitWith {deleteVehicle _vehicle}; //Bad vehicle.
 _vehicleName = FETCH_CONFIG2(getText,"CfgVehicles",(typeOf _vehicle),"displayName");
 _price = M_CONFIG(getNumber,"LifeCfgVehicles",(typeOf _vehicle),"price");
 [0,"STR_NOTF_BeingImpounded",true,[((_vehicleData select 0) select 1),_vehicleName]] remoteExecCall ["life_fnc_broadcast",RCLIENT];
-life_action_inUse = true;
+life_var_isBusy = true;
 
 _upp = localize "STR_NOTF_Impounding";
 //Setup our progress bar.
@@ -43,11 +43,11 @@ for "_i" from 0 to 1 step 0 do {
 
 "progressBar" cutText ["","PLAIN"];
 
-if (player distance _vehicle > 10) exitWith {hint localize "STR_NOTF_ImpoundingCancelled"; life_action_inUse = false;};
-if (!alive player) exitWith {life_action_inUse = false;};
+if (player distance _vehicle > 10) exitWith {hint localize "STR_NOTF_ImpoundingCancelled"; life_var_isBusy = false;};
+if (!alive player) exitWith {life_var_isBusy = false;};
 
 if (count crew _vehicle isEqualTo 0) then {
-    if (!(KINDOF_ARRAY(_vehicle,_filters))) exitWith {life_action_inUse = false;};
+    if (!(KINDOF_ARRAY(_vehicle,_filters))) exitWith {life_var_isBusy = false;};
     _type = FETCH_CONFIG2(getText,"CfgVehicles",(typeOf _vehicle),"displayName");
 
     life_impound_inuse = true;
@@ -77,4 +77,4 @@ if (count crew _vehicle isEqualTo 0) then {
     hint localize "STR_NOTF_ImpoundingCancelled";
 };
 
-life_action_inUse = false;
+life_var_isBusy = false;

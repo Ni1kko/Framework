@@ -22,7 +22,7 @@ if (!(_ctrl isEqualTo "goldBar")) exitWith {hint localize "STR_Cop_OnlyGold"};
 if (_num > _safeInfo) exitWith {hint format [localize "STR_Civ_IsntEnoughGold",_num];};
 
 //Secondary checks
-_num = [_ctrl,_num,life_carryWeight,life_maxWeight] call life_fnc_calWeightDiff;
+_num = [_ctrl,_num,life_var_carryWeight,life_maxWeight] call life_fnc_calWeightDiff;
 if (_num isEqualTo 0) exitWith {hint localize "STR_NOTF_InvFull"};
 
 

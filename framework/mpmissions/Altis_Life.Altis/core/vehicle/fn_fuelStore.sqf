@@ -14,7 +14,7 @@ closeDialog 0;
 if (_vehicle getVariable ["fuelTankWork",false]) exitWith {titleText[localize "STR_FuelTank_InUse","PLAIN"]};
 if !(local _vehicle) exitWith {titleText[localize "STR_MISC_VehLocal","PLAIN"]};
 
-life_action_inUse = true;
+life_var_isBusy = true;
 
 (_vehicle getVariable ["fuelTank",[]]) params [
     ["_fuelSpace",(getNumber(missionConfigFile >> "LifeCfgVehicles" >> (typeOf _vehicle) >> "vFuelSpace")),[0]],
@@ -23,7 +23,7 @@ life_action_inUse = true;
 
 _vehicle setVariable ["fuelTankWork",true,true];
 _vehicle remoteExec ["life_fnc_soundDevice",-2];
-life_action_inUse = false;
+life_var_isBusy = false;
 
 disableSerialization;
 "progressBar" cutRsc ["life_progress","PLAIN"];

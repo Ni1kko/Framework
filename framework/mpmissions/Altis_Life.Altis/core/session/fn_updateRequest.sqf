@@ -22,7 +22,7 @@ private _licenses = format ["getText(_x >> 'side') isEqualTo '%1'",_sideflag] co
     life_var_bank,
     (_licenses apply{[LICENSE_VARNAME(configName _x,_sideflag),LICENSE_VALUE(configName _x,_sideflag)]}),
     [life_var_loadout,life_var_vitems],
-    [life_hunger,life_thirst,(damage player)],
+    [life_var_hunger,life_var_thirst,(damage player)],
     life_is_arrested,
     _alive,
     _position

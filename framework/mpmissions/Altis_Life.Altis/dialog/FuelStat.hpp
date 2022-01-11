@@ -4,7 +4,7 @@ class Life_FuelStat {
     movingEnabled = 0;
     enableSimulation = 1;
     onLoad = "ctrlShow [2330,false];";
-    onUnload = "life_action_inUse = false;";
+    onUnload = "life_var_isBusy = false;";
 
     class controlsBackground {
         class Life_RscTitleBackground: Life_RscText    {
@@ -82,7 +82,7 @@ class Life_FuelStat {
         class CloseBtn: Life_RscButtonMenu {
             idc = -1;
             text = "$STR_Global_Close";
-            onButtonClick = "closeDialog 0; life_action_inUse = false;";
+            onButtonClick = "closeDialog 0; life_var_isBusy = false;";
             x = -0.06 + (6.25 / 40) + (1 / 250 / (safezoneW / safezoneH));
             y = 0.9 - (1 / 25);
             w = (6.25 / 40);
