@@ -341,13 +341,18 @@ class CfgFunctions {
 
         class Agony_System {
             file = "core\medical\agony";
-            class addBuff {};
+            //main damage handler
             class Agony {};
+            class KilledInAgony {};
+            
+            //add or remove effects
+            class addBuff {};
+            class removeBuff {};
+
+            //effects
             class effects_bleeding {};
             class effects_critHit {};
-            class KilledInAgony {};
-            class painShock {};
-            class removeBuff {};
+            class effects_painShock {};
         };
 
         class Network {
