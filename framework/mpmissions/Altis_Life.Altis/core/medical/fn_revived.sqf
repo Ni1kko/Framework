@@ -15,7 +15,7 @@ _reviveCost = LIFE_SETTINGS(getNumber,"revive_fee");
 [life_save_gear] spawn life_fnc_loadDeadGear;
 
 //remove death screen & Bring me back to life. 
-[_unit,true,false] call life_fnc_deathScreen;
+[_unit,true,false] spawn life_fnc_deathScreen;
 
 
 player setUnconscious false;
