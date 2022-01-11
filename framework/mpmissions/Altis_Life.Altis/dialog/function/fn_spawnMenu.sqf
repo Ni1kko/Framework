@@ -17,6 +17,7 @@ if (life_respawned) then {
 };
 cutText["","BLACK FADED"];
 0 cutFadeOut 9999999;
+if(dialog)then{closeDialog 2};
 if (!(createDialog "life_spawn_selection")) exitWith {[] call life_fnc_spawnMenu;};
 (findDisplay 38500) displaySetEventHandler ["keyDown","_this call life_fnc_displayHandler"];
 
