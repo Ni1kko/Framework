@@ -5,11 +5,13 @@
   "CfgsPath": "E:\\ExtremoServer\\@server\\server_configs",
   "CfgPerformance": "A3_Performance.cfg",
   "CfgDedicatedServer": "A3_DedicatedServer.cfg",
+  "CustomServerDirectory": "",
   "ServerMods": [
     "@server"
   ],
   "EnableHyperThreading": true,
   "EnableLargePage": true,
   "EnableExperimentalAlg": true,
-  "EnableAutoInit": true
+  "EnableAutoInit": true,
+  "Enable64Bit": true
 }
