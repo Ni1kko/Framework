@@ -10,14 +10,20 @@
 disableSerialization;
 
 private _entity = param [0,objNull,[objNull]];
-private _exit = param [1,false];
 
 life_var_medicstatus = -1;
 life_var_medicstatusby = "";
 
-
-if(_exit)exitWith{
+if(param [1,false])exitWith{
 	["RscDisplayDeathScreen"] call life_fnc_destroyRscLayer;
+	if(param [1,true])then{
+		[]spawn{
+			[] call life_fnc_spawnMenu;
+			waitUntil{!isNull (findDisplay 38500)};
+			waitUntil{isNull (findDisplay 38500)};
+			life_is_alive = true;
+		};
+	};
 };
 
 //-- register our layer

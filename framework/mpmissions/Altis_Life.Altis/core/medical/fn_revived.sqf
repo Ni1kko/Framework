@@ -14,11 +14,8 @@ _reviveCost = LIFE_SETTINGS(getNumber,"revive_fee");
 
 [life_save_gear] spawn life_fnc_loadDeadGear;
 
-hint format [localize "STR_Medic_RevivePay",_medic,[_reviveCost] call life_fnc_numberText];
-
-closeDialog 0;
-life_deathCamera cameraEffect ["TERMINATE","BACK"];
-camDestroy life_deathCamera;
+//remove death screen
+[_unit,true,false] call life_fnc_deathScreen;
 
 //Take fee for services.
 if (life_var_bank > _reviveCost) then {
@@ -26,6 +23,8 @@ if (life_var_bank > _reviveCost) then {
 } else {
     life_var_bank = 0;
 };
+
+hint format [localize "STR_Medic_RevivePay",_medic,[_reviveCost] call life_fnc_numberText];
 
 //Bring me back to life.
 player setDir (getDir life_corpse);
@@ -55,6 +54,7 @@ player setVariable ["lifeState","HEALTHY",true];
 
 [] call life_fnc_playerSkins;
 [] call SOCK_fnc_updateRequest;
+
 
 2 fadeSound 1;
 cutText ["You come to your senses ...", "BLACK IN", 5];
