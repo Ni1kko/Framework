@@ -20,14 +20,12 @@ if(param [1,false])exitWith{
 	["RscDisplayDeathScreen"] call life_fnc_destroyRscLayer;
 	player setDamage 0;
 	if(param [2,true])then{
-		if(isNull (findDisplay 38500))then{
-			[]spawn{
-				[] call life_fnc_spawnMenu;
-				waitUntil{!isNull (findDisplay 38500)};
-				waitUntil{isNull (findDisplay 38500)};
-				player setVariable ["lifeState","HEALTHY",true];
-				life_is_alive = true;
-			};
+		if(isNull (findDisplay 38500))then{ 
+			[] call life_fnc_spawnMenu;
+			waitUntil{!isNull (findDisplay 38500)};
+			waitUntil{isNull (findDisplay 38500)};
+			player setVariable ["lifeState","HEALTHY",true];
+			life_is_alive = true;
 		};
 	}else{
 		player setVariable ["lifeState","HEALTHY",true];
