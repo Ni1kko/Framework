@@ -14,13 +14,13 @@ private _entity = param [0,objNull,[objNull]];
 life_var_medicstatus = -1;
 life_var_medicstatusby = "";
 
-if(param [1,false])exitWith{
-	cutText ["","BLACK IN"];
+if(param [1,false])exitWith{ 
 	["all"] call life_fnc_removeBuff;
 	["RscDisplayDeathScreen"] call life_fnc_destroyRscLayer;
 	player setDamage 0;
 	if(param [2,true])then{
-		if(isNull (findDisplay 38500))then{ 
+		if(isNull (findDisplay 38500))then{
+			titleCut ["", "BLACK IN", 1];
 			[] call life_fnc_spawnMenu;
 			waitUntil{!isNull (findDisplay 38500)};
 			waitUntil{isNull (findDisplay 38500)};

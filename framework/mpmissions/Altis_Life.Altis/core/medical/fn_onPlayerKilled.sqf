@@ -103,4 +103,6 @@ if (playerSide isEqualTo civilian) then {
 };
 
 //remove death screen
-[_unit,true,true] spawn life_fnc_deathScreen;
+if(isNull (findDisplay 38500))then{ 
+    [_unit,true,true] spawn life_fnc_deathScreen;
+};
