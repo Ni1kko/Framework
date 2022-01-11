@@ -105,9 +105,11 @@ if (playerSide isEqualTo civilian) then {
 //remove death screen
 [_unit,true] call life_fnc_deathScreen;
 
-["Death2Spawn", true , 2] call BIS_fnc_blackOut;
-[] call life_fnc_spawnMenu;
-waitUntil{!isNull (findDisplay 38500)}; //Wait for the spawn selection to be open.
-["Death2Spawn", true] call BIS_fnc_blackIn;
-waitUntil{isNull (findDisplay 38500)}; //Wait for the spawn selection to be done.
-life_is_alive = true;
+[]spawn{
+    ["Death2Spawn", true , 2] call BIS_fnc_blackOut;
+    [] call life_fnc_spawnMenu;
+    waitUntil{!isNull (findDisplay 38500)}; //Wait for the spawn selection to be open.
+    ["Death2Spawn", true] call BIS_fnc_blackIn;
+    waitUntil{isNull (findDisplay 38500)}; //Wait for the spawn selection to be done.
+    life_is_alive = true;
+};
