@@ -2,7 +2,7 @@
 
 	Function: 	life_fnc_effects_critHit
 	Project: 	Misty Peaks RPG
-	Author:     Tonic, Merrick, Nikko, Affect & IceEagle132
+	Author:     Merrick, Nikko, Affect & IceEagle132
 	
 */
 if(missionNamespace getVariable ["life_fnc_effects_critHit_active",false]) exitWith{};

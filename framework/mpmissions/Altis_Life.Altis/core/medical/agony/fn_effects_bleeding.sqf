@@ -2,7 +2,7 @@
 
 	Function: 	life_fnc_effects_bleeding
 	Project: 	Misty Peaks RPG
-	Author:     Tonic, Merrick, Nikko, Affect & IceEagle132
+	Author:     Merrick, Nikko, Affect & IceEagle132
 	
 */
 if(missionNamespace getVariable ["life_fnc_effects_bleeding_active",false]) exitWith{};

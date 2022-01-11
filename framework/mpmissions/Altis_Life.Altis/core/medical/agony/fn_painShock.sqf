@@ -2,7 +2,7 @@
 
 	Function: 	life_fnc_painShock
 	Project: 	Misty Peaks RPG
-	Author:     Tonic, Merrick, Nikko, Affect & IceEagle132
+	Author:     Merrick, Nikko, Affect & IceEagle132
 	
 */
 

@@ -2,7 +2,7 @@
 
 	Function: 	life_fnc_removeBuff
 	Project: 	Misty Peaks RPG
-	Author:     Tonic, Merrick, Nikko, Affect & IceEagle132
+	Author:     Merrick, Nikko, Affect & IceEagle132
 	
 */
 private _type = param [0,"",[""]];
