@@ -113,7 +113,7 @@ life_fnc_addBuff = {
 	    case (life_var_bleeding) : {[] spawn life_fnc_effects_bleeding};
         case (life_var_pain_shock) : {[] spawn life_fnc_effects_painShock};
         case (life_var_critHit) : {[] spawn life_fnc_effects_critHit};
-        default {  /*...code...*/ }; 
+        default { missionNamespace setVariable [_type,true]; _this call life_fnc_addBuff; }; 
     };
 };
 
