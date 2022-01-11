@@ -19,7 +19,6 @@
 #include "spawnSelection.hpp"
 #include "chop_shop.hpp"
 #include "pInteraction.hpp"
-#include "deathScreen.hpp"
 #include "vehicleShop.hpp"
 #include "vehicleShop3D.hpp"
 #include "settings.hpp"

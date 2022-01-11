@@ -28,7 +28,7 @@ life_var_hud_layer_autohide_displays = [//displays where auto hide hooks are hid
 	12,	 //12 = map visible 
 	49,  //49 = escape menu 
 	602, //602 = inventory menu
-	7300 //7300 = death screen
+	"RscDisplayDeathScreen"
 ];
 
 if(_show)then{
@@ -75,12 +75,12 @@ life_var_hud_threads = compileFinal str(systemTimeUTC);
 []spawn {
     while {true} do { 
         //Hide
-        waitUntil {true in (life_var_hud_layer_autohide_displays apply {if(_x isEqualTo 12)then{visibleMap}else{!isNull(findDisplay _x)}})};
+        waitUntil {true in (life_var_hud_layer_autohide_displays apply {if(typeName _x isEqualTo "STRING")then{!isNull(findDisplay (uiNamespace getVariable [_x,displayNull]))}else{if(_x isEqualTo 12)then{visibleMap}else{!isNull(findDisplay _x)}}})};
 		if (life_var_hud_activelayer in life_var_hud_layer_autohide_hooks)then{
 			[false] call life_fnc_gui_hook_management;
 		};
         //Show
-        waitUntil {!(true in (life_var_hud_layer_autohide_displays apply {if(_x isEqualTo 12)then{visibleMap}else{!isNull(findDisplay _x)}}))};
+        waitUntil {!(true in (life_var_hud_layer_autohide_displays apply {if(typeName _x isEqualTo "STRING")then{!isNull(findDisplay (uiNamespace getVariable [_x,displayNull]))}else{if(_x isEqualTo 12)then{visibleMap}else{!isNull(findDisplay _x)}}}))};
 		if (life_var_hud_activelayer in life_var_hud_layer_autohide_hooks)then{
 			[true] call life_fnc_gui_hook_management;
 		}; 

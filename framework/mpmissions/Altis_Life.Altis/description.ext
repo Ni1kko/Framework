@@ -43,6 +43,7 @@ class RscTitles {
     #include "dialog\progress.hpp"
     #include "dialog\hud_nameTags.hpp"
     #include "dialog\RscPlayerHUD.hpp"
+    #include "dialog\deathScreen.hpp"
 };
 
 class CfgFunctions {

@@ -1,6 +1,6 @@
 class RscDisplayDeathScreen
 {
-	idd=7300;
+	idd=-1;
 	movingEnable=0;
   	fadein=0;
 	duration = 10e10;
