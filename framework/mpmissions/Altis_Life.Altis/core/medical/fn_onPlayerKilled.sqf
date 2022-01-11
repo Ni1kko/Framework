@@ -29,13 +29,21 @@ _unit setVariable ["transporting",false,true];
 _unit setVariable ["playerSurrender",false,true];
 _unit setVariable ["steam64id",(getPlayerUID player),true]; //Set the UID.
 
+
+life_is_alive = false;
+
+[_unit] call life_fnc_dropItems;
+
+life_action_inUse = false;
+life_hunger = 100;
+life_thirst = 100;
+life_carryWeight = 0;
+life_var_cash = 0;
+
 //close the esc dialog
 if (dialog) then {
     closeDialog 0;
 };
-
-//remove death screen
-[_unit,true] call life_fnc_deathScreen;
 
 //Make the killer wanted
 if (!isNull _killer && {!(_killer isEqualTo _unit)} && {!(side _killer isEqualTo west)} && {alive _killer}) then {
@@ -85,14 +93,6 @@ if (!isNull _killer && {!(_killer isEqualTo _unit)}) then {
     life_removeWanted = true;
 };
 
-[_unit] call life_fnc_dropItems;
-
-life_action_inUse = false;
-life_hunger = 100;
-life_thirst = 100;
-life_carryWeight = 0;
-life_var_cash = 0;
-life_is_alive = false;
 
 [player,life_settings_enableSidechannel,playerSide] remoteExecCall ["TON_fnc_manageSC",RSERV];
 
@@ -101,3 +101,13 @@ life_is_alive = false;
 if (playerSide isEqualTo civilian) then {
     [4] call SOCK_fnc_updatePartial;
 };
+
+//remove death screen
+[_unit,true] call life_fnc_deathScreen;
+
+["Death2Spawn", true , 2] call BIS_fnc_blackOut;
+[] call life_fnc_spawnMenu;
+waitUntil{!isNull (findDisplay 38500)}; //Wait for the spawn selection to be open.
+["Death2Spawn", true] call BIS_fnc_blackIn;
+waitUntil{isNull (findDisplay 38500)}; //Wait for the spawn selection to be done.
+life_is_alive = true;
