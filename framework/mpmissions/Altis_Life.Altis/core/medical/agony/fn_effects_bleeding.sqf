@@ -11,7 +11,7 @@ life_fnc_effects_bleeding_active = true;
 
 while {life_var_bleeding && alive(player)} do {
 	if (damage player < 0.89) then {
-		player setDamage (damage player + 0.05);
+		player setDamage (damage player + (random[0.05, 0.07, 0.1]));
 	} else {
 		// send to agony
 		[player,player] call life_fnc_Agony;

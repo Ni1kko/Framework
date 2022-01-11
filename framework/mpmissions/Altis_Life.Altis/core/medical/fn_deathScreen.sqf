@@ -10,9 +10,15 @@
 disableSerialization;
 
 private _entity = param [0,objNull,[objNull]];
+private _exit = param [1,false];
 
 life_var_medicstatus = -1;
 life_var_medicstatusby = "";
+
+
+if(_exit)then{
+	["RscDisplayDeathScreen"] call life_fnc_destroyRscLayer;
+};
 
 //-- register our layer
 ["RscDisplayDeathScreen","PLAIN"] call life_fnc_createRscLayer;
@@ -82,6 +88,9 @@ showChat true;
 
 //remove input handler
 (findDisplay 46) displayRemoveEventHandler ["KeyDown", _inputEH];
+
+//-- stop buff effects
+["all"] call life_fnc_removeBuff;
 
 //-- remove blood effect
 LIFE_PPE_DEATH_BLOOD ppEffectAdjust [1, 1, 0,[ 0, 0, 0, 0],[ 1, 1, 1, 1],[ 0, 0, 0, 0]];
