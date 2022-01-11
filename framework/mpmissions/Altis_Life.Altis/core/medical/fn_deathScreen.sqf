@@ -55,7 +55,7 @@ LIFE_PPE_DEATH_BLOOD ppEffectCommit 5;
 //-- start bleedout timer
 _txtBottomLeft spawn {
 	disableSerialization;
-	private _maxTime = time + (([missionConfigFile >> "life_timers", "bleedout", 0]  call BIS_fnc_returnConfigEntry) * 60);
+	private _maxTime = time + ([missionConfigFile >> "life_timers", "bleedout", 0]  call BIS_fnc_returnConfigEntry);
 	life_deathScreen_canRespawn = false;
 	waitUntil {		
 		_this ctrlSetStructuredText parseText format ["<t size='1.15' align='center' valign='middle'><br/>You Will Bleedout in <t color='#f30404'>%1</t> seconds</t>", [(_maxTime - time),"MM:SS.MS"] call BIS_fnc_secondsToString];

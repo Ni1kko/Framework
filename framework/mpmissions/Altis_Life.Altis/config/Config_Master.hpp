@@ -46,8 +46,7 @@ class Life_Settings {
     enable_fatigue = false; //Set to false to disable the ARMA 3 fatigue system
     enable_autorun = true; //enable_fatigue must be disabled to use this
     total_maxWeight = 26; //Static variable for the maximum weight allowed without having a backpack
-    respawn_timer = 30; //How many seconds a player should wait, before being able to respawn. Minimum 5 seconds.
-
+    
     /* Channel 7 News Station Configurations */
     news_broadcast_cost = 150000; //Cost for a player to send a news station broadcast.
     news_broadcast_cooldown = 20; //Time in minutes that is required between news station broadcasts. (Default = 20 minutes)
@@ -217,9 +216,9 @@ class Life_Settings {
 
 class life_timers
 {
-    respawn      = 10;//Secs till player can respawn
-    bleedout  = 2; //Mins till player bleeds out
-    resurrect = 1; //Mins till player can resurrect
+    respawn   = 10;//Secs till player can respawn
+    bleedout  = 20; //Secs till player bleeds out
+    resurrect = 60; //Secs till player can resurrect
 };
 
 #include "Config_Clothing.hpp"
