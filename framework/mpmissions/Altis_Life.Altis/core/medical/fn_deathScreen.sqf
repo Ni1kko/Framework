@@ -15,7 +15,9 @@ life_var_medicstatus = -1;
 life_var_medicstatusby = "";
 
 if(param [1,false])exitWith{
+	["all"] call life_fnc_removeBuff;
 	["RscDisplayDeathScreen"] call life_fnc_destroyRscLayer;
+	player setDamage 0;
 	if(param [1,true])then{
 		[]spawn{
 			[] call life_fnc_spawnMenu;
