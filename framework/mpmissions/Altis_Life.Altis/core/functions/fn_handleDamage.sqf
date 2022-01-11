@@ -50,9 +50,9 @@ life_fnc_removeBuff = {
  
 life_fnc_effects_critHit = {
     private["_sound","_critColorEffect"];
-    while {life_critHit} do {
+    while {life_var_critHit} do {
         uiSleep (15*60);
-        if (life_critHit && alive(player) && player == vehicle player) then {
+        if (life_var_critHit && alive(player) && player == vehicle player) then {
             _critColorEffect = ppEffectCreate ["colorCorrections", 2008];
             _critColorEffect ppEffectEnable true;
             _critColorEffect ppEffectAdjust [1, 1.1, -0.05, [0.4, 0.2, 0.3, -0.1], [0.3, 0.05, 0, 0], [0.5,0.5,0.5,0], [0,0,0,0,0,0,4]];
@@ -63,7 +63,7 @@ life_fnc_effects_critHit = {
             for "_i" from 1 to 20 do {
                 titleText[format["You have a traumatic shock caused by a serious injury! You will wake up in %1 sec.", (21 - _i)],"PLAIN"];
                 uiSleep 1;
-                if (!alive(player) OR !life_critHit) exitWith {};
+                if (!alive(player) OR !life_var_critHit) exitWith {};
             };
             switch (true) do {
                 case (!alive(player)) : {};
@@ -154,7 +154,6 @@ life_fnc_Agony = {
     _unit setVariable ["lifeState","INCAPACITATED",true];
     [_unit] spawn life_fnc_deathScreen;
 };
-
 
 // bug with cartridge definition
 if (_projectile isEqualType objNull) then {
