@@ -34,8 +34,6 @@ if (dialog) then {
     closeDialog 0;
 };
 
-[_unit] spawn life_fnc_deathScreen;
-
 //Make the killer wanted
 if (!isNull _killer && {!(_killer isEqualTo _unit)} && {!(side _killer isEqualTo west)} && {alive _killer}) then {
     if (vehicle _killer isKindOf "LandVehicle") then {

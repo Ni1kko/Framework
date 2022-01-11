@@ -8,39 +8,116 @@
 */
 params [
     ["_unit",objNull,[objNull]],
-    ["_part","",[""]],
+    ["_selection","",[""]],
     ["_damage",0,[0]],
     ["_source",objNull,[objNull]],
-    ["_projectile","",[""]],
-    ["_index",0,[0]]
+    ["_projectile","",["",objNull]],
+    ["_hitPointIndex",0,[0]],
+    ["_instigator",objNull,[objNull]]
 ];
 
-if (!isNull _source && {_source != _unit}) then {
-    if (side _source isEqualTo west) then {
-        if (currentWeapon _source in ["hgun_P07_snds_F","arifle_SDAR_F"] && _projectile in ["B_9x21_Ball","B_556x45_dual"]) then {
-            if (alive _unit) then {
-                if (playerSide isEqualTo civilian && {!life_istazed}) then {
-                    private _distance = 35;
-                    if (_projectile isEqualTo "B_556x45_dual") then {_distance = 100};
-                    if (_unit distance _source < _distance) then {
-                        if !(isNull objectParent _unit) then {
-                            if (typeOf (vehicle _unit) isEqualTo "B_Quadbike_01_F") then {
-                                _unit action ["Eject",vehicle _unit];
-                                [_unit,_source] spawn life_fnc_tazed;
+//get current damage data
+private _currentDmg = [_unit getHitIndex _hitPointIndex, damage _unit] select (_hitPointIndex < 0);
+
+// damage not important to us
+if (_selection == "hands") exitWith {_unit getHit "hands"};
+if (_selection == "legs") exitWith {_unit getHit "legs"};
+if (_selection == "arms") exitWith {_unit getHit "arms"};
+
+life_fnc_removeBuff = {
+
+};
+
+life_fnc_addBuff = {
+ 
+};
+
+life_fnc_KilledInAgony = {
+    params [
+        ["_unit",objNull,[objNull]],
+        ["_source",objNull,[objNull]],
+        ["_instigator",objNull,[objNull]],
+        ["_damage",0,[0]],
+        ["_projectile","",[""]],
+        ["_selection","",[""]]
+    ];
+
+    ["all"] call life_fnc_removeBuff;
+    _unit setDamage 1;
+};
+
+life_fnc_Agony = {
+    params [
+        ["_unit",objNull,[objNull]],
+        ["_source",objNull,[objNull]],
+        ["_instigator",objNull,[objNull]],
+        ["_projectile","",[""]]
+    ];
+    _unit setVariable ["medicStatus",-1,true];
+    _unit setVariable ["lifeState","INCAPACITATED",true];
+    [_unit] spawn life_fnc_deathScreen;
+};
+
+
+// bug with cartridge definition
+if (_projectile isEqualType objNull) then {
+	_projectile = typeOf _projectile;
+	_this set [4, _projectile];
+};
+
+if (alive _unit && _damage > 0) then {
+    if((_unit getVariable ["lifeState",""]) isEqualTo "INCAPACITATED")then{
+        [_unit,_shooter,_instigator,_damage,_projectile,_selection] spawn life_fnc_KilledInAgony;
+    }else{
+        if (!isNull _source && {_source != _unit}) then {
+            if (side _source isEqualTo west) then {
+                if (currentWeapon _source in ["hgun_P07_snds_F","arifle_SDAR_F"] && _projectile in ["B_9x21_Ball","B_556x45_dual"]) then {
+                    if (alive _unit) then {
+                        if (playerSide isEqualTo civilian && {!life_istazed}) then {
+                            private _distance = 35;
+                            if (_projectile isEqualTo "B_556x45_dual") then {_distance = 100};
+                            if (_unit distance _source < _distance) then {
+                                if !(isNull objectParent _unit) then {
+                                    if (typeOf (vehicle _unit) isEqualTo "B_Quadbike_01_F") then {
+                                        _unit action ["Eject",vehicle _unit];
+                                        [_unit,_source] spawn life_fnc_tazed;
+                                    };
+                                } else {
+                                    [_unit,_source] spawn life_fnc_tazed;
+                                };
                             };
-                        } else {
-                            [_unit,_source] spawn life_fnc_tazed;
+                        };
+                        _damage = if (_selection isEqualTo "") then {
+                            damage _unit;
+                        } else { 
+                            _unit getHit _selection;
                         };
                     };
                 };
-                _damage = if (_part isEqualTo "") then {
-                    damage _unit;
-                } else { 
-                    _unit getHit _part;
+            };
+        }else{
+            if (_damage >= 0.89) then {
+                [_unit,_source,_instigator,_projectile] call life_fnc_Agony;
+            } else { 
+                if (_dmg > 0) then {
+                    switch (true) do {
+                        case (_dmg > 0.1 && _dmg <= 0.3) : {
+                            ["life_bleeding","debuff",300] spawn life_fnc_addBuff;
+                        };
+                        case (_dmg > 0.3 && _dmg <= 0.45) : {
+                            ["life_pain_shock","debuff"] spawn life_fnc_addBuff;
+                        };
+                        case (_dmg > 0.45 && _dmg <= 0.9) : {
+                           ["life_critHit","debuff"] spawn life_fnc_addBuff;
+                        };
+                        default {}; 
+                    };
                 };
             };
         };
     };
+} else {
+	_damage = _currentDmg;
 };
 
-_damage;
+_damage
