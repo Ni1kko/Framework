@@ -37,10 +37,6 @@ if (!isNull life_corpse) then {
     deleteVehicle life_corpse;
 };
 
-//Destroy our camera...
-life_deathCamera cameraEffect ["TERMINATE","BACK"];
-camDestroy life_deathCamera;
-
 //Bad boy
 if (life_is_arrested) exitWith {
     hint localize "STR_Jail_Suicide";
