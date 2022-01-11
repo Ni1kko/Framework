@@ -13,7 +13,7 @@ class RscDisplayDeathScreen
 	
 	class controlsBackground
 	{
-		class DeathPicture: RscPicture
+		class DeathPicture: Life_RscPicture
 		{
 			idc = -1;
 			text = "\textures\blood.paa";
@@ -28,7 +28,7 @@ class RscDisplayDeathScreen
 	class Controls
 	{
 
-		class txt_top_left: RscStructuredText
+		class txt_top_left: Life_RscStructuredText
 		{
 			idc = 66601;
 			x = 0 * safezoneW + safezoneX;
@@ -36,7 +36,7 @@ class RscDisplayDeathScreen
 			w = 0.5 * safezoneW;
 			h = 0.11 * safezoneH;
 		};
-		class txt_top_right: RscStructuredText
+		class txt_top_right: Life_RscStructuredText
 		{
 			idc = 66602;
 			x = 0.5 * safezoneW + safezoneX;
@@ -44,7 +44,7 @@ class RscDisplayDeathScreen
 			w = 0.5 * safezoneW;
 			h = 0.11 * safezoneH;			
 		};
-		class txt_bottom_left: RscStructuredText
+		class txt_bottom_left: Life_RscStructuredText
 		{
 			idc = 66603;
 			x = 0 * safezoneW + safezoneX;
@@ -53,7 +53,7 @@ class RscDisplayDeathScreen
 			h = 0.11 * safezoneH;
 			colorBackground[] = {0,0,0,0.5};
 		};		
-		class txt_bottom_right: RscStructuredText
+		class txt_bottom_right: Life_RscStructuredText
 		{
 			idc = 66604;
 			x = 0.5 * safezoneW + safezoneX;
