@@ -1,6 +1,6 @@
 /*
 
-	Function: 	life_fnc_Bleeding
+	Function: 	life_fnc_painShock
 	Project: 	Misty Peaks RPG
 	Author:     Tonic, Merrick, Nikko, Affect & IceEagle132
 	

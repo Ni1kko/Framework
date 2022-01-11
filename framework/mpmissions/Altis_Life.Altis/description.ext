@@ -339,6 +339,17 @@ class CfgFunctions {
             class revivePlayer {};
         };
 
+        class Agony_System {
+            file = "core\medical\agony";
+            class addBuff {};
+            class Agony {};
+            class effects_bleeding {};
+            class effects_critHit {};
+            class KilledInAgony {};
+            class painShock {};
+            class removeBuff {};
+        };
+
         class Network {
             file = "core\functions\network";
             class broadcast {};
