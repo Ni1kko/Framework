@@ -66,15 +66,15 @@ if (alive _unit && _damage > 0) then {
             if (_damage >= 0.89) then {
                 [_unit,_source,_instigator,_projectile] call life_fnc_Agony;
             } else { 
-                if (_dmg > 0) then {
+                if (_damage > 0) then {
                     switch (true) do {
-                        case (_dmg > 0.1 && _dmg <= 0.3) : {
+                        case (_damage > 0.1 && _damage <= 0.3) : {
                             ["life_var_bleeding","debuff",300] spawn life_fnc_addBuff;
                         };
-                        case (_dmg > 0.3 && _dmg <= 0.45) : {
+                        case (_damage > 0.3 && _damage <= 0.45) : {
                             ["life_var_pain_shock","debuff"] spawn life_fnc_addBuff;
                         };
-                        case (_dmg > 0.45 && _dmg <= 0.9) : {
+                        case (_damage > 0.45 && _damage <= 0.9) : {
                            ["life_var_critHit","debuff"] spawn life_fnc_addBuff;
                         };
                         default {}; 

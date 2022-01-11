@@ -1,3 +1,14 @@
+/*
+
+	Function: 	life_fnc_effects_bleeding
+	Project: 	Misty Peaks RPG
+	Author:     Tonic, Merrick, Nikko, Affect & IceEagle132
+	
+*/
+if(missionNamespace getVariable ["life_fnc_effects_bleeding_active",false]) exitWith{};
+
+life_fnc_effects_bleeding_active = true;
+
 while {life_var_bleeding && alive(player)} do {
 	if (damage player < 0.89) then {
 		player setDamage (damage player + 0.05);
@@ -11,3 +22,5 @@ while {life_var_bleeding && alive(player)} do {
 	[5000] call BIS_fnc_bloodEffect;				
 	uiSleep 60;
 };
+
+life_fnc_effects_bleeding_active = false;

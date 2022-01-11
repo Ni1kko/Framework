@@ -5,6 +5,11 @@
 	Author:     Tonic, Merrick, Nikko, Affect & IceEagle132
 	
 */
+
+if(missionNamespace getVariable ["life_fnc_painShock_active",false]) exitWith{};
+
+life_fnc_painShock_active = true;
+
 while {life_var_pain_shock && alive(player)} do {
 	uiSleep 60;
 	if (life_var_pain_shock && alive(player)) then {
@@ -13,3 +18,5 @@ while {life_var_pain_shock && alive(player)} do {
 		systemChat "You have a pain shock ...";
 	};
 };
+
+life_fnc_painShock_active = false;

@@ -5,6 +5,10 @@
 	Author:     Tonic, Merrick, Nikko, Affect & IceEagle132
 	
 */
+if(missionNamespace getVariable ["life_fnc_effects_critHit_active",false]) exitWith{};
+
+life_fnc_effects_critHit_active = true;
+
 private["_sound","_critColorEffect"];
 while {life_var_critHit} do {
     uiSleep (15*60);
@@ -31,3 +35,5 @@ while {life_var_critHit} do {
         titleText["","PLAIN"];
     };
 };
+
+life_fnc_effects_critHit_active = false;
