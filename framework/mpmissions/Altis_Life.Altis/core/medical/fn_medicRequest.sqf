@@ -16,6 +16,7 @@ if (isNull _caller) exitWith {};
 
 player reveal _caller;
 
+[missionNamespace,["life_var_medicstatus",2]] remoteExec ["setVariable",owner _caller];
 [missionNamespace,["life_var_medicstatusby",player getVariable ["realname",""]]] remoteExec ["setVariable",owner _caller];
 
 ["MedicalRequestEmerg",[format[localize "STR_Medic_Request",_callerName]]] call BIS_fnc_showNotification;
