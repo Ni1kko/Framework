@@ -34,7 +34,7 @@ if (_projectile isEqualType objNull) then {
 
 if (alive _unit && _damage > 0) then {
     if((_unit getVariable ["lifeState",""]) isEqualTo "INCAPACITATED")then{
-        [_unit,_shooter,_instigator,_damage,_projectile,_selection] spawn life_fnc_KilledInAgony;
+        [_unit,_instigator,_damage,_projectile,_selection] spawn life_fnc_KilledInAgony;
     }else{
         if (!isNull _source && {_source != _unit}) then {
             if (side _source isEqualTo west) then {
