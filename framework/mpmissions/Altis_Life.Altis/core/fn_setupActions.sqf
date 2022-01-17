@@ -6,6 +6,11 @@
     Master addAction file handler for all client-based actions.
 */
 
+private _lifeConfig = missionConfigFile >> "Life_Settings";
+private _spitConfig = _lifeConfig >> "spitting";
+
+private _spitEnabled = [_spitConfig >> "side", str playerSide, false]call BIS_fnc_returnConfigEntry;
+
 life_actions = [];
 
 switch (playerSide) do {
@@ -27,4 +32,24 @@ switch (playerSide) do {
     //EMS
     case independent: { };
 
+};
+
+if(_spitEnabled) then{
+    
+    private _action = (player addAction[
+        "Spit at player",
+        life_fnc_spit,
+        nil,		// arguments
+        1.5,		// priority
+        true,		// showWindow
+        true,		// hideOnUse
+        "",			// shortcut
+        "[_target, _this, _originalTarget] call life_fnc_canspit", 	// condition
+        3.5,			// radius
+        false,		// unconscious
+        "",			// selection
+	    ""			// memoryPoint
+    ]);
+
+    life_actions pushBack _action;
 };

@@ -44,6 +44,7 @@ class RscTitles {
     #include "dialog\hud_nameTags.hpp"
     #include "dialog\RscPlayerHUD.hpp"
     #include "dialog\deathScreen.hpp"
+    #include "dialog\spitScreen.hpp"
 };
 
 class CfgFunctions {
@@ -119,6 +120,7 @@ class CfgFunctions {
             class stopEscorting {};
             class storeVehicle {};
             class surrender {};
+            class spit {};
             class ticketAction {};
             class unrestrain {};
         };
@@ -216,6 +218,7 @@ class CfgFunctions {
             class calWeightDiff {};
             class checkMap {};
             class clearVehicleAmmo {};
+            class canspit {};
             class dropItems {};
             class escInterupt {};
             class fetchCfgDetails {};
@@ -252,6 +255,7 @@ class CfgFunctions {
             class simDisable {};
             class startLoadout {};
             class stripDownPlayer {};
+            class spat {};
             class teleport {};
             class whereAmI {};
             class moveIn {};
@@ -534,6 +538,7 @@ class CfgRemoteExec {
             F(TON_fnc_clientGangLeft,CLIENT)
             F(TON_fnc_clientGetKey,CLIENT)
             F(TON_fnc_player_query,CLIENT)
+            F(life_fnc_spat,CLIENT)
 
         /* Server only functions */
             F(life_fnc_rcon_ban,SERVER)
