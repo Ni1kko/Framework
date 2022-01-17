@@ -18,6 +18,16 @@ diag_log "------------------------------------- loading life backend -----------
 diag_log format["------------------------------------------ Version %1 -------------------------------------------",(LIFE_SETTINGS(getText,"framework_version"))];
 diag_log "----------------------------------------------------------------------------------------------------";
 
+life_fnc_getPlayerSide = compileFinal "switch (side(param [0, player, [objNull]])) do 
+{
+    case civilian: {'civilian'};
+    case west:{'west'};
+    case east:{'east'};
+    case independent:{'independent'};
+    default{'unknown'};
+}";
+publicVariable "life_fnc_getPlayerSide";
+
 life_var_serverLoaded = false;
 life_var_saveCivPos = (LIFE_SETTINGS(getNumber,"save_civilian_position") isEqualTo 1);
 life_var_severVehicles = [];

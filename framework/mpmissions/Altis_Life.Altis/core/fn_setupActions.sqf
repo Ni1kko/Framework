@@ -8,31 +8,26 @@
 
 private _lifeConfig = missionConfigFile >> "Life_Settings";
 private _spitConfig = _lifeConfig >> "spitting";
-
-private _spitEnabled = [_spitConfig >> "side", str playerSide, false]call BIS_fnc_returnConfigEntry;
+private _side = player call life_fnc_getPlayerSide;
 
 life_actions = [];
 
-switch (playerSide) do {
+switch (call compile _side) do 
+{
+    //--- CIVILIAN
+    case civilian: { };
 
-    //Civilian
-    case civilian: {
-        //Drop fishing net
-        life_actions pushBack (player addAction[localize "STR_pAct_DropFishingNet",life_fnc_dropFishingNet,"",0,false,false,"",'
-        (surfaceisWater (getPos vehicle player)) && (vehicle player isKindOf "Ship") && life_var_carryWeight < life_maxWeight && speed (vehicle player) < 2 && speed (vehicle player) > -1 && !life_net_dropped ']);
-
-        //Rob person
-        life_actions pushBack (player addAction[localize "STR_pAct_RobPerson",life_fnc_robAction,"",0,false,false,"",'
-        !isNull cursorObject && player distance cursorObject < 3.5 && isPlayer cursorObject && animationState cursorObject == "Incapacitated" && !(cursorObject getVariable ["robbed",false]) ']);
-    };
-    
-    //Cops
+    //--- POLICE
     case west: { };
-    
-    //EMS
-    case independent: { };
 
+    //--- UNDEFINED
+    case east: { };
+    
+    //--- MEDIC
+    case independent: { };
 };
+
+private _spitEnabled = ([_spitConfig >> "side", _side, false] call BIS_fnc_returnConfigEntry) isEqualTo 1;
 
 if(_spitEnabled) then{
     
@@ -44,7 +39,7 @@ if(_spitEnabled) then{
         true,		// showWindow
         true,		// hideOnUse
         "",			// shortcut
-        "[_target, _this, _originalTarget] call life_fnc_canspit", 	// condition
+        "[_target, _this, _originalTarget, cursorTarget] call life_fnc_canspit", 	// condition
         3.5,			// radius
         false,		// unconscious
         "",			// selection
