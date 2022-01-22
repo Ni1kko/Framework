@@ -125,5 +125,15 @@ class Life_impound_menu {
             w = 0.6;
             h = (1 / 15);
         };
+
+        class Search_veh: Life_RscEdit {
+            idc = 2812;
+            text = "";
+            x = 0.11;
+            y = 0.8;
+            w = 0.3;
+            h = 0.04;
+            onKeyUp = "[(_this # 0), 2802, 2803] spawn life_fnc_filterGarage";
+        };
     };
 };

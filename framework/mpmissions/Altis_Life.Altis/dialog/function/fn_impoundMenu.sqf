@@ -34,3 +34,5 @@ lbClear _control;
 
 ctrlShow[2810,false];
 ctrlShow[2811,false];
+//Variable For VehicleList In Garage
+uiNamespace setVariable ["VehicleList", _vehicles];

@@ -80,7 +80,6 @@ class CfgFunctions {
             class setupActions {};
             class setupEVH {};
             class survival {};
-            class welcomeNotification {};
             class briefing {};
             class configuration {};
             class setupStationService {};
@@ -204,6 +203,7 @@ class CfgFunctions {
             class hasDisplay {};
             class createRscLayer {};
             class destroyRscLayer {};
+            class filterGarage {};
         };
 
         class Functions {
