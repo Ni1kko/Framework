@@ -86,6 +86,18 @@ master_group attachTo[bank_obj,[0,0,0]];
     };
 } forEach allUnits;
 
+// Lock All Homes That Can Be Owned
+{
+    if (isClass (missionConfigFile >> "Housing" >> worldname >> (typeOf _x))) then {
+    _house = _x;
+    _house setVariable ["locked",true,true];
+    _numOfDoors = getNumber(configFile >> "CfgVehicles" >> (typeOf _house) >> "numberOfDoors");
+    for "_i" from 1 to _numOfDoors do {
+        _house setVariable [format ["bis_disabled_Door_%1",_i],1,true];
+    };
+};
+} forEach nearestobjects [[worldSize/2, worldSize/2],["house"],worldsize];
+
 [8,true,12] call LifeFSM_fnc_timeModule;
 
 life_adminLevel = {0};
