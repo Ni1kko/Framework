@@ -1,5 +1,3 @@
-#include "..\..\script_macros.hpp"
-
 /*
 
 	Function: 	life_fnc_escInterupt
