@@ -60,6 +60,7 @@ if (life_spawn_point isEqualTo []) then {
 
 if (life_firstSpawn) then {
     life_firstSpawn = false;
+    [] execVM "dialog\function\fn_intro.sqf"; // Intro Cam Script
 };
 
 [] call life_fnc_playerSkins;

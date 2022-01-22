@@ -31,6 +31,7 @@ for "_idd" from 140 to 46 do {
     uiSleep 2;
 
     ["Thanks for playing","Till next time","red"] call life_fnc_setLoadingText;
+    playSound "byebye";
     uiSleep 3;
     endLoadingScreen;
     _this closeDisplay 2; 
