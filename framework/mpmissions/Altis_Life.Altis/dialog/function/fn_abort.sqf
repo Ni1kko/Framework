@@ -35,5 +35,3 @@ for "_idd" from 140 to 46 do {
     endLoadingScreen;
     _this closeDisplay 2; 
 };
-
-false
