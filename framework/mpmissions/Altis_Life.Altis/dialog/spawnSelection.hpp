@@ -4,6 +4,15 @@ class life_spawn_selection {
     enableSimulation = 1;
 
     class controlsBackground {
+        class SplashNoise: Life_RscPicture {
+            idc = -1;
+            x = "safezoneXAbs";
+            y = "safezoneY";
+            w = "safezoneWAbs";
+            h = "safezoneH";
+            text = "\A3\Ui_f\data\IGUI\RscTitles\SplashArma3\arma3_splashNoise_ca.paa";
+        };
+
         class life_RscTitleBackground: Life_RscText    {
             colorBackground[] = {"(profilenamespace getvariable ['GUI_BCG_RGB_R',0.3843])", "(profilenamespace getvariable ['GUI_BCG_RGB_G',0.7019])", "(profilenamespace getvariable ['GUI_BCG_RGB_B',0.8862])", "(profilenamespace getvariable ['GUI_BCG_RGB_A',0.7])"};
             idc = -1;

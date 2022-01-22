@@ -7,7 +7,7 @@
 */
 private ["_spCfg","_sp","_spawnPos"];
 closeDialog 0;
-cutText ["","BLACK IN"];
+//cutText ["","BLACK IN"];
 
 player setVariable ["life_var_teleported",true,true];
 
@@ -60,13 +60,6 @@ if (life_spawn_point isEqualTo []) then {
 
 if (life_firstSpawn) then {
     life_firstSpawn = false;
-    [
-        [
-            ["AsYetUntitled: Development Build","<t align = 'center' shadow = '1' size = '0.7' font='PuristaBold'>%1</t><br/>"],
-            ["By: Ni1kko","<t align = 'center' shadow = '1' size = '1.0'>%1</t><br/>"],
-            ["And: IceEagle132","<t align = 'center' shadow = '1' size = '1.0'>%1</t>"]
-        ]
-    ] spawn BIS_fnc_typeText;
 };
 
 [] call life_fnc_playerSkins;

@@ -10,11 +10,20 @@ diag_log "--------------------------------- Starting Altis Life Client Init ----
 diag_log format["------------------------------------------ Version %1 -------------------------------------------",(LIFE_SETTINGS(getText,"framework_version"))];
 diag_log "----------------------------------------------------------------------------------------------------";
 
-0 cutText[localize "STR_Init_ClientSetup","BLACK FADED",99999999];
 private _timeStamp = diag_tickTime;
 
-waitUntil {!isNull (findDisplay 46)};
+waitUntil{uiSleep 0.5;(getClientState isEqualTo "BRIEFING READ") && !isNull findDisplay 46};
 enableSentences false;
+
+private _life_fnc_exit = compile '
+    _this call life_fnc_setLoadingText;
+    uiSleep 5;
+    endLoadingScreen;
+    endMission "END1"; 
+';
+
+startLoadingScreen ["","life_Rsc_DisplayLoading"];
+["Setting up client,", "Please Wait..."] call life_fnc_setLoadingText; uiSleep(random[0.5,3,6]);
 
 diag_log "[Life Client] Initialization Variables";
 [] call life_fnc_configuration;
@@ -32,16 +41,16 @@ diag_log "[Life Client] Waiting for the server to be ready...";
 waitUntil {!isNil "life_var_serverLoaded" && {!isNil "extdb_var_database_error"}};
 
 if (extdb_var_database_error) exitWith {
-    0 cutText [localize "STR_Init_ExtdbFail","BLACK FADED",99999999];
+    ["Database failed to load,", "Please contact an administrator"] call _life_fnc_exit;
 };
 
 waitUntil {life_var_serverLoaded};
 diag_log "[Life Client] Server loading completed ";
-0 cutText [localize "STR_Init_ServerReady","BLACK FADED",99999999];
+["Waiting for the server to be ready"] call life_fnc_setLoadingText; uiSleep(random[0.5,3,6]);
 
 [] call SOCK_fnc_dataQuery;
 waitUntil {life_session_completed};
-0 cutText[localize "STR_Init_ClientFinish","BLACK FADED",99999999];
+["Finishing client setup procedure..."] call life_fnc_setLoadingText; uiSleep(random[0.5,3,6]);
 
 [] spawn life_fnc_escInterupt;
 
@@ -78,7 +87,7 @@ diag_log "[Life Client] Executing client.fsm";
 
 [] spawn life_fnc_survival;
 
-0 cutText ["","BLACK IN"];
+//0 cutText ["","BLACK IN"];  
 
 [] spawn {
     for "_i" from 0 to 1 step 0 do {

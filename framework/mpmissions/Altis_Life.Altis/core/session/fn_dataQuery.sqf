@@ -10,7 +10,8 @@
 
 if (life_session_completed) exitWith {}; //Why did this get executed when the client already initialized? Fucking arma...
 
-cutText[format [localize "STR_Session_Query",getPlayerUID player],"BLACK FADED"];
-0 cutFadeOut 999999999;
+//cutText[format [localize "STR_Session_Query",getPlayerUID player],"BLACK FADED"];
+//0 cutFadeOut 999999999;
+["Sending request to server for player information...."] call life_fnc_setLoadingText; uiSleep(random[0.5,3,6]);
 
 [player] remoteExec ["DB_fnc_queryRequest",2];

@@ -11,10 +11,11 @@
 private _count = count _this;
 life_session_tries = life_session_tries + 1;
 if (life_session_completed) exitWith {}; //Why did this get executed when the client already initialized? Fucking arma...
-if (life_session_tries > 3) exitWith {cutText[localize "STR_Session_Error","BLACK FADED"]; 0 cutFadeOut 999999999;};
+if (life_session_tries > 3) exitWith {["There was an error in trying to setup your client"] call life_fnc_setLoadingText; uiSleep(random[0.5,3,6]); uiSleep 5; endLoadingScreen; endMission "END1";};
 
-0 cutText [localize "STR_Session_Received","BLACK FADED"];
-0 cutFadeOut 9999999;
+//0 cutText [localize "STR_Session_Received","BLACK FADED"];
+//0 cutFadeOut 9999999;
+["Received request from server... Validating..."] call life_fnc_setLoadingText; uiSleep(random[0.5,3,6]);
 
 //Error handling and junk..
 if (isNil "_this") exitWith {[] call SOCK_fnc_insertPlayerInfo;};
