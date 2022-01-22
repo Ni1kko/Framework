@@ -91,7 +91,7 @@ for "_i" from 0 to 1 step 0 do {
     ((uiNamespace getVariable "RscDisplayMPInterrupt") displayCtrl 2) ctrlSetText "Resume";//Continue
 
     //Save Btn
-    ((uiNamespace getVariable "RscDisplayMPInterrupt") displayCtrl 103) ctrlEnable false;
+    ((uiNamespace getVariable "RscDisplayMPInterrupt") displayCtrl 103) ctrlEnable true;
     ((uiNamespace getVariable "RscDisplayMPInterrupt") displayCtrl 103) ctrlSetText "Sync Data";
     ((uiNamespace getVariable "RscDisplayMPInterrupt") displayCtrl 103) ctrlSetToolTip "Sync Player Data To Hive";
     ((uiNamespace getVariable "RscDisplayMPInterrupt") displayCtrl 103) buttonSetAction "[] call SOCK_fnc_syncData";
