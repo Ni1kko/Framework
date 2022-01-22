@@ -10,10 +10,18 @@ _fnc_scriptName = "Player Synchronization";
 if (isNil "life_session_time") then {life_session_time = false;};
 if (life_session_time) exitWith {hint localize "STR_Session_SyncdAlready";};
 
+life_var_lastSynced = time;
 [] call SOCK_fnc_updateRequest;
-hint localize "STR_Session_SyncData";
-[] spawn {
-    life_session_time = true;
-    sleep (5 * 60);
+hint "Syncing player information to Hive.\n\nPlease wait atleast 10 seconds before leaving";
+
+//allow admins to sync anytime
+if(call life_adminlevel)then{ 
     life_session_time = false;
+    life_var_lastSynced = (time + (5 * 60));
+}else{
+    [] spawn {
+        life_session_time = true;
+        sleep (5 * 60);
+        life_session_time = false;
+    };
 };

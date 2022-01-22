@@ -50,6 +50,7 @@ life_var_combat = false;
 life_var_autorun_thread = scriptNull;
 life_var_autorun_inventoryOpened = false; 
 life_var_autorun_interrupt = false;
+life_var_lastSynced = time;
 
 //Hud
 life_var_hud_threads = nil;

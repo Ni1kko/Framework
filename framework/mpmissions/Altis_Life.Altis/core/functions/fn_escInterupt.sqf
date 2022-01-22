@@ -1,72 +1,132 @@
 #include "..\..\script_macros.hpp"
 
 /*
-    File: fn_escInterupt.sqf
-    Author: Bryan "Tonic" Boardwine
 
-    Description:
-    Monitors when the ESC menu is pulled up and blocks off
-    certain controls when conditions meet.
+	Function: 	life_fnc_escInterupt
+	Project: 	AsYetUntitled
+	Author:     Tonic, Nikko, IceEagle132
+	Github:		https://github.com/AsYetUntitled/Framework
+	
 */
-disableSerialization;
-
-private _escSync = { 
+ 
+disableSerialization;  
+ 
+private _escSync = {
     disableSerialization;
-    private _abortButton = CONTROL(49,104);
-    private _abortTime = LIFE_SETTINGS(getNumber,"escapeMenu_timer");
-    private _timeStamp = time + _abortTime;
 
-    waitUntil {
-        _abortButton ctrlSetText format [localize "STR_NOTF_AbortESC",[(_timeStamp - time),"SS.MS"] call BIS_fnc_secondsToString];
-        _abortButton ctrlCommit 0;
-        if (dialog && {isNull (findDisplay 7300)}) then {closeDialog 0};
-
-        round(_timeStamp - time) <= 0 || {isNull (findDisplay 49)}
+    //Timer Finished Disapy Exit Button
+    if(_this)then{
+        private _thread = [] spawn {
+            disableSerialization;
+            private _timeStamp = time + 10;
+            waitUntil {
+                ((findDisplay 49) displayCtrl 104) ctrlSetText format[localize "STR_NOTF_AbortESC",[(_timeStamp - time),"SS.MS"] call BIS_fnc_secondsToString];
+                ((findDisplay 49) displayCtrl 104) ctrlCommit 0;
+                round(_timeStamp - time) <= 0 || isNull (findDisplay 49)
+            };
+            ((findDisplay 49) displayCtrl 104) ctrlSetText "Exit";
+            ((findDisplay 49) displayCtrl 104) ctrlCommit 0;
+        };
+        waitUntil{scriptDone _thread || isNull (findDisplay 49)};
+        ((findDisplay 49) displayCtrl 104) ctrlEnable true; //Enable Exit Button
     };
+};
 
-    _abortButton ctrlSetText localize "STR_DISP_INT_ABORT";
-    _abortButton ctrlCommit 0;
-    _abortButton ctrlEnable true;
+private _SaveSync = {
+    disableSerialization;
+
+    //Timer Finished Disapy save Button
+    if((life_var_lastSynced + (5 * 60)) < time)then{
+        private _thread = [] spawn {
+            disableSerialization;
+            private _timeStamp = life_var_lastSynced + (5 * 60);
+            waitUntil {
+                ((findDisplay 49) displayCtrl 103) ctrlSetText format["SyncData Blocked For %1",[(_timeStamp - time),"SS.MS"] call BIS_fnc_secondsToString];
+                ((findDisplay 49) displayCtrl 103) ctrlCommit 0;
+                round(_timeStamp - time) <= 0 || isNull (findDisplay 49)
+            }; 
+            ((findDisplay 49) displayCtrl 103) ctrlSetText "Sync Data";
+            ((findDisplay 49) displayCtrl 103) ctrlCommit 0;
+        };
+        waitUntil{scriptDone _thread || isNull (findDisplay 49)};
+        ((findDisplay 49) displayCtrl 103) ctrlEnable true; //Enable Save Btn
+    };
 };
 
 private _canUseControls = {
     (playerSide isEqualTo west) || {!((player getVariable ["restrained",false]) || {player getVariable ["Escorting",false]} || {player getVariable ["transporting",false]} || {life_is_arrested} || {life_istazed} || {life_isknocked})}
 };
 
+//Handle Esacpe Menu > Configure Btn
+[]spawn{
+    for "_i" from 0 to 1 step 0 do {
+        //Esc > Game
+        waitUntil{!isNull (uiNamespace getVariable "RscDisplayGameOptions")};
+        //Difficulty
+        ((uiNamespace getVariable "RscDisplayGameOptions") displayCtrl 304) ctrlEnable false;
+        ((uiNamespace getVariable "RscDisplayGameOptions") displayCtrl 304) ctrlSetText "Disabled"; 
+        //Colors
+        ((uiNamespace getVariable "RscDisplayGameOptions") displayCtrl 2404) ctrlEnable true;
+        ((uiNamespace getVariable "RscDisplayGameOptions") displayCtrl 2404) ctrlSetText "Game Colors";
+        //Layout
+        ((uiNamespace getVariable "RscDisplayGameOptions") displayCtrl 2405) ctrlEnable false;
+        ((uiNamespace getVariable "RscDisplayGameOptions") displayCtrl 2405) ctrlSetText "AntiCheat Patch";
+        
+        waitUntil{isNull (uiNamespace getVariable "RscDisplayGameOptions")};
+    };
+};
+
+//Handle Esacpe Menu
 for "_i" from 0 to 1 step 0 do {
-    waitUntil {!isNull (findDisplay 49)};
-    private _abortButton = CONTROL(49,104);
-    _abortButton ctrlRemoveAllEventHandlers "ButtonDown";
-    _abortButton ctrlAddEventHandler ["ButtonDown",life_fnc_abort];
-    private _respawnButton = CONTROL(49,1010);
-    private _fieldManual = CONTROL(49,122);
-    private _saveButton = CONTROL(49,103);
-    _saveButton ctrlSetText "";
-
-    _respawnButton buttonSetAction "player setDamage 1; life_var_respawned = true;";
+    waitUntil{!isNull (findDisplay 49)};
     
-    //Extras
-    if (LIFE_SETTINGS(getNumber,"escapeMenu_displayExtras") isEqualTo 1) then {
-        private _topButton = CONTROL(49,2);
-        _topButton ctrlEnable false;
-        _topButton ctrlSetText format ["%1",LIFE_SETTINGS(getText,"escapeMenu_displayText")];
-        _saveButton ctrlEnable false;
-        _saveButton ctrlSetText format ["Player UID: %1",getPlayerUID player];
-    };
+    //Name
+    ((findDisplay 49) displayCtrl 523) ctrlSetText profileName;
+    ((findDisplay 49) displayCtrl 523) ctrlSetToolTip "Your Arma3 Profile Name";
 
-    //Block off our buttons first.
-    _abortButton ctrlEnable false;
-    _fieldManual ctrlEnable false; //Never re-enable, blocks an old script executor.
-    _fieldManual ctrlShow false;
+    //SteamID (Short)
+    ((findDisplay 49) displayCtrl 109) ctrlSetText format["%1|%2",(profileNameSteam),([(getPlayerUID player), 12, 17] call BIS_fnc_trimString)];
+    ((findDisplay 49) displayCtrl 109) ctrlSetToolTip "SteamName & Last 5 Number Of Your SteamID";
 
-    if (call _canUseControls) then {
-        [] spawn _escSync;
-    } else {
-        _respawnButton ctrlEnable false;
-    };
+    //Continue Btn
+    ((findDisplay 49) displayCtrl 2) ctrlEnable true; //Continue
+    ((findDisplay 49) displayCtrl 2) ctrlSetText "Resume";//Continue
 
-    waitUntil {isNull (findDisplay 49) || {!alive player}};
-    if (!isNull (findDisplay 49) && {!alive player}) then {
-        (findDisplay 49) closeDisplay 2;
+    //Save Btn
+    ((findDisplay 49) displayCtrl 103) ctrlEnable false;
+    ((findDisplay 49) displayCtrl 103) ctrlSetText "Sync Data";
+    ((findDisplay 49) displayCtrl 103) ctrlSetToolTip "Sync Player Data To Hive";
+    ((findDisplay 49) displayCtrl 103) buttonSetAction "[] call SOCK_fnc_syncData";
+
+    //Respawn Btn
+    ((findDisplay 49) displayCtrl 1010) ctrlEnable false;
+    ((findDisplay 49) displayCtrl 1010) ctrlSetText "Respawn";
+    ((findDisplay 49) displayCtrl 1010) ctrlSetToolTip "Kills You And Gives You A New Life & Choice Of Spawn Locations";
+
+    //Configure Btn
+    ((findDisplay 49) displayCtrl 101) ctrlSetText "Game Options";
+    ((findDisplay 49) displayCtrl 101) ctrlEnable true;
+    ((findDisplay 49) displayCtrl 101) ctrlSetToolTip "Configure Arma Options";
+
+    //Field manual Btn
+    ((findDisplay 49) displayCtrl 122) ctrlEnable false;
+    ((findDisplay 49) displayCtrl 122) ctrlSetText "Disabled"; 
+    ((findDisplay 49) displayCtrl 122) ctrlSetToolTip "";
+    
+    //Exit Btn
+    ((findDisplay 49) displayCtrl 104) ctrlEnable false;
+    ((findDisplay 49) displayCtrl 104) ctrlSetText "Exit";
+    ((findDisplay 49) displayCtrl 104) buttonSetAction "[] call life_fnc_abort;";
+    ((findDisplay 49) displayCtrl 104) ctrlSetToolTip "Abandon Server And Sync Data";
+    
+    //Enable Contols
+    _usebleCtrl = call _canUseControls; 
+    _usebleCtrl spawn _escSync;
+    if(_usebleCtrl)then{
+        //Respawn Btn.
+        ((findDisplay 49) displayCtrl 1010) ctrlEnable true;
+        //SaveBtn
+        []spawn _SaveSync;
     };
+    waitUntil{isNull (findDisplay 49)};
 };

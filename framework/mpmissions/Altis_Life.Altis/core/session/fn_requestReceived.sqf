@@ -155,6 +155,8 @@ switch (playerSide) do {
     };
 };
 
+life_isAdmin = compileFinal str ((call life_adminlevel) > 0);
+
 [] call life_fnc_loadGear;
  
 if (count (_this select (_count - 1)) > 0) then {
