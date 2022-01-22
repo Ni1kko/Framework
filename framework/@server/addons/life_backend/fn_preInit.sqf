@@ -100,9 +100,6 @@ master_group attachTo[bank_obj,[0,0,0]];
 
 [8,true,12] call LifeFSM_fnc_timeModule;
 
-life_adminLevel = {0};
-life_medicLevel = {0};
-life_copLevel = {0};
 CONST(JxMxE_PublishVehicle,"false");
 
 /* Setup radio channels for west/independent/civilian */
