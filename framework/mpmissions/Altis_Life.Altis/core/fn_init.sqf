@@ -21,7 +21,10 @@ private _life_fnc_exit = compile '
     endLoadingScreen;
     endMission "END1"; 
 ';
+// -- Make it so they are now allowed to walk on debug
+disableUserInput true;
 
+// -- Start Loading Screen
 startLoadingScreen ["","life_Rsc_DisplayLoading"];
 ["Setting up client,", "Please Wait..."] call life_fnc_setLoadingText; uiSleep(random[0.5,3,6]);
 
@@ -52,6 +55,8 @@ diag_log "[Life Client] Server loading completed ";
 waitUntil {life_session_completed};
 ["Finishing client setup procedure..."] call life_fnc_setLoadingText; uiSleep(random[0.5,3,6]);
 
+[("Welcome " + profilename),"Have Fun And Respect The Rules!..."] call life_fnc_setLoadingText; uiSleep(5);
+
 [] spawn life_fnc_escInterupt;
 
 switch (playerSide) do {
@@ -70,12 +75,14 @@ switch (playerSide) do {
 };
 CONSTVAR(life_paycheck);
 
-player setVariable ["restrained", false, true];
-player setVariable ["Escorting", false, true];
-player setVariable ["transporting", false, true];
-player setVariable ["playerSurrender", false, true];
-player setVariable ["realname", profileName, true];
-player setVariable ["lifeState","HEALTHY",true];
+{player setVariable _x} forEach [
+    ['restrained', false, true],
+    ['Escorting', false, true],
+    ['transporting', false, true],
+    ['playerSurrender', false, true],
+    ['realname', profileName, true],
+    ['lifeState','HEALTHY',true]
+];
 
 diag_log "[Life Client] Past Settings Init";
 [] call life_fnc_client;
@@ -86,8 +93,6 @@ diag_log "[Life Client] Executing client.fsm";
 [player, life_settings_enableSidechannel, playerSide] remoteExecCall ["TON_fnc_manageSC", RSERV];
 
 [] spawn life_fnc_survival;
-
-//0 cutText ["","BLACK IN"];  
 
 [] spawn {
     for "_i" from 0 to 1 step 0 do {

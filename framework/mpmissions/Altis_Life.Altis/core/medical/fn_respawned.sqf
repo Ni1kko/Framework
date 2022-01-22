@@ -38,12 +38,14 @@ if (life_removeWanted) then {
 };
 
 //Set some vars on our new body.
-player setVariable ["restrained",false,true];
-player setVariable ["Escorting",false,true];
-player setVariable ["transporting",false,true];
-player setVariable ["playerSurrender",false,true];
-player setVariable ["steam64id",getPlayerUID player,true]; //Reset the UID.
-player setVariable ["realname",profileName,true]; //Reset the players name.
+{player setVariable _x} forEach [
+    ['restrained',false,true],
+    ['Escorting',false,true],
+    ['transporting',false,true],
+    ['playerSurrender',false,true],
+    ['steam64id',getPlayerUID player,true],
+    ['realname',profileName,true]
+];
 
 [] call life_fnc_startLoadout;
 [] call life_fnc_setupActions;

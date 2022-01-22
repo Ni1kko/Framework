@@ -21,11 +21,13 @@ _reviveCost = LIFE_SETTINGS(getNumber,"revive_fee");
 player setUnconscious false;
 player playMoveNow "amovpercmstpsnonwnondnon";
 
-player setVariable ["medicStatus",nil,true];
-player setVariable ["Revive",nil,true];
-player setVariable ["name",nil,true];
-player setVariable ["Reviving",nil,true];
-player setVariable ["lifeState","HEALTHY",true];
+{player setVariable _x} forEach [
+	['medicStatus',nil,true],
+	['Revive',nil,true],
+	['name',nil,true],
+	['Reviving',nil,true],
+	['lifeState','HEALTHY',true]
+];
 
 //Take fee for services.
 if (life_var_bank > _reviveCost) then {
