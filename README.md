@@ -1,4 +1,4 @@
-[![|Solid](http://i.imgur.com/pL3heId.png)](https://github.com/AsYetUntitled/Framework/)
+[![|Solid](https://i.imgur.com/gGC2TNF.png)](https://github.com/AsYetUntitled/Framework/)
 
 AsYetUntitled, Modifed BY: <b>@Ni1kko</b>
 
