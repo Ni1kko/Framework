@@ -1,17 +1,18 @@
+#include "..\..\script_macros.hpp"
 /*	
 	File: fn_intro.sqf
-	Usage: [] execVM "dialog\function\fn_intro.sqf";
+	Usage: [] spawn life_fnc_intro;
 */
-private ["_camera", "_camDistance","_randCamX","_randCamY","_camTime"];
-_camDistance = 350;
-_randCamX = 75 - floor(random 150);
-_randCamY = 75 - floor(random 150);
-_camTime = 12;
+
+private _camDistance = LIFE_SETTINGS(getNumber,"cam_distance");
+private _camTime = LIFE_SETTINGS(getNumber,"cam_time");
+private _randCamX = 75 - floor(random 150);
+private _randCamY = 75 - floor(random 150);
 
 //intro move
 showCinemaBorder false;
 playsound "intro"; // Lets Play Some Music
-
+private ["_camera"];
 _camera = "camera" camCreate [(position player select 0)+_randCamX, (position player select 1)+_randCamY,(position player select 2)+_camDistance];
 _camera cameraEffect ["internal","back"];
 _camera camSetFOV 2.000;

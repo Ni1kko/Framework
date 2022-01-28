@@ -206,6 +206,7 @@ class CfgFunctions {
             class filterGarage {};
             class setLoadingText {};
             class abort {};
+            class intro {};
         };
 
         class Functions {
