@@ -9,6 +9,7 @@
  
 //-- Close escape menu (must be closed before display 46 is closed)
 (findDisplay 49) closeDisplay 2;
+disableUserInput true;
 
 for "_idd" from 140 to 46 do {
     private _display = (findDisplay _idd);
@@ -34,5 +35,6 @@ for "_idd" from 140 to 46 do {
     playSound "byebye";
     uiSleep 3;
     endLoadingScreen;
-    _this closeDisplay 2; 
+    _this closeDisplay 2;
+    disableUserInput false;
 };
