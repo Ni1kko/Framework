@@ -4,11 +4,11 @@
 */
 
 params [
-	['_requestType','',['']],
-	['_senderInput','',['']],
-	['_senderLocation',false,[false]],
-	['_BEGuid_Sender','',['']],
-	['_BEGuid_Receiver','']
+	["_requestType","",[""]],
+	["_senderInput","",[""]],
+	["_senderLocation",false,[false]],
+	["_BEGuid_Sender","",[""]],
+	["_BEGuid_Receiver",""]
 ];
 
 if(!isServer)exitwith{false};
