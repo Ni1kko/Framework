@@ -56,9 +56,7 @@ class CfgAntiHack
     serverlanguage = 'English';  //Language all clients must have, if (checklanguage = 1)
     
     //--- names that you dont want players to use
-    nameblacklist[] = {
-        "Admin","Administor"
-    };
+    nameblacklist[] = { "Admin","Administrator","Owner","Staff","Dev","Player 1","Moderator" };
 
     //--- bad menu IDD array (IDD's found in this array will be auto closed)
     badmenus[] = {
