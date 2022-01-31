@@ -1,6 +1,25 @@
 
 if(!isNil "life_fnc_cellphone_show")exitWith{};
 
+KRON_StrToArray = {
+    private["_in","_i","_arr","_out"];
+    _in=_this select 0;
+    _arr = toArray(_in);
+    _out=[];
+    for "_i" from 0 to (count _arr)-1 do {
+        _out=_out+[toString([_arr select _i])];
+    };
+    _out
+};
+
+KRON_StrLen = {
+    private["_in","_arr","_len"];
+    _in=_this select 0;
+    _arr=[_in] call KRON_StrToArray;
+    _len=count (_arr);
+    _len
+};
+
 KRON_Replace = {
     private["_str","_old","_new","_out","_tmp","_jm","_la","_lo","_ln","_i"];
     _str=_this select 0;
@@ -287,7 +306,7 @@ life_fnc_cellphone_messageKeyUp = {
 };
 life_fnc_cellphone_messageReceived = {
     disableSerialization;
-    params['_senderName','_senderBEGuid','_cellphoneMode','_receiverBEGuid','_message','_pos'];
+    params["_senderName","_senderBEGuid","_cellphoneMode","_receiverBEGuid","_message","_pos"];
 
     if(_senderName == "" || _message == "") exitWith {};
     private _hasPos = true;
