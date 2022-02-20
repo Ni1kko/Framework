@@ -6344,17 +6344,8 @@
         </Key>
     </Package>
     <Package name="Life_Items">
-        <Key ID="STR_Item_Cannabis">
-            <Original>Marijuana leaf</Original>
-            <Czech>marihuana list</Czech>
-            <Spanish>Cannabis</Spanish>
-            <Russian></Russian>
-            <German>Kannabis</German>
-            <French>Cannabis</French>
-            <Italian>Cannabis</Italian>
-            <Portuguese>Maconha não Processada</Portuguese>
-            <Polish>Konopie</Polish>
-			<Chinesesimp>大麻叶</Chinesesimp>
+        <Key ID="STR_Item_marijuanaWet">
+            <Original>Marijuana leaf</Original> 
         </Key>
         <Key ID="STR_Item_Apple">
             <Original>Apple</Original>
@@ -6452,17 +6443,8 @@
             <Polish>Olej napędowy</Polish>
 			<Chinesesimp>成品油</Chinesesimp>
         </Key>
-        <Key ID="STR_Item_HeroinU">
+        <Key ID="STR_Item_OpiumpoppyU">
             <Original>Opium Poppy</Original>
-            <Czech>Mák setý</Czech>
-            <Spanish>Planta del Opio</Spanish>
-            <Russian></Russian>
-            <German>Unverarbeitetes Heroin</German>
-            <French>Graine de pavot</French>
-            <Italian>Eroina non processata</Italian>
-            <Portuguese>Heroína não Processada</Portuguese>
-            <Polish>Heroina nieoczyszczona</Polish>
-			<Chinesesimp>罂粟</Chinesesimp>
         </Key>
         <Key ID="STR_Item_HeroinP">
             <Original>Heroin</Original>
@@ -7368,15 +7350,6 @@
         </Key>
         <Key ID="STR_License_Marijuana">
             <Original>Marijuana Training</Original>
-            <Czech>Marihuana Training</Czech>
-            <Spanish>Entrenamiento de Marihuana</Spanish>
-            <Russian></Russian>
-            <German>Marihuanaausbildung</German>
-            <French>Traitement du Cannabis</French>
-            <Italian>Processo Marijuana</Italian>
-            <Portuguese>Treinamento de Maconha</Portuguese>
-            <Polish>Suszenie konopi</Polish>
-			<Chinesesimp>大麻加工证</Chinesesimp>
         </Key>
         <Key ID="STR_License_Cement">
             <Original>Cement Mixing License</Original>
@@ -7391,16 +7364,7 @@
 			<Chinesesimp>水泥制造证</Chinesesimp>
         </Key>
         <Key ID="STR_License_Medmarijuana">
-            <Original>Medical Marijuana License</Original>
-            <Czech>Medical Marihuana Licence</Czech>
-            <Spanish>Licencia de Marihuana Medicinal</Spanish>
-            <Russian></Russian>
-            <German>Medizinisches Marijuana-Lizenz</German>
-            <French>Licence de Cannabis Médical</French>
-            <Italian>Medical Marijuana Licenza</Italian>
-            <Portuguese>Licença Medical Marijuana</Portuguese>
-            <Polish>Medical Marijuana Licencji</Polish>
-			<Chinesesimp>医用大麻许可证</Chinesesimp>
+            <Original>Medical Marijuana License</Original> 
         </Key>
         <Key ID="STR_License_Home">
             <Original>Home Owners License</Original>

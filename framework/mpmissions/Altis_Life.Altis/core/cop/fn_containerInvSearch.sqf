@@ -22,10 +22,12 @@ _illegalValue = 0;
     _isIllegalItem = M_CONFIG(getNumber,"VirtualItems",_var,"illegal");
     if (_isIllegalItem isEqualTo 1 ) then {
         _illegalPrice = M_CONFIG(getNumber,"VirtualItems",_var,"sellPrice");
+        /*
         if (!isNull (missionConfigFile >> "VirtualItems" >> _var >> "processedItem")) then {
             _illegalItemProcessed = M_CONFIG(getText,"VirtualItems",_var,"processedItem");
             _illegalPrice = M_CONFIG(getNumber,"VirtualItems",_illegalItemProcessed,"sellPrice");
         };
+        */
 
         _illegalValue = _illegalValue + (round(_val * _illegalPrice / 2));
     };

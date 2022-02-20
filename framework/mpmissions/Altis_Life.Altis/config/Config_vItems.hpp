@@ -1,3 +1,5 @@
+#include "..\script_macros.hpp"
+
 /*
 *    FORMAT:
 *        STRING (Conditions) - Must return boolean :
@@ -140,14 +142,26 @@ class VirtualShops {
 *        edible = Item Edible (-1 = Disabled, other values = added value)
 *        drinkable = Item Drinkable (-1 = Disabled, other values = added value)
 *        icon = Item Icon
-*        processedItem = Processed Item
+*        object = name of object that will be used when droping item
 */
-class VirtualItems {
-    //Virtual Items
+class VirtualItems 
+{
+    //--- Misc
+    class money {
+        variable = VITEM_MISC_MONEY;
+        displayName = "STR_Item_Money";
+        weight = 0;
+        buyPrice = -1;
+        sellPrice = -1;
+        illegal = false;
+        edible = -1;
+        drinkable = -1;
+        icon = "";
+        object = "Land_Money_F";
+    };
 
-    //Misc
     class pickaxe {
-        variable = "pickaxe";
+        variable = VITEM_MISC_PICKAXE;
         displayName = "STR_Item_Pickaxe";
         weight = 2;
         buyPrice = 750;
@@ -156,10 +170,11 @@ class VirtualItems {
         edible = -1;
         drinkable = -1;
         icon = "icons\ico_pickaxe.paa";
+        object = "Land_Suitcase_F";
     };
 
     class defibrillator {
-        variable = "defibrillator";
+        variable = VITEM_MISC_DEFIBILLATOR;
         displayName = "STR_Item_Defibrillator";
         weight = 4;
         buyPrice = 900;
@@ -168,10 +183,11 @@ class VirtualItems {
         edible = -1;
         drinkable = -1;
         icon = "icons\ico_defibrillator.paa";
+        object = "Land_Suitcase_F";
     };
 
     class toolkit {
-        variable = "toolkit";
+        variable = VITEM_MISC_TOOLKIT;
         displayName = "STR_Item_Toolkit";
         weight = 4;
         buyPrice = 350;
@@ -180,10 +196,11 @@ class VirtualItems {
         edible = -1;
         drinkable = -1;
         icon = "\a3\weapons_f\items\data\UI\gear_toolkit_ca.paa";
+        object = "Land_Suitcase_F";
     };
 
     class fuelEmpty {
-        variable = "fuelEmpty";
+        variable = VITEM_MISC_FUELCAN_EMPTY;
         displayName = "STR_Item_FuelE";
         weight = 2;
         buyPrice = -1;
@@ -192,10 +209,11 @@ class VirtualItems {
         edible = -1;
         drinkable = -1;
         icon = "icons\ico_fuelEmpty.paa";
+        object = "Land_CanisterFuel_F";
     };
 
     class fuelFull {
-        variable = "fuelFull";
+        variable = VITEM_MISC_FUELCAN_FULL;
         displayName = "STR_Item_FuelF";
         weight = 5;
         buyPrice = 850;
@@ -204,10 +222,11 @@ class VirtualItems {
         edible = -1;
         drinkable = -1;
         icon = "icons\ico_fuel.paa";
+        object = "Land_CanisterFuel_F";
     };
 
     class spikeStrip {
-        variable = "spikeStrip";
+        variable = VITEM_MISC_SPIKESTRIP;
         displayName = "STR_Item_SpikeStrip";
         weight = 15;
         buyPrice = 2500;
@@ -216,10 +235,11 @@ class VirtualItems {
         edible = -1;
         drinkable = -1;
         icon = "icons\ico_spikeStrip.paa";
+        object = "Land_Suitcase_F";
     };
 
     class lockpick {
-        variable = "lockpick";
+        variable = VITEM_MISC_LOCKPICK;
         displayName = "STR_Item_Lockpick";
         weight = 1;
         buyPrice = 150;
@@ -228,10 +248,11 @@ class VirtualItems {
         edible = -1;
         drinkable = -1;
         icon = "icons\ico_lockpick.paa";
+        object = "Land_Suitcase_F";
     };
 
     class goldbar {
-        variable = "goldBar";
+        variable = VITEM_MISC_GOLDBAR;
         displayName = "STR_Item_GoldBar";
         weight = 12;
         buyPrice = -1;
@@ -240,6 +261,7 @@ class VirtualItems {
         edible = -1;
         drinkable = -1;
         icon = "icons\ico_goldBar.paa";
+        object = "Land_Suitcase_F";
     };
 
     class blastingcharge {
@@ -252,10 +274,11 @@ class VirtualItems {
         edible = -1;
         drinkable = -1;
         icon = "icons\ico_blastingCharge.paa";
+        object = "Land_Suitcase_F";
     };
 
     class boltcutter {
-        variable = "boltCutter";
+        variable = VITEM_MISC_BOLTCUTTERS;
         displayName = "STR_Item_BCutter";
         weight = 5;
         buyPrice = 7500;
@@ -264,10 +287,11 @@ class VirtualItems {
         edible = -1;
         drinkable = -1;
         icon = "icons\ico_boltCutter.paa";
+        object = "Land_Suitcase_F";
     };
 
     class defusekit {
-        variable = "defuseKit";
+        variable = VITEM_MISC_DEFUSEKIT;
         displayName = "STR_Item_DefuseKit";
         weight = 2;
         buyPrice = 2500;
@@ -276,10 +300,11 @@ class VirtualItems {
         edible = -1;
         drinkable = -1;
         icon = "icons\ico_defuseKit.paa";
+        object = "Land_Suitcase_F";
     };
 
     class storagesmall {
-        variable = "storageSmall";
+        variable = VITEM_MISC_STORAGEBOX_S;
         displayName = "STR_Item_StorageBS";
         weight = 5;
         buyPrice = 75000;
@@ -288,10 +313,11 @@ class VirtualItems {
         edible = -1;
         drinkable = -1;
         icon = "icons\ico_storageSmall.paa";
+        object = "Land_Suitcase_F";
     };
 
     class storagebig {
-        variable = "storageBig";
+        variable = VITEM_MISC_STORAGEBOX_L;
         displayName = "STR_Item_StorageBL";
         weight = 10;
         buyPrice = 150000;
@@ -300,11 +326,12 @@ class VirtualItems {
         edible = -1;
         drinkable = -1;
         icon = "icons\ico_storageBig.paa";
+        object = "Land_Suitcase_F";
     };
 
-    //Mined Items
+    //---Mined Items
     class oil_unprocessed {
-        variable = "oilUnprocessed";
+        variable = VITEM_MINED_CRUDE_OIL;
         displayName = "STR_Item_OilU";
         weight = 7;
         buyPrice = -1;
@@ -313,10 +340,11 @@ class VirtualItems {
         edible = -1;
         drinkable = -1;
         icon = "icons\ico_oilUnprocessed.paa";
+        object = "Land_Suitcase_F";
     };
 
     class oil_processed {
-        variable = "oilProcessed";
+        variable = VITEM_MINED_OIL;
         displayName = "STR_Item_OilP";
         weight = 6;
         buyPrice = -1;
@@ -325,10 +353,11 @@ class VirtualItems {
         edible = -1;
         drinkable = -1;
         icon = "icons\ico_oilProcessed.paa";
+        object = "Land_Suitcase_F";
     };
 
     class copper_unrefined {
-        variable = "copperUnrefined";
+        variable = VITEM_MINED_COPPER_SULFIDE_ORES;
         displayName = "STR_Item_CopperOre";
         weight = 4;
         buyPrice = -1;
@@ -337,10 +366,11 @@ class VirtualItems {
         edible = -1;
         drinkable = -1;
         icon = "icons\ico_copperOre.paa";
+        object = "Land_Suitcase_F";
     };
 
     class copper_refined {
-        variable = "copperRefined";
+        variable = VITEM_MINED_COPPER;
         displayName = "STR_Item_CopperIngot";
         weight = 3;
         buyPrice = -1;
@@ -349,10 +379,11 @@ class VirtualItems {
         edible = -1;
         drinkable = -1;
         icon = "icons\ico_copper.paa";
+        object = "Land_Suitcase_F";
     };
 
     class iron_unrefined {
-        variable = "ironUnrefined";
+        variable = VITEM_MINED_IRON_ORE;
         displayName = "STR_Item_IronOre";
         weight = 5;
         buyPrice = -1;
@@ -361,10 +392,11 @@ class VirtualItems {
         edible = -1;
         drinkable = -1;
         icon = "icons\ico_ironOre.paa";
+        object = "Land_Suitcase_F";
     };
 
     class iron_refined {
-        variable = "ironRefined";
+        variable = VITEM_MINED_IRON;
         displayName = "STR_Item_IronIngot";
         weight = 3;
         buyPrice = -1;
@@ -373,10 +405,11 @@ class VirtualItems {
         edible = -1;
         drinkable = -1;
         icon = "icons\ico_iron.paa";
+        object = "Land_Suitcase_F";
     };
 
     class salt_unrefined {
-        variable = "saltUnrefined";
+        variable = VITEM_MINED_SALT_BRINE;
         displayName = "STR_Item_Salt";
         weight = 3;
         buyPrice = -1;
@@ -385,10 +418,11 @@ class VirtualItems {
         edible = -1;
         drinkable = -1;
         icon = "icons\ico_saltUnprocessed.paa";
+        object = "Land_Suitcase_F";
     };
 
     class salt_refined {
-        variable = "saltRefined";
+        variable = VITEM_MINED_SALT;
         displayName = "STR_Item_SaltR";
         weight = 1;
         buyPrice = -1;
@@ -397,10 +431,11 @@ class VirtualItems {
         edible = -1;
         drinkable = -1;
         icon = "icons\ico_saltProcessed.paa";
+        object = "Land_Suitcase_F";
     };
 
     class sand {
-        variable = "sand";
+        variable = VITEM_MINED_SAND;
         displayName = "STR_Item_Sand";
         weight = 3;
         buyPrice = -1;
@@ -409,10 +444,11 @@ class VirtualItems {
         edible = -1;
         drinkable = -1;
         icon = "icons\ico_sand.paa";
+        object = "Land_Suitcase_F";
     };
 
     class glass {
-        variable = "glass";
+        variable = VITEM_MINED_GLASS;
         displayName = "STR_Item_Glass";
         weight = 1;
         buyPrice = -1;
@@ -421,10 +457,11 @@ class VirtualItems {
         edible = -1;
         drinkable = -1;
         icon = "icons\ico_glass.paa";
+        object = "Land_Suitcase_F";
     };
 
     class diamond_uncut {
-        variable = "diamondUncut";
+        variable = VITEM_MINED_DIAMOND_ORE;
         displayName = "STR_Item_DiamondU";
         weight = 4;
         buyPrice = -1;
@@ -433,10 +470,11 @@ class VirtualItems {
         edible = -1;
         drinkable = -1;
         icon = "icons\ico_diamondUncut.paa";
+        object = "Land_Suitcase_F";
     };
 
     class diamond_cut {
-        variable = "diamondCut";
+        variable = VITEM_MINED_DIAMOND;
         displayName = "STR_Item_DiamondC";
         weight = 2;
         buyPrice = -1;
@@ -445,10 +483,11 @@ class VirtualItems {
         edible = -1;
         drinkable = -1;
         icon = "icons\ico_diamondCut.paa";
+        object = "Land_Suitcase_F";
     };
 
     class rock {
-        variable = "rock";
+        variable = VITEM_MINED_ROCK;
         displayName = "STR_Item_Rock";
         weight = 6;
         buyPrice = -1;
@@ -457,10 +496,11 @@ class VirtualItems {
         edible = -1;
         drinkable = -1;
         icon = "icons\ico_rock.paa";
+        object = "Land_Suitcase_F";
     };
 
     class cement {
-        variable = "cement";
+        variable = VITEM_MINED_CEMENT;
         displayName = "STR_Item_CementBag";
         weight = 5;
         buyPrice = -1;
@@ -469,24 +509,25 @@ class VirtualItems {
         edible = -1;
         drinkable = -1;
         icon = "icons\ico_cement.paa";
+        object = "Land_Suitcase_F";
     };
 
-    //Drugs
-    class heroin_unprocessed {
-        variable = "heroinUnprocessed";
-        displayName = "STR_Item_HeroinU";
+    //--- Drugs
+    class opium_poppy {
+        variable = VITEM_DRUG_OPIUM_POPPY;
+        displayName = "STR_Item_OpiumpoppyU";
         weight = 6;
         buyPrice = -1;
         sellPrice = -1;
         illegal = true;
         edible = -1;
         drinkable = -1;
-        icon = "icons\ico_heroinUnprocessed.paa";
-        processedItem = "heroin_processed";
+        icon = "icons\ico_opiumpoppy.paa";
+        object = "Land_Suitcase_F";
     };
 
     class heroin_processed {
-        variable = "heroinProcessed";
+        variable = VITEM_DRUG_HEROIN;
         displayName = "STR_Item_HeroinP";
         weight = 4;
         buyPrice = 3500;
@@ -495,11 +536,38 @@ class VirtualItems {
         edible = -1;
         drinkable = -1;
         icon = "icons\ico_heroinProcessed.paa";
+        object = "Land_Suitcase_F";
     };
 
-    class cannabis {
-        variable = "cannabis";
-        displayName = "STR_Item_Cannabis";
+    class morphine {
+        variable = VITEM_DRUG_MORPHINE;
+        displayName = "Morphine";
+        weight = 4;
+        buyPrice = -1;
+        sellPrice = 10000;
+        illegal = true;
+        edible = -1;
+        drinkable = -1;
+        icon = "icons\ico_morpine.paa";//need image
+        object = "Land_Suitcase_F";
+    };
+
+    class codeine {
+        variable = VITEM_DRUG_CODEINE;
+        displayName = "Codeine";
+        weight = 1;
+        buyPrice = 2000;
+        sellPrice = 2700;
+        illegal = false;
+        edible = 1;
+        drinkable = 1;
+        icon = "icons\ico_codeine.paa";//need image
+        object = "Land_Suitcase_F";
+    };
+
+    class marijuanaWet {
+        variable = VITEM_DRUG_CANNABIS_WET;
+        displayName = "Marijuana Wet";
         weight = 4;
         buyPrice = -1;
         sellPrice = -1;
@@ -507,12 +575,12 @@ class VirtualItems {
         edible = -1;
         drinkable = -1;
         icon = "icons\ico_cannabis.paa";
-        processedItem = "marijuana";
+        object = "Land_Suitcase_F";
     };
 
     class marijuana {
-        variable = "marijuana";
-        displayName = "STR_Item_Marijuana";
+        variable = VITEM_DRUG_CANNABIS;
+        displayName = "Marijuana";
         weight = 3;
         buyPrice = 2800;
         sellPrice = 2350;
@@ -520,10 +588,11 @@ class VirtualItems {
         edible = -1;
         drinkable = -1;
         icon = "icons\ico_marijuana.paa";
+        object = "Land_Suitcase_F";
     };
 
     class cocaine_unprocessed {
-        variable = "cocaineUnprocessed";
+        variable = VITEM_DRUG_COCA_LEAFS;
         displayName = "STR_Item_CocaineU";
         weight = 6;
         buyPrice = -1;
@@ -532,11 +601,11 @@ class VirtualItems {
         edible = -1;
         drinkable = -1;
         icon = "icons\ico_cocaineUnprocessed.paa";
-        processedItem = "cocaine_processed";
+        object = "Land_Suitcase_F";
     };
 
     class cocaine_processed {
-        variable = "cocaineProcessed";
+        variable = VITEM_DRUG_COCAINE;
         displayName = "STR_Item_CocaineP";
         weight = 4;
         buyPrice = -1;
@@ -545,11 +614,12 @@ class VirtualItems {
         edible = -1;
         drinkable = -1;
         icon = "icons\ico_cocaineProcessed.paa";
+        object = "Land_Suitcase_F";
     };
 
-    //Drink
+    //--- Drinks
     class redgull {
-        variable = "redgull";
+        variable = VITEM_DRINK_REDGULL;
         displayName = "STR_Item_RedGull";
         weight = 1;
         buyPrice = 1500;
@@ -558,10 +628,11 @@ class VirtualItems {
         edible = -1;
         drinkable = 50;
         icon = "icons\ico_redgull.paa";
+        object = "Land_Can_V3_F";
     };
 
     class coffee {
-        variable = "coffee";
+        variable = VITEM_DRINK_COFFEE;
         displayName = "STR_Item_Coffee";
         weight = 1;
         buyPrice = 10;
@@ -570,10 +641,11 @@ class VirtualItems {
         edible = -1;
         drinkable = 100;
         icon = "icons\ico_coffee.paa";
+        object = "Land_Can_V3_F";
     };
 
     class waterBottle {
-        variable = "waterBottle";
+        variable = VITEM_DRINK_WATER;
         displayName = "STR_Item_WaterBottle";
         weight = 1;
         buyPrice = 10;
@@ -582,11 +654,12 @@ class VirtualItems {
         edible = -1;
         drinkable = 100;
         icon = "icons\ico_waterBottle.paa";
+        object = "Land_BottlePlastic_V1_F";
     };
 
-    //Food
+    //---Food
     class apple {
-        variable = "apple";
+        variable = VITEM_FOOD_APPLE;
         displayName = "STR_Item_Apple";
         weight = 1;
         buyPrice = 65;
@@ -595,10 +668,11 @@ class VirtualItems {
         edible = 10;
         drinkable = -1;
         icon = "icons\ico_apple.paa";
+        object = "Land_Suitcase_F";
     };
 
     class peach {
-        variable = "peach";
+        variable = VITEM_FOOD_PEACH;
         displayName = "STR_Item_Peach";
         weight = 1;
         buyPrice = 68;
@@ -607,10 +681,11 @@ class VirtualItems {
         edible = 10;
         drinkable = -1;
         icon = "icons\ico_peach.paa";
+        object = "Land_Suitcase_F";
     };
 
     class tbacon {
-        variable = "tbacon";
+        variable = VITEM_FOOD_BACON;
         displayName = "STR_Item_TBacon";
         weight = 1;
         buyPrice = 75;
@@ -619,10 +694,11 @@ class VirtualItems {
         edible = 40;
         drinkable = -1;
         icon = "icons\ico_tBacon.paa";
+        object = "Land_TacticalBacon_F";
     };
 
     class donuts {
-        variable = "donuts";
+        variable = VITEM_FOOD_DONUTS;
         displayName = "STR_Item_Donuts";
         weight = 1;
         buyPrice = 120;
@@ -631,10 +707,11 @@ class VirtualItems {
         edible = 30;
         drinkable = -1;
         icon = "icons\ico_donuts.paa";
+        object = "Land_Suitcase_F";
     };
 
     class rabbit_raw {
-        variable = "rabbitRaw";
+        variable = VITEM_FOOD_RAW_RABBIT;
         displayName = "STR_Item_RabbitRaw";
         weight = 2;
         buyPrice = -1;
@@ -643,10 +720,11 @@ class VirtualItems {
         edible = -1;
         drinkable = -1;
         icon = "icons\ico_rabbitRaw.paa";
+        object = "Land_Suitcase_F";
     };
 
     class rabbit {
-        variable = "rabbit";
+        variable = VITEM_FOOD_RABBIT;
         displayName = "STR_Item_Rabbit";
         weight = 1;
         buyPrice = 150;
@@ -655,10 +733,11 @@ class VirtualItems {
         edible = 20;
         drinkable = -1;
         icon = "icons\ico_rabbit.paa";
+        object = "Land_Suitcase_F";
     };
 
     class salema_raw {
-        variable = "salemaRaw";
+        variable = VITEM_FOOD_RAW_SALEMA;
         displayName = "STR_Item_SalemaRaw";
         weight = 2;
         buyPrice = -1;
@@ -667,10 +746,11 @@ class VirtualItems {
         edible = -1;
         drinkable = -1;
         icon = "icons\ico_salemaRaw.paa";
+        object = "Land_Suitcase_F";
     };
 
     class salema {
-        variable = "salema";
+        variable = VITEM_FOOD_SALEMA;
         displayName = "STR_Item_Salema";
         weight = 1;
         buyPrice = 75;
@@ -679,10 +759,11 @@ class VirtualItems {
         edible = 30;
         drinkable = -1;
         icon = "icons\ico_cookedFish.paa";
+        object = "Land_Suitcase_F";
     };
 
     class ornate_raw {
-        variable = "ornateRaw";
+        variable = VITEM_FOOD_RAW_ORNATE;
         displayName = "STR_Item_OrnateRaw";
         weight = 2;
         buyPrice = -1;
@@ -691,10 +772,11 @@ class VirtualItems {
         edible = -1;
         drinkable = -1;
         icon = "icons\ico_ornateRaw.paa";
+        object = "Land_Suitcase_F";
     };
 
     class ornate {
-        variable = "ornate";
+        variable = VITEM_FOOD_ORNATE;
         displayName = "STR_Item_Ornate";
         weight = 1;
         buyPrice = 175;
@@ -703,10 +785,11 @@ class VirtualItems {
         edible = 25;
         drinkable = -1;
         icon = "icons\ico_cookedFish.paa";
+        object = "Land_Suitcase_F";
     };
 
     class mackerel_raw {
-        variable = "mackerelRaw";
+        variable = VITEM_FOOD_RAW_MACKREL;
         displayName = "STR_Item_MackerelRaw";
         weight = 4;
         buyPrice = -1;
@@ -715,10 +798,11 @@ class VirtualItems {
         edible = -1;
         drinkable = -1;
         icon = "icons\ico_mackerelRaw.paa";
+        object = "Land_Suitcase_F";
     };
 
     class mackerel {
-        variable = "mackerel";
+        variable = VITEM_FOOD_MACKREL;
         displayName = "STR_Item_Mackerel";
         weight = 2;
         buyPrice = 250;
@@ -727,10 +811,11 @@ class VirtualItems {
         edible = 30;
         drinkable = -1;
         icon = "icons\ico_cookedFish.paa";
+        object = "Land_Suitcase_F";
     };
 
     class tuna_raw {
-        variable = "tunaRaw";
+        variable = VITEM_FOOD_RAW_TUNA;
         displayName = "STR_Item_TunaRaw";
         weight = 6;
         buyPrice = -1;
@@ -739,10 +824,11 @@ class VirtualItems {
         edible = -1;
         drinkable = -1;
         icon = "icons\ico_tunaRaw.paa";
+        object = "Land_Suitcase_F";
     };
 
     class tuna {
-        variable = "tuna";
+        variable = VITEM_FOOD_TUNA;
         displayName = "STR_Item_Tuna";
         weight = 3;
         buyPrice = 1250;
@@ -751,10 +837,11 @@ class VirtualItems {
         edible = 100;
         drinkable = -1;
         icon = "icons\ico_cookedFish.paa";
+        object = "Land_Suitcase_F";
     };
 
     class mullet_raw {
-        variable = "mulletRaw";
+        variable = VITEM_FOOD_RAW_MULLET;
         displayName = "STR_Item_MulletRaw";
         weight = 4;
         buyPrice = -1;
@@ -763,10 +850,11 @@ class VirtualItems {
         edible = -1;
         drinkable = -1;
         icon = "icons\ico_mulletRaw.paa";
+        object = "Land_Suitcase_F";
     };
 
     class mullet {
-        variable = "mullet";
+        variable = VITEM_FOOD_MULLET;
         displayName = "STR_Item_Mullet";
         weight = 2;
         buyPrice = 600;
@@ -775,10 +863,11 @@ class VirtualItems {
         edible = 80;
         drinkable = -1;
         icon = "icons\ico_cookedFish.paa";
+        object = "Land_Suitcase_F";
     };
 
     class catshark_raw {
-        variable = "catsharkRaw";
+        variable = VITEM_FOOD_RAW_CATSHARK;
         displayName = "STR_Item_CatSharkRaw";
         weight = 6;
         buyPrice = -1;
@@ -787,10 +876,11 @@ class VirtualItems {
         edible = -1;
         drinkable = -1;
         icon = "icons\ico_catsharkRaw.paa";
+        object = "Land_Suitcase_F";
     };
 
     class catshark {
-        variable = "catshark";
+        variable = VITEM_FOOD_CATSHARK;
         displayName = "STR_Item_CatShark";
         weight = 3;
         buyPrice = 750;
@@ -799,10 +889,11 @@ class VirtualItems {
         edible = 100;
         drinkable = -1;
         icon = "icons\ico_cookedFish.paa";
+        object = "Land_Suitcase_F";
     };
 
     class turtle_raw {
-        variable = "turtleRaw";
+        variable = VITEM_FOOD_RAW_TURTLE;
         displayName = "STR_Item_TurtleRaw";
         weight = 6;
         buyPrice = -1;
@@ -811,10 +902,11 @@ class VirtualItems {
         edible = -1;
         drinkable = -1;
         icon = "icons\ico_turtleRaw.paa";
+        object = "Land_Suitcase_F";
     };
 
     class turtle_soup {
-        variable = "turtleSoup";
+        variable = VITEM_FOOD_TURTLESOUP;
         displayName = "STR_Item_TurtleSoup";
         weight = 2;
         buyPrice = 1000;
@@ -823,10 +915,11 @@ class VirtualItems {
         edible = 100;
         drinkable = -1;
         icon = "icons\ico_turtleSoup.paa";
+        object = "Land_Suitcase_F";
     };
 
     class hen_raw {
-        variable = "henRaw";
+        variable = VITEM_FOOD_RAW_HEN;
         displayName = "STR_Item_HenRaw";
         weight = 1;
         buyPrice = -1;
@@ -835,10 +928,11 @@ class VirtualItems {
         edible = -1;
         drinkable = -1;
         icon = "icons\ico_wholeChickenRaw.paa";
+        object = "Land_Suitcase_F";
     };
 
     class hen {
-        variable = "hen";
+        variable = VITEM_FOOD_HEN;
         displayName = "STR_Item_Hen";
         weight = 1;
         buyPrice = 115;
@@ -847,10 +941,11 @@ class VirtualItems {
         edible = 65;
         drinkable = -1;
         icon = "icons\ico_wholeChicken.paa";
+        object = "Land_Suitcase_F";
     };
 
     class rooster_raw {
-        variable = "roosterRaw";
+        variable = VITEM_FOOD_RAW_ROOSTER;
         displayName = "STR_Item_RoosterRaw";
         weight = 1;
         buyPrice = -1;
@@ -859,10 +954,11 @@ class VirtualItems {
         edible = -1;
         drinkable = -1;
         icon = "icons\ico_chickenDrumstickRaw.paa";
+        object = "Land_Suitcase_F";
     };
 
     class rooster {
-        variable = "rooster";
+        variable = VITEM_FOOD_ROOSTER;
         displayName = "STR_Item_Rooster";
         weight = 115;
         buyPrice = 90;
@@ -871,10 +967,11 @@ class VirtualItems {
         edible = 45;
         drinkable = -1;
         icon = "icons\ico_chickenDrumstick.paa";
+        object = "Land_Suitcase_F";
     };
 
     class sheep_raw {
-        variable = "sheepRaw";
+        variable = VITEM_FOOD_RAW_SHEEP;
         displayName = "STR_Item_SheepRaw";
         weight = 2;
         buyPrice = -1;
@@ -883,10 +980,11 @@ class VirtualItems {
         edible = -1;
         drinkable = -1;
         icon = "icons\ico_lambChopRaw.paa";
+        object = "Land_Suitcase_F";
     };
 
     class sheep {
-        variable = "sheep";
+        variable = VITEM_FOOD_SHEEP;
         displayName = "STR_Item_Sheep";
         weight = 2;
         buyPrice = 155;
@@ -895,10 +993,11 @@ class VirtualItems {
         edible = 100;
         drinkable = -1;
         icon = "icons\ico_lambChop.paa";
+        object = "Land_Suitcase_F";
     };
 
     class goat_raw {
-        variable = "goatRaw";
+        variable = VITEM_FOOD_RAW_GOAT;
         displayName = "STR_Item_GoatRaw";
         weight = 2;
         buyPrice = -1;
@@ -907,10 +1006,11 @@ class VirtualItems {
         edible = -1;
         drinkable = -1;
         icon = "icons\ico_muttonLegRaw.paa";
+        object = "Land_Suitcase_F";
     };
 
     class goat {
-        variable = "goat";
+        variable = VITEM_FOOD_GOAT;
         displayName = "STR_Item_Goat";
         weight = 2;
         buyPrice = 175;
@@ -919,5 +1019,6 @@ class VirtualItems {
         edible = 100;
         drinkable = -1;
         icon = "icons\ico_muttonLeg.paa";
+        object = "Land_Suitcase_F";
     };
 };

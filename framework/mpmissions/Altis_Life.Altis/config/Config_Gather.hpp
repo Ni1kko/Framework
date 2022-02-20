@@ -14,7 +14,7 @@ class CfgGather {
             zoneSize = 30;
         };
 
-        class heroin_unprocessed {
+        class opium_poppy {
             amount = 3;
             zones[] = { "heroin_1" };
             item = "";
@@ -28,7 +28,7 @@ class CfgGather {
             zoneSize = 30;
         };
 
-        class cannabis {
+        class marijuanaWet {
             amount = 3;
             zones[] = { "weed_1" };
             item = "";

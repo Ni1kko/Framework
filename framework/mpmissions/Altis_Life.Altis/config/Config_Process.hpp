@@ -34,7 +34,7 @@ class ProcessAction {
     };
 
     class heroin {
-        MaterialsReq[] = {{"heroin_unprocessed",1}};
+        MaterialsReq[] = {{"opium_poppy",1}};
         MaterialsGive[] = {{"heroin_processed",1}};
         Text = "STR_Process_Heroin";
         //ScrollText = "Process Heroin";
@@ -82,7 +82,7 @@ class ProcessAction {
     };
 
     class marijuana {
-        MaterialsReq[] = {{"cannabis",1}};
+        MaterialsReq[] = {{"marijuanaWet",1}};
         MaterialsGive[] = {{"marijuana",1}};
         Text = "STR_Process_Marijuana";
         //ScrollText = "Harvest Marijuana";

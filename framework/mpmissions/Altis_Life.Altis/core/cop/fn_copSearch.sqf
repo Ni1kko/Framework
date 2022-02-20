@@ -21,12 +21,14 @@ _inv = "";
 if (count _invs > 0) then {
     {
         _displayName = M_CONFIG(getText,"VirtualItems",(_x select 0),"displayName");
-        _inv = _inv + format ["%1 %2<br/>",(_x select 1),(localize _displayName)];
+        _inv = _inv + format ["%1 %2<br/>",(_x select 1),TEXT_LOCALIZE(_displayName)];
         _price = M_CONFIG(getNumber,"VirtualItems",(_x select 0),"sellPrice");
+        /*
         if (!isNull (missionConfigFile >> "VirtualItems" >> (_x select 0) >> "processedItem")) then {
             _processed = M_CONFIG(getText,"VirtualItems",(_x select 0),"processedItem");
             _price = M_CONFIG(getNumber,"VirtualItems",_processed,"sellPrice");
         };
+        */
 
         if (!(_price isEqualTo -1)) then {
             _illegal = _illegal + ((_x select 1) * _price);
