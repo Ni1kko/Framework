@@ -1,7 +1,7 @@
 #include "..\..\script_macros.hpp"
 /*
     File: fn_revealObjects.sqf
-    Author: Tonic & Ni1kko
+    Author: Ni1kko
     
     Description:
     Reveals nearest objects within X amount of meters automatically to help with picking
@@ -12,12 +12,38 @@
 
 if (!life_settings_revealObjects) exitWith {};
 
+private _reveal = {
+    params[
+        ["_objects",[],[[]]],
+        ["_player",player]
+    ];
+    
+    if(count _objects < 1)exitWith {false};
+
+    private _group = (group _player);
+
+    {
+        if(_group isEqualTo (objNull))then{
+            _player reveal _x;
+        }else{
+            _group reveal _x;
+        };
+        
+    } forEach _objects;
+
+    true
+};
+
+#define CACHE_VAR "Life_var_revealObjectsCache"
+#define CACHE2_VAR format["%1%2",CACHE_VAR,"2"]
+#define CACHE_POS_VAR format["%1_pos",CACHE_VAR]
+
+private _cacheReveal = [false]; 
+
 //--- Cache object array
-private _cacheVar = "Life_var_revealObjectsCache";
-private _cache = call(missionNamespace getVariable [_cacheVar, {[]}]);
-if(count(_cache) <= 0)then
+if(!isFinal CACHE_VAR)then
 {
-    _cache = [
+    private _cache = [
         "Land_CargoBox_V1_F",
         "CAManBase"
     ];
@@ -28,18 +54,32 @@ if(count(_cache) <= 0)then
         _itemObject
     };
 
-    missionNamespace setVariable [_cacheVar, compileFinal str _cache];
+    missionNamespace setVariable [CACHE_VAR, compileFinal str _cache];
 };
 
 //--- Cache player position
-private _cachePos = missionNamespace getVariable [format["%1_pos",_cacheVar], [0,0,0]];
+private _cachePos = missionNamespace getVariable [CACHE_POS_VAR, [0,0,0]];
 private _playerPos = visiblePositionASL player;
 if(_cachePos distance2D _playerPos >= (REVEAL_DISTANCE / 2))then
 {
-    {
-        player reveal _x;
-        (group player) reveal _x;
-    } forEach (nearestObjects[_playerPos, _cache, REVEAL_DISTANCE]);
+    missionNamespace setVariable [CACHE_POS_VAR, _playerPos];
+    private _cache = missionNamespace getVariable [CACHE_VAR, {[]}];
+    private _objects2Reveal = (
+        nearestObjects[
+            _playerPos, 
+            call _cache, 
+            REVEAL_DISTANCE
+        ]
+    );
 
-    missionNamespace setVariable [format["%1_pos",_cacheVar], _playerPos];
+    //--- Cache near objects
+    private _cache2 = missionNamespace getVariable [CACHE2_VAR, []];
+    if(_cache2 isNotEqualTo _objects2Reveal)then{
+        _cacheReveal = [true] + _objects2Reveal;
+        missionNamespace setVariable [CACHE2_VAR, _objects2Reveal];
+    };
+};
+
+if(_cacheReveal#0)then{
+    [(_cacheReveal - [true]), player] call _reveal;
 };
