@@ -30,7 +30,7 @@ private _queryBankResult = ["READ", "bankaccounts", [["funds"],[["BEGuid",str _B
 private _queryResult = ["READ", "players", [
     (switch (_side) do { 
         case west:        {["pid", "name", "cash", "adminlevel", "donorlevel", "virtualitems", "cop_licenses", "coplevel", "cop_gear", "blacklist", "cop_stats", "playtime"]};
-        case independent: {["pid", "name", "cash", "adminlevel", "donorlevel", "virtualitems", "med_licenses", "mediclevel", "med_gear", "med_stats, playtime"]};
+        case independent: {["pid", "name", "cash", "adminlevel", "donorlevel", "virtualitems", "med_licenses", "mediclevel", "med_gear", "med_stats", "playtime"]};
         default           {["pid", "name", "cash", "adminlevel", "donorlevel", "virtualitems", "civ_licenses", "arrested", "civ_gear", "civ_stats", "alive", "position", "playtime"]};
     }),
     [
@@ -38,6 +38,7 @@ private _queryResult = ["READ", "players", [
         ["pid",_uid]
     ]
 ],true]call life_fnc_database_request;
+
 
 if (_queryResult isEqualTo ["DB:Read:Task-failure",false]) exitWith {
     diag_log format ["Error reading player: %1",_BEGuid];
