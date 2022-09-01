@@ -4,9 +4,8 @@
 */
 
 params [
-    ["_uid","",[""]],
-    ["_name","",[""]],
-    ["_side",sideUnknown,[sideUnknown]],
+    ["_var","",[""]],
+    ["_player",objNull,[objNull]],
     ["_cash",0,[0]],
     ["_bank",0,[0]],
     ["_licenses",[],[[]]],
@@ -16,6 +15,11 @@ params [
     ["_alive",false,[false]],
     ["_position",[],[[]]]
 ];
+ 
+private _uid = getPlayerUID _player;
+private _name = name _player;
+private _side = side _player;
+private _dmg = damage _player;
 
 private _BEGuid = ('BEGuid' callExtension ("get:"+_uid));
 private _playtime = [];
@@ -26,7 +30,7 @@ if ((_uid isEqualTo "") || (_name isEqualTo "")) exitWith {};
  
 //--- Playtime
 {if ((_x#0) isEqualTo _uid) exitWith{_playtime =_x#1}} forEach TON_fnc_playtime_values_request;
-_playtime set[(switch (_side) do {case west: {0};case independent: {1};default {2};}),([_uid] call TON_fnc_getPlayTime)];
+_playtime set[(switch (_side) do {case west: {0};case independent: {1};case east: {2};default {3};}),([_uid] call TON_fnc_getPlayTime)];
 
 //--- Licenses
 _licenses = _licenses apply{
@@ -35,6 +39,9 @@ _licenses = _licenses apply{
 
 //--- Gear
 _gear params ['_loadout','_virtualitems'];
+
+
+_stats pushBack _dmg;
 
 //--- 
 ["UPDATE", "bankaccounts", [
@@ -53,7 +60,7 @@ _gear params ['_loadout','_virtualitems'];
         ["cash", 			                ["DB","A2NET", _cash] call life_fnc_database_parse],
         [format["%1_licenses",_sideflag], 	["DB","ARRAY", _licenses] call life_fnc_database_parse],
         [format["%1_gear",_sideflag], 		["DB","ARRAY", _loadout] call life_fnc_database_parse],
-        [format["%1_stats",_sideflag], 	    ["DB","ARRAY", _stats] call life_fnc_database_parse],
+        ["stats", 	                        ["DB","ARRAY", _stats] call life_fnc_database_parse],
         ["virtualitems", 	                ["DB","ARRAY", _virtualitems] call life_fnc_database_parse],
         ["arrested", 	                    ["DB","BOOL", _arrested] call life_fnc_database_parse],
         ["alive", 	                        ["DB","BOOL", _alive] call life_fnc_database_parse],
@@ -65,3 +72,5 @@ _gear params ['_loadout','_virtualitems'];
         ["pid",_uid]
     ]
 ]]call life_fnc_database_request;
+
+[missionNameSource,[_var,true]] remoteExec ["setVariable",owner _player];

@@ -17,8 +17,7 @@ class Life_Settings {
     save_virtualItems = true; //Save Virtual items (all sides)?
     saved_virtualItems[] = { "pickaxe","fuelEmpty","fuelFull", "spikeStrip", "lockpick", "defuseKit","storageSmall","storageBig","redgull","coffee","waterBottle","apple","peach","tbacon","donuts","rabbit","salema","ornate","mackerel","tuna","mullet","catshark","turtle_soup","hen","rooster","sheep","goat","defibrillator","toolkit" }; //Array of virtual items that can be saved on your player.
     save_playerStats = true; //Save food, water and damage (all sides)?
-    save_civilian_weapons = true; //Allow civilians to save weapons on them?
-    save_civilian_position = false; //Save civilian location?
+    save_civilian_weapons = true; //Allow civilians to save weapons on them? 
     save_civilian_position_restart = false; //Save civilian location only between restarts. After a server restart you'll have to spawn again.
     /* !!!TO SAVE POSITION BETWEEN RESTARTS save_civilian_position MUST BE TRUE!!! */
     save_civilian_positionStrict = false; //Strip the player if possible combat-log?  WARNING: Server crashes and lack of reliable syncing can trigger this.
@@ -65,7 +64,6 @@ class Life_Settings {
     escapeMenu_displayText = "Thanks for playing!"; //Text displayed in the escape menu. Make it short.. around 20 characters.
 
     /* Fuel System Configurations */
-    pump_service = true; //Allow users to use pump service on the map. Default = false
     fuel_cost = 80; //Cost of fuel per liter at fuel stations (if not defined for the vehicle already).
     service_chopper = 1000; //Cost to service chopper at chopper service station(Repair/Refuel).
     fuelCan_refuel = 250; //Cost to refuel an empty fuel canister at the fuel station pumps. (Be wary of your buy/sell prices on fuel cans to prevent exploits...)
@@ -108,11 +106,7 @@ class Life_Settings {
 
     /* Paycheck & Bank System Configurations */
     startingFunds = 125000; //Amount of cash in bank for new players
-
-    paycheck_cop = 1475; //Payment for cops
-    paycheck_civ = 600;  //Payment for civillians
-    paycheck_med = 1720; //Payment for medics
-
+  
     paycheck_period = 30; //Scaled in minutes
     bank_transferTax = .02; //Tax that player pays when transferring money from ATM. Tax = Amount * multiplier
 

@@ -29,7 +29,6 @@ life_fnc_getPlayerSide = compileFinal "switch (side(param [0, player, [objNull]]
 publicVariable "life_fnc_getPlayerSide";
 
 life_var_serverLoaded = false;
-life_var_saveCivPos = (LIFE_SETTINGS(getNumber,"save_civilian_position") isEqualTo 1);
 life_var_severVehicles = [];
 TON_fnc_playtime_values = [];
 TON_fnc_playtime_values_request = [];

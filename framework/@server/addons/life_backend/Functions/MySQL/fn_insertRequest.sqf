@@ -45,6 +45,8 @@ if (!_insertBank AND !_insertPlayer) exitWith {[] remoteExecCall ["SOCK_fnc_data
 
 //--- Add new player to database
 if(_insertPlayer)then{ 
+    private _emptyArray = ["DB","ARRAY", []] call life_fnc_database_parse;
+
     ["CREATE", "players", 
         [//What
             ["serverID", 		["DB","INT", (call life_var_serverID)] call life_fnc_database_parse],
@@ -53,13 +55,15 @@ if(_insertPlayer)then{
             ["name", 			["DB","STRING", _name] call life_fnc_database_parse],
             ["cash", 			["DB","A2NET", 0] call life_fnc_database_parse],
             ["aliases", 		["DB","ARRAY", [_name]] call life_fnc_database_parse],
-            ["virtualitems", 	["DB","ARRAY", []] call life_fnc_database_parse],
-            ["cop_licenses", 	["DB","ARRAY", []] call life_fnc_database_parse],
-            ["med_licenses", 	["DB","ARRAY", []] call life_fnc_database_parse],
-            ["civ_licenses", 	["DB","ARRAY", []] call life_fnc_database_parse],
-            ["civ_gear", 		["DB","ARRAY", []] call life_fnc_database_parse],
-            ["cop_gear", 		["DB","ARRAY", []] call life_fnc_database_parse],
-            ["med_gear", 		["DB","ARRAY", []] call life_fnc_database_parse]
+            ["virtualitems", 	_emptyArray],
+            ["cop_licenses", 	_emptyArray],
+            ["reb_licenses", 	_emptyArray],
+            ["med_licenses", 	_emptyArray],
+            ["civ_licenses", 	_emptyArray],
+            ["civ_gear", 		_emptyArray],
+            ["cop_gear", 		_emptyArray],
+            ["reb_gear", 		_emptyArray],
+            ["med_gear", 		_emptyArray]
         ]
     ] call life_fnc_database_request;
 };

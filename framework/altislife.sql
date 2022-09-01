@@ -30,6 +30,7 @@ DROP PROCEDURE IF EXISTS `deleteOldWanted`;
 DROP PROCEDURE IF EXISTS `resetActivePlayerList`;
 DROP PROCEDURE IF EXISTS `resetPlayersLife`;
 DROP PROCEDURE IF EXISTS `deleteCellMessages`;
+DROP PROCEDURE IF EXISTS `deleteDeadTents`;
 
 DELIMITER $$
 --
@@ -81,6 +82,9 @@ CREATE DEFINER=CURRENT_USER PROCEDURE `deleteCellMessages` ()  BEGIN
   DELETE FROM `cellphone_messages` WHERE `remove` = 0;
 END$$
 
+CREATE DEFINER=CURRENT_USER PROCEDURE `deleteDeadTents` ()  BEGIN
+  DELETE FROM `tents` WHERE `alive` = 0;
+END$$
 
 DELIMITER ;
 
@@ -116,25 +120,27 @@ CREATE TABLE IF NOT EXISTS `players` (
     `name`         VARCHAR(32) NOT NULL,
     `aliases`      TEXT NOT NULL,
     `cash`         INT NOT NULL DEFAULT 0,
-    `coplevel`     ENUM('0','1','2','3','4','5','6','7','8','9','10','11','12') NOT NULL DEFAULT '0',
+    `coplevel`     ENUM('0','1','2','3','4','5','6','7','8','9','10','11','12','13','14','15') NOT NULL DEFAULT '0',
+    `reblevel`     ENUM('0','1','2','3','4','5','6','7') NOT NULL DEFAULT '0',
     `mediclevel`   ENUM('0','1','2','3','4','5','6','7','8','9','10') NOT NULL DEFAULT '0',
+    `joblevel`     ENUM('0','1','2','3','4','5','6','7') NOT NULL DEFAULT '0',
     `virtualitems` TEXT NOT NULL,
     `civ_licenses` TEXT NOT NULL,
     `cop_licenses` TEXT NOT NULL,
+    `reb_licenses` TEXT NOT NULL,
     `med_licenses` TEXT NOT NULL,
     `civ_gear`     TEXT NOT NULL,
     `cop_gear`     TEXT NOT NULL,
+    `reb_gear`     TEXT NOT NULL,
     `med_gear`     TEXT NOT NULL,
-    `civ_stats`    VARCHAR(25) NOT NULL DEFAULT '"[100,100,0]"',
-    `cop_stats`    VARCHAR(25) NOT NULL DEFAULT '"[100,100,0]"',
-    `med_stats`    VARCHAR(25) NOT NULL DEFAULT '"[100,100,0]"',
+    `stats`    VARCHAR(25) NOT NULL DEFAULT '"[100,100,0]"'
     `arrested`     TINYINT NOT NULL DEFAULT 0,
     `adminlevel`   ENUM('0','1','2','3','4','5','6','7','8','9','10')  NOT NULL DEFAULT '0',
     `donorlevel`   ENUM('0','1','2','3')  NOT NULL DEFAULT '0',
     `blacklist`    TINYINT NOT NULL DEFAULT 0,
     `alive`    TINYINT NOT NULL DEFAULT 0,
     `position` VARCHAR(32) NOT NULL DEFAULT '"[]"',
-    `playtime`     VARCHAR(32) NOT NULL DEFAULT '"[0,0,0]"',
+    `playtime`     VARCHAR(32) NOT NULL DEFAULT '"[0,0,0,0]"',
     `insert_time`  TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     `last_seen`    TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
     
@@ -296,6 +302,28 @@ CREATE TABLE IF NOT EXISTS `houses` (
     PRIMARY KEY (`id`),
     INDEX `fkIdx_players_houses` (`pid`),
     CONSTRAINT `FK_players_houses` FOREIGN KEY `fkIdx_players_houses` (`pid`)
+      REFERENCES `players` (`pid`)
+      ON UPDATE CASCADE ON DELETE CASCADE
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `tents`
+--
+
+CREATE TABLE IF NOT EXISTS `tents` (
+    `id`          INT NOT NULL AUTO_INCREMENT,
+    `pid`         VARCHAR(17) NOT NULL,
+    `type`        VARCHAR(64) NOT NULL,
+    `position`    VARCHAR(32) DEFAULT NULL,
+    `inventory`   TEXT NOT NULL,
+    `active`      TINYINT NOT NULL DEFAULT 1,
+    `insert_time` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    
+    PRIMARY KEY (`id`),
+    INDEX `fkIdx_players_tents` (`pid`),
+    CONSTRAINT `FK_players_tents` FOREIGN KEY `fkIdx_players_tents` (`pid`)
       REFERENCES `players` (`pid`)
       ON UPDATE CASCADE ON DELETE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;

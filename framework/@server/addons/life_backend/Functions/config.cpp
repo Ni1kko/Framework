@@ -139,6 +139,7 @@ class CfgFunctions {
             class clientGangLeader {};
             class clientGangLeft {};
             class clientMessageRequest {};
+            class switchSideRequest {};
         };
     };
 };

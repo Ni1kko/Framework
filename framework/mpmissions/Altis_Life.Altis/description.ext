@@ -66,8 +66,7 @@ class CfgFunctions {
 
         class FiniteStateMachine
         {
-            file="core\fsm";
-            class client {ext=".fsm";};
+            file="core\fsm"; 
             class timeModule {ext=".fsm";};
         };
 
@@ -261,6 +260,8 @@ class CfgFunctions {
             class teleport {};
             class whereAmI {};
             class moveIn {};
+            class switchSide {};
+            class paychecks {};
         };
 
         class Gangs {
@@ -583,6 +584,7 @@ class CfgRemoteExec {
             F(TON_fnc_vehicleUpdate,SERVER)
             F(TON_fnc_handleBlastingCharge,SERVER)
             F(TON_fnc_houseGarage,SERVER)
+            F(TON_fnc_switchSideRequest,SERVER)
 
         /* HeadlessClient only functions */
             F(HC_fnc_addContainer,HC)
