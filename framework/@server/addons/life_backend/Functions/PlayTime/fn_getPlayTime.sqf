@@ -21,15 +21,15 @@ _time_join = nil;
         _time_gathered = _x select 1;
         _time_join = _x select 2;
     };
-} forEach TON_fnc_playtime_values;
+} forEach life_var_playtimeValues;
 
 if (isNil "_time_gathered" || isNil "_time_join") then {
     _time_gathered = 0;
     _time_join = time;
-    TON_fnc_playtime_values pushBack [_uid, _time_gathered, _time_join];
+    life_var_playtimeValues pushBack [_uid, _time_gathered, _time_join];
 };
 
-publicVariable "TON_fnc_playtime_values";
+publicVariable "life_var_playtimeValues";
 
 _time = (time - _time_join); //return time
 _time = _time + _time_gathered;

@@ -105,6 +105,13 @@ class CfgFunctions {
             class setPlayTime {};
             class getPlayTime {};
         };
+
+        //--- World Functions
+        class World {
+            file = "\life_backend\Functions\World";
+            class setupHospitals {};
+            class setupFedralReserve {};
+        };
         
         //--- Systems Functions
         class Systems {
@@ -140,6 +147,8 @@ class CfgFunctions {
             class clientGangLeft {};
             class clientMessageRequest {};
             class switchSideRequest {};
+            class setupDealers {};
+            class stripNpcs {};
         };
     };
 };

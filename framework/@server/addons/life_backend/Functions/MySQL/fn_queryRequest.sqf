@@ -100,13 +100,13 @@ _return pushBack (["GAME","ARRAY", (_queryResult#16)] call life_fnc_database_par
 
 //--- Playtime
 private _playtimenew = ["GAME","ARRAY", (_queryResult#17)] call life_fnc_database_parse;
-private _playtimeindex = TON_fnc_playtime_values_request find [_uid, _playtimenew];
+private _playtimeindex = life_var_playtimeValuesRequest find [_uid, _playtimenew];
 if (_playtimeindex != -1) then {
-    TON_fnc_playtime_values_request set[_playtimeindex,-1];
-    TON_fnc_playtime_values_request = TON_fnc_playtime_values_request - [-1];
-    TON_fnc_playtime_values_request pushBack [_uid, _playtimenew];
+    life_var_playtimeValuesRequest set[_playtimeindex,-1];
+    life_var_playtimeValuesRequest = life_var_playtimeValuesRequest - [-1];
+    life_var_playtimeValuesRequest pushBack [_uid, _playtimenew];
 } else {
-    TON_fnc_playtime_values_request pushBack [_uid, _playtimenew];
+    life_var_playtimeValuesRequest pushBack [_uid, _playtimenew];
 };
 
 switch (_side) do {
@@ -123,7 +123,7 @@ switch (_side) do {
         [_uid,_playtimenew#3] call TON_fnc_setPlayTime;
     };
 };
-publicVariable "TON_fnc_playtime_values_request";
+publicVariable "life_var_playtimeValuesRequest";
 
 //--- Tents (16)
 //private _tentsData = _uid spawn TON_fnc_fetchPlayerTents;

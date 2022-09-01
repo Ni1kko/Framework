@@ -7,6 +7,9 @@
     Server-side cleanup script on vehicles.
     Sort of a lame way but whatever. Yep someone should look at it!
 */
+
+cleanupFSM = [] call LifeFSM_fnc_cleanup;
+
 private "_deleted";
 _deleted = false;
 for "_i" from 0 to 1 step 0 do {

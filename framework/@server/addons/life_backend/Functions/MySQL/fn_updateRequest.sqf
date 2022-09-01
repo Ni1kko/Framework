@@ -29,7 +29,7 @@ private _sideflag = switch (_side) do {case west: {"cop"};case independent: {"me
 if ((_uid isEqualTo "") || (_name isEqualTo "")) exitWith {};
  
 //--- Playtime
-{if ((_x#0) isEqualTo _uid) exitWith{_playtime =_x#1}} forEach TON_fnc_playtime_values_request;
+{if ((_x#0) isEqualTo _uid) exitWith{_playtime =_x#1}} forEach life_var_playtimeValuesRequest;
 _playtime set[(switch (_side) do {case west: {0};case independent: {1};case east: {2};default {3};}),([_uid] call TON_fnc_getPlayTime)];
 
 //--- Licenses

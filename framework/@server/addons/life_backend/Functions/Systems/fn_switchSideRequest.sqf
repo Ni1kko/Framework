@@ -31,15 +31,10 @@ private _newplayerObject = _newgroup createUnit [_unitclassname, _position, [], 
 //--- Already on side requested to join
 if(isNull _newplayerObject)exitWith{
 	_playerObject setVariable ["sideswitch_error","Error occured during switching sides, Failed to create new object.",true]; 
+	deleteVehicle _newplayerObject; 
 	false
 };
 
-private _whereclause = [
-	["BEGuid",str _BEGuid],
-	["pid",_SteamID]
-];
-
-  
 //--get data for new side
 private _queryResult = ["READ", "players", [
 	(switch _newside do { 
@@ -48,12 +43,16 @@ private _queryResult = ["READ", "players", [
 		case east: 		  {["reb_licenses", "reb_gear",  "playtime", "reblevel"]};
 		default           {["civ_licenses", "civ_gear",  "playtime"]};
 	}),
-	_whereclause
+	[
+		["BEGuid",str _BEGuid],
+		["pid",_SteamID]
+	]
 ],true]call life_fnc_database_request;
 
 
 if (_queryResult isEqualTo ["DB:Read:Task-failure",false]) exitWith {
-	_playerObject setVariable ["sideswitch_error","Error occured during switching sides, Failed to read database.",true]; 
+	_playerObject setVariable ["sideswitch_error","Error occured during switching sides, Failed to read database.",true];
+	deleteVehicle _newplayerObject;
 	false
 };
 
@@ -69,10 +68,11 @@ private _rank = 		["GAME","INT",(switch _newside do {
 
 //-- Whitelist check
 if (_newside in [east,west,independent] AND _rank <= 0)exitWith {
-	_playerObject setVariable ["sideswitch_error","Error occured during switching sides, Not whitelisted.",true];  
+	_playerObject setVariable ["sideswitch_error","Error occured during switching sides, Not whitelisted.",true];
+	deleteVehicle _newplayerObject;
 	false
 };
- 
+
 _licenses = _licenses apply{[_x#0,["GAME","BOOL", _x#1] call life_fnc_database_parse]}
 
 //--- Switch character
@@ -126,15 +126,15 @@ _licenses = _licenses apply{[_x#0,["GAME","BOOL", _x#1] call life_fnc_database_p
 ]remoteExec["spawn",owner _playerObject];
  
 //--- Playtime 
-private _playtimeindex = TON_fnc_playtime_values_request find [_uid, _playtime];
+private _playtimeindex = life_var_playtimeValuesRequest find [_uid, _playtime];
 private _sideindex = (switch (_side) do {case west: {0};case independent: {1};case east: {2};default {3};});
 if (_playtimeindex != -1) then {
-	TON_fnc_playtime_values_request deleteAt _playtimeindex;
+	life_var_playtimeValuesRequest deleteAt _playtimeindex;
 };
-_playtimeindex = TON_fnc_playtime_values_request pushBackUnique [_uid, _playtime];
+_playtimeindex = life_var_playtimeValuesRequest pushBackUnique [_uid, _playtime];
 _playtime = _playtime#_sideindex;
 [_uid,_playtime] call TON_fnc_setPlayTime;
-publicVariable "TON_fnc_playtime_values_request";
+publicVariable "life_var_playtimeValuesRequest";
  
 //--- Delete old character
 if _deleteOLD then{

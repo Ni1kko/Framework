@@ -16,6 +16,8 @@ life_var_antihack_loaded = false;
 life_var_antihack_networkReady = false;
 life_var_antihack_logs = [];
 
+JxMxE_PublishVehicle = compileFinal str(false);
+
 waitUntil {isFinal "extdb_var_database_key"};
 
 try {

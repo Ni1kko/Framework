@@ -24,4 +24,4 @@ _time_gathered = ((_this select 1) * 60);
         _x set [1, _time_gathered];
         _x set [2, time];
     };
-} forEach TON_fnc_playtime_values;
+} forEach life_var_playtimeValues;

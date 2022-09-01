@@ -27,7 +27,7 @@ switch (call compile _side) do
     case independent: { };
 };
 
-private _spitEnabled = ([_spitConfig >> "side", _side, false] call BIS_fnc_returnConfigEntry) isEqualTo 1;
+private _spitEnabled = false;//([_spitConfig >> "side", _side, false] call BIS_fnc_returnConfigEntry) isEqualTo 1;
 
 if(_spitEnabled) then{
     
