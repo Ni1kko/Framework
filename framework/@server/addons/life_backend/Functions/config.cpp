@@ -149,6 +149,7 @@ class CfgFunctions {
             class switchSideRequest {};
             class setupDealers {};
             class stripNpcs {};
+            class setupRadioChannels {};
         };
     };
 };

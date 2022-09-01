@@ -103,7 +103,9 @@ try {
 		"_rnd_adminmenu_getposfrommap",
 		"_rnd_adminmenu_spectateevent",
 		"_rnd_adminmenu_mappos",
-		"_rnd_adminmenu_addlogs2list"
+		"_rnd_adminmenu_addlogs2list",
+		"_rnd_fnc_joinAdminChat",
+		"_rnd_fnc_leaveAdminChat"
 	];
 
 	//--- create random vars
@@ -111,6 +113,8 @@ try {
 	_tempvars resize (count _rndvars);
 	_tempvars params (_rndvars apply {private _ret=[_x,call life_fnc_util_randomString];[format["`%1` => `%2`",_ret#0,_ret#1]]call life_fnc_admin_systemlog;_ret});
 	_tempvars =nil;
+
+	
 	
 	private _adminclient = "
 		params ['_steamID'];
@@ -1203,6 +1207,9 @@ try {
 				};
 				false;
 			}];
+
+			["+_rnd_fnc_joinAdminChat+",[player]] call "+_rnd_runserver+";
+			
 			systemChat '--------------------------------------------------------------------------------------';
 			systemChat 'Welcome Admin, OPEN Menu using INSERT or using Y-Menu';
 			systemChat '--------------------------------------------------------------------------------------';
@@ -1261,6 +1268,9 @@ try {
 			[_name,_steamID,_ownerID,_adminlvl] spawn "+_rnd_admindisconnected+";
 		},[]];
 		 
+		"+_rnd_fnc_joinAdminChat+" = compileFinal ""life_radio_staff radioChannelAdd [param [0,objNull]]"";
+		"+_rnd_fnc_leaveAdminChat+" = compileFinal ""life_radio_staff radioChannelRemove [param [0,objNull]]"";
+
 		life_var_admin_loaded = true;
 		['Admin Server Code Loaded'] call life_fnc_admin_systemlog;
 	";

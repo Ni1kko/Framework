@@ -13,6 +13,14 @@ _side = [_this,2,civilian,[west]] call BIS_fnc_param;
 if (isNull _unit) exitWith {};
 
 switch (_side) do {
+    case east: {
+        if (_bool) then {
+            life_radio_east radioChannelAdd [_unit];
+        } else {
+            life_radio_east radioChannelRemove [_unit];
+        };
+    };
+
     case west: {
         if (_bool) then {
             life_radio_west radioChannelAdd [_unit];
