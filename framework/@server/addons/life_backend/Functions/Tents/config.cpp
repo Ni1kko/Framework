@@ -9,7 +9,8 @@ class CfgPatches {
  
 class CfgTents
 {
-    oneTimeUse = 1;
+    oneTimeUse = 0; // disable too give back tent after packing up
+    garages = 1; // allow to store vehicles at placed campsites
 };
 
 class CfgFunctions {

@@ -62,7 +62,10 @@ if (_queryBankResult isEqualTo ["DB:Read:Task-failure",false]) exitWith {
 
 if (count _queryResult isEqualTo 0 || count _queryBankResult isEqualTo 0) exitWith {
     [] remoteExecCall ["SOCK_fnc_insertPlayerInfo",_ownerID];
-}; 
+};
+
+
+_queryResult set [0,_BEGuid];
 
 private _return = _queryResult select [0,2];
 

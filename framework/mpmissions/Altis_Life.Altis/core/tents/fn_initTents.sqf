@@ -5,6 +5,13 @@
 
 life_var_tents = [];
 
+life_fnc_isTent = compileFinal '
+	private _tent = param [0, objNull];
+	if(isNil {_tent getVariable "tentID"}) exitWith {false};
+	if(typeOf _tent in ["Land_Campfire_F", "Campfire_burning_F","Land_TentA_F","Land_TentDome_F"]) exitWith {true};
+	false
+';
+
 waitUntil{!isNil "life_var_allTents"};
 
 {

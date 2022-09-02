@@ -14,6 +14,12 @@ if(isNull _tent)exitWith {false};
 private _tentID = _tent getVariable ["tentID",""];
 if(_tentID isEqualTo "")exitWith {false};
 
+//-- Config
+(call life_var_tent_config) params [
+	["_oneTimeUse", false],
+	["_garages", false]
+];
+
 //-- Delete from database
 ["UPDATE", "tents", [[["alive",["DB","BOOL", false] call life_fnc_database_parse]],[["tentID",str _tentID]]]]call life_fnc_database_request;
 
@@ -22,8 +28,6 @@ if(_tentID isEqualTo "")exitWith {false};
 
 //-- Delete local marker
 if(_marker isEqualTo "" OR isNull _player)exitWith {true};
-
-private _oneTimeUse = getNumber(configFile >> "CfgTents" >> "oneTimeUse") isEqualTo 1;
 
 private _vitem = ["tentKit", ""] select _oneTimeUse;
 

@@ -7,6 +7,13 @@ if(!canSuspend)exitWith{_this spawn life_fnc_tents_init};
 
 waitUntil {isFinal "extdb_var_database_key"}; 
 
+life_var_tent_config = compileFinal str [
+	getNumber(configFile >> "CfgTents" >> "oneTimeUse") isEqualTo 1,
+	getNumber(configFile >> "CfgTents" >> "garages") isEqualTo 1
+];
+
+publicVariable "life_var_tent_config";
+
 //-- Delete dead tents from database
 ["CALL", "deleteDeadTents"] call life_fnc_database_request;
 uiSleep 5;

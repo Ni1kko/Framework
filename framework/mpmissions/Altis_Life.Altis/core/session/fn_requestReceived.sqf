@@ -18,6 +18,7 @@ if (count _this isEqualTo 0) exitWith {[] call SOCK_fnc_insertPlayerInfo;};
 if ((_this select 0) isEqualTo "Error") exitWith {[] call SOCK_fnc_insertPlayerInfo;};
 if (!(getPlayerUID player isEqualTo (_this select 0))) exitWith {[] call SOCK_fnc_dataQuery;};
 
+life_BEGuid = compileFinal str(_this#0);
 life_isdev = compileFinal "(getPlayerUID _this) in getArray(missionConfigFile >> ""enableDebugConsole"")";
 
 //--- Cash

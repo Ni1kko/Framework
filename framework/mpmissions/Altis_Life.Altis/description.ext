@@ -262,7 +262,6 @@ class CfgFunctions {
             class moveIn {};
             class switchSide {};
             class paychecks {};
-            class initTents {};
         };
 
         class Gangs {
@@ -315,6 +314,14 @@ class CfgFunctions {
             class sellHouse {};
             class sellHouseGarage {};
         };
+        
+        class Tents {
+            file = "core\tents";
+            class deployTent {};
+            class packupTent {};
+            class initTents {};
+            class tentMenu {};
+        };
 
         class Items {
             file = "core\items";
@@ -327,9 +334,7 @@ class CfgFunctions {
             class lockpick {};
             class placestorage {};
             class spikeStrip {};
-            class storageBox {};
-            class deployTent {};
-            class packupTent {};
+            class storageBox {}; 
         };
 
         class Medical_System {
