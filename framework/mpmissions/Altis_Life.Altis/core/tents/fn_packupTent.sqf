@@ -4,7 +4,7 @@
 */
 
 params [
-	["_tent",cursorObject,[objNull]]
+	["_tent",cursorObject,[objNull]],
 	["_silent",false,[false]]
 ];
 
