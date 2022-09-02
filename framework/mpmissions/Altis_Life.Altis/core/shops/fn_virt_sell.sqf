@@ -43,10 +43,10 @@ if (life_shop_type isEqualTo "drugdealer") then {
     };
 };
 
-if (life_shop_type isEqualTo "gold" && (LIFE_SETTINGS(getNumber,"noatm_timer")) > 0) then {
+if (life_shop_type isEqualTo "gold" && (LIFE_SETTINGS(getNumber,"federalReserve_atmRestrictionTimer")) > 0) then {
     [] spawn {
         life_var_ATMEnabled = false;
-        sleep ((LIFE_SETTINGS(getNumber,"noatm_timer")) * 60);
+        sleep ((LIFE_SETTINGS(getNumber,"federalReserve_atmRestrictionTimer")) * 60);
         life_var_ATMEnabled = true;
     };
 };

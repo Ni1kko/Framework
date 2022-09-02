@@ -20,6 +20,4 @@ _rsb setVariable ["bis_disabled_Door_1",1,true];
 _dome allowDamage false;
 _rsb allowDamage false;
 
-/* Set the amount of gold in the federal reserve at mission start */
-fed_bank setVariable ["safe",count playableUnits,true];
 [] spawn TON_fnc_federalUpdate;

@@ -32,10 +32,15 @@ class Life_Settings {
 
 
 /* System Settings */
-    /* ATM & Federal Reserve System Configurations */
-    global_ATM = true; //Allow users to access any ATM on the map (Marked & Unmarked).
-    noatm_timer = 15; //Time in minutes that players cannot deposit money after selling stolen gold.
-    minimum_cops = 3; //Minimum cops required online to rob the Federal Reserve
+
+    //-- Federal Reserve System Configurations 
+    federalReserve_atmRestrictionTimer = 15; //Time in minutes that players cannot deposit money after selling stolen gold.
+    federalReserve_startGold = 50; //Amount of gold bars in the Federal Reserve
+    federalReserve_MaxGold = 9999; //Max Amount of gold bars in the Federal Reserve
+    federalReserve_AddMoreEvery = 30; //Number of minutes between x amount of gold bar spawn in the Federal Reserve
+    federalReserve_AddMin = 1; //
+    federalReserve_AddMid = 25; //
+    federalReserve_AddMax = 70; //
 
     /*Death settings*/
     drop_weapons_onDeath = true; //Set true to enable weapon dropping on death. False (default) will delete player weapons on death, allowing them to be revived with them instead

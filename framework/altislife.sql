@@ -98,6 +98,7 @@ CREATE TABLE IF NOT EXISTS `servers` (
     `name`            VARCHAR(255) NOT NULL,
     `world`           VARCHAR(64) NOT NULL,
     `currentplayers`  TEXT NOT NULL,
+    `vault`           INT NOT NULL DEFAULT 0,
     `maxplayercount`  INT NOT NULL DEFAULT 0,
     `restartcount`    INT NOT NULL DEFAULT 0,
     `runtime`         INT NOT NULL DEFAULT 0,
