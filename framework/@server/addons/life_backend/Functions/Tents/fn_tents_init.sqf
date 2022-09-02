@@ -19,14 +19,12 @@ publicVariable "life_var_tent_config";
 uiSleep 5;
 
 //-- Get tents from database
-private _queryTents=  ["READ", "tents", 
+private _queryTents = ["READ", "tents", 
 	[
-		["type","position","vitems","BEGuid","tentID"], 
-		[
-			["alive",["DB","BOOL", true] call life_fnc_database_parse],
-		]
+		["type", "position", "vitems", "BEGuid", "tentID"],
+		[["alive", ["DB","BOOL", true] call life_fnc_database_parse]]
 	]
-]call life_fnc_database_request;
+] call life_fnc_database_request;
 
 //-- ReSpawn tents
 { 
