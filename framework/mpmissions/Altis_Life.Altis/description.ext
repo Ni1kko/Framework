@@ -262,6 +262,7 @@ class CfgFunctions {
             class moveIn {};
             class switchSide {};
             class paychecks {};
+            class initTents {};
         };
 
         class Gangs {
@@ -327,6 +328,8 @@ class CfgFunctions {
             class placestorage {};
             class spikeStrip {};
             class storageBox {};
+            class deployTent {};
+            class packupTent {};
         };
 
         class Medical_System {
@@ -585,6 +588,7 @@ class CfgRemoteExec {
             F(TON_fnc_handleBlastingCharge,SERVER)
             F(TON_fnc_houseGarage,SERVER)
             F(TON_fnc_switchSideRequest,SERVER)
+            F(life_fnc_tents_buildRequest,SERVER)
 
         /* HeadlessClient only functions */
             F(HC_fnc_addContainer,HC)

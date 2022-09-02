@@ -114,6 +114,7 @@ switch (playerSide) do {
 [] spawn life_fnc_setupStationService;
 [] spawn life_fnc_cellphone;//temp
 [] spawn life_fnc_survival;
+[] spawn life_fnc_initTents;
 
 addMissionEventHandler ["EachFrame", life_fnc_playerTags];
 addMissionEventHandler ["EachFrame", life_fnc_revealObjects];

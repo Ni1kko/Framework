@@ -74,6 +74,10 @@ switch (_item) do {
         [true] call life_fnc_storageBox;
     };
 
+    case "tentKit": {
+        ["Land_TentDome_F"] spawn life_fnc_deployTent;
+    };
+
     case "spikeStrip": {
         if (!isNull life_spikestrip) exitWith {hint localize "STR_ISTR_SpikesDeployment"; closeDialog 0};
         if ([false, _item, 1] call life_fnc_handleInv) then {

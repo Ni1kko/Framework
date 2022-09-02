@@ -6854,6 +6854,9 @@
             <Polish>zestaw narzędzi</Polish>
 			<Chinesesimp>维修包</Chinesesimp>
         </Key>
+        <Key ID="STR_Item_Tentkit">
+            <Original>Tentlkit</Original>
+        </Key
         <Key ID="STR_Item_Pickaxe">
             <Original>Pickaxe</Original>
             <Czech>Krumpáč</Czech>

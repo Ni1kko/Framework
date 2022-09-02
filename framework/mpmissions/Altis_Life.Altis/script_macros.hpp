@@ -48,6 +48,7 @@
 #define VITEM_MISC_PICKAXE "pickaxe"
 #define VITEM_MISC_DEFIBILLATOR "defibrillator"
 #define VITEM_MISC_TOOLKIT "toolkit"
+#define VITEM_MISC_TENTKIT "tentKit"
 #define VITEM_MISC_FUELCAN_EMPTY "fuelEmpty"
 #define VITEM_MISC_FUELCAN_FULL "fuelFull"
 #define VITEM_MISC_SPIKESTRIP "spikeStrip"

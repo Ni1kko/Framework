@@ -29,14 +29,14 @@ class VirtualShops {
         name = "STR_Shops_Rebel";
         side = "civ";
         conditions = "license_civ_rebel";
-        items[] = { "waterBottle", "rabbit", "apple", "redgull", "tbacon", "lockpick", "pickaxe", "toolkit", "fuelFull", "peach", "boltcutter", "blastingcharge" };
+        items[] = { "tentKit", "waterBottle", "rabbit", "apple", "redgull", "tbacon", "lockpick", "pickaxe", "toolkit", "fuelFull", "peach", "boltcutter", "blastingcharge" };
     };
 
     class gang {
         name = "STR_Shops_Gang";
         side = "civ";
         conditions = "";
-        items[] = { "waterBottle", "rabbit", "apple", "redgull", "tbacon", "lockpick", "pickaxe", "toolkit", "fuelFull", "peach", "boltcutter", "blastingcharge" };
+        items[] = { "tentKit", "waterBottle", "rabbit", "apple", "redgull", "tbacon", "lockpick", "pickaxe", "toolkit", "fuelFull", "peach", "boltcutter", "blastingcharge" };
     };
 
     class wongs {
@@ -197,6 +197,19 @@ class VirtualItems
         drinkable = -1;
         icon = "\a3\weapons_f\items\data\UI\gear_toolkit_ca.paa";
         object = "Land_Suitcase_F";
+    };
+
+    class tentKit {
+        variable = VITEM_MISC_TENTKIT;
+        displayName = "STR_Item_Tentkit";
+        weight = 30;
+        buyPrice = 12000;
+        sellPrice = 8000;
+        illegal = false;
+        edible = -1;
+        drinkable = -1;
+        icon = "";//TODO: make icon
+        object = "Land_Ground_sheet_folded_khaki_F";
     };
 
     class fuelEmpty {

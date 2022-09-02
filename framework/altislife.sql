@@ -314,17 +314,18 @@ CREATE TABLE IF NOT EXISTS `houses` (
 
 CREATE TABLE IF NOT EXISTS `tents` (
     `id`          INT NOT NULL AUTO_INCREMENT,
-    `pid`         VARCHAR(17) NOT NULL,
+    `BEGuid`      VARCHAR(64) NOT NULL,
+    `tentID`      VARCHAR(64) NOT NULL,
     `type`        VARCHAR(64) NOT NULL,
     `position`    VARCHAR(32) DEFAULT NULL,
-    `inventory`   TEXT NOT NULL,
-    `active`      TINYINT NOT NULL DEFAULT 1,
+    `vitems`      TEXT NOT NULL,
+    `alive`       TINYINT NOT NULL DEFAULT 1,
     `insert_time` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
     
     PRIMARY KEY (`id`),
-    INDEX `fkIdx_players_tents` (`pid`),
-    CONSTRAINT `FK_players_tents` FOREIGN KEY `fkIdx_players_tents` (`pid`)
-      REFERENCES `players` (`pid`)
+    INDEX `fkIdx_players_tents` (`BEGuid`),
+    CONSTRAINT `FK_players_tents` FOREIGN KEY `fkIdx_players_tents` (`BEGuid`)
+      REFERENCES `players` (`BEGuid`)
       ON UPDATE CASCADE ON DELETE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
