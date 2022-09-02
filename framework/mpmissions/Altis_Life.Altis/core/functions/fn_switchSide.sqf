@@ -38,35 +38,54 @@ if (_newside in [west,east,independent] AND life_blacklisted) exitWith {
 	_return
 };
 
+// -- Start Loading Screen
+startLoadingScreen ["","life_Rsc_DisplayLoading"];
+
 //--
+["Saving Current Data", "Please Wait..."] call life_fnc_setLoadingText;
 private _sessionvar = [] call SOCK_fnc_updateRequest;
 waitUntil {missionNamespace getVariable [_sessionvar,false]};
 
 //-- Switch side
 private _player = player;
+["Switching side", "Please Wait..."] call life_fnc_setLoadingText;
 [_player,_newside,true] remoteExec ["TON_fnc_switchSideRequest",2];
 
 //-- Wait for system to finish
-waitUntil {_player != player || !isNil {_player getVariable "sideswitch_error"}};
+waitUntil {_player isNotEqualTo player || !isNil {_player getVariable "sideswitch_error"}};
 
 //-- Switch failed
 if(!isNil {_player getVariable "sideswitch_error"})exitWith{
 	private _error = _player getVariable ["sideswitch_error",""];
 	if(typeName _error isEqualTo "STRING")then{
-		hint _error;
 		systemChat format ["Error: %1",_error];
+		["An Error Occured!",_error] call life_fnc_setLoadingText; 
+		uiSleep 6;
 	};
+
+	endLoadingScreen;
+	disableUserInput false;
 };
 
+ 
 //-- Switch complete
-if(_newside isEqualTo playerSide)then{
+if(_newside isEqualTo playerSide)then
+{
 	//-- set rank
 	player setVariable ["rank",_rank,true];
 	
 	[_newside] call life_fnc_paychecks;
-	
+
+	//--
+	["Side Switched", "Please Wait..."] call life_fnc_setLoadingText; uiSleep(random[0.5,3,6]);
+
 	//--
 	_return = true;
 };
+
+
+["Please Wait..."] call life_fnc_setLoadingText; 
+uiSleep(random[0.5,3,6]);
+endLoadingScreen;
 
 _return

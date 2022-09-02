@@ -56,24 +56,20 @@ if (_queryResult isEqualTo ["DB:Read:Task-failure",false]) exitWith {
 	false
 };
 
-private _licenses = 	["GAME","ARRAY",_queryResult param [0,[]]] call life_fnc_database_parse;
-private _gear =    		["GAME","ARRAY",_queryResult param [1,[]]] call life_fnc_database_parse; 
-private _playtime = 	["GAME","ARRAY",_queryResult param [2,[]]] call life_fnc_database_parse;
-private _rank = 		["GAME","INT",(switch _newside do { 
-	case west:        	{_queryResult param [3,0]};
-	case independent: 	{_queryResult param [3,0]};
-	case east:        	{_queryResult param [3,0]};
-	default           	{0};
-})] call life_fnc_database_parse;
+private _licenses = 	(["GAME","ARRAY",_queryResult param [0,[]]] call life_fnc_database_parse) apply {[_x#0,["GAME","BOOL", _x#1] call life_fnc_database_parse]};
+private _gear =    		(["GAME","ARRAY",_queryResult param [1,[]]] call life_fnc_database_parse); 
+private _playtime = 	(["GAME","ARRAY",_queryResult param [2,[]]] call life_fnc_database_parse);
+private _rank = 		(["GAME","INT",(switch _newside do {case civilian: {0};default {_queryResult param [3,0]};})] call life_fnc_database_parse);
 
-//-- Whitelist check
+//--- Whitelist check
 if (_newside in [east,west,independent] AND _rank <= 0)exitWith {
 	_playerObject setVariable ["sideswitch_error","Error occured during switching sides, Not whitelisted.",true];
 	deleteVehicle _newplayerObject;
 	false
 };
 
-_licenses = _licenses apply{[_x#0,["GAME","BOOL", _x#1] call life_fnc_database_parse]}
+//--- Leave side chat for current side
+[_playerObject, false, _oldside] call TON_fnc_manageSC;
 
 //--- Switch character
 [
@@ -86,41 +82,44 @@ _licenses = _licenses apply{[_x#0,["GAME","BOOL", _x#1] call life_fnc_database_p
 			["_licenses",[],[[]]]
 		];
 		
-		//-- no input
+		//-- Disable input
 		disableUserInput true;
 		
 		//-- Hide both old and new objects
 		_playerObject hideObjectGlobal true;
 		_newplayerObject hideObjectGlobal true;
 
-		//--switch unit
+		//-- Switch unit
 		_playerObject reveal _newplayerObject;
 		selectPlayer _newplayerObject;
 
-		//-- wait for switch to complete
+		//-- Wait for switch to complete
 		waitUntil {player isEqualTo _newplayerObject};
 
-		//-- add gear
+		//-- Add gear
 		_newplayerObject setUnitLoadout _loadout;
 
-		//-- setup event handlers 
+		//-- Setup event handlers 
 		[] call life_fnc_setupEVH;
 
-		//-- show new player object
+		//--- Join side chat for new side
+		[_newplayerObject, life_settings_enableSidechannel, playerSide] remoteExecCall ["TON_fnc_manageSC", 2];
+
+		//-- Show new player object
 		_newplayerObject hideObjectGlobal false;
 
-		//--
+		//-- Add licenses
 		if (count _licenses > 0) then {
 			{missionNamespace setVariable [_x#0,_x#1]} forEach _licenses;
 		};
 
-		//-- enable input
+		//-- Enable input
 		disableUserInput false; 
 
-		//-- notify player
+		//-- Notify player
 		hint format ["Your are now on %1 side",playerside];
 
-		//-- serverside cleanup var
+		//-- Serverside cleanup var
 		_playerObject setVariable ["ready4cleanup",true,true];
 	}
 ]remoteExec["spawn",owner _playerObject];
