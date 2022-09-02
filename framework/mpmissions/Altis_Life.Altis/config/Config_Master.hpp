@@ -41,6 +41,7 @@ class Life_Settings {
     federalReserve_AddMin = 1; //
     federalReserve_AddMid = 25; //
     federalReserve_AddMax = 70; //
+    federalReserve_resetAfterRestart = 0; //
 
     /*Death settings*/
     drop_weapons_onDeath = true; //Set true to enable weapon dropping on death. False (default) will delete player weapons on death, allowing them to be revived with them instead

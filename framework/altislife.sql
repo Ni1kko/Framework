@@ -31,6 +31,7 @@ DROP PROCEDURE IF EXISTS `resetActivePlayerList`;
 DROP PROCEDURE IF EXISTS `resetPlayersLife`;
 DROP PROCEDURE IF EXISTS `deleteCellMessages`;
 DROP PROCEDURE IF EXISTS `deleteDeadTents`;
+DROP PROCEDURE IF EXISTS `resetFedVault`;
 
 DELIMITER $$
 --
@@ -84,6 +85,10 @@ END$$
 
 CREATE DEFINER=CURRENT_USER PROCEDURE `deleteDeadTents` ()  BEGIN
   DELETE FROM `tents` WHERE `alive` = 0;
+END$$
+
+CREATE DEFINER=CURRENT_USER PROCEDURE `resetFedVault` ()  BEGIN
+  UPDATE `servers` SET `vault`= 0;
 END$$
 
 DELIMITER ;
