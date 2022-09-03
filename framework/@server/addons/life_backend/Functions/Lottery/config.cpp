@@ -23,6 +23,7 @@ class CfgFunctions {
             class lottery_pickwinners {};
             class lottery_buyTicket {};
             class lottery_generateTicket {};
+            class lottery_checkOldTickets {};
         };
     };
 };

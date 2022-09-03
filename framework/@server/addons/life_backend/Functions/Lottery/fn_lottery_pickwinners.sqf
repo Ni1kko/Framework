@@ -14,10 +14,10 @@ params [
 ];
 	
 
-//-- Get tents from database
+//-- Get tickets from database
 private _queryTickets = ["READ", "lotteryTickets", 
 	[
-		["id", "BEGuid", "numbers", "bonusball"],
+		["ticketID", "BEGuid", "numbers", "bonusball"],
 		[["active", ["DB","BOOL", true] call life_fnc_database_parse]]
 	]
 ] call life_fnc_database_request;
@@ -89,6 +89,8 @@ _vaultObject setVariable ["safe",0,true];
 {
 	_x params ["_ticketid","_WinnerGuid","_wonBonusBall"];
 
+	private _winnerIndex = _forEachIndex;
+	
 	{
 		if(isPlayer _x)then{ 
 			private _player = _x;
@@ -126,10 +128,27 @@ _vaultObject setVariable ["safe",0,true];
 						life_var_cash = life_var_cash + _totalPayout;
 					}
 				] remoteExec ["spawn",_ownerID];
+
+				_Winners deleteAt _winnerIndex;
 			}; 
 		};
 	} forEach playableUnits; 
 }forEach _Winners;
+
+private _offlineWinners = _Winners;
+
+{
+	_x params ["_ticketid","_BEGuid","_wonBonusBall"];
+
+	["CREATE", "unclaimedLotteryTickets", 
+		[
+			["BEGuid", 					["DB","STRING", _BEGuid] call life_fnc_database_parse],
+			["winnings", 				["DB","INT", _Split] call life_fnc_database_parse],
+			["bonusball", 				["DB","BOOL", _wonBonusBall] call life_fnc_database_parse],
+			["bonusballWinnings", 		["DB","INT", [0, _bonusBallPayout] select _wonBonusBall] call life_fnc_database_parse],
+		]
+	] call life_fnc_database_request;
+}forEach _offlineWinners;
 
 //-- Delete dead tickets from database
 ["CALL", "deleteOldLotteryTickets"] call life_fnc_database_request;

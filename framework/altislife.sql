@@ -99,6 +99,10 @@ CREATE DEFINER=CURRENT_USER PROCEDURE `deleteOldLotteryTickets` ()  BEGIN
   DELETE FROM `lotteryTickets` WHERE `active` = 0;
 END$$
 
+CREATE DEFINER=CURRENT_USER PROCEDURE `deleteClaimedLotteryTickets` ()  BEGIN
+  DELETE FROM `unclaimedLotteryTickets` WHERE `claimed` = 0;
+END$$
+
 DELIMITER ;
 
 --
@@ -134,6 +138,25 @@ CREATE TABLE IF NOT EXISTS `lotteryTickets` (
     PRIMARY KEY (`ticketID`),
     INDEX `fkIdx_players_lottery` (`BEGuid`),
     CONSTRAINT `FK_players_lottery` FOREIGN KEY `fkIdx_players_lottery` (`BEGuid`)
+      REFERENCES `players` (`BEGuid`)
+      ON UPDATE CASCADE ON DELETE CASCADE
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+--
+-- Table structure for table `unclaimedLotteryTickets`
+--
+
+CREATE TABLE IF NOT EXISTS `unclaimedLotteryTickets` (
+    `ticketID`                INT NOT NULL AUTO_INCREMENT,
+    `BEGuid`                  VARCHAR(64) NOT NULL,
+    `winnings`                INT NOT NULL DEFAULT 0,
+    `bonusball`               TINYINT NOT NULL DEFAULT 1,
+    `bonusballWinnings`       INT NOT NULL DEFAULT 0,
+    `claimed`                 TINYINT NOT NULL DEFAULT 0,
+    `timestamp`               TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    PRIMARY KEY (`ticketID`),
+    INDEX `fkIdx_players_unclaimedlottery` (`BEGuid`),
+    CONSTRAINT `FK_players_unclaimedlottery` FOREIGN KEY `fkIdx_players_unclaimedlottery` (`BEGuid`)
       REFERENCES `players` (`BEGuid`)
       ON UPDATE CASCADE ON DELETE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
