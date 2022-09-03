@@ -12,6 +12,7 @@ class CfgLottery
     ticketPrice = 1000; // Price of one ticket
     ticketLength = 4; // Length of ticket number (Larger numbers = more combinations)
     ticketDrawCount = 25; // Amount of winable tickets
+    ticketsReclaim = 1; // allow players to reclaim their tickets if the were not online when draw was made
 };
 
 class CfgFunctions {

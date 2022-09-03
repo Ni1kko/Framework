@@ -10,9 +10,9 @@ params [
 (call life_var_lotto_config) params [
 	"_ticketPrice",
 	"_ticketLength",
-	"_ticketDrawCount"
+	"_ticketDrawCount",
+	"_ticketsReclaim"
 ];
-	
 
 //-- Get tickets from database
 private _queryTickets = ["READ", "lotteryTickets", 
@@ -135,25 +135,30 @@ _vaultObject setVariable ["safe",0,true];
 	} forEach playableUnits; 
 }forEach _Winners;
 
-private _offlineWinners = _Winners;
+//-- Reclaim tickets
+if _ticketsReclaim then {
+	private _offlineWinners = _Winners;
 
-{
-	_x params ["_ticketid","_BEGuid","_wonBonusBall"];
+	{
+		_x params ["_ticketid","_BEGuid","_wonBonusBall"];
 
-	["CREATE", "unclaimedLotteryTickets", 
-		[
-			["BEGuid", 					["DB","STRING", _BEGuid] call life_fnc_database_parse],
-			["winnings", 				["DB","INT", _Split] call life_fnc_database_parse],
-			["bonusball", 				["DB","BOOL", _wonBonusBall] call life_fnc_database_parse],
-			["bonusballWinnings", 		["DB","INT", [0, _bonusBallPayout] select _wonBonusBall] call life_fnc_database_parse],
-		]
-	] call life_fnc_database_request;
-}forEach _offlineWinners;
+		["CREATE", "unclaimedLotteryTickets", 
+			[
+				["BEGuid", 					["DB","STRING", _BEGuid] call life_fnc_database_parse],
+				["winnings", 				["DB","INT", _Split] call life_fnc_database_parse],
+				["bonusball", 				["DB","BOOL", _wonBonusBall] call life_fnc_database_parse],
+				["bonusballWinnings", 		["DB","INT", [0, _bonusBallPayout] select _wonBonusBall] call life_fnc_database_parse],
+			]
+		] call life_fnc_database_request;
+	}forEach _offlineWinners;
+};
 
 //-- Delete dead tickets from database
 ["CALL", "deleteOldLotteryTickets"] call life_fnc_database_request;
 
+//-- Allow new tickets to be purchased
 Life_var_lottoDrawLock = false;
 publicVariable "Life_var_lottoDrawLock";
 
+//-- 
 true
