@@ -6,6 +6,8 @@
     Uhhh, adds to it?
 */
 
+if(call life_var_federlReserveReady)exitWith{false};
+
 private _vaultObject = missionNamespace getVariable ["fed_bank",objNull];
 private _whereClause = [["serverID",["DB","INT",call life_var_serverID] call life_fnc_database_parse]];
 private _lifeConfig = missionConfigFile >> "Life_Settings";
@@ -41,7 +43,10 @@ if _resetAfterRestart then{
 };
 
 _vaultObject setVariable ["safe",_startGold,true];
- 
+
+life_var_federlReserveReady = compileFinal str(true);
+publicVariable "life_var_federlReserveReady";
+
 for "_i" from 0 to 1 step 0 do 
 {
     uiSleep (_addMoreEvery * 60);
@@ -58,7 +63,7 @@ for "_i" from 0 to 1 step 0 do
     };
 
     //-- Update the vault
-    fed_bank setVariable ["safe",_newfunds,true];
+    _vaultObject setVariable ["safe",_newfunds,true];
 
     //-- Update the database 
     ["UPDATE", "servers", [[["vault",["DB","INT", _newfunds] call life_fnc_database_parse]],_whereClause]]call life_fnc_database_request;

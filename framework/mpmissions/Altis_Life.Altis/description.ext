@@ -594,6 +594,7 @@ class CfgRemoteExec {
             F(TON_fnc_houseGarage,SERVER)
             F(TON_fnc_switchSideRequest,SERVER)
             F(life_fnc_tents_buildRequest,SERVER)
+            F(life_fnc_lottery_buyTicket,SERVER)
 
         /* HeadlessClient only functions */
             F(HC_fnc_addContainer,HC)

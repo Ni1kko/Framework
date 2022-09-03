@@ -91,6 +91,14 @@ CREATE DEFINER=CURRENT_USER PROCEDURE `resetFedVault` ()  BEGIN
   UPDATE `servers` SET `vault`= 0;
 END$$
 
+CREATE DEFINER=CURRENT_USER PROCEDURE `deactiveLotteryTickets` ()  BEGIN
+   UPDATE `lotteryTickets` SET `active`= 0;
+END$$
+
+CREATE DEFINER=CURRENT_USER PROCEDURE `deleteOldLotteryTickets` ()  BEGIN
+  DELETE FROM `lotteryTickets` WHERE `active` = 0;
+END$$
+
 DELIMITER ;
 
 --
@@ -110,6 +118,23 @@ CREATE TABLE IF NOT EXISTS `servers` (
     TIMESTAMP         TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
     PRIMARY KEY (`serverID`),
     UNIQUE KEY `unique_serverid` (`serverID`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+--
+-- Table structure for table `lotteryTickets`
+--
+
+CREATE TABLE IF NOT EXISTS `lotteryTickets` (
+    `ticketID`        INT NOT NULL AUTO_INCREMENT,
+    `BEGuid`          VARCHAR(64) NOT NULL,
+    `numbers`         INT NOT NULL DEFAULT 0,
+    `active`          TINYINT NOT NULL DEFAULT 1,
+    `Purchased`       TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    PRIMARY KEY (`ticketID`),
+    INDEX `fkIdx_players_lottery` (`BEGuid`),
+    CONSTRAINT `FK_players_lottery` FOREIGN KEY `fkIdx_players_lottery` (`BEGuid`)
+      REFERENCES `players` (`BEGuid`)
+      ON UPDATE CASCADE ON DELETE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 -- --------------------------------------------------------

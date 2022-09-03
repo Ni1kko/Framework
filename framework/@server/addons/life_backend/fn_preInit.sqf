@@ -11,6 +11,7 @@ life_var_playtimeValues = [];
 life_var_playtimeValuesRequest = [];
 life_var_radioChannels = [];
 life_var_corpses = []; 
+life_var_federlReserveReady = {false};
 
 publicVariable "life_var_serverLoaded";
 waitUntil {isFinal "extdb_var_database_key"};
