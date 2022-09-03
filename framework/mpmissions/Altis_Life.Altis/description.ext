@@ -262,6 +262,7 @@ class CfgFunctions {
             class moveIn {};
             class switchSide {};
             class paychecks {};
+            class buyLotteryTicket {};
         };
 
         class Gangs {

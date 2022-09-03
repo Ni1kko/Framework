@@ -27,14 +27,14 @@ uiSleep 5;
 private _Winners = [];
 private _jackpotRollover = _vaultObject getVariable ["safe",0];
 private _winningNumbers = [];
-private _winningBonusBall = floor(random 99);
-private _bonusBallPayout = ((5000 * floor(random 120)) * 0.9);
+private _winningBonusBall = [] call life_fnc_lottery_generateBonusBall;
+private _bonusBallPayout = ((5000 * floor(random (10 + life_var_serverMaxPlayers))) * 0.9);
 private _totalTicketsPurchased = count _queryTickets;
 private _JackPot = ((300 * _totalTicketsPurchased) * 0.9) + _jackpotRollover;
 private _Split = _JackPot / (count(_Winners));
 
 //-- Generate winning tickets
-for "_i" from 1 to _ticketDrawCount do {
+for "_i" from 0 to _ticketDrawCount do {
 	_winningNumbers pushBack ([] call life_fnc_lottery_generateTicket);
 };
 
@@ -43,9 +43,9 @@ for "_i" from 1 to _ticketDrawCount do {
 	_x params ["_ticketid", "_BEGuid", "_numbers", "_bonusball"];
 
 	_numbers = ["GAME","STRING", _numbers] call life_fnc_database_parse;
-	_bonusball = ["GAME","INT", _bonusball] call life_fnc_database_parse;
+	_bonusball = ["GAME","STRING", _bonusball] call life_fnc_database_parse;
 
-	private _wonBonusBall = [_winningBonusBall isEqualTo _bonusball,false] select (_bonusball isEqualTo 0);
+	private _wonBonusBall = [_winningBonusBall isEqualTo _bonusball,false] select (parseNumber _bonusball isEqualTo 0);
 
 	if(_numbers in _winningNumbers)then{
 		_Winners pushBack [_ticketid,_BEGuid,_wonBonusBall];

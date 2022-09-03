@@ -6,32 +6,39 @@
 if(!canSuspend)exitWith{_this spawn life_fnc_lottery_init};
 
 diag_log "[Life Lottery] Initializing...";
-waitUntil {isFinal "extdb_var_database_key" AND isFinal "life_var_federlReserveReady"}; 
+
+systemTimeUTC params ["_year","_month","_day","_hour","_minute","_second"];
 
 private _timer = 0;
-private _vaultObject = missionNamespace getVariable ["fed_bank",objNull];
-
+private _vaultObject = objNull;
 Life_var_lottoDrawLock = false;
 life_var_lotto_config = compileFinal str [
 	getNumber(configFile >> "CfgLottery" >> "ticketPrice"),
 	getNumber(configFile >> "CfgLottery" >> "ticketLength"),
 	getNumber(configFile >> "CfgLottery" >> "ticketDrawCount"),
-	getNumber(configFile >> "CfgLottery" >> "ticketsReclaim") isEqualTo 1
+	getNumber(configFile >> "CfgLottery" >> "ticketsReclaim") isEqualTo 1,
+	getNumber(configFile >> "CfgLottery" >> "ticketBonusballPrice")
 ];
-
-publicVariable "life_var_lotto_config";
 
 (call life_var_lotto_config) params [
 	"_ticketPrice",
 	"_ticketLength",
 	"_ticketDrawCount",
-	"_ticketsReclaim"
+	"_ticketsReclaim",
+	"_ticketBonusballPrice"
 ];
 
-systemTimeUTC params ["_year","_month","_day","_hour","_minute","_second"];
+publicVariable "life_var_lotto_config";
+publicVariable "life_fnc_lottery_generateTicket";
+publicVariable "life_fnc_lottery_generateBonusBall";
 
 //-- Run database procedures
+waitUntil {isFinal "extdb_var_database_key"};
 ["CALL", "deleteOldLotteryTickets"] call life_fnc_database_request;
+
+//--
+waitUntil {isFinal "life_var_federlReserveReady"}; 
+_vaultObject = missionNamespace getVariable ["fed_bank",objNull];
 
 //--
 if _ticketsReclaim then{

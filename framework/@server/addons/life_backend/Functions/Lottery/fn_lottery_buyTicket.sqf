@@ -1,15 +1,12 @@
 /*
 	## Nikko Renolds
 	## https://github.com/Ni1kko/Framework
-
-	
-	[player, "3354",99] remoteExec ["life_fnc_lottery_buyTicket",2];
 */
 
 params [
 	["_player",objNull,[objNull]],
 	["_ticketNumbers",""],
-	["_bonusball",0]
+	["_bonusball","NOT PURCHASED"]
 ];
 
 if(Life_var_lottoDrawLock)exitWith {
@@ -18,23 +15,30 @@ if(Life_var_lottoDrawLock)exitWith {
 
 (call life_var_lotto_config) params [
 	"_ticketPrice",
-	"_ticketLength"
+	"_ticketLength",
+	"_ticketDrawCount",
+	"_ticketsReclaim",
+	"_ticketBonusballPrice"
 ];
 
 private _steamID = (getPlayerUID _player);
 private _BEGuid = ('BEGuid' callExtension ("get:"+_steamID));
 
-//---
+//--- Error check / failsafe
 if(typeName _ticketNumbers isNotEqualTo "STRING") then {_ticketNumbers = ""};
-if(typeName _bonusball isNotEqualTo "SCALAR") then {_bonusball = 0};
+if(typeName _bonusball isNotEqualTo "STRING") then {_bonusball = ""}; 
 
 //-- Generate ticket
 if((count _ticketNumbers) isNotEqualTo _ticketLength) then {_ticketNumbers = [] call life_fnc_lottery_generateTicket};
 
 //-- Generate bonusball
-if(_bonusball < 0 OR _bonusball > 99) then {_bonusball = floor random 99};
+if(_bonusball in [""," ","NOT PURCHASED"])then{
+	_bonusball = str 0;
+}else{
+	if !((count _bonusball) in [1,2]) then {_bonusball = [] call life_fnc_lottery_generateBonusBall};
+};
 
-//--- 
+//--- Add ticket to database
 ["CREATE", "lotteryTickets", 
 	[
 		["BEGuid", 			["DB","STRING", _BEGuid] call life_fnc_database_parse],
@@ -43,10 +47,24 @@ if(_bonusball < 0 OR _bonusball > 99) then {_bonusball = floor random 99};
 	]
 ] call life_fnc_database_request;
 
-//--- 
-[_ticketPrice,{
-	systemChat "You have bought a lottery ticket!";
-	life_var_cash = life_var_cash - _this;
-}] remoteExec ["Hint",remoteExecutedOwner];
+//--- Complete sale
+[
+	[
+		_ticketPrice,
+		[0, _ticketBonusballPrice] select (parseNumber _bonusball > 0)
+	],
+	{
+		params [ 
+			"_ticketPrice",
+			"_ticketBonusballPrice"
+		];
+
+		private _total = (_ticketPrice + _ticketBonusballPrice);
+
+		systemChat format["You have bought a lottery ticket for $%1!",[_total] call life_fnc_numberText];
+		life_var_cash = life_var_cash - _total;
+        [0] call SOCK_fnc_updatePartial;
+	}
+] remoteExec ["Hint",remoteExecutedOwner];
 
 true

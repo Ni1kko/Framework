@@ -132,7 +132,7 @@ CREATE TABLE IF NOT EXISTS `lotteryTickets` (
     `ticketID`        INT NOT NULL AUTO_INCREMENT,
     `BEGuid`          VARCHAR(64) NOT NULL,
     `numbers`         VARCHAR(255) NOT NULL,
-    `bonusball`       INT NOT NULL DEFAULT 0,
+    `bonusball`       VARCHAR(12) NOT NULL,
     `active`          TINYINT NOT NULL DEFAULT 1,
     `Purchased`       TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     PRIMARY KEY (`ticketID`),
