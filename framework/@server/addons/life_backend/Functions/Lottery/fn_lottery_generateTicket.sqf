@@ -3,11 +3,8 @@
 	## https://github.com/Ni1kko/Framework
 */
 
-(call life_var_lotto_config) params [
-	"",
-	"_ticketLength"
-];
-
+private _config = call life_var_lotto_config;
+private _ticketLength = _config param [1, 0];
 private _ticketNumbers = [];
 
 for "_i" from 1 to _ticketLength do {
