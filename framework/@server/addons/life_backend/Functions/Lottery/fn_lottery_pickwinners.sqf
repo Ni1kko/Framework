@@ -31,7 +31,7 @@ private _winningBonusBall = [] call life_fnc_lottery_generateBonusBall;
 private _bonusBallPayout = ((5000 * floor(random (10 + life_var_serverMaxPlayers))) * 0.9);
 private _totalTicketsPurchased = count _queryTickets;
 private _JackPot = ((300 * _totalTicketsPurchased) * 0.9) + _jackpotRollover;
-private _Split = _JackPot / (count(_Winners));
+private _jackpotSplit = _JackPot;
 
 //-- Generate winning tickets
 for "_i" from 1 to _ticketDrawCount do {
@@ -46,11 +46,30 @@ for "_i" from 1 to _ticketDrawCount do {
 	_bonusball = ["GAME","STRING", _bonusball] call life_fnc_database_parse;
 
 	private _wonBonusBall = [_winningBonusBall isEqualTo _bonusball,false] select (parseNumber _bonusball isEqualTo 0);
-
+	
 	if(_numbers in _winningNumbers)then{
-		_Winners pushBack [_ticketid,_BEGuid,_wonBonusBall];
+		_Winners pushBack [_ticketid,_BEGuid,_wonBonusBall,_ticketLength];
+	}else{
+		private _matches = 0;
+		{
+			private _winningNumber = _x;
+
+			{
+				private _number = _x;
+				if(_number in _numbers)then{
+					_matches = _matches + 1;
+				};
+			}forEach (_winningNumber splitString "");
+		}forEach _winningNumbers;
+
+		if(_matches >= (_ticketLength / 2))then{
+			_Winners pushBack [_ticketid,_BEGuid,_wonBonusBall,_matches];
+		};
 	};
 } forEach (_queryTickets call BIS_fnc_arrayShuffle);
+
+//-- Calculate winnings split between all winners
+_jackpotSplit = _JackPot / (count _Winners);
 
 //-- Make tickets dead in database
 ["CALL", "deactiveLotteryTickets"] call life_fnc_database_request;
@@ -73,21 +92,15 @@ if (count(_Winners) <= 0) exitWith {
 
 //-- Empty vault
 _vaultObject setVariable ["safe",0,true];
-["UPDATE", "servers", [
-	[
-		["vault",["DB","INT", 0] call life_fnc_database_parse]
-	],
-	[
-		["serverID",["DB","INT",call life_var_serverID] call life_fnc_database_parse]
-	]
-]]call life_fnc_database_request;
+["UPDATE", "servers", [[["vault",["DB","INT", 0] call life_fnc_database_parse]],[["serverID",["DB","INT",call life_var_serverID] call life_fnc_database_parse]]]]call life_fnc_database_request;
 
 //-- Notify
 [0,format["Someone has won the lottery jackpot of $%1!",[_Jackpot] call life_fnc_numberText]] remoteExec ["life_fnc_broadcast",0];
 
+
 //-- Paytime
 {
-	_x params ["_ticketid","_WinnerGuid","_wonBonusBall"];
+	_x params ["_ticketid","_WinnerGuid","_wonBonusBall","_matches"];
 
 	private _winnerIndex = _forEachIndex;
 	
@@ -98,9 +111,18 @@ _vaultObject setVariable ["safe",0,true];
 			private _steamID = (getPlayerUID _player);
 			private _ownerID = (owner _player);
 			private _BEGuid = ('BEGuid' callExtension ("get:"+_steamID));
- 
+			private _payout = _jackpotSplit;
+			private _payoutBB = _bonusBallPayout;
+
 			if (_BEGuid isEqualTo _WinnerGuid) then 
-			{ 
+			{  
+				//--- Part winner
+				if(_matches isNotEqualTo _ticketLength)then{
+					_payout = (_payout / (_ticketLength - _matches));
+					_payoutBB = (_payoutBB / (_ticketLength - _matches));
+				};
+				
+				//--- Boradcast
 				[
 					0,
 					[
@@ -109,11 +131,12 @@ _vaultObject setVariable ["safe",0,true];
 					] select _wonBonusBall
 				] remoteExec ["life_fnc_broadcast",0];
 
+				//--- Payout
 				[
 					[
-						_Split,
+						_payout,
 						_wonBonusBall,
-						[0,_bonusBallPayout]select _wonBonusBall
+						[0,_payoutBB]select _wonBonusBall
 					],
 					{
 						params ["_ticketPayout","_bonusBallWinner","_bonusBallPayout"];
@@ -145,7 +168,7 @@ if _ticketsReclaim then {
 		["CREATE", "unclaimedLotteryTickets", 
 			[
 				["BEGuid", 					["DB","STRING", _BEGuid] call life_fnc_database_parse],
-				["winnings", 				["DB","INT", _Split] call life_fnc_database_parse],
+				["winnings", 				["DB","INT", _jackpotSplit] call life_fnc_database_parse],
 				["bonusball", 				["DB","BOOL", _wonBonusBall] call life_fnc_database_parse],
 				["bonusballWinnings", 		["DB","INT", [0, _bonusBallPayout] select _wonBonusBall] call life_fnc_database_parse],
 			]
