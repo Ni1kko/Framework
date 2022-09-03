@@ -21,7 +21,8 @@
   - Vitem shops, vehicle shops, weapon shops, clothing stores etc. 
   - Housing System
   - Camping System 
-  - Persistent federal reserve vault
+  - Lottery System (Weekly picked, Rollover is stored in federal reserve vault)
+  - Persistent federal reserve vault can be claimed through winning Lottery or by robbing
   - Persistent wanted system
   - RCON
   - DB Logging
