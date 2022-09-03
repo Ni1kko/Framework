@@ -7,6 +7,8 @@ if(!canSuspend)exitWith{_this spawn life_fnc_tents_init};
 
 waitUntil {isFinal "extdb_var_database_key"}; 
 
+diag_log "[Life Tents] Initializing...";
+
 life_var_tent_config = compileFinal str [
 	getNumber(configFile >> "CfgTents" >> "oneTimeUse") isEqualTo 1,
 	getNumber(configFile >> "CfgTents" >> "garages") isEqualTo 1
@@ -38,3 +40,5 @@ private _queryTents = ["READ", "tents",
 } foreach _queryTents;
 
 publicVariable "life_var_allTents";
+
+diag_log "[Life Tents] Initialized!";
