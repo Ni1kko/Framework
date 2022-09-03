@@ -34,7 +34,7 @@ private _JackPot = ((300 * _totalTicketsPurchased) * 0.9) + _jackpotRollover;
 private _Split = _JackPot / (count(_Winners));
 
 //-- Generate winning tickets
-for "_i" from 0 to _ticketDrawCount do {
+for "_i" from 1 to _ticketDrawCount do {
 	_winningNumbers pushBack ([] call life_fnc_lottery_generateTicket);
 };
 
