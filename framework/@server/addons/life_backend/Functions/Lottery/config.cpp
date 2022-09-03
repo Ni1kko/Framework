@@ -10,6 +10,8 @@ class CfgPatches {
 class CfgLottery
 { 
     ticketPrice = 1000; // Price of one ticket
+    ticketLength = 4; // Length of ticket number (Larger numbers = more combinations)
+    ticketDrawCount = 25; // Amount of winable tickets
 };
 
 class CfgFunctions {
@@ -20,6 +22,7 @@ class CfgFunctions {
             class lottery_init {postInit = 1;};
             class lottery_pickwinners {};
             class lottery_buyTicket {};
+            class lottery_generateTicket {};
         };
     };
 };

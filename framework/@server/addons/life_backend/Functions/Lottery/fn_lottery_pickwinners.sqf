@@ -7,10 +7,17 @@ params [
 	["_vaultObject",objNull,[objNull]]
 ];
 
+(call life_var_lotto_config) params [
+	"_ticketPrice",
+	"_ticketLength",
+	"_ticketDrawCount"
+];
+	
+
 //-- Get tents from database
 private _queryTickets = ["READ", "lotteryTickets", 
 	[
-		["id", "BEGuid", "numbers"],
+		["id", "BEGuid", "numbers", "bonusball"],
 		[["active", ["DB","BOOL", true] call life_fnc_database_parse]]
 	]
 ] call life_fnc_database_request;
@@ -19,17 +26,29 @@ uiSleep 5;
 
 private _Winners = [];
 private _jackpotRollover = _vaultObject getVariable ["safe",0];
-private _winningNumbers = [floor(random(1000)),round(random(1000)),floor(random(1000)),round(random(1000)),floor(random(1000)),round(random(1000))];
-private _Count = count _queryTickets;
-private _JackPot = ((300 * _Count) * 0.9) + _jackpotRollover;
+private _winningNumbers = [];
+private _winningBonusBall = floor(random 99);
+private _bonusBallPayout = ((5000 * floor(random 120)) * 0.9);
+private _totalTicketsPurchased = count _queryTickets;
+private _JackPot = ((300 * _totalTicketsPurchased) * 0.9) + _jackpotRollover;
 private _Split = _JackPot / (count(_Winners));
+
+//-- Generate winning tickets
+for "_i" from 1 to _ticketDrawCount do {
+	_winningNumbers pushBack ([] call life_fnc_lottery_generateTicket);
+};
 
 //-- Check if there are any winning tickets
 {
-	_x params ["_ticketid", "_BEGuid", "_numbers"];
+	_x params ["_ticketid", "_BEGuid", "_numbers", "_bonusball"];
+
+	_numbers = ["GAME","STRING", _numbers] call life_fnc_database_parse;
+	_bonusball = ["GAME","INT", _bonusball] call life_fnc_database_parse;
+
+	private _wonBonusBall = [_winningBonusBall isEqualTo _bonusball,false] select (_bonusball isEqualTo 0);
 
 	if(_numbers in _winningNumbers)then{
-		_Winners pushBack [_ticketid,_BEGuid];
+		_Winners pushBack [_ticketid,_BEGuid,_wonBonusBall];
 	};
 } forEach (_queryTickets call BIS_fnc_arrayShuffle);
 
@@ -68,16 +87,49 @@ _vaultObject setVariable ["safe",0,true];
 
 //-- Paytime
 {
-	if (getPlayerUID _x in _Winners) then 
-	{
-		[0,format["%1 is a lotto winner!",name _x]] remoteExec ["life_fnc_broadcast",0];
+	_x params ["_ticketid","_WinnerGuid","_wonBonusBall"];
 
-		[_Split,{
-			life_var_cash = life_var_cash + _this;
-			systemChat format["You have won $%1 from the lottery!",[_this] call life_fnc_numberText]
-		}] remoteExec ["spawn",owner _x]; 
-	};
-} forEach playableUnits;
+	{
+		if(isPlayer _x)then{ 
+			private _player = _x;
+			private _name = (name _player);
+			private _steamID = (getPlayerUID _player);
+			private _ownerID = (owner _player);
+			private _BEGuid = ('BEGuid' callExtension ("get:"+_steamID));
+ 
+			if (_BEGuid isEqualTo _WinnerGuid) then 
+			{ 
+				[
+					0,
+					[
+						format["%1 is a lotto winner!",_name],
+						format["%1 is a lotto winner and won the bounus ball (%2)!",_name,_winningBonusBall]
+					] select _wonBonusBall
+				] remoteExec ["life_fnc_broadcast",0];
+
+				[
+					[
+						_Split,
+						_wonBonusBall,
+						[0,_bonusBallPayout]select _wonBonusBall
+					],
+					{
+						params ["_ticketPayout","_bonusBallWinner","_bonusBallPayout"];
+
+						private _totalPayout = _ticketPayout + _bonusBallPayout;
+						
+						systemChat ([
+							format["You have won $%1 from the lottery!",[_ticketPayout] call life_fnc_numberText],
+							format["You have won $%1 from the lottery bonusball!",[_bonusBallPayout] call life_fnc_numberText]
+						] select _bonusBallWinner);
+
+						life_var_cash = life_var_cash + _totalPayout;
+					}
+				] remoteExec ["spawn",_ownerID];
+			}; 
+		};
+	} forEach playableUnits; 
+}forEach _Winners;
 
 //-- Delete dead tickets from database
 ["CALL", "deleteOldLotteryTickets"] call life_fnc_database_request;

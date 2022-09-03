@@ -14,7 +14,9 @@ private _vaultObject = missionNamespace getVariable ["fed_bank",objNull];
 Life_var_lottoDrawLock = false;
 
 life_var_lotto_config = compileFinal str [
-	getNumber(configFile >> "CfgLottery" >> "ticketPrice")
+	getNumber(configFile >> "CfgLottery" >> "ticketPrice"),
+	getNumber(configFile >> "CfgLottery" >> "ticketLength"),
+	getNumber(configFile >> "CfgLottery" >> "ticketDrawCount")
 ];
 
 publicVariable "life_var_lotto_config";
