@@ -30415,7 +30415,7 @@ class Mission
 					class Attributes
 					{
 						skill=0.60000002;
-						init="this allowDamage false; this enableSimulation false; this addAction[localize""STR_Shops_Market"",life_fnc_virt_menu,""market"",1.5,true,true,"""",""true"",5];";
+						init="this allowDamage false; this enableSimulation false; this addAction[localize""STR_Shops_Market"",life_fnc_virt_menu,""market"",1.5,true,true,"""",""true"",5];this addAction [""Buy Lottery Ticket"",life_fnc_buyLotteryTicket,nil,1.5,true,true,"""",""true"",5];";
 						disableSimulation=1;
 					};
 					id=951;
@@ -32176,7 +32176,7 @@ class Mission
 					class Attributes
 					{
 						skill=0.60000002;
-						init="this allowDamage false; this enableSimulation false; this addAction[localize""STR_Shops_Market"",life_fnc_virt_menu,""market"",1.5,true,true,"""",""true"",5];";
+						init="this allowDamage false; this enableSimulation false; this addAction[localize""STR_Shops_Market"",life_fnc_virt_menu,""market"",1.5,true,true,"""",""true"",5];this addAction [""Buy Lottery Ticket"",life_fnc_buyLotteryTicket,nil,1.5,true,true,"""",""true"",5];";
 						disableSimulation=1;
 					};
 					id=973;
@@ -32580,7 +32580,7 @@ class Mission
 					class Attributes
 					{
 						skill=0.60000002;
-						init="this allowDamage false; this enableSimulation false; this addAction[localize""STR_Shops_Market"",life_fnc_virt_menu,""market"",1.5,true,true,"""",""true"",5];";
+						init="this allowDamage false; this enableSimulation false; this addAction[localize""STR_Shops_Market"",life_fnc_virt_menu,""market"",1.5,true,true,"""",""true"",5];this addAction [""Buy Lottery Ticket"",life_fnc_buyLotteryTicket,nil,1.5,true,true,"""",""true"",5];";
 						disableSimulation=1;
 					};
 					id=978;
@@ -38258,7 +38258,7 @@ class Mission
 					class Attributes
 					{
 						skill=0.60000002;
-						init="this allowDamage false; this enableSimulation false; this addAction[localize""STR_Shops_Market"",life_fnc_virt_menu,""market"",1.5,true,true,"""",""true"",5];";
+						init="this allowDamage false; this enableSimulation false; this addAction[localize""STR_Shops_Market"",life_fnc_virt_menu,""market"",1.5,true,true,"""",""true"",5];this addAction [""Buy Lottery Ticket"",life_fnc_buyLotteryTicket,nil,1.5,true,true,"""",""true"",5];";
 						disableSimulation=1;
 					};
 					id=939;
@@ -38419,7 +38419,7 @@ class Mission
 					class Attributes
 					{
 						skill=0.60000002;
-						init="this allowDamage false; this enableSimulation false; this addAction[localize""STR_Shops_Market"",life_fnc_virt_menu,""market"",1.5,true,true,"""",""true"",5];";
+						init="this allowDamage false; this enableSimulation false; this addAction[localize""STR_Shops_Market"",life_fnc_virt_menu,""market"",1.5,true,true,"""",""true"",5];this addAction [""Buy Lottery Ticket"",life_fnc_buyLotteryTicket,nil,1.5,true,true,"""",""true"",5];";
 						disableSimulation=1;
 					};
 					id=1056;
