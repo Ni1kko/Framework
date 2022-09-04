@@ -9,8 +9,8 @@
 	["_ticketPrice",-1],
 	["_ticketLength",-1],
 	["_ticketDrawCount",-1],
-	["_ticketsReclaim",false]
-	["_ticketBonusballPrice",-1],
+	["_ticketsReclaim",false],
+	["_ticketBonusballPrice",-1]
 ];
 
 if (_ticketPrice == -1) exitWith {hint "Error: No ticket price set in config!"; false};
