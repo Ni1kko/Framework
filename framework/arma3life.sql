@@ -1,9 +1,15 @@
+-- phpMyAdmin SQL Dump
+-- version 5.2.0
+-- https://www.phpmyadmin.net/
+--
+-- Host: 127.0.0.1
+-- Generation Time: Sep 05, 2022 at 01:15 AM
+-- Server version: 10.4.24-MariaDB
+-- PHP Version: 8.1.6
+
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
+START TRANSACTION;
 SET time_zone = "+00:00";
---
--- Compatible with newer MySQL versions. (After MySQL-5.5)
--- This SQL uses utf8mb4 and has CURRENT_TIMESTAMP function.
---
 
 
 /*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
@@ -12,265 +18,106 @@ SET time_zone = "+00:00";
 /*!40101 SET NAMES utf8mb4 */;
 
 --
--- Creates database `arma3life` unless it already exists and uses `arma3life`
--- Default Schema
+-- Database: `arma3life`
 --
-CREATE DATABASE IF NOT EXISTS `arma3life` DEFAULT CHARACTER SET utf8mb4;
+CREATE DATABASE IF NOT EXISTS `arma3life` DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci;
 USE `arma3life`;
-
---
--- Drop procedures to ensure no conflicts
---
-DROP PROCEDURE IF EXISTS `resetLifeVehicles`;
-DROP PROCEDURE IF EXISTS `deleteDeadVehicles`;
-DROP PROCEDURE IF EXISTS `deleteOldHouses`;
-DROP PROCEDURE IF EXISTS `deleteOldGangs`;
-DROP PROCEDURE IF EXISTS `deleteOldContainers`;
-DROP PROCEDURE IF EXISTS `deleteOldWanted`;
-DROP PROCEDURE IF EXISTS `resetActivePlayerList`;
-DROP PROCEDURE IF EXISTS `resetPlayersLife`;
-DROP PROCEDURE IF EXISTS `deleteCellMessages`;
-DROP PROCEDURE IF EXISTS `deleteDeadTents`;
-DROP PROCEDURE IF EXISTS `resetFedVault`;
-DROP PROCEDURE IF EXISTS `deactiveLotteryTickets`;
-DROP PROCEDURE IF EXISTS `deleteOldLotteryTickets`;
-DROP PROCEDURE IF EXISTS `deleteClaimedLotteryTickets`;
-DROP PROCEDURE IF EXISTS `increaseServerRestarts`;
 
 DELIMITER $$
 --
 -- Procedures
--- CURRENT_USER function returns the name of the current user in the SQL Server database.
 --
-
-CREATE DEFINER=CURRENT_USER PROCEDURE `resetLifeVehicles`()
-BEGIN
-  UPDATE `vehicles` SET `active`= 0;
-END$$
-
-CREATE DEFINER=CURRENT_USER PROCEDURE `deleteDeadVehicles`()
-BEGIN
-  DELETE FROM `vehicles` WHERE `alive` = 0;
-END$$
-
-CREATE DEFINER=CURRENT_USER PROCEDURE `deleteOldHouses`()
-BEGIN
-  DELETE FROM `houses` WHERE `owned` = 0;
-END$$
-
-CREATE DEFINER=CURRENT_USER PROCEDURE `deleteOldGangs`()
-BEGIN
-  DELETE FROM `gangs` WHERE `active` = 0;
-END$$
-
-CREATE DEFINER=CURRENT_USER PROCEDURE `deleteOldContainers`()
-BEGIN
-  DELETE FROM `containers` WHERE `owned` = 0;
-END$$
-
-CREATE DEFINER=CURRENT_USER PROCEDURE `deleteOldWanted`()
-BEGIN
-  DELETE FROM `wanted` WHERE `active` = 0;
-END$$
-
-CREATE DEFINER=CURRENT_USER PROCEDURE `resetActivePlayerList`()
-BEGIN
-  UPDATE `servers` SET `currentplayers`=  '"[]"';
-END$$
-
-CREATE DEFINER=CURRENT_USER PROCEDURE `resetPlayersLife`()
-BEGIN
-  UPDATE `players` SET `alive`= 0 WHERE `alive` = 1;
-END$$
-
-CREATE DEFINER=CURRENT_USER PROCEDURE `deleteCellMessages` ()  BEGIN
-  DELETE FROM `cellphone_messages` WHERE `remove` = 0;
-END$$
-
-CREATE DEFINER=CURRENT_USER PROCEDURE `deleteDeadTents` ()  BEGIN
-  DELETE FROM `tents` WHERE `alive` = 0;
-END$$
-
-CREATE DEFINER=CURRENT_USER PROCEDURE `resetFedVault` ()  BEGIN
-  UPDATE `servers` SET `vault`= 0;
-END$$
-
-CREATE DEFINER=CURRENT_USER PROCEDURE `deactiveLotteryTickets` ()  BEGIN
+DROP PROCEDURE IF EXISTS `deactiveLotteryTickets`$$
+CREATE DEFINER=`root`@`localhost` PROCEDURE `deactiveLotteryTickets` ()   BEGIN
    UPDATE `lotteryTickets` SET `active`= 0;
 END$$
 
-CREATE DEFINER=CURRENT_USER PROCEDURE `deleteOldLotteryTickets` ()  BEGIN
-  DELETE FROM `lotteryTickets` WHERE `active` = 0;
+DROP PROCEDURE IF EXISTS `deleteCellMessages`$$
+CREATE DEFINER=`root`@`localhost` PROCEDURE `deleteCellMessages` ()   BEGIN
+  DELETE FROM `cellphone_messages` WHERE `remove` = 0;
 END$$
 
-CREATE DEFINER=CURRENT_USER PROCEDURE `deleteClaimedLotteryTickets` ()  BEGIN
+DROP PROCEDURE IF EXISTS `deleteClaimedLotteryTickets`$$
+CREATE DEFINER=`root`@`localhost` PROCEDURE `deleteClaimedLotteryTickets` ()   BEGIN
   DELETE FROM `unclaimedLotteryTickets` WHERE `claimed` = 0;
 END$$
 
-CREATE DEFINER=CURRENT_USER PROCEDURE `increaseServerRestarts` ()  BEGIN
+DROP PROCEDURE IF EXISTS `deleteDeadTents`$$
+CREATE DEFINER=`root`@`localhost` PROCEDURE `deleteDeadTents` ()   BEGIN
+  DELETE FROM `tents` WHERE `alive` = 0;
+END$$
+
+DROP PROCEDURE IF EXISTS `deleteDeadVehicles`$$
+CREATE DEFINER=`root`@`localhost` PROCEDURE `deleteDeadVehicles` ()   BEGIN
+  DELETE FROM `vehicles` WHERE `alive` = 0;
+END$$
+
+DROP PROCEDURE IF EXISTS `deleteOldContainers`$$
+CREATE DEFINER=`root`@`localhost` PROCEDURE `deleteOldContainers` ()   BEGIN
+  DELETE FROM `containers` WHERE `owned` = 0;
+END$$
+
+DROP PROCEDURE IF EXISTS `deleteOldGangs`$$
+CREATE DEFINER=`root`@`localhost` PROCEDURE `deleteOldGangs` ()   BEGIN
+  DELETE FROM `gangs` WHERE `active` = 0;
+END$$
+
+DROP PROCEDURE IF EXISTS `deleteOldHouses`$$
+CREATE DEFINER=`root`@`localhost` PROCEDURE `deleteOldHouses` ()   BEGIN
+  DELETE FROM `houses` WHERE `owned` = 0;
+END$$
+
+DROP PROCEDURE IF EXISTS `deleteOldLotteryTickets`$$
+CREATE DEFINER=`root`@`localhost` PROCEDURE `deleteOldLotteryTickets` ()   BEGIN
+  DELETE FROM `lotteryTickets` WHERE `active` = 0;
+END$$
+
+DROP PROCEDURE IF EXISTS `deleteOldWanted`$$
+CREATE DEFINER=`root`@`localhost` PROCEDURE `deleteOldWanted` ()   BEGIN
+  DELETE FROM `wanted` WHERE `active` = 0;
+END$$
+
+DROP PROCEDURE IF EXISTS `increaseServerRestarts`$$
+CREATE DEFINER=`root`@`localhost` PROCEDURE `increaseServerRestarts` ()   BEGIN
    UPDATE `servers` SET restartcount = restartcount + 1;
+END$$
+
+DROP PROCEDURE IF EXISTS `resetActivePlayerList`$$
+CREATE DEFINER=`root`@`localhost` PROCEDURE `resetActivePlayerList` ()   BEGIN
+  UPDATE `servers` SET `currentplayers`=  '"[]"';
+END$$
+
+DROP PROCEDURE IF EXISTS `resetFedVault`$$
+CREATE DEFINER=`root`@`localhost` PROCEDURE `resetFedVault` ()   BEGIN
+  UPDATE `servers` SET `vault`= 0;
+END$$
+
+DROP PROCEDURE IF EXISTS `resetLifeVehicles`$$
+CREATE DEFINER=`root`@`localhost` PROCEDURE `resetLifeVehicles` ()   BEGIN
+  UPDATE `vehicles` SET `active`= 0;
+END$$
+
+DROP PROCEDURE IF EXISTS `resetPlayersLife`$$
+CREATE DEFINER=`root`@`localhost` PROCEDURE `resetPlayersLife` ()   BEGIN
+  UPDATE `players` SET `alive`= 0 WHERE `alive` = 1;
 END$$
 
 DELIMITER ;
 
---
--- Table structure for table `servers`
---
-
-CREATE TABLE IF NOT EXISTS `servers` (
-    `serverID`        INT NOT NULL AUTO_INCREMENT,
-    `hardwareID`      VARCHAR(64) NOT NULL,
-    `name`            VARCHAR(255) NOT NULL,
-    `world`           VARCHAR(64) NOT NULL,
-    `currentplayers`  TEXT NOT NULL,
-    `vault`           INT NOT NULL DEFAULT 0,
-    `maxplayercount`  INT NOT NULL DEFAULT 0,
-    `restartcount`    INT NOT NULL DEFAULT 0,
-    `runtime`         INT NOT NULL DEFAULT 0,
-    TIMESTAMP         TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
-    PRIMARY KEY (`serverID`),
-    UNIQUE KEY `unique_serverid` (`serverID`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
-
 -- --------------------------------------------------------
 
 --
--- Table structure for table `players`
+-- Table structure for table `admin_logs`
 --
 
-CREATE TABLE IF NOT EXISTS `players` (
-    `uid`          INT NOT NULL AUTO_INCREMENT,
-    `serverID`     INT NOT NULL,
-    `BEGuid`       VARCHAR(64) NOT NULL,
-    `pid`          VARCHAR(17) NOT NULL,
-    `name`         VARCHAR(32) NOT NULL,
-    `aliases`      TEXT NOT NULL,
-    `cash`         INT NOT NULL DEFAULT 0,
-    `coplevel`     ENUM('0','1','2','3','4','5','6','7','8','9','10','11','12','13','14','15') NOT NULL DEFAULT '0',
-    `reblevel`     ENUM('0','1','2','3','4','5','6','7') NOT NULL DEFAULT '0',
-    `mediclevel`   ENUM('0','1','2','3','4','5','6','7','8','9','10') NOT NULL DEFAULT '0',
-    `joblevel`     ENUM('0','1','2','3','4','5','6','7') NOT NULL DEFAULT '0',
-    `virtualitems` TEXT NOT NULL,
-    `civ_licenses` TEXT NOT NULL,
-    `cop_licenses` TEXT NOT NULL,
-    `reb_licenses` TEXT NOT NULL,
-    `med_licenses` TEXT NOT NULL,
-    `civ_gear`     TEXT NOT NULL,
-    `cop_gear`     TEXT NOT NULL,
-    `reb_gear`     TEXT NOT NULL,
-    `med_gear`     TEXT NOT NULL,
-    `stats`    VARCHAR(25) NOT NULL DEFAULT '"[100,100,0]"',
-    `arrested`     TINYINT NOT NULL DEFAULT 0,
-    `adminlevel`   ENUM('0','1','2','3','4','5','6','7','8','9','10')  NOT NULL DEFAULT '0',
-    `donorlevel`   ENUM('0','1','2','3')  NOT NULL DEFAULT '0',
-    `blacklist`    TINYINT NOT NULL DEFAULT 0,
-    `alive`    TINYINT NOT NULL DEFAULT 0,
-    `position` VARCHAR(32) NOT NULL DEFAULT '"[]"',
-    `playtime`     VARCHAR(32) NOT NULL DEFAULT '"[0,0,0,0]"',
-    `insert_time`  TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-    `last_seen`    TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
-    
-    PRIMARY KEY (`pid`),
-    UNIQUE KEY `unique_uid` (`uid`),
-    UNIQUE KEY `unique_beguid` (`BEGuid`),
-    CONSTRAINT `FK_server_id` FOREIGN KEY `fkIdx_server_id` (`serverID`) REFERENCES `servers` (`serverID`) ON UPDATE CASCADE ON DELETE CASCADE,
-    INDEX `index_name` (`name`),
-    INDEX `index_blacklist` (`blacklist`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
-
---
--- Table structure for table `lotteryTickets`
---
-
-CREATE TABLE IF NOT EXISTS `lotteryTickets` (
-    `ticketID`        INT NOT NULL AUTO_INCREMENT,
-    `BEGuid`          VARCHAR(64) NOT NULL,
-    `numbers`         VARCHAR(255) NOT NULL,
-    `bonusball`       VARCHAR(12) NOT NULL,
-    `active`          TINYINT NOT NULL DEFAULT 1,
-    `Purchased`       TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-    PRIMARY KEY (`ticketID`),
-    INDEX `fkIdx_players_lottery` (`BEGuid`),
-    CONSTRAINT `FK_players_lottery` FOREIGN KEY `fkIdx_players_lottery` (`BEGuid`)
-      REFERENCES `players` (`BEGuid`)
-      ON UPDATE CASCADE ON DELETE CASCADE
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
-
---
--- Table structure for table `unclaimedLotteryTickets`
---
-
-CREATE TABLE IF NOT EXISTS `unclaimedLotteryTickets` (
-    `ticketID`                INT NOT NULL AUTO_INCREMENT,
-    `BEGuid`                  VARCHAR(64) NOT NULL,
-    `winnings`                INT NOT NULL DEFAULT 0,
-    `bonusball`               TINYINT NOT NULL DEFAULT 1,
-    `bonusballWinnings`       INT NOT NULL DEFAULT 0,
-    `claimed`                 TINYINT NOT NULL DEFAULT 0,
-    `timestamp`               TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-    PRIMARY KEY (`ticketID`),
-    INDEX `fkIdx_players_unclaimedlottery` (`BEGuid`),
-    CONSTRAINT `FK_players_unclaimedlottery` FOREIGN KEY `fkIdx_players_unclaimedlottery` (`BEGuid`)
-      REFERENCES `players` (`BEGuid`)
-      ON UPDATE CASCADE ON DELETE CASCADE
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
-
--- --------------------------------------------------------
-
---
--- Table structure for table `cellphone_messages`
---
-
-CREATE TABLE IF NOT EXISTS `cellphone_messages` (
-    `id`          INT NOT NULL AUTO_INCREMENT,
-    `sender`      VARCHAR(64) NOT NULL,
-    `receiver`    VARCHAR(64) NOT NULL,
-    `message`     TEXT NOT NULL,
-    `sent_at`     TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
-    `remove`      TINYINT NOT NULL DEFAULT 0,
-    PRIMARY KEY (`id`),
-    INDEX `fkIdx_players_cellmsgsender` (`sender`),
-    INDEX `fkIdx_players_cellmsgreceiver` (`receiver`),
-    CONSTRAINT `FK_players_cellmsgsender` FOREIGN KEY `fkIdx_players_cellmsgsender` (`sender`) REFERENCES `players` (`BEGuid`) ON UPDATE CASCADE ON DELETE CASCADE,
-    CONSTRAINT `FK_players_cellmsgreceiver` FOREIGN KEY `fkIdx_players_cellmsgreceiver` (`receiver`) REFERENCES `players` (`BEGuid`) ON UPDATE CASCADE ON DELETE CASCADE
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
-
--- --------------------------------------------------------
-
---
--- Table structure for table `players`
---
-CREATE TABLE IF NOT EXISTS `bankaccounts` (
-    `accountID`   INT NOT NULL AUTO_INCREMENT,
-    `BEGuid`      VARCHAR(64) NOT NULL,
-    `funds`       INT NOT NULL DEFAULT 0, 
-    
-    PRIMARY KEY (`accountID`),
-    INDEX `fkIdx_players_bankaccounts` (`BEGuid`),
-    CONSTRAINT `FK_players_bankaccounts` FOREIGN KEY `fkIdx_players_bankaccounts` (`BEGuid`)
-      REFERENCES `players` (`BEGuid`)
-      ON UPDATE CASCADE ON DELETE CASCADE
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
-
--- --------------------------------------------------------
-
---
--- Table structure for table `rcon_logs`
---
-
-CREATE TABLE IF NOT EXISTS `rcon_logs` (
-    `id`          INT NOT NULL AUTO_INCREMENT,
-    `Type`        VARCHAR(12) NOT NULL,
-    `BEGuid`      VARCHAR(64) NOT NULL,
-    `pid`         VARCHAR(17) NOT NULL,
-    `reason`      TEXT NOT NULL,
-    `occured`     TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
-
-    PRIMARY KEY (`id`),
-    INDEX `fkIdx_players_logs` (`BEGuid`),
-    CONSTRAINT `FK_players_logs` FOREIGN KEY `fkIdx_players_logs` (`BEGuid`)
-      REFERENCES `players` (`BEGuid`)
-      ON UPDATE CASCADE ON DELETE CASCADE
+DROP TABLE IF EXISTS `admin_logs`;
+CREATE TABLE `admin_logs` (
+  `id` int(11) NOT NULL,
+  `Type` varchar(12) NOT NULL,
+  `BEGuid` varchar(64) NOT NULL,
+  `steamID` varchar(17) NOT NULL,
+  `log` text NOT NULL,
+  `occured` timestamp NOT NULL DEFAULT current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 -- --------------------------------------------------------
@@ -279,94 +126,190 @@ CREATE TABLE IF NOT EXISTS `rcon_logs` (
 -- Table structure for table `antihack_logs`
 --
 
-CREATE TABLE IF NOT EXISTS `antihack_logs` (
-    `id`          INT NOT NULL AUTO_INCREMENT,
-    `Type`        VARCHAR(12) NOT NULL,
-    `BEGuid`      VARCHAR(64) NOT NULL,
-    `steamID`     VARCHAR(17) NOT NULL,
-    `log`         TEXT NOT NULL,
-    `occured`     TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
-
-    PRIMARY KEY (`id`),
-    INDEX `fkIdx_players_ah_logs` (`BEGuid`),
-    CONSTRAINT `FK_players_ah_logs` FOREIGN KEY `fkIdx_players_ah_logs` (`BEGuid`)
-      REFERENCES `players` (`BEGuid`)
-      ON UPDATE CASCADE ON DELETE CASCADE
+DROP TABLE IF EXISTS `antihack_logs`;
+CREATE TABLE `antihack_logs` (
+  `id` int(11) NOT NULL,
+  `Type` varchar(12) NOT NULL,
+  `BEGuid` varchar(64) NOT NULL,
+  `steamID` varchar(17) NOT NULL,
+  `log` text NOT NULL,
+  `occured` timestamp NOT NULL DEFAULT current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 -- --------------------------------------------------------
 
 --
--- Table structure for table `admin_logs`
+-- Table structure for table `bankaccounts`
 --
 
-CREATE TABLE IF NOT EXISTS `admin_logs` (
-    `id`          INT NOT NULL AUTO_INCREMENT,
-    `Type`        VARCHAR(12) NOT NULL,
-    `BEGuid`      VARCHAR(64) NOT NULL,
-    `steamID`     VARCHAR(17) NOT NULL,
-    `log`         TEXT NOT NULL,
-    `occured`     TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
-
-    PRIMARY KEY (`id`),
-    INDEX `fkIdx_players_admin_logs` (`BEGuid`),
-    CONSTRAINT `FK_players_admin_logs` FOREIGN KEY `fkIdx_players_admin_logs` (`BEGuid`)
-      REFERENCES `players` (`BEGuid`)
-      ON UPDATE CASCADE ON DELETE CASCADE
+DROP TABLE IF EXISTS `bankaccounts`;
+CREATE TABLE `bankaccounts` (
+  `accountID` int(11) NOT NULL,
+  `BEGuid` varchar(64) NOT NULL,
+  `funds` int(11) NOT NULL DEFAULT 0
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 -- --------------------------------------------------------
 
 --
--- Table structure for table `vehicles`
+-- Table structure for table `cellphone_messages`
 --
 
-CREATE TABLE IF NOT EXISTS `vehicles` (
-    `id`          INT NOT NULL AUTO_INCREMENT,
-    `pid`         VARCHAR(17) NOT NULL,
-    `side`        VARCHAR(10) NOT NULL,
-    `classname`   VARCHAR(64) NOT NULL,
-    `type`        VARCHAR(16) NOT NULL,
-    `alive`       TINYINT NOT NULL DEFAULT 1,
-    `blacklist`   TINYINT NOT NULL DEFAULT 0,
-    `active`      TINYINT NOT NULL DEFAULT 0,
-    `plate`       MEDIUMINT NOT NULL,
-    `color`       INT NOT NULL,
-    `inventory`   TEXT NOT NULL,
-    `gear`        TEXT NOT NULL,
-    `fuel`        DOUBLE NOT NULL DEFAULT 1,
-    `damage`      VARCHAR(256) NOT NULL,
-    `insert_time` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
-    
-    PRIMARY KEY (`id`),
-    INDEX `fkIdx_players_vehicles` (`pid`),
-    CONSTRAINT `FK_players_vehicles` FOREIGN KEY `fkIdx_players_vehicles` (`pid`)
-      REFERENCES `players` (`pid`)
-      ON UPDATE CASCADE ON DELETE CASCADE,
-    INDEX `index_side` (`side`),
-    INDEX `index_type` (`type`)
+DROP TABLE IF EXISTS `cellphone_messages`;
+CREATE TABLE `cellphone_messages` (
+  `id` int(11) NOT NULL,
+  `sender` varchar(64) NOT NULL,
+  `receiver` varchar(64) NOT NULL,
+  `message` text NOT NULL,
+  `sent_at` timestamp NOT NULL DEFAULT current_timestamp(),
+  `remove` tinyint(4) NOT NULL DEFAULT 0
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `containers`
+--
+
+DROP TABLE IF EXISTS `containers`;
+CREATE TABLE `containers` (
+  `id` int(11) NOT NULL,
+  `pid` varchar(17) NOT NULL,
+  `classname` varchar(32) NOT NULL,
+  `pos` varchar(32) DEFAULT NULL,
+  `inventory` text NOT NULL,
+  `gear` text NOT NULL,
+  `dir` varchar(128) DEFAULT NULL,
+  `active` tinyint(4) NOT NULL DEFAULT 0,
+  `owned` tinyint(4) NOT NULL DEFAULT 0,
+  `insert_time` timestamp NOT NULL DEFAULT current_timestamp()
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `gangs`
+--
+
+DROP TABLE IF EXISTS `gangs`;
+CREATE TABLE `gangs` (
+  `id` int(11) NOT NULL,
+  `owner` varchar(17) NOT NULL,
+  `name` varchar(32) DEFAULT NULL,
+  `members` text DEFAULT NULL,
+  `maxmembers` int(11) DEFAULT 8,
+  `bank` int(11) DEFAULT 0,
+  `active` tinyint(4) NOT NULL DEFAULT 1,
+  `insert_time` timestamp NOT NULL DEFAULT current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 -- --------------------------------------------------------
 
 --
 -- Table structure for table `houses`
--- Needed for extDB latest update on git
 --
 
-CREATE TABLE IF NOT EXISTS `houses` (
-    `id`          INT NOT NULL AUTO_INCREMENT,
-    `pid`         VARCHAR(17) NOT NULL,
-    `pos`         VARCHAR(32) DEFAULT NULL,
-    `owned`       TINYINT DEFAULT 0,
-    `garage`      TINYINT NOT NULL DEFAULT 0,
-    `insert_time` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
-    
-    PRIMARY KEY (`id`),
-    INDEX `fkIdx_players_houses` (`pid`),
-    CONSTRAINT `FK_players_houses` FOREIGN KEY `fkIdx_players_houses` (`pid`)
-      REFERENCES `players` (`pid`)
-      ON UPDATE CASCADE ON DELETE CASCADE
+DROP TABLE IF EXISTS `houses`;
+CREATE TABLE `houses` (
+  `id` int(11) NOT NULL,
+  `pid` varchar(17) NOT NULL,
+  `pos` varchar(32) DEFAULT NULL,
+  `owned` tinyint(4) DEFAULT 0,
+  `garage` tinyint(4) NOT NULL DEFAULT 0,
+  `insert_time` timestamp NOT NULL DEFAULT current_timestamp()
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `lotterytickets`
+--
+
+DROP TABLE IF EXISTS `lotterytickets`;
+CREATE TABLE `lotterytickets` (
+  `ticketID` int(11) NOT NULL,
+  `serverID` int(11) NOT NULL,
+  `BEGuid` varchar(64) NOT NULL,
+  `numbers` varchar(255) NOT NULL,
+  `bonusball` varchar(12) NOT NULL,
+  `active` tinyint(4) NOT NULL DEFAULT 1,
+  `Purchased` timestamp NOT NULL DEFAULT current_timestamp()
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `players`
+--
+
+DROP TABLE IF EXISTS `players`;
+CREATE TABLE `players` (
+  `uid` int(11) NOT NULL,
+  `serverID` int(11) NOT NULL,
+  `BEGuid` varchar(64) NOT NULL,
+  `pid` varchar(17) NOT NULL,
+  `name` varchar(32) NOT NULL,
+  `aliases` text NOT NULL,
+  `cash` int(11) NOT NULL DEFAULT 0,
+  `coplevel` enum('0','1','2','3','4','5','6','7','8','9','10','11','12','13','14','15') NOT NULL DEFAULT '0',
+  `reblevel` enum('0','1','2','3','4','5','6','7') NOT NULL DEFAULT '0',
+  `mediclevel` enum('0','1','2','3','4','5','6','7','8','9','10') NOT NULL DEFAULT '0',
+  `joblevel` enum('0','1','2','3','4','5','6','7') NOT NULL DEFAULT '0',
+  `virtualitems` text NOT NULL,
+  `civ_licenses` text NOT NULL,
+  `cop_licenses` text NOT NULL,
+  `reb_licenses` text NOT NULL,
+  `med_licenses` text NOT NULL,
+  `civ_gear` text NOT NULL,
+  `cop_gear` text NOT NULL,
+  `reb_gear` text NOT NULL,
+  `med_gear` text NOT NULL,
+  `stats` varchar(25) NOT NULL DEFAULT '"[100,100,0]"',
+  `arrested` tinyint(4) NOT NULL DEFAULT 0,
+  `adminlevel` enum('0','1','2','3','4','5','6','7','8','9','10') NOT NULL DEFAULT '0',
+  `donorlevel` enum('0','1','2','3') NOT NULL DEFAULT '0',
+  `blacklist` tinyint(4) NOT NULL DEFAULT 0,
+  `alive` tinyint(4) NOT NULL DEFAULT 0,
+  `position` varchar(32) NOT NULL DEFAULT '"[]"',
+  `playtime` varchar(32) NOT NULL DEFAULT '"[0,0,0,0]"',
+  `insert_time` timestamp NOT NULL DEFAULT current_timestamp(),
+  `last_seen` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp()
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `rcon_logs`
+--
+
+DROP TABLE IF EXISTS `rcon_logs`;
+CREATE TABLE `rcon_logs` (
+  `id` int(11) NOT NULL,
+  `Type` varchar(12) NOT NULL,
+  `BEGuid` varchar(64) NOT NULL,
+  `pid` varchar(17) NOT NULL,
+  `reason` text NOT NULL,
+  `occured` timestamp NOT NULL DEFAULT current_timestamp()
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `servers`
+--
+
+DROP TABLE IF EXISTS `servers`;
+CREATE TABLE `servers` (
+  `serverID` int(11) NOT NULL,
+  `hardwareID` varchar(64) NOT NULL,
+  `name` varchar(255) NOT NULL,
+  `world` varchar(64) NOT NULL,
+  `currentplayers` text NOT NULL,
+  `vault` int(11) NOT NULL DEFAULT 0,
+  `maxplayercount` int(11) NOT NULL DEFAULT 0,
+  `restartcount` int(11) NOT NULL DEFAULT 0,
+  `runtime` int(11) NOT NULL DEFAULT 0,
+  `firstRun` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 -- --------------------------------------------------------
@@ -375,105 +318,374 @@ CREATE TABLE IF NOT EXISTS `houses` (
 -- Table structure for table `tents`
 --
 
-CREATE TABLE IF NOT EXISTS `tents` (
-    `id`          INT NOT NULL AUTO_INCREMENT,
-    `BEGuid`      VARCHAR(64) NOT NULL,
-    `tentID`      VARCHAR(64) NOT NULL,
-    `type`        VARCHAR(64) NOT NULL,
-    `position`    VARCHAR(32) DEFAULT NULL,
-    `vitems`      TEXT NOT NULL,
-    `alive`       TINYINT NOT NULL DEFAULT 1,
-    `insert_time` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
-    
-    PRIMARY KEY (`id`),
-    INDEX `fkIdx_players_tents` (`BEGuid`),
-    CONSTRAINT `FK_players_tents` FOREIGN KEY `fkIdx_players_tents` (`BEGuid`)
-      REFERENCES `players` (`BEGuid`)
-      ON UPDATE CASCADE ON DELETE CASCADE
+DROP TABLE IF EXISTS `tents`;
+CREATE TABLE `tents` (
+  `id` int(11) NOT NULL,
+  `BEGuid` varchar(64) NOT NULL,
+  `tentID` varchar(64) NOT NULL,
+  `type` varchar(64) NOT NULL,
+  `position` varchar(32) DEFAULT NULL,
+  `vitems` text NOT NULL,
+  `alive` tinyint(4) NOT NULL DEFAULT 1,
+  `insert_time` timestamp NOT NULL DEFAULT current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 -- --------------------------------------------------------
 
 --
--- Table structure for table `gangs`
--- Needed for extDB latest update on git
+-- Table structure for table `unclaimedlotterytickets`
 --
 
-CREATE TABLE IF NOT EXISTS `gangs` (
-    `id`          INT NOT NULL AUTO_INCREMENT,
-    `owner`       VARCHAR(17) NOT NULL,
-    `name`        VARCHAR(32) DEFAULT NULL,
-    `members`     TEXT,
-    `maxmembers`  INT DEFAULT 8,
-    `bank`        INT DEFAULT 0,
-    `active`      TINYINT NOT NULL DEFAULT 1,
-    `insert_time` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
-    
-    PRIMARY KEY (`id`),
-    UNIQUE KEY `unique_name` (`name`),
-    INDEX `fkIdx_players_gangs` (`owner`),
-    CONSTRAINT `FK_players_gangs` FOREIGN KEY `fkIdx_players_gangs` (`owner`)
-      REFERENCES `players` (`pid`)
-      ON UPDATE CASCADE ON DELETE CASCADE
+DROP TABLE IF EXISTS `unclaimedlotterytickets`;
+CREATE TABLE `unclaimedlotterytickets` (
+  `ticketID` int(11) NOT NULL,
+  `serverID` int(11) NOT NULL,
+  `BEGuid` varchar(64) NOT NULL,
+  `winnings` int(11) NOT NULL DEFAULT 0,
+  `bonusball` tinyint(4) NOT NULL DEFAULT 1,
+  `bonusballWinnings` int(11) NOT NULL DEFAULT 0,
+  `claimed` tinyint(4) NOT NULL DEFAULT 0,
+  `timestamp` timestamp NOT NULL DEFAULT current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 -- --------------------------------------------------------
 
 --
--- Table structure for table `containers`
--- Needed for extDB latest update on git
+-- Table structure for table `vehicles`
 --
 
-CREATE TABLE IF NOT EXISTS `containers` (
-    `id`          INT NOT NULL AUTO_INCREMENT,
-    `pid`         VARCHAR(17) NOT NULL,
-    `classname`   VARCHAR(32) NOT NULL,
-    `pos`         VARCHAR(32) DEFAULT NULL,
-    `inventory`   TEXT NOT NULL,
-    `gear`        TEXT NOT NULL,
-    `dir`         VARCHAR(128) DEFAULT NULL,
-    `active`      TINYINT NOT NULL DEFAULT 0,
-    `owned`       TINYINT NOT NULL DEFAULT 0,
-    `insert_time` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
-    
-    PRIMARY KEY (`id`),
-    INDEX `fkIdx_players_containers` (`pid`),
-    CONSTRAINT `FK_players_containers` FOREIGN KEY `fkIdx_players_containers` (`pid`)
-      REFERENCES `players` (`pid`)
-      ON UPDATE CASCADE ON DELETE CASCADE
+DROP TABLE IF EXISTS `vehicles`;
+CREATE TABLE `vehicles` (
+  `id` int(11) NOT NULL,
+  `pid` varchar(17) NOT NULL,
+  `side` varchar(10) NOT NULL,
+  `classname` varchar(64) NOT NULL,
+  `type` varchar(16) NOT NULL,
+  `alive` tinyint(4) NOT NULL DEFAULT 1,
+  `blacklist` tinyint(4) NOT NULL DEFAULT 0,
+  `active` tinyint(4) NOT NULL DEFAULT 0,
+  `plate` mediumint(9) NOT NULL,
+  `color` int(11) NOT NULL,
+  `inventory` text NOT NULL,
+  `gear` text NOT NULL,
+  `fuel` double NOT NULL DEFAULT 1,
+  `damage` varchar(256) NOT NULL,
+  `insert_time` timestamp NOT NULL DEFAULT current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 -- --------------------------------------------------------
 
 --
 -- Table structure for table `wanted`
--- Needed for extDB latest update on git
 --
 
-CREATE TABLE IF NOT EXISTS `wanted` (
-    `wantedID`     VARCHAR(17) NOT NULL,
-    `wantedName`   VARCHAR(32) NOT NULL,
-    `wantedCrimes` TEXT NOT NULL,
-    `wantedBounty` INT NOT NULL,
-    `active`       TINYINT NOT NULL DEFAULT 0,
-    `insert_time`  TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
-    
-    PRIMARY KEY (`wantedID`),
-    CONSTRAINT `FK_players_wanted` FOREIGN KEY `fkIdx_players_wanted` (`wantedID`)
-      REFERENCES `players` (`pid`)
-      ON UPDATE CASCADE ON DELETE CASCADE
+DROP TABLE IF EXISTS `wanted`;
+CREATE TABLE `wanted` (
+  `wantedID` varchar(17) NOT NULL,
+  `wantedName` varchar(32) NOT NULL,
+  `wantedCrimes` text NOT NULL,
+  `wantedBounty` int(11) NOT NULL,
+  `active` tinyint(4) NOT NULL DEFAULT 0,
+  `insert_time` timestamp NOT NULL DEFAULT current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
--- --------------------------------------------------------
 --
--- Creates default user `arma3` with password `changeme` unless it already exists
--- Granting permissions to user `arma3`, created below
--- Reloads the privileges from the grant tables in the MySQL system database.
+-- Indexes for dumped tables
 --
 
-CREATE USER IF NOT EXISTS `arma3`@`localhost` IDENTIFIED BY 'changeme';
-GRANT SELECT, UPDATE, INSERT, EXECUTE ON `arma3life`.* TO 'arma3'@'localhost';
-FLUSH PRIVILEGES;
+--
+-- Indexes for table `admin_logs`
+--
+ALTER TABLE `admin_logs`
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `fkIdx_players_admin_logs` (`BEGuid`);
+
+--
+-- Indexes for table `antihack_logs`
+--
+ALTER TABLE `antihack_logs`
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `fkIdx_players_ah_logs` (`BEGuid`);
+
+--
+-- Indexes for table `bankaccounts`
+--
+ALTER TABLE `bankaccounts`
+  ADD PRIMARY KEY (`accountID`),
+  ADD KEY `fkIdx_players_bankaccounts` (`BEGuid`);
+
+--
+-- Indexes for table `cellphone_messages`
+--
+ALTER TABLE `cellphone_messages`
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `fkIdx_players_cellmsgsender` (`sender`),
+  ADD KEY `fkIdx_players_cellmsgreceiver` (`receiver`);
+
+--
+-- Indexes for table `containers`
+--
+ALTER TABLE `containers`
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `fkIdx_players_containers` (`pid`);
+
+--
+-- Indexes for table `gangs`
+--
+ALTER TABLE `gangs`
+  ADD PRIMARY KEY (`id`),
+  ADD UNIQUE KEY `unique_name` (`name`),
+  ADD KEY `fkIdx_players_gangs` (`owner`);
+
+--
+-- Indexes for table `houses`
+--
+ALTER TABLE `houses`
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `fkIdx_players_houses` (`pid`);
+
+--
+-- Indexes for table `lotterytickets`
+--
+ALTER TABLE `lotterytickets`
+  ADD PRIMARY KEY (`ticketID`),
+  ADD KEY `fkIdx_players_lottery` (`BEGuid`),
+  ADD KEY `fkIdx_servers_serverID` (`serverID`);
+
+--
+-- Indexes for table `players`
+--
+ALTER TABLE `players`
+  ADD PRIMARY KEY (`pid`),
+  ADD UNIQUE KEY `unique_uid` (`uid`),
+  ADD UNIQUE KEY `unique_beguid` (`BEGuid`),
+  ADD KEY `FK_server_id` (`serverID`),
+  ADD KEY `index_name` (`name`),
+  ADD KEY `index_blacklist` (`blacklist`);
+
+--
+-- Indexes for table `rcon_logs`
+--
+ALTER TABLE `rcon_logs`
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `fkIdx_players_logs` (`BEGuid`);
+
+--
+-- Indexes for table `servers`
+--
+ALTER TABLE `servers`
+  ADD PRIMARY KEY (`serverID`),
+  ADD UNIQUE KEY `unique_serverid` (`serverID`);
+
+--
+-- Indexes for table `tents`
+--
+ALTER TABLE `tents`
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `fkIdx_players_tents` (`BEGuid`);
+
+--
+-- Indexes for table `unclaimedlotterytickets`
+--
+ALTER TABLE `unclaimedlotterytickets`
+  ADD PRIMARY KEY (`ticketID`),
+  ADD KEY `fkIdx_players_unclaimedlottery` (`BEGuid`),
+  ADD KEY `fkIdx_servers_unclaimedlottery` (`serverID`);
+
+--
+-- Indexes for table `vehicles`
+--
+ALTER TABLE `vehicles`
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `fkIdx_players_vehicles` (`pid`),
+  ADD KEY `index_side` (`side`),
+  ADD KEY `index_type` (`type`);
+
+--
+-- Indexes for table `wanted`
+--
+ALTER TABLE `wanted`
+  ADD PRIMARY KEY (`wantedID`);
+
+--
+-- AUTO_INCREMENT for dumped tables
+--
+
+--
+-- AUTO_INCREMENT for table `admin_logs`
+--
+ALTER TABLE `admin_logs`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+
+--
+-- AUTO_INCREMENT for table `antihack_logs`
+--
+ALTER TABLE `antihack_logs`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+
+--
+-- AUTO_INCREMENT for table `bankaccounts`
+--
+ALTER TABLE `bankaccounts`
+  MODIFY `accountID` int(11) NOT NULL AUTO_INCREMENT;
+
+--
+-- AUTO_INCREMENT for table `cellphone_messages`
+--
+ALTER TABLE `cellphone_messages`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+
+--
+-- AUTO_INCREMENT for table `containers`
+--
+ALTER TABLE `containers`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+
+--
+-- AUTO_INCREMENT for table `gangs`
+--
+ALTER TABLE `gangs`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+
+--
+-- AUTO_INCREMENT for table `houses`
+--
+ALTER TABLE `houses`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+
+--
+-- AUTO_INCREMENT for table `lotterytickets`
+--
+ALTER TABLE `lotterytickets`
+  MODIFY `ticketID` int(11) NOT NULL AUTO_INCREMENT;
+
+--
+-- AUTO_INCREMENT for table `players`
+--
+ALTER TABLE `players`
+  MODIFY `uid` int(11) NOT NULL AUTO_INCREMENT;
+
+--
+-- AUTO_INCREMENT for table `rcon_logs`
+--
+ALTER TABLE `rcon_logs`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+
+--
+-- AUTO_INCREMENT for table `servers`
+--
+ALTER TABLE `servers`
+  MODIFY `serverID` int(11) NOT NULL AUTO_INCREMENT;
+
+--
+-- AUTO_INCREMENT for table `tents`
+--
+ALTER TABLE `tents`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+
+--
+-- AUTO_INCREMENT for table `unclaimedlotterytickets`
+--
+ALTER TABLE `unclaimedlotterytickets`
+  MODIFY `ticketID` int(11) NOT NULL AUTO_INCREMENT;
+
+--
+-- AUTO_INCREMENT for table `vehicles`
+--
+ALTER TABLE `vehicles`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+
+--
+-- Constraints for dumped tables
+--
+
+--
+-- Constraints for table `admin_logs`
+--
+ALTER TABLE `admin_logs`
+  ADD CONSTRAINT `FK_players_admin_logs` FOREIGN KEY (`BEGuid`) REFERENCES `players` (`BEGuid`) ON DELETE CASCADE ON UPDATE CASCADE;
+
+--
+-- Constraints for table `antihack_logs`
+--
+ALTER TABLE `antihack_logs`
+  ADD CONSTRAINT `FK_players_ah_logs` FOREIGN KEY (`BEGuid`) REFERENCES `players` (`BEGuid`) ON DELETE CASCADE ON UPDATE CASCADE;
+
+--
+-- Constraints for table `bankaccounts`
+--
+ALTER TABLE `bankaccounts`
+  ADD CONSTRAINT `FK_players_bankaccounts` FOREIGN KEY (`BEGuid`) REFERENCES `players` (`BEGuid`) ON DELETE CASCADE ON UPDATE CASCADE;
+
+--
+-- Constraints for table `cellphone_messages`
+--
+ALTER TABLE `cellphone_messages`
+  ADD CONSTRAINT `FK_players_cellmsgreceiver` FOREIGN KEY (`receiver`) REFERENCES `players` (`BEGuid`) ON DELETE CASCADE ON UPDATE CASCADE,
+  ADD CONSTRAINT `FK_players_cellmsgsender` FOREIGN KEY (`sender`) REFERENCES `players` (`BEGuid`) ON DELETE CASCADE ON UPDATE CASCADE;
+
+--
+-- Constraints for table `containers`
+--
+ALTER TABLE `containers`
+  ADD CONSTRAINT `FK_players_containers` FOREIGN KEY (`pid`) REFERENCES `players` (`pid`) ON DELETE CASCADE ON UPDATE CASCADE;
+
+--
+-- Constraints for table `gangs`
+--
+ALTER TABLE `gangs`
+  ADD CONSTRAINT `FK_players_gangs` FOREIGN KEY (`owner`) REFERENCES `players` (`pid`) ON DELETE CASCADE ON UPDATE CASCADE;
+
+--
+-- Constraints for table `houses`
+--
+ALTER TABLE `houses`
+  ADD CONSTRAINT `FK_players_houses` FOREIGN KEY (`pid`) REFERENCES `players` (`pid`) ON DELETE CASCADE ON UPDATE CASCADE;
+
+--
+-- Constraints for table `lotterytickets`
+--
+ALTER TABLE `lotterytickets`
+  ADD CONSTRAINT `FK_players_lottery` FOREIGN KEY (`BEGuid`) REFERENCES `players` (`BEGuid`) ON DELETE CASCADE ON UPDATE CASCADE,
+  ADD CONSTRAINT `FK_servers_serverID` FOREIGN KEY (`serverID`) REFERENCES `servers` (`serverID`) ON DELETE CASCADE ON UPDATE CASCADE;
+
+--
+-- Constraints for table `players`
+--
+ALTER TABLE `players`
+  ADD CONSTRAINT `FK_server_id` FOREIGN KEY (`serverID`) REFERENCES `servers` (`serverID`) ON DELETE CASCADE ON UPDATE CASCADE;
+
+--
+-- Constraints for table `rcon_logs`
+--
+ALTER TABLE `rcon_logs`
+  ADD CONSTRAINT `FK_players_logs` FOREIGN KEY (`BEGuid`) REFERENCES `players` (`BEGuid`) ON DELETE CASCADE ON UPDATE CASCADE;
+
+--
+-- Constraints for table `tents`
+--
+ALTER TABLE `tents`
+  ADD CONSTRAINT `FK_players_tents` FOREIGN KEY (`BEGuid`) REFERENCES `players` (`BEGuid`) ON DELETE CASCADE ON UPDATE CASCADE;
+
+--
+-- Constraints for table `unclaimedlotterytickets`
+--
+ALTER TABLE `unclaimedlotterytickets`
+  ADD CONSTRAINT `FK_players_unclaimedlottery` FOREIGN KEY (`BEGuid`) REFERENCES `players` (`BEGuid`) ON DELETE CASCADE ON UPDATE CASCADE,
+  ADD CONSTRAINT `FK_servers_unclaimedlottery` FOREIGN KEY (`serverID`) REFERENCES `servers` (`serverID`) ON DELETE CASCADE ON UPDATE CASCADE;
+
+--
+-- Constraints for table `vehicles`
+--
+ALTER TABLE `vehicles`
+  ADD CONSTRAINT `FK_players_vehicles` FOREIGN KEY (`pid`) REFERENCES `players` (`pid`) ON DELETE CASCADE ON UPDATE CASCADE;
+
+--
+-- Constraints for table `wanted`
+--
+ALTER TABLE `wanted`
+  ADD CONSTRAINT `FK_players_wanted` FOREIGN KEY (`wantedID`) REFERENCES `players` (`pid`) ON DELETE CASCADE ON UPDATE CASCADE;
+COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
 /*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;

@@ -42,6 +42,7 @@ if(_bonusball in [""," ","NOT PURCHASED"])then{
 ["CREATE", "lotteryTickets", 
 	[
 		["BEGuid", 			["DB","STRING", _BEGuid] call life_fnc_database_parse],
+		["serverID",		["DB","INT",call life_var_serverID] call life_fnc_database_parse]
 		["numbers", 		["DB","STRING", _ticketNumbers] call life_fnc_database_parse],
 		["bonusball", 		["DB","STRING", _bonusball] call life_fnc_database_parse]
 	]
