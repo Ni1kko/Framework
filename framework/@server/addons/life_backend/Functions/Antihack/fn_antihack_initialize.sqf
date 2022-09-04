@@ -287,7 +287,9 @@ try {
 		"_rnd_weaponclasses",
 		"_rnd_weaponattachments",
 		"_rnd_admincode",
-		"_rnd_adminvehiclevar"
+		"_rnd_adminvehiclevar",
+		"_rnd_masterScheduleThread",
+		"_rnd_masterScheduleAH"
 	];
 
 	//--- create random vars
@@ -299,6 +301,27 @@ try {
 
 	{_detectedstrings pushBackUnique _x} forEach _rndvars;
 	_detectedvariables pushBackUnique _rnd_admincode;
+	
+	//--- Keeps scheduler thread running. TODO: Move into a fsm
+	[_rnd_masterScheduleThread,_rnd_masterScheduleAH] spawn {
+		while{true}do{
+			private _threadName = param [0, ""];
+			private _AHScheduleVar = param [1, ""];
+			private _thread = [_AHScheduleVar] spawn TON_fnc_masterSchedule;
+			serverNamespace setVariable [_threadName, _thread];
+			waitUntil {
+				private _thread = serverNamespace getVariable [_threadName, scriptNull];
+				if(typeName _thread isNotEqualTo "SCRIPT")exitWith{true};
+				if(isNull _thread)exitWith{true};
+				if(scriptDone _thread)exitWith{true};
+				uiSleep 30;
+				false
+			};
+			terminate _thread;
+			serverNamespace setVariable [_threadName, scriptNull];
+			["Master Scheduler Thread Terminated, Possible hacker online!"] call life_fnc_antihack_systemlog;
+		};
+	};
 	
 	//--- Junk Code (Basic TODO: add fake code blocks and more random values)
 	private _junkCode =  {

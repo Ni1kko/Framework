@@ -35,6 +35,7 @@ DROP PROCEDURE IF EXISTS `resetFedVault`;
 DROP PROCEDURE IF EXISTS `deactiveLotteryTickets`;
 DROP PROCEDURE IF EXISTS `deleteOldLotteryTickets`;
 DROP PROCEDURE IF EXISTS `deleteClaimedLotteryTickets`;
+DROP PROCEDURE IF EXISTS `increaseServerRestarts`;
 
 DELIMITER $$
 --
@@ -104,6 +105,10 @@ END$$
 
 CREATE DEFINER=CURRENT_USER PROCEDURE `deleteClaimedLotteryTickets` ()  BEGIN
   DELETE FROM `unclaimedLotteryTickets` WHERE `claimed` = 0;
+END$$
+
+CREATE DEFINER=CURRENT_USER PROCEDURE `increaseServerRestarts` ()  BEGIN
+   UPDATE `servers` SET restartcount = restartcount + 1;
 END$$
 
 DELIMITER ;

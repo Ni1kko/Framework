@@ -184,5 +184,9 @@ if _resetAfterRestart then{
 
 _vaultObject setVariable ["safe",_startGold,true];
 
+//--- Make sure database is alive for accses to bank data
+waitUntil {isFinal "extdb_var_database_key"};
 life_var_banksReady = compileFinal str(true);
 publicVariable "life_var_banksReady";
+
+true

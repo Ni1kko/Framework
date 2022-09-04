@@ -16,10 +16,6 @@ life_var_tent_config = compileFinal str [
 
 publicVariable "life_var_tent_config";
 
-//-- Delete dead tents from database
-["CALL", "deleteDeadTents"] call life_fnc_database_request;
-uiSleep 5;
-
 //-- Get tents from database
 private _queryTents = ["READ", "tents", 
 	[

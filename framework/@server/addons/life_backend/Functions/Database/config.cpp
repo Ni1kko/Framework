@@ -27,10 +27,15 @@ class CfgExtDB
 
     //--- procedures to run after database connects
     startup_procedures[] = {
+        "increaseServerRestarts",
+        "resetActivePlayerList",
         "resetLifeVehicles",
         "deleteDeadVehicles",
         "deleteOldHouses",
-        "deleteOldGangs"
+        "deleteOldGangs",
+        "deleteDeadTents",
+        "deleteOldLotteryTickets",
+        "deleteClaimedLotteryTickets"
     };
 };
 

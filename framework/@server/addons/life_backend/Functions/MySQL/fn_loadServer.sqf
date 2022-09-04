@@ -88,21 +88,8 @@ if(_serverID isEqualTo -1)exitwith{
 life_var_serverID = compileFinal str (["GAME","INT",_serverID] call life_fnc_database_parse);
 life_var_serverMaxPlayers = (["GAME","INT",_maxplayercount] call life_fnc_database_parse);
 life_var_serverRuntime = (["GAME","INT",_runtime] call life_fnc_database_parse);
-life_var_serverRestarts = ((["GAME","INT",_restartcount] call life_fnc_database_parse) + 1);
-life_var_serverCurrentPlayers = (["GAME","ARRAY",_currentplayers] call life_fnc_database_parse);
-
-//--- Remove any players from last restart (mainly happens if server wasn't shut down correctly)
-if(count life_var_serverCurrentPlayers > 0)then{
-    private _res = ["CALL", "resetActivePlayerList"]call life_fnc_database_request;
-    if(_res isEqualTo ["DB:Call:Task-completed",true])then{
-        life_var_serverCurrentPlayers = [];
-    };
-};
-
-//--- Add new restartcount to datbase query
-private _updateServerQuery = [
-    ["restartcount",["DB","INT", life_var_serverRestarts] call life_fnc_database_parse]
-];
+life_var_serverRestarts = (["GAME","INT",_restartcount] call life_fnc_database_parse);
+life_var_serverCurrentPlayers = [];
 
 //--- World or Servername changed add new values to datbase query
 if(serverName isNotEqualTo _name OR worldName isNotEqualTo _world)then{

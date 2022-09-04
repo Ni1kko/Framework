@@ -1,50 +1,108 @@
 /*
-	## Maihym & Ni1kko
+	## Ni1kko
 	## https://github.com/Ni1kko/Framework
+
+	## life_var_severScheduler pushBack [time, function, params, target, isSpawn]
 */
 
- 
+private _AHScheduleVar = param [0, ""];
+private _ScheduleVar = "life_var_severScheduler";
 private _runtime = 0;
 
 while{true} do
-{  
-	_runtime = _runtime + 1;
+{
+	private _MasterSchedule = [];
+	private _Schedule = missionNamespace getVariable [_ScheduleVar, []]; 
+	private _AHSchedule = serverNamespace getVariable [_AHScheduleVar, []]; 
 
-	switch (true) do 
+	if(isNil "_Schedule") then {_Schedule = []; missionNamespace setVariable [_AHScheduleVar, _Schedule]};
+	if(typeName _Schedule isNotEqualTo "ARRAY") then {_Schedule = []; missionNamespace setVariable [_AHScheduleVar, _Schedule]};
+
+	if(isNil "_AHSchedule") then {_AHSchedule = []; serverNamespace setVariable [_AHScheduleVar, _AHSchedule]};
+	if(typeName _AHSchedule isNotEqualTo "ARRAY") then {_AHSchedule = []; serverNamespace setVariable [_AHScheduleVar, _AHSchedule]};
+	 
+	_MasterSchedule append _AHSchedule;
+	_MasterSchedule append _Schedule;
+ 
+	if(count _MasterSchedule > 0)then
 	{
-		//--- Every 2 seconds
-		case ((_runtime mod 2) isEqualTo 0): {};
-		//--- Every 5 seconds
-		case ((_runtime mod 5) isEqualTo 0): {};
-		//--- Every 10 seconds
-		case ((_runtime mod 10) isEqualTo 0): {[] call TON_fnc_updateHuntingZone};
-		//--- Every 30 seconds
-		case ((_runtime mod 30) isEqualTo 0): { };
-		//--- Every 1 minute
-		case ((_runtime mod 60) isEqualTo 0): { };
-		//--- Every 2 minutes
-		case ((_runtime mod 120) isEqualTo 0): { };
-		//--- Every 3 minutes
-		case ((_runtime mod 180) isEqualTo 0): {["items"] call TON_fnc_cleanup};
-		//--- Every 5 minutes
-		case ((_runtime mod 300) isEqualTo 0): {["weapons"] call TON_fnc_cleanup};
-		//--- Every 10 minutes
-		case ((_runtime mod 600) isEqualTo 0): {["vault"] call TON_fnc_updateBanks};
-		//--- Every 15 minutes
-		case ((_runtime mod 900) isEqualTo 0): { };
-		//--- Every 20 minutes
-		case ((_runtime mod 1200) isEqualTo 0): {["bank"] call TON_fnc_updateBanks};
-		//--- Every 25 minutes
-		case ((_runtime mod 1500) isEqualTo 0): { };
-		//--- Every 30 minutes
-		case ((_runtime mod 1800) isEqualTo 0): {[] call TON_fnc_updateDealers};
-		//--- Every 45 minutes
-		case ((_runtime mod 2700) isEqualTo 0): {["atm"] call TON_fnc_updateBanks};
-		//--- Every 60 minutes
-		case ((_runtime mod 3600) isEqualTo 0): {["vehicles"] call TON_fnc_cleanup};
-		//--- Every 2 hours
-		case ((_runtime mod 7200) isEqualTo 0): {};
-	};
+		{
+			private _schedulerOkay = _x params [
+				["_time", 0, [0]],
+				["_function", "", ["",{}]],
+				["_params", []],
+				["_target", "SERVER", [""]],
+				["_isSpawn",false, [false]]
+			];
 
+			if _scheduleOkay then
+			{
+				if(_time < 3)then{_time = 3};
+				
+				if(_target in ["CLIENT","SERVER","GLOBAL"])then
+				{
+					if((_runtime mod _time) isEqualTo 0)then
+					{ 
+						switch _target do 
+						{
+							case "SERVER": 
+							{ 
+								private _code = compile ("diag_log 'Error: Function [" + _function + "] not found'");
+
+								if(typeName _function isEqualTo "CODE")then{
+									_code = _function;
+								}else{
+									_code = missionNamespace getVariable [_function, _code];
+								};
+
+								if _isSpawn then {
+									_params spawn _code;
+								}else{
+									_params call _code;
+								};
+							};
+							case "CLIENT": 
+							{ 
+								if(typeName _function isEqualTo "CODE")then{ 
+									if _isSpawn then {
+										[_params,_function] remoteExec ["spawn", -2];
+									}else{
+										[_params,_function] remoteExec ["call", -2];
+									};
+								}else{
+									if _isSpawn then {
+										_params remoteExec [_function, -2];
+									}else{
+										_params remoteExecCall [_function, -2];
+									}; 
+								};
+							};
+							case "GLOBAL": 
+							{ 
+								if(typeName _function isEqualTo "CODE")then{ 
+									if _isSpawn then {
+										[_params,_function] remoteExec ["spawn", 0];
+									}else{
+										[_params,_function] remoteExec ["call", 0];
+									};
+								}else{
+									if _isSpawn then {
+										_params remoteExec [_function, 0];
+									}else{
+										_params remoteExecCall [_function, 0];
+									};
+								};
+							};
+						};	
+					};
+				};
+			}; 
+		}forEach (_MasterSchedule call BIS_fnc_arrayShuffle)
+		
+	};
+	
+	_runtime = _runtime + 1;
 	uiSleep 1;
 };
+
+true
