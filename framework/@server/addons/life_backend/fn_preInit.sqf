@@ -12,6 +12,7 @@ life_var_playtimeValuesRequest = [];
 life_var_radioChannels = [];
 life_var_corpses = []; 
 life_var_federlReserveReady = {false};
+life_var_spawndAnimals = [];
 
 publicVariable "life_var_serverLoaded";
 waitUntil {isFinal "extdb_var_database_key"};
@@ -32,10 +33,10 @@ life_var_entityRespawnedEVH =   addMissionEventHandler ["EntityRespawned",      
 [] call TON_fnc_stripNpcs;
 [] call TON_fnc_setupRadioChannels;
 [8,true,12] call LifeFSM_fnc_timeModule;
+cleanupFSM = [] call LifeFSM_fnc_cleanup;
 
-life_var_cleanupThread = [] spawn TON_fnc_cleanup;
-life_var_dealersThread = [] spawn TON_fnc_setupDealers;
-life_var_huntingThread = ["hunting_zone",30] spawn TON_fnc_huntingZone;
+//
+life_var_masterScheduleThread = [] spawn TON_fnc_masterSchedule;
 
 //--- Variable Event handlers
 "life_fnc_RequestClientId" addPublicVariableEventHandler {(_this select 1) setVariable ["life_clientID", owner (_this select 1), true];};

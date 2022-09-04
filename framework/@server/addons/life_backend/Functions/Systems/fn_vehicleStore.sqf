@@ -30,11 +30,7 @@ if (LIFE_SETTINGS(getNumber,"save_vehicle_damage") isEqualTo 1) then {
 _damage = [_damage] call DB_fnc_mresArray;
 
 // because fuel price!
-if (LIFE_SETTINGS(getNumber,"save_vehicle_fuel") isEqualTo 1) then {
-    _fuel = (fuel _vehicle);
-    } else {
-    _fuel = 1;
-};
+_fuel = (fuel _vehicle);
 
 if (_impound) exitWith {
     if (count _vInfo isEqualTo 0) then  {

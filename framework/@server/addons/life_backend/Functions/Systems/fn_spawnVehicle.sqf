@@ -141,11 +141,7 @@ if (LIFE_SETTINGS(getNumber,"save_vehicle_virtualItems") isEqualTo 1) then {
     _vehicle setVariable ["Trunk",[[],0],true];
 };
 
-if (LIFE_SETTINGS(getNumber,"save_vehicle_fuel") isEqualTo 1) then {
-    _vehicle setFuel (_vInfo select 11);
-    }else{
-    _vehicle setFuel 1;
-};
+_vehicle setFuel (_vInfo select 11);
 
 if (count _gear > 0 && (LIFE_SETTINGS(getNumber,"save_vehicle_inventory") isEqualTo 1)) then {
     _items = _gear select 0;

@@ -18,7 +18,7 @@ if (_which) then {
         if (!(isPlayer _x)) then {
             _x setOwner extdb_var_database_headless_client;  //Move agents over to HC
         };
-    } forEach animals;
+    } forEach life_var_spawndAnimals;
 
 } else {
 
@@ -27,6 +27,6 @@ if (_which) then {
         if (!(isPlayer _x)) then {
             _x setOwner 2;  //Move agents over to Server
         };
-    } forEach animals;
+    } forEach life_var_spawndAnimals;
 
 };

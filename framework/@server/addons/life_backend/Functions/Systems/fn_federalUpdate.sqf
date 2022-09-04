@@ -1,16 +1,32 @@
 /*
-    File: fn_federalUpdate.sqf
-    Author: Bryan "Tonic" Boardwine
-
-    Description:
-    Uhhh, adds to it?
+	## Nikko Renolds
+	## https://github.com/Ni1kko/Framework
 */
-
-if(call life_var_federlReserveReady)exitWith{false};
 
 private _vaultObject = missionNamespace getVariable ["fed_bank",objNull];
 private _whereClause = [["serverID",["DB","INT",call life_var_serverID] call life_fnc_database_parse]];
 private _lifeConfig = missionConfigFile >> "Life_Settings";
+
+//-- Add to the vault
+if (call life_var_federlReserveReady)exitWith
+{
+    //-- Get current gold
+    private _currentfunds = _vaultObject getVariable ["safe",0];
+
+    //-- Add more gold
+    private _newfunds = _currentfunds + round(random ["_addMin","_addMid","_addMax"]);
+
+    //-- Limit reached.... hmmm just half the amount of gold we have?
+    if(_newfunds > _maxGold)then{
+        _newfunds = _newfunds / 2;
+    };
+
+    //-- Update the vault
+    _vaultObject setVariable ["safe",_newfunds,true];
+
+    //-- Update the database 
+    ["UPDATE", "servers", [[["vault",["DB","INT", _newfunds] call life_fnc_database_parse]],_whereClause]]call life_fnc_database_request;
+};
 
 [
     getNumber(_lifeConfig >> "federalReserve_resetAfterRestart") isEqualTo 1,
@@ -34,7 +50,7 @@ if _resetAfterRestart then{
     ["CALL", "resetFedVault"]call life_fnc_database_request;
 }else{
     private _queryRes = ["READ", "servers",[["vault"],_whereClause],true] call life_fnc_database_request;
- 
+
     private _vault = ["GAME","INT",_queryRes param [0, 0]] call life_fnc_database_parse;
 
     if(_vault > 0)then{
@@ -47,26 +63,4 @@ _vaultObject setVariable ["safe",_startGold,true];
 life_var_federlReserveReady = compileFinal str(true);
 publicVariable "life_var_federlReserveReady";
 
-for "_i" from 0 to 1 step 0 do 
-{
-    uiSleep (_addMoreEvery * 60);
-
-    //-- Get current gold
-    private _currentfunds = _vaultObject getVariable ["safe",0];
-
-    //-- Add more gold
-    private _newfunds = _currentfunds + round(random ["_addMin","_addMid","_addMax"]);
-
-    //-- Limit reached.... hmmm just half the amount of gold we have?
-    if(_newfunds > _maxGold)then{
-        _newfunds = _newfunds / 2;
-    };
-
-    //-- Update the vault
-    _vaultObject setVariable ["safe",_newfunds,true];
-
-    //-- Update the database 
-    ["UPDATE", "servers", [[["vault",["DB","INT", _newfunds] call life_fnc_database_parse]],_whereClause]]call life_fnc_database_request;
-};
-
-false
+true

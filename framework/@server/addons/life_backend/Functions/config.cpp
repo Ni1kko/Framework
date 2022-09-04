@@ -118,7 +118,7 @@ class CfgFunctions {
             file = "\life_backend\Functions\Systems";
             class managesc {};
             class cleanup {};
-            class huntingZone {};
+            class updateHuntingZone {};
             class vehicleCreate {};
             class spawnVehicle {};
             class getVehicles {};
@@ -147,9 +147,10 @@ class CfgFunctions {
             class clientGangLeft {};
             class clientMessageRequest {};
             class switchSideRequest {};
-            class setupDealers {};
+            class updateDealers {};
             class stripNpcs {};
             class setupRadioChannels {};
+            class masterSchedule {};
         };
     };
 };
