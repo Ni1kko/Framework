@@ -32,6 +32,9 @@ DROP PROCEDURE IF EXISTS `resetPlayersLife`;
 DROP PROCEDURE IF EXISTS `deleteCellMessages`;
 DROP PROCEDURE IF EXISTS `deleteDeadTents`;
 DROP PROCEDURE IF EXISTS `resetFedVault`;
+DROP PROCEDURE IF EXISTS `deactiveLotteryTickets`;
+DROP PROCEDURE IF EXISTS `deleteOldLotteryTickets`;
+DROP PROCEDURE IF EXISTS `deleteClaimedLotteryTickets`;
 
 DELIMITER $$
 --
@@ -124,6 +127,52 @@ CREATE TABLE IF NOT EXISTS `servers` (
     UNIQUE KEY `unique_serverid` (`serverID`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `players`
+--
+
+CREATE TABLE IF NOT EXISTS `players` (
+    `uid`          INT NOT NULL AUTO_INCREMENT,
+    `serverID`     INT NOT NULL,
+    `BEGuid`       VARCHAR(64) NOT NULL,
+    `pid`          VARCHAR(17) NOT NULL,
+    `name`         VARCHAR(32) NOT NULL,
+    `aliases`      TEXT NOT NULL,
+    `cash`         INT NOT NULL DEFAULT 0,
+    `coplevel`     ENUM('0','1','2','3','4','5','6','7','8','9','10','11','12','13','14','15') NOT NULL DEFAULT '0',
+    `reblevel`     ENUM('0','1','2','3','4','5','6','7') NOT NULL DEFAULT '0',
+    `mediclevel`   ENUM('0','1','2','3','4','5','6','7','8','9','10') NOT NULL DEFAULT '0',
+    `joblevel`     ENUM('0','1','2','3','4','5','6','7') NOT NULL DEFAULT '0',
+    `virtualitems` TEXT NOT NULL,
+    `civ_licenses` TEXT NOT NULL,
+    `cop_licenses` TEXT NOT NULL,
+    `reb_licenses` TEXT NOT NULL,
+    `med_licenses` TEXT NOT NULL,
+    `civ_gear`     TEXT NOT NULL,
+    `cop_gear`     TEXT NOT NULL,
+    `reb_gear`     TEXT NOT NULL,
+    `med_gear`     TEXT NOT NULL,
+    `stats`    VARCHAR(25) NOT NULL DEFAULT '"[100,100,0]"',
+    `arrested`     TINYINT NOT NULL DEFAULT 0,
+    `adminlevel`   ENUM('0','1','2','3','4','5','6','7','8','9','10')  NOT NULL DEFAULT '0',
+    `donorlevel`   ENUM('0','1','2','3')  NOT NULL DEFAULT '0',
+    `blacklist`    TINYINT NOT NULL DEFAULT 0,
+    `alive`    TINYINT NOT NULL DEFAULT 0,
+    `position` VARCHAR(32) NOT NULL DEFAULT '"[]"',
+    `playtime`     VARCHAR(32) NOT NULL DEFAULT '"[0,0,0,0]"',
+    `insert_time`  TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    `last_seen`    TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+    
+    PRIMARY KEY (`pid`),
+    UNIQUE KEY `unique_uid` (`uid`),
+    UNIQUE KEY `unique_beguid` (`BEGuid`),
+    CONSTRAINT `FK_server_id` FOREIGN KEY `fkIdx_server_id` (`serverID`) REFERENCES `servers` (`serverID`) ON UPDATE CASCADE ON DELETE CASCADE,
+    INDEX `index_name` (`name`),
+    INDEX `index_blacklist` (`blacklist`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
 --
 -- Table structure for table `lotteryTickets`
 --
@@ -159,52 +208,6 @@ CREATE TABLE IF NOT EXISTS `unclaimedLotteryTickets` (
     CONSTRAINT `FK_players_unclaimedlottery` FOREIGN KEY `fkIdx_players_unclaimedlottery` (`BEGuid`)
       REFERENCES `players` (`BEGuid`)
       ON UPDATE CASCADE ON DELETE CASCADE
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
-
--- --------------------------------------------------------
-
---
--- Table structure for table `players`
---
-
-CREATE TABLE IF NOT EXISTS `players` (
-    `uid`          INT NOT NULL AUTO_INCREMENT,
-    `serverID`     INT NOT NULL,
-    `BEGuid`       VARCHAR(64) NOT NULL,
-    `pid`          VARCHAR(17) NOT NULL,
-    `name`         VARCHAR(32) NOT NULL,
-    `aliases`      TEXT NOT NULL,
-    `cash`         INT NOT NULL DEFAULT 0,
-    `coplevel`     ENUM('0','1','2','3','4','5','6','7','8','9','10','11','12','13','14','15') NOT NULL DEFAULT '0',
-    `reblevel`     ENUM('0','1','2','3','4','5','6','7') NOT NULL DEFAULT '0',
-    `mediclevel`   ENUM('0','1','2','3','4','5','6','7','8','9','10') NOT NULL DEFAULT '0',
-    `joblevel`     ENUM('0','1','2','3','4','5','6','7') NOT NULL DEFAULT '0',
-    `virtualitems` TEXT NOT NULL,
-    `civ_licenses` TEXT NOT NULL,
-    `cop_licenses` TEXT NOT NULL,
-    `reb_licenses` TEXT NOT NULL,
-    `med_licenses` TEXT NOT NULL,
-    `civ_gear`     TEXT NOT NULL,
-    `cop_gear`     TEXT NOT NULL,
-    `reb_gear`     TEXT NOT NULL,
-    `med_gear`     TEXT NOT NULL,
-    `stats`    VARCHAR(25) NOT NULL DEFAULT '"[100,100,0]"'
-    `arrested`     TINYINT NOT NULL DEFAULT 0,
-    `adminlevel`   ENUM('0','1','2','3','4','5','6','7','8','9','10')  NOT NULL DEFAULT '0',
-    `donorlevel`   ENUM('0','1','2','3')  NOT NULL DEFAULT '0',
-    `blacklist`    TINYINT NOT NULL DEFAULT 0,
-    `alive`    TINYINT NOT NULL DEFAULT 0,
-    `position` VARCHAR(32) NOT NULL DEFAULT '"[]"',
-    `playtime`     VARCHAR(32) NOT NULL DEFAULT '"[0,0,0,0]"',
-    `insert_time`  TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-    `last_seen`    TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
-    
-    PRIMARY KEY (`pid`),
-    UNIQUE KEY `unique_uid` (`uid`),
-    UNIQUE KEY `unique_beguid` (`BEGuid`),
-    CONSTRAINT `FK_server_id` FOREIGN KEY `fkIdx_server_id` (`serverID`) REFERENCES `servers` (`serverID`) ON UPDATE CASCADE ON DELETE CASCADE,
-    INDEX `index_name` (`name`),
-    INDEX `index_blacklist` (`blacklist`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 -- --------------------------------------------------------
