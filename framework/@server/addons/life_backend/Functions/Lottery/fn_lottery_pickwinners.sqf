@@ -171,7 +171,7 @@ if _ticketsReclaim then {
 				["BEGuid", 					["DB","STRING", _BEGuid] call life_fnc_database_parse],
 				["winnings", 				["DB","INT", _jackpotSplit] call life_fnc_database_parse],
 				["bonusball", 				["DB","BOOL", _wonBonusBall] call life_fnc_database_parse],
-				["bonusballWinnings", 		["DB","INT", [0, _bonusBallPayout] select _wonBonusBall] call life_fnc_database_parse],
+				["bonusballWinnings", 		["DB","INT", [0, _bonusBallPayout] select _wonBonusBall] call life_fnc_database_parse]
 			]
 		] call life_fnc_database_request;
 	}forEach _offlineWinners;
