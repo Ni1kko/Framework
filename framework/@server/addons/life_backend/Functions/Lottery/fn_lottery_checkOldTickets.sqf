@@ -60,7 +60,7 @@ while {count _queryTickets > 0} do {
 					_claimedTickets pushBack _ticketID;
 				}; 
 			};
-		}forEach _allPlayers
+		}forEach _allPlayers;
 
 		uiSleep 2; 
 
@@ -71,12 +71,8 @@ while {count _queryTickets > 0} do {
 		{ 
 
 			["UPDATE", "unclaimedLotteryTickets", 
-				[
-					["claimed", ["DB","BOOL", true] call life_fnc_database_parse], 
-				],
-				[
-					["ticketID", ["DB","INT", _x] call life_fnc_database_parse]
-				]
+				[ ["claimed", ["DB","BOOL", true] call life_fnc_database_parse] ],
+				[ ["ticketID", ["DB","INT", _x] call life_fnc_database_parse] ]
 			] call life_fnc_database_request;
 			_queryTickets deleteAt _forEachIndex;
 		}forEach _claimedTickets;
