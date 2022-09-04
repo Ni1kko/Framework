@@ -9,7 +9,7 @@ class CfgPatches {
  
 class CfgExtDB
 {
-    profile = "altislife";           //Database profile setup in `extdb3-conf.ini`  
+    profile = "frameworkDB";         //Database profile setup in `extdb3-conf.ini`  
     sqlcustom = 0;                   //Enable prepared calls
     sqlcustomfile = "lifesqlcustom"; //File name of `custom.ini`
 
