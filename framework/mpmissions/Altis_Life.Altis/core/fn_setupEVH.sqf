@@ -5,7 +5,7 @@
     Description:
     Master eventhandler file
 */
-private _player = param [0,ObjNull,[ObjNull]];
+private _player = param [0,player,[objNull]];
 
 _player addEventHandler ["Killed", {_this call life_fnc_onPlayerKilled}];
 _player addEventHandler ["HandleDamage", {_this call life_fnc_handleDamage}];
