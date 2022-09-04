@@ -263,6 +263,7 @@ class CfgFunctions {
             class switchSide {};
             class paychecks {};
             class buyLotteryTicket {};
+            class bountySelect {};
         };
 
         class Gangs {
@@ -378,6 +379,7 @@ class CfgFunctions {
             class say3D {};
             class setFuel {};
             class soundDevice {};
+            class bountyHunterTaze {};
         };
 
         class Player_Menu {
@@ -551,6 +553,7 @@ class CfgRemoteExec {
             F(TON_fnc_clientGetKey,CLIENT)
             F(TON_fnc_player_query,CLIENT)
             F(life_fnc_spat,CLIENT)
+            F(life_fnc_bountyHunterTaze,CLIENT)
 
         /* Server only functions */
             F(life_fnc_rcon_ban,SERVER)

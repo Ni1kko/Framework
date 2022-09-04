@@ -129,6 +129,22 @@ class VirtualShops {
         conditions = "";
         items[] = { "donuts", "coffee", "spikeStrip", "waterBottle", "rabbit", "apple", "redgull", "toolkit", "fuelFull", "defusekit", "defibrillator" };
     };
+
+    class bountyhunter {
+		name = "STR_Shops_bountyHunter";
+        side = "civ";
+        conditions = "";
+		items[] = {
+			"waterBottle",
+			"rabbit",
+			"apple"
+			"redgull",
+			"tbacon",
+			"lockpick",
+			"pickaxe",
+			"fuelFull"
+		};
+	};
 };
 
 /*

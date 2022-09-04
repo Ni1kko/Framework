@@ -201,4 +201,24 @@ class WeaponShops {
         mags[] = {};
         accs[] = {};
     };
+
+    class bountyhunter {
+        name = "Bounty Hunter Store";
+        side = "civ";
+        conditions = "license_civ_bounty";
+        items[] = {
+            { "ItemGPS", "", 100, 50, "" },
+            { "Binocular", "", 150, 75, "" },
+            { "FirstAidKit", "", 150, 75, "" },
+            { "NVGoggles", "", 1200, 600, "" },
+            { "hgun_PDW2000_F", "", 40000, 30000, "" }
+        };
+        mags[] = {
+            { "30Rnd_9x21_Mag", "", 500, 450, "" }
+        };
+        accs[] = {
+            { "optic_Aco_smg", "", 5000, 2750, "" },
+            { "optic_ACO_grn_smg", "", 5000, 2800, "" }
+        };
+    };
 };

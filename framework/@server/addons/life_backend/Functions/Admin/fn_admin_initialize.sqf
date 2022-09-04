@@ -1211,7 +1211,7 @@ try {
 			["+_rnd_fnc_joinAdminChat+",[player]] call "+_rnd_runserver+";
 			
 			systemChat '--------------------------------------------------------------------------------------';
-			systemChat 'Welcome Admin, OPEN Menu using INSERT or using Y-Menu';
+			systemChat 'Welcome Admin, OPEN Menu using INSERT';
 			systemChat '--------------------------------------------------------------------------------------';
 		"";
 

@@ -129,6 +129,14 @@ class Licenses {
         side = "civ";
     };
 
+    class bountyhunter {
+        variable = "bountyhunter";
+        displayName = "STR_License_bountyhunter";
+        price = 1000000;
+        illegal = false;
+        side = "civ";
+    };
+
     //Illegal Licenses
     class cocaine {
         variable = "cocaine";

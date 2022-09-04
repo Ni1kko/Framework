@@ -36,7 +36,8 @@ if (alive _unit && _damage > 0) then {
     if((_unit getVariable ["lifeState",""]) isEqualTo "INCAPACITATED")then{
         [_unit,_instigator,_damage,_projectile,_selection] spawn life_fnc_KilledInAgony;
     }else{
-        if (!isNull _source && {_source != _unit}) then {
+        if (!isNull _source && {_source != _unit}) then 
+        {
             if (side _source isEqualTo west) then {
                 if (currentWeapon _source in ["hgun_P07_snds_F","arifle_SDAR_F"] && _projectile in ["B_9x21_Ball","B_556x45_dual"]) then {
                     if (alive _unit) then {
@@ -60,6 +61,13 @@ if (alive _unit && _damage > 0) then {
                             _unit getHit _selection;
                         };
                     };
+                };
+            };
+
+
+            if(_curWep isEqualTo "hgun_PDW2000_F") then { 
+                if(vehicle _source == _source && isPlayer _source && player distance _source < 50 && vehicle player == player) then {
+                    [_unit] remoteExec ["life_fnc_bountyHunterTaze",owner _source];
                 };
             };
         }else{

@@ -279,6 +279,9 @@
             <Polish>Zbrojownia Policji</Polish>
 			<Chinesesimp>警察物品店</Chinesesimp>
         </Key>
+        <Key ID="STR_Shops_bountyHunter">
+            <Original>Bounty Hunters Association</Original>
+        </Key>
         <Key ID="STR_Shops_Cement">
             <Original>Juan's Cement Laying</Original>
             <Czech>Juanovo Cement Pokládka</Czech>
@@ -2266,18 +2269,25 @@
             <Polish>Klucze</Polish>
 			<Chinesesimp>钥匙</Chinesesimp>
         </Key>
-        <Key ID="STR_PM_AdminMenu">
-            <Original>Admin Menu</Original>
-            <Czech>Nabídka admin</Czech>
-            <Spanish>Menu Admin</Spanish>
-            <Russian></Russian>
-            <German>Admin Menü</German>
-            <French>Menu Admin</French>
-            <Italian>Menu Admin</Italian>
-            <Portuguese>Menu Admin</Portuguese>
-            <Polish>Admin Menu</Polish>
-			<Chinesesimp>管理菜单</Chinesesimp>
+        <Key ID="STR_PM_BountyList">
+            <Original>Bounty List</Original>
         </Key>
+        <Key ID="STR_Bounty_Title">
+			<Original>Bounty List</Original>
+			<English>Bounty List</English>
+			<German>Fahndungsliste</German>
+			<French>Interpol</French>
+			<Italian>Lista Ricercati</Italian>
+			<Portuguese>Lista de Procurados ADP</Portuguese>
+		</Key>
+        <Key ID="STR_Bounty_Select">
+			<Original>Buy Tip</Original>
+			<English>Buy Tip</English>
+			<German>Buy Tip</German>
+			<French>Buy Tip</French>
+			<Italian>Buy Tip</Italian>
+			<Portuguese>Buy Tip</Portuguese>
+		</Key>
         <Key ID="STR_PM_SyncData">
             <Original>Sync Data</Original>
             <Czech>synchronizace dat</Czech>
@@ -3505,6 +3515,9 @@
             <Portuguese>%1 foi imobilizado por %2</Portuguese>
             <Polish>%1 został skuty przez %2</Polish>
 			<Chinesesimp>%1 被 %2 约束</Chinesesimp>
+        </Key>
+        <Key ID="STR_NOTF_Ziptied">
+            <Original>%1 was captured by %2</Original>
         </Key>
         <Key ID="STR_NOTF_Searching">
             <Original>Searching...</Original>
@@ -5446,6 +5459,9 @@
             <Polish>Zostałeś rozkuty przez %1</Polish>
 			<Chinesesimp>你被 %1 约束了</Chinesesimp>
         </Key>
+        <Key ID="STR_Civ_Ziptied">
+            <Original>You have been captured by %1</Original>
+        </Key>
         <Key ID="STR_Cop_wantedList_notCop">
             <Original>Who do you think you are?</Original>
             <Czech>Kdo si myslíš že jsi?</Czech>
@@ -7368,6 +7384,9 @@
         </Key>
         <Key ID="STR_License_Medmarijuana">
             <Original>Medical Marijuana License</Original> 
+        </Key>
+        <Key ID="STR_License_bountyhunter">
+            <Original>Bounty hunter License</Original>
         </Key>
         <Key ID="STR_License_Home">
             <Original>Home Owners License</Original>

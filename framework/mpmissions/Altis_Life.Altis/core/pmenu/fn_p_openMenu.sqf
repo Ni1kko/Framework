@@ -29,4 +29,9 @@ if (FETCH_CONST(life_adminlevel) < 1) then {
     ctrlShow[2021,false];
 };
 
+//--- Bounty hunting
+if (playerSide isNotEqualTo civilian || !license_civ_bounty) then {
+    ctrlShow[2024,false];
+};
+
 [] call life_fnc_p_updateMenu;

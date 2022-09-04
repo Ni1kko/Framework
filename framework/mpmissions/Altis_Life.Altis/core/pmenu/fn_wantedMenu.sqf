@@ -8,11 +8,9 @@
 */
 disableSerialization;
 
-if !(playerSide isEqualTo west) exitWith {}; // Only for cops open this menu
+if (playerSide isNotEqualTo west AND !license_civ_bounty) exitWith {false};
 
-createDialog "life_wanted_menu";
-
-private _display = findDisplay 2400;
+private _display = (if _isBountyHunter then{createDialog ["life_bounty_menu",true]}else{createDialog ["life_wanted_menu",true]});
 private _list = _display displayCtrl 2401;
 private _players = _display displayCtrl 2406;
 private _units = [];

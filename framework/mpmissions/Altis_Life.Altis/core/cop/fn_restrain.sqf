@@ -6,10 +6,15 @@
     Description:
     Restrains the client.
 */
-private ["_cop","_player","_vehicle"];
-_cop = [_this,0,objNull,[objNull]] call BIS_fnc_param;
-_player = player;
-_vehicle = vehicle player;
+
+params [
+    ["_cop", objNull, [objNull]],
+    ["_isBountyHunter", false, [false]]
+];
+
+private _player = player;
+private _vehicle = vehicle player;
+
 if (isNull _cop) exitWith {};
 
 //Monitor excessive restrainment
@@ -29,8 +34,12 @@ if (isNull _cop) exitWith {};
         };
     };
 };
-
-titleText[format [localize "STR_Cop_Restrained",_cop getVariable ["realname",name _cop]],"PLAIN"];
+ 
+if(side _cop == west || _isBountyHunter) then {
+	titleText[format[localize "STR_Cop_Restrained",_cop getVariable["realname",name _cop]],"PLAIN"];
+} else{
+	titleText[format[localize "STR_Civ_Ziptied",_cop getVariable["realname",name _cop]],"PLAIN"];		
+};
 
 life_disable_getIn = true;
 life_disable_getOut = false;

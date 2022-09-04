@@ -255,10 +255,21 @@ class playerSettings {
             h = (1 / 25);
         };
 
-        class ButtonAdminMenu: Life_RscButtonMenu {
+        
+        /*class ButtonAdminMenu: Life_RscButtonMenu {
             idc = 2021;
             text = "$STR_PM_AdminMenu";
             onButtonClick = "[]spawn{if(isNil 'life_fnc_admin_showmenu')exitWith{hint 'Admin menu is stil loading, try again in a 1-2 mins'};closeDialog 0;[]spawn life_fnc_admin_showmenu;}";
+            x = 0.1 + (6.25 / 40) + (1 / 250 / (safezoneW / safezoneH));
+            y = 0.805;
+            w = (6.25 / 40);
+            h = (1 / 25);
+        };*/
+
+        class ButtonBountyList: Life_RscButtonMenu {
+            idc = 2024;
+            text = "$STR_PM_BountyList";
+            onButtonClick = "[true] call life_fnc_wantedMenu";
             x = 0.1 + (6.25 / 40) + (1 / 250 / (safezoneW / safezoneH));
             y = 0.805;
             w = (6.25 / 40);

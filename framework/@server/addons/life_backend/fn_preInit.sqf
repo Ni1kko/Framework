@@ -61,7 +61,8 @@ life_var_serverLoaded = true;
     "life_var_playtimeValuesRequest",
     "life_var_playtimeValues",
     "life_var_serverLoaded",
-    "life_fnc_util_getSideString"
+    "life_fnc_util_getSideString",
+    "life_fnc_util_getPlayerObject"
 ];
 
 true
