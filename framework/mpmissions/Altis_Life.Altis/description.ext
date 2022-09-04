@@ -726,6 +726,18 @@ class CfgSounds {
         sound[] = {"\sounds\intro.ogg", 0.75, 1};
         titles[] = {};
     };
+
+    class cuffson {
+        name = "cuffson";
+        sound[] = {"\sounds\Handcuffs.ogg", 1.0, 1};
+        titles[] = {};
+    };
+
+    class zipTie {
+        name = "zipTie";
+        sound[] = {"\sounds\ziptie.ogg", 1.0, 1};
+        titles[] = {};
+    };
 };
 
 class CfgDebriefing {
