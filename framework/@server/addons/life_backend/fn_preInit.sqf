@@ -11,7 +11,9 @@ life_var_playtimeValues = [];
 life_var_playtimeValuesRequest = [];
 life_var_radioChannels = [];
 life_var_corpses = []; 
-life_var_federlReserveReady = {false};
+life_var_banksReady = {false};
+life_var_banks = [];
+life_var_atms = [];
 life_var_spawndAnimals = [];
 
 publicVariable "life_var_serverLoaded";
@@ -28,7 +30,7 @@ life_var_handleDisconnectEVH =  addMissionEventHandler ["HandleDisconnect",     
 life_var_entityRespawnedEVH =   addMissionEventHandler ["EntityRespawned",      TON_fnc_entityRespawned];
 
 [] call TON_fnc_initHouses;
-[] call TON_fnc_setupFedralReserve;
+[] call TON_fnc_setupBanks;
 [] call TON_fnc_setupHospitals;
 [] call TON_fnc_stripNpcs;
 [] call TON_fnc_setupRadioChannels;

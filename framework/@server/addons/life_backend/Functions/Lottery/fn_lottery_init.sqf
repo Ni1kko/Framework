@@ -37,7 +37,7 @@ waitUntil {isFinal "extdb_var_database_key"};
 ["CALL", "deleteOldLotteryTickets"] call life_fnc_database_request;
 
 //--
-waitUntil {isFinal "life_var_federlReserveReady"}; 
+waitUntil {isFinal "life_var_banksReady"}; 
 _vaultObject = missionNamespace getVariable ["fed_bank",objNull];
 
 //--

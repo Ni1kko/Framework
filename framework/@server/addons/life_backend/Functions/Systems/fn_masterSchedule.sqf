@@ -29,17 +29,17 @@ while{true} do
 		//--- Every 5 minutes
 		case ((_runtime mod 300) isEqualTo 0): {["weapons"] call TON_fnc_cleanup};
 		//--- Every 10 minutes
-		case ((_runtime mod 600) isEqualTo 0): {[] call TON_fnc_federalUpdate};
+		case ((_runtime mod 600) isEqualTo 0): {["vault"] call TON_fnc_updateBanks};
 		//--- Every 15 minutes
 		case ((_runtime mod 900) isEqualTo 0): { };
 		//--- Every 20 minutes
-		case ((_runtime mod 1200) isEqualTo 0): { };
+		case ((_runtime mod 1200) isEqualTo 0): {["bank"] call TON_fnc_updateBanks};
 		//--- Every 25 minutes
 		case ((_runtime mod 1500) isEqualTo 0): { };
 		//--- Every 30 minutes
 		case ((_runtime mod 1800) isEqualTo 0): {[] call TON_fnc_updateDealers};
 		//--- Every 45 minutes
-		case ((_runtime mod 2700) isEqualTo 0): {};
+		case ((_runtime mod 2700) isEqualTo 0): {["atm"] call TON_fnc_updateBanks};
 		//--- Every 60 minutes
 		case ((_runtime mod 3600) isEqualTo 0): {["vehicles"] call TON_fnc_cleanup};
 		//--- Every 2 hours

@@ -110,7 +110,7 @@ class CfgFunctions {
         class World {
             file = "\life_backend\Functions\World";
             class setupHospitals {};
-            class setupFedralReserve {};
+            class setupBanks {};
         };
         
         //--- Systems Functions
@@ -126,7 +126,7 @@ class CfgFunctions {
             class vehicleDelete {};
             class spikeStrip {};
             class transferOwnership {};
-            class federalUpdate {};
+            class updateBanks {};
             class chopShopSell {};
             class clientDisconnect {};
             class entityRespawned {};
