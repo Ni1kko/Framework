@@ -12,11 +12,11 @@ SET time_zone = "+00:00";
 /*!40101 SET NAMES utf8mb4 */;
 
 --
--- Creates database `altislife` unless it already exists and uses `altislife`
+-- Creates database `arma3life` unless it already exists and uses `arma3life`
 -- Default Schema
 --
-CREATE DATABASE IF NOT EXISTS `altislife` DEFAULT CHARACTER SET utf8mb4;
-USE `altislife`;
+CREATE DATABASE IF NOT EXISTS `arma3life` DEFAULT CHARACTER SET utf8mb4;
+USE `arma3life`;
 
 --
 -- Drop procedures to ensure no conflicts
@@ -464,7 +464,7 @@ CREATE TABLE IF NOT EXISTS `wanted` (
 --
 
 CREATE USER IF NOT EXISTS `arma3`@`localhost` IDENTIFIED BY 'changeme';
-GRANT SELECT, UPDATE, INSERT, EXECUTE ON `altislife`.* TO 'arma3'@'localhost';
+GRANT SELECT, UPDATE, INSERT, EXECUTE ON `arma3life`.* TO 'arma3'@'localhost';
 FLUSH PRIVILEGES;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
