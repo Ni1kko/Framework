@@ -50,6 +50,7 @@ class CfgFunctions {
             file = "\life_backend\Functions\Utils";
             class util_getPlayerObject {};
             class util_randomString {};
+            class util_getSideString {};
         };
 
         //--- Wanted Functions

@@ -60,7 +60,8 @@ life_var_serverLoaded = true;
     "TON_fnc_clientGangLeft",
     "life_var_playtimeValuesRequest",
     "life_var_playtimeValues",
-    "life_var_serverLoaded"
+    "life_var_serverLoaded",
+    "life_fnc_util_getSideString"
 ];
 
 true
