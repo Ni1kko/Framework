@@ -743,6 +743,15 @@ class CfgDebriefing {
         picture = "";
         pictureColor[] = {0,0.3,0.6,1};
     };
+
+    class Antihack {
+        title = "Antihack";
+        subtitle = "Nobody likes a hacker";
+        description = "You have been flagged for hacking";
+        pictureBackground = "";
+        picture = "";
+        pictureColor[] = {0,0.3,0.6,1};
+    };
 };
 
 class CfgNotifications {
