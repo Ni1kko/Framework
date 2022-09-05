@@ -110,61 +110,55 @@ _vehicle setVariable ["oUUID",_pid,true];
 _vehicle disableTIEquipment true; //No Thermals.. They're cheap but addictive.
 [_vehicle] call life_fnc_clearVehicleAmmo;
 
-if (LIFE_SETTINGS(getNumber,"save_vehicle_virtualItems") isEqualTo 1) then {
+_vehicle setVariable ["Trunk",_trunk,true];
 
-    _vehicle setVariable ["Trunk",_trunk,true];
+if (_wasIllegal) then {
+    private _refPoint = if (_sp isEqualType "") then {getMarkerPos _sp;} else {_sp;};
     
-    if (_wasIllegal) then {
-        private _refPoint = if (_sp isEqualType "") then {getMarkerPos _sp;} else {_sp;};
-        
-        private _distance = 100000;
-        private "_location";
+    private _distance = 100000;
+    private "_location";
 
-        {
-            private _tempLocation = nearestLocation [_refPoint, _x];
-            private _tempDistance = _refPoint distance _tempLocation;
-    
-            if (_tempDistance < _distance) then {
-                _location = _tempLocation;
-                _distance = _tempDistance;
-            };
-            false
-    
-        } count ["NameCityCapital", "NameCity", "NameVillage"];
- 
-        _location = text _location;
-        [1,"STR_NOTF_BlackListedVehicle",true,[_location,_name]] remoteExecCall ["life_fnc_broadcast",west];
+    {
+        private _tempLocation = nearestLocation [_refPoint, _x];
+        private _tempDistance = _refPoint distance _tempLocation;
 
-        _query = format ["UPDATE vehicles SET blacklist='0' WHERE id='%1' AND pid='%2'",_vid,_pid];
-        [_query,1] call life_fnc_database_rawasync_request;
-    };
-} else {
-    _vehicle setVariable ["Trunk",[[],0],true];
+        if (_tempDistance < _distance) then {
+            _location = _tempLocation;
+            _distance = _tempDistance;
+        };
+        false
+
+    } count ["NameCityCapital", "NameCity", "NameVillage"];
+
+    _location = text _location;
+    [1,"STR_NOTF_BlackListedVehicle",true,[_location,_name]] remoteExecCall ["life_fnc_broadcast",west];
+
+    _query = format ["UPDATE vehicles SET blacklist='0' WHERE id='%1' AND pid='%2'",_vid,_pid];
+    [_query,1] call life_fnc_database_rawasync_request;
 };
 
 _vehicle setFuel (_vInfo select 11);
 
-if (count _gear > 0 && (LIFE_SETTINGS(getNumber,"save_vehicle_inventory") isEqualTo 1)) then {
-    _items = _gear select 0;
-    _mags = _gear select 1;
-    _weapons = _gear select 2;
-    _backpacks = _gear select 3;
+ 
+_items = _gear select 0;
+_mags = _gear select 1;
+_weapons = _gear select 2;
+_backpacks = _gear select 3;
 
-    for "_i" from 0 to ((count (_items select 0)) - 1) do {
-        _vehicle addItemCargoGlobal [((_items select 0) select _i), ((_items select 1) select _i)];
-    };
-    for "_i" from 0 to ((count (_mags select 0)) - 1) do {
-        _vehicle addMagazineCargoGlobal [((_mags select 0) select _i), ((_mags select 1) select _i)];
-    };
-    for "_i" from 0 to ((count (_weapons select 0)) - 1) do {
-        _vehicle addWeaponCargoGlobal [((_weapons select 0) select _i), ((_weapons select 1) select _i)];
-    };
-    for "_i" from 0 to ((count (_backpacks select 0)) - 1) do {
-        _vehicle addBackpackCargoGlobal [((_backpacks select 0) select _i), ((_backpacks select 1) select _i)];
-    };
+for "_i" from 0 to ((count (_items select 0)) - 1) do {
+    _vehicle addItemCargoGlobal [((_items select 0) select _i), ((_items select 1) select _i)];
+};
+for "_i" from 0 to ((count (_mags select 0)) - 1) do {
+    _vehicle addMagazineCargoGlobal [((_mags select 0) select _i), ((_mags select 1) select _i)];
+};
+for "_i" from 0 to ((count (_weapons select 0)) - 1) do {
+    _vehicle addWeaponCargoGlobal [((_weapons select 0) select _i), ((_weapons select 1) select _i)];
+};
+for "_i" from 0 to ((count (_backpacks select 0)) - 1) do {
+    _vehicle addBackpackCargoGlobal [((_backpacks select 0) select _i), ((_backpacks select 1) select _i)];
 };
 
-if (count _damage > 0 && (LIFE_SETTINGS(getNumber,"save_vehicle_damage") isEqualTo 1)) then {
+if (count _damage > 0) then {
     _parts = getAllHitPointsDamage _vehicle;
 
     for "_i" from 0 to ((count _damage) - 1) do {

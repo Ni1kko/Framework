@@ -43,18 +43,16 @@ _vehicle spawn {
     };
 };
 
-if (LIFE_SETTINGS(getNumber,"save_vehicle_virtualItems") isEqualTo 1) then {
-    _vehicle spawn {
-        waitUntil {isNull (findDisplay 3500)};
-        _this setVariable ["trunk_in_use",false,true];
-        if ((_this isKindOf "Car") || (_this isKindOf "Air") || (_this isKindOf "Ship")) then {
-            [] call SOCK_fnc_updateRequest;
+_vehicle spawn {
+    waitUntil {isNull (findDisplay 3500)};
+    _this setVariable ["trunk_in_use",false,true];
+    if ((_this isKindOf "Car") || (_this isKindOf "Air") || (_this isKindOf "Ship")) then {
+        [] call SOCK_fnc_updateRequest;
 
-            if (count extdb_var_database_headless_clients > 0) then {
-                [_this,2] remoteExecCall ["HC_fnc_vehicleUpdate",extdb_var_database_headless_client];
-            } else {
-                [_this,2] remoteExecCall ["TON_fnc_vehicleUpdate",2];
-            };
+        if (count extdb_var_database_headless_clients > 0) then {
+            [_this,2] remoteExecCall ["HC_fnc_vehicleUpdate",extdb_var_database_headless_client];
+        } else {
+            [_this,2] remoteExecCall ["TON_fnc_vehicleUpdate",2];
         };
     };
 };

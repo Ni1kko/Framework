@@ -24,14 +24,12 @@ if ((typeOf _container) in ["Box_IND_Grenades_F", "B_supplyCrate_F"]) exitWith {
 
     [3] call SOCK_fnc_updatePartial;
 };
-
-if (LIFE_SETTINGS(getNumber, "save_vehicle_inventory") isEqualTo 1) exitWith {
-    if (_container isKindOf "Car" || {_container isKindOf "Air"} || {_container isKindOf "Ship"}) then {
-        if (count extdb_var_database_headless_clients > 0) then {
-            [_container, 1] remoteExecCall ["HC_fnc_vehicleUpdate", extdb_var_database_headless_client];
-        } else {
-            [_container, 1] remoteExecCall ["TON_fnc_vehicleUpdate", 2];
-        };
+ 
+if (_container isKindOf "Car" || {_container isKindOf "Air"} || {_container isKindOf "Ship"}) exitWith {
+    if (count extdb_var_database_headless_clients > 0) then {
+        [_container, 1] remoteExecCall ["HC_fnc_vehicleUpdate", extdb_var_database_headless_client];
+    } else {
+        [_container, 1] remoteExecCall ["TON_fnc_vehicleUpdate", 2];
     };
 
     [3] call SOCK_fnc_updatePartial;
