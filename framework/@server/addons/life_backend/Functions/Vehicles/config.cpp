@@ -9,7 +9,7 @@ class CfgPatches {
  
 class CfgVehicles
 {
-
+    impoundFee = 500; // How much money to get back a vehicle from impound (Does increase with each day until it is released)
 };
 
 class CfgFunctions {

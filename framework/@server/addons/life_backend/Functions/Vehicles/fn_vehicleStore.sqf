@@ -20,6 +20,8 @@ if (count _vInfo > 0) then {
     _uid = _vInfo select 0;
 };
 
+private _vehicleID = _vehicle getVariable ["vehicle_id",-1];
+private _impoundFee = getNumber(configFile >> "cfgVehicles" >> "impoundFee");
 
 // save damage.
 if (LIFE_SETTINGS(getNumber,"save_vehicle_damage") isEqualTo 1) then {
@@ -33,41 +35,6 @@ _damage = [_damage] call DB_fnc_mresArray;
 // because fuel price!
 _fuel = (fuel _vehicle);
 
-if (_impound) exitWith {
-    if (count _vInfo isEqualTo 0) then  {
-        life_impound_inuse = false;
-        (owner _unit) publicVariableClient "life_impound_inuse";
-
-        if (!isNil "_vehicle" && {!isNull _vehicle}) then {
-            deleteVehicle _vehicle;
-        };
-    } else {    // no free repairs!
-        _query = format ["UPDATE vehicles SET active='0', impounded='1', fuel='%3', damage='%4' WHERE pid='%1' AND plate='%2'",_uid , _plate, _fuel, _damage];
-        _thread = [_query,1] call life_fnc_database_rawasync_request;
- 
-        private _vehicleID = _vehicle getVariable ["vehicle_id",-1];
-        private _impoundFee = 500;
-        
-        if(_vehicleID > 0) then {
-            ["CREATE", "impounded_vehicles", 
-                [
-                    ["vehicle_id",				["DB","INT", _vehicleID] call life_fnc_database_parse],
-                    ["impound_by_guid", 		["DB","STRING", ('BEGuid' callExtension ("get:"+(getPlayerUID _unit)))] call life_fnc_database_parse],
-                    ["impound_fee", 			["DB","INT", _impoundFee] call life_fnc_database_parse]
-                ]
-            ] call life_fnc_database_request;
-        };
-        
-
-        if (!isNil "_vehicle" && {!isNull _vehicle}) then {
-            deleteVehicle _vehicle;
-        };
-
-        life_impound_inuse = false;
-        (owner _unit) publicVariableClient "life_impound_inuse";
-    };
-};
-
 // not persistent so just do this!
 if (count _vInfo isEqualTo 0) exitWith {
     [1,"STR_Garage_Store_NotPersistent",true] remoteExecCall ["life_fnc_broadcast",(owner _unit)];
@@ -75,7 +42,7 @@ if (count _vInfo isEqualTo 0) exitWith {
     (owner _unit) publicVariableClient "life_garage_store";
 };
 
-if !(_uid isEqualTo getPlayerUID _unit) exitWith {
+if (_uid isNotEqualTo getPlayerUID _unit AND !_impound) exitWith {
     [1,"STR_Garage_Store_NoOwnership",true] remoteExecCall ["life_fnc_broadcast",(owner _unit)];
     life_garage_store = false;
     (owner _unit) publicVariableClient "life_garage_store";
@@ -150,14 +117,64 @@ if (LIFE_SETTINGS(getNumber,"save_vehicle_inventory") isEqualTo 1) then {
 _trunk = [_trunk] call DB_fnc_mresArray;
 _cargo = [_cargo] call DB_fnc_mresArray;
 
-// update
-_query = format ["UPDATE vehicles SET active='0', inventory='%3', gear='%4', fuel='%5', damage='%6' WHERE pid='%1' AND plate='%2'", _uid, _plate, _trunk, _cargo, _fuel, _damage];
-_thread = [_query,1] call life_fnc_database_rawasync_request;
+private _queryElements = [
+    ["active",["DB","BOOL", false] call life_fnc_database_parse], 
+    ["inventory",["DB","ARRAY", _trunk] call life_fnc_database_parse], 
+    ["gear",["DB","ARRAY", _cargo] call life_fnc_database_parse], 
+    ["fuel",["DB","INT", _fuel] call life_fnc_database_parse], 
+    ["damage",["DB","INT", _damage] call life_fnc_database_parse]
+];
 
+if (_impound) then {
+    if (count _vInfo isEqualTo 0) then  {
+        life_impound_inuse = false;
+        (owner _unit) publicVariableClient "life_impound_inuse";
+
+        if (!isNil "_vehicle" && {!isNull _vehicle}) then {
+            deleteVehicle _vehicle;
+        };
+    } else {
+        if(_vehicleID > 0) then {
+            _queryElements pushBack ["impounded",["DB","BOOL", true] call life_fnc_database_parse];
+        };
+    }; 
+};
+
+private _impounded = ["impounded",["DB","BOOL", true] call life_fnc_database_parse] in _queryElements;
+
+//--- 
+["UPDATE", "vehicles", [
+    _queryElements,
+    [
+        ["pid",["DB","STRING", _uid] call life_fnc_database_parse],
+        ["plate",["DB","STRING", _plate] call life_fnc_database_parse]
+    ]
+]]call life_fnc_database_request;
+
+ 
 if (!isNil "_vehicle" && {!isNull _vehicle}) then {
     deleteVehicle _vehicle;
 };
 
+if _impounded exitWith
+{
+    ["CREATE", "impounded_vehicles", 
+        [
+            ["vehicle_id",				["DB","INT", _vehicleID] call life_fnc_database_parse],
+            ["impound_by_guid", 		["DB","STRING", ('BEGuid' callExtension ("get:"+(getPlayerUID _unit)))] call life_fnc_database_parse],
+            ["impound_fee", 			["DB","INT", _impoundFee] call life_fnc_database_parse]
+        ]
+    ] call life_fnc_database_request;
+
+    life_impound_inuse = false;
+    (owner _unit) publicVariableClient "life_impound_inuse";
+
+    true
+};
+
+ 
 life_garage_store = false;
 (owner _unit) publicVariableClient "life_garage_store";
 [1,_storetext] remoteExecCall ["life_fnc_broadcast",(owner _unit)];
+
+true
