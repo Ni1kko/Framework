@@ -189,7 +189,7 @@ class CfgFunctions {
             class displayHandler {};
             class gangBankResponse {};
             class garageLBChange {};
-            class impoundMenu {};
+            class garageMenu {};
             class progressBar {};
             class safeFix {};
             class safeInventory {};
@@ -517,7 +517,7 @@ class CfgRemoteExec {
             F(life_fnc_garageRefund,CLIENT)
             F(life_fnc_giveDiff,CLIENT)
             F(life_fnc_hideObj,CLIENT)
-            F(life_fnc_impoundMenu,CLIENT)
+            F(life_fnc_garageMenu,CLIENT)
             F(life_fnc_jail,CLIENT)
             F(life_fnc_jailMe,CLIENT)
             F(life_fnc_knockedOut,CLIENT)

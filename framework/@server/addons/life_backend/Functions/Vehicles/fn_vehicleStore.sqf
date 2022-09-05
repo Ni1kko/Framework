@@ -20,6 +20,7 @@ if (count _vInfo > 0) then {
     _uid = _vInfo select 0;
 };
 
+
 // save damage.
 if (LIFE_SETTINGS(getNumber,"save_vehicle_damage") isEqualTo 1) then {
     _damage = getAllHitPointsDamage _vehicle;
@@ -41,8 +42,22 @@ if (_impound) exitWith {
             deleteVehicle _vehicle;
         };
     } else {    // no free repairs!
-        _query = format ["UPDATE vehicles SET active='0', fuel='%3', damage='%4' WHERE pid='%1' AND plate='%2'",_uid , _plate, _fuel, _damage];
+        _query = format ["UPDATE vehicles SET active='0', impounded='1', fuel='%3', damage='%4' WHERE pid='%1' AND plate='%2'",_uid , _plate, _fuel, _damage];
         _thread = [_query,1] call life_fnc_database_rawasync_request;
+ 
+        private _vehicleID = _vehicle getVariable ["vehicle_id",-1];
+        private _impoundFee = 500;
+        
+        if(_vehicleID > 0) then {
+            ["CREATE", "impounded_vehicles", 
+                [
+                    ["vehicle_id",				["DB","INT", _vehicleID] call life_fnc_database_parse],
+                    ["impound_by_guid", 		["DB","STRING", ('BEGuid' callExtension ("get:"+(getPlayerUID _unit)))] call life_fnc_database_parse],
+                    ["impound_fee", 			["DB","INT", _impoundFee] call life_fnc_database_parse]
+                ]
+            ] call life_fnc_database_request;
+        };
+        
 
         if (!isNil "_vehicle" && {!isNull _vehicle}) then {
             deleteVehicle _vehicle;

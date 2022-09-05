@@ -112,6 +112,11 @@ CREATE DEFINER=`root`@`localhost` PROCEDURE `resetPlayersLife` ()   BEGIN
   DELETE FROM `remoteexec` WHERE `Completed` = 'true';
 END$$
 
+DROP PROCEDURE IF EXISTS `increaseImpoundFee`$$
+CREATE DEFINER=`root`@`localhost` PROCEDURE `increaseImpoundFee` ()   BEGIN
+   UPDATE `impounded_vehicles` SET impound_fee = impound_fee + 300;
+END$$
+
 DELIMITER ;
 
 -- --------------------------------------------------------
@@ -393,7 +398,23 @@ CREATE TABLE `vehicles` (
   `gear` text NOT NULL,
   `fuel` double NOT NULL DEFAULT 1,
   `damage` varchar(256) NOT NULL,
+  `impounded` tinyint(4) NOT NULL DEFAULT 0,
   `insert_time` timestamp NOT NULL DEFAULT current_timestamp()
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `impounded_vehicles`
+--
+
+DROP TABLE IF EXISTS `impounded_vehicles`;
+CREATE TABLE `impounded_vehicles` (
+  `impound_id` int(11) NOT NULL,
+  `vehicle_id` int(11) NOT NULL,
+  `impound_by_guid` varchar(64) NOT NULL, 
+  `impound_fee` int(11) NOT NULL DEFAULT 0,
+  `impound_time` timestamp NOT NULL DEFAULT current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 -- --------------------------------------------------------
@@ -532,6 +553,14 @@ ALTER TABLE `vehicles`
   ADD KEY `index_type` (`type`);
 
 --
+-- Indexes for table `impounded_vehicles`
+--
+ALTER TABLE `impounded_vehicles`
+  ADD PRIMARY KEY (`impound_id`),
+  ADD KEY `vehicle_id` (`vehicle_id`),
+  ADD KEY `impound_by_guid` (`impound_by_guid`);
+
+--
 -- Indexes for table `wanted`
 --
 ALTER TABLE `wanted`
@@ -632,6 +661,12 @@ ALTER TABLE `vehicles`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
 
 --
+-- AUTO_INCREMENT for table `impounded_vehicles`
+--
+ALTER TABLE `impounded_vehicles`
+  MODIFY `impound_id` int(11) NOT NULL AUTO_INCREMENT;
+
+--
 -- Constraints for dumped tables
 --
 
@@ -683,7 +718,6 @@ ALTER TABLE `houses`
 --
 ALTER TABLE `remoteexec`
   ADD CONSTRAINT `fdidx_remoteexec_servers` FOREIGN KEY (`ServerID`) REFERENCES `servers` (`serverID`) ON DELETE CASCADE ON UPDATE CASCADE;
-COMMIT;
 
 --
 -- Constraints for table `lotterytickets`
@@ -722,6 +756,13 @@ ALTER TABLE `unclaimedlotterytickets`
 --
 ALTER TABLE `vehicles`
   ADD CONSTRAINT `FK_players_vehicles` FOREIGN KEY (`pid`) REFERENCES `players` (`pid`) ON DELETE CASCADE ON UPDATE CASCADE;
+
+--
+-- Constraints for table `impounded_vehicles`
+--
+ALTER TABLE `impounded_vehicles`
+  ADD CONSTRAINT `FK_IMPOUNDED_PLAYERS_BEGUID` FOREIGN KEY (`impound_by_guid`) REFERENCES `players` (`BEGuid`) ON DELETE CASCADE ON UPDATE CASCADE,
+  ADD CONSTRAINT `FK_IMPOUNDED_VEHICLES_ID` FOREIGN KEY (`vehicle_id`) REFERENCES `vehicles` (`id`) ON DELETE CASCADE ON UPDATE CASCADE;
 
 --
 -- Constraints for table `wanted`

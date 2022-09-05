@@ -107,25 +107,20 @@ class CfgFunctions {
             class setPlayTime {};
             class getPlayTime {};
         };
-
+        
         //--- World Functions
         class World {
             file = "\life_backend\Functions\World";
             class setupHospitals {};
             class setupBanks {};
         };
-        
+
         //--- Systems Functions
         class Systems {
             file = "\life_backend\Functions\Systems";
             class managesc {};
             class cleanup {};
             class updateHuntingZone {};
-            class vehicleCreate {};
-            class spawnVehicle {};
-            class getVehicles {};
-            class vehicleStore {};
-            class vehicleDelete {};
             class spikeStrip {};
             class transferOwnership {};
             class updateBanks {};
@@ -134,7 +129,6 @@ class CfgFunctions {
             class entityRespawned {};
             class cleanupRequest {};
             class keyManagement {};
-            class vehicleUpdate {};
             class recupkeyforHC {};
             class handleBlastingCharge {};
             class terrainSort {};
