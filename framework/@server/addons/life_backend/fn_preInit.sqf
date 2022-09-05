@@ -16,6 +16,7 @@ life_var_banksReady = {false};
 life_var_banks = [];
 life_var_atms = [];
 life_var_spawndAnimals = [];
+life_var_severSchedulerStartUpQueue = {[]};
 
 publicVariable "life_var_serverLoaded";
 waitUntil {isFinal "extdb_var_database_key"};
@@ -38,7 +39,7 @@ life_var_entityRespawnedEVH =   addMissionEventHandler ["EntityRespawned",      
 [8,true,12] call LifeFSM_fnc_timeModule;
 cleanupFSM = [] call LifeFSM_fnc_cleanup;
 
-{life_var_severScheduler pushBack _x}forEach [ 
+private _severSchedulerStartUpQueue = [ 
 	//--- Every 10 seconds
 	[10, 	  "TON_fnc_updateHuntingZone"],
 	//--- Every 3 minutes
@@ -61,11 +62,15 @@ cleanupFSM = [] call LifeFSM_fnc_cleanup;
 if(getNumber(configFile "CfgRemoteExec" >> "enabled") == 1)then
 {
     //--- Add Remote exec to scheduler
-    life_var_severScheduler pushBack [getNumber(configFile "CfgRemoteExec" >> "checkEveryXmins") * 60, "Life_fnc_remoteExecRun"];
+    _severSchedulerStartUpQueue pushBack [getNumber(configFile "CfgRemoteExec" >> "checkEveryXmins") * 60, "Life_fnc_remoteExecRun"];
     //--- Add Remote exec cleanup to scheduler
-    life_var_severScheduler pushBack [25 * 60, "life_fnc_database_request", ["CALL", "deleteCompletedRemoteExecRequests"]];
+    _severSchedulerStartUpQueue pushBack [25 * 60, "life_fnc_database_request", ["CALL", "deleteCompletedRemoteExecRequests"]];
 };
 
+//--- Add queue too scheduler
+life_var_severSchedulerStartUpQueue = compileFinal str _severSchedulerStartUpQueue;
+{life_var_severScheduler pushBack _x}forEach _severSchedulerStartUpQueue;
+ 
 //--- Variable Event handlers
 "life_fnc_RequestClientId" addPublicVariableEventHandler {(_this select 1) setVariable ["life_clientID", owner (_this select 1), true];};
 "money_log" addPublicVariableEventHandler {diag_log (_this select 1)};

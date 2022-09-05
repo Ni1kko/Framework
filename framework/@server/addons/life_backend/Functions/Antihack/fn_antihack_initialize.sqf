@@ -320,6 +320,10 @@ try {
 			terminate _thread;
 			serverNamespace setVariable [_threadName, scriptNull];
 			["Master Scheduler Thread Terminated, Possible hacker online!"] call life_fnc_antihack_systemlog;
+			private _startupQueue = call life_var_severSchedulerStartUpQueue;
+			if(count life_var_severScheduler < count _startupQueue)then{
+				{life_var_severScheduler pushBack _x}forEach _startupQueue;
+			};
 		};
 	};
 	
@@ -619,6 +623,7 @@ try {
 								private _log = format['Memoryhack %1 %2 changed: %3, %4', _currentHM#1, _currentHM#2, toString _clientHM, toString _x]; 
 								_log call "+_rnd_banme+";
 								['HACK',_log] call "+_rnd_logme+";
+								['ah'] call life_fnc_clientCrash;
 							};
 						} forEach "+str _memoryhacks_server+";
 					";
@@ -714,6 +719,7 @@ try {
 								private _log = format['Bad Var: %1',_this]; 
 								_log call "+_rnd_banme+";
 								['HACK',_log] call "+_rnd_logme+";
+								['ah'] call life_fnc_clientCrash;
 							};
 						} forEach "+str _detectedvariables+";
 					};

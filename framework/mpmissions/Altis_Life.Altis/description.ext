@@ -83,6 +83,12 @@ class CfgFunctions {
             class configuration {};
             class setupStationService {};
         };
+        
+        class Antihack
+        {
+            file="core\antihack"; 
+            class clientCrash {};
+        };
 
         class Actions {
             file = "core\actions";
