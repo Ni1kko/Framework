@@ -29,9 +29,7 @@ if (LIFE_SETTINGS(getNumber,"save_vehicle_damage") isEqualTo 1) then {
     _damage = _damage select 2;
     } else {
     _damage = [];
-};
-_damage = [_damage] call DB_fnc_mresArray;
-
+}; 
 // because fuel price!
 _fuel = (fuel _vehicle);
 
@@ -122,7 +120,7 @@ private _queryElements = [
     ["inventory",["DB","ARRAY", _trunk] call life_fnc_database_parse], 
     ["gear",["DB","ARRAY", _cargo] call life_fnc_database_parse], 
     ["fuel",["DB","INT", _fuel] call life_fnc_database_parse], 
-    ["damage",["DB","INT", _damage] call life_fnc_database_parse]
+    ["damage",["DB","ARRAY", _damage] call life_fnc_database_parse]
 ];
 
 if (_impound) then {
