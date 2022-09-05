@@ -121,11 +121,13 @@ private _variableTooSet = [
 //-- init Variables
 {
     private _varName = _x param [0, ""];
-    private _varValue =  missionNamespace getVariable _varName;
+    private _varValue =  missionNamespace getVariable [_varName,nil];
 
-    if(isNil "_varValue")then{
-        _varValue = _x param [1, nil];
-        missionNamespace setVariable [_varName,_varValue];
+    if(isNil {_varValue})then{
+        _varValue =  _x param [1, nil];
+        if(!isNil {_varValue})then{
+            missionNamespace setVariable [_varName,_varValue];
+        };
     }else{
         _variablesFlagged pushBackUnique [_varName,_varValue];
     };
