@@ -1,9 +1,7 @@
 #include "\life_backend\script_macros.hpp"
 /*
-    File: fn_vehicleStore.sqf
-    Author: Bryan "Tonic" Boardwine
-    Description:
-    Stores the vehicle in the 'Garage'
+	## Tonic & Ni1kko
+	## https://github.com/Ni1kko/Framework
 */
 
 params [ 
@@ -13,7 +11,13 @@ params [
     ["_storetext", "", [""]] 
 ];
 
-if (isNull _vehicle || isNull _unit) exitWith {life_impound_inuse = false; (owner _unit) publicVariableClient "life_impound_inuse";life_garage_store = false;(owner _unit) publicVariableClient "life_garage_store";}; //Bad data passed.
+//--- Bad data passed.
+if (isNull _vehicle || isNull _unit) exitWith {
+    life_impound_inuse = false; 
+    (owner _unit) publicVariableClient "life_impound_inuse";
+    life_garage_store = false;
+    (owner _unit) publicVariableClient "life_garage_store";
+};
 
 private _vehicleID = _vehicle getVariable ["vehicle_id",-1];
 private _vInfo = _vehicle getVariable ["dbInfo",[]];
@@ -22,13 +26,7 @@ private _impoundFee = getNumber(configFile >> "cfgVehicles" >> "impoundFee");
 private _blacklist = false;  
 private _totalweight = 0;
 
-private ["_plate","_uid"];
-if (count _vInfo > 0) then {
-    _plate = _vInfo select 1;
-    _uid = _vInfo select 0;
-};
-
-//-- not persistent
+//-- Not persistent
 if (count _vInfo isEqualTo 0) exitWith {
     if _impound then  {
         if (!isNil "_vehicle" && {!isNull _vehicle}) then {
@@ -44,26 +42,34 @@ if (count _vInfo isEqualTo 0) exitWith {
     };
 };
 
-//-- not the vehicles owner
+//-- Not the vehicles owner
 if (_uid isNotEqualTo getPlayerUID _unit AND !_impound) exitWith {
     [1,"STR_Garage_Store_NoOwnership",true] remoteExecCall ["life_fnc_broadcast",(owner _unit)];
     life_garage_store = false;
     (owner _unit) publicVariableClient "life_garage_store";
 };
 
-// save damage.
+//--- Parse vInfo into local vars with default values
+_vInfo params [ 
+    ["_plate", "", [""]],
+    ["_uid", "", [""]] 
+];
+
+//--- Damage
 private _damage = (getAllHitPointsDamage _vehicle)#2;
 
-// because fuel price!
+//--- fuel
 private _fuel = (fuel _vehicle);
 
+//--- Cargo
 private _cargo = [
     getItemCargo _vehicle,
     getMagazineCargo _vehicle,
     getWeaponCargo _vehicle,
     getBackpackCargo _vehicle
 ];
- 
+
+//--- vItems
 private _items = (_trunk#0) apply {
     private _isIllegal = (M_CONFIG(getNumber,"VirtualItems",(_x#0),"illegal")) isEqualTo 1;
     private _weight = (ITEM_WEIGHT(_x#0)) * (_x#1);
@@ -72,6 +78,7 @@ private _items = (_trunk#0) apply {
     [_x#0,_x#1]
 };
 
+//--- Database elements to update
 private _queryElements = [
     ["active",["DB","BOOL", false] call life_fnc_database_parse], 
     ["inventory",["DB","ARRAY", [_items, _totalweight]] call life_fnc_database_parse], 
@@ -123,9 +130,8 @@ if (["impounded",["DB","BOOL", true] call life_fnc_database_parse] in _queryElem
     true
 };
 
- 
+//--- Return succses
 life_garage_store = false;
 (owner _unit) publicVariableClient "life_garage_store";
 [1,_storetext] remoteExecCall ["life_fnc_broadcast",(owner _unit)];
-
 true
