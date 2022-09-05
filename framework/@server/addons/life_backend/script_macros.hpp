@@ -51,3 +51,13 @@
 #define M_CONFIG(TYPE,CFG,CLASS,ENTRY) TYPE(missionConfigFile >> CFG >> CLASS >> ENTRY)
 #define BASE_CONFIG(CFG,CLASS) inheritsFrom(configFile >> CFG >> CLASS)
 #define LIFE_SETTINGS(TYPE,SETTING) TYPE(missionConfigFile >> "Life_Settings" >> SETTING)
+
+
+//Database Conversion Macros
+#define SIDE_TARGET_COP -100
+#define SIDE_TARGET_REB -200
+#define SIDE_TARGET_MED -300
+#define SIDE_TARGET_CIV -400
+#define SIDE_TARGET_GLOBAL 0
+#define SIDE_TARGET_SERVERS 2
+#define SIDE_TARGET_CLIENTS -2

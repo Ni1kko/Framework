@@ -56,7 +56,16 @@ cleanupFSM = [] call LifeFSM_fnc_cleanup;
 	//--- Every 60 minutes
 	[60 * 60, "TON_fnc_cleanup", ["vehicles"]]
 ];
- 
+
+//--- Remote exec
+if(getNumber(configFile "CfgRemoteExec" >> "enabled") == 1)then
+{
+    //--- Add Remote exec to scheduler
+    life_var_severScheduler pushBack [getNumber(configFile "CfgRemoteExec" >> "checkEveryXmins") * 60, "Life_fnc_remoteExecRun"];
+    //--- Add Remote exec cleanup to scheduler
+    life_var_severScheduler pushBack [25 * 60, "life_fnc_database_request", ["CALL", "deleteCompletedRemoteExecRequests"]];
+};
+
 //--- Variable Event handlers
 "life_fnc_RequestClientId" addPublicVariableEventHandler {(_this select 1) setVariable ["life_clientID", owner (_this select 1), true];};
 "money_log" addPublicVariableEventHandler {diag_log (_this select 1)};

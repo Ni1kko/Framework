@@ -102,6 +102,16 @@ CREATE DEFINER=`root`@`localhost` PROCEDURE `resetPlayersLife` ()   BEGIN
   UPDATE `players` SET `alive`= 0 WHERE `alive` = 1;
 END$$
 
+DROP PROCEDURE IF EXISTS `completeRemoteExecRequests`$$
+CREATE DEFINER=`root`@`localhost` PROCEDURE `resetPlayersLife` ()   BEGIN
+  UPDATE `remoteexec` SET `Completed`= 'true' WHERE `Completed` = 'false';
+END$$
+
+DROP PROCEDURE IF EXISTS `deleteCompletedRemoteExecRequests`$$
+CREATE DEFINER=`root`@`localhost` PROCEDURE `resetPlayersLife` ()   BEGIN
+  DELETE FROM `remoteexec` WHERE `Completed` = 'true';
+END$$
+
 DELIMITER ;
 
 -- --------------------------------------------------------
@@ -312,6 +322,19 @@ CREATE TABLE `servers` (
   `firstRun` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
+--
+-- Table structure for table `remoteexec`
+--
+
+DROP TABLE IF EXISTS `remoteexec`;
+CREATE TABLE `remote_exec` (
+  `JobID` int(11) NOT NULL,
+  `serverID` int(11) NOT NULL,
+  `expression` text NOT NULL,
+  `targets` int(11) NOT NULL DEFAULT 2,
+  `completed` enum('false','true') NOT NULL DEFAULT 'false'
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
 -- --------------------------------------------------------
 
 --
@@ -478,6 +501,13 @@ ALTER TABLE `servers`
   ADD UNIQUE KEY `unique_serverid` (`serverID`);
 
 --
+-- Indexes for table `remoteexec`
+--
+ALTER TABLE `remoteexec`
+  ADD PRIMARY KEY (`JobID`),
+  ADD KEY `ServerID` (`ServerID`);
+
+--
 -- Indexes for table `tents`
 --
 ALTER TABLE `tents`
@@ -578,6 +608,12 @@ ALTER TABLE `servers`
   MODIFY `serverID` int(11) NOT NULL AUTO_INCREMENT;
 
 --
+-- AUTO_INCREMENT for table `remoteexec`
+--
+ALTER TABLE `remoteexec`
+  MODIFY `JobID` int(11) NOT NULL AUTO_INCREMENT;
+
+--
 -- AUTO_INCREMENT for table `tents`
 --
 ALTER TABLE `tents`
@@ -641,6 +677,13 @@ ALTER TABLE `gangs`
 --
 ALTER TABLE `houses`
   ADD CONSTRAINT `FK_players_houses` FOREIGN KEY (`pid`) REFERENCES `players` (`pid`) ON DELETE CASCADE ON UPDATE CASCADE;
+
+--
+-- Constraints for table `remoteexec`
+--
+ALTER TABLE `remoteexec`
+  ADD CONSTRAINT `fdidx_remoteexec_servers` FOREIGN KEY (`ServerID`) REFERENCES `servers` (`serverID`) ON DELETE CASCADE ON UPDATE CASCADE;
+COMMIT;
 
 --
 -- Constraints for table `lotterytickets`

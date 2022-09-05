@@ -51,6 +51,7 @@ class CfgFunctions {
             class util_getPlayerObject {};
             class util_randomString {};
             class util_getSideString {};
+            class util_tooExpression {};
         };
 
         //--- Wanted Functions

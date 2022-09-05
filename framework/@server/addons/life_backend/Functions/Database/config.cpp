@@ -35,7 +35,8 @@ class CfgExtDB
         "deleteOldGangs",
         "deleteDeadTents",
         "deleteOldLotteryTickets",
-        "deleteClaimedLotteryTickets"
+        "deleteClaimedLotteryTickets",
+        "deleteCompletedRemoteExecRequests"
     };
 };
 
