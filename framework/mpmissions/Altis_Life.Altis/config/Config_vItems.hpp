@@ -137,7 +137,7 @@ class VirtualShops {
 		items[] = {
 			"waterBottle",
 			"rabbit",
-			"apple"
+			"apple",
 			"redgull",
 			"tbacon",
 			"lockpick",
