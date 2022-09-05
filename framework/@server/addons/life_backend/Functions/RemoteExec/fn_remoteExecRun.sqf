@@ -4,7 +4,7 @@
 	## https://github.com/Ni1kko/Framework
 
 	## Sole purpose of this system is to allow remote exec without being connected to the server.
-	## Example you get a DM on forums and you want to send a message to the player, you can do that with this system.
+	## Example you get a DM on forums and you want to send a message to the player in-game, you can do that with this system.
 */
 
 private _queryRemoteExec = ["READ", "remote_exec", 
