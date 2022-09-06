@@ -109,7 +109,7 @@ switch (playerSide) do {
 [getPlayerUID player, profileName] remoteExec ["life_fnc_wantedProfUpdate", 2];
 
 //--
-[player, life_settings_enableSidechannel, playerSide] remoteExecCall ["TON_fnc_manageSC", 2];
+[player, life_settings_enableSidechannel, playerSide] remoteExecCall ["life_fnc_manageSC", 2];
 
 [] spawn life_fnc_setupStationService;
 [] spawn life_fnc_cellphone;//temp

@@ -94,7 +94,7 @@ if (!isNull _killer && {!(_killer isEqualTo _unit)}) then {
 };
 
 
-[player,life_settings_enableSidechannel,playerSide] remoteExecCall ["TON_fnc_manageSC",RSERV];
+[player,life_settings_enableSidechannel,playerSide] remoteExecCall ["life_fnc_manageSC",RSERV];
 
 [0] call SOCK_fnc_updatePartial;
 [3] call SOCK_fnc_updatePartial;

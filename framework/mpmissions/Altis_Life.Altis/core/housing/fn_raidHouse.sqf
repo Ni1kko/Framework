@@ -77,7 +77,7 @@ if (_value > 0) then {
     if (count extdb_var_database_headless_clients > 0) then {
         [_house] remoteExecCall ["HC_fnc_updateHouseTrunk",extdb_var_database_headless_client];
     } else {
-        [_house] remoteExecCall ["TON_fnc_updateHouseTrunk",RSERV];
+        [_house] remoteExecCall ["life_fnc_updateHouseTrunk",RSERV];
     };
 } else {
     hint localize "STR_House_Raid_NoIllegal";

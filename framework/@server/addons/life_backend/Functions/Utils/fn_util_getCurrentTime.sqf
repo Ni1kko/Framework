@@ -3,7 +3,7 @@
 	## https://github.com/Ni1kko/Framework
 */
 
-private _GMT = true;
+private _GMT = getNumber(configFile >> "CfgUtils" >> "useGMTtime") isEqualTo 1;
 systemTimeUTC params ["_year","_month","_day","_hour","_minute","_second"]; 
 
 if _GMT then {

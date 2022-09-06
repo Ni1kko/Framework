@@ -69,7 +69,7 @@ if (_newside in [east,west,independent] AND _rank <= 0)exitWith {
 };
 
 //--- Leave side chat for current side
-[_playerObject, false, _oldside] call TON_fnc_manageSC;
+[_playerObject, false, _oldside] call life_fnc_manageSC;
 
 //--- Switch character
 [
@@ -103,7 +103,7 @@ if (_newside in [east,west,independent] AND _rank <= 0)exitWith {
 		[] call life_fnc_setupEVH;
 
 		//--- Join side chat for new side
-		[_newplayerObject, life_settings_enableSidechannel, playerSide] remoteExecCall ["TON_fnc_manageSC", 2];
+		[_newplayerObject, life_settings_enableSidechannel, playerSide] remoteExecCall ["life_fnc_manageSC", 2];
 
 		//-- Show new player object
 		_newplayerObject hideObjectGlobal false;
@@ -132,7 +132,7 @@ if (_playtimeindex != -1) then {
 };
 _playtimeindex = life_var_playtimeValuesRequest pushBackUnique [_uid, _playtime];
 _playtime = _playtime#_sideindex;
-[_uid,_playtime] call TON_fnc_setPlayTime;
+[_uid,_playtime] call life_fnc_setPlayTime;
 publicVariable "life_var_playtimeValuesRequest";
  
 //--- Delete old character

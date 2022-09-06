@@ -1,5 +1,7 @@
-class CfgPatches {
-    class Admin {
+class CfgPatches 
+{
+    class Admin 
+    {
         units[] = {};
         weapons[] = {};
         requiredAddons[] = {"Database","Rcon"};
@@ -130,8 +132,10 @@ class CfgAdmin
    
 };
 
-class CfgFunctions {
-    class Life {
+class CfgFunctions 
+{
+    class Life 
+    {
         class Admin_Functions
         {
             file = "\life_backend\Functions\Admin";

@@ -38,7 +38,7 @@ _vehicle spawn {
         if (count extdb_var_database_headless_clients > 0) then {
             [_this] remoteExecCall ["HC_fnc_updateHouseTrunk",extdb_var_database_headless_client];
         } else {
-            [_this] remoteExecCall ["TON_fnc_updateHouseTrunk",2];
+            [_this] remoteExecCall ["life_fnc_updateHouseTrunk",2];
         };
     };
 };
@@ -52,7 +52,7 @@ _vehicle spawn {
         if (count extdb_var_database_headless_clients > 0) then {
             [_this,2] remoteExecCall ["HC_fnc_vehicleUpdate",extdb_var_database_headless_client];
         } else {
-            [_this,2] remoteExecCall ["TON_fnc_vehicleUpdate",2];
+            [_this,2] remoteExecCall ["life_fnc_vehicleUpdate",2];
         };
     };
 };

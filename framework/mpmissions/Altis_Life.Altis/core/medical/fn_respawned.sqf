@@ -50,7 +50,7 @@ if (life_removeWanted) then {
 [] call life_fnc_startLoadout;
 [] call life_fnc_setupActions;
  
-[player,life_settings_enableSidechannel,playerSide] remoteExecCall ["TON_fnc_manageSC",RSERV];
+[player,life_settings_enableSidechannel,playerSide] remoteExecCall ["life_fnc_manageSC",RSERV];
 if (LIFE_SETTINGS(getNumber,"enable_fatigue") isEqualTo 0) then {player enableFatigue false;};
 
 player playMoveNow "AmovPpneMstpSrasWrflDnon";

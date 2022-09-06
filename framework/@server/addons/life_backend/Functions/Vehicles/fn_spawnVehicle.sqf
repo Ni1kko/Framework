@@ -99,7 +99,7 @@ if (_sp isEqualType "") then {
 _vehicle allowDamage true;
 //Send keys over the network.
 [_vehicle] remoteExecCall ["life_fnc_addVehicle2Chain",_unit];
-[_pid,_side,_vehicle,1] call TON_fnc_keyManagement;
+[_pid,_side,_vehicle,1] call life_fnc_keyManagement;
 _vehicle lock 2;
 //Reskin the vehicle
 [_vehicle,(_vInfo select 8)] remoteExecCall ["life_fnc_colorVehicle",_unit];

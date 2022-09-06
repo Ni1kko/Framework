@@ -19,7 +19,7 @@ if ((typeOf _container) in ["Box_IND_Grenades_F", "B_supplyCrate_F"]) exitWith {
     if (count extdb_var_database_headless_clients > 0) then {
         [_container] remoteExecCall ["HC_fnc_updateHouseContainers", extdb_var_database_headless_client];
     } else {
-        [_container] remoteExecCall ["TON_fnc_updateHouseContainers", 2];
+        [_container] remoteExecCall ["life_fnc_updateHouseContainers", 2];
     };
 
     [3] call SOCK_fnc_updatePartial;
@@ -29,7 +29,7 @@ if (_container isKindOf "Car" || {_container isKindOf "Air"} || {_container isKi
     if (count extdb_var_database_headless_clients > 0) then {
         [_container, 1] remoteExecCall ["HC_fnc_vehicleUpdate", extdb_var_database_headless_client];
     } else {
-        [_container, 1] remoteExecCall ["TON_fnc_vehicleUpdate", 2];
+        [_container, 1] remoteExecCall ["life_fnc_vehicleUpdate", 2];
     };
 
     [3] call SOCK_fnc_updatePartial;

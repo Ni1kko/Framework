@@ -1,5 +1,7 @@
-class CfgPatches {
-    class RemoteExec {
+class CfgPatches 
+{
+    class RemoteExec 
+    {
         units[] = {};
         weapons[] = {};
         requiredAddons[] = {"Database"};
@@ -13,8 +15,10 @@ class CfgRemoteExec
     checkEveryXmins = 3;
 };
 
-class CfgFunctions {
-    class Life {
+class CfgFunctions 
+{
+    class Life 
+    {
         class RemoteExec_Functions
         {
             file = "\life_backend\Functions\RemoteExec"; 

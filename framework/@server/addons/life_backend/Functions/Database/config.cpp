@@ -1,5 +1,7 @@
-class CfgPatches {
-    class Database {
+class CfgPatches 
+{
+    class Database 
+    {
         units[] = {};
         weapons[] = {};
         requiredAddons[] = {"Rcon"};
@@ -41,8 +43,10 @@ class CfgExtDB
     };
 };
 
-class CfgFunctions {
-    class Life {
+class CfgFunctions 
+{
+    class Life 
+    {
         class Database_Functions
         {
             file = "\life_backend\Functions\Database";

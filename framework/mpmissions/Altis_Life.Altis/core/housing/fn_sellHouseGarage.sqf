@@ -31,7 +31,7 @@ if (_action) then {
     if (count extdb_var_database_headless_clients > 0) then {
         [_uid,_house,1] remoteExec ["HC_fnc_houseGarage",extdb_var_database_headless_client];
     } else {
-        [_uid,_house,1] remoteExec ["TON_fnc_houseGarage",RSERV];
+        [_uid,_house,1] remoteExec ["life_fnc_houseGarage",RSERV];
     };
 
     life_var_bank = life_var_bank + _sellPrice;

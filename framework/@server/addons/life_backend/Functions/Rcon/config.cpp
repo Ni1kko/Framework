@@ -1,5 +1,7 @@
-class CfgPatches {
-    class Rcon {
+class CfgPatches 
+{
+    class Rcon 
+    {
         units[] = {};
         weapons[] = {};
         requiredAddons[] = {"life_backend"};
@@ -51,8 +53,10 @@ class CfgRCON
     };
 };
 
-class CfgFunctions {
-    class Life {
+class CfgFunctions 
+{
+    class Life 
+    {
         class Rcon_Functions
         {
             file = "\life_backend\Functions\Rcon";

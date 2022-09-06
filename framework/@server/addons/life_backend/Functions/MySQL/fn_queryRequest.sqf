@@ -18,7 +18,7 @@ params [
 if (isNull _player) exitWith {};
 
 if (LIFE_SETTINGS(getNumber,"player_deathLog") isEqualTo 1) then {
-    _player addMPEventHandler ["MPKilled", {_this call TON_fnc_whoDoneIt}];
+    _player addMPEventHandler ["MPKilled", {_this call life_fnc_whoDoneIt}];
 };
  
 private _uid = getPlayerUID _player;
@@ -114,32 +114,32 @@ if (_playtimeindex != -1) then {
 
 switch (_side) do {
     case west: { 
-        [_uid,_playtimenew#0] call TON_fnc_setPlayTime;
+        [_uid,_playtimenew#0] call life_fnc_setPlayTime;
     };
     case independent: { 
-        [_uid,_playtimenew#1] call TON_fnc_setPlayTime;
+        [_uid,_playtimenew#1] call life_fnc_setPlayTime;
     };
     case east: { 
-        [_uid,_playtimenew#2] call TON_fnc_setPlayTime;
+        [_uid,_playtimenew#2] call life_fnc_setPlayTime;
     };
     default { 
-        [_uid,_playtimenew#3] call TON_fnc_setPlayTime;
+        [_uid,_playtimenew#3] call life_fnc_setPlayTime;
     };
 };
 publicVariable "life_var_playtimeValuesRequest";
 
 //--- Tents (16)
-//private _tentsData = _uid spawn TON_fnc_fetchPlayerTents;
+//private _tentsData = _uid spawn life_fnc_fetchPlayerTents;
 //waitUntil {scriptDone _tentsData};
 _return pushBack (missionNamespace getVariable [format ["tents_%1",_uid],[]]);
  
 //--- Houses (17)
-private _houseData = _uid spawn TON_fnc_fetchPlayerHouses;
+private _houseData = _uid spawn life_fnc_fetchPlayerHouses;
 waitUntil {scriptDone _houseData};
 _return pushBack (missionNamespace getVariable [format ["houses_%1",_uid],[]]);
 
 //--- Gang (18)
-private _gangData = _uid spawn TON_fnc_queryPlayerGang;
+private _gangData = _uid spawn life_fnc_queryPlayerGang;
 waitUntil{scriptDone _gangData};
 _return pushBack (missionNamespace getVariable [format ["gang_%1",_uid],[]]);
 

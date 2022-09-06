@@ -34,7 +34,7 @@ if (_action) then {
     if (count extdb_var_database_headless_clients > 0) then {
         [_container] remoteExecCall ["HC_fnc_deleteDBContainer",extdb_var_database_headless_client];
     } else {
-        [_container] remoteExecCall ["TON_fnc_deleteDBContainer",RSERV];
+        [_container] remoteExecCall ["life_fnc_deleteDBContainer",RSERV];
     };
 
     {

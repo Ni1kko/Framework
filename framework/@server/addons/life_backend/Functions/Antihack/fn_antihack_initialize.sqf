@@ -307,7 +307,7 @@ try {
 		while{true}do{
 			private _threadName = param [0, ""];
 			private _AHScheduleVar = param [1, ""];
-			private _thread = [_AHScheduleVar] spawn TON_fnc_masterSchedule;
+			private _thread = [_AHScheduleVar] spawn life_fnc_masterSchedule;
 			serverNamespace setVariable [_threadName, _thread];
 			waitUntil {
 				private _thread = serverNamespace getVariable [_threadName, scriptNull];

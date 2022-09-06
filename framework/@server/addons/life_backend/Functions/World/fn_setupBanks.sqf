@@ -24,8 +24,8 @@
 private _masterGroup = missionNamespace getVariable ["master_group",objNull];
 private _bankObject = missionNamespace getVariable ["bank_obj",objNull];
 private _vaultObject = missionNamespace getVariable ["fed_bank",objNull];
-private _vaultHouse = [[["Altis", "Land_Research_house_V1_F"], ["Tanoa", "Land_Medevac_house_V1_F"]]] call TON_fnc_terrainSort;
-private _pos = [[["Altis", [16019.5,16952.9,0]], ["Tanoa", [11074.2,11501.5,0.00137329]]]] call TON_fnc_terrainSort;
+private _vaultHouse = [[["Altis", "Land_Research_house_V1_F"], ["Tanoa", "Land_Medevac_house_V1_F"]]] call life_fnc_terrainSort;
+private _pos = [[["Altis", [16019.5,16952.9,0]], ["Tanoa", [11074.2,11501.5,0.00137329]]]] call life_fnc_terrainSort;
 private _dome = nearestObject [_pos,"Land_Dome_Big_F"];
 private _rsb = nearestObject [_pos,_vaultHouse];
 private _lifeConfig = missionConfigFile >> "Life_Settings";

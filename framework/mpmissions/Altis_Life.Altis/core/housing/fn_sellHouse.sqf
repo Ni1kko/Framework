@@ -34,7 +34,7 @@ if (_action) then {
     if (count extdb_var_database_headless_clients > 0) then {
         [_house] remoteExecCall ["HC_fnc_sellHouse",extdb_var_database_headless_client];
     } else {
-        [_house] remoteExecCall ["TON_fnc_sellHouse",RSERV];
+        [_house] remoteExecCall ["life_fnc_sellHouse",RSERV];
     };
 
     _house setVariable ["locked",false,true];
@@ -58,7 +58,7 @@ if (_action) then {
         life_vehicles deleteAt _index;
     };
 
-    _index = [str(getPosATL _house),life_houses] call TON_fnc_index;
+    _index = [str(getPosATL _house),life_houses] call life_fnc_index;
     if !(_index isEqualTo -1) then {
         life_houses deleteAt _index;
     };
@@ -74,7 +74,7 @@ if (_action) then {
             if (count extdb_var_database_headless_clients > 0) then {
                 [_x] remoteExecCall ["HC_fnc_sellHouseContainer",extdb_var_database_headless_client];
             } else {
-                [_x] remoteExecCall ["TON_fnc_sellHouseContainer",RSERV];
+                [_x] remoteExecCall ["life_fnc_sellHouseContainer",RSERV];
             };
 
         } forEach _containers;

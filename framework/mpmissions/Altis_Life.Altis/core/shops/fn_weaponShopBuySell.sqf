@@ -31,7 +31,7 @@ if ((uiNamespace getVariable ["Weapon_Shop_Filter",0]) isEqualTo 1) then {
 } else {
     private _altisArray = ["Land_u_Barracks_V2_F","Land_i_Barracks_V2_F"];
     private _tanoaArray = ["Land_School_01_F","Land_Warehouse_03_F","Land_House_Small_02_F"];
-    private _hideoutObjs = [[["Altis", _altisArray], ["Tanoa", _tanoaArray]]] call TON_fnc_terrainSort;
+    private _hideoutObjs = [[["Altis", _altisArray], ["Tanoa", _tanoaArray]]] call life_fnc_terrainSort;
     private _hideout = (nearestObjects[getPosATL player,_hideoutObjs,25]) select 0;
     if (!isNil "_hideout" && {!isNil {group player getVariable "gang_bank"}} && {(group player getVariable "gang_bank") >= _price}) then {
         _action = [
@@ -53,7 +53,7 @@ if ((uiNamespace getVariable ["Weapon_Shop_Filter",0]) isEqualTo 1) then {
             if (count extdb_var_database_headless_clients > 0) then {
                 [1,group player] remoteExecCall ["HC_fnc_updateGang",extdb_var_database_headless_client];
             } else {
-                [1,group player] remoteExecCall ["TON_fnc_updateGang",RSERV];
+                [1,group player] remoteExecCall ["life_fnc_updateGang",RSERV];
             };
 
 

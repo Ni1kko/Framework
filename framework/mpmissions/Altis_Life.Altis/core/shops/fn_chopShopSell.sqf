@@ -19,7 +19,7 @@ life_var_isBusy = true;
 if (count extdb_var_database_headless_clients > 0) then {
     [player,_vehicle,_price] remoteExecCall ["HC_fnc_chopShopSell",extdb_var_database_headless_client];
 } else {
-    [player,_vehicle,_price] remoteExecCall ["TON_fnc_chopShopSell",RSERV];
+    [player,_vehicle,_price] remoteExecCall ["life_fnc_chopShopSell",RSERV];
 };
 
 if (LIFE_SETTINGS(getNumber,"player_advancedLog") isEqualTo 1) then {

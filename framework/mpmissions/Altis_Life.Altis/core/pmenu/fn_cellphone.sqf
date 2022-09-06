@@ -199,7 +199,7 @@ life_fnc_cellphone_sendMessage = {
 	if(_trigger) exitWith {hint "Please remove any restricted characters inside your text. Restricted Characters: `{}<>"};
     
     private _BEGuid = call(player getVariable ["BEGUID",{""}]);
-    [life_cellphone_receiver#1,_text,_sendLoc,_BEGuid,life_cellphone_receiver#2] remoteExecCall ["TON_fnc_clientMessageRequest",2];
+    [life_cellphone_receiver#1,_text,_sendLoc,_BEGuid,life_cellphone_receiver#2] remoteExecCall ["life_fnc_clientMessageRequest",2];
 	
     closeDialog 0;
 	[] spawn life_fnc_cellphone_show;

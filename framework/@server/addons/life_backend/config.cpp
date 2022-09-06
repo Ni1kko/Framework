@@ -1,6 +1,8 @@
 class DefaultEventhandlers;
-class CfgPatches {
-    class life_backend {
+class CfgPatches 
+{
+    class life_backend 
+    {
         units[] = {"C_man_1"};
         weapons[] = {};
         requiredAddons[] = {"A3_Data_F","A3_Soft_F","A3_Soft_F_Offroad_01","A3_Characters_F"};
@@ -12,28 +14,6 @@ class CfgPatches {
 //--- Limits RPT file output to one file only!
 rptFileLimit=1;
 
-class CfgFunctions {
-    
-    //--- Root Functions
-    class Life_Backend {
-        tag = "life";
-        class Root {
-            file = "\life_backend";
-            class preInit {preInit = 1;};
-        }; 
-    };
-
-    //--- Finite State Machine Functions
-    class LifeFSM {
-        class FiniteStateMachine
-        {
-            file="\life_backend\FSM";
-            class cleanup {ext=".fsm";};
-            class timeModule {ext=".fsm";};
-        };
-    };
-};
-
 class CfgVehicles {
     class Car_F;
     class CAManBase;
@@ -44,7 +24,7 @@ class CfgVehicles {
 
     class C_man_1 : Civilian_F {
         class EventHandlers: EventHandlers {
-            init = "(_this select 0) spawn TON_fnc_fix_headgear;";
+            init = "(_this select 0) spawn life_fnc_fix_headgear;";
         };
     };
 };

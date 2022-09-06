@@ -1,5 +1,7 @@
-class CfgPatches {
-    class Antihack {
+class CfgPatches 
+{
+    class Antihack 
+    {
         units[] = {};
         weapons[] = {};
         requiredAddons[] = {"Database","Rcon","Admin"};
@@ -190,8 +192,10 @@ class CfgAntiHack
     };
 };
 
-class CfgFunctions {
-    class Life {
+class CfgFunctions 
+{
+    class Life 
+    {
         class Antihack_Functions
         {
             file = "\life_backend\Functions\Antihack";

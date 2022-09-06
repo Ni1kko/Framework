@@ -1,5 +1,7 @@
-class CfgPatches {
-    class Tents {
+class CfgPatches 
+{
+    class Tents 
+    {
         units[] = {};
         weapons[] = {};
         requiredAddons[] = {"Database"};
@@ -13,8 +15,10 @@ class CfgTents
     garages = 1; // allow to store vehicles at placed campsites
 };
 
-class CfgFunctions {
-    class Life {
+class CfgFunctions 
+{
+    class Life 
+    {
         class Tent_Functions
         {
             file = "\life_backend\Functions\Tents";

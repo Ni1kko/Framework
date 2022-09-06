@@ -118,6 +118,6 @@ switch (param [1,-1]) do {
     };
 
     case 7: {
-        [_uid,_side,param [2,0],0] call TON_fnc_keyManagement;
+        [_uid,_side,param [2,0],0] call life_fnc_keyManagement;
     };
 };
