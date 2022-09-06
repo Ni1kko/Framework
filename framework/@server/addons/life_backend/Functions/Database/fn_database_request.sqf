@@ -12,8 +12,9 @@ params [
 
 private _qstring = "";
 private _res = ["DB:Task-failure", false];
-
-if(life_var_rcon_RestartMode > 0)exitWith{_res};
+private _queryIndex = (serverNamespace getVariable ["DBQueryIndex", 0]) + 1;
+private _debug = getNumber(configFile >> "CfgExtDB" >> "debugMode") isEqualTo 1;
+private _realTimeDate = systemTimeUTC;
 
 //--- Build Query
 switch (_mode) do {
@@ -36,6 +37,12 @@ switch (_mode) do {
 		_qstring = ("2:" + str(call extdb_var_database_key) + ":SELECT " + _columns + " FROM " + _table);
 		if(count _clauses > 0)then{_qstring = _qstring + (" WHERE " + (_clauses joinString " AND "));};
 		//"2:464:SELECT name,cash,safe FROM players WHERE playerid=76561199109931625"
+	};
+	case "CURRENTDAY": 
+	{ 
+		_realTimeDate params ["_year","_month","_day","_hours","_minutes","_seconds"]; 
+		_qstring = format["2:%1:SELECT DAYNAME('%2-%3-%4')",call extdb_var_database_key, _year, _month, _day];
+		_single = true;
 	};
 	case "UPDATE": 
 	{ 
@@ -66,11 +73,18 @@ switch (_mode) do {
 	};
 };
 
+//--- Logs
+diag_log format ["[DB:Task] Executing Task#%2 -> %1",_mode,_queryIndex];
+if _debug then {diag_log format ["[DB:Task] Query Task#%2 -> %1",_qstring,_queryIndex]};
+
+//--- Debug
+serverNamespace setVariable ["DBQueryIndex", _queryIndex];
+
 //--- Send Request to extension
 private _messageID = "extDB3" callExtension _qstring;
 
 //--- No Database Return... Task Completed
-if(_mode in ["UPDATE","CREATE","DELETE","CALL"])exitWith{_res};
+if(_mode in ["UPDATE","CREATE","DELETE","CALL","CURRENTDAY"])exitWith{_res};
 
 //--- Query Message Key
 private _key = (call compile format["%1",_messageID])#1;
@@ -118,6 +132,13 @@ if (_single && count _res > 0) then {
 	_res = (_res#0);
 };
 
+//--- Logs
+if _debug then {
+	diag_log "_________________________Start Of Results_________________________";
+	{diag_log format ["_res select %2 = %1",_x,_forEachIndex]}forEach _res;
+	diag_log "__________________________END Of Results__________________________";
+};
+
 _res
 
 /* 
@@ -146,6 +167,8 @@ _res
 			["BEGuid",str("092dd37cc6d0e2781ea42ee334debd28")]
 		]
 	],true]call life_fnc_database_request;
+	
+	["CURRENTDAY"] call life_fnc_database_request;
 
 	["UPDATE", "players", [
 		[//What

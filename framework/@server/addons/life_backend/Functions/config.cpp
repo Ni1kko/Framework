@@ -53,6 +53,7 @@ class CfgFunctions {
             class util_getSideString {};
             class util_tooExpression {};
             class util_getCurrentDay {};
+            class util_getCurrentTime {};
         };
 
         //--- Wanted Functions

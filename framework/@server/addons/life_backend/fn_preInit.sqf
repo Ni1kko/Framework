@@ -17,9 +17,11 @@ life_var_banks = [];
 life_var_atms = [];
 life_var_spawndAnimals = [];
 life_var_severSchedulerStartUpQueue = {[]};
+life_var_currentDay = "Loading";
 
 publicVariable "life_var_serverLoaded";
 waitUntil {isFinal "extdb_var_database_key"};
+life_var_currentDay = [] call life_fnc_util_getCurrentDay;
 
 //--- Server info
 private _serverDatabaseInit = [] spawn DB_fnc_loadServer;
@@ -94,7 +96,8 @@ life_var_serverLoaded = true;
     "life_var_playtimeValues",
     "life_var_serverLoaded",
     "life_fnc_util_getSideString",
-    "life_fnc_util_getPlayerObject"
+    "life_fnc_util_getPlayerObject",
+	"life_var_currentDay"
 ];
 
 true

@@ -3,24 +3,24 @@
 	## https://github.com/Ni1kko/Framework
 */
 
+params [
+   ["_upper", true, [false]]
+];
 
-private _dateTime = "extDB3" callExtension "9:LOCAL_TIME";
-_dateTime = (call compile _dateTime)#1;
-/*
-   //TODO: use this command for _dateTime
-   systemTimeUTC params ["_year","_month","_day","_hour","_minute","_second"]; 
-*/
+private _queryWeekDay = ["CURRENTDAY"] call life_fnc_database_request;
 
-private _daynameQuery = [format["SELECT DAYNAME('%1-%2-%3')",_dateTime#0, _dateTime#1, _dateTime#2],2] call DB_fnc_asyncCall;
-
-_daynameQuery params [
+_queryWeekDay params [
    ["_dayname", "", [""]]
 ];
 
-_dayname = toUpper _dayname;
-
-if !(_dayname in ["MONDAY","TUESDAY","WEDNESDAY","THURSDAY","FRIDAY","SATURDAY","SUNDAY"]) then {
+if !(toUpper _dayname in ["MONDAY","TUESDAY","WEDNESDAY","THURSDAY","FRIDAY","SATURDAY","SUNDAY"]) then {
    _dayname = "Error";
+};
+
+if _upper then {
+   _dayname = toUpper _dayname;
+}else{
+   _dayname = toLower _dayname;
 };
 
 _dayname
