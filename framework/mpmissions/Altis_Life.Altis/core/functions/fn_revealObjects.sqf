@@ -34,10 +34,6 @@ private _reveal = {
     true
 };
 
-#define CACHE_VAR "Life_var_revealObjectsCache"
-#define CACHE2_VAR format["%1%2",CACHE_VAR,"2"]
-#define CACHE_POS_VAR format["%1_pos",CACHE_VAR]
-
 private _cacheReveal = [false]; 
 
 //--- Cache object array
@@ -48,11 +44,7 @@ if(!isFinal CACHE_VAR)then
         "CAManBase"
     ];
 
-    {_cache pushBackUnique _x}forEach ("true" configClasses (missionConfigFile >> "VirtualItems")) apply {
-        private _item = (if(_x isEqualType "")then{_x}else{configName _x});
-        private _itemObject = ITEM_OBJECT(_item);
-        _itemObject
-    };
+    {_cache pushBackUnique _x}forEach (("true" configClasses (missionConfigFile >> "VirtualItems")) apply {ITEM_OBJECT(configName _x)});
 
     missionNamespace setVariable [CACHE_VAR, compileFinal str _cache];
 };

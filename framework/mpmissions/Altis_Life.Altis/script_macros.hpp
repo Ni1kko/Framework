@@ -117,6 +117,11 @@
 #define VITEM_FOOD_RAW_GOAT "goatRaw"
 #define VITEM_FOOD_GOAT "goat"
 
-
+//--- Databse related helpers
 #define MAX_SECS_TOO_WAIT_FOR_SERVER 30
 #define MAX_ATTEMPTS_TOO_QUERY_DATA 3
+
+//--- Reveal Objects helpers
+#define CACHE_VAR "Life_var_revealObjectsCache"
+#define CACHE2_VAR format["%1%2",CACHE_VAR,"2"]
+#define CACHE_POS_VAR format["%1_pos",CACHE_VAR]
