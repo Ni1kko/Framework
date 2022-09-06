@@ -7,8 +7,6 @@ if(!canSuspend)exitWith{_this spawn life_fnc_lottery_init};
 
 diag_log "[Life Lottery] Initializing...";
 
-systemTimeUTC params ["_year","_month","_day","_hour","_minute","_second"];
-
 private _timer = 0;
 private _vaultObject = objNull;
 Life_var_lottoDrawLock = false;
@@ -17,7 +15,8 @@ life_var_lotto_config = compileFinal str [
 	getNumber(configFile >> "CfgLottery" >> "ticketLength"),
 	getNumber(configFile >> "CfgLottery" >> "ticketDrawCount"),
 	getNumber(configFile >> "CfgLottery" >> "ticketsReclaim") isEqualTo 1,
-	getNumber(configFile >> "CfgLottery" >> "ticketBonusballPrice")
+	getNumber(configFile >> "CfgLottery" >> "ticketBonusballPrice"),
+	toUpper(getText(configFile >> "CfgLottery" >> "ticketDrawDay"))
 ];
 
 (call life_var_lotto_config) params [
@@ -25,7 +24,8 @@ life_var_lotto_config = compileFinal str [
 	"_ticketLength",
 	"_ticketDrawCount",
 	"_ticketsReclaim",
-	"_ticketBonusballPrice"
+	"_ticketBonusballPrice",
+	"_ticketDrawDay"
 ];
 
 //-- Boradcast some data to all clients
@@ -46,21 +46,23 @@ if _ticketsReclaim then{
 
 diag_log "[Life Lottery] Initialized!";
 
-life_fnc_lottery_initTime = diag_tickTime;
-
 //-- Start the lottery
-if(_day in [4,11,17,24,31])then{
+if(_ticketDrawDay isEqualTo ([] call life_fnc_util_getCurrentDay))then{
+	diag_log "[Life Lottery] Winners Will Be Picked Today!";
+	life_var_lottery_initTime = diag_tickTime;
 	life_var_severScheduler pushBack [10 * 60, {
 		private _vaultObject = param [0,objNull];
-		switch (floor((diag_tickTime - life_fnc_lottery_initTime))) do 
+		switch (floor((diag_tickTime - life_var_lottery_initTime))) do 
 		{
 			case 3:  { [0,"The Altis Lottery will be drawn today in 90 minutes."] remoteExec ["life_fnc_broadcast",0]; };
 			case 6:  { [0,"The Altis Lottery will be drawn today in 60 minutes."] remoteExec ["life_fnc_broadcast",0]; };
 			case 9:  { [0,"The Altis Lottery will be drawn today in 30 Minutes."] remoteExec ["life_fnc_broadcast",0]; };
 			case 11: { [0,"The Altis Lottery will be drawn todayin 10 Minutes."] remoteExec ["life_fnc_broadcast",0]; Life_var_lottoDrawLock = true; publicVariable "Life_var_lottoDrawLock"; };
-			case 12: { [_vaultObject] spawn life_fnc_lottery_pickwinners; life_fnc_lottery_initTime = diag_tickTime; };
+			case 12: { [_vaultObject] spawn life_fnc_lottery_pickwinners; life_var_lottery_initTime = diag_tickTime; };
 		};
 	}, [_vaultObject]]
+}else{
+	diag_log format["[Life Lottery] Winners Will Be Picked on %1!",_ticketDrawDay];
 };
 
 true

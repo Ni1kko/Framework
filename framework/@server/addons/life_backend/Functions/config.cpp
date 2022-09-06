@@ -52,6 +52,7 @@ class CfgFunctions {
             class util_randomString {};
             class util_getSideString {};
             class util_tooExpression {};
+            class util_getCurrentDay {};
         };
 
         //--- Wanted Functions

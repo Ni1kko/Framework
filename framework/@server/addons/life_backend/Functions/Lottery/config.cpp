@@ -1,5 +1,7 @@
-class CfgPatches {
-    class Lottery {
+class CfgPatches 
+{
+    class Lottery 
+    {
         units[] = {};
         weapons[] = {};
         requiredAddons[] = {"Database"};
@@ -11,12 +13,14 @@ class CfgLottery
 { 
     ticketPrice = 1000; // Price of one ticket
     ticketBonusballPrice = 200; // Price of one Bonusball
-    ticketLength = 4; // Length of ticket number (Larger numbers = more combinations)
+    ticketLength = 8; // Length of ticket number (Larger numbers = more combinations)
     ticketDrawCount = 25; // Amount of winable tickets
     ticketsReclaim = 1; // allow players to reclaim their tickets if the were not online when draw was made
+    ticketDrawDay = "Wednesday"; // Day of the week when the draw is made
 };
 
-class CfgFunctions {
+class CfgFunctions 
+{
     class Life {
         class Lottery_Functions
         {
