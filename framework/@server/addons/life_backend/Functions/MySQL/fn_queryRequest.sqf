@@ -1,31 +1,21 @@
 #include "\life_backend\script_macros.hpp"
 /*
-    File: fn_queryRequest.sqf
-    Author: Bryan "Tonic" Boardwine
-
-    Description:
-    Handles the incoming request and sends an asynchronous query
-    request to the database.
-
-    Return:
-    ARRAY - If array has 0 elements it should be handled as an error in client-side files.
-    STRING - The request had invalid handles or an unknown error and is logged to the RPT.
+	## Nikko Renolds
+	## https://github.com/Ni1kko/Framework
 */
+
 params [
     ["_player",objNull,[objNull]]
 ];
 
 if (isNull _player) exitWith {};
 
-if (LIFE_SETTINGS(getNumber,"player_deathLog") isEqualTo 1) then {
-    _player addMPEventHandler ["MPKilled", {_this call MPServer_fnc_whoDoneIt}];
-};
- 
+private _return = []; 
 private _uid = getPlayerUID _player;
 private _ownerID = owner _player;
 private _netID = netId _player;
 private _side = side _player;
-private _sideVar = (switch (_side) do {case west: {"cop"}; case east: {"reb"}; case independent: {"med"}; default {"civ"};});
+private _sideVar = [_side,true] call MPServer_fnc_util_getSideString;
 private _BEGuid = ('BEGuid' callExtension ("get:"+_uid));
 
 private _queryClause = [["BEGuid",str _BEGuid]];
@@ -49,26 +39,15 @@ private _queryParams = [
     /* 16 */ "position", 
     /* 17 */ "playtime"
 ];
+
 private _queryResult = ["READ", "players", [_queryParams,_queryClause],true]call MPServer_fnc_database_request;
 private _queryBankResult = ["READ", "bankaccounts", [["funds"],_queryClause],true]call MPServer_fnc_database_request;
+if (_queryResult isEqualTo ["DB:Read:Task-failure",false]) exitWith {diag_log format ["Error reading player: %1",_BEGuid]};
+if (_queryBankResult isEqualTo ["DB:Read:Task-failure",false]) exitWith {diag_log format ["Error reading player-bank: %1",_BEGuid]};
+if (count _queryResult isEqualTo 0 || count _queryBankResult isEqualTo 0) exitWith {[] remoteExec ["MPClient_fnc_insertPlayerInfo",_ownerID]};
 
-if (_queryResult isEqualTo ["DB:Read:Task-failure",false]) exitWith {
-    diag_log format ["Error reading player: %1",_BEGuid];
-}; 
-
-if (_queryBankResult isEqualTo ["DB:Read:Task-failure",false]) exitWith {
-    diag_log format ["Error reading player-bank: %1",_BEGuid];
-};
-
-if (count _queryResult isEqualTo 0 || count _queryBankResult isEqualTo 0) exitWith {
-    [] remoteExecCall ["MPClient_fnc_insertPlayerInfo",_ownerID];
-};
-
-
-_queryResult set [0,_BEGuid];
-
-private _return = _queryResult select [0,2];
-
+//--- UserData (2)
+_return pushBack ([_queryResult#0,_BEGuid]);
 //--- Cash (2)
 _return pushBack (["GAME","A2NET", (_queryResult#2)] call MPServer_fnc_database_parse);
 //--- Admin (3)
@@ -85,7 +64,7 @@ _return pushBack (["GAME","INT", (_queryResult#7)] call MPServer_fnc_database_pa
 _return pushBack (["GAME","INT", (_queryResult#8)] call MPServer_fnc_database_parse);
 //--- Licenses (9)
 _return pushBack ((["GAME","ARRAY", _queryResult#9] call MPServer_fnc_database_parse) apply{[_x#0,["GAME","BOOL", _x#1] call MPServer_fnc_database_parse]});
-//--- Gear (19)
+//--- Gear (10)
 _return pushBack ([
     ["GAME","ARRAY", (_queryResult#10)] call MPServer_fnc_database_parse,
     ["GAME","ARRAY", (_queryResult#11)] call MPServer_fnc_database_parse
@@ -101,32 +80,7 @@ _return pushBack (["GAME","ARRAY", (_queryResult#15)] call MPServer_fnc_database
 //--- Position (15)
 _return pushBack (["GAME","ARRAY", (_queryResult#16)] call MPServer_fnc_database_parse); 
 
-//--- Playtime
-private _playtimenew = ["GAME","ARRAY", (_queryResult#17)] call MPServer_fnc_database_parse;
-private _playtimeindex = life_var_playtimeValuesRequest find [_uid, _playtimenew];
-if (_playtimeindex != -1) then {
-    life_var_playtimeValuesRequest set[_playtimeindex,-1];
-    life_var_playtimeValuesRequest = life_var_playtimeValuesRequest - [-1];
-    life_var_playtimeValuesRequest pushBack [_uid, _playtimenew];
-} else {
-    life_var_playtimeValuesRequest pushBack [_uid, _playtimenew];
-};
-
-switch (_side) do {
-    case west: { 
-        [_uid,_playtimenew#0] call MPServer_fnc_setPlayTime;
-    };
-    case independent: { 
-        [_uid,_playtimenew#1] call MPServer_fnc_setPlayTime;
-    };
-    case east: { 
-        [_uid,_playtimenew#2] call MPServer_fnc_setPlayTime;
-    };
-    default { 
-        [_uid,_playtimenew#3] call MPServer_fnc_setPlayTime;
-    };
-};
-publicVariable "life_var_playtimeValuesRequest";
+[_uid, ["GAME","ARRAY", (_queryResult#17)] call MPServer_fnc_database_parse] call MPServer_fnc_registerPlayTime;
 
 //--- Tents (16)
 //private _tentsData = _uid spawn MPServer_fnc_fetchPlayerTents;
@@ -149,6 +103,12 @@ _return pushBack (missionNamespace getVariable [format ["%1_KEYS_%2",_uid,_side]
 //--- Bank 
 [missionNamespace,["life_var_bank",(["GAME","A2NET", (_queryBankResult#0)] call MPServer_fnc_database_parse)]] remoteExec ["setVariable",_ownerID];
 
+//--- EventHandler for logging
+if (LIFE_SETTINGS(getNumber,"player_deathLog") isEqualTo 1) then {
+    private _index = _player addMPEventHandler ["MPKilled", {_this call MPServer_fnc_whoDoneIt}];
+    _player setVariable ["MPKilledIndex",_index,true];
+};
 
 //--- Return
 _return remoteExec ["MPClient_fnc_requestReceived",_ownerID];
+true
