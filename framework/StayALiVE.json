@@ -1,8 +1,8 @@
 {
   "Port": 2302,
   "ProfileName": "Admin",
-  "ProfilesPath": "E:\\ExtremoServer\\@server\\server_configs\\serverData",
-  "CfgsPath": "E:\\ExtremoServer\\@server\\server_configs",
+  "ProfilesPath": "@server\\server_configs\\serverData",
+  "CfgsPath": "@server\\server_configs",
   "CfgPerformance": "A3_Performance.cfg",
   "CfgDedicatedServer": "A3_DedicatedServer.cfg",
   "CustomServerDirectory": "",
