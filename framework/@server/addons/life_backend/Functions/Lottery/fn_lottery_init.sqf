@@ -57,8 +57,9 @@ if(count _ticketDrawTimes > 0)then
 	{
 		waitUntil {
 			uiSleep 30;
-			private _timeInfo = [] call life_fnc_lottery_getTimeInfo; 
-			(_timeInfo#2)
+			private _timeInfo = [] call life_fnc_lottery_getTimeInfo;
+			_timeInfo params ["_timeRemaining","_configIndex","_configIndexValid"];
+			_timeRemaining <= 0 AND _configIndexValid
 		};
 
 		[_vaultObject] spawn life_fnc_lottery_pickwinners;
@@ -66,7 +67,7 @@ if(count _ticketDrawTimes > 0)then
 		waitUntil {
 			uiSleep (5 * 60);
 			private _timeInfo = [] call life_fnc_lottery_getTimeInfo; 
-			not(_timeInfo#2)
+			(_timeInfo#0) > 0
 		};
 	};
 }else{
