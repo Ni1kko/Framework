@@ -3,17 +3,9 @@
 	## https://github.com/Ni1kko/Framework
 */
 
-private _side = param [0, player, [objNull,sideUnknown]];
+private _input = param [0, player, [objNull,sideUnknown]];
 private _shortName = param [1, false, [false]];
- 
-if(typeName _side isEqualTo "OBJECT")then{
-   
-   if(isNull _object) then {
-      _side = sideUnknown;
-   }else{ 
-      _side = side _side;
-   };
-};
+private _side = (if(typeName _input isEqualTo "OBJECT")then{if(isNull _input)then{sideUnknown}else{side _input}}else{_input});
 
 private _string = switch _side do 
 {
