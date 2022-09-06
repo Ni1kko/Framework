@@ -62,7 +62,7 @@ if (life_spawn_point isEqualTo []) then {
 
 if (life_firstSpawn) then {
     life_firstSpawn = false;
-    [] execVM "dialog\function\fn_intro.sqf"; // Intro Cam Script
+    [] spawn MPClient_fnc_intro; // Intro Cam Script
 }else{
     [true] call MPClient_fnc_gui_hook_management;
 };

@@ -253,7 +253,7 @@ class CfgFunctions
         class Gui 
         {
             file = "core\gui";
-            
+            class intro {};
             class bankDeposit {};
             class bankTransfer {};
             class bankWithdraw {};
