@@ -41,8 +41,8 @@ private _mins2hrsmins = compile "
 	[_hrs,_mins]
 ";
 
-private _serveruptime = false call life_fnc_database_getUpTime;
-private _rconuptime = call life_fnc_rcon_getUpTime;
+private _serveruptime = false call MPServer_fnc_database_getUpTime;
+private _rconuptime = call MPServer_fnc_rcon_getUpTime;
 
 while {true} do 
 {

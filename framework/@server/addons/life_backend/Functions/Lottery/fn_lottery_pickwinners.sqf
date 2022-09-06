@@ -31,7 +31,7 @@ uiSleep 5;
 private _Winners = [];
 private _jackpotRollover = _vaultObject getVariable ["safe",0];
 private _winningNumbers = [];
-private _winningBonusBall = [] call life_fnc_lottery_generateBonusBall;
+private _winningBonusBall = [] call MPServer_fnc_lottery_generateBonusBall;
 private _bonusBallPayout = _ticketBonusballPrice * ((floor(random (10 + life_var_serverMaxPlayers))) * 0.9);
 private _totalTicketsPurchased = count _queryTickets;
 private _JackPot = ((_ticketPrice * _totalTicketsPurchased) * 0.9) + _jackpotRollover;

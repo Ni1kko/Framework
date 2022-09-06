@@ -34,7 +34,7 @@ life_var_lotto_config = compileFinal str [
 {publicVariable _x}forEach [
 	"life_var_lotto_config",
 	"MPServer_fnc_lottery_generateTicket",
-	"life_fnc_lottery_generateBonusBall"
+	"MPServer_fnc_lottery_generateBonusBall"
 ];
 
 //-- Wait for bank system to ready up

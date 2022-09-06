@@ -62,8 +62,8 @@ if (LIFE_SETTINGS(getNumber,"enable_fatigue") isEqualTo 0) then {
     }; 
 };
 
-life_fnc_RequestClientId = player;
-publicVariableServer "life_fnc_RequestClientId";
+MPServer_fnc_requestClientId = player;
+publicVariableServer "MPServer_fnc_requestClientId";
 
 {
     /*

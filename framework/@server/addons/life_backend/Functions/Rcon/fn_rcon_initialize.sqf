@@ -25,7 +25,7 @@ life_var_rcon_inittime = compile str diag_tickTime;
 
 "Starting RCON" call MPServer_fnc_rcon_systemlog;
 
-life_fnc_rcon_getUpTime = compileFinal "round((diag_tickTime - (call life_var_rcon_inittime) / 60))";
+MPServer_fnc_rcon_getUpTime = compileFinal "round((diag_tickTime - (call life_var_rcon_inittime) / 60))";
  
 {
 	private _tempTime = [_x] call MPServer_fnc_util_getRemainingTime;

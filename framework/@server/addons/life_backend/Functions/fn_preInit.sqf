@@ -73,7 +73,7 @@ life_var_severSchedulerStartUpQueue = compileFinal str _severSchedulerStartUpQue
 {life_var_severScheduler pushBack _x}forEach _severSchedulerStartUpQueue;
  
 //--- Variable Event handlers
-"life_fnc_RequestClientId" addPublicVariableEventHandler {(_this select 1) setVariable ["life_clientID", owner (_this select 1), true];};
+"MPServer_fnc_requestClientId" addPublicVariableEventHandler {(_this select 1) setVariable ["life_clientID", owner (_this select 1), true];};
 "money_log" addPublicVariableEventHandler {diag_log (_this select 1)};
 "advanced_log" addPublicVariableEventHandler {diag_log (_this select 1)};
 

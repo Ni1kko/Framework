@@ -1,5 +1,5 @@
 /*
-	File: fn_preparedCall.sqf
+	File: fn_database_prepared_request.sqf
 	Author: Torndeco, Tonic & Ni1kko
 	Description: Commits an asynchronous call to extDB Gets result via extDB 4:x + uses 5:x if message is Multi-Part
 	Parameters:
@@ -9,7 +9,7 @@
 */
 
 if !(call extdb_var_database_prepared)exitWith{ 
-    diag_log "extDB3: Protocol Error, cant use `extlife_fnc_preparedCall` with SQL Raw";
+    diag_log "extDB3: Protocol Error, cant use `MPServer_fnc_database_prepared_request` with SQL Raw";
 };
 
 if(life_var_rcon_RestartMode > 0)exitWith{false};

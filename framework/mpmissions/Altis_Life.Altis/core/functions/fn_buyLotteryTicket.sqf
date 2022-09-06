@@ -29,7 +29,7 @@ if(_bonusBall) then {
 	if (life_var_cash < (_ticketPrice + _ticketBonusballPrice)) exitWith {hint "You don't have enough money to buy a ticket!"; _return =  false};
 	
 	//-- 0 = no bonus ball | 1-99 = bonus ball
-	private _bonusBallNumber = [] call life_fnc_lottery_generateBonusBall; 
+	private _bonusBallNumber = [] call MPServer_fnc_lottery_generateBonusBall; 
 
 	[player, _ticketNumbers, _bonusBallNumber] remoteExec ["MPServer_fnc_lottery_buyTicket",2];
 }else{

@@ -35,7 +35,7 @@ if((count _ticketNumbers) isNotEqualTo _ticketLength) then {_ticketNumbers = [] 
 if(_bonusball in [""," ","NOT PURCHASED"])then{
 	_bonusball = str 0;
 }else{
-	if !((count _bonusball) in [1,2]) then {_bonusball = [] call life_fnc_lottery_generateBonusBall};
+	if !((count _bonusball) in [1,2]) then {_bonusball = [] call MPServer_fnc_lottery_generateBonusBall};
 };
 
 //--- Add ticket to database

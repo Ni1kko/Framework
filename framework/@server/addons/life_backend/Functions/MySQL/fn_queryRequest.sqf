@@ -129,7 +129,7 @@ switch (_side) do {
 publicVariable "life_var_playtimeValuesRequest";
 
 //--- Tents (16)
-//private _tentsData = _uid spawn life_fnc_fetchPlayerTents;
+//private _tentsData = _uid spawn MPServer_fnc_fetchPlayerTents;
 //waitUntil {scriptDone _tentsData};
 _return pushBack (missionNamespace getVariable [format ["tents_%1",_uid],[]]);
  
