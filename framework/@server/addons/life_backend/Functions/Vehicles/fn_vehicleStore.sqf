@@ -12,11 +12,17 @@ params [
 ];
 
 //--- Bad data passed.
-if (isNull _vehicle || isNull _unit) exitWith {
-    life_impound_inuse = false; 
-    (owner _unit) publicVariableClient "life_impound_inuse";
-    life_garage_store = false;
-    (owner _unit) publicVariableClient "life_garage_store";
+if (isNull _vehicle || isNull _unit) exitWith 
+{
+    private _ownerID = [owner _unit , remoteExecutedOwner] select (isRemoteExecuted AND isNull _unit);
+  
+    if _impound then{
+        life_impound_inuse = false;
+        _ownerID publicVariableClient "life_impound_inuse";
+    }else{
+        life_garage_store = false;
+        _ownerID publicVariableClient "life_garage_store";
+    };
 };
 
 private _vehicleID = _vehicle getVariable ["vehicle_id",-1];
