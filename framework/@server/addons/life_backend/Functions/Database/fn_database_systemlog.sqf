@@ -13,7 +13,7 @@ if(count _logmessage < 2)exitwith{false};
 
 private _config = configFile >> "CfgExtDB";
 
-_logmessage = format["[DATABASE SYSTEM]: %1",_logmessage];
+_logmessage = format["[LIFE DATABASE SYSTEM]: %1",_logmessage];
 
 //--- Console
 if((getNumber(_config >> "conlogs") isEqualTo 1) AND life_var_rcon_passwordOK)then{

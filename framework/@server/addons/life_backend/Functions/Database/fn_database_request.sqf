@@ -14,6 +14,7 @@ private _qstring = "";
 private _res = ["DB:Task-failure", false];
 private _queryIndex = (serverNamespace getVariable ["DBQueryIndex", 0]) + 1;
 private _debug = getNumber(configFile >> "CfgExtDB" >> "debugMode") isEqualTo 1;
+private _fireAndForget = _mode in ["UPDATE","CREATE","DELETE","CALL","CURRENTDAY"];
 private _realTimeDate = systemTimeUTC;
 
 //--- Build Query
@@ -74,8 +75,8 @@ switch (_mode) do {
 };
 
 //--- Logs
-diag_log format ["[DB:Task] Executing Task#%2 -> %1",_mode,_queryIndex];
-if _debug then {diag_log format ["[DB:Task] Query Task#%2 -> %1",_qstring,_queryIndex]};
+[format ["Executing Task#%2 -> %1",_mode,_queryIndex]] call life_fnc_database_systemlog;
+if _debug then {[format ["%3 Task#%2 -> %1",_qstring,_queryIndex,["Query", "FireAndForget"] select _fireAndForget]] call life_fnc_database_systemlog};
 
 //--- Debug
 serverNamespace setVariable ["DBQueryIndex", _queryIndex];
@@ -84,7 +85,7 @@ serverNamespace setVariable ["DBQueryIndex", _queryIndex];
 private _messageID = "extDB3" callExtension _qstring;
 
 //--- No Database Return... Task Completed
-if(_mode in ["UPDATE","CREATE","DELETE","CALL","CURRENTDAY"])exitWith{_res};
+if _fireAndForget exitWith{_res};
 
 //--- Query Message Key
 private _key = (call compile format["%1",_messageID])#1;
@@ -134,9 +135,9 @@ if (_single && count _res > 0) then {
 
 //--- Logs
 if _debug then {
-	diag_log "_________________________Start Of Results_________________________";
+	diag_log "_________________________START OF RESULTS_________________________";
 	{diag_log format ["_res select %2 = %1",_x,_forEachIndex]}forEach _res;
-	diag_log "__________________________END Of Results__________________________";
+	diag_log "__________________________END OF RESULTS___________________________";
 };
 
 _res
