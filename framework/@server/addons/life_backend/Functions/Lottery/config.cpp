@@ -13,10 +13,20 @@ class CfgLottery
 { 
     ticketPrice = 1000; // Price of one ticket
     ticketBonusballPrice = 200; // Price of one Bonusball
-    ticketLength = 8; // Length of ticket number (Larger numbers = more combinations)
+    ticketLength = 6; // Length of ticket number (Larger numbers = more combinations)
     ticketDrawCount = 25; // Amount of winable tickets
     ticketsReclaim = 1; // allow players to reclaim their tickets if the were not online when draw was made
-    ticketDrawDay = "Wednesday"; // Day of the week when the draw is made
+ 
+    class ticketDrawTimes 
+    {
+		MONDAY[] = {};
+		TUESDAY[] = {};
+		WEDNESDAY[] = {"15:00","18:00"};
+		THURSDAY[] = {};
+		FRIDAY[] = {};
+		SATURDAY[] = {};
+		SUNDAY[] = {"15:00","18:00"};
+	};
 };
 
 class CfgFunctions 
@@ -30,6 +40,7 @@ class CfgFunctions
             class lottery_buyTicket {};
             class lottery_generateTicket {};
             class lottery_checkOldTickets {};
+            class lottery_getTimeInfo {};
         };
     };
 };

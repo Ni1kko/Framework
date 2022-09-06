@@ -54,6 +54,7 @@ class CfgFunctions {
             class util_tooExpression {};
             class util_getCurrentDay {};
             class util_getCurrentTime {};
+            class util_getRemainingTime {};
         };
 
         //--- Wanted Functions

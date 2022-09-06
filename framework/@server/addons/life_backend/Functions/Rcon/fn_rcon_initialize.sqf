@@ -25,43 +25,11 @@ life_var_rcon_inittime = compile str diag_tickTime;
 
 "Starting RCON" call life_fnc_rcon_systemlog;
 
-life_fnc_rcon_getRealTime = compileFinal "(systemTimeUTC select [3,if(param[0,false])then{3}else{2}]) apply {if(_x < 10)then{'0' + str _x}else{_x}} joinString ':'";
 life_fnc_rcon_getUpTime = compileFinal "round((diag_tickTime - (call life_var_rcon_inittime) / 60))";
-
-life_fnc_rcon_sortTimeByEarlist = compileFinal "
-	if !(params[['_evar','',['']],['_lvar','',['']]])exitWith {};
-	
-	call compile format [""
-		private _a = %1;
-		private _b = %2;
-		
-		private _aSplit = _a splitString ':';
-		private _bSplit = _b splitString ':';
-	
-		if(parseNumber(_aSplit#0) == parseNumber(_bSplit#0))then{
-			if(parseNumber(_aSplit#1) > parseNumber(_bSplit#1))exitWith{
-				%2 = _a;
-				%1 = _b;
-			};
-		}else{ 
-			if(parseNumber(_aSplit#0) > parseNumber(_bSplit#0))exitWith{ 
-				%2 = _a;
-				%1 = _b;
-			};
-		};
-	"",_evar,_lvar];
-";
-
-life_fnc_rcon_subtractTime = compileFinal "
-	private _early = param[0,'12:00'];
-	private _late = param[1,'12:00'];
-	['_early','_late'] call life_fnc_rcon_sortTimeByEarlist;
-	parseNumber('Time' callExtension format['subtract-%1,%2',_early,_late])
-";
-
-private _time = call getRealTime;
+ 
 {
-	if(([_x, _time] call life_fnc_rcon_subtractTime) > 0)exitWith{
+	private _tempTime = [_x] call life_fnc_util_getRemainingTime;
+	if(_tempTime isNotEqualTo -1)exitWith{
 		life_var_rcon_nextRestart = _x;
 	};
 } forEach life_var_rcon_RestartTimes;
