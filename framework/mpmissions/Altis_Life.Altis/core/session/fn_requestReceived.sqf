@@ -1,3 +1,4 @@
+#include "..\..\script_macros.hpp"
 /*
 	## Nikko Renolds
 	## https://github.com/Ni1kko/Framework
@@ -6,8 +7,8 @@
 if (life_session_completed) exitWith {}; 
 if(!canSuspend)exitWith{_this spawn MPClient_fnc_requestReceived};
  
-life_session_tries = life_session_tries + 1;
-if (life_session_tries > 3) exitWith {["There was an error in trying to setup your client"] call MPClient_fnc_setLoadingText; uiSleep(random[0.5,3,6]); uiSleep 5; endLoadingScreen; endMission "END1";};
+life_var_session_attempts = life_var_session_attempts + 1;
+if (life_var_session_attempts > MAX_ATTEMPTS_TOO_QUERY_DATA) exitWith {["There was an error in trying to setup your client"] call MPClient_fnc_setLoadingText;};
 
 ["Received request from server... Validating..."] call MPClient_fnc_setLoadingText; uiSleep(random[0.5,3,6]);
 

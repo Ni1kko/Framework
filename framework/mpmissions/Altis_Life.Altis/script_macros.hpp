@@ -116,3 +116,7 @@
 #define VITEM_FOOD_SHEEP "sheep"
 #define VITEM_FOOD_RAW_GOAT "goatRaw"
 #define VITEM_FOOD_GOAT "goat"
+
+
+#define MAX_SECS_TOO_WAIT_FOR_SERVER 30
+#define MAX_ATTEMPTS_TOO_QUERY_DATA 3

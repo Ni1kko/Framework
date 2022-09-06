@@ -60,10 +60,11 @@ private _severSchedulerStartUpQueue = [
 ];
 
 //--- Remote exec
-if(getNumber(configFile "CfgRemoteExec" >> "enabled") == 1)then
+if(getNumber(configFile >> "CfgRemoteExec" >> "enabled") isEqualTo 1)then
 {
+	private _checkEveryXmins = getNumber(configFile >>"CfgRemoteExec" >> "checkEveryXmins"); 
     //--- Add Remote exec to scheduler
-    _severSchedulerStartUpQueue pushBack [getNumber(configFile "CfgRemoteExec" >> "checkEveryXmins") * 60, "MPServer_fnc_remoteExecRun"];
+    _severSchedulerStartUpQueue pushBack [_checkEveryXmins * 60, "MPServer_fnc_remoteExecRun"];
     //--- Add Remote exec cleanup to scheduler
     _severSchedulerStartUpQueue pushBack [25 * 60, "MPServer_fnc_database_request", ["CALL", "deleteCompletedRemoteExecRequests"]];
 };

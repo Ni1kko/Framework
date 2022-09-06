@@ -13,37 +13,47 @@ private _MPClient_fnc_exit = compile '
     endLoadingScreen;
     endMission "END1"; 
     disableUserInput false;
+    true
 ';
+
+// -- Start Loading Screen
+startLoadingScreen ["","life_Rsc_DisplayLoading"];
+["Setting up client", "Please Wait..."] call MPClient_fnc_setLoadingText; uiSleep(random[0.5,3,6]);
 
 // -- Make it so they are now allowed to walk on debug
 disableUserInput true;
 
-// -- Start Loading Screen
-startLoadingScreen ["","life_Rsc_DisplayLoading"];
-["Setting up client,", "Please Wait..."] call MPClient_fnc_setLoadingText; uiSleep(random[0.5,3,6]);
-
+// -- Load configuration variables
 [] call MPClient_fnc_configuration;
-[] call MPClient_fnc_setupEVH;
-[] call MPClient_fnc_setupActions;
 
+// --
 diag_log "[Life Client] Waiting for the server to be ready...";
 waitUntil {!isNil "life_var_serverLoaded" && {!isNil "extdb_var_database_error"}};
-if (extdb_var_database_error) exitWith {["Database failed to load,", "Please contact an administrator"] call _MPClient_fnc_exit};
-waitUntil {
-    ["Waiting for the server to be ready"] call MPClient_fnc_setLoadingText; 
-    uiSleep 0.2;
-    ["Waiting for the server to be ready."] call MPClient_fnc_setLoadingText; 
-    uiSleep 0.2;
-    ["Waiting for the server to be ready.."] call MPClient_fnc_setLoadingText;  
-    uiSleep 0.2;
-    ["Waiting for the server to be ready..."] call MPClient_fnc_setLoadingText;
-    uiSleep(random[0.5,3,6]);
-    life_var_serverLoaded
+if (extdb_var_database_error) exitWith {["Database failed to load", "Please contact an administrator"] call _MPClient_fnc_exit};
+if !life_var_serverLoaded then { 
+    waitUntil {
+        if(life_var_serverTimeout > MAX_SECS_TOO_WAIT_FOR_SERVER) exitWith {["Server failed to load", "Please try again"] call _MPClient_fnc_exit};
+        ["Waiting for the server to be ready"] call MPClient_fnc_setLoadingText; 
+        uiSleep 0.2;
+        ["Waiting for the server to be ready."] call MPClient_fnc_setLoadingText; 
+        uiSleep 0.2;
+        ["Waiting for the server to be ready.."] call MPClient_fnc_setLoadingText;  
+        uiSleep 0.2;
+        ["Waiting for the server to be ready..."] call MPClient_fnc_setLoadingText;
+        uiSleep 0.4;
+        life_var_serverTimeout = life_var_serverTimeout + 1;
+        life_var_serverLoaded
+    }; 
 };
 
-["Requesting client data..."] call MPClient_fnc_setLoadingText; uiSleep(random[0.5,3,6]);
+[] call MPClient_fnc_setupEVH;
+[] call MPClient_fnc_setupActions;
 [] call MPClient_fnc_dataQuery;
-waitUntil {life_session_completed};
+waitUntil {
+    if(life_var_session_attempts > MAX_ATTEMPTS_TOO_QUERY_DATA) exitWith {["Unable to load player data", "Please try again"] call _MPClient_fnc_exit};
+    uiSleep 1;    
+    life_session_completed
+};
  
 ["Setting up player..."] call MPClient_fnc_setLoadingText; uiSleep(random[0.5,3,6]);
 {player setVariable _x} forEach [

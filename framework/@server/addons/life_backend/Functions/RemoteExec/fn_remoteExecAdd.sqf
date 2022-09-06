@@ -17,7 +17,7 @@ private _ownerID = switch (typeName _target) do {
 		case west: {SIDE_TARGET_COP};
 		case east: {SIDE_TARGET_REB}; 
 		case independent: {SIDE_TARGET_MED};
-		case default: {SIDE_TARGET_CIV};
+		default {SIDE_TARGET_CIV};
 	}};
 	default {_target};
 };

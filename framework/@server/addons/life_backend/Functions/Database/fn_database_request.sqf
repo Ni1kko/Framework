@@ -135,9 +135,17 @@ if (_single && count _res > 0) then {
 
 //--- Logs
 if _debug then {
-	diag_log "_________________________START OF RESULTS_________________________";
-	{diag_log format ["_res select %2 = %1",_x,_forEachIndex]}forEach _res;
-	diag_log "__________________________END OF RESULTS___________________________";
+	if !(isNil "_res") then {
+		if(typeName _res isEqualTo "ARRAY")then{
+			if(count _res > 0)then{ 
+				diag_log "_________________________START OF RESULTS_________________________";
+				{diag_log format ["_res select %2 = %1",_x,_forEachIndex]}forEach _res;
+				diag_log "__________________________END OF RESULTS__________________________";
+			};
+		}else{
+			diag_log format ["_res select 0 = %1",_res];
+		};
+	};
 };
 
 _res
