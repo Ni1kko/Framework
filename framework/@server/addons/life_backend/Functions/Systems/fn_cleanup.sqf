@@ -33,14 +33,14 @@ switch (param [0,""]) do
                 if (count _dbInfo >= 2) then {
                     ["UPDATE", "vehicles", [
                         [
-                            ["active",["DB","BOOL", false] call life_fnc_database_parse],
-                            ["fuel",["DB","INT", fuel _veh] call life_fnc_database_parse]
+                            ["active",["DB","BOOL", false] call MPServer_fnc_database_parse],
+                            ["fuel",["DB","INT", fuel _veh] call MPServer_fnc_database_parse]
                         ],
                         [
-                            ["pid",["DB","STRING", _dbInfo#0] call life_fnc_database_parse],
-                            ["plate",["DB","STRING", _dbInfo#1] call life_fnc_database_parse]
+                            ["pid",["DB","STRING", _dbInfo#0] call MPServer_fnc_database_parse],
+                            ["plate",["DB","STRING", _dbInfo#1] call MPServer_fnc_database_parse]
                         ]
-                    ]]call life_fnc_database_request;
+                    ]]call MPServer_fnc_database_request;
                 };
                
             };

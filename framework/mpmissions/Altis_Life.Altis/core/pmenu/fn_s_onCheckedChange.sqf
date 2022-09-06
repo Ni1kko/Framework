@@ -43,7 +43,7 @@ switch (_option) do {
             profileNamespace setVariable ["life_enableSidechannel",false];
             life_settings_enableSidechannel = profileNamespace getVariable ["life_enableSidechannel",false];
         };
-        [player,life_settings_enableSidechannel,playerSide] remoteExecCall ["life_fnc_manageSC",RSERV];
+        [player,life_settings_enableSidechannel,playerSide] remoteExecCall ["MPServer_fnc_managesc",RSERV];
     };
 
     case "broadcast": {

@@ -75,8 +75,8 @@ switch (_mode) do {
 };
 
 //--- Logs
-[format ["Executing Task#%2 -> %1",_mode,_queryIndex]] call life_fnc_database_systemlog;
-if _debug then {[format ["%3 Task#%2 -> %1",_qstring,_queryIndex,["Query", "FireAndForget"] select _fireAndForget]] call life_fnc_database_systemlog};
+[format ["Executing Task#%2 -> %1",_mode,_queryIndex]] call MPServer_fnc_database_systemlog;
+if _debug then {[format ["%3 Task#%2 -> %1",_qstring,_queryIndex,["Query", "FireAndForget"] select _fireAndForget]] call MPServer_fnc_database_systemlog};
 
 //--- Debug
 serverNamespace setVariable ["DBQueryIndex", _queryIndex];
@@ -145,20 +145,20 @@ _res
 /* 
 	["CREATE", "players", 
 		[//What
-			["serverID", 		["DB","INT", (call life_var_serverID)] call life_fnc_database_parse],
-			["BEGuid", 			["DB","STRING", "092dd37cc6d0e2781ea42ee334debd28"] call life_fnc_database_parse],
-			["pid", 			["DB","STRING", "76561198276956558"] call life_fnc_database_parse],
-			["name", 			["DB","STRING", "nikko test"] call life_fnc_database_parse],
-			["cash", 			["DB","A2NET", 0] call life_fnc_database_parse],
-			["aliases", 		["DB","ARRAY", ["nikko test"]] call life_fnc_database_parse],
-			["cop_licenses", 	["DB","ARRAY", []] call life_fnc_database_parse],
-			["med_licenses", 	["DB","ARRAY", []] call life_fnc_database_parse],
-			["civ_licenses", 	["DB","ARRAY", []] call life_fnc_database_parse],
-			["civ_gear", 		["DB","ARRAY", []] call life_fnc_database_parse],
-			["cop_gear", 		["DB","ARRAY", []] call life_fnc_database_parse],
-			["med_gear", 		["DB","ARRAY", []] call life_fnc_database_parse]
+			["serverID", 		["DB","INT", (call life_var_serverID)] call MPServer_fnc_database_parse],
+			["BEGuid", 			["DB","STRING", "092dd37cc6d0e2781ea42ee334debd28"] call MPServer_fnc_database_parse],
+			["pid", 			["DB","STRING", "76561198276956558"] call MPServer_fnc_database_parse],
+			["name", 			["DB","STRING", "nikko test"] call MPServer_fnc_database_parse],
+			["cash", 			["DB","A2NET", 0] call MPServer_fnc_database_parse],
+			["aliases", 		["DB","ARRAY", ["nikko test"]] call MPServer_fnc_database_parse],
+			["cop_licenses", 	["DB","ARRAY", []] call MPServer_fnc_database_parse],
+			["med_licenses", 	["DB","ARRAY", []] call MPServer_fnc_database_parse],
+			["civ_licenses", 	["DB","ARRAY", []] call MPServer_fnc_database_parse],
+			["civ_gear", 		["DB","ARRAY", []] call MPServer_fnc_database_parse],
+			["cop_gear", 		["DB","ARRAY", []] call MPServer_fnc_database_parse],
+			["med_gear", 		["DB","ARRAY", []] call MPServer_fnc_database_parse]
 		]
-	]call life_fnc_database_request;
+	]call MPServer_fnc_database_request;
 
 	["READ", "players", [
 		[//What
@@ -167,25 +167,25 @@ _res
 		[//Where
 			["BEGuid",str("092dd37cc6d0e2781ea42ee334debd28")]
 		]
-	],true]call life_fnc_database_request;
+	],true]call MPServer_fnc_database_request;
 	
-	["CURRENTDAY"] call life_fnc_database_request;
+	["CURRENTDAY"] call MPServer_fnc_database_request;
 
 	["UPDATE", "players", [
 		[//What
-			["cash",["DB","A2NET", 500] call life_fnc_database_parse]
+			["cash",["DB","A2NET", 500] call MPServer_fnc_database_parse]
 		],
 		[//Where
 			["BEGuid",str("092dd37cc6d0e2781ea42ee334debd28")]
 		]
-	]]call life_fnc_database_request;
+	]]call MPServer_fnc_database_request;
 	
 	["DELETE", "players", [
 		[//Where
 			["BEGuid",str("092dd37cc6d0e2781ea42ee334debd28")]
 		]
-	],true]call life_fnc_database_request;
+	],true]call MPServer_fnc_database_request;
 
-	["CALL", "deleteOldGangs"]call life_fnc_database_request;
+	["CALL", "deleteOldGangs"]call MPServer_fnc_database_request;
 
 */

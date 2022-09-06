@@ -22,7 +22,7 @@ if (life_var_bank < (LIFE_SETTINGS(getNumber,"gang_price"))) exitWith {hint form
 if (count extdb_var_database_headless_clients > 0) then {
     [player,getPlayerUID player,_gangName] remoteExec ["HC_fnc_insertGang",extdb_var_database_headless_client];
 } else {
-    [player,getPlayerUID player,_gangName] remoteExec ["life_fnc_insertGang",RSERV];
+    [player,getPlayerUID player,_gangName] remoteExec ["MPServer_fnc_insertGang",RSERV];
 };
 
 if (LIFE_SETTINGS(getNumber,"player_advancedLog") isEqualTo 1) then {

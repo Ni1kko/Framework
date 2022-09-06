@@ -16,7 +16,7 @@ _uid = _this select 0;
 _time_gathered = ((_this select 1) * 60);
 
 //create value using get
-[_uid] call life_fnc_getPlayTime;
+[_uid] call MPServer_fnc_getPlayTime;
 
 //set value no 1
 {

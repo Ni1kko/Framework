@@ -692,15 +692,15 @@ a3_characters_f
 21:01:28 "Administrator/BIS_fnc_log: [preInit] ""DeltaTime computation started"""
 21:01:28 "Administrator/BIS_fnc_log: [preInit] BIS_fnc_keyframeAnimation_deltaTime (0 ms)"
 21:01:28 "Administrator/BIS_fnc_log: [preInit] BIS_fnc_getServerVariable (0 ms)"
-21:01:28 "Administrator/BIS_fnc_log: [preInit] life_fnc_preInit (0.999451 ms)"
+21:01:28 "Administrator/BIS_fnc_log: [preInit] MPServer_fnc_preInit (0.999451 ms)"
 21:01:28 "[RCON SYSTEM]: Starting RCON"
 21:01:28 "[RCON SYSTEM]: Sending Command: #lock"
 21:01:28 "[RCON SYSTEM]: Lock Event: server locked for init"
 21:01:28 "Administrator/BIS_fnc_log: [preInit] Life_fnc_rcon_initialize (9.00078 ms)"
-21:01:28 CallExtension loaded: extDB3 (E:\ExtremoServer\@server\extDB3_x64.dll) [ èµ÷]
+21:01:28 CallExtension loaded: extDB3 (E:\ExtremoServer\@server\extDB3_x64.dll) [ï¿½ï¿½ï¿½]
 
-21:01:28 "Administrator/BIS_fnc_log: [preInit] Life_fnc_database_initialize (24.9996 ms)"
-21:01:28 "Administrator/BIS_fnc_log: [preInit] Life_fnc_antihack_initialize (0 ms)"
+21:01:28 "Administrator/BIS_fnc_log: [preInit] MPServer_fnc_database_initialize (24.9996 ms)"
+21:01:28 "Administrator/BIS_fnc_log: [preInit] MPServer_fnc_antihack_initialize (0 ms)"
 21:01:28 "Administrator/BIS_fnc_log: [preInit] BIS_fnc_OM_HandleMapControls (0 ms)"
 21:01:28 "Administrator/BIS_fnc_log: [BIS_fnc_OM_moduleSmartMarkers] Error: SmartMarker system has not been yet initialized."
 21:01:28 "Administrator/BIS_fnc_log: [preInit] BIS_fnc_OM_moduleSmartMarkers (0.999451 ms)"
@@ -1152,7 +1152,7 @@ a3_characters_f
 21:16:06 Deinitialized shape [Class: "C_man_polo_4_F"; Shape: "a3\characters_f\civil\c_poloshirt.p3d";]
 21:16:06 c:\bis\source\stable\futura\lib\network\networkserver.cpp ClearNetServer:NOT IMPLEMENTED - briefing!
 21:16:07 Extensions:
-21:16:07   extDB3 (E:\ExtremoServer\@server\extDB3_x64.dll) [ èµ÷]
+21:16:07   extDB3 (E:\ExtremoServer\@server\extDB3_x64.dll) [ï¿½ï¿½ï¿½]
 
 21:16:07   BEGuid (E:\ExtremoServer\@server\BEGuid_x64.dll) [] []
 

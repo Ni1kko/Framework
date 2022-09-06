@@ -47,7 +47,7 @@ for "_i" from 0 to 1 step 0 do {
         player forceWalk true;
     };
 
-    private _escDist = [[["Altis", 60], ["Tanoa", 145]]] call life_fnc_terrainSort;
+    private _escDist = [[["Altis", 60], ["Tanoa", 145]]] call MPServer_fnc_terrainSort;
     
     if (player distance (getMarkerPos "jail_marker") > _escDist) exitWith {
         _esc = true;
@@ -75,7 +75,7 @@ switch (true) do {
         if (count extdb_var_database_headless_clients > 0) then {
             [getPlayerUID player] remoteExecCall ["HC_fnc_wantedRemove", extdb_var_database_headless_client];
         } else {
-            [getPlayerUID player] remoteExecCall ["life_fnc_wantedRemove", RSERV];
+            [getPlayerUID player] remoteExecCall ["MPServer_fnc_wantedRemove", RSERV];
         };
 
         [5] call SOCK_fnc_updatePartial;
@@ -89,7 +89,7 @@ switch (true) do {
         if (count extdb_var_database_headless_clients > 0) then {
             [getPlayerUID player, profileName, "901"] remoteExecCall ["HC_fnc_wantedAdd", extdb_var_database_headless_client];
         } else {
-            [getPlayerUID player, profileName, "901"] remoteExecCall ["life_fnc_wantedAdd", RSERV];
+            [getPlayerUID player, profileName, "901"] remoteExecCall ["MPServer_fnc_wantedAdd", RSERV];
         };
 
         [5] call SOCK_fnc_updatePartial;
@@ -102,7 +102,7 @@ switch (true) do {
         if (count extdb_var_database_headless_clients > 0) then {
             [getPlayerUID player] remoteExecCall ["HC_fnc_wantedRemove", extdb_var_database_headless_client];
         } else {
-            [getPlayerUID player] remoteExecCall ["life_fnc_wantedRemove", RSERV];
+            [getPlayerUID player] remoteExecCall ["MPServer_fnc_wantedRemove", RSERV];
         };
         player setVariable ["life_var_teleported",true,true];
         player setPos (getMarkerPos "jail_release");

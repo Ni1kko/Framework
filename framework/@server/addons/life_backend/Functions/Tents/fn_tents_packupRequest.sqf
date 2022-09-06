@@ -21,10 +21,10 @@ if(_tentID isEqualTo "")exitWith {false};
 ];
 
 //-- Delete from database
-["UPDATE", "tents", [[["alive",["DB","BOOL", false] call life_fnc_database_parse]],[["tentID",str _tentID]]]]call life_fnc_database_request;
+["UPDATE", "tents", [[["alive",["DB","BOOL", false] call MPServer_fnc_database_parse]],[["tentID",str _tentID]]]]call MPServer_fnc_database_request;
 
 //-- Delete from world
-[_tent] call life_fnc_tents_packup;
+[_tent] call MPServer_fnc_tents_packup;
 
 //-- Delete local marker
 if(_marker isEqualTo "" OR isNull _player)exitWith {true};

@@ -49,7 +49,7 @@ waitUntil {missionNamespace getVariable [_sessionvar,false]};
 //-- Switch side
 private _player = player;
 ["Switching side", "Please Wait..."] call life_fnc_setLoadingText;
-[_player,_newside,true] remoteExec ["life_fnc_switchSideRequest",2];
+[_player,_newside,true] remoteExec ["MPServer_fnc_switchSideRequest",2];
 
 //-- Wait for system to finish
 waitUntil {_player isNotEqualTo player || !isNil {_player getVariable "sideswitch_error"}};

@@ -38,7 +38,7 @@ if (_value > 0) then {
     life_var_bank = life_var_bank + _value;
     [1] call SOCK_fnc_updatePartial;
     _container setVariable ["Trunk",[[],0],true];
-    [_container] remoteExecCall ["life_fnc_updateHouseTrunk",2];
+    [_container] remoteExecCall ["MPServer_fnc_updateHouseTrunk",2];
 } else {
     hint localize "STR_Cop_NoIllegalContainer";
 };

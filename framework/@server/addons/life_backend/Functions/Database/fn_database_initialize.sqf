@@ -33,12 +33,12 @@ try {
 	//--- Version
 	private _versionRes = parseNumber("extDB3" callExtension "9:VERSION");
 	if(_versionRes < 1.031) throw "Error with extDB3";
- 	format ["ExtDB V%1 Loaded",_versionRes] call life_fnc_database_systemlog;
+ 	format ["ExtDB V%1 Loaded",_versionRes] call MPServer_fnc_database_systemlog;
 
 	//--- Profile
 	private _profileRes = "extDB3" callExtension format ["9:ADD_DATABASE:%1",_profile];
 	if(_profileRes isNotEqualTo "[1]") throw "Error with Database Profile";
-	format ["Profile (%1) Loaded",_profile] call life_fnc_database_systemlog;
+	format ["Profile (%1) Loaded",_profile] call MPServer_fnc_database_systemlog;
 
 	//--- Protocol
 	private _protocolRes = (if(_sqlcustom)then{
@@ -47,22 +47,22 @@ try {
 		"extDB3" callExtension format ["9:ADD_DATABASE_PROTOCOL:%1:SQL:%2:TEXT2",_profile,_databasekey];
 	});
 	if(_protocolRes isNotEqualTo "[1]") throw "Error with Database Protocol";
-	format ["SQL%1 Protocol Loaded",["Raw","Custom"]select _sqlcustom] call life_fnc_database_systemlog;
+	format ["SQL%1 Protocol Loaded",["Raw","Custom"]select _sqlcustom] call MPServer_fnc_database_systemlog;
 
 	//--- Lock profile
 	private _lockRes = "extDB3" callExtension "9:LOCK";
 	private _lockedRes = "extDB3" callExtension "9:LOCK_STATUS";
 	if(_protocolRes isNotEqualTo "[1]" OR _protocolRes isNotEqualTo "[1]") throw "Error Locking Database Profile";
-	format ["Profile (%1) Locked",_profile] call life_fnc_database_systemlog;
+	format ["Profile (%1) Locked",_profile] call MPServer_fnc_database_systemlog;
 	 
 	//--- Connection OKAY
 	extdb_var_database_prepared = compileFinal str(_sqlcustom);
 	extdb_var_database_key = compileFinal str(_databasekey); 
-	format["Database Connected Using Profile: (%1)", _profile] call life_fnc_database_systemlog;
+	format["Database Connected Using Profile: (%1)", _profile] call MPServer_fnc_database_systemlog;
 
 	//--- Setup server to support headless clients
 	if (_headless) then {
-		[] call life_fnc_database_initializeHC;
+		[] call MPServer_fnc_database_initializeHC;
 	};
 
 	//--- Reset players life after restart
@@ -72,11 +72,11 @@ try {
 
 	//--- Run stored procedures for SQL side cleanup
 	{
-		["CALL", _x]call life_fnc_database_request;
-		format["Executing procedure (%1)", _x] call life_fnc_database_systemlog;
+		["CALL", _x]call MPServer_fnc_database_request;
+		format["Executing procedure (%1)", _x] call MPServer_fnc_database_systemlog;
 	} forEach _procedures;
 } catch { 
-	_exception call life_fnc_database_systemlog;
+	_exception call MPServer_fnc_database_systemlog;
 	extdb_var_database_error = true;
 };
 

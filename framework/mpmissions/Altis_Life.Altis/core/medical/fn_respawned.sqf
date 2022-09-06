@@ -28,13 +28,13 @@ if (life_is_arrested) exitWith {
 
 //Johnny law got me but didn't let the EMS revive me, reward them half the bounty.
 if (!isNil "life_copRecieve") then {
-    [getPlayerUID player,player,life_copRecieve,true] remoteExecCall ["life_fnc_wantedBounty",RSERV];
+    [getPlayerUID player,player,life_copRecieve,true] remoteExecCall ["MPServer_fnc_wantedBounty",RSERV];
     life_copRecieve = nil;
 };
 
 //So I guess a fellow gang member, cop or myself killed myself so get me off that Altis Most Wanted
 if (life_removeWanted) then {
-    [getPlayerUID player] remoteExecCall ["life_fnc_wantedRemove",RSERV];
+    [getPlayerUID player] remoteExecCall ["MPServer_fnc_wantedRemove",RSERV];
 };
 
 //Set some vars on our new body.
@@ -50,7 +50,7 @@ if (life_removeWanted) then {
 [] call life_fnc_startLoadout;
 [] call life_fnc_setupActions;
  
-[player,life_settings_enableSidechannel,playerSide] remoteExecCall ["life_fnc_manageSC",RSERV];
+[player,life_settings_enableSidechannel,playerSide] remoteExecCall ["MPServer_fnc_managesc",RSERV];
 if (LIFE_SETTINGS(getNumber,"enable_fatigue") isEqualTo 0) then {player enableFatigue false;};
 
 player playMoveNow "AmovPpneMstpSrasWrflDnon";

@@ -3,7 +3,7 @@
 	## https://github.com/Ni1kko/Framework
 */
 
-if(!canSuspend)exitwith{_this spawn life_fnc_preInit; true};
+if(!canSuspend)exitwith{_this spawn MPServer_fnc_preInit; true};
  
 life_var_serverLoaded = false;
 life_var_severVehicles = [];
@@ -20,52 +20,52 @@ life_var_severSchedulerStartUpQueue = {[]};
 
 publicVariable "life_var_serverLoaded";
 waitUntil {isFinal "extdb_var_database_key"};
-life_var_currentDay = [] call life_fnc_util_getCurrentDay;
+life_var_currentDay = [] call MPServer_fnc_util_getCurrentDay;
 
 //--- Server info
-private _serverDatabaseInit = [] spawn life_fnc_loadServer;
+private _serverDatabaseInit = [] spawn MPServer_fnc_loadServer;
 waitUntil{scriptDone _serverDatabaseInit};
 
 //--- Mission Event handlers
-life_var_clientConnected =      addMissionEventHandler ['PlayerConnected',      life_fnc_event_playerConnected,    []];
-life_var_clientDisconnected =   addMissionEventHandler ["PlayerDisconnected",   life_fnc_event_playerDisconnected, []];
-life_var_handleDisconnectEVH =  addMissionEventHandler ["HandleDisconnect",     {_this call life_fnc_clientDisconnect; false;}];
-life_var_entityRespawnedEVH =   addMissionEventHandler ["EntityRespawned",      life_fnc_entityRespawned];
+life_var_clientConnected =      addMissionEventHandler ['PlayerConnected',      MPServer_fnc_event_playerConnected,    []];
+life_var_clientDisconnected =   addMissionEventHandler ["PlayerDisconnected",   MPServer_fnc_event_playerDisconnected, []];
+life_var_handleDisconnectEVH =  addMissionEventHandler ["HandleDisconnect",     {_this call MPServer_fnc_clientDisconnect; false;}];
+life_var_entityRespawnedEVH =   addMissionEventHandler ["EntityRespawned",      MPServer_fnc_entityRespawned];
 
-[] call life_fnc_initHouses;
-[] call life_fnc_setupBanks;
-[] call life_fnc_setupHospitals;
-[] call life_fnc_stripNpcs;
-[] call life_fnc_setupRadioChannels;
-[8,true,12] call LifeFSM_fnc_timeModule;
-cleanupFSM = [] call LifeFSM_fnc_cleanup;
+[] call MPServer_fnc_initHouses;
+[] call MPServer_fnc_setupBanks;
+[] call MPServer_fnc_setupHospitals;
+[] call MPServer_fnc_stripNpcs;
+[] call MPServer_fnc_setupRadioChannels;
+[8,true,12] call MPServerFSM_fnc_timeModule;
+cleanupFSM = [] call MPServerFSM_fnc_cleanup;
 
 private _severSchedulerStartUpQueue = [ 
 	//--- Every 10 seconds
-	[10, 	  "life_fnc_updateHuntingZone"],
+	[10, 	  "MPServer_fnc_updateHuntingZone"],
 	//--- Every 3 minutes
-	[3 * 60,  "life_fnc_cleanup", ["items"]],
+	[3 * 60,  "MPServer_fnc_cleanup", ["items"]],
 	//--- Every 5 minutes
-	[5 * 60,  "life_fnc_cleanup", ["weapons"]],
+	[5 * 60,  "MPServer_fnc_cleanup", ["weapons"]],
 	//--- Every 10 minutes
-	[10 * 60, "life_fnc_updateBanks", ["vault"]],
+	[10 * 60, "MPServer_fnc_updateBanks", ["vault"]],
 	//--- Every 20 minutes
-	[20 * 60, "life_fnc_updateBanks", ["bank"]],
+	[20 * 60, "MPServer_fnc_updateBanks", ["bank"]],
 	//--- Every 30 minutes
-	[30 * 60, "life_fnc_updateDealers"],
+	[30 * 60, "MPServer_fnc_updateDealers"],
 	//--- Every 45 minutes
-	[45 * 60, "life_fnc_updateBanks", ["atm"]],
+	[45 * 60, "MPServer_fnc_updateBanks", ["atm"]],
 	//--- Every 60 minutes
-	[60 * 60, "life_fnc_cleanup", ["vehicles"]]
+	[60 * 60, "MPServer_fnc_cleanup", ["vehicles"]]
 ];
 
 //--- Remote exec
 if(getNumber(configFile "CfgRemoteExec" >> "enabled") == 1)then
 {
     //--- Add Remote exec to scheduler
-    _severSchedulerStartUpQueue pushBack [getNumber(configFile "CfgRemoteExec" >> "checkEveryXmins") * 60, "Life_fnc_remoteExecRun"];
+    _severSchedulerStartUpQueue pushBack [getNumber(configFile "CfgRemoteExec" >> "checkEveryXmins") * 60, "MPServer_fnc_remoteExecRun"];
     //--- Add Remote exec cleanup to scheduler
-    _severSchedulerStartUpQueue pushBack [25 * 60, "life_fnc_database_request", ["CALL", "deleteCompletedRemoteExecRequests"]];
+    _severSchedulerStartUpQueue pushBack [25 * 60, "MPServer_fnc_database_request", ["CALL", "deleteCompletedRemoteExecRequests"]];
 };
 
 //--- Add queue too scheduler
@@ -83,19 +83,19 @@ life_var_serverLoaded = true;
 
 //--- 
 {publicVariable _x}forEach[
-    "life_fnc_terrainSort",
-    "life_fnc_player_query",
-    "life_fnc_index",
-    "life_fnc_isNumber",
-    "life_fnc_clientGangKick",
-    "life_fnc_clientGetKey",
-    "life_fnc_clientGangLeader",
-    "life_fnc_clientGangLeft",
+    "MPServer_fnc_terrainSort",
+    "MPServer_fnc_player_query",
+    "MPServer_fnc_index",
+    "MPServer_fnc_isNumber",
+    "MPServer_fnc_clientGangKick",
+    "MPServer_fnc_clientGetKey",
+    "MPServer_fnc_clientGangLeader",
+    "MPServer_fnc_clientGangLeft",
     "life_var_playtimeValuesRequest",
     "life_var_playtimeValues",
     "life_var_serverLoaded",
-    "life_fnc_util_getSideString",
-    "life_fnc_util_getPlayerObject",
+    "MPServer_fnc_util_getSideString",
+    "MPServer_fnc_util_getPlayerObject",
 	"life_var_currentDay"
 ];
 

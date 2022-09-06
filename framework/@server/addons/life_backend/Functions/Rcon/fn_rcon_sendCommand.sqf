@@ -19,13 +19,13 @@ if(_password isEqualTo "")then{_password = "empty";};
 if(!life_var_rcon_passwordOK AND !_init)exitwith{_password=nil;_return};
 if (!life_var_rcon_passwordOK AND _init)then{
 	_command = "#exec users";
-	format["Sending Command: %1",_command] call life_fnc_rcon_systemlog;
+	format["Sending Command: %1",_command] call MPServer_fnc_rcon_systemlog;
 	if (_password serverCommand _command AND (serverCommandAvailable "#lock"))then{
 		_command = "#lock";
 		life_var_rcon_passwordOK = true;
 		publicVariable "life_var_rcon_passwordOK";
 	}else{
-		"ServerPassword MISMATCH!!! RCON features DISABLED!" call life_fnc_rcon_systemlog;
+		"ServerPassword MISMATCH!!! RCON features DISABLED!" call MPServer_fnc_rcon_systemlog;
 	};
 };
 
@@ -39,7 +39,7 @@ if(_command in ["#lock","#unlock"])then{
 };
 
 if(life_var_rcon_passwordOK AND _command isNotEqualTo "")then{
-	if (!_conlog)then{format["Sending Command: %1",_command] call life_fnc_rcon_systemlog;};
+	if (!_conlog)then{format["Sending Command: %1",_command] call MPServer_fnc_rcon_systemlog;};
 	_return = _password serverCommand _command;
 };
 

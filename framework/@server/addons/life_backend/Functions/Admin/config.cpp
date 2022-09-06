@@ -134,7 +134,7 @@ class CfgAdmin
 
 class CfgFunctions 
 {
-    class Life 
+    class MPServer 
     {
         class Admin_Functions
         {

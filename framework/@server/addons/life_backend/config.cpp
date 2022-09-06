@@ -24,7 +24,7 @@ class CfgVehicles {
 
     class C_man_1 : Civilian_F {
         class EventHandlers: EventHandlers {
-            init = "(_this select 0) spawn life_fnc_fix_headgear;";
+            init = "(_this select 0) spawn MPServer_fnc_fix_headgear;";
         };
     };
 };

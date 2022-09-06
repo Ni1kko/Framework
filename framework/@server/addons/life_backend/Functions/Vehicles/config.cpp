@@ -16,7 +16,7 @@ class CfgVehicles
 
 class CfgFunctions 
 {
-    class Life 
+    class MPServer 
     {
         class Vehicles_Functions
         {

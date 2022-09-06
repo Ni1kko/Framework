@@ -138,14 +138,14 @@ _vehicle allowDamage true;
 life_vehicles pushBack _vehicle;
 
 //Always handle key management by the server
-[getPlayerUID player,playerSide,_vehicle,1] remoteExecCall ["life_fnc_keyManagement",RSERV];
+[getPlayerUID player,playerSide,_vehicle,1] remoteExecCall ["MPServer_fnc_keyManagement",RSERV];
 
 if (_mode) then {
     if !(_className in LIFE_SETTINGS(getArray,"vehicleShop_rentalOnly")) then {
         if (count extdb_var_database_headless_clients > 0) then {
             [(getPlayerUID player),playerSide,_vehicle,_colorIndex] remoteExecCall ["HC_fnc_vehicleCreate",extdb_var_database_headless_client];
         } else {
-            [(getPlayerUID player),playerSide,_vehicle,_colorIndex] remoteExecCall ["life_fnc_vehicleCreate",RSERV];
+            [(getPlayerUID player),playerSide,_vehicle,_colorIndex] remoteExecCall ["MPServer_fnc_vehicleCreate",RSERV];
         };
     };
 };

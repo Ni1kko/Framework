@@ -8,7 +8,7 @@ params [
 ];
 
 private _lvl = 0;
-private _admins = call life_fnc_antihack_getAdmins;
+private _admins = call MPServer_fnc_antihack_getAdmins;
 
 {
 	if(_input isEqualTo _x#1 OR _input isEqualTo _x#2)exitWith{

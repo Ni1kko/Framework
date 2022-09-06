@@ -8,11 +8,11 @@ private _queryTickets = ["READ", "unclaimedLotteryTickets",
 	[
 		["ticketID", "BEGuid", "winnings", "bonusball","bonusballWinnings"],
 		[
-			["claimed", ["DB","BOOL", false] call life_fnc_database_parse],
-			["serverID",["DB","INT",call life_var_serverID] call life_fnc_database_parse]
+			["claimed", ["DB","BOOL", false] call MPServer_fnc_database_parse],
+			["serverID",["DB","INT",call life_var_serverID] call MPServer_fnc_database_parse]
 		]
 	]
-] call life_fnc_database_request;
+] call MPServer_fnc_database_request;
 
 private _claimedTickets = [];
 
@@ -76,16 +76,16 @@ while {count _queryTickets > 0} do {
 			["UPDATE", "unclaimedLotteryTickets", 
 				[
 					[
-						["claimed", ["DB","BOOL", true] call life_fnc_database_parse],
-						["ticketID", ["DB","INT", _x] call life_fnc_database_parse]
+						["claimed", ["DB","BOOL", true] call MPServer_fnc_database_parse],
+						["ticketID", ["DB","INT", _x] call MPServer_fnc_database_parse]
 					]
 				]
-			] call life_fnc_database_request;
+			] call MPServer_fnc_database_request;
 			_queryTickets deleteAt _forEachIndex;
 		}forEach _claimedTickets;
 	};
 
 	uiSleep 10;
 
-	["CALL", "deleteClaimedLotteryTickets"] call life_fnc_database_request;
+	["CALL", "deleteClaimedLotteryTickets"] call MPServer_fnc_database_request;
 };

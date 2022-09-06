@@ -19,9 +19,9 @@ private _blacklistedGarages = ("count (getArray (_x >> 'garageBlacklists')) > 0"
 } forEach _allHouses;
 
 //--- Owned Houses
-for [{_x=0},{_x<=((["SELECT COUNT(*) FROM houses WHERE owned='1'",2] call life_fnc_database_rawasync_request)#0)},{_x=_x+10}] do {
+for [{_x=0},{_x<=((["SELECT COUNT(*) FROM houses WHERE owned='1'",2] call MPServer_fnc_database_rawasync_request)#0)},{_x=_x+10}] do {
     private _query = format ["SELECT houses.id, houses.pid, houses.pos, players.name, houses.garage FROM houses INNER JOIN players WHERE houses.owned='1' AND houses.pid = players.pid LIMIT %1,10",_x];
-    private _queryResult = [_query,2,true] call life_fnc_database_rawasync_request;
+    private _queryResult = [_query,2,true] call MPServer_fnc_database_rawasync_request;
     if (count _queryResult isEqualTo 0) exitWith {};
     {
         _pos = call compile format ["%1",_x select 2];

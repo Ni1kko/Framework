@@ -26,7 +26,7 @@ if (life_var_cash < life_ticket_val) exitWith {
     if (count extdb_var_database_headless_clients > 0) then {
         [getPlayerUID player] remoteExecCall ["HC_fnc_wantedRemove",extdb_var_database_headless_client];
     } else {
-        [getPlayerUID player] remoteExecCall ["life_fnc_wantedRemove",RSERV];
+        [getPlayerUID player] remoteExecCall ["MPServer_fnc_wantedRemove",RSERV];
     };
     closeDialog 0;
 };
@@ -38,7 +38,7 @@ life_ticket_paid = true;
 if (count extdb_var_database_headless_clients > 0) then {
     [getPlayerUID player] remoteExecCall ["HC_fnc_wantedRemove",extdb_var_database_headless_client];
 } else {
-    [getPlayerUID player] remoteExecCall ["life_fnc_wantedRemove",RSERV];
+    [getPlayerUID player] remoteExecCall ["MPServer_fnc_wantedRemove",RSERV];
 };
 
 [0,"STR_Cop_Ticket_PaidNOTF",true,[profileName,[life_ticket_val] call life_fnc_numberText]] remoteExecCall ["life_fnc_broadcast",west];

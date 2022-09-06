@@ -16,7 +16,7 @@ class CfgProperties
 
 class CfgFunctions 
 {
-    class TON 
+    class MPServer 
     {
         class Property_Functions
         {

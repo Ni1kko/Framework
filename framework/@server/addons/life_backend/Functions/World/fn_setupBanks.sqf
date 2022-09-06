@@ -24,8 +24,8 @@
 private _masterGroup = missionNamespace getVariable ["master_group",objNull];
 private _bankObject = missionNamespace getVariable ["bank_obj",objNull];
 private _vaultObject = missionNamespace getVariable ["fed_bank",objNull];
-private _vaultHouse = [[["Altis", "Land_Research_house_V1_F"], ["Tanoa", "Land_Medevac_house_V1_F"]]] call life_fnc_terrainSort;
-private _pos = [[["Altis", [16019.5,16952.9,0]], ["Tanoa", [11074.2,11501.5,0.00137329]]]] call life_fnc_terrainSort;
+private _vaultHouse = [[["Altis", "Land_Research_house_V1_F"], ["Tanoa", "Land_Medevac_house_V1_F"]]] call MPServer_fnc_terrainSort;
+private _pos = [[["Altis", [16019.5,16952.9,0]], ["Tanoa", [11074.2,11501.5,0.00137329]]]] call MPServer_fnc_terrainSort;
 private _dome = nearestObject [_pos,"Land_Dome_Big_F"];
 private _rsb = nearestObject [_pos,_vaultHouse];
 private _lifeConfig = missionConfigFile >> "Life_Settings";
@@ -171,11 +171,11 @@ _dome allowDamage false;
 _rsb allowDamage false;
 
 if _resetAfterRestart then{
-    ["CALL", "resetFedVault"]call life_fnc_database_request;
+    ["CALL", "resetFedVault"]call MPServer_fnc_database_request;
 }else{
-    private _queryRes = ["READ", "servers",[["vault"],[["serverID",["DB","INT",call life_var_serverID] call life_fnc_database_parse]]],true] call life_fnc_database_request;
+    private _queryRes = ["READ", "servers",[["vault"],[["serverID",["DB","INT",call life_var_serverID] call MPServer_fnc_database_parse]]],true] call MPServer_fnc_database_request;
 
-    private _vault = ["GAME","INT",_queryRes param [0, 0]] call life_fnc_database_parse;
+    private _vault = ["GAME","INT",_queryRes param [0, 0]] call MPServer_fnc_database_parse;
 
     if(_vault > 0)then{
         _startGold = _vault;

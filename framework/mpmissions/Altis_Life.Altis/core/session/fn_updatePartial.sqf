@@ -58,4 +58,4 @@ switch (_mode) do {
     };
 };
 
-_packet remoteExecCall ["life_fnc_updatePartial",RSERV];
+_packet remoteExecCall ["MPServer_fnc_updatePartial",RSERV];

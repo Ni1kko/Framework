@@ -20,7 +20,7 @@ if (life_var_cash < _ticketPrice) exitWith {hint "You don't have enough money to
 
 private _return = true;
 private _bonusBall = true;
-private _ticketNumbers = [] call life_fnc_lottery_generateTicket;
+private _ticketNumbers = [] call MPServer_fnc_lottery_generateTicket;
 
 if(count _ticketNumbers isNotEqualTo _ticketLength)exitWith{hint "Error: Not enough numbers to submit lottery Ticket!"; false}; 
 
@@ -31,9 +31,9 @@ if(_bonusBall) then {
 	//-- 0 = no bonus ball | 1-99 = bonus ball
 	private _bonusBallNumber = [] call life_fnc_lottery_generateBonusBall; 
 
-	[player, _ticketNumbers, _bonusBallNumber] remoteExec ["life_fnc_lottery_buyTicket",2];
+	[player, _ticketNumbers, _bonusBallNumber] remoteExec ["MPServer_fnc_lottery_buyTicket",2];
 }else{
-	[player, _ticketNumbers, 0] remoteExec ["life_fnc_lottery_buyTicket",2];
+	[player, _ticketNumbers, 0] remoteExec ["MPServer_fnc_lottery_buyTicket",2];
 };
 
 _return

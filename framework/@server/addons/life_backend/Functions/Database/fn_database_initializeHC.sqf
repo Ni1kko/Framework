@@ -28,7 +28,7 @@ if(count _headlessclients >= 1)exitWith
 			if !(_isHeadless)exitWith{true};
 
 			//add hc to server array
-			format["Headless client [%1] avaliable", _steamID] call life_fnc_database_systemlog;
+			format["Headless client [%1] avaliable", _steamID] call MPServer_fnc_database_systemlog;
 			extdb_var_database_headless_clients pushBackUnique [_steamID,_ownerID];
 			publicVariable "extdb_var_database_headless_clients";
 
@@ -60,7 +60,7 @@ if(count _headlessclients >= 1)exitWith
 			private _isHeadless = _steamID in _headlessClients;
 
 			if !(_isHeadless)exitWith{true};
-			format["Headless client [%1] left (OR) lost connection. HC is no longer avaliable", _steamID] call life_fnc_database_systemlog;
+			format["Headless client [%1] left (OR) lost connection. HC is no longer avaliable", _steamID] call MPServer_fnc_database_systemlog;
 
 			private _var = format ["extdb_var_headless_%1_JIP",_steamID]; 
 			private _jip = missionNamespace getVariable [_var,-100];
@@ -79,12 +79,12 @@ if(count _headlessclients >= 1)exitWith
 
 	//--- Log
 	{
-		format["Waiting for headless client [%1] to connect", _x] call life_fnc_database_systemlog;
+		format["Waiting for headless client [%1] to connect", _x] call MPServer_fnc_database_systemlog;
 	} forEach _headlessclients;
 
 	true
 };
 
-"No headless clients defined" call life_fnc_database_systemlog;
+"No headless clients defined" call MPServer_fnc_database_systemlog;
 
 false

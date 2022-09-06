@@ -59,10 +59,10 @@ if ((_curObject isKindOf "B_supplyCrate_F" || _curObject isKindOf "Box_IND_Grena
     };
 };
 
-private _vaultHouse = [[["Altis", "Land_Research_house_V1_F"], ["Tanoa", "Land_Medevac_house_V1_F"]]] call life_fnc_terrainSort;
+private _vaultHouse = [[["Altis", "Land_Research_house_V1_F"], ["Tanoa", "Land_Medevac_house_V1_F"]]] call MPServer_fnc_terrainSort;
 private _altisArray = [16019.5,16952.9,0];
 private _tanoaArray = [11074.2,11501.5,0.00137329];
-private _pos = [[["Altis", _altisArray], ["Tanoa", _tanoaArray]]] call life_fnc_terrainSort;
+private _pos = [[["Altis", _altisArray], ["Tanoa", _tanoaArray]]] call MPServer_fnc_terrainSort;
 
 //-- Houses
 if (_curObject isKindOf "House_F" && {player distance _curObject < 12} || ((nearestObject [_pos,"Land_Dome_Big_F"]) isEqualTo _curObject || (nearestObject [_pos,_vaultHouse]) isEqualTo _curObject)) exitWith {
@@ -117,11 +117,11 @@ if (isPlayer _curObject && _curObject isKindOf "CAManBase") then {
     } else {
         //OK, it wasn't a vehicle so let's see what else it could be?
         if ((typeOf _curObject) in _miscItems) then {
-            [_curObject,player,false] remoteExecCall ["life_fnc_pickupAction",RSERV];
+            [_curObject,player,false] remoteExecCall ["MPServer_fnc_pickupAction",RSERV];
         } else {
             //It wasn't a misc item so is it money?
             if ((typeOf _curObject) isEqualTo "Land_Money_F" && {!(_curObject getVariable ["inUse",false])}) then {
-                [_curObject,player,true] remoteExecCall ["life_fnc_pickupAction",RSERV];
+                [_curObject,player,true] remoteExecCall ["MPServer_fnc_pickupAction",RSERV];
             };
         };
     };

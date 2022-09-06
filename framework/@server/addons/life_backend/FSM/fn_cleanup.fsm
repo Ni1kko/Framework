@@ -94,7 +94,7 @@ class FSM
                          "          _query = format [""UPDATE vehicles SET alive='0' WHERE pid='%1' AND plate='%2'"",_uid,_plate];" \n
                          "          _query spawn {" \n
                          "              " \n
-                         "              _thread = [_this,1] call life_fnc_database_rawasync_request;" \n
+                         "              _thread = [_this,1] call MPServer_fnc_database_rawasync_request;" \n
                          "          };" \n
                          "      };" \n
                          "      if (!isNil ""_x"" && {!isNull _x}) then {" \n
@@ -113,7 +113,7 @@ class FSM
                          "          _query = format [""UPDATE vehicles SET alive='0' WHERE pid='%1' AND plate='%2'"",_uid,_plate];" \n
                          "          _query spawn {" \n
                          "              " \n
-                         "              _thread = [_this,1] call life_fnc_database_rawasync_request;" \n
+                         "              _thread = [_this,1] call MPServer_fnc_database_rawasync_request;" \n
                          "          };" \n
                          "      };" \n
                          "      if (!isNil ""_x"" && {!isNull _x}) then {" \n

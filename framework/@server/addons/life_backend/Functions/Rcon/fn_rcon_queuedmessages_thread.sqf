@@ -11,7 +11,7 @@ while {true} do {
 		//--- Send queued messages
 		{
 			//--- broadcast queued message
-			format["#beserver Say -1 %1",_x] call life_fnc_rcon_sendCommand;
+			format["#beserver Say -1 %1",_x] call MPServer_fnc_rcon_sendCommand;
 			
 			//--- remove from queue
 			life_var_rcon_messagequeue deleteAt _forEachIndex;

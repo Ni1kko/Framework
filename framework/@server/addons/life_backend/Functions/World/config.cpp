@@ -16,7 +16,7 @@ class CfgWorld
 
 class CfgFunctions 
 {
-    class Life 
+    class MPServer 
     {
         class World_Functions
         {

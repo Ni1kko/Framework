@@ -29,7 +29,7 @@ if (_action) then {
     if (count extdb_var_database_headless_clients > 0) then {
         [4,_group] remoteExecCall ["HC_fnc_updateGang",extdb_var_database_headless_client];
     } else {
-        [4,_group] remoteExecCall ["life_fnc_updateGang",RSERV];
+        [4,_group] remoteExecCall ["MPServer_fnc_updateGang",RSERV];
     };
 
 } else {
@@ -40,7 +40,7 @@ if (_action) then {
     if (count extdb_var_database_headless_clients > 0) then {
         [4,_group] remoteExecCall ["HC_fnc_updateGang",extdb_var_database_headless_client];
     } else {
-        [4,_group] remoteExecCall ["life_fnc_updateGang",RSERV];
+        [4,_group] remoteExecCall ["MPServer_fnc_updateGang",RSERV];
     };
 
 };

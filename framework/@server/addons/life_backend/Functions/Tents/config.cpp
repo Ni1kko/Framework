@@ -17,7 +17,7 @@ class CfgTents
 
 class CfgFunctions 
 {
-    class Life 
+    class MPServer 
     {
         class Tent_Functions
         {

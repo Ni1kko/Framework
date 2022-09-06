@@ -12,7 +12,7 @@ private _playableSlotsNumber = 0;
 }forEach[east,west,independent,civilian];
 
 for "_i" from 0 to _playableSlotsNumber do {
-	[_i] call life_fnc_rcon_kick;
+	[_i] call MPServer_fnc_rcon_kick;
 };
 
 true

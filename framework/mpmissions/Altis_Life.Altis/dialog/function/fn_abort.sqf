@@ -26,7 +26,7 @@ for "_idd" from 140 to 46 do {
     uiSleep 2;
 
     //--- Request server to clean up player
-    [player] remoteExec ["life_fnc_cleanupRequest",2];
+    [player] remoteExec ["MPServer_fnc_cleanupRequest",2];
     ["Server Cleanup", "", "red"] call life_fnc_setLoadingText;
     uiSleep 2;
 

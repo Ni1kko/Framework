@@ -11,7 +11,7 @@ private _result = ["Are you sure you wish too deploy tent here?", "Deploy Tent",
 
 if (_result) then {
 	private _position = getPos player;
-	[player,_type,_position] remoteExec ["life_fnc_tents_buildRequest",2];
+	[player,_type,_position] remoteExec ["MPServer_fnc_tents_buildRequest",2];
 } else {
 	systemChat "Tent depolyment aborted.";
 };

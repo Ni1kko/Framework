@@ -16,7 +16,7 @@ class CfgMySQL
 
 class CfgFunctions 
 {
-    class Life
+    class MPServer
     {
         class MySQL_Functions
         {

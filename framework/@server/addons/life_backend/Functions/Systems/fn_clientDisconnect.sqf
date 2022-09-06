@@ -20,7 +20,7 @@ if (isNil "HC_UID" || {!(_uid isEqualTo HC_UID)}) then {
     private _position = getPosATL _unit;
     if ((getMarkerPos "respawn_civilian" distance _position) > 300) then {
         private _alive = alive _unit;
-        if (count extdb_var_database_headless_clients > 0) then {[_uid,civilian,_alive,4,_position] remoteExec ["HC_fnc_updatePartial",extdb_var_database_headless_client]} else {[_uid,civilian,_alive,4,_position] spawn life_fnc_updatePartial};
+        if (count extdb_var_database_headless_clients > 0) then {[_uid,civilian,_alive,4,_position] remoteExec ["HC_fnc_updatePartial",extdb_var_database_headless_client]} else {[_uid,civilian,_alive,4,_position] spawn MPServer_fnc_updatePartial};
     };
 };
 
@@ -46,4 +46,4 @@ private _containers = nearestObjects[_unit,["WeaponHolderSimulated"],5];
 {deleteVehicle _x} forEach _containers;
 deleteVehicle _unit;
 
-[_uid] spawn life_fnc_houseCleanup;
+[_uid] spawn MPServer_fnc_houseCleanup;

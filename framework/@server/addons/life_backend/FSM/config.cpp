@@ -11,7 +11,7 @@ class CfgPatches
 
 class CfgFunctions 
 {
-    class LifeFSM_Functions
+    class MPServerFSM
     {
         class FiniteStateMachine
         {

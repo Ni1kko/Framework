@@ -17,5 +17,5 @@ if (isNil "_criminal") exitWith {};
 if (count extdb_var_database_headless_clients > 0) then {
     [player,_criminal] remoteExec ["HC_fnc_wantedCrimes",extdb_var_database_headless_client];
 } else {
-    [player,_criminal] remoteExec ["life_fnc_wantedCrimes",RSERV];
+    [player,_criminal] remoteExec ["MPServer_fnc_wantedCrimes",RSERV];
 };

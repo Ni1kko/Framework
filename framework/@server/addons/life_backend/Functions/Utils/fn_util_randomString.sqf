@@ -3,7 +3,7 @@
 	## https://github.com/Ni1kko/Framework
 */
 
-//call life_fnc_util_randomString
+//call MPServer_fnc_util_randomString
 
 private _createvar = compile '
 	private _numbers = "0987654321";

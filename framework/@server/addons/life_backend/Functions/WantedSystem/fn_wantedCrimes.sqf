@@ -16,11 +16,11 @@ params [
 ];
 
 private _query = format ["SELECT wantedCrimes, wantedBounty FROM wanted WHERE active='1' AND wantedID='%1'",_criminal select 0];
-private _queryResult = [_query,2] call life_fnc_database_rawasync_request;
+private _queryResult = [_query,2] call MPServer_fnc_database_rawasync_request;
 
 _ret = owner _ret;
 
-private _type = [_queryResult select 0] call life_fnc_mresToArray;
+private _type = [_queryResult select 0] call MPServer_fnc_mresToArray;
 if (_type isEqualType "") then {_type = call compile format ["%1", _type];};
 
 private _crimesArr = [];

@@ -49,7 +49,7 @@ if (!(_sellPrice isEqualType 0) || _sellPrice < 1) then {_sellPrice = 500;};
 if (count extdb_var_database_headless_clients > 0) then {
     [_vid,_pid,_sellPrice,player,life_garage_type] remoteExecCall ["HC_fnc_vehicleDelete",extdb_var_database_headless_client];
 } else {
-    [_vid,_pid,_sellPrice,player,life_garage_type] remoteExecCall ["life_fnc_vehicleDelete",RSERV];
+    [_vid,_pid,_sellPrice,player,life_garage_type] remoteExecCall ["MPServer_fnc_vehicleDelete",RSERV];
 };
 
 hint format [localize "STR_Garage_SoldCar",[_sellPrice] call life_fnc_numberText];

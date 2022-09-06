@@ -26,23 +26,23 @@ switch (param [1,-1]) do {
     case 0: {
         ["UPDATE", "players", [
             [//What
-                ["cash",["DB","A2NET", param [2,0]] call life_fnc_database_parse]
+                ["cash",["DB","A2NET", param [2,0]] call MPServer_fnc_database_parse]
             ],
             [//Where
                 ["BEGuid",str _BEGuid]
             ]
-        ]]call life_fnc_database_request;
+        ]]call MPServer_fnc_database_request;
     };
 
     case 1: { 
         ["UPDATE", "bankaccounts", [
             [//What
-                ["funds",["DB","A2NET", param [2,0]] call life_fnc_database_parse]
+                ["funds",["DB","A2NET", param [2,0]] call MPServer_fnc_database_parse]
             ],
             [//Where
                 ["BEGuid",str _BEGuid]
             ]
-        ]]call life_fnc_database_request;
+        ]]call MPServer_fnc_database_request;
     };
 
     case 2: {
@@ -52,12 +52,12 @@ switch (param [1,-1]) do {
                     case west: {"cop_licenses"};
                     case independent: {"med_licenses"};
                     default {"civ_licenses"};
-                }),["DB","ARRAY", ((param [2,0]) apply{[_x#0,["DB","BOOL", _x#1] call life_fnc_database_parse]})] call life_fnc_database_parse]	
+                }),["DB","ARRAY", ((param [2,0]) apply{[_x#0,["DB","BOOL", _x#1] call MPServer_fnc_database_parse]})] call MPServer_fnc_database_parse]	
             ],
             [//Where
                 ["BEGuid",str _BEGuid]
             ]
-        ]]call life_fnc_database_request;
+        ]]call MPServer_fnc_database_request;
     };
 
     case 3: {
@@ -67,57 +67,57 @@ switch (param [1,-1]) do {
                     case west: {"cop_gear"};
                     case independent: {"med_gear"};
                     default {"civ_gear"};
-                }),["DB","ARRAY", param [2,[]]] call life_fnc_database_parse]	
+                }),["DB","ARRAY", param [2,[]]] call MPServer_fnc_database_parse]	
             ],
             [//Where
                 ["BEGuid",str _BEGuid]
             ]
-        ]]call life_fnc_database_request;
+        ]]call MPServer_fnc_database_request;
     };
 
     case 4: {
         ["UPDATE", "players", [
             [//What
-                ["alive",   ["DB","BOOL", param [2,false]] call life_fnc_database_parse],	
-                ["position",["DB","POSITION", param [3,[]]] call life_fnc_database_parse]	
+                ["alive",   ["DB","BOOL", param [2,false]] call MPServer_fnc_database_parse],	
+                ["position",["DB","POSITION", param [3,[]]] call MPServer_fnc_database_parse]	
             ],
             [//Where
                 ["BEGuid",str _BEGuid]
             ]
-        ]]call life_fnc_database_request;
+        ]]call MPServer_fnc_database_request;
     };
 
     case 5: {
         ["UPDATE", "players", [
             [//What
-                ["arrested",["DB","BOOL", param [2,0]] call life_fnc_database_parse]
+                ["arrested",["DB","BOOL", param [2,0]] call MPServer_fnc_database_parse]
             ],
             [//Where
                 ["BEGuid",str _BEGuid]
             ]
-        ]]call life_fnc_database_request;
+        ]]call MPServer_fnc_database_request;
     };
 
     case 6: {
         ["UPDATE", "players", [
             [//What
-                ["cash",["DB","A2NET", param [2,0]] call life_fnc_database_parse]
+                ["cash",["DB","A2NET", param [2,0]] call MPServer_fnc_database_parse]
             ],
             [//Where
                 ["BEGuid",str _BEGuid]
             ]
-        ]]call life_fnc_database_request;
+        ]]call MPServer_fnc_database_request;
         ["UPDATE", "bankaccounts", [
             [//What
-                ["funds",["DB","A2NET", param [3,0]] call life_fnc_database_parse]
+                ["funds",["DB","A2NET", param [3,0]] call MPServer_fnc_database_parse]
             ],
             [//Where
             ["BEGuid",str _BEGuid]
             ]
-        ]]call life_fnc_database_request;
+        ]]call MPServer_fnc_database_request;
     };
 
     case 7: {
-        [_uid,_side,param [2,0],0] call life_fnc_keyManagement;
+        [_uid,_side,param [2,0],0] call MPServer_fnc_keyManagement;
     };
 };

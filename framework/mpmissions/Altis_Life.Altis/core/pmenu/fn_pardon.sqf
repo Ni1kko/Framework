@@ -21,5 +21,5 @@ if (_data isEqualTo []) exitWith {};
 if (count extdb_var_database_headless_clients > 0) then {
     [(_data select 0)] remoteExecCall ["HC_fnc_wantedRemove",extdb_var_database_headless_client];
 } else {
-    [(_data select 0)] remoteExecCall ["life_fnc_wantedRemove",RSERV];
+    [(_data select 0)] remoteExecCall ["MPServer_fnc_wantedRemove",RSERV];
 };

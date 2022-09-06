@@ -3,7 +3,7 @@
 	## https://github.com/Ni1kko/Framework
 */
 
-if(!canSuspend)exitWith{_this spawn life_fnc_lottery_init};
+if(!canSuspend)exitWith{_this spawn MPServer_fnc_lottery_init};
 
 waitUntil {!isNil "life_var_currentDay"};
 diag_log "[Life Lottery] Initializing...";
@@ -33,7 +33,7 @@ life_var_lotto_config = compileFinal str [
 //-- Boradcast some data to all clients
 {publicVariable _x}forEach [
 	"life_var_lotto_config",
-	"life_fnc_lottery_generateTicket",
+	"MPServer_fnc_lottery_generateTicket",
 	"life_fnc_lottery_generateBonusBall"
 ];
 
@@ -43,7 +43,7 @@ _vaultObject = missionNamespace getVariable ["fed_bank",objNull];
 
 //--
 if _ticketsReclaim then{
-	[] spawn life_fnc_lottery_checkOldTickets;
+	[] spawn MPServer_fnc_lottery_checkOldTickets;
 };
 
 diag_log "[Life Lottery] Initialized!";
@@ -57,16 +57,16 @@ if(count _ticketDrawTimes > 0)then
 	{
 		waitUntil {
 			uiSleep 30;
-			private _timeInfo = [] call life_fnc_lottery_getTimeInfo;
+			private _timeInfo = [] call MPServer_fnc_lottery_getTimeInfo;
 			_timeInfo params ["_timeRemaining","_configIndex","_configIndexValid"];
 			_timeRemaining <= 0 AND _configIndexValid
 		};
 
-		[_vaultObject] spawn life_fnc_lottery_pickwinners;
+		[_vaultObject] spawn MPServer_fnc_lottery_pickwinners;
 
 		waitUntil {
 			uiSleep (5 * 60);
-			private _timeInfo = [] call life_fnc_lottery_getTimeInfo; 
+			private _timeInfo = [] call MPServer_fnc_lottery_getTimeInfo; 
 			(_timeInfo#0) > 0
 		};
 	};

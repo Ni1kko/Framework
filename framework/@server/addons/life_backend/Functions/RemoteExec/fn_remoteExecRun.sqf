@@ -11,15 +11,15 @@ private _queryRemoteExec = ["READ", "remote_exec",
 	[
 		["jobID", "expression", "targets"],
 		[
-			["completed", ["DB","BOOL", false] call life_fnc_database_parse],
-			["serverID",["DB","INT",call life_var_serverID] call life_fnc_database_parse]
+			["completed", ["DB","BOOL", false] call MPServer_fnc_database_parse],
+			["serverID",["DB","INT",call life_var_serverID] call MPServer_fnc_database_parse]
 		]
 	]
-] call life_fnc_database_request;
+] call MPServer_fnc_database_request;
 
 if(count _queryRemoteExec > 0)then
 {
-	["CALL", "completeRemoteExecRequests"] call life_fnc_database_request;
+	["CALL", "completeRemoteExecRequests"] call MPServer_fnc_database_request;
 
 	{
 		_x params ["_jobID", "_expression", "_targets"];

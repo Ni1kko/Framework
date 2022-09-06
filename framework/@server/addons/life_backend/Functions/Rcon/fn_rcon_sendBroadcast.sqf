@@ -3,7 +3,7 @@
 	## https://github.com/Ni1kko/Framework
 */
 
-//"some message" call life_fnc_rcon_sendBroadcast
+//"some message" call MPServer_fnc_rcon_sendBroadcast
 if(!isServer)exitwith{false};
 
 params [

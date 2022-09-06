@@ -16,10 +16,10 @@ params [
 if (_uid isEqualTo "" ||  {_name isEqualTo ""}) exitWith {};
 
 _wantedCheck = format ["SELECT wantedName FROM wanted WHERE wantedID='%1'",_uid];
-_wantedQuery = [_wantedCheck,2] call life_fnc_database_rawasync_request;
+_wantedQuery = [_wantedCheck,2] call MPServer_fnc_database_rawasync_request;
 if (count _wantedQuery isEqualTo 0) exitWith {};
 
 if !(_name isEqualTo (_wantedQuery select 0)) then {
     _query = format ["UPDATE wanted SET wantedName='%1' WHERE wantedID='%2'",_name,_uid];
-    [_query,2] call life_fnc_database_rawasync_request;
+    [_query,2] call MPServer_fnc_database_rawasync_request;
 };

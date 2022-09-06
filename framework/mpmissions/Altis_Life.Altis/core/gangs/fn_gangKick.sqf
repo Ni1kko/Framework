@@ -23,12 +23,12 @@ if (!(_members isEqualType [])) exitWith {};
 _members = _members - [_unitID];
 group player setVariable ["gang_members",_members,true];
 
-[_unit,group player] remoteExec ["life_fnc_clientGangKick",_unit]; //Boot that bitch!
+[_unit,group player] remoteExec ["MPServer_fnc_clientGangKick",_unit]; //Boot that bitch!
 
 if (count extdb_var_database_headless_clients > 0) then {
     [4,group player] remoteExec ["HC_fnc_updateGang",extdb_var_database_headless_client]; //Update the database.
 } else {
-    [4,group player] remoteExec ["life_fnc_updateGang",RSERV]; //Update the database.
+    [4,group player] remoteExec ["MPServer_fnc_updateGang",RSERV]; //Update the database.
 };
 
 [] call life_fnc_gangMenu;

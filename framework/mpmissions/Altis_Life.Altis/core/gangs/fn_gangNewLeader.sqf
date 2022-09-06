@@ -27,12 +27,12 @@ if (_action) then {
     if (_unitID isEqualTo "") exitWith {hint localize "STR_GNOTF_badUID";}; //Unlikely?
     group player setVariable ["gang_owner",_unitID,true];
     group player selectLeader _unit;
-    [_unit,group player] remoteExec ["life_fnc_clientGangLeader",_unit]; //Boot that bitch!
+    [_unit,group player] remoteExec ["MPServer_fnc_clientGangLeader",_unit]; //Boot that bitch!
 
     if (count extdb_var_database_headless_clients > 0) then {
         [3,group player] remoteExec ["HC_fnc_updateGang",extdb_var_database_headless_client]; //Update the database.
     } else {
-        [3,group player] remoteExec ["life_fnc_updateGang",RSERV]; //Update the database.
+        [3,group player] remoteExec ["MPServer_fnc_updateGang",RSERV]; //Update the database.
     };
 
 } else {

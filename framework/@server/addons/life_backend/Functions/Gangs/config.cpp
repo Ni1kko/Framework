@@ -16,7 +16,7 @@ class CfgGangs
 
 class CfgFunctions 
 {
-    class TON
+    class MPServer
     {
         class Gang_Functions
         {

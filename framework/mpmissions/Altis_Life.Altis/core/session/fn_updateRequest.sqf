@@ -27,6 +27,6 @@ private _var = format["Sync_%1_Completed_%2",round(random[1000,5000,9999]),round
     life_is_arrested,
     _alive,
     _position
-] remoteExecCall ["life_fnc_updateRequest",2];
+] remoteExecCall ["MPServer_fnc_updateRequest",2];
 
 _var

@@ -32,12 +32,12 @@ if(!_valid || _tooFar)exitWith{
 };
 
 if(_silent)then{
-	[player,_tent,_marker] remoteExec ["life_fnc_tents_packupRequest",2];
+	[player,_tent,_marker] remoteExec ["MPServer_fnc_tents_packupRequest",2];
 }else{
 	private _result = ["Are you sure you wish too packup tent?", "Packup Tent", true, true] call BIS_fnc_guiMessage;
 
 	if (_result) then { 
-		[player,_tent,_marker] remoteExec ["life_fnc_tents_packupRequest",2];
+		[player,_tent,_marker] remoteExec ["MPServer_fnc_tents_packupRequest",2];
 	} else {
 		systemChat "Tent packup aborted.";
 	}; 

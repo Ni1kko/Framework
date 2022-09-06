@@ -29,7 +29,7 @@ if(typeName _ticketNumbers isNotEqualTo "STRING") then {_ticketNumbers = ""};
 if(typeName _bonusball isNotEqualTo "STRING") then {_bonusball = ""}; 
 
 //-- Generate ticket
-if((count _ticketNumbers) isNotEqualTo _ticketLength) then {_ticketNumbers = [] call life_fnc_lottery_generateTicket};
+if((count _ticketNumbers) isNotEqualTo _ticketLength) then {_ticketNumbers = [] call MPServer_fnc_lottery_generateTicket};
 
 //-- Generate bonusball
 if(_bonusball in [""," ","NOT PURCHASED"])then{
@@ -41,12 +41,12 @@ if(_bonusball in [""," ","NOT PURCHASED"])then{
 //--- Add ticket to database
 ["CREATE", "lotteryTickets", 
 	[
-		["BEGuid", 			["DB","STRING", _BEGuid] call life_fnc_database_parse],
-		["serverID",		["DB","INT",call life_var_serverID] call life_fnc_database_parse],
-		["numbers", 		["DB","STRING", _ticketNumbers] call life_fnc_database_parse],
-		["bonusball", 		["DB","STRING", _bonusball] call life_fnc_database_parse]
+		["BEGuid", 			["DB","STRING", _BEGuid] call MPServer_fnc_database_parse],
+		["serverID",		["DB","INT",call life_var_serverID] call MPServer_fnc_database_parse],
+		["numbers", 		["DB","STRING", _ticketNumbers] call MPServer_fnc_database_parse],
+		["bonusball", 		["DB","STRING", _bonusball] call MPServer_fnc_database_parse]
 	]
-] call life_fnc_database_request;
+] call MPServer_fnc_database_request;
 
 //--- Complete sale
 [

@@ -16,7 +16,7 @@ class CfgSystems
 
 class CfgFunctions 
 {
-    class TON
+    class MPServer
     {
         class System_Functions
         {

@@ -16,7 +16,7 @@ class CfgEvents
 
 class CfgFunctions 
 {
-    class Life
+    class MPServer
     {
         class Events_Functions
         {

@@ -5,7 +5,7 @@
 
 if(!isServer)exitwith{false};
 if(life_var_antihack_networkReady)exitwith{false};
-if(isRemoteExecuted)exitwith{[remoteExecutedOwner,"RemoteExecuted `fn_antihack_setupNetwork.sqf`"] call life_fnc_rcon_ban;};
+if(isRemoteExecuted)exitwith{[remoteExecutedOwner,"RemoteExecuted `fn_antihack_setupNetwork.sqf`"] call MPServer_fnc_rcon_ban;};
 
 params[
 	["_antihack","",[""]],
@@ -21,9 +21,9 @@ private _headlessclient =objNull;
 private _compiletime = diag_tickTime;
 
 //--- Compile Antihack
-["Compiling Antihack Thread"] call life_fnc_antihack_systemlog;
+["Compiling Antihack Thread"] call MPServer_fnc_antihack_systemlog;
 _antihack = compile _antihack;
-[format["Antihack Thread Compiled... compile took %1 seconds",(diag_tickTime - _compiletime)]] call life_fnc_antihack_systemlog;
+[format["Antihack Thread Compiled... compile took %1 seconds",(diag_tickTime - _compiletime)]] call MPServer_fnc_antihack_systemlog;
 
 //--- Setup network handler
 _netVar addPublicVariableEventHandler {
@@ -44,7 +44,7 @@ _netVar addPublicVariableEventHandler {
 
 		//---
 		private _adminlvl = 0;
-		private _admins = call life_fnc_antihack_getAdmins;
+		private _admins = call MPServer_fnc_antihack_getAdmins;
 		private _BEGuid = ('BEGuid' callExtension ('get:'+_SteamID));
 		{if(_SteamID isEqualTo _x#1 || {_BEGuid isEqualTo _x#2})exitWith{_adminlvl = _x#0;}}forEach _admins;
 		
@@ -52,19 +52,19 @@ _netVar addPublicVariableEventHandler {
 		if(_adminlvl > 0 || _key in ["kick","ban","log"])then{
 			switch (_key) do {
 				case "kick": {
-					//[_value,["KICK",_SteamID]] call life_fnc_antihack_systemlog;
-					[_SteamID,_value] call life_fnc_rcon_kick;
+					//[_value,["KICK",_SteamID]] call MPServer_fnc_antihack_systemlog;
+					[_SteamID,_value] call MPServer_fnc_rcon_kick;
 				};
 				case "ban": { 
-					//[_value,["BAN",_SteamID]] call life_fnc_antihack_systemlog;
-					[_SteamID,_value] call life_fnc_rcon_ban;
+					//[_value,["BAN",_SteamID]] call MPServer_fnc_antihack_systemlog;
+					[_SteamID,_value] call MPServer_fnc_rcon_ban;
 				};
 				case "log": { 
 					private _data = [_value#2,[_value#1,_SteamID]];
 					if((_value#0) isEqualTo "ADMIN")then{
-						_data call life_fnc_admin_systemlog;
+						_data call MPServer_fnc_admin_systemlog;
 					}else{
-						_data call life_fnc_antihack_systemlog;
+						_data call MPServer_fnc_antihack_systemlog;
 					};
 				};
 				case "run-server": {
@@ -92,8 +92,8 @@ _netVar addPublicVariableEventHandler {
 				};
 			};
 		}else{
-			[format['Attempted to execute restricted function %1 = %2',_this#0,_this#1],["HACK",_SteamID]] call life_fnc_antihack_systemlog;
-			[_SteamID,format['Attempted using restricted antihack network function `%1`',_key]] call life_fnc_rcon_kick;
+			[format['Attempted to execute restricted function %1 = %2',_this#0,_this#1],["HACK",_SteamID]] call MPServer_fnc_antihack_systemlog;
+			[_SteamID,format['Attempted using restricted antihack network function `%1`',_key]] call MPServer_fnc_rcon_kick;
 		};
 	};
 

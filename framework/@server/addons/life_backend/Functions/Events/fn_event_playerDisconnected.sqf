@@ -25,12 +25,12 @@ if(_playerIndex isNotEqualTo -1)then{
         //--- Send query
         ["UPDATE", "servers", [
             [
-                ["currentplayers", ["DB","ARRAY",life_var_serverCurrentPlayers] call life_fnc_database_parse]
+                ["currentplayers", ["DB","ARRAY",life_var_serverCurrentPlayers] call MPServer_fnc_database_parse]
             ],
             [
-                ["serverID", ["DB","INT", (call life_var_serverID)] call life_fnc_database_parse]
+                ["serverID", ["DB","INT", (call life_var_serverID)] call MPServer_fnc_database_parse]
             ]
-        ]]call life_fnc_database_request;
+        ]]call MPServer_fnc_database_request;
         diag_log format ["[Player Logout]: `%1` - (%2) - (%3) ", _name, _BEGuid, _steamID];
    };
 };

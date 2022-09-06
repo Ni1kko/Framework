@@ -86,21 +86,21 @@ private _items = (_trunk#0) apply {
 
 //--- Database elements to update
 private _queryElements = [
-    ["active",["DB","BOOL", false] call life_fnc_database_parse], 
-    ["inventory",["DB","ARRAY", [_items, _totalweight]] call life_fnc_database_parse], 
-    ["gear",["DB","ARRAY", _cargo] call life_fnc_database_parse], 
-    ["fuel",["DB","INT", _fuel] call life_fnc_database_parse], 
-    ["damage",["DB","ARRAY", _damage] call life_fnc_database_parse]
+    ["active",["DB","BOOL", false] call MPServer_fnc_database_parse], 
+    ["inventory",["DB","ARRAY", [_items, _totalweight]] call MPServer_fnc_database_parse], 
+    ["gear",["DB","ARRAY", _cargo] call MPServer_fnc_database_parse], 
+    ["fuel",["DB","INT", _fuel] call MPServer_fnc_database_parse], 
+    ["damage",["DB","ARRAY", _damage] call MPServer_fnc_database_parse]
 ];
 
 //--- check if the vehicle was impounded by cop and were they anything illegal in the trunk
 if (_impound AND _blacklist AND side _unit isEqualTo west) then {
-    private _profileQuery = [format ["SELECT name FROM players WHERE pid='%1'", _uid], 2] call life_fnc_database_rawasync_request;
+    private _profileQuery = [format ["SELECT name FROM players WHERE pid='%1'", _uid], 2] call MPServer_fnc_database_rawasync_request;
     private _profileName = _profileQuery#0; 
-    [_uid, _profileName, "481"] call life_fnc_wantedAdd;
-    _queryElements pushBack ["blacklist",["DB","BOOL", true] call life_fnc_database_parse];
+    [_uid, _profileName, "481"] call MPServer_fnc_wantedAdd;
+    _queryElements pushBack ["blacklist",["DB","BOOL", true] call MPServer_fnc_database_parse];
     if (_vehicleID > 0) then { 
-        _queryElements pushBack ["impounded",["DB","BOOL", true] call life_fnc_database_parse];
+        _queryElements pushBack ["impounded",["DB","BOOL", true] call MPServer_fnc_database_parse];
     };
 };
 
@@ -114,21 +114,21 @@ if (!isNil "_vehicle" && {!isNull _vehicle}) then {
 ["UPDATE", "vehicles", [
     _queryElements,
     [
-        ["pid",["DB","STRING", _uid] call life_fnc_database_parse],
-        ["plate",["DB","STRING", _plate] call life_fnc_database_parse]
+        ["pid",["DB","STRING", _uid] call MPServer_fnc_database_parse],
+        ["plate",["DB","STRING", _plate] call MPServer_fnc_database_parse]
     ]
-]]call life_fnc_database_request;
+]]call MPServer_fnc_database_request;
 
 //--- Impounded
-if (["impounded",["DB","BOOL", true] call life_fnc_database_parse] in _queryElements) exitWith
+if (["impounded",["DB","BOOL", true] call MPServer_fnc_database_parse] in _queryElements) exitWith
 {
     ["CREATE", "impounded_vehicles", 
         [
-            ["vehicle_id",				["DB","INT", _vehicleID] call life_fnc_database_parse],
-            ["impound_by_guid", 		["DB","STRING", ('BEGuid' callExtension ("get:"+(getPlayerUID _unit)))] call life_fnc_database_parse],
-            ["impound_fee", 			["DB","INT", _impoundFee] call life_fnc_database_parse]
+            ["vehicle_id",				["DB","INT", _vehicleID] call MPServer_fnc_database_parse],
+            ["impound_by_guid", 		["DB","STRING", ('BEGuid' callExtension ("get:"+(getPlayerUID _unit)))] call MPServer_fnc_database_parse],
+            ["impound_fee", 			["DB","INT", _impoundFee] call MPServer_fnc_database_parse]
         ]
-    ] call life_fnc_database_request;
+    ] call MPServer_fnc_database_request;
 
     life_impound_inuse = false;
     (owner _unit) publicVariableClient "life_impound_inuse";

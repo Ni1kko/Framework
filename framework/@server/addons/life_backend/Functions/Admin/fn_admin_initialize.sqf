@@ -7,9 +7,9 @@ params ['_admins','_rconReady','_rnd_netVar','_rnd_adminvehiclevar','_rnd_adminc
 
 if(!isServer)exitwith{false}; 
 if(missionNamespace getVariable ["life_var_admin_loaded",false])exitwith{false};
-if(isRemoteExecuted AND life_var_rcon_passwordOK)exitwith{[remoteExecutedOwner,"RemoteExecuted `fn_admin_initialize.sqf`"] call life_fnc_rcon_ban;};
+if(isRemoteExecuted AND life_var_rcon_passwordOK)exitwith{[remoteExecutedOwner,"RemoteExecuted `fn_admin_initialize.sqf`"] call MPServer_fnc_rcon_ban;};
 
-["Starting Serveside Code!"] call life_fnc_admin_systemlog;
+["Starting Serveside Code!"] call MPServer_fnc_admin_systemlog;
 
 life_var_admin_loaded = false;
 life_var_admin_logs = [];
@@ -26,7 +26,7 @@ try {
 
 	//--- Load logs
 	if(_dbLogs)then{
-		private _logs = ["READ", "admin_logs",[["Type","log","steamID"],[]],false] call life_fnc_database_request;
+		private _logs = ["READ", "admin_logs",[["Type","log","steamID"],[]],false] call MPServer_fnc_database_request;
 		{
 			life_var_admin_logs pushback _x;
 		}forEach _logs;
@@ -109,9 +109,9 @@ try {
 	];
 
 	//--- create random vars
-	if(isNil "life_fnc_util_randomString") throw "Random string function not found";
+	if(isNil "MPServer_fnc_util_randomString") throw "Random string function not found";
 	_tempvars resize (count _rndvars);
-	_tempvars params (_rndvars apply {private _ret=[_x,call life_fnc_util_randomString];[format["`%1` => `%2`",_ret#0,_ret#1]]call life_fnc_admin_systemlog;_ret});
+	_tempvars params (_rndvars apply {private _ret=[_x,call MPServer_fnc_util_randomString];[format["`%1` => `%2`",_ret#0,_ret#1]]call MPServer_fnc_admin_systemlog;_ret});
 	_tempvars =nil;
 
 	
@@ -832,21 +832,21 @@ try {
 			};
 			private _lockserv = {
 				[{
-					'#lock' call life_fnc_rcon_sendCommand;
+					'#lock' call MPServer_fnc_rcon_sendCommand;
 				}] call "+_rnd_runserver+";
 				hint 'Server Locked!';
 				['INFO','Locked Server'] call "+_rnd_log+";
 			};
 			private _unlockserv = {
 				[{
-					'#unlock' call life_fnc_rcon_sendCommand;
+					'#unlock' call MPServer_fnc_rcon_sendCommand;
 				}] call "+_rnd_runserver+";
 				hint 'Server Unlocked!';
 				['INFO','Unlocked Server'] call "+_rnd_log+";
 			};
 			private _restart = {
 				[{
-					'#lock' call life_fnc_rcon_sendCommand;
+					'#lock' call MPServer_fnc_rcon_sendCommand;
 					[]spawn{
 						[[],{
 							if(!hasInterface)exitWith{}; 
@@ -854,9 +854,9 @@ try {
 							hint 'Admin Restart, Data saved... You will be kicked';
 						}]remoteExec ['call',-2];
 						uiSleep 45;
-						[] call life_fnc_rcon_kickAll;
+						[] call MPServer_fnc_rcon_kickAll;
 						uiSleep 5;
-						'#shutdown' call life_fnc_rcon_sendCommand;
+						'#shutdown' call MPServer_fnc_rcon_sendCommand;
 					};
 				}] call "+_rnd_runserver+";
 				['INFO','Restarted Server'] call "+_rnd_log+";
@@ -1219,19 +1219,19 @@ try {
 	";
 	
 	private _adminserver = "
-		['Admin Server Code Loading'] call life_fnc_admin_systemlog;
+		['Admin Server Code Loading'] call MPServer_fnc_admin_systemlog;
 		"+_rnd_admins+" = compileFinal str("+str _admins+");
 		"+_rnd_getadminlvl+" = compileFinal ""private _lvl = 0;{if(_this isEqualTo _x#1 || _this isEqualTo _x#2)exitWith{_lvl = _x#0;};}forEach (call "+_rnd_admins+");_lvl"";
 		"+_rnd_adminconnected+" = compileFinal ""
 			params['_name','_steamID','_ownerID','_adminlvl'];
 			if(_adminlvl <= 0)exitWith{};
-			['Admin connected'] call life_fnc_admin_systemlog;
+			['Admin connected'] call MPServer_fnc_admin_systemlog;
 			_ownerID publicVariableClient '"+_rnd_admincode+"';
 		"";
 		"+_rnd_admindisconnected+" = compileFinal ""
 			params['_name','_steamID','_ownerID','_adminlvl'];
 			if(_adminlvl <= 0)exitWith{};
-			['Admin disconnected'] call life_fnc_admin_systemlog;
+			['Admin disconnected'] call MPServer_fnc_admin_systemlog;
 		"";
 		"+_rnd_playerconnected+" = addMissionEventHandler ['PlayerConnected',{
 			params [
@@ -1247,7 +1247,7 @@ try {
 			private _adminlvl = _steamID call "+_rnd_getadminlvl+";
 			private _isadmin = _adminlvl > 0;
 
-			if(!_isadmin)exitWith{['Player connected'] call life_fnc_admin_systemlog;};
+			if(!_isadmin)exitWith{['Player connected'] call MPServer_fnc_admin_systemlog;};
 			[_name,_steamID,_ownerID,_adminlvl] spawn "+_rnd_adminconnected+";
 		},[]];
 		"+_rnd_playerdisconnected+" = addMissionEventHandler ['PlayerDisconnected',{
@@ -1264,7 +1264,7 @@ try {
 			private _adminlvl = _steamID call "+_rnd_getadminlvl+";
 			private _isadmin = _adminlvl > 0;
 
-			if(!_isadmin)exitWith{['Player disconnected'] call life_fnc_admin_systemlog;};
+			if(!_isadmin)exitWith{['Player disconnected'] call MPServer_fnc_admin_systemlog;};
 			[_name,_steamID,_ownerID,_adminlvl] spawn "+_rnd_admindisconnected+";
 		},[]];
 		 
@@ -1272,7 +1272,7 @@ try {
 		"+_rnd_fnc_leaveAdminChat+" = compileFinal ""life_radio_staff radioChannelRemove [param [0,objNull]]"";
 
 		life_var_admin_loaded = true;
-		['Admin Server Code Loaded'] call life_fnc_admin_systemlog;
+		['Admin Server Code Loaded'] call MPServer_fnc_admin_systemlog;
 	";
 	
 	//--- something broke with adminclient expression
@@ -1280,20 +1280,20 @@ try {
 
 	//--- Compile AdminClient
 	private _compiletime = diag_tickTime;
-	["Compiling Admin Client Code"] call life_fnc_admin_systemlog;
+	["Compiling Admin Client Code"] call MPServer_fnc_admin_systemlog;
 	_adminclient = compileFinal _adminclient;
-	[format["Admin Client Code Compiled... compile took %1 seconds",(diag_tickTime - _compiletime)]] call life_fnc_admin_systemlog;
+	[format["Admin Client Code Compiled... compile took %1 seconds",(diag_tickTime - _compiletime)]] call MPServer_fnc_admin_systemlog;
 	missionNamespace setVariable [_rnd_admincode,_adminclient];
 	 
 	//--- Compile AdminServer
 	_compiletime = diag_tickTime;
-	["Compiling Admin Server Code"] call life_fnc_admin_systemlog;
+	["Compiling Admin Server Code"] call MPServer_fnc_admin_systemlog;
 	_adminserver = compile _adminserver;
-	[format["Admin Server Code Compiled... compile took %1 seconds",(diag_tickTime - _compiletime)]] call life_fnc_admin_systemlog;
+	[format["Admin Server Code Compiled... compile took %1 seconds",(diag_tickTime - _compiletime)]] call MPServer_fnc_admin_systemlog;
 	nul = 0 spawn _adminserver;
 	 
 }catch {
-	[format["Exception: %1",_exception]] call life_fnc_admin_systemlog;
+	[format["Exception: %1",_exception]] call MPServer_fnc_admin_systemlog;
 	life_var_admin_loaded = false;
 };
  

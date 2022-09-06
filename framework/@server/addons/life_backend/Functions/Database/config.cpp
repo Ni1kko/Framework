@@ -45,7 +45,7 @@ class CfgExtDB
 
 class CfgFunctions 
 {
-    class Life 
+    class MPServer 
     {
         class Database_Functions
         {

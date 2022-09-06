@@ -6,11 +6,11 @@
 waitUntil {!isNil "life_var_rcon_passwordOK"};
 
 if(!isServer)exitwith{false};
-if(!canSuspend)exitwith{[]spawn life_fnc_antihack_initialize};
+if(!canSuspend)exitwith{[]spawn MPServer_fnc_antihack_initialize};
 if(missionNamespace getVariable ["life_var_antihack_loaded",false])exitwith{false};
-if(isRemoteExecuted AND life_var_rcon_passwordOK)exitwith{[remoteExecutedOwner,"RemoteExecuted `fn_antihack_initialize.sqf`"] call life_fnc_rcon_ban;};
+if(isRemoteExecuted AND life_var_rcon_passwordOK)exitwith{[remoteExecutedOwner,"RemoteExecuted `fn_antihack_initialize.sqf`"] call MPServer_fnc_rcon_ban;};
 
-["Starting AntiHack!"] call life_fnc_antihack_systemlog;
+["Starting AntiHack!"] call MPServer_fnc_antihack_systemlog;
 
 life_var_antihack_loaded = false;
 life_var_antihack_networkReady = false;
@@ -22,7 +22,7 @@ waitUntil {isFinal "extdb_var_database_key"};
 
 try {
 	private _config = (configFile >> "CfgAntiHack");
-	private _admins = call life_fnc_antihack_getAdmins;
+	private _admins = call MPServer_fnc_antihack_getAdmins;
 	private _rconReady = life_var_rcon_passwordOK;
 	private _memoryhacks_client = [];
 	private _memoryhacks_server = [];
@@ -36,7 +36,7 @@ try {
 	private _backpacksclasses = [];
 
 	//--- Log RCON state
-	[format["RCON Functions %1!",["Disabled, BANS will not work","Enabled"] select _rconReady]] call life_fnc_antihack_systemlog;
+	[format["RCON Functions %1!",["Disabled, BANS will not work","Enabled"] select _rconReady]] call MPServer_fnc_antihack_systemlog;
 
 	//--- Get Config
 	if(!isClass _config) throw "Config not found";
@@ -244,7 +244,7 @@ try {
 	
 	//--- Load logs
 	if(_dbLogs)then{
-		private _logs = ["READ", "antihack_logs",[["Type","log","steamID"],[]],false] call life_fnc_database_request;
+		private _logs = ["READ", "antihack_logs",[["Type","log","steamID"],[]],false] call MPServer_fnc_database_request;
 		{
 			life_var_antihack_logs pushback _x;
 		}forEach _logs;
@@ -293,10 +293,10 @@ try {
 	];
 
 	//--- create random vars
-	if(isNil "life_fnc_util_randomString") throw "Random string function not found";
+	if(isNil "MPServer_fnc_util_randomString") throw "Random string function not found";
 	private _tempvars = [];
 	_tempvars resize (count _rndvars);
-	_tempvars params (_rndvars apply {private _ret=[_x,call life_fnc_util_randomString];[format["`%1` => `%2`",_ret#0,_ret#1]]call life_fnc_antihack_systemlog;_ret});
+	_tempvars params (_rndvars apply {private _ret=[_x,call MPServer_fnc_util_randomString];[format["`%1` => `%2`",_ret#0,_ret#1]]call MPServer_fnc_antihack_systemlog;_ret});
 	_tempvars =nil;
 
 	{_detectedstrings pushBackUnique _x} forEach _rndvars;
@@ -307,7 +307,7 @@ try {
 		while{true}do{
 			private _threadName = param [0, ""];
 			private _AHScheduleVar = param [1, ""];
-			private _thread = [_AHScheduleVar] spawn life_fnc_masterSchedule;
+			private _thread = [_AHScheduleVar] spawn MPServer_fnc_masterSchedule;
 			serverNamespace setVariable [_threadName, _thread];
 			waitUntil {
 				private _thread = serverNamespace getVariable [_threadName, scriptNull];
@@ -319,7 +319,7 @@ try {
 			};
 			terminate _thread;
 			serverNamespace setVariable [_threadName, scriptNull];
-			["Master Scheduler Thread Terminated, Possible hacker online!"] call life_fnc_antihack_systemlog;
+			["Master Scheduler Thread Terminated, Possible hacker online!"] call MPServer_fnc_antihack_systemlog;
 			private _startupQueue = call life_var_severSchedulerStartUpQueue;
 			if(count life_var_severScheduler < count _startupQueue)then{
 				{life_var_severScheduler pushBack _x}forEach _startupQueue;
@@ -335,7 +335,7 @@ try {
 		{
 		   _junk = _junk + format["
 		   %1=%2;",_x, selectRandom [true,false,[],random(999),serverTime]];
-		} forEach (_vars apply {call life_fnc_util_randomString});
+		} forEach (_vars apply {call MPServer_fnc_util_randomString});
 		_junk
 	};
 
@@ -1019,7 +1019,7 @@ try {
 	if(isNil "_antihackclient")throw "Failed to load antihack";
 
 	//--- setup network thread
-	_antihackclient = [_antihackclient,_rnd_netVar,_rnd_sysvar,_rnd_hcvar] spawn life_fnc_antihack_setupNetwork;
+	_antihackclient = [_antihackclient,_rnd_netVar,_rnd_sysvar,_rnd_hcvar] spawn MPServer_fnc_antihack_setupNetwork;
 	
 	//--- something broke with thread
 	if(isNull _antihackclient)throw "Failed to load antihack network";
@@ -1027,15 +1027,15 @@ try {
 	life_var_antihack_loaded = true;
 	_antihackclient = nil;
 
-	[_admins,_rconReady,_rnd_netVar,_rnd_adminvehiclevar,_rnd_admincode]spawn life_fnc_admin_initialize;
+	[_admins,_rconReady,_rnd_netVar,_rnd_adminvehiclevar,_rnd_admincode]spawn MPServer_fnc_admin_initialize;
 }catch {
-	[format["Exception: %1",_exception]] call life_fnc_antihack_systemlog;
+	[format["Exception: %1",_exception]] call MPServer_fnc_antihack_systemlog;
 	
 	life_var_antihack_loaded = false;
 };
 
 if(life_var_antihack_loaded)then{
-	["System fully initialized!"] call life_fnc_antihack_systemlog;
+	["System fully initialized!"] call MPServer_fnc_antihack_systemlog;
 };
 
 life_var_antihack_loaded

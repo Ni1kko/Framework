@@ -35,7 +35,7 @@ _query = format ["SELECT id, side, classname, type, pid, alive, active, plate, c
 
 
 _tickTime = diag_tickTime;
-_queryResult = [_query,2,true] call life_fnc_database_rawasync_request;
+_queryResult = [_query,2,true] call MPServer_fnc_database_rawasync_request;
 
 if (getNumber(configFile >> "CfgExtDB" >> "debugMode") isEqualTo 1) then {
     diag_log "------------- Client Query Request -------------";

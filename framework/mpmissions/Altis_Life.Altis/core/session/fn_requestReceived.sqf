@@ -71,7 +71,7 @@ life_houses = _houses;
     private _house = nearestObject [(call compile format ["%1",(_x select 0)]), "House"];
     life_vehicles pushBack _house;
 } forEach life_houses;
-[] spawn life_fnc_initHouses;
+[] spawn MPServer_fnc_initHouses;
 
 //--- Gang
 ["Loading gangs"] call life_fnc_setLoadingText; uiSleep(random[0.5,3,6]);

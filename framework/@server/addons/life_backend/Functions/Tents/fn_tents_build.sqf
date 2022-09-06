@@ -7,7 +7,7 @@ params [
 	["_type","",[""]],
 	["_position",[],[[]]],
 	["_BEGuid","",[""]],
-	["_tentID",call life_fnc_util_randomString],
+	["_tentID",call MPServer_fnc_util_randomString],
 	["_vitems",[]]
 ];
 

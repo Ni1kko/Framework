@@ -7,7 +7,7 @@ params [
    ["_upper", true, [false]]
 ];
 
-private _queryWeekDay = ["CURRENTDAY"] call life_fnc_database_request;
+private _queryWeekDay = ["CURRENTDAY"] call MPServer_fnc_database_request;
 
 _queryWeekDay params [
    ["_dayname", "", [""]]

@@ -18,7 +18,7 @@ if (!((side _unit) in [civilian,independent])) exitWith {}; //Not a civ
 if (count extdb_var_database_headless_clients > 0) then {
     [getPlayerUID _unit,_unit,player,false] remoteExecCall ["HC_fnc_wantedBounty",extdb_var_database_headless_client];
 } else {
-    [getPlayerUID _unit,_unit,player,false] remoteExecCall ["life_fnc_wantedBounty",RSERV];
+    [getPlayerUID _unit,_unit,player,false] remoteExecCall ["MPServer_fnc_wantedBounty",RSERV];
 };
 
 if (isNull _unit) exitWith {}; //Not valid

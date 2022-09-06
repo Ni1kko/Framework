@@ -17,7 +17,7 @@ _logmessage = format["[LIFE DATABASE SYSTEM]: %1",_logmessage];
 
 //--- Console
 if((getNumber(_config >> "conlogs") isEqualTo 1) AND life_var_rcon_passwordOK)then{
-	format ["#debug %1", _logmessage] call life_fnc_rcon_sendCommand;
+	format ["#debug %1", _logmessage] call MPServer_fnc_rcon_sendCommand;
 }else{
 	//--- RPT
 	if(getNumber(_config >> "rptlogs") isEqualTo 1)then{

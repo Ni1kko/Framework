@@ -46,5 +46,5 @@ if (FETCH_CONST(life_coplevel) < 3 && {FETCH_CONST(life_adminlevel) isEqualTo 0}
 if (count extdb_var_database_headless_clients > 0) then {
     [player] remoteExec ["HC_fnc_wantedFetch",extdb_var_database_headless_client];
 } else {
-    [player] remoteExec ["life_fnc_wantedFetch",RSERV];
+    [player] remoteExec ["MPServer_fnc_wantedFetch",RSERV];
 };

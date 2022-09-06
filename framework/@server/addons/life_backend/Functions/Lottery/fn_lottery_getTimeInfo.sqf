@@ -10,7 +10,7 @@ private _ticketDrawTimes = _config param [5,[]];
 
 {
 	private _timeString = _x;
-	private _tempTime = [_timeString] call life_fnc_util_getRemainingTime;
+	private _tempTime = [_timeString] call MPServer_fnc_util_getRemainingTime;
 
 	if(_tempTime isNotEqualTo -1) then {
 		_timeRemaining =  _tempTime;

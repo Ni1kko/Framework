@@ -17,8 +17,8 @@ _vehWeapons = getWeaponCargo _container;
 _vehBackpacks = getBackpackCargo _container;
 _cargo = [_vehItems,_vehMags,_vehWeapons,_vehBackpacks];
 
-_cargo = [_cargo] call life_fnc_mresArray;
+_cargo = [_cargo] call MPServer_fnc_mresArray;
 
 _query = format ["UPDATE containers SET gear='%1' WHERE id='%2'",_cargo,_containerID];
 
-[_query,1] call life_fnc_database_rawasync_request;
+[_query,1] call MPServer_fnc_database_rawasync_request;

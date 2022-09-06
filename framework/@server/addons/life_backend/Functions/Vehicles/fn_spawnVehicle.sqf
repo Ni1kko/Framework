@@ -31,7 +31,7 @@ private _servIndex = life_var_severVehicles find _vid;
 private _query = format ["SELECT id, side, classname, type, pid, alive, active, plate, color, inventory, gear, fuel, damage, blacklist FROM vehicles WHERE id='%1' AND pid='%2' AND impounded='0'",_vid,_pid];
 
 private _tickTime = diag_tickTime;
-private _queryResult = [_query,2] call life_fnc_database_rawasync_request;
+private _queryResult = [_query,2] call MPServer_fnc_database_rawasync_request;
 
 if (getNumber(configFile >> "CfgExtDB" >> "debugMode") isEqualTo 1) then {
     diag_log "------------- Client Query Request -------------";
@@ -72,13 +72,13 @@ if (count _nearVehicles > 0) exitWith {
 
 _query = format ["UPDATE vehicles SET active='1', damage='""[]""' WHERE pid='%1' AND id='%2'",_pid,_vid];
 
-private _trunk = [(_vInfo select 9)] call life_fnc_mresToArray;
-private _gear = [(_vInfo select 10)] call life_fnc_mresToArray;
-private _damage = [call compile (_vInfo select 12)] call life_fnc_mresToArray;
+private _trunk = [(_vInfo select 9)] call MPServer_fnc_mresToArray;
+private _gear = [(_vInfo select 10)] call MPServer_fnc_mresToArray;
+private _damage = [call compile (_vInfo select 12)] call MPServer_fnc_mresToArray;
 private _wasIllegal = _vInfo select 13;
 _wasIllegal = if (_wasIllegal isEqualTo 1) then { true } else { false };
 
-[_query,1] call life_fnc_database_rawasync_request;
+[_query,1] call MPServer_fnc_database_rawasync_request;
 
 private "_vehicle";
 if (_sp isEqualType "") then {
@@ -99,7 +99,7 @@ if (_sp isEqualType "") then {
 _vehicle allowDamage true;
 //Send keys over the network.
 [_vehicle] remoteExecCall ["life_fnc_addVehicle2Chain",_unit];
-[_pid,_side,_vehicle,1] call life_fnc_keyManagement;
+[_pid,_side,_vehicle,1] call MPServer_fnc_keyManagement;
 _vehicle lock 2;
 //Reskin the vehicle
 [_vehicle,(_vInfo select 8)] remoteExecCall ["life_fnc_colorVehicle",_unit];
@@ -134,7 +134,7 @@ if (_wasIllegal) then {
     [1,"STR_NOTF_BlackListedVehicle",true,[_location,_name]] remoteExecCall ["life_fnc_broadcast",west];
 
     _query = format ["UPDATE vehicles SET blacklist='0' WHERE id='%1' AND pid='%2'",_vid,_pid];
-    [_query,1] call life_fnc_database_rawasync_request;
+    [_query,1] call MPServer_fnc_database_rawasync_request;
 };
 
 _vehicle setFuel (_vInfo select 11);

@@ -15,16 +15,16 @@ params [
 if (_uid isEqualTo "") exitWith {};
 
 _query = format ["SELECT pid, pos, classname, inventory, gear, dir, id FROM containers WHERE pid='%1' AND owned='1'",_uid];
-_containers = [_query,2,true] call life_fnc_database_rawasync_request;
+_containers = [_query,2,true] call MPServer_fnc_database_rawasync_request;
 
 _containerss = [];
 {
     _position = call compile format ["%1",_x select 1];
     _house = nearestObject [_position, "House"];
     _direction = call compile format ["%1",_x select 5];
-    _trunk = [_x select 3] call life_fnc_mresToArray;
+    _trunk = [_x select 3] call MPServer_fnc_mresToArray;
     if (_trunk isEqualType "") then {_trunk = call compile format ["%1", _trunk];};
-    _gear = [_x select 4] call life_fnc_mresToArray;
+    _gear = [_x select 4] call MPServer_fnc_mresToArray;
     if (_gear isEqualType "") then {_gear = call compile format ["%1", _gear];};
     _container = createVehicle[_x select 2,[0,0,999],[],0,"NONE"];
     waitUntil {!isNil "_container" && {!isNull _container}};
@@ -73,7 +73,7 @@ _containerss = [];
 } forEach _containers;
 
 _query = format ["SELECT pid, pos FROM houses WHERE pid='%1' AND owned='1'",_uid];
-_houses = [_query,2,true] call life_fnc_database_rawasync_request;
+_houses = [_query,2,true] call MPServer_fnc_database_rawasync_request;
 
 _return = [];
 {

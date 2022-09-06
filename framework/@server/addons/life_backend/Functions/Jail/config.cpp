@@ -16,7 +16,7 @@ class CfgJail
 
 class CfgFunctions 
 {
-    class Life
+    class MPServer
     {
         class Jail_Functions
         {

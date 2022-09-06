@@ -10,7 +10,7 @@ params [
 ];
 
 private _query = format ["SELECT pos FROM containers WHERE pid='%1' AND owned='1'",_uid];
-private _containers = [_query,2,true] call life_fnc_database_rawasync_request;
+private _containers = [_query,2,true] call MPServer_fnc_database_rawasync_request;
 
 {
     _x params ["_pos"];

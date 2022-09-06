@@ -16,7 +16,7 @@ class CfgWanted
 
 class CfgFunctions 
 {
-    class Life 
+    class MPServer 
     {
         class Wanted_Functions
         {

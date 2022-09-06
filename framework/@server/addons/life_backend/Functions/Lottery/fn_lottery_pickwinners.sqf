@@ -20,11 +20,11 @@ private _queryTickets = ["READ", "lotteryTickets",
 	[
 		["ticketID", "BEGuid", "numbers", "bonusball"],
 		[
-			["active", ["DB","BOOL", true] call life_fnc_database_parse],
-			["serverID",["DB","INT",call life_var_serverID] call life_fnc_database_parse]
+			["active", ["DB","BOOL", true] call MPServer_fnc_database_parse],
+			["serverID",["DB","INT",call life_var_serverID] call MPServer_fnc_database_parse]
 		]
 	]
-] call life_fnc_database_request;
+] call MPServer_fnc_database_request;
 
 uiSleep 5;
 
@@ -39,15 +39,15 @@ private _jackpotSplit = _JackPot;
 
 //-- Generate winning tickets
 for "_i" from 1 to _ticketDrawCount do {
-	_winningNumbers pushBack ([] call life_fnc_lottery_generateTicket);
+	_winningNumbers pushBack ([] call MPServer_fnc_lottery_generateTicket);
 };
 
 //-- Check if there are any winning tickets
 {
 	_x params ["_ticketid", "_BEGuid", "_numbers", "_bonusball"];
 
-	_numbers = ["GAME","STRING", _numbers] call life_fnc_database_parse;
-	_bonusball = ["GAME","STRING", _bonusball] call life_fnc_database_parse;
+	_numbers = ["GAME","STRING", _numbers] call MPServer_fnc_database_parse;
+	_bonusball = ["GAME","STRING", _bonusball] call MPServer_fnc_database_parse;
 
 	private _wonBonusBall = [_winningBonusBall isEqualTo _bonusball,false] select (parseNumber _bonusball isEqualTo 0);
 	
@@ -76,7 +76,7 @@ for "_i" from 1 to _ticketDrawCount do {
 _jackpotSplit = _JackPot / (count _Winners);
 
 //-- Make tickets dead in database
-["CALL", "deactiveLotteryTickets"] call life_fnc_database_request;
+["CALL", "deactiveLotteryTickets"] call MPServer_fnc_database_request;
 
 //-- Nobody one (Rollover)
 if (count(_Winners) <= 0) exitWith {
@@ -86,17 +86,17 @@ if (count(_Winners) <= 0) exitWith {
 
 	["UPDATE", "servers", [
 		[
-			["vault",["DB","INT", _JackPot] call life_fnc_database_parse]
+			["vault",["DB","INT", _JackPot] call MPServer_fnc_database_parse]
 		],
 		[
-			["serverID",["DB","INT",call life_var_serverID] call life_fnc_database_parse]
+			["serverID",["DB","INT",call life_var_serverID] call MPServer_fnc_database_parse]
 		]
-	]]call life_fnc_database_request;
+	]]call MPServer_fnc_database_request;
 };
 
 //-- Empty vault
 _vaultObject setVariable ["safe",0,true];
-["UPDATE", "servers", [[["vault",["DB","INT", 0] call life_fnc_database_parse]],[["serverID",["DB","INT",call life_var_serverID] call life_fnc_database_parse]]]]call life_fnc_database_request;
+["UPDATE", "servers", [[["vault",["DB","INT", 0] call MPServer_fnc_database_parse]],[["serverID",["DB","INT",call life_var_serverID] call MPServer_fnc_database_parse]]]]call MPServer_fnc_database_request;
 
 //-- Notify
 [0,format["Someone has won the lottery jackpot of $%1!",[_Jackpot] call life_fnc_numberText]] remoteExec ["life_fnc_broadcast",0];
@@ -171,18 +171,18 @@ if _ticketsReclaim then {
 
 		["CREATE", "unclaimedLotteryTickets", 
 			[
-				["BEGuid", 					["DB","STRING", _BEGuid] call life_fnc_database_parse],
-				["serverID",				["DB","INT", call life_var_serverID] call life_fnc_database_parse],
-				["winnings", 				["DB","INT", _jackpotSplit] call life_fnc_database_parse],
-				["bonusball", 				["DB","BOOL", _wonBonusBall] call life_fnc_database_parse],
-				["bonusballWinnings", 		["DB","INT", [0, _bonusBallPayout] select _wonBonusBall] call life_fnc_database_parse]
+				["BEGuid", 					["DB","STRING", _BEGuid] call MPServer_fnc_database_parse],
+				["serverID",				["DB","INT", call life_var_serverID] call MPServer_fnc_database_parse],
+				["winnings", 				["DB","INT", _jackpotSplit] call MPServer_fnc_database_parse],
+				["bonusball", 				["DB","BOOL", _wonBonusBall] call MPServer_fnc_database_parse],
+				["bonusballWinnings", 		["DB","INT", [0, _bonusBallPayout] select _wonBonusBall] call MPServer_fnc_database_parse]
 			]
-		] call life_fnc_database_request;
+		] call MPServer_fnc_database_request;
 	}forEach _offlineWinners;
 };
 
 //-- Delete dead tickets from database
-["CALL", "deleteOldLotteryTickets"] call life_fnc_database_request;
+["CALL", "deleteOldLotteryTickets"] call MPServer_fnc_database_request;
 
 //-- Allow new tickets to be purchased
 Life_var_lottoDrawLock = false;

@@ -19,9 +19,9 @@ if (_groupID isEqualTo -1) exitWith {};
 
 switch (_mode) do {
     case 0: {
-        _bank = [(_group getVariable ["gang_bank",0])] call life_fnc_numberSafe;
+        _bank = [(_group getVariable ["gang_bank",0])] call MPServer_fnc_numberSafe;
         _maxMembers = _group getVariable ["gang_maxMembers",8];
-        _members = [(_group getVariable "gang_members")] call life_fnc_mresArray;
+        _members = [(_group getVariable "gang_members")] call MPServer_fnc_mresArray;
         _owner = _group getVariable ["gang_owner",""];
         if (_owner isEqualTo "") exitWith {};
 
@@ -61,8 +61,8 @@ switch (_mode) do {
                 diag_log (format [localize "STR_DL_ML_withdrewGang",name _unit,(getPlayerUID _unit),_value,[_funds] call life_fnc_numberText,[0] call life_fnc_numberText,[_cash] call life_fnc_numberText]);
             };
         };
-        _query = format ["UPDATE gangs SET bank='%1' WHERE id='%2'",([_funds] call life_fnc_numberSafe),_groupID];
-        [getPlayerUID _unit,side _unit,_cash,0] call life_fnc_updatePartial;
+        _query = format ["UPDATE gangs SET bank='%1' WHERE id='%2'",([_funds] call MPServer_fnc_numberSafe),_groupID];
+        [getPlayerUID _unit,side _unit,_cash,0] call MPServer_fnc_updatePartial;
     };
 
     case 2: {
@@ -85,11 +85,11 @@ switch (_mode) do {
         } else {
             _membersFinal = _group getVariable "gang_members";
         };
-        _membersFinal = [_membersFinal] call life_fnc_mresArray;
+        _membersFinal = [_membersFinal] call MPServer_fnc_mresArray;
         _query = format ["UPDATE gangs SET members='%1' WHERE id='%2'",_membersFinal,_groupID];
     };
 };
 
 if (!isNil "_query") then {
-    [_query,1] call life_fnc_database_rawasync_request;
+    [_query,1] call MPServer_fnc_database_rawasync_request;
 };

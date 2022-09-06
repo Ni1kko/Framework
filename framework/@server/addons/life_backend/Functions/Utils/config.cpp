@@ -16,7 +16,7 @@ class CfgUtils
 
 class CfgFunctions 
 {
-    class Life 
+    class MPServer 
     {
         class Utils_Functions
         {

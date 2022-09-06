@@ -16,7 +16,7 @@ class CfgPlayTime
 
 class CfgFunctions 
 {
-    class Life 
+    class MPServer 
     {
         class PlayTime_Functions
         {

@@ -16,7 +16,7 @@ if(isClass _config)then{
 	//--- Load admins from database
 	if(_use_databaseadmins)then{
 		for "_i" from 1 to 99 do {
-			_admins append (["READ", "players", [["adminlevel","pid","BEGuid"],[["adminlevel",_i+1]]],false]call life_fnc_database_request);
+			_admins append (["READ", "players", [["adminlevel","pid","BEGuid"],[["adminlevel",_i+1]]],false]call MPServer_fnc_database_request);
 		};
 	};
 

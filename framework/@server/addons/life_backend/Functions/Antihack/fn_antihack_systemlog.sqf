@@ -16,7 +16,7 @@ private _logmessage2 = format["[ANTIHACK SYSTEM]: %1",_logmessage];
 
 //--- Console
 if((getNumber(_config >> "conlogs") isEqualTo 1) AND life_var_rcon_passwordOK)then{
-	format ["#debug %1", _logmessage2] call life_fnc_rcon_sendCommand;
+	format ["#debug %1", _logmessage2] call MPServer_fnc_rcon_sendCommand;
 }else{
 	//--- RPT
 	if(getNumber(_config >> "rptlogs") isEqualTo 1)then{
@@ -47,12 +47,12 @@ if(getNumber(_config >> "dblogs") isEqualTo 1)then{
 		private _BEGuid = ('BEGuid' callExtension ("get:"+_SteamID));
 		["CREATE", "antihack_logs",
 			[
-				["Type", 	["DB","STRING", toUpper _type] call life_fnc_database_parse],
-				["BEGuid", 	["DB","STRING", _BEGuid] call life_fnc_database_parse],
-				["steamID", ["DB","STRING", _steamID] call life_fnc_database_parse],
+				["Type", 	["DB","STRING", toUpper _type] call MPServer_fnc_database_parse],
+				["BEGuid", 	["DB","STRING", _BEGuid] call MPServer_fnc_database_parse],
+				["steamID", ["DB","STRING", _steamID] call MPServer_fnc_database_parse],
 				["log", 	"'"""+_logmessage+"""'"]
 			]
-		] call life_fnc_database_request;
+		] call MPServer_fnc_database_request;
 	};
 };
 

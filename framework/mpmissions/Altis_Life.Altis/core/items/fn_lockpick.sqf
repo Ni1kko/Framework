@@ -88,7 +88,7 @@ if (!_isVehicle) then {
         if (count extdb_var_database_headless_clients > 0) then {
             [getPlayerUID player,profileName,"487"] remoteExecCall ["HC_fnc_wantedAdd",extdb_var_database_headless_client];
         } else {
-            [getPlayerUID player,profileName,"487"] remoteExecCall ["life_fnc_wantedAdd",RSERV];
+            [getPlayerUID player,profileName,"487"] remoteExecCall ["MPServer_fnc_wantedAdd",RSERV];
         };
 
     } else {
@@ -96,7 +96,7 @@ if (!_isVehicle) then {
         if (count extdb_var_database_headless_clients > 0) then {
             [getPlayerUID player,profileName,"215"] remoteExecCall ["HC_fnc_wantedAdd",extdb_var_database_headless_client];
         } else {
-            [getPlayerUID player,profileName,"215"] remoteExecCall ["life_fnc_wantedAdd",RSERV];
+            [getPlayerUID player,profileName,"215"] remoteExecCall ["MPServer_fnc_wantedAdd",RSERV];
         };
 
         [0,"STR_ISTR_Lock_FailedNOTF",true,[profileName]] remoteExecCall ["life_fnc_broadcast",west];

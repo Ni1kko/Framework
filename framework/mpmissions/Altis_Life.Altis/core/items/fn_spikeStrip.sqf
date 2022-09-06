@@ -29,5 +29,5 @@ life_action_spikeStripPickup = player addAction[localize "STR_ISTR_Spike_Pack",l
 if (count extdb_var_database_headless_clients > 0) then {
     [_spikeStrip] remoteExec ["HC_fnc_spikeStrip",extdb_var_database_headless_client]; //Send it to the HeadlessClient for monitoring.
 } else {
-    [_spikeStrip] remoteExec ["life_fnc_spikeStrip",RSERV]; //Send it to the server for monitoring.
+    [_spikeStrip] remoteExec ["MPServer_fnc_spikeStrip",RSERV]; //Send it to the server for monitoring.
 };

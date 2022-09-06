@@ -26,7 +26,7 @@ switch (param [0,""]) do
         _vaultObject setVariable ["safe",_newfunds,true];
 
         //-- Update the database 
-        ["UPDATE", "servers", [[["vault",["DB","INT", _newfunds] call life_fnc_database_parse]],[["serverID",["DB","INT",call life_var_serverID] call life_fnc_database_parse]]]]call life_fnc_database_request;
+        ["UPDATE", "servers", [[["vault",["DB","INT", _newfunds] call MPServer_fnc_database_parse]],[["serverID",["DB","INT",call life_var_serverID] call MPServer_fnc_database_parse]]]]call MPServer_fnc_database_request;
     };
     case "bank": 
     {

@@ -16,7 +16,7 @@ class CfgActions
 
 class CfgFunctions 
 {
-    class TON 
+    class MPServer
     {
         class Action_Functions
         { 

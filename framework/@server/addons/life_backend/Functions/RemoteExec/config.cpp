@@ -17,12 +17,13 @@ class CfgRemoteExec
 
 class CfgFunctions 
 {
-    class Life 
+    class MPServer 
     {
         class RemoteExec_Functions
         {
-            file = "\life_backend\Functions\RemoteExec"; 
-            class remoteExecRun {}; 
+            file = "\life_backend\Functions\RemoteExec";
+            class remoteExecRun {};
+            class remoteExecAdd {};
         };
     };
 };

@@ -3,7 +3,7 @@
 	## https://github.com/Ni1kko/Framework
 */
 
-if(!canSuspend)exitWith{_this spawn life_fnc_event_playerConnected};
+if(!canSuspend)exitWith{_this spawn MPServer_fnc_event_playerConnected};
 
 params [
     ["_directPlayID",-100,[0]],		    // Number - is the unique DirectPlay ID. Quite useless as the number is too big for in-built string representation and gets rounded. It is also the same id used for user placed markers.
@@ -23,23 +23,23 @@ waitUntil {!isNil "life_var_serverLoaded" AND {!isNil "life_var_rcon_serverLocke
 
 //--- Rcon boot
 if(life_var_rcon_serverLocked)exitWith{ 
-	[_ownerID,"Joined before server unlocked"] call life_fnc_rcon_kick;
+	[_ownerID,"Joined before server unlocked"] call MPServer_fnc_rcon_kick;
 };
 
 //--- Fucking arma... player isn't registered as player yet. FML
 private _player = objNull;
 waitUntil{
 	uiSleep 0.2;
-	_player = [selectRandom [_ownerID,_steamID]] call life_fnc_util_getPlayerObject;
+	_player = [selectRandom [_ownerID,_steamID]] call MPServer_fnc_util_getPlayerObject;
 	!isNull _player
 };
 
-"#beserver players" call life_fnc_rcon_sendCommand;
+"#beserver players" call MPServer_fnc_rcon_sendCommand;
 
 //--- Get BEGuid
 private _BEGuid = ('BEGuid' callExtension ("get:"+_steamID));
 if(_BEGuid isEqualTo "")exitWith{
-	[_ownerID,"Error calculating players BEGuid"] call life_fnc_rcon_kick;
+	[_ownerID,"Error calculating players BEGuid"] call MPServer_fnc_rcon_kick;
 };
 
 //--- Set BEGuid
@@ -53,7 +53,7 @@ private _playerData = [_name,_BEGuid];
 private _playerIndex = life_var_serverCurrentPlayers find _playerData;
 if(_playerIndex isEqualTo -1)then{ 
 	if((life_var_serverCurrentPlayers pushBackUnique _playerData) isNotEqualTo -1)then{
-		_serverQuery  pushback ["currentplayers", ["DB","ARRAY",life_var_serverCurrentPlayers] call life_fnc_database_parse];
+		_serverQuery  pushback ["currentplayers", ["DB","ARRAY",life_var_serverCurrentPlayers] call MPServer_fnc_database_parse];
 	};
 };
  
@@ -61,12 +61,12 @@ if(_playerIndex isEqualTo -1)then{
 private _totalPlayerCount = (count allPlayers);
 if(_totalPlayerCount > life_var_serverMaxPlayers)then{
 	life_var_serverMaxPlayers = _totalPlayerCount;
-	_serverQuery pushBack ["maxplayercount", ["DB","INT", life_var_serverMaxPlayers] call life_fnc_database_parse];
+	_serverQuery pushBack ["maxplayercount", ["DB","INT", life_var_serverMaxPlayers] call MPServer_fnc_database_parse];
 };
 
 //--- Send query
 if(count _serverQuery > 0)then{
-	["UPDATE", "servers", [_serverQuery,[["serverID", ["DB","INT", (call life_var_serverID)] call life_fnc_database_parse]]]]call life_fnc_database_request;
+	["UPDATE", "servers", [_serverQuery,[["serverID", ["DB","INT", (call life_var_serverID)] call MPServer_fnc_database_parse]]]]call MPServer_fnc_database_request;
 };
 
 diag_log format ["[Player Login]: `%1` - (%2) - (%3)", _name, _BEGuid, _steamID];

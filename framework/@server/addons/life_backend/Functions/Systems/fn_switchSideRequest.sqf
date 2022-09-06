@@ -47,7 +47,7 @@ private _queryResult = ["READ", "players", [
 		["BEGuid",str _BEGuid],
 		["pid",_SteamID]
 	]
-],true]call life_fnc_database_request;
+],true]call MPServer_fnc_database_request;
 
 
 if (_queryResult isEqualTo ["DB:Read:Task-failure",false]) exitWith {
@@ -56,10 +56,10 @@ if (_queryResult isEqualTo ["DB:Read:Task-failure",false]) exitWith {
 	false
 };
 
-private _licenses = 	(["GAME","ARRAY",_queryResult param [0,[]]] call life_fnc_database_parse) apply {[_x#0,["GAME","BOOL", _x#1] call life_fnc_database_parse]};
-private _gear =    		(["GAME","ARRAY",_queryResult param [1,[]]] call life_fnc_database_parse); 
-private _playtime = 	(["GAME","ARRAY",_queryResult param [2,[]]] call life_fnc_database_parse);
-private _rank = 		(["GAME","INT",(switch _newside do {case civilian: {0};default {_queryResult param [3,0]};})] call life_fnc_database_parse);
+private _licenses = 	(["GAME","ARRAY",_queryResult param [0,[]]] call MPServer_fnc_database_parse) apply {[_x#0,["GAME","BOOL", _x#1] call MPServer_fnc_database_parse]};
+private _gear =    		(["GAME","ARRAY",_queryResult param [1,[]]] call MPServer_fnc_database_parse); 
+private _playtime = 	(["GAME","ARRAY",_queryResult param [2,[]]] call MPServer_fnc_database_parse);
+private _rank = 		(["GAME","INT",(switch _newside do {case civilian: {0};default {_queryResult param [3,0]};})] call MPServer_fnc_database_parse);
 
 //--- Whitelist check
 if (_newside in [east,west,independent] AND _rank <= 0)exitWith {
@@ -69,7 +69,7 @@ if (_newside in [east,west,independent] AND _rank <= 0)exitWith {
 };
 
 //--- Leave side chat for current side
-[_playerObject, false, _oldside] call life_fnc_manageSC;
+[_playerObject, false, _oldside] call MPServer_fnc_managesc;
 
 //--- Switch character
 [
@@ -103,7 +103,7 @@ if (_newside in [east,west,independent] AND _rank <= 0)exitWith {
 		[] call life_fnc_setupEVH;
 
 		//--- Join side chat for new side
-		[_newplayerObject, life_settings_enableSidechannel, playerSide] remoteExecCall ["life_fnc_manageSC", 2];
+		[_newplayerObject, life_settings_enableSidechannel, playerSide] remoteExecCall ["MPServer_fnc_managesc", 2];
 
 		//-- Show new player object
 		_newplayerObject hideObjectGlobal false;
@@ -132,7 +132,7 @@ if (_playtimeindex != -1) then {
 };
 _playtimeindex = life_var_playtimeValuesRequest pushBackUnique [_uid, _playtime];
 _playtime = _playtime#_sideindex;
-[_uid,_playtime] call life_fnc_setPlayTime;
+[_uid,_playtime] call MPServer_fnc_setPlayTime;
 publicVariable "life_var_playtimeValuesRequest";
  
 //--- Delete old character

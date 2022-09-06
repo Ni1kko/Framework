@@ -31,7 +31,8 @@ class CfgLottery
 
 class CfgFunctions 
 {
-    class Life {
+    class MPServer 
+    {
         class Lottery_Functions
         {
             file = "\life_backend\Functions\Lottery";

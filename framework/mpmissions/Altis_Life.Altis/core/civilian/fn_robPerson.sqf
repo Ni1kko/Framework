@@ -17,7 +17,7 @@ if (life_var_cash > 0) then {
     if (count extdb_var_database_headless_clients > 0) then {
         [getPlayerUID _robber,_robber getVariable ["realname",name _robber],"211"] remoteExecCall ["HC_fnc_wantedAdd",extdb_var_database_headless_client];
     } else {
-        [getPlayerUID _robber,_robber getVariable ["realname",name _robber],"211"] remoteExecCall ["life_fnc_wantedAdd",RSERV];
+        [getPlayerUID _robber,_robber getVariable ["realname",name _robber],"211"] remoteExecCall ["MPServer_fnc_wantedAdd",RSERV];
     };
 
     [1,"STR_NOTF_Robbed",true,[_robber getVariable ["realname",name _robber],profileName,[life_var_cash] call life_fnc_numberText]] remoteExecCall ["life_fnc_broadcast",RCLIENT];

@@ -55,7 +55,7 @@ class CfgRCON
 
 class CfgFunctions 
 {
-    class Life 
+    class MPServer 
     {
         class Rcon_Functions
         {

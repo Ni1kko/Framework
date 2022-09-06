@@ -12,7 +12,7 @@ class CfgPatches
 class CfgFunctions 
 {
     //--- Root Functions
-    class Life 
+    class MPServer 
     {
         class Root_Functions
         {

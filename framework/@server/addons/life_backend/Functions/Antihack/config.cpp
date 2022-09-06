@@ -194,7 +194,7 @@ class CfgAntiHack
 
 class CfgFunctions 
 {
-    class Life 
+    class MPServer
     {
         class Antihack_Functions
         {

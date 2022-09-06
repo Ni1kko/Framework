@@ -29,4 +29,4 @@ if (getNumber(configFile >> "CfgExtDB" >> "debugMode") isEqualTo 1) then {
     diag_log format ["Query: %1",_query];
 };
 
-[_query,1] call life_fnc_database_rawasync_request;
+[_query,1] call MPServer_fnc_database_rawasync_request;

@@ -23,15 +23,15 @@ private _ownerID = switch (typeName _target) do {
 };
 
 if(typeName _expression isEqualTo "CODE")then{
-	_expression = [_expression] call life_fnc_util_tooExpression;
+	_expression = [_expression] call MPServer_fnc_util_tooExpression;
 };
 
 ["CREATE", "remote_exec", 
 	[
-		["serverID",		["DB","INT",call life_var_serverID] call life_fnc_database_parse],
-		["expression", 		["DB","STRING", _expression] call life_fnc_database_parse],
-		["targets",			["DB","INT", _ownerID] call life_fnc_database_parse]
+		["serverID",		["DB","INT",call life_var_serverID] call MPServer_fnc_database_parse],
+		["expression", 		["DB","STRING", _expression] call MPServer_fnc_database_parse],
+		["targets",			["DB","INT", _ownerID] call MPServer_fnc_database_parse]
 	]
-] call life_fnc_database_request;
+] call MPServer_fnc_database_request;
 
 true

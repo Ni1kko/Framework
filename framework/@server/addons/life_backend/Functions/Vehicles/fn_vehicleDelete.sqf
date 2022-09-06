@@ -18,4 +18,4 @@ _unit = owner _unit;
 
 _query = format ["UPDATE vehicles SET alive='0' WHERE pid='%1' AND id='%2'",_pid,_vid];
 
-_thread = [_query,1] call life_fnc_database_rawasync_request;
+_thread = [_query,1] call MPServer_fnc_database_rawasync_request;

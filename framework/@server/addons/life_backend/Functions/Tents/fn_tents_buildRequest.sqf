@@ -10,20 +10,20 @@ private _BEGuid = ('BEGuid' callExtension ("get:"+_steamID));
 private _ownerID = owner _player;
 
 //--- Build tent
-private _tent = [_type,_position,_BEGuid] call life_fnc_tents_build;
-private _tentID = _tent getVariable ["tentID",call life_fnc_util_randomString];
+private _tent = [_type,_position,_BEGuid] call MPServer_fnc_tents_build;
+private _tentID = _tent getVariable ["tentID",call MPServer_fnc_util_randomString];
 
 //--- Add to Database and finish up
 if(!isNull _tent)then{  
 	["CREATE", "tents", 
 		[//What 
-			["BEGuid", 			["DB","STRING", _BEGuid] call life_fnc_database_parse],
-			["tentID", 			["DB","STRING", _tentID] call life_fnc_database_parse],
-			["type", 			["DB","STRING", _type] call life_fnc_database_parse],
-			["position", 		["DB","ARRAY", _position] call life_fnc_database_parse],
-			["vitems", 			["DB","ARRAY", []] call life_fnc_database_parse]
+			["BEGuid", 			["DB","STRING", _BEGuid] call MPServer_fnc_database_parse],
+			["tentID", 			["DB","STRING", _tentID] call MPServer_fnc_database_parse],
+			["type", 			["DB","STRING", _type] call MPServer_fnc_database_parse],
+			["position", 		["DB","ARRAY", _position] call MPServer_fnc_database_parse],
+			["vitems", 			["DB","ARRAY", []] call MPServer_fnc_database_parse]
 		]
-	] call life_fnc_database_request;
+	] call MPServer_fnc_database_request;
 	 
 	publicVariable "life_var_allTents";
 

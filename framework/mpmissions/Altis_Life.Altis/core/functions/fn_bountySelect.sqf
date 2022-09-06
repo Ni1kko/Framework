@@ -14,7 +14,7 @@ if(2500 > life_var_bank) exitWith {hint "You do not have enough money in your ba
 if(isNil "_data" OR {typeName _data isNotEqualTo "ARRAY" OR {count _data < 2}}) exitWith {hint "An error occured, please try again."; false};
 
 //--- Find player
-private _player = [_data#1] call life_fnc_util_getPlayerObject; 
+private _player = [_data#1] call MPServer_fnc_util_getPlayerObject; 
 if(isNull _player) exitWith {hint "An error occured, Null <player object>."; false};
 
 //--- 

@@ -23,12 +23,12 @@ life_var_rcon_setupEvents_thread = scriptNull;
 life_var_rcon_nextRestart = "12:00";
 life_var_rcon_inittime = compile str diag_tickTime;
 
-"Starting RCON" call life_fnc_rcon_systemlog;
+"Starting RCON" call MPServer_fnc_rcon_systemlog;
 
 life_fnc_rcon_getUpTime = compileFinal "round((diag_tickTime - (call life_var_rcon_inittime) / 60))";
  
 {
-	private _tempTime = [_x] call life_fnc_util_getRemainingTime;
+	private _tempTime = [_x] call MPServer_fnc_util_getRemainingTime;
 	if(_tempTime isNotEqualTo -1)exitWith{
 		life_var_rcon_nextRestart = _x;
 	};
@@ -42,12 +42,12 @@ life_fnc_rcon_getUpTime = compileFinal "round((diag_tickTime - (call life_var_rc
 	"life_var_rcon_RestartMode"
 ];
 
-if ("#init/" call life_fnc_rcon_sendCommand) then
+if ("#init/" call MPServer_fnc_rcon_sendCommand) then
 {
-	"Lock Event: server locked for init" call life_fnc_rcon_systemlog;
-	[] call life_fnc_rcon_kickAll;
+	"Lock Event: server locked for init" call MPServer_fnc_rcon_systemlog;
+	[] call MPServer_fnc_rcon_kickAll;
 	life_var_rcon_inittime = compileFinal str diag_tickTime;
-	life_var_rcon_setupEvents_thread = [] spawn life_fnc_rcon_setupEvents;
+	life_var_rcon_setupEvents_thread = [] spawn MPServer_fnc_rcon_setupEvents;
 };
 
 true

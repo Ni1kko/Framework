@@ -106,10 +106,10 @@ switch (playerSide) do {
 [playerSide] call life_fnc_paychecks;
 
 //-- Update wanted prifle
-[getPlayerUID player, profileName] remoteExec ["life_fnc_wantedProfUpdate", 2];
+[getPlayerUID player, profileName] remoteExec ["MPServer_fnc_wantedProfUpdate", 2];
 
 //--
-[player, life_settings_enableSidechannel, playerSide] remoteExecCall ["life_fnc_manageSC", 2];
+[player, life_settings_enableSidechannel, playerSide] remoteExecCall ["MPServer_fnc_managesc", 2];
 
 [] spawn life_fnc_setupStationService;
 [] spawn life_fnc_cellphone;//temp
