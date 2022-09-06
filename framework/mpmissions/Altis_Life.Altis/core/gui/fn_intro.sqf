@@ -1,7 +1,7 @@
 /*	
 	File: fn_intro.sqf
-	Usage: [] execVM "dialog\function\fn_intro.sqf";
 */
+
 private ["_camera", "_camDistance","_randCamX","_randCamY","_camTime"];
 _camDistance = 350;
 _randCamX = 75 - floor(random 150);
