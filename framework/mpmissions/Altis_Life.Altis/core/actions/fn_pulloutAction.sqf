@@ -12,6 +12,6 @@ _crew = crew cursorObject;
 {
     if !(side _x isEqualTo west) then {
         _x setVariable ["transporting",false,true]; _x setVariable ["Escorting",false,true];
-        [_x] remoteExecCall ["life_fnc_pulloutVeh",_x];
+        [_x] remoteExecCall ["MPClient_fnc_pulloutVeh",_x];
     };
 } forEach _crew;

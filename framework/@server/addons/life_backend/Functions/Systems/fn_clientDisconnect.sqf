@@ -35,7 +35,7 @@ if !(alive _unit) then {
         ];
         if (_corpseUID isEqualTo _uid) exitWith {
             if (isNull _corpse) exitWith {life_var_corpses deleteAt _forEachIndex};
-            [_corpse] remoteExecCall ["life_fnc_corpse",0];
+            [_corpse] remoteExecCall ["MPClient_fnc_corpse",0];
             diag_log format["%1 disconnected while dead.",_corpseUID];
             life_var_corpses deleteAt _forEachIndex;
         };

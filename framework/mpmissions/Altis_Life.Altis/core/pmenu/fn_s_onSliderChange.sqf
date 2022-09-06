@@ -17,7 +17,7 @@ switch _mode do {
     {
         life_settings_viewDistanceFoot = round(_value);
         ctrlSetText[2902,format ["%1",round(_value)]];
-        [] call life_fnc_updateViewDistance;
+        [] call MPClient_fnc_updateViewDistance;
         profileNamespace setVariable ["life_viewDistanceFoot",round(_value)];
     };
 
@@ -25,7 +25,7 @@ switch _mode do {
     {
         life_settings_viewDistanceCar = round(_value);
         ctrlSetText[2912,format ["%1",round(_value)]];
-        [] call life_fnc_updateViewDistance;
+        [] call MPClient_fnc_updateViewDistance;
         profileNamespace setVariable ["life_viewDistanceCar",round(_value)];
     };
 
@@ -33,7 +33,7 @@ switch _mode do {
     {
         life_settings_viewDistanceAir = round(_value);
         ctrlSetText[2922,format ["%1",round(_value)]];
-        [] call life_fnc_updateViewDistance;
+        [] call MPClient_fnc_updateViewDistance;
         profileNamespace setVariable ["life_viewDistanceAir",round(_value)];
     };
 
@@ -46,7 +46,7 @@ switch _mode do {
 
             private _vehicleFuelList = uiNamespace getVariable ["fuel_list",[]];
             (_vehicleFuelList select _index) params ["_car"];
-            private _vehicleInfo = [_className] call life_fnc_fetchVehInfo;
+            private _vehicleInfo = [_className] call MPClient_fnc_fetchVehInfo;
             private _fuel = fuel _car;
             private _fuelTank = _vehicleInfo select 12;
             if (_car isKindOf "B_Truck_01_box_F" || _car isKindOf "B_Truck_01_transport_F") then {

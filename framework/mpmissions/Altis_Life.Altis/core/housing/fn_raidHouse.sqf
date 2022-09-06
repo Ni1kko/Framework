@@ -14,7 +14,7 @@ if (isNil {(_house getVariable "house_owner")}) exitWith {hint localize "STR_Hou
 
 _uid = ((_house getVariable "house_owner") select 0);
 
-if (!([_uid] call life_fnc_isUIDActive)) exitWith {hint localize "STR_House_Raid_OwnerOff"};
+if (!([_uid] call MPClient_fnc_isUIDActive)) exitWith {hint localize "STR_House_Raid_OwnerOff"};
 
 _houseInv = _house getVariable ["Trunk",[[],0]];
 if (_houseInv isEqualTo [[],0]) exitWith {hint localize "STR_House_Raid_Nothing"};
@@ -61,16 +61,16 @@ _value = 0;
     if (ITEM_ILLEGAL(_var) isEqualTo 1) then {
         if (!(ITEM_SELLPRICE(_var) isEqualTo -1)) then {
             _houseInvData deleteAt _forEachIndex;
-            _houseInvVal = _houseInvVal - (([_var] call life_fnc_itemWeight) * _val);
+            _houseInvVal = _houseInvVal - (([_var] call MPClient_fnc_itemWeight) * _val);
             _value = _value + (_val * ITEM_SELLPRICE(_var));
         };
     };
 } forEach (_houseInv select 0);
 
 if (_value > 0) then {
-    [0,"STR_House_Raid_Successful",true,[[_value] call life_fnc_numberText]] remoteExecCall ["life_fnc_broadcast",RCLIENT];
+    [0,"STR_House_Raid_Successful",true,[[_value] call MPClient_fnc_numberText]] remoteExecCall ["MPClient_fnc_broadcast",RCLIENT];
     life_var_bank = life_var_bank + round(_value / 2);
-    [1] call SOCK_fnc_updatePartial;
+    [1] call MPClient_fnc_updatePartial;
 
     _house setVariable ["Trunk",[_houseInvData,_houseInvVal],true];
 

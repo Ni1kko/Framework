@@ -15,7 +15,7 @@ private _amount = lbData [2407,lbCurSel 2407];
 if (isNil "_unit") exitWith {};
 if (isNull _unit) exitWith {};
 
-[1,"STR_Wanted_AddP",true,[_unit getVariable ["realname",name _unit],_amount,getPlayerUID _unit]] remoteExecCall ["life_fnc_broadcast",RCLIENT];
+[1,"STR_Wanted_AddP",true,[_unit getVariable ["realname",name _unit],_amount,getPlayerUID _unit]] remoteExecCall ["MPClient_fnc_broadcast",RCLIENT];
 
 if (count extdb_var_database_headless_clients > 0) then {
     [getPlayerUID _unit,_unit getVariable ["realname",name _unit],_amount] remoteExecCall ["HC_fnc_wantedAdd",extdb_var_database_headless_client];

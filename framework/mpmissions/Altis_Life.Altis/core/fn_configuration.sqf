@@ -135,7 +135,7 @@ private _variableTooSet = [
 
 //-- flagged variable found. TODO: handle this through anticheat on server once detected
 if(count _variablesFlagged > 0)exitWith{ 
-    [0,format["[Antihack] Hacker Detected %1 Variables flagged",getPlayerUID player],true,[profileNameSteam, profileName]] remoteExecCall ["life_fnc_broadcast",-2];
+    [0,format["[Antihack] Hacker Detected %1 Variables flagged",getPlayerUID player],true,[profileNameSteam, profileName]] remoteExecCall ["MPClient_fnc_broadcast",-2];
     diag_log format ["[LIFE] %1 Variables flagged",count _variablesFlagged];
     {diag_log (format ["[LIFE] %1 = %2;"] + _x)}forEach _variablesFlagged;
     endMission "Antihack";

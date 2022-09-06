@@ -70,7 +70,7 @@ private _price = floor((((floor(_shortest / 100) * 100) / 1337) * _pricem) * 100
 private _win = 0;
 
 _vehicle setVariable ["fuelTankWork",true,true];
-_vehicle remoteExec ["life_fnc_soundDevice",-2];
+_vehicle remoteExec ["MPClient_fnc_soundDevice",-2];
 life_var_isBusy = false;
 
 disableSerialization;
@@ -119,7 +119,7 @@ if (_fuelState <= 0) then {titleText [localize "STR_FuelTank_Empty","PLAIN"]};
 sleep 2;
 
 life_var_cash = life_var_cash + _win;
-[0] call SOCK_fnc_updatePartial;
+[0] call MPClient_fnc_updatePartial;
 
 titleText [format [localize "STR_FuelTank_Money", _win], "PLAIN"];
 "progressBar" cutText ["","PLAIN"];

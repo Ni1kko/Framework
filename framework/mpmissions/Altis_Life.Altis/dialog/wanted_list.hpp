@@ -3,7 +3,7 @@ class life_wanted_menu {
     name= "life_wanted_menu";
     movingEnable = false;
     enableSimulation = true;
-    //onLoad = "[] spawn life_fnc_wantedadd2;";
+    //onLoad = "[] spawn MPClient_fnc_wantedadd2;";
 
     class controlsBackground {
         class Life_RscTitleBackground: Life_RscText {
@@ -46,7 +46,7 @@ class life_wanted_menu {
             idc = 2401;
             text = "";
             sizeEx = 0.035;
-            onLBSelChanged = "[] spawn life_fnc_wantedGrab";
+            onLBSelChanged = "[] spawn MPClient_fnc_wantedGrab";
             x = 0.12;
             y = 0.28;
             w = 0.2;
@@ -106,7 +106,7 @@ class life_wanted_menu {
         class PardonButtonKey: Life_RscButtonMenu {
             idc = 2405;
             text = "$STR_Wanted_Pardon";
-            onButtonClick = "[] call life_fnc_pardon; closeDialog 0;";
+            onButtonClick = "[] call MPClient_fnc_pardon; closeDialog 0;";
             x = 0.1 + (6.25 / 40) + (1 / 250 / (safezoneW / safezoneH));
             y = 0.8 - (1 / 25);
             w = (6.25 / 40);
@@ -117,7 +117,7 @@ class life_wanted_menu {
             idc = 9800;
             //shortcuts[] = {0x00050000 + 2};
             text = "$STR_Wanted_Add";
-            onButtonClick = "[] call life_fnc_wantedAddP;";
+            onButtonClick = "[] call MPClient_fnc_wantedAddP;";
             x = 0.1 + (6.25 / 19.8) + (1 / 250 / (safezoneW / safezoneH));
             y = 0.8 - (1 / 25);
             w = (6.25 / 40);
@@ -203,7 +203,7 @@ class life_bounty_menu {
 			idc = 2401;
 			text = "";
 			sizeEx = 0.035;
-			//onLBSelChanged = "[] call life_fnc_wantedInfo";
+			//onLBSelChanged = "[] call MPClient_fnc_wantedInfo";
 			
 			x = 0.12; y = 0.26;
 			w = 0.55; h = 0.4;
@@ -222,7 +222,7 @@ class life_bounty_menu {
 		class PardonButtonKey : Life_RscButtonMenu {
 			idc = 2405;
 			text = "$STR_Bounty_Select";
-			onButtonClick = "[] call life_fnc_bountySelect; closeDialog 0; [] call life_fnc_p_updateMenu;";
+			onButtonClick = "[] call MPClient_fnc_bountySelect; closeDialog 0; [] call MPClient_fnc_p_updateMenu;";
 			x = 0.1 + (6.25 / 40) + (1 / 250 / (safezoneW / safezoneH));
 			y = 0.8 - (1 / 25);
 			w = (6.25 / 40);

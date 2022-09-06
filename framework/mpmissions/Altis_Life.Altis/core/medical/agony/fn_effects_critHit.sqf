@@ -1,13 +1,13 @@
 /*
 
-	Function: 	life_fnc_effects_critHit
+	Function: 	MPClient_fnc_effects_critHit
 	Project: 	Misty Peaks RPG
 	Author:     Merrick, Nikko, Affect & IceEagle132
 	
 */
-if(missionNamespace getVariable ["life_fnc_effects_critHit_active",false]) exitWith{};
+if(missionNamespace getVariable ["MPClient_fnc_effects_critHit_active",false]) exitWith{};
 
-life_fnc_effects_critHit_active = true;
+MPClient_fnc_effects_critHit_active = true;
 
 private["_sound","_critColorEffect"];
 while {life_var_critHit} do {
@@ -17,7 +17,7 @@ while {life_var_critHit} do {
         _critColorEffect ppEffectEnable true;
         _critColorEffect ppEffectAdjust [1, 1.1, -0.05, [0.4, 0.2, 0.3, -0.1], [0.3, 0.05, 0, 0], [0.5,0.5,0.5,0], [0,0,0,0,0,0,4]];
         _critColorEffect ppEffectCommit 18;
-        [player,"ActsPknlMstpSnonWnonDnon_TreatingInjured_NikitinDead",true,true] remoteExecCall ["life_fnc_animSync",-2];
+        [player,"ActsPknlMstpSnonWnonDnon_TreatingInjured_NikitinDead",true,true] remoteExecCall ["MPClient_fnc_animSync",-2];
         _sound = ["action_cry_0", "action_cry_1"] call BIS_fnc_selectRandom;
         player say3D _sound;
         for "_i" from 1 to 20 do {
@@ -28,7 +28,7 @@ while {life_var_critHit} do {
         switch (true) do {
             case (!alive(player)) : {};
             case (player getVariable ["restrained",false]) : {player playMove "AmovPercMstpSnonWnonDnon_Ease"};
-            default {[player,"amovpercmstpsnonwnondnon",true,true] remoteExecCall ["life_fnc_animSync",-2];};
+            default {[player,"amovpercmstpsnonwnondnon",true,true] remoteExecCall ["MPClient_fnc_animSync",-2];};
         };
         ppEffectDestroy [_critColorEffect];
         player setFatigue 1;
@@ -36,4 +36,4 @@ while {life_var_critHit} do {
     };
 };
 
-life_fnc_effects_critHit_active = false;
+MPClient_fnc_effects_critHit_active = false;

@@ -30,7 +30,7 @@ _weaponArray = [primaryWeapon player, secondaryWeapon player, handgunWeapon play
     if (!(_x isEqualTo "")) then
     {
         _weapon = _x;
-        _cfgInfo = [_weapon,"CfgWeapons"] call life_fnc_fetchCfgDetails;
+        _cfgInfo = [_weapon,"CfgWeapons"] call MPClient_fnc_fetchCfgDetails;
 
         _legacyItems = ((_cfgInfo select 10) + (_cfgInfo select 11) + (_cfgInfo select 12));
         _newItems = _cfgInfo select 14;

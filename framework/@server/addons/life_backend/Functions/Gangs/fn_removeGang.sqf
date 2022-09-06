@@ -16,6 +16,6 @@ if (_groupID isEqualTo -1) exitWith {};
 _group setVariable ["gang_owner",nil,true];
 [format ["UPDATE gangs SET active='0' WHERE id='%1'",_groupID],1] call MPServer_fnc_database_rawasync_request;
 
-[_group] remoteExecCall ["life_fnc_gangDisbanded",(units _group)];
+[_group] remoteExecCall ["MPClient_fnc_gangDisbanded",(units _group)];
 waitUntil {(units _group) isEqualTo []};
 deleteGroup _group;

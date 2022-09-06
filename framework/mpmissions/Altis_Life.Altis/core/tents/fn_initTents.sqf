@@ -5,7 +5,7 @@
 
 life_var_tents = [];
 
-life_fnc_isTent = compileFinal '
+MPClient_fnc_isTent = compileFinal '
 	private _tent = param [0, objNull];
 	if(isNil {_tent getVariable "tentID"}) exitWith {false};
 	if(typeOf _tent in ["Land_Campfire_F", "Campfire_burning_F","Land_TentA_F","Land_TentDome_F"]) exitWith {true};
@@ -29,14 +29,14 @@ waitUntil{!isNil "life_var_allTents"};
 
 		life_var_tents pushBackUnique [_x, _type, _pos, _marker];
  
-		_tent addAction ["Packup Campsite",{[param [0,objNull]] spawn life_fnc_packupTent;},nil,1.5,true,true,"","true",7,false];
+		_tent addAction ["Packup Campsite",{[param [0,objNull]] spawn MPClient_fnc_packupTent;},nil,1.5,true,true,"","true",7,false];
 	};
 }forEach life_var_allTents;
 	
 if(count life_var_tents > 0)then{
 	if(count life_var_tents > 3)then{
 		private _tent = life_var_tents#0;
-		[_tent,true] call life_fnc_packupTent;
+		[_tent,true] call MPClient_fnc_packupTent;
 	};
 	uiSleep 30;
 	systemChat format ["%1 owned tents loaded",count life_var_tents];

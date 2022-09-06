@@ -14,7 +14,7 @@ private _sideflag = switch (playerSide) do {case west: {"cop"}; case civilian: {
 private _licenses = format ["getText(_x >> 'side') isEqualTo '%1'",_sideflag] configClasses (missionConfigFile >> "Licenses");
 private _var = format["Sync_%1_Completed_%2",round(random[1000,5000,9999]),round diag_tickTime];
 
-[] call life_fnc_saveGear;
+[] call MPClient_fnc_saveGear;
 
 [
     _var,

@@ -4,19 +4,19 @@
 */
 
 if (life_session_completed) exitWith {}; 
-if(!canSuspend)exitWith{_this spawn SOCK_fnc_requestReceived};
+if(!canSuspend)exitWith{_this spawn MPClient_fnc_requestReceived};
  
 life_session_tries = life_session_tries + 1;
-if (life_session_tries > 3) exitWith {["There was an error in trying to setup your client"] call life_fnc_setLoadingText; uiSleep(random[0.5,3,6]); uiSleep 5; endLoadingScreen; endMission "END1";};
+if (life_session_tries > 3) exitWith {["There was an error in trying to setup your client"] call MPClient_fnc_setLoadingText; uiSleep(random[0.5,3,6]); uiSleep 5; endLoadingScreen; endMission "END1";};
 
-["Received request from server... Validating..."] call life_fnc_setLoadingText; uiSleep(random[0.5,3,6]);
+["Received request from server... Validating..."] call MPClient_fnc_setLoadingText; uiSleep(random[0.5,3,6]);
 
 //Error handling and junk..
-if (isNil "_this") exitWith {[] call SOCK_fnc_insertPlayerInfo;};
-if (_this isEqualType "") exitWith {[] call SOCK_fnc_insertPlayerInfo;};
-if (count _this isEqualTo 0) exitWith {[] call SOCK_fnc_insertPlayerInfo;};
-if ((_this select 0) isEqualTo "Error") exitWith {[] call SOCK_fnc_insertPlayerInfo;};
-if (!(getPlayerUID player isEqualTo (_this select 0))) exitWith {[] call SOCK_fnc_dataQuery;};
+if (isNil "_this") exitWith {[] call MPClient_fnc_insertPlayerInfo;};
+if (_this isEqualType "") exitWith {[] call MPClient_fnc_insertPlayerInfo;};
+if (count _this isEqualTo 0) exitWith {[] call MPClient_fnc_insertPlayerInfo;};
+if ((_this select 0) isEqualTo "Error") exitWith {[] call MPClient_fnc_insertPlayerInfo;};
+if (!(getPlayerUID player isEqualTo (_this select 0))) exitWith {[] call MPClient_fnc_dataQuery;};
 
 life_BEGuid = compileFinal str(_this#0);
 life_isdev = compileFinal "(getPlayerUID _this) in getArray(missionConfigFile >> ""enableDebugConsole"")";
@@ -65,7 +65,7 @@ private _houses = _this call BIS_fnc_arrayPop;
 private _tents = _this call BIS_fnc_arrayPop;
  
 //--- Houses
-["Loading houses"] call life_fnc_setLoadingText; uiSleep(random[0.5,3,6]);
+["Loading houses"] call MPClient_fnc_setLoadingText; uiSleep(random[0.5,3,6]);
 life_houses = _houses;
 {
     private _house = nearestObject [(call compile format ["%1",(_x select 0)]), "House"];
@@ -74,17 +74,17 @@ life_houses = _houses;
 [] spawn MPServer_fnc_initHouses;
 
 //--- Gang
-["Loading gangs"] call life_fnc_setLoadingText; uiSleep(random[0.5,3,6]);
+["Loading gangs"] call MPClient_fnc_setLoadingText; uiSleep(random[0.5,3,6]);
 life_gangData = _gang;
 if (count life_gangData > 0) then {
-    [] spawn life_fnc_initGang;
+    [] spawn MPClient_fnc_initGang;
 };
 
 //--- Tents
-["Loading tents"] call life_fnc_setLoadingText; uiSleep(random[0.5,3,6]);
+["Loading tents"] call MPClient_fnc_setLoadingText; uiSleep(random[0.5,3,6]);
 life_tents = _tents;
 if(count _tents > 0) then {
-    //[] spawn life_fnc_initTents;
+    //[] spawn MPClient_fnc_initTents;
 };
 
 //-- Keychain
@@ -94,7 +94,7 @@ if (count _keychain > 0) then {
   
 life_isAdmin = compileFinal str ((call life_adminlevel) > 0);
 
-[] call life_fnc_loadGear;
+[] call MPClient_fnc_loadGear;
  
 life_session_completed = true;
 

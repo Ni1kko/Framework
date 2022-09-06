@@ -1,6 +1,6 @@
 /*
 
-	Function: 	life_fnc_Agony
+	Function: 	MPClient_fnc_Agony
 	Project: 	Misty Peaks RPG
 	Author:     Merrick, Nikko, Affect & IceEagle132
 	
@@ -13,4 +13,4 @@ params [
 ];
 _unit setVariable ["medicStatus",-1,true];
 _unit setVariable ["lifeState","INCAPACITATED",true];
-[_unit] spawn life_fnc_deathScreen;
+[_unit] spawn MPClient_fnc_deathScreen;

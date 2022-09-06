@@ -35,7 +35,7 @@ switch (_mode) do {
     };
 
     case 3: {
-        [] call life_fnc_saveGear;
+        [] call MPClient_fnc_saveGear;
         _packet set[2,life_var_loadout];
     };
 

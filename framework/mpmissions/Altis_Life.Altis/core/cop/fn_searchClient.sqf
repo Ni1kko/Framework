@@ -21,7 +21,7 @@ _robber = false;
     _val = ITEM_VALUE(_var);
     if (_val > 0) then {
         _inv pushBack [_var,_val];
-        [false,_var,_val] call life_fnc_handleInv;
+        [false,_var,_val] call MPClient_fnc_handleInv;
     };
 } forEach ("getNumber(_x >> 'illegal') isEqualTo 1" configClasses (missionConfigFile >> "VirtualItems"));
 
@@ -30,4 +30,4 @@ if (!life_var_ATMEnabled) then  {
     _robber = true;
 };
 
-[player,_inv,_robber] remoteExec ["life_fnc_copSearch",_cop];
+[player,_inv,_robber] remoteExec ["MPClient_fnc_copSearch",_cop];

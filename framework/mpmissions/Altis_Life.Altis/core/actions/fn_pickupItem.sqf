@@ -19,19 +19,19 @@ if (isLocalized _itemName) then {
 };
 
 if (playerSide isEqualTo west && _illegal isEqualTo 1) exitWith {
-    titleText[format [localize "STR_NOTF_PickedEvidence",_itemName,[round(ITEM_SELLPRICE(_itemInfo select 0) / 2)] call life_fnc_numberText],"PLAIN"];
+    titleText[format [localize "STR_NOTF_PickedEvidence",_itemName,[round(ITEM_SELLPRICE(_itemInfo select 0) / 2)] call MPClient_fnc_numberText],"PLAIN"];
     life_var_bank = life_var_bank + round(ITEM_SELLPRICE(_itemInfo select 0) / 2);
     deleteVehicle _this;
-    [1] call SOCK_fnc_updatePartial;
+    [1] call MPClient_fnc_updatePartial;
     life_action_delay = time;
 };
 
 life_action_delay = time;
-_diff = [(_itemInfo select 0),(_itemInfo select 1),life_var_carryWeight,life_maxWeight] call life_fnc_calWeightDiff;
+_diff = [(_itemInfo select 0),(_itemInfo select 1),life_var_carryWeight,life_maxWeight] call MPClient_fnc_calWeightDiff;
 if (_diff <= 0) exitWith {hint localize "STR_NOTF_InvFull"; INUSE(_this);};
 
 if (!(_diff isEqualTo (_itemInfo select 1))) then {
-    if ([true,(_itemInfo select 0),_diff] call life_fnc_handleInv) then {
+    if ([true,(_itemInfo select 0),_diff] call MPClient_fnc_handleInv) then {
         player playMove "AinvPknlMstpSlayWrflDnon";
 
         _this setVariable ["item",[(_itemInfo select 0),(_itemInfo select 1) - _diff],true];
@@ -41,7 +41,7 @@ if (!(_diff isEqualTo (_itemInfo select 1))) then {
         INUSE(_this);
     };
 } else {
-    if ([true,(_itemInfo select 0),(_itemInfo select 1)] call life_fnc_handleInv) then {
+    if ([true,(_itemInfo select 0),(_itemInfo select 1)] call MPClient_fnc_handleInv) then {
         deleteVehicle _this;
         //waitUntil{isNull _this};
         player playMove "AinvPknlMstpSlayWrflDnon";

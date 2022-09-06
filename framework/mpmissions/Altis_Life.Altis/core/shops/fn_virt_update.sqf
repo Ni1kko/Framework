@@ -32,7 +32,7 @@ for "_i" from 1 to 2 do {
                 _quantity = 99;//temp (0 = no stock)
                 if (_buyprice isNotEqualTo -1) then {
 
-                    private _itemName = format ["%1 - ($%2)",TEXT_LOCALIZE(_displayName),[_buyprice] call life_fnc_numberText];
+                    private _itemName = format ["%1 - ($%2)",TEXT_LOCALIZE(_displayName),[_buyprice] call MPClient_fnc_numberText];
                        
                     if(_quantity < 1)then{
                         _itemName = format ["%1 - (OUT OF STOCK)",TEXT_LOCALIZE(_displayName)];
@@ -41,7 +41,7 @@ for "_i" from 1 to 2 do {
                         _itemName = format (if (_buyprice isEqualTo 0) then {
                             ["%1 - (FREE)",TEXT_LOCALIZE(_displayName)]
                         }else{
-                            ["%1 - ($%2)",TEXT_LOCALIZE(_displayName),[_buyprice] call life_fnc_numberText]
+                            ["%1 - ($%2)",TEXT_LOCALIZE(_displayName),[_buyprice] call MPClient_fnc_numberText]
                         });
                     };
 

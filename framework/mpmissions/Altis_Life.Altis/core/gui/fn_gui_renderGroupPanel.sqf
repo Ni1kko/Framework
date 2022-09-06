@@ -28,7 +28,7 @@ if (diag_tickTime - life_var_hud_lastgrprendered_at >= 1) then
 				if ((vehicle _x) isEqualTo _x) then {
 					_lines = _lines + format ["<t color='%1'>%2</t><br/>", _color, name _x];
 				} else {
-					private _role = _x call life_fnc_util_getVehicleRole;
+					private _role = _x call MPClient_fnc_util_getVehicleRole;
 					switch (_role) do {
 						case "driver": {
 							_lines = _lines + format ["<t color='%1'>%2 <img image='textures\hud\hud_group_driver.paa'/></t><br/>", _color, name _x];

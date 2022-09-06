@@ -18,9 +18,9 @@ if (!([_num] call MPServer_fnc_isNumber)) exitWith {hint localize "STR_MISC_Wron
 _num = parseNumber(_num);
 if (_num < 1) exitWith {hint localize "STR_MISC_Under1";};
 
-_totalWeight = [life_trunk_vehicle] call life_fnc_vehicleWeight;
+_totalWeight = [life_trunk_vehicle] call MPClient_fnc_vehicleWeight;
 
-_itemWeight = ([_ctrl] call life_fnc_itemWeight) * _num;
+_itemWeight = ([_ctrl] call MPClient_fnc_itemWeight) * _num;
 _veh_data = life_trunk_vehicle getVariable ["Trunk",[[],0]];
 _inv = _veh_data select 0;
 
@@ -37,13 +37,13 @@ if (_ctrl == "money") then {
     };
 
     life_var_cash = life_var_cash - _num;
-    [0] call SOCK_fnc_updatePartial;
+    [0] call MPClient_fnc_updatePartial;
     life_trunk_vehicle setVariable ["Trunk",[_inv,(_veh_data select 1) + _itemWeight],true];
-    [life_trunk_vehicle] call life_fnc_vehInventory;
+    [life_trunk_vehicle] call MPClient_fnc_vehInventory;
 } else {
     if (((_totalWeight select 1) + _itemWeight) > (_totalWeight select 0)) exitWith {hint localize "STR_NOTF_VehicleFullOrInsufCap";};
 
-    if (!([false,_ctrl,_num] call life_fnc_handleInv)) exitWith {hint localize "STR_CouldNotRemoveItemsToPutInVeh";};
+    if (!([false,_ctrl,_num] call MPClient_fnc_handleInv)) exitWith {hint localize "STR_CouldNotRemoveItemsToPutInVeh";};
     _index = [_ctrl,_inv] call MPServer_fnc_index;
     if (_index isEqualTo -1) then {
         _inv pushBack [_ctrl,_num];
@@ -53,5 +53,5 @@ if (_ctrl == "money") then {
     };
 
     life_trunk_vehicle setVariable ["Trunk",[_inv,(_veh_data select 1) + _itemWeight],true];
-    [life_trunk_vehicle] call life_fnc_vehInventory;
+    [life_trunk_vehicle] call MPClient_fnc_vehInventory;
 };

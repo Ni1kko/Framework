@@ -100,7 +100,7 @@ if (_newside in [east,west,independent] AND _rank <= 0)exitWith {
 		_newplayerObject setUnitLoadout _loadout;
 
 		//-- Setup event handlers 
-		[] call life_fnc_setupEVH;
+		[] call MPClient_fnc_setupEVH;
 
 		//--- Join side chat for new side
 		[_newplayerObject, life_settings_enableSidechannel, playerSide] remoteExecCall ["MPServer_fnc_managesc", 2];

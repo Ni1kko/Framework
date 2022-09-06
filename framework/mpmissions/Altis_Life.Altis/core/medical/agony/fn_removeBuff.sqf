@@ -1,6 +1,6 @@
 /*
 
-	Function: 	life_fnc_removeBuff
+	Function: 	MPClient_fnc_removeBuff
 	Project: 	Misty Peaks RPG
 	Author:     Merrick, Nikko, Affect & IceEagle132
 	

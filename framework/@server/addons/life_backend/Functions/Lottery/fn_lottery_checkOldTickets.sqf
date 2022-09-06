@@ -51,8 +51,8 @@ while {count _queryTickets > 0} do {
 							private _totalPayout = _ticketPayout + _bonusBallPayout;
 							
 							systemChat ([
-								format["You have won $%1 from the lottery!",[_ticketPayout] call life_fnc_numberText],
-								format["You have won $%1 from the lottery bonusball!",[_bonusBallPayout] call life_fnc_numberText]
+								format["You have won $%1 from the lottery!",[_ticketPayout] call MPClient_fnc_numberText],
+								format["You have won $%1 from the lottery bonusball!",[_bonusBallPayout] call MPClient_fnc_numberText]
 							] select _bonusBallWinner);
 
 							life_var_cash = life_var_cash + _totalPayout;

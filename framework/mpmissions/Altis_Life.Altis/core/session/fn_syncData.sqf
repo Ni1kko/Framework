@@ -11,7 +11,7 @@ if (isNil "life_session_time") then {life_session_time = false;};
 if (life_session_time) exitWith {hint localize "STR_Session_SyncdAlready";};
 
 life_var_lastSynced = time;
-[] call SOCK_fnc_updateRequest;
+[] call MPClient_fnc_updateRequest;
 hint "Syncing player information to Hive.\n\nPlease wait atleast 10 seconds before leaving";
 
 //allow admins to sync anytime

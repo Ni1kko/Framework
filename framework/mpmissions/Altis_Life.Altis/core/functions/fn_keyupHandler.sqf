@@ -31,7 +31,7 @@ if ((_keyCode in (actionKeys "GetOver") || _keyCode in (actionKeys "salute") || 
 if (life_var_isBusy) exitWith {
     if (!life_interrupted && _keyCode in _interruptionKeys) then {
         if (life_var_autorun) then {
-            ["abort"] call life_fnc_autoruntoggle;
+            ["abort"] call MPClient_fnc_autoruntoggle;
         };
         life_interrupted = true
     };
@@ -44,7 +44,7 @@ if (_keyCode in (actionKeys "User2")) exitWith
 	{
 		if ((group player getVariable ["gang_id",-1]) isNotEqualTo -1) then 
 		{
-			//[]call life_fnc_updatePartyMarker; 
+			//[]call MPClient_fnc_updatePartyMarker; 
 		};
 	};
 	true
@@ -60,7 +60,7 @@ private _interactionKey = if (actionKeys "User10" isEqualTo []) then {DIK_LWIN} 
 
 if (life_container_active) exitwith {
     if (life_var_autorun) then {
-        ["abort"] call life_fnc_autoruntoggle;
+        ["abort"] call MPClient_fnc_autoruntoggle;
     };
     //ignore movement actions
     private _allowedMoves = [
@@ -95,7 +95,7 @@ if (life_container_active) exitwith {
     };
     //handle other keys
     if (_keyCode isEqualTo DIK_SPACE) then {//space key -> place
-        life_storagePlacing = 0 spawn life_fnc_placestorage;
+        life_storagePlacing = 0 spawn MPClient_fnc_placestorage;
     } else { //other keys -> abort
         if (!isNull life_storagePlacing) exitWith {}; //already placing down a box
         if (!isNull life_container_activeObj) then {
@@ -131,7 +131,7 @@ switch (_keyCode) do
 		if (primaryWeapon player != "") then {
 			if (primaryWeapon player != currentWeapon player) then {
 				if (life_var_autorun) then {
-					["abort"] call life_fnc_autoruntoggle; 
+					["abort"] call MPClient_fnc_autoruntoggle; 
 				};
 				player selectWeapon (primaryWeapon player);
 			};
@@ -143,7 +143,7 @@ switch (_keyCode) do
 		if (handgunWeapon player != "") then {
 			if (handgunWeapon player != currentWeapon player) then {
 				if (life_var_autorun) then {
-					["abort"] call life_fnc_autoruntoggle; 
+					["abort"] call MPClient_fnc_autoruntoggle; 
 				};
 				player selectWeapon (handgunWeapon player);
 			};
@@ -155,7 +155,7 @@ switch (_keyCode) do
 		if (secondaryWeapon player != "") then {
 			if (secondaryWeapon player != currentWeapon player) then {
 				if (life_var_autorun) then {
-					["abort"] call life_fnc_autoruntoggle; 
+					["abort"] call MPClient_fnc_autoruntoggle; 
 				};
 				player selectWeapon (secondaryWeapon player);
 			};
@@ -171,7 +171,7 @@ switch (_keyCode) do
 	case DIK_0: 
 	{ 
 		if (!dialog && !(player getVariable ["restrained",false]) && {!life_var_isBusy}) then  {
-			["toggle"] call life_fnc_autoruntoggle;
+			["toggle"] call MPClient_fnc_autoruntoggle;
 		};
         _stopPropagation = true;
 	};
@@ -183,7 +183,7 @@ switch (_keyCode) do
 	case DIK_W:
 	{
 		if (life_var_autorun) then {
-			["abort"] call life_fnc_autoruntoggle;
+			["abort"] call MPClient_fnc_autoruntoggle;
 			_stopPropagation = true; 
 		};
 	};
@@ -192,9 +192,9 @@ switch (_keyCode) do
 	{
         if (_shiftState && playerSide isEqualTo west && {!isNull cursorObject} && {cursorObject isKindOf "CAManBase"} && {(isPlayer cursorObject)} && {(side cursorObject in [civilian,independent])} && {alive cursorObject} && {cursorObject distance player < 3.5} && {!(cursorObject getVariable "Escorting")} && {!(cursorObject getVariable "restrained")} && {speed cursorObject < 1}) then {
             if (life_var_autorun) then {
-                ["abort"] call life_fnc_autoruntoggle;
+                ["abort"] call MPClient_fnc_autoruntoggle;
             };
-            [] call life_fnc_restrainAction;
+            [] call MPClient_fnc_restrainAction;
 			_stopPropagation = true
         };
 	};
@@ -203,7 +203,7 @@ switch (_keyCode) do
         if (!_altState && {!_controlState} && {!dialog} && {!life_var_isBusy} && {!(player getVariable ["playerSurrender",false])} && {!(player getVariable ["restrained",false])} && {!life_isknocked} && {!life_istazed}) then {
             if (!(isNull objectParent player) && alive vehicle player) then {
                 if ((vehicle player) in life_vehicles) then {
-                    [vehicle player] spawn life_fnc_openInventory;
+                    [vehicle player] spawn MPClient_fnc_openInventory;
                 };
             } else {
                 private "_list";
@@ -213,13 +213,13 @@ switch (_keyCode) do
                     if (_house getVariable ["locked", false]) then {
                         hint localize "STR_House_ContainerDeny";
                     } else {
-                        [_list] spawn life_fnc_openInventory;
+                        [_list] spawn MPClient_fnc_openInventory;
                     };
                 } else {
                     _list = ["landVehicle","Air","Ship"];
                     if (KINDOF_ARRAY(cursorObject,_list) && {player distance cursorObject < 7} && {isNull objectParent player} && {alive cursorObject} && {!life_var_isBusy}) then {
                         if (cursorObject in life_vehicles || {locked cursorObject isEqualTo 0}) then {
-                            [cursorObject] spawn life_fnc_openInventory;
+                            [cursorObject] spawn MPClient_fnc_openInventory;
                         };
                     };
                 };
@@ -229,14 +229,14 @@ switch (_keyCode) do
 	case DIK_Y: 
 	{
         if (!_altState && !_controlState && !dialog && !(player getVariable ["restrained",false]) && {!life_var_isBusy}) then {
-            [] call life_fnc_p_openMenu;
+            [] call MPClient_fnc_p_openMenu;
         };
     };
 	case DIK_U: 
 	{
         if (!_altState && !_controlState) then {
             if (life_var_autorun) then {
-                ["abort"] call life_fnc_autoruntoggle;
+                ["abort"] call MPClient_fnc_autoruntoggle;
             };
             private _veh = if (isNull objectParent player) then {
                 cursorObject;
@@ -246,7 +246,7 @@ switch (_keyCode) do
 
             if (_veh isKindOf "House_F" && {playerSide isEqualTo civilian}) then {
                 if (_veh in life_vehicles && {player distance _veh < 20}) then {
-                    private _door = [_veh] call life_fnc_nearestDoor;
+                    private _door = [_veh] call MPClient_fnc_nearestDoor;
                     if (_door isEqualTo 0) exitWith {hint localize "STR_House_Door_NotNear"};
                     private _locked = _veh getVariable [format ["bis_disabled_Door_%1",_door],0];
 
@@ -289,7 +289,7 @@ switch (_keyCode) do
                             _veh animateDoor ['DoorL_Back_Open',1];
                             _veh animateDoor ['DoorR_Back_Open ',1];
                         } else {
-                            [_veh,0] remoteExecCall ["life_fnc_lockVehicle",_veh];
+                            [_veh,0] remoteExecCall ["MPClient_fnc_lockVehicle",_veh];
 
                             _veh animateDoor ["door_back_R",1];
                             _veh animateDoor ["door_back_L",1];
@@ -313,7 +313,7 @@ switch (_keyCode) do
                             _veh animateDoor ['DoorR_Back_Open ',1];
                         };
                         systemChat localize "STR_MISC_VehUnlock";
-                        [_veh,"unlockCarSound",50,1] remoteExec ["life_fnc_say3D",RANY];
+                        [_veh,"unlockCarSound",50,1] remoteExec ["MPClient_fnc_say3D",RANY];
                     } else {
                         if (local _veh) then {
                             _veh lock 2;
@@ -339,7 +339,7 @@ switch (_keyCode) do
                             _veh animateDoor ['DoorL_Back_Open',0];
                             _veh animateDoor ['DoorR_Back_Open ',0];
                         } else {
-                            [_veh,2] remoteExecCall ["life_fnc_lockVehicle",_veh];
+                            [_veh,2] remoteExecCall ["MPClient_fnc_lockVehicle",_veh];
 
                             _veh animateDoor ["door_back_R",0];
                             _veh animateDoor ["door_back_L",0];
@@ -363,7 +363,7 @@ switch (_keyCode) do
                             _veh animateDoor ['DoorR_Back_Open ',0];
                         };
                         systemChat localize "STR_MISC_VehLock";
-                        [_veh,"lockCarSound",50,1] remoteExec ["life_fnc_say3D",RANY];
+                        [_veh,"lockCarSound",50,1] remoteExec ["MPClient_fnc_say3D",RANY];
                     };
                 };
             };
@@ -391,21 +391,21 @@ switch (_keyCode) do
 	case DIK_A:
 	{
 		if (life_var_autorun) then {
-			["abort"] call life_fnc_autoruntoggle;
+			["abort"] call MPClient_fnc_autoruntoggle;
 			_stopPropagation = true; 
 		};
 	};
 	case DIK_S:
 	{
 		if (life_var_autorun) then {
-			["abort"] call life_fnc_autoruntoggle;
+			["abort"] call MPClient_fnc_autoruntoggle;
 			_stopPropagation = true; 
 		};
 	};
 	case DIK_D:
 	{
 		if (life_var_autorun) then {
-			["abort"] call life_fnc_autoruntoggle;
+			["abort"] call MPClient_fnc_autoruntoggle;
 			_stopPropagation = true; 
 		};
 	};
@@ -433,9 +433,9 @@ switch (_keyCode) do
                 _veh setVariable ["siren",true,true];
                 private "_jip";
                 if (playerSide isEqualTo west) then {
-                    _jip = [_veh] remoteExec ["life_fnc_copSiren",RCLIENT,true];
+                    _jip = [_veh] remoteExec ["MPClient_fnc_copSiren",RCLIENT,true];
                 } else {
-                    _jip = [_veh] remoteExec ["life_fnc_medicSiren",RCLIENT,true];
+                    _jip = [_veh] remoteExec ["MPClient_fnc_medicSiren",RCLIENT,true];
                 };
                 _veh setVariable ["sirenJIP",_jip,true];
             };
@@ -445,7 +445,7 @@ switch (_keyCode) do
 	{ 
 		if (_shiftState && playerSide isEqualTo civilian && !isNull cursorObject && cursorObject isKindOf "CAManBase" && isPlayer cursorObject && alive cursorObject && cursorObject distance player < 4 && speed cursorObject < 1) then {
             if ((animationState cursorObject) != "Incapacitated" && (currentWeapon player == primaryWeapon player || currentWeapon player == handgunWeapon player) && currentWeapon player != "" && !life_knockout && !(player getVariable ["restrained",false]) && !life_istazed && !life_isknocked) then {
-                [cursorObject] spawn life_fnc_knockoutAction;
+                [cursorObject] spawn MPClient_fnc_knockoutAction;
             };
             _stopPropagation = true;
         };
@@ -475,16 +475,16 @@ switch (_keyCode) do
             if (!(isNull objectParent player) && (typeOf vehicle player) in ["C_Offroad_01_F","B_MRAP_01_F","C_SUV_01_F","C_Hatchback_01_sport_F","B_Heli_Light_01_F","B_Heli_Transport_01_F"]) then {
                 if (!isNil {vehicle player getVariable "lights"}) then {
                     if (playerSide isEqualTo west) then {
-                        [vehicle player] call life_fnc_sirenLights;
+                        [vehicle player] call MPClient_fnc_sirenLights;
                     } else {
-                        [vehicle player] call life_fnc_medicSirenLights;
+                        [vehicle player] call MPClient_fnc_medicSirenLights;
                     };
                     _stopPropagation = true;
                 };
             };
         };
 
-        if (!_altState && !_controlState) then { [] call life_fnc_radar; };
+        if (!_altState && !_controlState) then { [] call MPClient_fnc_radar; };
     };
 
 	//-- row 5 
@@ -496,12 +496,12 @@ switch (_keyCode) do
 	{
         if (_shiftState) then {
             if (life_var_autorun) then {
-                ["abort"] call life_fnc_autoruntoggle;
+                ["abort"] call MPClient_fnc_autoruntoggle;
             };
             if (player getVariable ["playerSurrender",false]) then {
                 player setVariable ["playerSurrender",false,true];
             } else {
-                [] spawn life_fnc_surrender;
+                [] spawn MPClient_fnc_surrender;
             };
             _stopPropagation = true;
         };
@@ -523,10 +523,10 @@ switch (_keyCode) do
 		}else{
 			if (!life_var_isBusy) then {
 				if (life_var_autorun) then {
-					["abort"] call life_fnc_autoruntoggle;
+					["abort"] call MPClient_fnc_autoruntoggle;
 				};
 				[] spawn  {
-					private _handle = [] spawn life_fnc_actionKeyHandler;
+					private _handle = [] spawn MPClient_fnc_actionKeyHandler;
 					waitUntil {scriptDone _handle};
 					life_var_isBusy = false;
 				};
@@ -538,12 +538,12 @@ switch (_keyCode) do
 	case DIK_SPACE:
 	{
         if (life_var_autorun) then {
-            ["abort"] call life_fnc_autoruntoggle;
+            ["abort"] call MPClient_fnc_autoruntoggle;
         };
         if (isNil "jumpActionTime") then {jumpActionTime = 0;};
         if (_shiftState && {!(animationState player isEqualTo "AovrPercMrunSrasWrflDf")} && {isTouchingGround player} && {stance player isEqualTo "STAND"} && {speed player > 2} && {!life_is_arrested} && {((velocity player) select 2) < 2.5} && {time - jumpActionTime > 1.5}) then {
             jumpActionTime = time; //Update the time.
-            [player] remoteExec ["life_fnc_jumpFnc",RANY]; //Global execution
+            [player] remoteExec ["MPClient_fnc_jumpFnc",RANY]; //Global execution
             _stopPropagation = true;
         };
     };

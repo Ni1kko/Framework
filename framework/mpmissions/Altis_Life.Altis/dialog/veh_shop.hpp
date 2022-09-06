@@ -40,7 +40,7 @@ class Life_vehicle_shop {
             text = "";
             sizeEx = 0.035;
             colorBackground[] = {0,0,0,0};
-            onLBSelChanged = "[_this] call life_fnc_vehicleColorList";
+            onLBSelChanged = "[_this] call MPClient_fnc_vehicleColorList";
             x = 0.12;
             y = 0.26;
             w = 0.76;
@@ -68,7 +68,7 @@ class Life_vehicle_shop {
         class GetCar: Life_RscButtonMenu {
             idc = -1;
             text = "$STR_Global_Buy";
-            onButtonClick = "[] spawn life_fnc_vehicleShopBuy";
+            onButtonClick = "[] spawn MPClient_fnc_vehicleShopBuy";
             x = 0.1 + (6.25 / 40) + (1 / 250 / (safezoneW / safezoneH));
             y = 0.8 - (1 / 25);
             w = (6.25 / 40);
@@ -78,7 +78,7 @@ class Life_vehicle_shop {
         class GetCarGarage: Life_RscButtonMenu {
             idc = -1;
             text = "$STR_Global_BuyPerm";
-            onButtonClick = "[] spawn life_fnc_vehicleShopBuySave";
+            onButtonClick = "[] spawn MPClient_fnc_vehicleShopBuySave";
             x = 0.26 + (6.25 / 40) + (1 / 250 / (safezoneW / safezoneH));
             y = 0.8 - (1 / 25);
             w = (10 / 40);

@@ -16,7 +16,7 @@ if (isNil "_classname" || _classname isEqualTo "") exitWith {
 private _vehicleFuelList = uiNamespace getVariable ["fuel_list",[]];
 
 (_vehicleFuelList select _index) params ["_car"];
-private _vehicleInfo = [_className] call life_fnc_fetchVehInfo;
+private _vehicleInfo = [_className] call MPClient_fnc_fetchVehInfo;
 private _fuelNow = fuel _car;
 private _fueltank = _vehicleInfo select 12;
 if (_car isKindOf "B_Truck_01_box_F" || _car isKindOf "B_Truck_01_transport_F") then {_fueltank = 350};//hemtt
@@ -51,17 +51,17 @@ if ((life_var_bank - (_fueltoput * _fuelCost)) > 0) then {
         if (player distance _car > 10) exitWith {};
         if !(isNull objectParent player) exitWith {};
         if (((_cP * 100) mod 10) isEqualTo 0) then {
-            [_car,_cP * _setfuel] remoteExecCall ["life_fnc_setFuel",_car];
+            [_car,_cP * _setfuel] remoteExecCall ["MPClient_fnc_setFuel",_car];
         };
     };
     private _toPay = floor((_fueltoput * _fuelCost) * _cP);
     life_var_bank = life_var_bank - _toPay; //pay the received fuel
-    [_car,_cP * _setfuel] remoteExecCall ["life_fnc_setFuel",_car]; //update the fuel
+    [_car,_cP * _setfuel] remoteExecCall ["MPClient_fnc_setFuel",_car]; //update the fuel
     "progressBar" cutText ["","PLAIN"];
     if (_car distance player > 10 || !(isNull objectParent player)) then {
         hint localize "STR_Distance_Vehicle_Pump";
     };
-    [0] call SOCK_fnc_updatePartial;
+    [0] call MPClient_fnc_updatePartial;
     life_is_processing = false;
 } else {
     hint localize "STR_NOTF_NotEnoughMoney";

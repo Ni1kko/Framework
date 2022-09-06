@@ -6,8 +6,8 @@ while {true} do {
 	waitUntil{life_var_autorun}; 
 	life_var_autorun_thread = [] spawn {
 		while {life_var_autorun} do { 
-			if (call life_fnc_util_canautorun) then {
-				private _gradient = player call life_fnc_util_getTerrainGradient;
+			if (call MPClient_fnc_util_canautorun) then {
+				private _gradient = player call MPClient_fnc_util_getTerrainGradient;
 				
 				//out of range
 				if(_gradient < 0)exitWith{
@@ -23,7 +23,7 @@ while {true} do {
 				}; 
 
 				//play
-				_mode call life_fnc_autorunswitch;
+				_mode call MPClient_fnc_autorunswitch;
 
 				//loop after 1
 				uiSleep 1;
@@ -34,5 +34,5 @@ while {true} do {
 	};
 	waitUntil{!life_var_autorun}; 
 	terminate life_var_autorun_thread;
-	"Stop" call life_fnc_autorunswitch;
+	"Stop" call MPClient_fnc_autorunswitch;
 };

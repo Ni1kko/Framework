@@ -1,6 +1,6 @@
 /*
 
-	Function: 	life_fnc_canspit
+	Function: 	MPClient_fnc_canspit
 	Project: 	AsYetUntitled/Framework
 	Author:     Nikko
 	Github:		https://github.com/AsYetUntitled/Framework

@@ -42,7 +42,7 @@ if (count _vInfo isEqualTo 0) exitWith {
         life_impound_inuse = false;
         (owner _unit) publicVariableClient "life_impound_inuse";
     }else{ 
-        [1,"STR_Garage_Store_NotPersistent",true] remoteExecCall ["life_fnc_broadcast",(owner _unit)];
+        [1,"STR_Garage_Store_NotPersistent",true] remoteExecCall ["MPClient_fnc_broadcast",(owner _unit)];
         life_garage_store = false;
         (owner _unit) publicVariableClient "life_garage_store"; 
     };
@@ -50,7 +50,7 @@ if (count _vInfo isEqualTo 0) exitWith {
 
 //-- Not the vehicles owner
 if (_uid isNotEqualTo getPlayerUID _unit AND !_impound) exitWith {
-    [1,"STR_Garage_Store_NoOwnership",true] remoteExecCall ["life_fnc_broadcast",(owner _unit)];
+    [1,"STR_Garage_Store_NoOwnership",true] remoteExecCall ["MPClient_fnc_broadcast",(owner _unit)];
     life_garage_store = false;
     (owner _unit) publicVariableClient "life_garage_store";
 };
@@ -139,5 +139,5 @@ if (["impounded",["DB","BOOL", true] call MPServer_fnc_database_parse] in _query
 //--- Return succses
 life_garage_store = false;
 (owner _unit) publicVariableClient "life_garage_store";
-[1,_storetext] remoteExecCall ["life_fnc_broadcast",(owner _unit)];
+[1,_storetext] remoteExecCall ["MPClient_fnc_broadcast",(owner _unit)];
 true

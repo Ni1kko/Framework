@@ -20,7 +20,7 @@ private _tooFar = _tent distance2D player > 7;
 }forEach life_var_tents;
 
 if(!_valid || _tooFar)exitWith{ 
-	if(_tent call life_fnc_isTent)then{
+	if(_tent call MPClient_fnc_isTent)then{
 		if(_tooFar)then{
 			systemChat "You are not close enough to the tent.";
 		}else{

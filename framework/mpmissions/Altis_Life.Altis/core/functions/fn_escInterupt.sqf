@@ -1,6 +1,6 @@
 /*
 
-	Function: 	life_fnc_escInterupt
+	Function: 	MPClient_fnc_escInterupt
 	Project: 	AsYetUntitled
 	Author:     Tonic, Nikko, IceEagle132
 	Github:		https://github.com/AsYetUntitled/Framework
@@ -94,7 +94,7 @@ for "_i" from 0 to 1 step 0 do {
     ((uiNamespace getVariable "RscDisplayMPInterrupt") displayCtrl 103) ctrlEnable true;
     ((uiNamespace getVariable "RscDisplayMPInterrupt") displayCtrl 103) ctrlSetText "Sync Data";
     ((uiNamespace getVariable "RscDisplayMPInterrupt") displayCtrl 103) ctrlSetToolTip "Sync Player Data To Hive";
-    ((uiNamespace getVariable "RscDisplayMPInterrupt") displayCtrl 103) buttonSetAction "[] call SOCK_fnc_syncData";
+    ((uiNamespace getVariable "RscDisplayMPInterrupt") displayCtrl 103) buttonSetAction "[] call MPClient_fnc_syncData";
 
     //Respawn Btn
     ((uiNamespace getVariable "RscDisplayMPInterrupt") displayCtrl 1010) ctrlEnable false;
@@ -114,7 +114,7 @@ for "_i" from 0 to 1 step 0 do {
     //Exit Btn
     ((uiNamespace getVariable "RscDisplayMPInterrupt") displayCtrl 104) ctrlEnable false;
     ((uiNamespace getVariable "RscDisplayMPInterrupt") displayCtrl 104) ctrlSetText "Exit";
-    ((uiNamespace getVariable "RscDisplayMPInterrupt") displayCtrl 104) ctrlAddEventHandler ["ButtonClick","[] spawn life_fnc_abort; (findDisplay 49) closeDisplay 2; true"];
+    ((uiNamespace getVariable "RscDisplayMPInterrupt") displayCtrl 104) ctrlAddEventHandler ["ButtonClick","[] spawn MPClient_fnc_abort; (findDisplay 49) closeDisplay 2; true"];
     ((uiNamespace getVariable "RscDisplayMPInterrupt") displayCtrl 104) ctrlSetToolTip "Abandon Server And Sync Data";
 
     

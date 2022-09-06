@@ -18,5 +18,5 @@ if (isNull _spikeStrip) exitWith {}; //It was picked up?
 _vehicle = _nearVehicles select 0;
 
 if (isNil "_vehicle") exitWith {deleteVehicle _spikeStrip;};
-[_vehicle] remoteExec ["life_fnc_spikeStripEffect",_vehicle];
+[_vehicle] remoteExec ["MPClient_fnc_spikeStripEffect",_vehicle];
 deleteVehicle _spikeStrip;

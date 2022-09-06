@@ -37,14 +37,14 @@ switch (playerSide) do {
     };
 };
 
-_vehicleInfo = [_className] call life_fnc_fetchVehInfo;
-_trunkSpace = [_className] call life_fnc_vehicleWeightCfg;
+_vehicleInfo = [_className] call MPClient_fnc_fetchVehInfo;
+_trunkSpace = [_className] call MPClient_fnc_vehicleWeightCfg;
 _maxspeed = (_vehicleInfo select 8);
 _horsepower = (_vehicleInfo select 11);
 _passengerseats = (_vehicleInfo select 10);
 _fuel = (_vehicleInfo select 12);
 _armor = (_vehicleInfo select 9);
-[_className] call life_fnc_3dPreviewDisplay;
+[_className] call MPClient_fnc_3dPreviewDisplay;
 
 ctrlShow [2330,true];
 (CONTROL(2300,2303)) ctrlSetStructuredText parseText format [
@@ -56,8 +56,8 @@ ctrlShow [2330,true];
     (localize "STR_Shop_Veh_UI_Trunk")+ " %6<br/>" +
     (localize "STR_Shop_Veh_UI_Fuel")+ " %7<br/>" +
     (localize "STR_Shop_Veh_UI_Armor")+ " %8",
-    [round(_initalPrice * _rentMultiplier)] call life_fnc_numberText,
-    [round(_initalPrice * _buyMultiplier)] call life_fnc_numberText,
+    [round(_initalPrice * _rentMultiplier)] call MPClient_fnc_numberText,
+    [round(_initalPrice * _buyMultiplier)] call MPClient_fnc_numberText,
     _maxspeed,
     _horsepower,
     _passengerseats,
@@ -80,7 +80,7 @@ _colorArray = M_CONFIG(getArray,"LifeCfgVehicles",_classNameLife,"textures");
     _textureName = (_x select 0);
     if ((life_veh_shop select 2) isEqualTo _flag) then {
         _x params ["_texture"];
-        private _toShow = [_x] call life_fnc_levelCheck;
+        private _toShow = [_x] call MPClient_fnc_levelCheck;
         if (_toShow) then {
             _ctrl lbAdd _textureName;
             _ctrl lbSetValue [(lbSize _ctrl)-1,_forEachIndex];

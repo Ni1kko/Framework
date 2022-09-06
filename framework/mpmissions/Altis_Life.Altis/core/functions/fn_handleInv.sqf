@@ -15,11 +15,11 @@ if (_item isEqualTo "" || _num isEqualTo 0) exitWith {false};
 _var = ITEM_VARNAME(_item);
 
 if (_math) then {
-    _diff = [_item,_num,life_var_carryWeight,life_maxWeight] call life_fnc_calWeightDiff;
+    _diff = [_item,_num,life_var_carryWeight,life_maxWeight] call MPClient_fnc_calWeightDiff;
     _num = _diff;
     if (_num <= 0) exitWith {false};
 };
-_weight = ([_item] call life_fnc_itemWeight) * _num;
+_weight = ([_item] call MPClient_fnc_itemWeight) * _num;
 _value = ITEM_VALUE(_item);
 
 if (_math) then {

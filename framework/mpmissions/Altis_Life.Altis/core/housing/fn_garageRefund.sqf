@@ -10,4 +10,4 @@ _price = _this select 0;
 _unit = _this select 1;
 if !(_unit isEqualTo player) exitWith {};
 life_var_bank = life_var_bank + _price;
-[1] call SOCK_fnc_updatePartial;
+[1] call MPClient_fnc_updatePartial;

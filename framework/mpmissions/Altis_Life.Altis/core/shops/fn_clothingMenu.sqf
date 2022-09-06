@@ -32,7 +32,7 @@ if !(_shopSide isEqualTo "") then {
 
 if (_exit) exitWith {};
 
-_exit = [_conditions] call life_fnc_levelCheck;
+_exit = [_conditions] call MPClient_fnc_levelCheck;
 if !(_exit) exitWith {hint localize "STR_Shop_Veh_NoLicense";};
 
 //Save old inventory
@@ -51,7 +51,7 @@ disableSerialization;
 
 ctrlSetText [3103,localize _shopTitle];
 
-(findDisplay 3100) displaySetEventHandler ["KeyDown","if ((_this select 1) isEqualTo 1) then {closeDialog 0; [] call life_fnc_playerSkins;}"]; //Fix Custom Skin after ESC
+(findDisplay 3100) displaySetEventHandler ["KeyDown","if ((_this select 1) isEqualTo 1) then {closeDialog 0; [] call MPClient_fnc_playerSkins;}"]; //Fix Custom Skin after ESC
 
 sliderSetRange [3107, 0, 360];
 
@@ -181,7 +181,7 @@ _filter lbAdd localize "STR_Shop_UI_Backpack";
 
 _filter lbSetCurSel 0;
 
-[] call life_fnc_playerSkins;
+[] call MPClient_fnc_playerSkins;
 
 waitUntil {isNull (findDisplay 3100)};
 if (LIFE_SETTINGS(getNumber,"clothing_noTP") isEqualTo 0) then {
@@ -227,7 +227,7 @@ if (isNil "life_clothesPurchased") exitWith {
             clearAllItemsFromBackpack player;
             if (count life_oldBackpackItems > 0) then {
                 {
-                    [_x,true,true] call life_fnc_handleItem;
+                    [_x,true,true] call MPClient_fnc_handleItem;
                     true
                 } count life_oldBackpackItems;
             };
@@ -236,7 +236,7 @@ if (isNil "life_clothesPurchased") exitWith {
 
     if (count life_oldUniformItems > 0) then {
         {
-            [_x,true,false,false,true] call life_fnc_handleItem;
+            [_x,true,false,false,true] call MPClient_fnc_handleItem;
             true
         } count life_oldUniformItems;
     };
@@ -248,13 +248,13 @@ if (isNil "life_clothesPurchased") exitWith {
             player addVest life_oldVest;
             if (count life_oldVestItems > 0) then {
                 {
-                    [_x,true,false,false,true] call life_fnc_handleItem;
+                    [_x,true,false,false,true] call MPClient_fnc_handleItem;
                     true
                 } count life_oldVestItems;
             };
         };
     };
-    [] call life_fnc_playerSkins;
+    [] call MPClient_fnc_playerSkins;
 };
 life_clothesPurchased = nil;
 
@@ -288,7 +288,7 @@ if ((life_clothing_purchase select 3) isEqualTo -1) then {
         if (life_oldVest isEqualTo "") then {removeVest player;} else {
             player addVest life_oldVest;
             {
-                [_x,true,false,false,true] call life_fnc_handleItem;
+                [_x,true,false,false,true] call MPClient_fnc_handleItem;
                 true
             } count life_oldVestItems;
         };
@@ -302,7 +302,7 @@ if ((life_clothing_purchase select 4) isEqualTo -1) then {
             removeBackpack player;
             player addBackpack life_oldBackpack;
             {
-                [_x,true,true] call life_fnc_handleItem;
+                [_x,true,true] call MPClient_fnc_handleItem;
                 true
             } count life_oldBackpackItems;
         };
@@ -310,7 +310,7 @@ if ((life_clothing_purchase select 4) isEqualTo -1) then {
 };
 
 life_clothing_purchase = [-1,-1,-1,-1,-1];
-[] call life_fnc_saveGear;
+[] call MPClient_fnc_saveGear;
 
 [] spawn {
     uiSleep 5;

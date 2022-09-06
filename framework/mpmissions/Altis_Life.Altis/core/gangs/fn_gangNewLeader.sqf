@@ -38,4 +38,4 @@ if (_action) then {
 } else {
     hint localize "STR_GNOTF_TransferCancel";
 };
-[] call life_fnc_gangMenu;
+[] call MPClient_fnc_gangMenu;

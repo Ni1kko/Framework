@@ -7,8 +7,8 @@
 waitUntil{uiSleep 0.5;(getClientState isEqualTo "BRIEFING READ") && !isNull findDisplay 46};
 enableSentences false;
 
-private _life_fnc_exit = compile '
-    _this call life_fnc_setLoadingText;
+private _MPClient_fnc_exit = compile '
+    _this call MPClient_fnc_setLoadingText;
     uiSleep 5;
     endLoadingScreen;
     endMission "END1"; 
@@ -20,32 +20,32 @@ disableUserInput true;
 
 // -- Start Loading Screen
 startLoadingScreen ["","life_Rsc_DisplayLoading"];
-["Setting up client,", "Please Wait..."] call life_fnc_setLoadingText; uiSleep(random[0.5,3,6]);
+["Setting up client,", "Please Wait..."] call MPClient_fnc_setLoadingText; uiSleep(random[0.5,3,6]);
 
-[] call life_fnc_configuration;
-[] call life_fnc_setupEVH;
-[] call life_fnc_setupActions;
+[] call MPClient_fnc_configuration;
+[] call MPClient_fnc_setupEVH;
+[] call MPClient_fnc_setupActions;
 
 diag_log "[Life Client] Waiting for the server to be ready...";
 waitUntil {!isNil "life_var_serverLoaded" && {!isNil "extdb_var_database_error"}};
-if (extdb_var_database_error) exitWith {["Database failed to load,", "Please contact an administrator"] call _life_fnc_exit};
+if (extdb_var_database_error) exitWith {["Database failed to load,", "Please contact an administrator"] call _MPClient_fnc_exit};
 waitUntil {
-    ["Waiting for the server to be ready"] call life_fnc_setLoadingText; 
+    ["Waiting for the server to be ready"] call MPClient_fnc_setLoadingText; 
     uiSleep 0.2;
-    ["Waiting for the server to be ready."] call life_fnc_setLoadingText; 
+    ["Waiting for the server to be ready."] call MPClient_fnc_setLoadingText; 
     uiSleep 0.2;
-    ["Waiting for the server to be ready.."] call life_fnc_setLoadingText;  
+    ["Waiting for the server to be ready.."] call MPClient_fnc_setLoadingText;  
     uiSleep 0.2;
-    ["Waiting for the server to be ready..."] call life_fnc_setLoadingText;
+    ["Waiting for the server to be ready..."] call MPClient_fnc_setLoadingText;
     uiSleep(random[0.5,3,6]);
     life_var_serverLoaded
 };
 
-["Requesting client data..."] call life_fnc_setLoadingText; uiSleep(random[0.5,3,6]);
-[] call SOCK_fnc_dataQuery;
+["Requesting client data..."] call MPClient_fnc_setLoadingText; uiSleep(random[0.5,3,6]);
+[] call MPClient_fnc_dataQuery;
 waitUntil {life_session_completed};
  
-["Setting up player..."] call life_fnc_setLoadingText; uiSleep(random[0.5,3,6]);
+["Setting up player..."] call MPClient_fnc_setLoadingText; uiSleep(random[0.5,3,6]);
 {player setVariable _x} forEach [
     ['restrained', false, true],
     ['Escorting', false, true],
@@ -58,7 +58,7 @@ waitUntil {life_session_completed};
 if (LIFE_SETTINGS(getNumber,"enable_fatigue") isEqualTo 0) then {
     player enableFatigue false;
     if (LIFE_SETTINGS(getNumber,"enable_autorun") isEqualTo 1) then {
-        [] spawn life_fnc_autoruninit;
+        [] spawn MPClient_fnc_autoruninit;
     }; 
 };
 
@@ -87,23 +87,23 @@ publicVariableServer "MPServer_fnc_requestClientId";
 };
 
 //-- 
-[] spawn life_fnc_escInterupt;
+[] spawn MPClient_fnc_escInterupt;
 
 //-- Input handlers
-(findDisplay 46) displayAddEventHandler ["KeyDown", "_this call life_fnc_keydownHandler"];
-(findDisplay 46) displayAddEventHandler ["KeyUp", "_this call life_fnc_keyupHandler"];
+(findDisplay 46) displayAddEventHandler ["KeyDown", "_this call MPClient_fnc_keydownHandler"];
+(findDisplay 46) displayAddEventHandler ["KeyUp", "_this call MPClient_fnc_keyupHandler"];
 
-[("Welcome " + profilename),"Have Fun And Respect The Rules!..."] call life_fnc_setLoadingText; uiSleep(5);
+[("Welcome " + profilename),"Have Fun And Respect The Rules!..."] call MPClient_fnc_setLoadingText; uiSleep(5);
 
 //--
 switch (playerSide) do {
-    case west: {0 call life_fnc_initCop};
-    case civilian: {0 call life_fnc_initCiv};
-    case independent: {0 call life_fnc_initMedic};
+    case west: {0 call MPClient_fnc_initCop};
+    case civilian: {0 call MPClient_fnc_initCiv};
+    case independent: {0 call MPClient_fnc_initMedic};
 };
 
 //-- Paychecks
-[playerSide] call life_fnc_paychecks;
+[playerSide] call MPClient_fnc_paychecks;
 
 //-- Update wanted prifle
 [getPlayerUID player, profileName] remoteExec ["MPServer_fnc_wantedProfUpdate", 2];
@@ -111,11 +111,11 @@ switch (playerSide) do {
 //--
 [player, life_settings_enableSidechannel, playerSide] remoteExecCall ["MPServer_fnc_managesc", 2];
 
-[] spawn life_fnc_setupStationService;
-[] spawn life_fnc_cellphone;//temp
-[] spawn life_fnc_survival;
-[] spawn life_fnc_initTents;
+[] spawn MPClient_fnc_setupStationService;
+[] spawn MPClient_fnc_cellphone;//temp
+[] spawn MPClient_fnc_survival;
+[] spawn MPClient_fnc_initTents;
 
-addMissionEventHandler ["EachFrame", life_fnc_playerTags];
-addMissionEventHandler ["EachFrame", life_fnc_revealObjects];
+addMissionEventHandler ["EachFrame", MPClient_fnc_playerTags];
+addMissionEventHandler ["EachFrame", MPClient_fnc_revealObjects];
  

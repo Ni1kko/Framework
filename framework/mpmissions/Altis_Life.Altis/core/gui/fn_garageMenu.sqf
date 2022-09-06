@@ -25,7 +25,7 @@ if (count _vehicles isEqualTo 0) exitWith {
 
 //--- Add vehicles to listbox
 {
-    private _vehicleInfo = [_x#2] call life_fnc_fetchVehInfo;
+    private _vehicleInfo = [_x#2] call MPClient_fnc_fetchVehInfo;
     _listBox lbAdd (_vehicleInfo#3);
     _listBox lbSetData [(lbSize _listBox)-1,str([_x#2,_x#8])];
     _listBox lbSetPicture [(lbSize _listBox)-1,_vehicleInfo#2];

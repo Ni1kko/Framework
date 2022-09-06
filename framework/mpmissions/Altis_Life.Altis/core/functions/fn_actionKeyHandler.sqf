@@ -14,12 +14,12 @@ if (life_interrupted) exitWith {life_interrupted = false;};
 _isWater = surfaceIsWater (visiblePositionASL player);
 
 if (playerSide isEqualTo west && {player getVariable ["isEscorting",false]}) exitWith {
-    [] call life_fnc_copInteractionMenu;
+    [] call MPClient_fnc_copInteractionMenu;
 };
 
 //Check if the player is near an ATM.
-if ((call life_fnc_nearATM) && {!dialog}) exitWith {
-    [] call life_fnc_atmMenu;
+if ((call MPClient_fnc_nearATM) && {!dialog}) exitWith {
+    [] call MPClient_fnc_atmMenu;
 };
 
 if (isNull _curObject) exitWith {
@@ -27,23 +27,23 @@ if (isNull _curObject) exitWith {
         _fish = (nearestObjects[player,(LIFE_SETTINGS(getArray,"animaltypes_fish")),3]) select 0;
         if (!isNil "_fish") then {
             if (!alive _fish) then {
-                [_fish] call life_fnc_catchFish;
+                [_fish] call MPClient_fnc_catchFish;
             };
         };
     } else {
         _animal = (nearestObjects[player,(LIFE_SETTINGS(getArray,"animaltypes_hunting")),3]) select 0;
         if (!isNil "_animal") then {
             if (!alive _animal) then {
-                [_animal] call life_fnc_gutAnimal;
+                [_animal] call MPClient_fnc_gutAnimal;
             };
         } else {
             private "_handle";
             if (playerSide isEqualTo civilian && !life_action_gathering) then {
-          _whatIsIt = [] call life_fnc_whereAmI;
+          _whatIsIt = [] call MPClient_fnc_whereAmI;
                 if (life_action_gathering) exitWith {};                 //Action is in use, exit to prevent spamming.
                 switch (_whatIsIt) do {
-                    case "mine" : { _handle = [] spawn life_fnc_mine };
-                    default { _handle = [] spawn life_fnc_gather };
+                    case "mine" : { _handle = [] spawn MPClient_fnc_mine };
+                    default { _handle = [] spawn MPClient_fnc_gather };
                 };
                 life_action_gathering = true;
                 waitUntil {scriptDone _handle};
@@ -55,7 +55,7 @@ if (isNull _curObject) exitWith {
 
 if ((_curObject isKindOf "B_supplyCrate_F" || _curObject isKindOf "Box_IND_Grenades_F") && {player distance _curObject < 3} ) exitWith {
     if (alive _curObject) then {
-        [_curObject] call life_fnc_containerMenu;
+        [_curObject] call MPClient_fnc_containerMenu;
     };
 };
 
@@ -66,12 +66,12 @@ private _pos = [[["Altis", _altisArray], ["Tanoa", _tanoaArray]]] call MPServer_
 
 //-- Houses
 if (_curObject isKindOf "House_F" && {player distance _curObject < 12} || ((nearestObject [_pos,"Land_Dome_Big_F"]) isEqualTo _curObject || (nearestObject [_pos,_vaultHouse]) isEqualTo _curObject)) exitWith {
-    [_curObject] call life_fnc_houseMenu;
+    [_curObject] call MPClient_fnc_houseMenu;
 };
 
 //-- Tents
-if(_curObject call life_fnc_isTent && {player distance _curObject <= 7}) exitWith { 
-    [_curObject] spawn life_fnc_tentMenu;
+if(_curObject call MPClient_fnc_isTent && {player distance _curObject <= 7}) exitWith { 
+    [_curObject] spawn MPClient_fnc_tentMenu;
 };
 
 if (dialog) exitWith {}; //Don't bother when a dialog is open.
@@ -89,7 +89,7 @@ if (_curObject isKindOf "CAManBase" && {!alive _curObject}) exitWith {
     //Hotfix code by ins0
     if ((playerSide isEqualTo west && {(LIFE_SETTINGS(getNumber,"revive_cops") isEqualTo 1)}) || {(playerSide isEqualTo civilian && {(LIFE_SETTINGS(getNumber,"revive_civ") isEqualTo 1)})} || {(playerSide isEqualTo east && {(LIFE_SETTINGS(getNumber,"revive_east") isEqualTo 1)})} || {playerSide isEqualTo independent}) then {
         if (life_inv_defibrillator > 0) then {
-            [_curObject] call life_fnc_revivePlayer;
+            [_curObject] call MPClient_fnc_revivePlayer;
         };
     };
 };
@@ -97,7 +97,7 @@ if (_curObject isKindOf "CAManBase" && {!alive _curObject}) exitWith {
 //If target is a player then check if we can use the cop menu.
 if (isPlayer _curObject && _curObject isKindOf "CAManBase") then {
     if ((_curObject getVariable ["restrained",false]) && !dialog && playerSide isEqualTo west) then {
-        [_curObject] call life_fnc_copInteractionMenu;
+        [_curObject] call MPClient_fnc_copInteractionMenu;
     };
 } else {
     //OK, it wasn't a player so what is it?
@@ -111,7 +111,7 @@ if (isPlayer _curObject && _curObject isKindOf "CAManBase") then {
     if (_isVehicle) then {
         if (!dialog) then {
             if (player distance _curObject < ((boundingBox _curObject select 1) select 0)+2 && (!(player getVariable ["restrained",false])) && (!(player getVariable ["playerSurrender",false])) && !life_isknocked && !life_istazed) then {
-                [_curObject] call life_fnc_vInteractionMenu;
+                [_curObject] call MPClient_fnc_vInteractionMenu;
             };
         };
     } else {

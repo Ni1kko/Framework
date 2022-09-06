@@ -40,25 +40,25 @@ removeHeadGear player;
 } forEach (assignedItems player);
 
 //Add the gear
-if (!(_uniform isEqualTo "")) then {_handle = [_uniform,true,false,false,false] spawn life_fnc_handleItem; waitUntil {scriptDone _handle};};
-if (!(_vest isEqualTo "")) then {_handle = [_vest,true,false,false,false] spawn life_fnc_handleItem; waitUntil {scriptDone _handle};};
-if (!(_backpack isEqualTo "")) then {_handle = [_backpack,true,false,false,false] spawn life_fnc_handleItem; waitUntil {scriptDone _handle};};
+if (!(_uniform isEqualTo "")) then {_handle = [_uniform,true,false,false,false] spawn MPClient_fnc_handleItem; waitUntil {scriptDone _handle};};
+if (!(_vest isEqualTo "")) then {_handle = [_vest,true,false,false,false] spawn MPClient_fnc_handleItem; waitUntil {scriptDone _handle};};
+if (!(_backpack isEqualTo "")) then {_handle = [_backpack,true,false,false,false] spawn MPClient_fnc_handleItem; waitUntil {scriptDone _handle};};
 {
-    _handle = [_x,true,false,false,false] spawn life_fnc_handleItem;
+    _handle = [_x,true,false,false,false] spawn MPClient_fnc_handleItem;
     waitUntil {scriptDone _handle};
 } forEach _magazines;
 
-if (!(_primary isEqualTo "")) then {[_primary,true,false,false,false] spawn life_fnc_handleItem;};
-if (!(_launcher isEqualTo "")) then {[_launcher,true,false,false,false] spawn life_fnc_handleItem;};
-if (!(_handgun isEqualTo "")) then {[_handgun,true,false,false,false] spawn life_fnc_handleItem;};
+if (!(_primary isEqualTo "")) then {[_primary,true,false,false,false] spawn MPClient_fnc_handleItem;};
+if (!(_launcher isEqualTo "")) then {[_launcher,true,false,false,false] spawn MPClient_fnc_handleItem;};
+if (!(_handgun isEqualTo "")) then {[_handgun,true,false,false,false] spawn MPClient_fnc_handleItem;};
 
-{_handle = [_x,true,false,false,false] spawn life_fnc_handleItem; waitUntil {scriptDone _handle};} forEach _items;
-{[_x,true,false,false,true] call life_fnc_handleItem;} forEach (_uitems);
-{[_x,true,false,false,true] call life_fnc_handleItem;} forEach (_vitems);
-{[_x,true,true,false,false] call life_fnc_handleItem;} forEach (_bitems);
-{[_x,true,false,true,false] call life_fnc_handleItem;} forEach (_primitems);
-{[_x,true,false,true,false] call life_fnc_handleItem;} forEach (_secitems);
-{[_x,true,false,true,false] call life_fnc_handleItem;} forEach (_handgunitems);
+{_handle = [_x,true,false,false,false] spawn MPClient_fnc_handleItem; waitUntil {scriptDone _handle};} forEach _items;
+{[_x,true,false,false,true] call MPClient_fnc_handleItem;} forEach (_uitems);
+{[_x,true,false,false,true] call MPClient_fnc_handleItem;} forEach (_vitems);
+{[_x,true,true,false,false] call MPClient_fnc_handleItem;} forEach (_bitems);
+{[_x,true,false,true,false] call MPClient_fnc_handleItem;} forEach (_primitems);
+{[_x,true,false,true,false] call MPClient_fnc_handleItem;} forEach (_secitems);
+{[_x,true,false,true,false] call MPClient_fnc_handleItem;} forEach (_handgunitems);
 
 if (!(_headgear isEqualTo "")) then {player addHeadGear _headgear};
 if (!(_goggles isEqualTo "")) then {player addGoggles _goggles};

@@ -24,4 +24,4 @@ waitUntil {camCommitted _camera};
 _camera cameraEffect ["terminate","back"];
 camDestroy _camera;
 
-[true] call life_fnc_gui_hook_management;
+[true] call MPClient_fnc_gui_hook_management;

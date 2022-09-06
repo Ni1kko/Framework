@@ -22,11 +22,11 @@ if (!(_ctrl isEqualTo "goldBar")) exitWith {hint localize "STR_Cop_OnlyGold"};
 if (_num > _safeInfo) exitWith {hint format [localize "STR_Civ_IsntEnoughGold",_num];};
 
 //Secondary checks
-_num = [_ctrl,_num,life_var_carryWeight,life_maxWeight] call life_fnc_calWeightDiff;
+_num = [_ctrl,_num,life_var_carryWeight,life_maxWeight] call MPClient_fnc_calWeightDiff;
 if (_num isEqualTo 0) exitWith {hint localize "STR_NOTF_InvFull"};
 
 
 //Take it
-if (!([true,_ctrl,_num] call life_fnc_handleInv)) exitWith {hint localize "STR_NOTF_CouldntAdd";};
+if (!([true,_ctrl,_num] call MPClient_fnc_handleInv)) exitWith {hint localize "STR_NOTF_CouldntAdd";};
 life_safeObj setVariable ["safe",_safeInfo - _num,true];
-[life_safeObj] call life_fnc_safeInventory;
+[life_safeObj] call MPClient_fnc_safeInventory;

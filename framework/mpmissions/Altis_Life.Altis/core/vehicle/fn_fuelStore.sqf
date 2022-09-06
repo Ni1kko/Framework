@@ -22,7 +22,7 @@ life_var_isBusy = true;
 ];
 
 _vehicle setVariable ["fuelTankWork",true,true];
-_vehicle remoteExec ["life_fnc_soundDevice",-2];
+_vehicle remoteExec ["MPClient_fnc_soundDevice",-2];
 life_var_isBusy = false;
 
 disableSerialization;

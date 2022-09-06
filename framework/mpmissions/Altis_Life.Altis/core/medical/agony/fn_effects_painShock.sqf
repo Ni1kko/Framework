@@ -1,14 +1,14 @@
 /*
 
-	Function: 	life_fnc_painShock
+	Function: 	MPClient_fnc_painShock
 	Project: 	Misty Peaks RPG
 	Author:     Merrick, Nikko, Affect & IceEagle132
 	
 */
 
-if(missionNamespace getVariable ["life_fnc_painShock_active",false]) exitWith{};
+if(missionNamespace getVariable ["MPClient_fnc_painShock_active",false]) exitWith{};
 
-life_fnc_painShock_active = true;
+MPClient_fnc_painShock_active = true;
 
 while {life_var_pain_shock && alive(player)} do {
 	uiSleep 60;
@@ -19,4 +19,4 @@ while {life_var_pain_shock && alive(player)} do {
 	};
 };
 
-life_fnc_painShock_active = false;
+MPClient_fnc_painShock_active = false;

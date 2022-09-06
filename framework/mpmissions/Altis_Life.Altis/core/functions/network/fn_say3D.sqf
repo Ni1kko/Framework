@@ -6,7 +6,7 @@
     Description:
     Pass your sounds that you want everyone nearby to hear through here.
 
-    Example:   [_veh,"unlock",50,1] remoteExec ["life_fnc_say3D",0];
+    Example:   [_veh,"unlock",50,1] remoteExec ["MPClient_fnc_say3D",0];
 */
 params [
     ["_object",objNull,[objNull]],

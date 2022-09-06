@@ -28,7 +28,7 @@ for "_i" from 0 to count(_spawnCfg)-1 do {
     private _curConfig = (_spawnCfg select _i);
     private _conditions = getText(_curConfig >> "conditions");
 
-    private _flag = [_conditions] call life_fnc_levelCheck;
+    private _flag = [_conditions] call MPClient_fnc_levelCheck;
 
     if (_flag) then {
         _tempConfig pushBack getText(_curConfig >> "spawnMarker");

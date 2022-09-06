@@ -19,7 +19,7 @@ private _edible = M_CONFIG(getNumber, "VirtualItems", _item, "edible");
 private _drinkable = M_CONFIG(getNumber, "VirtualItems", _item, "drinkable");
 
 if (_edible > -1 || _drinkable > -1) exitWith {
-    if ([false, _item, 1] call life_fnc_handleInv) then {
+    if ([false, _item, 1] call MPClient_fnc_handleInv) then {
         if (_edible > -1) then {
             private _sum = life_var_hunger + _edible;
             life_var_hunger = (_sum max 5) min 100; // never below 5 or above 100
@@ -45,60 +45,60 @@ if (_edible > -1 || _drinkable > -1) exitWith {
         };
     };
 
-    [] call life_fnc_p_updateMenu;
+    [] call MPClient_fnc_p_updateMenu;
 };
 
 switch (_item) do {
     case "boltcutter": {
-        [cursorObject] spawn life_fnc_boltcutter;
+        [cursorObject] spawn MPClient_fnc_boltcutter;
         closeDialog 0;
     };
 
     case "blastingcharge": {
         player reveal fed_bank;
         (group player) reveal fed_bank;
-        [cursorObject] spawn life_fnc_blastingCharge;
+        [cursorObject] spawn MPClient_fnc_blastingCharge;
         closeDialog 0;
     };
 
     case "defusekit": {
-        [cursorObject] spawn life_fnc_defuseKit;
+        [cursorObject] spawn MPClient_fnc_defuseKit;
         closeDialog 0;
     };
 
     case "storagesmall": {
-        [false] call life_fnc_storageBox;
+        [false] call MPClient_fnc_storageBox;
     };
 
     case "storagebig": {
-        [true] call life_fnc_storageBox;
+        [true] call MPClient_fnc_storageBox;
     };
 
     case "tentKit": {
-        ["Land_TentDome_F"] spawn life_fnc_deployTent;
+        ["Land_TentDome_F"] spawn MPClient_fnc_deployTent;
     };
 
     case "spikeStrip": {
         if (!isNull life_spikestrip) exitWith {hint localize "STR_ISTR_SpikesDeployment"; closeDialog 0};
-        if ([false, _item, 1] call life_fnc_handleInv) then {
-            [] spawn life_fnc_spikeStrip;
+        if ([false, _item, 1] call MPClient_fnc_handleInv) then {
+            [] spawn MPClient_fnc_spikeStrip;
             closeDialog 0;
         };
     };
 
     case "fuelFull": {
         if !(isNull objectParent player) exitWith {hint localize "STR_ISTR_RefuelInVehicle"};
-        [] spawn life_fnc_jerryRefuel;
+        [] spawn MPClient_fnc_jerryRefuel;
         closeDialog 0;
     };
 
     case "fuelEmpty": {
-        [] spawn life_fnc_jerryCanRefuel;
+        [] spawn MPClient_fnc_jerryCanRefuel;
         closeDialog 0;
     };
 
     case "lockpick": {
-        [] spawn life_fnc_lockpick;
+        [] spawn MPClient_fnc_lockpick;
         closeDialog 0;
     };
 
@@ -107,4 +107,4 @@ switch (_item) do {
     };
 };
 
-[] call life_fnc_p_updateMenu;
+[] call MPClient_fnc_p_updateMenu;

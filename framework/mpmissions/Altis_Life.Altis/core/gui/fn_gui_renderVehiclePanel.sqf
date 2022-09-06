@@ -67,7 +67,7 @@ if (diag_tickTime - life_var_hud_lastvehrendered_at >= 0.1) then{
 			};
 			private _heightString = str (round _height);
 			if (_height > 999) then{
-				_heightString = format ["%1k", [_height / 1000, 2] call life_fnc_util_math_round];
+				_heightString = format ["%1k", [_height / 1000, 2] call MPClient_fnc_util_math_round];
 			};
 			_heightControl ctrlSetText (format ["%1m", _heightString]);		
 		};
@@ -86,12 +86,12 @@ if (diag_tickTime - life_var_hud_lastvehrendered_at >= 0.1) then{
 			private _tankSize = life_var_hud_lastrendered_vehfueltanksize;
 			private _tankSizeString = str (round _tankSize);
 			if (_tankSize > 999) then{
-				_tankSizeString = format ["%1k", [_tankSize / 1000, 2] call life_fnc_util_math_round];
+				_tankSizeString = format ["%1k", [_tankSize / 1000, 2] call MPClient_fnc_util_math_round];
 			};
 			private _fuelRemaining = _fuel * life_var_hud_lastrendered_vehfueltanksize;
 			private _fuelRemainingString = str (round _fuelRemaining);
 			if (_fuelRemaining > 999) then{
-				_fuelRemainingString = format ["%1k", [_fuelRemaining / 1000, 2] call life_fnc_util_math_round];
+				_fuelRemainingString = format ["%1k", [_fuelRemaining / 1000, 2] call MPClient_fnc_util_math_round];
 			};
 			_fuelControl ctrlSetText format ["%1/%2l", _fuelRemainingString, _tankSizeString];
 		};

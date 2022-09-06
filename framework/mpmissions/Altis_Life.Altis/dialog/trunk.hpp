@@ -108,7 +108,7 @@ class TrunkMenu {
             idc = -1;
             text = "$STR_Trunk_Take";
             colorBackground[] = {"(profilenamespace getvariable ['GUI_BCG_RGB_R',0.3843])", "(profilenamespace getvariable ['GUI_BCG_RGB_G',0.7019])", "(profilenamespace getvariable ['GUI_BCG_RGB_B',0.8862])", 0.5};
-            onButtonClick = "[] call life_fnc_vehTakeItem;";
+            onButtonClick = "[] call MPClient_fnc_vehTakeItem;";
             x = 0.19;
             y = 0.78;
             w = (6.25 / 40);
@@ -119,7 +119,7 @@ class TrunkMenu {
             idc = -1;
             text = "$STR_Trunk_Store";
             colorBackground[] = {"(profilenamespace getvariable ['GUI_BCG_RGB_R',0.3843])", "(profilenamespace getvariable ['GUI_BCG_RGB_G',0.7019])", "(profilenamespace getvariable ['GUI_BCG_RGB_B',0.8862])", 0.5};
-            onButtonClick = "[] call life_fnc_vehStoreItem;";
+            onButtonClick = "[] call MPClient_fnc_vehStoreItem;";
             x = 0.57;
             y = 0.78;
             w = (6.25 / 40);

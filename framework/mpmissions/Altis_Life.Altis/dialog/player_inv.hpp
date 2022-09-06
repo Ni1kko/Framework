@@ -116,7 +116,7 @@ class playerSettings {
             idc = 2001;
             text = "$STR_Global_Give";
             colorBackground[] = {"(profilenamespace getvariable ['GUI_BCG_RGB_R',0.3843])", "(profilenamespace getvariable ['GUI_BCG_RGB_G',0.7019])", "(profilenamespace getvariable ['GUI_BCG_RGB_B',0.8862])", 0.5};
-            onButtonClick = "[] call life_fnc_giveMoney";
+            onButtonClick = "[] call MPClient_fnc_giveMoney";
             sizeEx = 0.025;
             x = 0.135;
             y = 0.50;
@@ -147,7 +147,7 @@ class playerSettings {
             idc = 2002;
             text = "$STR_Global_Give";
             colorBackground[] = {"(profilenamespace getvariable ['GUI_BCG_RGB_R',0.3843])", "(profilenamespace getvariable ['GUI_BCG_RGB_G',0.7019])", "(profilenamespace getvariable ['GUI_BCG_RGB_B',0.8862])", 0.5};
-            onButtonClick = "[] call life_fnc_giveItem;";
+            onButtonClick = "[] call MPClient_fnc_giveItem;";
             x = 0.765;
             y = 0.70;
             w = (5.25 / 40);
@@ -157,7 +157,7 @@ class playerSettings {
         class UseButton: Life_RscButtonMenu {
             text = "$STR_Global_Use";
             colorBackground[] = {"(profilenamespace getvariable ['GUI_BCG_RGB_R',0.3843])", "(profilenamespace getvariable ['GUI_BCG_RGB_G',0.7019])", "(profilenamespace getvariable ['GUI_BCG_RGB_B',0.8862])", 0.5};
-            onButtonClick = "[] call life_fnc_useItem;";
+            onButtonClick = "[] call MPClient_fnc_useItem;";
             x = 0.62;
             y = 0.70;
             w = (5.25 / 40);
@@ -167,7 +167,7 @@ class playerSettings {
         class RemoveButton: Life_RscButtonMenu {
             text = "$STR_Global_Remove";
             colorBackground[] = {"(profilenamespace getvariable ['GUI_BCG_RGB_R',0.3843])", "(profilenamespace getvariable ['GUI_BCG_RGB_G',0.7019])", "(profilenamespace getvariable ['GUI_BCG_RGB_B',0.8862])", 0.5};
-            onButtonClick = "[] call life_fnc_removeItem;";
+            onButtonClick = "[] call MPClient_fnc_removeItem;";
             x = 0.475;
             y = 0.70;
             w = (5.25 / 40);
@@ -188,7 +188,7 @@ class playerSettings {
         class ButtonSettings: Life_RscButtonMenu {
             idc = -1;
             text = "$STR_Global_Settings";
-            onButtonClick = "[] call life_fnc_settingsMenu;";
+            onButtonClick = "[] call MPClient_fnc_settingsMenu;";
             x = 0.1 + (6.25 / 40) + (1 / 250 / (safezoneW / safezoneH));
             y = 0.8 - (1 / 25);
             w = (6.25 / 40);
@@ -198,7 +198,7 @@ class playerSettings {
         class ButtonMyGang: Life_RscButtonMenu {
             idc = 2011;
             text = "$STR_PM_MyGang";
-            onButtonClick = "if (isNil ""life_action_gangInUse"") then {if (isNil {(group player) getVariable ""gang_owner""}) then {createDialog ""Life_Create_Gang_Diag"";} else {[] spawn life_fnc_gangMenu;};};";
+            onButtonClick = "if (isNil ""life_action_gangInUse"") then {if (isNil {(group player) getVariable ""gang_owner""}) then {createDialog ""Life_Create_Gang_Diag"";} else {[] spawn MPClient_fnc_gangMenu;};};";
             x = 0.1 + (6.25 / 19.8) + (1 / 250 / (safezoneW / safezoneH));
             y = 0.8 - (1 / 25);
             w = (6.25 / 40);
@@ -228,7 +228,7 @@ class playerSettings {
         class ButtonGangList: Life_RscButtonMenu {
             idc = 2012;
             text = "$STR_PM_WantedList";
-            onButtonClick = "[] call life_fnc_wantedMenu";
+            onButtonClick = "[] call MPClient_fnc_wantedMenu";
             x = 0.1 + (6.25 / 19.8) + (1 / 250 / (safezoneW / safezoneH));
             y = 0.8 - (1 / 25);
             w = (6.25 / 40);
@@ -248,7 +248,7 @@ class playerSettings {
         class ButtonCell: Life_RscButtonMenu {
             idc = 2014;
             text = "$STR_PM_CellPhone";
-            onButtonClick = "[] spawn life_fnc_cellphone_show;";
+            onButtonClick = "[] spawn MPClient_fnc_cellphone_show;";
             x = 0.42 + (6.25 / 19.8) + (1 / 250 / (safezoneW / safezoneH));
             y = 0.8 - (1 / 25);
             w = (6.25 / 40);
@@ -259,7 +259,7 @@ class playerSettings {
         /*class ButtonAdminMenu: Life_RscButtonMenu {
             idc = 2021;
             text = "$STR_PM_AdminMenu";
-            onButtonClick = "[]spawn{if(isNil 'life_fnc_admin_showmenu')exitWith{hint 'Admin menu is stil loading, try again in a 1-2 mins'};closeDialog 0;[]spawn life_fnc_admin_showmenu;}";
+            onButtonClick = "[]spawn{if(isNil 'MPClient_fnc_admin_showmenu')exitWith{hint 'Admin menu is stil loading, try again in a 1-2 mins'};closeDialog 0;[]spawn MPClient_fnc_admin_showmenu;}";
             x = 0.1 + (6.25 / 40) + (1 / 250 / (safezoneW / safezoneH));
             y = 0.805;
             w = (6.25 / 40);
@@ -269,7 +269,7 @@ class playerSettings {
         class ButtonBountyList: Life_RscButtonMenu {
             idc = 2024;
             text = "$STR_PM_BountyList";
-            onButtonClick = "[true] call life_fnc_wantedMenu";
+            onButtonClick = "[true] call MPClient_fnc_wantedMenu";
             x = 0.1 + (6.25 / 40) + (1 / 250 / (safezoneW / safezoneH));
             y = 0.805;
             w = (6.25 / 40);
@@ -280,7 +280,7 @@ class playerSettings {
             idc = -1;
             //shortcuts[] = {0x00050000 + 2};
             text = "$STR_PM_SyncData";
-            onButtonClick = "[] call SOCK_fnc_syncData;";
+            onButtonClick = "[] call MPClient_fnc_syncData;";
             x = 0.1;
             y = 0.805;
             w = (6.25 / 40);

@@ -15,6 +15,6 @@ life_var_isBusy = false;
 
 if (_price > 0) then {
     life_var_cash = life_var_cash + _price;
-    [0] call SOCK_fnc_updatePartial;
-    titleText [format[(localize "STR_NOTF_ChopSoldCar"),_displayName,[_price] call life_fnc_numberText],"PLAIN",1];
+    [0] call MPClient_fnc_updatePartial;
+    titleText [format[(localize "STR_NOTF_ChopSoldCar"),_displayName,[_price] call MPClient_fnc_numberText],"PLAIN",1];
 };

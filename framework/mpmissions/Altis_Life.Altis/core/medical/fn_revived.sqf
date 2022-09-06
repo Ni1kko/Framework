@@ -1,7 +1,7 @@
 #include "..\..\script_macros.hpp"
 /*
 
-	Function: 	life_fnc_revived
+	Function: 	MPClient_fnc_revived
 	Project: 	Misty Peaks RPG
 	Author:     Tonic, Merrick, Nikko, Affect & IceEagle132
 	Github:		https://github.com/AsYetUntitled/Framework
@@ -12,10 +12,10 @@ private ["_medic","_dir","_reviveCost"];
 _medic = param [0,"Unknown Medic",[""]];
 _reviveCost = LIFE_SETTINGS(getNumber,"revive_fee");
 
-[life_save_gear] spawn life_fnc_loadDeadGear;
+[life_save_gear] spawn MPClient_fnc_loadDeadGear;
 
 //remove death screen & Bring me back to life. 
-[_unit,true,false] spawn life_fnc_deathScreen;
+[_unit,true,false] spawn MPClient_fnc_deathScreen;
 
 
 player setUnconscious false;
@@ -36,10 +36,10 @@ if (life_var_bank > _reviveCost) then {
     life_var_bank = 0;
 };
 
-hint format [localize "STR_Medic_RevivePay",_medic,[_reviveCost] call life_fnc_numberText];
+hint format [localize "STR_Medic_RevivePay",_medic,[_reviveCost] call MPClient_fnc_numberText];
  
-[] call life_fnc_playerSkins;
-[] call SOCK_fnc_updateRequest;
+[] call MPClient_fnc_playerSkins;
+[] call MPClient_fnc_updateRequest;
 
 2 fadeSound 1;
 cutText ["You come to your senses ...", "BLACK IN", 5];

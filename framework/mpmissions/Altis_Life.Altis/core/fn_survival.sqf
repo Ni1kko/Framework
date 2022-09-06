@@ -77,7 +77,7 @@ for "_i" from 0 to 1 step 0 do
 
     //--- VIEW DISTANCE
     if (!(vehicle player isEqualTo _lastState) || {!life_is_alive}) then {
-        [] call life_fnc_updateViewDistance;
+        [] call MPClient_fnc_updateViewDistance;
         _lastState = vehicle player;
     };
 

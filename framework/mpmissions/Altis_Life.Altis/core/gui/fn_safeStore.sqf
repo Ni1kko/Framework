@@ -19,8 +19,8 @@ if (!(_ctrl isEqualTo "goldBar")) exitWith {hint localize "STR_Cop_OnlyGold"};
 if (_num > life_inv_goldbar) exitWith {hint format [localize "STR_Cop_NotEnoughGold",_num];};
 
 //Store it.
-if (!([false,_ctrl,_num] call life_fnc_handleInv)) exitWith {hint localize "STR_Cop_CantRemove";};
+if (!([false,_ctrl,_num] call MPClient_fnc_handleInv)) exitWith {hint localize "STR_Cop_CantRemove";};
 _safeInfo = life_safeObj getVariable ["safe",0];
 life_safeObj getVariable ["safe",_safeInfo + _num,true];
 
-[life_safeObj] call life_fnc_safeInventory;
+[life_safeObj] call MPClient_fnc_safeInventory;

@@ -24,6 +24,6 @@ if (_trueorfalse) then {
     };
 } else {
     _vehicle setVariable ["lights",true,true];
-    private _jip = [_vehicle,0.22] remoteExec ["life_fnc_medicLights",RCLIENT,true];
+    private _jip = [_vehicle,0.22] remoteExec ["MPClient_fnc_medicLights",RCLIENT,true];
     _vehicle setVariable ["lightsJIP",_jip,true];
 };

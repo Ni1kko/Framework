@@ -23,10 +23,10 @@ _msgCooldown = (60 * LIFE_SETTINGS(getNumber,"news_broadcast_cooldown"));
 _msgCost = LIFE_SETTINGS(getNumber,"news_broadcast_cost");
 
 if (life_var_cash < _msgCost) then {
-    hint format [localize "STR_News_NotEnough",[_msgCost] call life_fnc_numberText];
+    hint format [localize "STR_News_NotEnough",[_msgCost] call MPClient_fnc_numberText];
 } else {
     _confirmBtn ctrlEnable true;
-    _confirmBtn buttonSetAction "[] call life_fnc_postNewsBroadcast; closeDialog 0;";
+    _confirmBtn buttonSetAction "[] call MPClient_fnc_postNewsBroadcast; closeDialog 0;";
 };
 
 if (isNil "life_broadcastTimer" || {(time - life_broadcastTimer) > _msgCooldown}) then {
@@ -36,4 +36,4 @@ if (isNil "life_broadcastTimer" || {(time - life_broadcastTimer) > _msgCooldown}
     _confirmBtn ctrlEnable false;
 };
 
-CONTROL(100100,100103) ctrlSetStructuredText parseText format [ localize "STR_News_StructuredText",[_msgCost] call life_fnc_numberText,_broadcastDelay];
+CONTROL(100100,100103) ctrlSetStructuredText parseText format [ localize "STR_News_StructuredText",[_msgCost] call MPClient_fnc_numberText,_broadcastDelay];

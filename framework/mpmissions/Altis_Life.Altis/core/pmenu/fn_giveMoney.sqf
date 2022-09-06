@@ -24,11 +24,11 @@ if (parseNumber(_amount) > life_var_cash) exitWith {hint localize "STR_NOTF_notE
 if (isNull _unit) exitWith {ctrlShow[2001,true];};
 if (isNil "_unit") exitWith {ctrlShow[2001,true]; hint localize "STR_NOTF_notWithinRange";};
 
-hint format [localize "STR_NOTF_youGaveMoney",[(parseNumber(_amount))] call life_fnc_numberText,_unit getVariable ["realname",name _unit]];
+hint format [localize "STR_NOTF_youGaveMoney",[(parseNumber(_amount))] call MPClient_fnc_numberText,_unit getVariable ["realname",name _unit]];
 life_var_cash = life_var_cash - (parseNumber(_amount));
-[0] call SOCK_fnc_updatePartial;
+[0] call MPClient_fnc_updatePartial;
 
-[_unit,_amount,player] remoteExecCall ["life_fnc_receiveMoney",_unit];
-[] call life_fnc_p_updateMenu;
+[_unit,_amount,player] remoteExecCall ["MPClient_fnc_receiveMoney",_unit];
+[] call MPClient_fnc_p_updateMenu;
 
 ctrlShow[2001,true];

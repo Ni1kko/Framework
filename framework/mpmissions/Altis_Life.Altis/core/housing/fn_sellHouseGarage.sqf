@@ -20,7 +20,7 @@ private _sellPrice = LIFE_SETTINGS(getNumber,"houseGarage_sellPrice");
 
 _action = [
     format [localize "STR_House_SellGarageMSG",
-    [_sellPrice] call life_fnc_numberText],
+    [_sellPrice] call MPClient_fnc_numberText],
     localize "STR_House_GarageSell",
     localize "STR_Global_Sell",
     localize "STR_Global_Cancel"
@@ -35,7 +35,7 @@ if (_action) then {
     };
 
     life_var_bank = life_var_bank + _sellPrice;
-    [1] call SOCK_fnc_updatePartial;
+    [1] call MPClient_fnc_updatePartial;
 
     _house setVariable ["garageBought",false,true];
 

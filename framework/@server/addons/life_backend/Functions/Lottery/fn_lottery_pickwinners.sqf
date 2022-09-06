@@ -80,7 +80,7 @@ _jackpotSplit = _JackPot / (count _Winners);
 
 //-- Nobody one (Rollover)
 if (count(_Winners) <= 0) exitWith {
-	[0,format["No one has won the lottery! $%1 will be added to next drawing.",[_Jackpot] call life_fnc_numberText]] remoteExec ["life_fnc_broadcast",0];
+	[0,format["No one has won the lottery! $%1 will be added to next drawing.",[_Jackpot] call MPClient_fnc_numberText]] remoteExec ["MPClient_fnc_broadcast",0];
 	 
 	_vaultObject setVariable ["safe",_JackPot,true];
 
@@ -99,7 +99,7 @@ _vaultObject setVariable ["safe",0,true];
 ["UPDATE", "servers", [[["vault",["DB","INT", 0] call MPServer_fnc_database_parse]],[["serverID",["DB","INT",call life_var_serverID] call MPServer_fnc_database_parse]]]]call MPServer_fnc_database_request;
 
 //-- Notify
-[0,format["Someone has won the lottery jackpot of $%1!",[_Jackpot] call life_fnc_numberText]] remoteExec ["life_fnc_broadcast",0];
+[0,format["Someone has won the lottery jackpot of $%1!",[_Jackpot] call MPClient_fnc_numberText]] remoteExec ["MPClient_fnc_broadcast",0];
 
 
 //-- Paytime
@@ -133,7 +133,7 @@ _vaultObject setVariable ["safe",0,true];
 						format["%1 is a lotto winner!",_name],
 						format["%1 is a lotto winner and won the bounus ball (%2)!",_name,_winningBonusBall]
 					] select _wonBonusBall
-				] remoteExec ["life_fnc_broadcast",0];
+				] remoteExec ["MPClient_fnc_broadcast",0];
 
 				//--- Payout
 				[
@@ -148,8 +148,8 @@ _vaultObject setVariable ["safe",0,true];
 						private _totalPayout = _ticketPayout + _bonusBallPayout;
 						
 						systemChat ([
-							format["You have won $%1 from the lottery!",[_ticketPayout] call life_fnc_numberText],
-							format["You have won $%1 from the lottery bonusball!",[_bonusBallPayout] call life_fnc_numberText]
+							format["You have won $%1 from the lottery!",[_ticketPayout] call MPClient_fnc_numberText],
+							format["You have won $%1 from the lottery bonusball!",[_bonusBallPayout] call MPClient_fnc_numberText]
 						] select _bonusBallWinner);
 
 						life_var_cash = life_var_cash + _totalPayout;

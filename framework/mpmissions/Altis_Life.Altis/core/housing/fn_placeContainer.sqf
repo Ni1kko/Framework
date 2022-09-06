@@ -26,14 +26,14 @@ _message = 0;
 _isPlaced = false;
 if (!isNull _house) then {
     _message = 1;
-    if (([player] call life_fnc_playerInBuilding) && {([_container] call life_fnc_playerInBuilding)}) then {
+    if (([player] call MPClient_fnc_playerInBuilding) && {([_container] call MPClient_fnc_playerInBuilding)}) then {
         _message = 2;
         if ((_house in life_vehicles) && !(isNil {_house getVariable "house_owner"})) then {
             _message = 3;
             if (!_isFloating) then {
                 _message = 4;
                 _containers = _house getVariable ["containers",[]];
-                _houseCfg = [(typeOf _house)] call life_fnc_houseConfig;
+                _houseCfg = [(typeOf _house)] call MPClient_fnc_houseConfig;
                 if (_houseCfg isEqualTo []) exitWith {};
                 if (count _containers < (_houseCfg select 1)) then {
                     _isPlaced = true;
@@ -56,7 +56,7 @@ if (!isNull _house) then {
 if (_isPlaced) exitWith {};
 
 deleteVehicle _container;
-[true,_type,1] call life_fnc_handleInv;
+[true,_type,1] call MPClient_fnc_handleInv;
 
 if (_message isEqualTo 0 || _message isEqualTo 1) then {
     hint localize "STR_House_Container_House_Near";

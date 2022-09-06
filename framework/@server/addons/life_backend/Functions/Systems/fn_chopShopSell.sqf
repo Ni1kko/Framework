@@ -14,7 +14,7 @@ params [
 
 //Error checks
 if (isNull _vehicle || isNull _unit) exitWith  {
-    [] remoteExecCall ["life_fnc_chopShopSold", remoteExecutedOwner];
+    [] remoteExecCall ["MPClient_fnc_chopShopSold", remoteExecutedOwner];
 };
 
 private _displayName = FETCH_CONFIG2(getText,"CfgVehicles",typeOf _vehicle, "displayName");
@@ -28,4 +28,4 @@ if (count _dbInfo > 0) then {
 
 deleteVehicle _vehicle;
 
-[_price,_displayName] remoteExecCall ["life_fnc_chopShopSold", remoteExecutedOwner];
+[_price,_displayName] remoteExecCall ["MPClient_fnc_chopShopSold", remoteExecutedOwner];

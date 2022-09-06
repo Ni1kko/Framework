@@ -19,7 +19,7 @@ private _price = LIFE_SETTINGS(getNumber,"houseGarage_buyPrice");
 
 _action = [
     format [localize "STR_Garage_HouseBuyMSG",
-    [_price] call life_fnc_numberText],
+    [_price] call MPClient_fnc_numberText],
     localize "STR_House_GaragePurchase",
     localize "STR_Global_Buy",
     localize "STR_Global_Cancel"
@@ -29,7 +29,7 @@ if (_action) then {
 
     if (life_var_bank < _price) exitWith {hint format [localize "STR_House_NotEnough"]};
     life_var_bank = life_var_bank - _price;
-    [1] call SOCK_fnc_updatePartial;
+    [1] call MPClient_fnc_updatePartial;
 
     if (count extdb_var_database_headless_clients > 0) then {
         [_uid,_house,0] remoteExec ["HC_fnc_houseGarage",extdb_var_database_headless_client];

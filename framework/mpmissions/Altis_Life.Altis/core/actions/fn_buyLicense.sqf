@@ -15,12 +15,12 @@ _price = M_CONFIG(getNumber,"Licenses",_type,"price");
 _sideFlag = M_CONFIG(getText,"Licenses",_type,"side");
 _varName = LICENSE_VARNAME(_type,_sideFlag);
 
-if (life_var_cash < _price) exitWith {hint format [localize "STR_NOTF_NE_1",[_price] call life_fnc_numberText,localize _displayName];};
+if (life_var_cash < _price) exitWith {hint format [localize "STR_NOTF_NE_1",[_price] call MPClient_fnc_numberText,localize _displayName];};
 life_var_cash = life_var_cash - _price;
 
-[0] call SOCK_fnc_updatePartial;
+[0] call MPClient_fnc_updatePartial;
 
-titleText[format [localize "STR_NOTF_B_1", localize _displayName,[_price] call life_fnc_numberText],"PLAIN"];
+titleText[format [localize "STR_NOTF_B_1", localize _displayName,[_price] call MPClient_fnc_numberText],"PLAIN"];
 missionNamespace setVariable [_varName,true];
 
-[2] call SOCK_fnc_updatePartial;
+[2] call MPClient_fnc_updatePartial;

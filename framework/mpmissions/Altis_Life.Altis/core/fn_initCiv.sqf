@@ -22,17 +22,17 @@ if (life_is_alive && !life_is_arrested) then {
 } else {
     if (!life_is_alive && !life_is_arrested) then {
         if (LIFE_SETTINGS(getNumber,"save_civilian_positionStrict") isEqualTo 1) then {
-            [] call life_fnc_startLoadout;
+            [] call MPClient_fnc_startLoadout;
             life_var_cash = 0;
-            [0] call SOCK_fnc_updatePartial;
+            [0] call MPClient_fnc_updatePartial;
         };
-        [] call life_fnc_spawnMenu;
+        [] call MPClient_fnc_spawnMenu;
         waitUntil{!isNull (findDisplay 38500)}; //Wait for the spawn selection to be open.
         waitUntil{isNull (findDisplay 38500)}; //Wait for the spawn selection to be done.
     } else {
         if (life_is_arrested) then {
             life_is_arrested = false;
-            [player,true] spawn life_fnc_jail;
+            [player,true] spawn MPClient_fnc_jail;
         };
     };
 };

@@ -40,7 +40,7 @@ if !(_ret isEqualTo []) then {
 for "_i" from 0 to 1 step 0 do {
     if (round(_time - time) > 0) then {
         _countDown = [(_time - time), "MM:SS.MS"] call BIS_fnc_secondsToString;
-        hintSilent parseText format [(localize "STR_Jail_Time") + "<br/> <t size='2'><t color='#FF0000'>%1</t></t><br/><br/>" + (localize "STR_Jail_Pay") + " %3<br/>" + (localize "STR_Jail_Price") + " $%2", _countDown, [life_bail_amount] call life_fnc_numberText, if (life_canpay_bail) then {"Yes"} else {"No"}];
+        hintSilent parseText format [(localize "STR_Jail_Time") + "<br/> <t size='2'><t color='#FF0000'>%1</t></t><br/><br/>" + (localize "STR_Jail_Pay") + " %3<br/>" + (localize "STR_Jail_Price") + " $%2", _countDown, [life_bail_amount] call MPClient_fnc_numberText, if (life_canpay_bail) then {"Yes"} else {"No"}];
     };
 
     if (LIFE_SETTINGS(getNumber,"jail_forceWalk") isEqualTo 1) then {
@@ -78,13 +78,13 @@ switch (true) do {
             [getPlayerUID player] remoteExecCall ["MPServer_fnc_wantedRemove", RSERV];
         };
 
-        [5] call SOCK_fnc_updatePartial;
+        [5] call MPClient_fnc_updatePartial;
     };
 
     case (_esc): {
         life_is_arrested = false;
         hint localize "STR_Jail_EscapeSelf";
-        [0, "STR_Jail_EscapeNOTF", true, [profileName]] remoteExecCall ["life_fnc_broadcast", RCLIENT];
+        [0, "STR_Jail_EscapeNOTF", true, [profileName]] remoteExecCall ["MPClient_fnc_broadcast", RCLIENT];
 
         if (count extdb_var_database_headless_clients > 0) then {
             [getPlayerUID player, profileName, "901"] remoteExecCall ["HC_fnc_wantedAdd", extdb_var_database_headless_client];
@@ -92,7 +92,7 @@ switch (true) do {
             [getPlayerUID player, profileName, "901"] remoteExecCall ["MPServer_fnc_wantedAdd", RSERV];
         };
 
-        [5] call SOCK_fnc_updatePartial;
+        [5] call MPClient_fnc_updatePartial;
     };
 
     case (alive player && {!_esc} && {!_bail}): {
@@ -106,7 +106,7 @@ switch (true) do {
         };
         player setVariable ["life_var_teleported",true,true];
         player setPos (getMarkerPos "jail_release");
-        [5] call SOCK_fnc_updatePartial;
+        [5] call MPClient_fnc_updatePartial;
     };
 };
 

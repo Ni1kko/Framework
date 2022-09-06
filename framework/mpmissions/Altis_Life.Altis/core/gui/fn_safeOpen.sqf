@@ -16,7 +16,7 @@ if (!createDialog "Federal_Safe") exitWith {localize "STR_MISC_DialogError"};
 
 disableSerialization;
 ctrlSetText[3501,(localize "STR_Civ_SafeInv")];
-[life_safeObj] call life_fnc_safeInventory;
+[life_safeObj] call MPClient_fnc_safeInventory;
 life_safeObj setVariable ["inUse",true,true];
 
 [life_safeObj] spawn {

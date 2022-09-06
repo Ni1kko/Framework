@@ -37,19 +37,19 @@ if (player distance (getMarkerPos "jail_marker") > 40) then {
     player setPos (getMarkerPos "jail_marker");
 };
 
-[1] call life_fnc_removeLicenses;
+[1] call MPClient_fnc_removeLicenses;
 
 {
     _amount = ITEM_VALUE(_x);
     if (_amount > 0) then {
-        [false,_x,_amount] call life_fnc_handleInv;
+        [false,_x,_amount] call MPClient_fnc_handleInv;
     };
 } forEach _illegalItems;
 
 life_is_arrested = true;
 
 if (LIFE_SETTINGS(getNumber,"jail_seize_inventory") isEqualTo 1) then {
-    [] spawn life_fnc_seizeClient;
+    [] spawn MPClient_fnc_seizeClient;
 } else {
     removeAllWeapons player;
     {player removeMagazine _x} forEach (magazines player);
@@ -61,7 +61,7 @@ if (count extdb_var_database_headless_clients > 0) then {
     [player,_bad] remoteExecCall ["MPServer_fnc_jailSys",RSERV];
 };
 
-[5] call SOCK_fnc_updatePartial;
+[5] call MPClient_fnc_updatePartial;
 []spawn{
     uiSleep 5;
     player setVariable ["life_var_teleported",false,true];

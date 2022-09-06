@@ -24,7 +24,7 @@ _queryResult = [_query,2] call MPServer_fnc_database_rawasync_request;
 
 //Check to see if the gang name already exists.
 if (!(count _queryResult isEqualTo 0)) exitWith {
-    [1,"There is already a gang created with that name please pick another name."] remoteExecCall ["life_fnc_broadcast",_ownerID];
+    [1,"There is already a gang created with that name please pick another name."] remoteExecCall ["MPClient_fnc_broadcast",_ownerID];
     life_action_gangInUse = nil;
     _ownerID publicVariableClient "life_action_gangInUse";
 };
@@ -35,7 +35,7 @@ _queryResult = [_query,2] call MPServer_fnc_database_rawasync_request;
 
 //Check to see if this person already owns or belongs to a gang.
 if (!(count _queryResult isEqualTo 0)) exitWith {
-    [1,"You are currently already active in a gang, please leave the gang first."] remoteExecCall ["life_fnc_broadcast",_ownerID];
+    [1,"You are currently already active in a gang, please leave the gang first."] remoteExecCall ["MPClient_fnc_broadcast",_ownerID];
     life_action_gangInUse = nil;
     _ownerID publicVariableClient "life_action_gangInUse";
 };
@@ -59,7 +59,7 @@ _group setVariable ["gang_owner",_uid,true];
 _group setVariable ["gang_bank",0,true];
 _group setVariable ["gang_maxMembers",8,true];
 _group setVariable ["gang_members",[_uid],true];
-[_group] remoteExecCall ["life_fnc_gangCreated",_ownerID];
+[_group] remoteExecCall ["MPClient_fnc_gangCreated",_ownerID];
 
 uiSleep 0.35;
 _query = format ["SELECT id FROM gangs WHERE owner='%1' AND active='1'",_uid];

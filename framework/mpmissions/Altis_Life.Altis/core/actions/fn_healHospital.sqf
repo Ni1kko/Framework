@@ -13,11 +13,11 @@ private ["_healCost","_action"];
 if (life_var_isBusy) exitWith {};
 if ((damage player) < 0.01) exitWith {hint localize "STR_NOTF_HS_FullHealth"};
 _healCost = LIFE_SETTINGS(getNumber,"hospital_heal_fee");
-if (life_var_cash < _healCost) exitWith {hint format [localize "STR_NOTF_HS_NoCash",[_healCost] call life_fnc_numberText];};
+if (life_var_cash < _healCost) exitWith {hint format [localize "STR_NOTF_HS_NoCash",[_healCost] call MPClient_fnc_numberText];};
 
 life_var_isBusy = true;
 _action = [
-    format [localize "STR_NOTF_HS_PopUp",[_healCost] call life_fnc_numberText],
+    format [localize "STR_NOTF_HS_PopUp",[_healCost] call MPClient_fnc_numberText],
     localize "STR_NOTF_HS_TITLE",
     localize "STR_Global_Yes",
     localize "STR_Global_No"

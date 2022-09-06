@@ -28,7 +28,7 @@ if(life_var_hud_hunger_lastval != round life_var_hunger)then{
 };
 
 //-- Area Notification
-private _currentArea = [getPos player] call life_fnc_util_getNearestLocationName;
+private _currentArea = [getPos player] call MPClient_fnc_util_getNearestLocationName;
 if(_currentArea != "" AND life_var_hud_lastlocation != _currentArea)then{ 
 	life_var_hud_lastlocation = _currentArea;
 	[[

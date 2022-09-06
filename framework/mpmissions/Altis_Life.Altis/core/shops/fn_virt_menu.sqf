@@ -31,8 +31,8 @@ if (_exit) exitWith {};
 
 private _conditions = M_CONFIG(getText,"VirtualShops",_shopType,"conditions");
 
-if !([_conditions] call life_fnc_levelCheck) exitWith {hint localize "STR_Shop_Veh_NotAllowed";};
+if !([_conditions] call MPClient_fnc_levelCheck) exitWith {hint localize "STR_Shop_Veh_NotAllowed";};
 
 createDialog "shops_menu";
 
-[] call life_fnc_virt_update;
+[] call MPClient_fnc_virt_update;

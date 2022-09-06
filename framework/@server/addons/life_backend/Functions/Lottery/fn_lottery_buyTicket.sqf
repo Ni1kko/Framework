@@ -62,9 +62,9 @@ if(_bonusball in [""," ","NOT PURCHASED"])then{
 
 		private _total = (_ticketPrice + _ticketBonusballPrice);
 
-		systemChat format["You have bought a lottery ticket for $%1!",[_total] call life_fnc_numberText];
+		systemChat format["You have bought a lottery ticket for $%1!",[_total] call MPClient_fnc_numberText];
 		life_var_cash = life_var_cash - _total;
-        [0] call SOCK_fnc_updatePartial;
+        [0] call MPClient_fnc_updatePartial;
 	}
 ] remoteExec ["Hint",remoteExecutedOwner];
 

@@ -77,8 +77,8 @@ if (_weaponPanelType isEqualTo 0) then {
 			} else {
 				_compatibleMagazines = getArray (configFile >> "CfgWeapons" >> _currentWeaponClassName >> "magazines");
 			};
-			_compatibleMagazines = _compatibleMagazines call life_fnc_util_array_toLower;
-			_needReload = [_currentMagazineClassName, _currentAmmoCount] call life_fnc_util_needsReload;
+			_compatibleMagazines = _compatibleMagazines call MPClient_fnc_util_array_toLower;
+			_needReload = [_currentMagazineClassName, _currentAmmoCount] call MPClient_fnc_util_needsReload;
 			_currentMagazineCount =	{(toLower _x) in _compatibleMagazines} count (magazines player);
 		};
 	};

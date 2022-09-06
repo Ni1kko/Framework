@@ -34,7 +34,7 @@ if(!isNull _tent)then{
 
 		//-- Remove tentkit from player vinventory
 		//"tentKit"
-		_this addAction ["Packup Campsite",{[param [0,objNull]] spawn life_fnc_packupTent;},nil,1.5,true,true,"","true",7,false];
+		_this addAction ["Packup Campsite",{[param [0,objNull]] spawn MPClient_fnc_packupTent;},nil,1.5,true,true,"","true",7,false];
 
 		//-- Add map marker
 		private _marker = createMarkerLocal[format["tent_%1",getPlayerUID player],_pos];

@@ -15,7 +15,7 @@ player setVariable ["life_var_teleported",true,true];
 
 if (life_spawn_point isEqualTo []) then {
     private ["_sp","_spCfg"];
-    _spCfg = [playerSide] call life_fnc_spawnPointCfg;
+    _spCfg = [playerSide] call MPClient_fnc_spawnPointCfg;
     _sp = _spCfg select 0;
 
     if (playerSide isEqualTo civilian) then {
@@ -37,7 +37,7 @@ if (life_spawn_point isEqualTo []) then {
             if (((life_spawn_point select 0) find "house") != -1) then {
                 private ["_bPos","_house","_pos"];
                 _house = nearestObjects [getMarkerPos (life_spawn_point select 0),["House_F"],10] select 0;
-                _bPos = [_house] call life_fnc_getBuildingPositions;
+                _bPos = [_house] call MPClient_fnc_getBuildingPositions;
 
                 if (_bPos isEqualTo []) exitWith {
                     player setPos (getMarkerPos (life_spawn_point select 0));
@@ -64,10 +64,10 @@ if (life_firstSpawn) then {
     life_firstSpawn = false;
     [] execVM "dialog\function\fn_intro.sqf"; // Intro Cam Script
 }else{
-    [true] call life_fnc_gui_hook_management;
+    [true] call MPClient_fnc_gui_hook_management;
 };
 
-[] call life_fnc_playerSkins;
+[] call MPClient_fnc_playerSkins;
 
 []spawn{
     uiSleep 5;

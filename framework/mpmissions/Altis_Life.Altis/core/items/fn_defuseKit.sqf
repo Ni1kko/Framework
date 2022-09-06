@@ -28,7 +28,7 @@ _cP = 0.01;
 
 for "_i" from 0 to 1 step 0 do {
     if (animationState player != "AinvPknlMstpSnonWnonDnon_medic_1") then {
-        [player,"AinvPknlMstpSnonWnonDnon_medic_1",true] remoteExecCall ["life_fnc_animSync",RCLIENT];
+        [player,"AinvPknlMstpSnonWnonDnon_medic_1",true] remoteExecCall ["MPClient_fnc_animSync",RCLIENT];
         player switchMove "AinvPknlMstpSnonWnonDnon_medic_1";
         player playMoveNow "AinvPknlMstpSnonWnonDnon_medic_1";
     };
@@ -54,4 +54,4 @@ if (life_interrupted) exitWith {life_interrupted = false; titleText[localize "ST
 
 life_var_isBusy = false;
 _vault setVariable ["chargeplaced",false,true];
-[0,localize "STR_ISTR_Defuse_Success"] remoteExecCall ["life_fnc_broadcast",west];
+[0,localize "STR_ISTR_Defuse_Success"] remoteExecCall ["MPClient_fnc_broadcast",west];

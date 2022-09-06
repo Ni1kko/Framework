@@ -21,11 +21,11 @@ life_action_delay = time;
 
 _price = (_price * _amount);
 _name = M_CONFIG(getText,"VirtualItems",_type,"displayName");
-if ([false,_type,_amount] call life_fnc_handleInv) then {
-    hint format [localize "STR_Shop_Virt_SellItem",_amount,TEXT_LOCALIZE(_name),[_price] call life_fnc_numberText];
+if ([false,_type,_amount] call MPClient_fnc_handleInv) then {
+    hint format [localize "STR_Shop_Virt_SellItem",_amount,TEXT_LOCALIZE(_name),[_price] call MPClient_fnc_numberText];
     life_var_cash = life_var_cash + _price;
-    [0] call SOCK_fnc_updatePartial;
-    [] call life_fnc_virt_update;
+    [0] call MPClient_fnc_updatePartial;
+    [] call MPClient_fnc_virt_update;
 };
 
 if (life_shop_type isEqualTo "drugdealer") then {
@@ -51,4 +51,4 @@ if (life_shop_type isEqualTo "gold" && (LIFE_SETTINGS(getNumber,"federalReserve_
     };
 };
 
-[3] call SOCK_fnc_updatePartial;
+[3] call MPClient_fnc_updatePartial;

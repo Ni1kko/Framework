@@ -8,5 +8,5 @@
 */
 if (!hasInterface && !isServer) exitWith {};
 
-[] spawn life_fnc_init;
-[] spawn life_fnc_briefing;
+[] spawn MPClient_fnc_init;
+[] spawn MPClient_fnc_briefing;

@@ -25,8 +25,8 @@ if (!isClass (missionConfigFile >> "LifeCfgVehicles" >> _classNameLife)) then {
 _vehicleColor = ((M_CONFIG(getArray,"LifeCfgVehicles",_classNameLife,"textures") select (_dataArr select 1)) select 0);
 if (isNil "_vehicleColor") then {_vehicleColor = "Default";};
 
-_vehicleInfo = [_className] call life_fnc_fetchVehInfo;
-_trunkSpace = [_className] call life_fnc_vehicleWeightCfg;
+_vehicleInfo = [_className] call MPClient_fnc_fetchVehInfo;
+_trunkSpace = [_className] call MPClient_fnc_vehicleWeightCfg;
 
 _price = M_CONFIG(getNumber,"LifeCfgVehicles",_classNameLife,"price");
 _storageFee = LIFE_SETTINGS(getNumber,"vehicle_storage_fee_multiplier");
@@ -65,8 +65,8 @@ if (!(_retrievePrice isEqualType 0) || _retrievePrice < 1) then {_retrievePrice 
     " +(localize "STR_Shop_Veh_UI_Trunk")+ " %6<br/>
     " +(localize "STR_Shop_Veh_UI_Fuel")+ " %7
     ",
-[_retrievePrice] call life_fnc_numberText,
-[_sellPrice] call life_fnc_numberText,
+[_retrievePrice] call MPClient_fnc_numberText,
+[_sellPrice] call MPClient_fnc_numberText,
 (_vehicleInfo select 8),
 (_vehicleInfo select 11),
 (_vehicleInfo select 10),

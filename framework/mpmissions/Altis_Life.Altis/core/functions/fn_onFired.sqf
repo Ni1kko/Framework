@@ -17,6 +17,6 @@ if (_ammoType isEqualTo "GrenadeHand_stone") then {
             _position = ASLtoATL (visiblePositionASL _this);
             sleep 0.1;
         };
-        [_position] remoteExec ["life_fnc_flashbang",RCLIENT];
+        [_position] remoteExec ["MPClient_fnc_flashbang",RCLIENT];
     };
 };

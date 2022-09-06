@@ -42,7 +42,7 @@ ctrlSetText [20323,format ["Total : %1$",_fuelCost * 0.1]];
     _x params ["_vehicle","_fuelLeft"];
     private _className = typeOf _vehicle;
 
-    private _vehicleInfo = [_className] call life_fnc_fetchVehInfo;
+    private _vehicleInfo = [_className] call MPClient_fnc_fetchVehInfo;
     _control lbAdd (_vehicleInfo select 3);
     _control lbSetPicture [_forEachIndex,(_vehicleInfo select 2)];
     _control lbSetData [_forEachIndex,_className];

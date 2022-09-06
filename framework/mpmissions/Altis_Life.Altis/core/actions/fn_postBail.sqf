@@ -16,5 +16,5 @@ if (life_var_bank < life_bail_amount) exitWith {hint format [localize "STR_NOTF_
 
 life_var_bank = life_var_bank - life_bail_amount;
 life_bail_paid = true;
-[1] call SOCK_fnc_updatePartial;
-[0,"STR_NOTF_Bail_Bailed",true,[profileName]] remoteExecCall ["life_fnc_broadcast",RCLIENT];
+[1] call MPClient_fnc_updatePartial;
+[0,"STR_NOTF_Bail_Bailed",true,[profileName]] remoteExecCall ["MPClient_fnc_broadcast",RCLIENT];

@@ -47,30 +47,18 @@ class RscTitles {
     #include "dialog\spitScreen.hpp"
 };
 
-class CfgFunctions {
-    class Socket_Reciever {
-        tag = "SOCK";
-        class SQL_Socket {
-            file = "core\session";
-            class dataQuery {};
-            class insertPlayerInfo {};
-            class requestReceived {};
-            class syncData {};
-            class updatePartial {};
-            class updateRequest {};
-        };
-    };
-
-    class Life_Client_Core {
-        tag = "life";
-
+class CfgFunctions 
+{
+    class MPClient 
+    {
         class FiniteStateMachine
         {
             file="core\fsm"; 
             class timeModule {ext=".fsm";};
         };
 
-        class Master_Directory {
+        class Root
+        {
             file = "core";
             class init {};
             class initCiv {};
@@ -90,7 +78,8 @@ class CfgFunctions {
             class clientCrash {};
         };
 
-        class Actions {
+        class Actions 
+        {
             file = "core\actions";
             class arrestAction {};
             class buyLicense {};
@@ -129,7 +118,8 @@ class CfgFunctions {
             class unrestrain {};
         };
         
-        class Civilian {
+        class Civilian 
+        {
             file = "core\civilian";
             class civMarkers {};
             class demoChargeTimer {};
@@ -144,7 +134,8 @@ class CfgFunctions {
             class tazed {};
         };
 
-        class Config {
+        class Config 
+        {
             file = "core\config";
             class houseConfig {};
             class itemWeight {};
@@ -152,7 +143,8 @@ class CfgFunctions {
             class vehicleWeightCfg {};
         };
 
-        class Cop {
+        class Cop 
+        {
             file = "core\cop";
             class bountyReceive {};
             class containerInvSearch {};
@@ -181,39 +173,8 @@ class CfgFunctions {
             class wantedGrab {};
         };
 
-        class Dialog_Controls {
-            file = "dialog\function";
-            class bankDeposit {};
-            class bankTransfer {};
-            class bankWithdraw {};
-            class displayHandler {};
-            class gangBankResponse {};
-            class garageLBChange {};
-            class garageMenu {};
-            class progressBar {};
-            class safeFix {};
-            class safeInventory {};
-            class safeOpen {};
-            class safeTake {};
-            class sellGarage {};
-            class setMapPosition {};
-            class spawnConfirm {};
-            class spawnMenu {};
-            class spawnPointCfg {};
-            class spawnPointSelected {};
-            class unimpound {};
-            class useGangBank {};
-            class vehicleGarage {};
-            class wireTransfer {};
-            class hasDisplay {};
-            class createRscLayer {};
-            class destroyRscLayer {};
-            class filterGarage {};
-            class setLoadingText {};
-            class abort {};
-        };
-
-        class Functions {
+        class Functions 
+        {
             file = "core\functions";
             class AAN {};
             class accType {};
@@ -272,7 +233,8 @@ class CfgFunctions {
             class bountySelect {};
         };
 
-        class Gangs {
+        class Gangs 
+        {
             file = "core\gangs";
             class createGang {};
             class gangCreated {};
@@ -288,8 +250,38 @@ class CfgFunctions {
             class initGang {};
         };
 
-        class Gui {
-            file = "core\gui"; 
+        class Gui 
+        {
+            file = "core\gui";
+            
+            class bankDeposit {};
+            class bankTransfer {};
+            class bankWithdraw {};
+            class displayHandler {};
+            class gangBankResponse {};
+            class garageLBChange {};
+            class garageMenu {};
+            class progressBar {};
+            class safeFix {};
+            class safeInventory {};
+            class safeOpen {};
+            class safeTake {};
+            class sellGarage {};
+            class setMapPosition {};
+            class spawnConfirm {};
+            class spawnMenu {};
+            class spawnPointCfg {};
+            class spawnPointSelected {};
+            class unimpound {};
+            class useGangBank {};
+            class vehicleGarage {};
+            class wireTransfer {};
+            class hasDisplay {};
+            class createRscLayer {};
+            class destroyRscLayer {};
+            class filterGarage {};
+            class setLoadingText {};
+            class abort {};
             class gui_hook_management {}; 
             class gui_renderGrenadePanel {};
             class gui_renderGroupPanel {};
@@ -301,7 +293,8 @@ class CfgFunctions {
             class gui_renderWeaponPanel {};
         };
 
-        class Housing {
+        class Housing 
+        {
             file = "core\housing";
             class buyHouse {};
             class buyHouseGarage {};
@@ -323,7 +316,8 @@ class CfgFunctions {
             class sellHouseGarage {};
         };
         
-        class Tents {
+        class Tents 
+        {
             file = "core\tents";
             class deployTent {};
             class packupTent {};
@@ -331,7 +325,8 @@ class CfgFunctions {
             class tentMenu {};
         };
 
-        class Items {
+        class Items 
+        {
             file = "core\items";
             class blastingCharge {};
             class boltcutter {};
@@ -345,7 +340,8 @@ class CfgFunctions {
             class storageBox {}; 
         };
 
-        class Medical_System {
+        class Medical_System 
+        {
             file = "core\medical";
             class deathScreen {};
             class deathScreenKeyHandler {};
@@ -361,7 +357,8 @@ class CfgFunctions {
             class revivePlayer {};
         };
 
-        class Agony_System {
+        class Medical_Agony_System 
+        {
             file = "core\medical\agony";
             //main damage handler
             class Agony {};
@@ -377,7 +374,8 @@ class CfgFunctions {
             class effects_painShock {};
         };
 
-        class Network {
+        class Network 
+        {
             file = "core\functions\network";
             class broadcast {};
             class corpse {};
@@ -388,7 +386,8 @@ class CfgFunctions {
             class bountyHunterTaze {};
         };
 
-        class Player_Menu {
+        class Player_Menu 
+        {
             file = "core\pmenu";
             class cellphone {};
             class giveItem {};
@@ -412,7 +411,8 @@ class CfgFunctions {
             class wantedMenu {};
         };
 
-        class Shops {
+        class Shops 
+        {
             file = "core\shops";
             class 3dPreviewDisplay {};
             class 3dPreviewExit {};
@@ -444,7 +444,19 @@ class CfgFunctions {
             class weaponShopSelection {};
         };
 
-        class Utils {
+        class Session 
+        {
+            file = "core\session";
+            class dataQuery {};
+            class insertPlayerInfo {};
+            class requestReceived {};
+            class syncData {};
+            class updatePartial {};
+            class updateRequest {};
+        };
+
+        class Utils 
+        {
             file = "core\utils";
             class util_canautorun {};
             class util_math_round {};
@@ -455,7 +467,8 @@ class CfgFunctions {
             class util_getTerrainGradient {};
         };
 
-        class Vehicle {
+        class Vehicle
+        {
             file = "core\vehicle";
             class addVehicle2Chain {};
             class colorVehicle {};
@@ -504,62 +517,61 @@ class CfgRemoteExec {
 
 		//-- Whitelist
         /* Client only functions */
-            F(life_fnc_AAN,CLIENT)
-            F(life_fnc_addVehicle2Chain,CLIENT)
-            F(life_fnc_bountyReceive,CLIENT)
-            JIP(life_fnc_copLights,CLIENT)
-            F(life_fnc_copSearch,CLIENT)
-            JIP(life_fnc_copSiren,CLIENT)
-            F(life_fnc_freezePlayer,CLIENT)
-            F(life_fnc_gangCreated,CLIENT)
-            F(life_fnc_gangDisbanded,CLIENT)
-            F(life_fnc_gangInvite,CLIENT)
-            F(life_fnc_garageRefund,CLIENT)
-            F(life_fnc_giveDiff,CLIENT)
-            F(life_fnc_hideObj,CLIENT)
-            F(life_fnc_garageMenu,CLIENT)
-            F(life_fnc_jail,CLIENT)
-            F(life_fnc_jailMe,CLIENT)
-            F(life_fnc_knockedOut,CLIENT)
-            F(life_fnc_licenseCheck,CLIENT)
-            F(life_fnc_licensesRead,CLIENT)
-            F(life_fnc_lightHouse,CLIENT)
-            JIP(life_fnc_mediclights,CLIENT)
-            F(life_fnc_medicRequest,CLIENT)
-            JIP(life_fnc_medicSiren,CLIENT)
-            F(life_fnc_moveIn,CLIENT)
-            F(life_fnc_pickupItem,CLIENT)
-            F(life_fnc_pickupMoney,CLIENT)
-            F(life_fnc_receiveItem,CLIENT)
-            F(life_fnc_receiveMoney,CLIENT)
-            F(life_fnc_removeLicenses,CLIENT)
-            F(life_fnc_restrain,CLIENT)
-            F(life_fnc_revived,CLIENT)
-            F(life_fnc_robPerson,CLIENT)
-            F(life_fnc_robReceive,CLIENT)
-            F(life_fnc_searchClient,CLIENT)
-            F(life_fnc_seizeClient,CLIENT)
-            F(life_fnc_soundDevice,CLIENT)
-            F(MPServer_fnc_spikeStripEffect,CLIENT)
-            F(life_fnc_tazeSound,CLIENT)
-            F(life_fnc_ticketPaid,CLIENT)
-            F(life_fnc_ticketPrompt,CLIENT)
-            F(life_fnc_vehicleAnimate,CLIENT)
-            F(life_fnc_wantedList,CLIENT)
-            F(life_fnc_wireTransfer,CLIENT)
-            F(life_fnc_gangBankResponse,CLIENT)
-            F(life_fnc_chopShopSold,CLIENT)
-            F(SOCK_fnc_dataQuery,CLIENT)
-            F(SOCK_fnc_insertPlayerInfo,CLIENT)
-            F(SOCK_fnc_requestReceived,CLIENT)
-            F(SOCK_fnc_updateRequest,CLIENT)
+            F(MPClient_fnc_AAN,CLIENT)
+            F(MPClient_fnc_addVehicle2Chain,CLIENT)
+            F(MPClient_fnc_bountyReceive,CLIENT)
+            JIP(MPClient_fnc_copLights,CLIENT)
+            F(MPClient_fnc_copSearch,CLIENT)
+            JIP(MPClient_fnc_copSiren,CLIENT)
+            F(MPClient_fnc_freezePlayer,CLIENT)
+            F(MPClient_fnc_gangCreated,CLIENT)
+            F(MPClient_fnc_gangDisbanded,CLIENT)
+            F(MPClient_fnc_gangInvite,CLIENT)
+            F(MPClient_fnc_garageRefund,CLIENT)
+            F(MPClient_fnc_giveDiff,CLIENT)
+            F(MPClient_fnc_hideObj,CLIENT)
+            F(MPClient_fnc_garageMenu,CLIENT)
+            F(MPClient_fnc_jail,CLIENT)
+            F(MPClient_fnc_jailMe,CLIENT)
+            F(MPClient_fnc_knockedOut,CLIENT)
+            F(MPClient_fnc_licenseCheck,CLIENT)
+            F(MPClient_fnc_licensesRead,CLIENT)
+            F(MPClient_fnc_lightHouse,CLIENT)
+            JIP(MPClient_fnc_mediclights,CLIENT)
+            F(MPClient_fnc_medicRequest,CLIENT)
+            JIP(MPClient_fnc_medicSiren,CLIENT)
+            F(MPClient_fnc_moveIn,CLIENT)
+            F(MPClient_fnc_pickupItem,CLIENT)
+            F(MPClient_fnc_pickupMoney,CLIENT)
+            F(MPClient_fnc_receiveItem,CLIENT)
+            F(MPClient_fnc_receiveMoney,CLIENT)
+            F(MPClient_fnc_removeLicenses,CLIENT)
+            F(MPClient_fnc_restrain,CLIENT)
+            F(MPClient_fnc_revived,CLIENT)
+            F(MPClient_fnc_robPerson,CLIENT)
+            F(MPClient_fnc_robReceive,CLIENT)
+            F(MPClient_fnc_searchClient,CLIENT)
+            F(MPClient_fnc_seizeClient,CLIENT)
+            F(MPClient_fnc_soundDevice,CLIENT)
+            F(MPClient_fnc_spikeStripEffect,CLIENT)
+            F(MPClient_fnc_tazeSound,CLIENT)
+            F(MPClient_fnc_ticketPaid,CLIENT)
+            F(MPClient_fnc_ticketPrompt,CLIENT)
+            F(MPClient_fnc_vehicleAnimate,CLIENT)
+            F(MPClient_fnc_wantedList,CLIENT)
+            F(MPClient_fnc_wireTransfer,CLIENT)
+            F(MPClient_fnc_gangBankResponse,CLIENT)
+            F(MPClient_fnc_chopShopSold,CLIENT)
+            F(MPClient_fnc_dataQuery,CLIENT)
+            F(MPClient_fnc_insertPlayerInfo,CLIENT)
+            F(MPClient_fnc_requestReceived,CLIENT)
+            F(MPClient_fnc_updateRequest,CLIENT)
             F(MPServer_fnc_clientGangKick,CLIENT)
             F(MPServer_fnc_clientGangLeader,CLIENT)
             F(MPServer_fnc_clientGangLeft,CLIENT)
             F(MPServer_fnc_clientGetKey,CLIENT)
-            F(MPServer_fnc_player_query,CLIENT)
-            F(life_fnc_spat,CLIENT)
-            F(life_fnc_bountyHunterTaze,CLIENT)
+            F(MPClient_fnc_spat,CLIENT)
+            F(MPClient_fnc_bountyHunterTaze,CLIENT)
 
         /* Server only functions */
             F(MPServer_fnc_rcon_ban,SERVER)
@@ -576,8 +588,6 @@ class CfgRemoteExec {
             F(MPServer_fnc_wantedFetch,SERVER)
             F(MPServer_fnc_wantedProfUpdate,SERVER)
             F(MPServer_fnc_wantedRemove,SERVER)
-            F(SPY_fnc_cookieJar,SERVER)
-            F(SPY_fnc_observe,SERVER)
             F(MPServer_fnc_addContainer,SERVER)
             F(MPServer_fnc_addHouse,SERVER)
             F(MPServer_fnc_chopShopSell,SERVER)
@@ -644,19 +654,18 @@ class CfgRemoteExec {
         /* Functions for everyone */
             F(BIS_fnc_effectKilledAirDestruction,ANYONE)
             F(BIS_fnc_effectKilledSecondaries,ANYONE)
-            F(life_fnc_animSync,ANYONE)
-            F(life_fnc_broadcast,ANYONE)
-            F(life_fnc_colorVehicle,ANYONE)
-            F(life_fnc_corpse,ANYONE)
-            F(life_fnc_demoChargeTimer,ANYONE)
-            F(life_fnc_flashbang,ANYONE)
-            F(life_fnc_jumpFnc,ANYONE)
-            F(life_fnc_lockVehicle,ANYONE)
-            F(life_fnc_pulloutVeh,ANYONE)
-            F(life_fnc_say3D,ANYONE)
-            F(life_fnc_setFuel,ANYONE)
-            F(life_fnc_simDisable,ANYONE)
-            F(SPY_fnc_notifyAdmins,ANYONE)
+            F(MPClient_fnc_animSync,ANYONE)
+            F(MPClient_fnc_broadcast,ANYONE)
+            F(MPClient_fnc_colorVehicle,ANYONE)
+            F(MPClient_fnc_corpse,ANYONE)
+            F(MPClient_fnc_demoChargeTimer,ANYONE)
+            F(MPClient_fnc_flashbang,ANYONE)
+            F(MPClient_fnc_jumpFnc,ANYONE)
+            F(MPClient_fnc_lockVehicle,ANYONE)
+            F(MPClient_fnc_pulloutVeh,ANYONE)
+            F(MPClient_fnc_say3D,ANYONE)
+            F(MPClient_fnc_setFuel,ANYONE)
+            F(MPClient_fnc_simDisable,ANYONE)
             F(bis_fnc_debugconsoleexec,ANYONE)
     };
 

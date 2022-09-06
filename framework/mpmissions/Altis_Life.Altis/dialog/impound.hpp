@@ -66,7 +66,7 @@ class Life_impound_menu {
         class RetrieveCar: Life_RscButtonMenu {
             idc = -1;
             text = "$STR_Global_Retrieve";
-            onButtonClick = "[] call life_fnc_unimpound;";
+            onButtonClick = "[] call MPClient_fnc_unimpound;";
             x = 0.1 + (6.25 / 40) + (1 / 250 / (safezoneW / safezoneH));
             y = 0.9 - (1 / 25);
             w = (6.25 / 40);
@@ -76,7 +76,7 @@ class Life_impound_menu {
         class SellCar: Life_RscButtonMenu {
             idc = -1;
             text = "$STR_Global_Sell";
-            onButtonClick = "[] call life_fnc_sellGarage; closeDialog 0;";
+            onButtonClick = "[] call MPClient_fnc_sellGarage; closeDialog 0;";
             x = 0.26 + (6.25 / 40) + (1 / 250 / (safezoneW / safezoneH));
             y = 0.9 - (1 / 25);
             w = (6.25 / 40);
@@ -90,7 +90,7 @@ class Life_impound_menu {
             text = "";
             sizeEx = 0.04;
             colorBackground[] = {0.1,0.1,0.1,0.9};
-            onLBSelChanged = "_this call life_fnc_garageLBChange;";
+            onLBSelChanged = "_this call MPClient_fnc_garageLBChange;";
             x = 0.11;
             y = 0.302;
             w = 0.303;
@@ -133,7 +133,7 @@ class Life_impound_menu {
             y = 0.8;
             w = 0.3;
             h = 0.04;
-            onKeyUp = "[(_this # 0), 2802, 2803] spawn life_fnc_filterGarage";
+            onKeyUp = "[(_this # 0), 2802, 2803] spawn MPClient_fnc_filterGarage";
         };
     };
 };

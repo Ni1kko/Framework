@@ -31,4 +31,4 @@ if (count extdb_var_database_headless_clients > 0) then {
     [4,group player] remoteExec ["MPServer_fnc_updateGang",RSERV]; //Update the database.
 };
 
-[] call life_fnc_gangMenu;
+[] call MPClient_fnc_gangMenu;

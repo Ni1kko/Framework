@@ -84,7 +84,6 @@ life_var_serverLoaded = true;
 //--- 
 {publicVariable _x}forEach[
     "MPServer_fnc_terrainSort",
-    "MPServer_fnc_player_query",
     "MPServer_fnc_index",
     "MPServer_fnc_isNumber",
     "MPServer_fnc_clientGangKick",

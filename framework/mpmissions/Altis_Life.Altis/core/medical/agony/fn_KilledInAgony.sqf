@@ -1,6 +1,6 @@
 /*
 
-	Function: 	life_fnc_KilledInAgony
+	Function: 	MPClient_fnc_KilledInAgony
 	Project: 	Misty Peaks RPG
 	Author:     Merrick, Nikko, Affect & IceEagle132
 	
@@ -14,5 +14,5 @@ params [
 	["_selection","",[""]]
 ];
 
-["all"] call life_fnc_removeBuff;
+["all"] call MPClient_fnc_removeBuff;
 _unit setDamage 1;

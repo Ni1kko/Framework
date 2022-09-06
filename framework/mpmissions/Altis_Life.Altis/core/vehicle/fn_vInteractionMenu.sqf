@@ -36,27 +36,27 @@ _id = getObjectDLC _curTarget;
 
 //Set Repair Action
 _Btn1 ctrlSetText localize "STR_vInAct_Repair";
-_Btn1 buttonSetAction "[life_vInact_curTarget] spawn life_fnc_repairTruck; closeDialog 0;";
+_Btn1 buttonSetAction "[life_vInact_curTarget] spawn MPClient_fnc_repairTruck; closeDialog 0;";
 
-if ((life_inv_toolkit >= 1) && {alive life_vInact_curTarget} && {([life_vInact_curTarget] call life_fnc_isDamaged)}) then {_Btn1 ctrlEnable true;} else {_Btn1 ctrlEnable false;};
+if ((life_inv_toolkit >= 1) && {alive life_vInact_curTarget} && {([life_vInact_curTarget] call MPClient_fnc_isDamaged)}) then {_Btn1 ctrlEnable true;} else {_Btn1 ctrlEnable false;};
 
 if (playerSide isEqualTo west) then {
     _Btn2 ctrlSetText localize "STR_vInAct_Registration";
-    _Btn2 buttonSetAction "[life_vInact_curTarget] spawn life_fnc_searchVehAction; closeDialog 0;";
+    _Btn2 buttonSetAction "[life_vInact_curTarget] spawn MPClient_fnc_searchVehAction; closeDialog 0;";
 
     _Btn3 ctrlSetText localize "STR_vInAct_SearchVehicle";
-    _Btn3 buttonSetAction "[life_vInact_curTarget] spawn life_fnc_vehInvSearch; closeDialog 0;";
+    _Btn3 buttonSetAction "[life_vInact_curTarget] spawn MPClient_fnc_vehInvSearch; closeDialog 0;";
 
     _Btn4 ctrlSetText localize "STR_vInAct_PullOut";
-    _Btn4 buttonSetAction "[life_vInact_curTarget] spawn life_fnc_pulloutAction; closeDialog 0;";
+    _Btn4 buttonSetAction "[life_vInact_curTarget] spawn MPClient_fnc_pulloutAction; closeDialog 0;";
     if (crew _curTarget isEqualTo []) then {_Btn4 ctrlEnable false;};
 
     _Btn5 ctrlSetText localize "STR_vInAct_Impound";
-    _Btn5 buttonSetAction "[life_vInact_curTarget] spawn life_fnc_impoundAction; closeDialog 0;";
+    _Btn5 buttonSetAction "[life_vInact_curTarget] spawn MPClient_fnc_impoundAction; closeDialog 0;";
 
     if (_curTarget isKindOf "Ship") then {
         _Btn6 ctrlSetText localize "STR_vInAct_PushBoat";
-        _Btn6 buttonSetAction "[] spawn life_fnc_pushObject; closeDialog 0;";
+        _Btn6 buttonSetAction "[] spawn MPClient_fnc_pushObject; closeDialog 0;";
         if (_curTarget isKindOf "Ship" && {local _curTarget} && {crew _curTarget isEqualTo []}) then { _Btn6 ctrlEnable true;} else {_Btn6 ctrlEnable false};
     } else {
         if (!isNil "_id") then {
@@ -76,7 +76,7 @@ if (playerSide isEqualTo west) then {
 
     if (_curTarget isKindOf "Ship") then {
         _Btn2 ctrlSetText localize "STR_vInAct_PushBoat";
-        _Btn2 buttonSetAction "[] spawn life_fnc_pushObject; closeDialog 0;";
+        _Btn2 buttonSetAction "[] spawn MPClient_fnc_pushObject; closeDialog 0;";
         if (alive _curTarget && {_curTarget isKindOf "Ship"} && {local _curTarget} && {crew _curTarget isEqualTo []}) then { _Btn2 ctrlEnable true;} else {_Btn2 ctrlEnable false};
     } else {
         if (!isNil "_id") then {
@@ -93,7 +93,7 @@ if (playerSide isEqualTo west) then {
     };
     if (typeOf _curTarget == "O_Truck_03_device_F") then {
         _Btn3 ctrlSetText localize "STR_vInAct_DeviceMine";
-        _Btn3 buttonSetAction "[life_vInact_curTarget] spawn life_fnc_deviceMine";
+        _Btn3 buttonSetAction "[life_vInact_curTarget] spawn MPClient_fnc_deviceMine";
         if (!isNil {(_curTarget getVariable "mining")} || !local _curTarget && {_curTarget in life_vehicles}) then {
             _Btn3 ctrlEnable false;
         } else {
@@ -109,13 +109,13 @@ if (playerSide isEqualTo west) then {
             } else {
                 if (count (nearestObjects [_curTarget, ["Land_FuelStation_Feed_F","Land_fs_feed_F"], 15]) > 0) then {
                     _Btn3 ctrlSetText localize "STR_FuelTank_Supply";
-                    _Btn3 buttonSetAction "[life_vInact_curTarget] spawn life_fnc_fuelSupply";
+                    _Btn3 buttonSetAction "[life_vInact_curTarget] spawn MPClient_fnc_fuelSupply";
                     _Btn3 ctrlShow true;
                 }else{
                     {
                         if (player distance (getMarkerPos _x) < 20) exitWith {
                             _Btn3 ctrlSetText localize "STR_FuelTank_Store";
-                            _Btn3 buttonSetAction "[life_vInact_curTarget] spawn life_fnc_fuelStore";
+                            _Btn3 buttonSetAction "[life_vInact_curTarget] spawn MPClient_fnc_fuelStore";
                             _Btn3 ctrlShow true;
                         };
                     } forEach ["fuel_storage_1","fuel_storage_2"];

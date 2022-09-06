@@ -15,7 +15,7 @@ if(!license_civ_bounty || playerSide isNotEqualTo civilian) exitWith {false};
 if(_victim distance player > 50) exitWith {false};
 
 //--- Taze the player
-[_victim,player] remoteExec ["life_fnc_bountyHunterTaze",owner _victim];
+[_victim,player] remoteExec ["MPClient_fnc_bountyHunterTaze",owner _victim];
 
 //--- 
 true

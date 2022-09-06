@@ -22,7 +22,7 @@ if ((typeOf _container) in ["Box_IND_Grenades_F", "B_supplyCrate_F"]) exitWith {
         [_container] remoteExecCall ["MPServer_fnc_updateHouseContainers", 2];
     };
 
-    [3] call SOCK_fnc_updatePartial;
+    [3] call MPClient_fnc_updatePartial;
 };
  
 if (_container isKindOf "Car" || {_container isKindOf "Air"} || {_container isKindOf "Ship"}) exitWith {
@@ -32,5 +32,5 @@ if (_container isKindOf "Car" || {_container isKindOf "Air"} || {_container isKi
         [_container, 1] remoteExecCall ["MPServer_fnc_vehicleUpdate", 2];
     };
 
-    [3] call SOCK_fnc_updatePartial;
+    [3] call MPClient_fnc_updatePartial;
 };

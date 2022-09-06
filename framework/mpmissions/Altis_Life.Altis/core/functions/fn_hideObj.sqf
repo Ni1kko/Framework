@@ -8,7 +8,7 @@
 
     Usage :
     _id = The owner of player
-    [_object] remoteExecCall ["life_fnc_hideObj",-_id];
+    [_object] remoteExecCall ["MPClient_fnc_hideObj",-_id];
 */
 params [
     ["_object",objNull,[objNull]]

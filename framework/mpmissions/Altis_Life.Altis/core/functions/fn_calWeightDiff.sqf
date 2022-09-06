@@ -16,7 +16,7 @@ if !(
     ]
 ) exitWith {-1};
 
-private _iWeight = [_item] call life_fnc_itemWeight;
+private _iWeight = [_item] call MPClient_fnc_itemWeight;
 if (_iWeight isEqualTo 0) exitWith {_value};
 
 (floor ((_mWeight - _cWeight) / _iWeight)) min _value;

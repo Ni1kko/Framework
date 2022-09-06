@@ -21,7 +21,7 @@ if ((_vehicle isKindOf "Car") || !(_vehicle isKindOf "Air") || !(_vehicle isKind
     if (player distance _vehicle > 10 || !alive player || !alive _vehicle) exitWith {hint localize "STR_NOTF_SearchVehFail";};
     //_inventory = [(_vehicle getVariable "vehicle_info_inv")] call fnc_veh_inv;
     //if (isNil {_inventory}) then {_inventory = "Nothing in storage."};
-    _owners = [_owners] call life_fnc_vehicleOwners;
+    _owners = [_owners] call MPClient_fnc_vehicleOwners;
 
     if (_owners == "any<br/>") then {
         _owners = "No owners, impound it<br/>";

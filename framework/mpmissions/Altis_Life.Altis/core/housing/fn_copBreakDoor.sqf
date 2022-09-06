@@ -13,9 +13,9 @@ if (isNull _house || !(_house isKindOf "House_F")) exitWith {};
 if (isNil {(_house getVariable "house_owner")}) exitWith {hint localize "STR_House_Raid_NoOwner"};
 
 _uid = (_house getVariable "house_owner") select 0;
-if (!([_uid] call life_fnc_isUIDActive)) exitWith {hint localize "STR_House_Raid_OwnerOff"};
+if (!([_uid] call MPClient_fnc_isUIDActive)) exitWith {hint localize "STR_House_Raid_OwnerOff"};
 
-_door = [_house] call life_fnc_nearestDoor;
+_door = [_house] call MPClient_fnc_nearestDoor;
 if (_door isEqualTo 0) exitWith {hint localize "STR_Cop_NotaDoor"};
 if ((_house getVariable [format ["bis_disabled_Door_%1",_door],0]) isEqualTo 0) exitWith {hint localize "STR_House_Raid_DoorUnlocked"};
 
@@ -33,11 +33,11 @@ _progressBar progressSetPosition 0.01;
 _cP = 0.01;
 _cpRate = 0.0092;
 
-[2,"STR_House_Raid_NOTF",true,[(_house getVariable "house_owner") select 1]] remoteExecCall ["life_fnc_broadcast",RCLIENT];
+[2,"STR_House_Raid_NOTF",true,[(_house getVariable "house_owner") select 1]] remoteExecCall ["MPClient_fnc_broadcast",RCLIENT];
 
 for "_i" from 0 to 1 step 0 do {
     if (animationState player != "AinvPknlMstpSnonWnonDnon_medic_1") then {
-        [player,"AinvPknlMstpSnonWnonDnon_medic_1",true] remoteExecCall ["life_fnc_animSync",RCLIENT];
+        [player,"AinvPknlMstpSnonWnonDnon_medic_1",true] remoteExecCall ["MPClient_fnc_animSync",RCLIENT];
         player switchMove "AinvPknlMstpSnonWnonDnon_medic_1";
         player playMoveNow "AinvPknlMstpSnonWnonDnon_medic_1";
     };

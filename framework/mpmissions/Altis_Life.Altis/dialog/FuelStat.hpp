@@ -92,7 +92,7 @@ class Life_FuelStat {
         class refuelCar: Life_RscButtonMenu {
             idc = 20309;
             text = "Refuel";
-            onButtonClick = "[] spawn life_fnc_fuelRefuelCar;";
+            onButtonClick = "[] spawn MPClient_fnc_fuelRefuelCar;";
             x = 0.26 + (6.25 / 40) + (1 / 250 / (safezoneW / safezoneH));
             y = 0.9 - (1 / 25);
             w = (6.25 / 40);
@@ -106,7 +106,7 @@ class Life_FuelStat {
             text = "";
             sizeEx = 0.04;
             colorBackground[] = {0.1,0.1,0.1,0.9};
-            onLBSelChanged = "_this call life_fnc_fuelLBChange";
+            onLBSelChanged = "_this call MPClient_fnc_fuelLBChange";
             x = 0.11;
             y = 0.302;
             w = 0.32;
@@ -116,7 +116,7 @@ class Life_FuelStat {
         class fuelTank: life_RscXSliderH {
             idc = 20901;
             text = "";
-            onSliderPosChanged = "[3,_this select 1] call life_fnc_s_onSliderChange;";
+            onSliderPosChanged = "[3,_this select 1] call MPClient_fnc_s_onSliderChange;";
             tooltip = "";
             x = 0.47;
             y = .80;

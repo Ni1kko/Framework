@@ -44,7 +44,7 @@ class life_weapon_shop {
 
         class FilterList: Life_RscCombo {
             idc = 38402;
-            onLBSelChanged = "_this call life_fnc_weaponShopFilter";
+            onLBSelChanged = "_this call MPClient_fnc_weaponShopFilter";
             x = 0.11;
             y = 0.64;
             w = 0.3;
@@ -55,7 +55,7 @@ class life_weapon_shop {
     class controls {
         class itemList: Life_RscListBox {
             idc = 38403;
-            onLBSelChanged = "_this call life_fnc_weaponShopSelection";
+            onLBSelChanged = "_this call MPClient_fnc_weaponShopSelection";
             sizeEx = 0.035;
             x = 0.11;
             y = 0.25;
@@ -66,7 +66,7 @@ class life_weapon_shop {
         class ButtonBuySell: Life_RscButtonMenu {
             idc = 38405;
             text = "$STR_Global_Buy";
-            onButtonClick = "[] spawn life_fnc_weaponShopBuySell; true";
+            onButtonClick = "[] spawn MPClient_fnc_weaponShopBuySell; true";
             x = 0.1;
             y = 0.8 - (1 / 25);
             w = (6.25 / 40);
@@ -86,7 +86,7 @@ class life_weapon_shop {
         class ButtonMags: Life_RscButtonMenu {
             idc = 38406;
             text = "$STR_Global_Mags";
-            onButtonClick = "_this call life_fnc_weaponShopMags; _this call life_fnc_weaponShopFilter";
+            onButtonClick = "_this call MPClient_fnc_weaponShopMags; _this call MPClient_fnc_weaponShopFilter";
             x = 0.1;
             y = 0.8 + (1 / 250 / (safezoneW / safezoneH));
             w = (6.25 / 40);
@@ -96,7 +96,7 @@ class life_weapon_shop {
         class ButtonAccs: Life_RscButtonMenu {
             idc = 38407;
             text = "$STR_Global_Accs";
-            onButtonClick = "_this call life_fnc_weaponShopAccs; _this call life_fnc_weaponShopFilter";
+            onButtonClick = "_this call MPClient_fnc_weaponShopAccs; _this call MPClient_fnc_weaponShopFilter";
             x = 0.1 + (6.25 / 40) + (1 / 250 / (safezoneW / safezoneH));
             y = 0.8 + (1 / 250 / (safezoneW / safezoneH));
             w = (6.25 / 40);

@@ -1,5 +1,5 @@
 
-if(!isNil "life_fnc_cellphone_show")exitWith{};
+if(!isNil "MPClient_fnc_cellphone_show")exitWith{};
 
 KRON_Replace = {
     private["_str","_old","_new","_out","_tmp","_jm","_la","_lo","_ln","_i"];
@@ -29,7 +29,7 @@ KRON_Replace = {
     _out
 };
   
-life_fnc_cellphone_show = {
+MPClient_fnc_cellphone_show = {
     if!(createDialog "RscDisplayCellPhone")exitWith{};
 
     private _display = (findDisplay 8500);
@@ -58,11 +58,11 @@ life_fnc_cellphone_show = {
         };
     } forEach playableUnits;
     
-    [false] spawn life_fnc_cellphone_switchDialog;
-    [] spawn life_fnc_cellphone_playerFilter;
-    [] spawn life_fnc_cellphone_messageShow;
+    [false] spawn MPClient_fnc_cellphone_switchDialog;
+    [] spawn MPClient_fnc_cellphone_playerFilter;
+    [] spawn MPClient_fnc_cellphone_messageShow;
 };
-life_fnc_cellphone_switchDialog = {
+MPClient_fnc_cellphone_switchDialog = {
     disableSerialization;
     private _isMsg = [_this,0,false,[false]] call BIS_fnc_param;
 
@@ -77,11 +77,11 @@ life_fnc_cellphone_switchDialog = {
     
     if(_isMsg) then {
         _replyMsg ctrlSetText "Send Message";
-        _replyMsg buttonSetAction "[] call life_fnc_cellphone_sendMessage;";
-        _cancelMsg buttonSetAction "[] call life_fnc_cellphone_sendMessageCancel;";
+        _replyMsg buttonSetAction "[] call MPClient_fnc_cellphone_sendMessage;";
+        _cancelMsg buttonSetAction "[] call MPClient_fnc_cellphone_sendMessageCancel;";
     } else {
         _replyMsg ctrlSetText "Reply";
-        _replyMsg buttonSetAction "[] call life_fnc_cellphone_reply;";
+        _replyMsg buttonSetAction "[] call MPClient_fnc_cellphone_reply;";
     };
     _replyMsg ctrlShow true;
     {
@@ -93,7 +93,7 @@ life_fnc_cellphone_switchDialog = {
         _ctrl ctrlShow (_isMsg);
     } forEach _sendMessage;
 };
-life_fnc_cellphone_playerFilter = {
+MPClient_fnc_cellphone_playerFilter = {
     disableSerialization;
     private _display = findDisplay 8500;
     if(isNull _display) exitWith {};
@@ -124,7 +124,7 @@ life_fnc_cellphone_playerFilter = {
 
     life_cellphone_filterWorking = false;
 };
-life_fnc_cellphone_messageShow = {
+MPClient_fnc_cellphone_messageShow = {
     disableSerialization;
 	_display = findDisplay 8500;
 	_messageList = _display displayCtrl 1501;
@@ -159,7 +159,7 @@ life_fnc_cellphone_messageShow = {
 		_messageList lnbSetValue[[((lnbSize _messageList) select 0)-1,0],_i];
 	};
 };
-life_fnc_cellphone_startMessage = {
+MPClient_fnc_cellphone_startMessage = {
     disableSerialization;
 	_display = findDisplay 8500;
 	if(isNull _display) exitWith {};
@@ -169,7 +169,7 @@ life_fnc_cellphone_startMessage = {
 	_receiver = _playerList lbData (lbCurSel _playerList);
 	_receiver = call compile _receiver;
 	_writingTo = _display displayCtrl 4000;
-	[true] call life_fnc_cellphone_switchDialog;  
+	[true] call MPClient_fnc_cellphone_switchDialog;  
 	_receiverName = switch (_receiver select 1) do
 	{
         case "XXX-REQ-PLAYER": {_receiver select 0};
@@ -181,7 +181,7 @@ life_fnc_cellphone_startMessage = {
 	life_cellphone_receiver = _receiver;
 	_writingTo ctrlSetText format["Writing to %1", _receiverName];
 };
-life_fnc_cellphone_sendMessage = {
+MPClient_fnc_cellphone_sendMessage = {
     disableSerialization;
 	if(count life_cellphone_receiver < 1) exitWith {};
 	private _display = findDisplay 8500;
@@ -202,13 +202,13 @@ life_fnc_cellphone_sendMessage = {
     [life_cellphone_receiver#1,_text,_sendLoc,_BEGuid,life_cellphone_receiver#2] remoteExecCall ["MPServer_fnc_clientMessageRequest",2];
 	
     closeDialog 0;
-	[] spawn life_fnc_cellphone_show;
+	[] spawn MPClient_fnc_cellphone_show;
 	hint "Message Sent!";
 };
-life_fnc_cellphone_sendMessageCancel = {
+MPClient_fnc_cellphone_sendMessageCancel = {
     disableSerialization;
 };
-life_fnc_cellphone_reply = {
+MPClient_fnc_cellphone_reply = {
     disableSerialization;
     private _display = findDisplay 8500;
     if(isNull _display) exitWith {};
@@ -218,13 +218,13 @@ life_fnc_cellphone_reply = {
     private _messageIndex = _messageList lnbValue[(lbCurSel _messageList),0];
     private _receiver = life_cellphone_messages select _messageIndex;
     private _writingTo = _display displayCtrl 4000;
-    [true] call life_fnc_cellphone_switchDialog; //Change our dialog over.
+    [true] call MPClient_fnc_cellphone_switchDialog; //Change our dialog over.
 
     //MSG TYPES  0: MSG 1: POLREQ 2: NHSREQ 3: ARAC 4: TAXI
     life_cellphone_receiver = [_receiver#0, "XXX-REQ-PLAYER", _receiver#1, ""];
     _writingTo ctrlSetText format["Writing to %1", _receiver#0];
 };
-life_fnc_cellphone_messageSelect = {
+MPClient_fnc_cellphone_messageSelect = {
     disableSerialization;
 	private _display = findDisplay 8500;
 	if(isNull _display) exitWith {};
@@ -268,9 +268,9 @@ life_fnc_cellphone_messageSelect = {
 	];
 
 	(life_cellphone_messages select _messageIndex) set [5, true];
-	[] call life_fnc_cellphone_messageShow;
+	[] call MPClient_fnc_cellphone_messageShow;
 };
-life_fnc_cellphone_messageKeyUp = {
+MPClient_fnc_cellphone_messageKeyUp = {
     disableSerialization;
     private _display = findDisplay 8500;
     if(isNull _display) exitWith {};
@@ -285,7 +285,7 @@ life_fnc_cellphone_messageKeyUp = {
 
     _charText ctrlSetText format["%1/1500",count (ctrlText _ctrl)];
 };
-life_fnc_cellphone_messageReceived = {
+MPClient_fnc_cellphone_messageReceived = {
     disableSerialization;
     params['_senderName','_senderBEGuid','_cellphoneMode','_receiverBEGuid','_message','_pos'];
 

@@ -38,7 +38,7 @@ if (!alive (_search select 0) || (_search select 0) distance air_sp > 15) exitWi
 
 life_var_cash = life_var_cash - _serviceCost;
 if (!local (_search select 0)) then {
-    [(_search select 0),1] remoteExecCall ["life_fnc_setFuel",(_search select 0)];
+    [(_search select 0),1] remoteExecCall ["MPClient_fnc_setFuel",(_search select 0)];
 } else {
     (_search select 0) setFuel 1;
 };

@@ -30,12 +30,12 @@ if ((uiNamespace getVariable ["Weapon_Magazine",0]) isEqualTo 1 || {(uiNamespace
     
         _config = M_CONFIG(getArray,"WeaponShops",_shop,"mags");
         {
-            _bool = [_x] call life_fnc_levelCheck;
+            _bool = [_x] call MPClient_fnc_levelCheck;
             if (_bool) then {
                 _x params ["_var"];
                 _count = {_x == _var} count (uiNamespace getVariable ["Magazine_Array",[]]);
                 if (_count > 0) then {
-                    _itemInfo = [(_x select 0)] call life_fnc_fetchCfgDetails;
+                    _itemInfo = [(_x select 0)] call MPClient_fnc_fetchCfgDetails;
                     _itemList lbAdd format ["%1",if (!((_x select 1) isEqualTo "")) then {(_x select 1)} else {(_itemInfo select 1)}];
                     _itemList lbSetData[(lbSize _itemList)-1,(_itemInfo select 0)];
                     _itemList lbSetPicture[(lbSize _itemList)-1,(_itemInfo select 2)];
@@ -54,12 +54,12 @@ if ((uiNamespace getVariable ["Weapon_Magazine",0]) isEqualTo 1 || {(uiNamespace
     
         _config = M_CONFIG(getArray,"WeaponShops",_shop,"accs");
         {
-            _bool = [_x] call life_fnc_levelCheck;
+            _bool = [_x] call MPClient_fnc_levelCheck;
             if (_bool) then {
                 _x params ["_var"];
                 _count = {_x == _var} count (uiNamespace getVariable ["Accessories_Array",[]]);
                 if (_count > 0) then {
-                    _itemInfo = [(_x select 0)] call life_fnc_fetchCfgDetails;
+                    _itemInfo = [(_x select 0)] call MPClient_fnc_fetchCfgDetails;
                     _itemList lbAdd format ["%1",if (!((_x select 1) isEqualTo "")) then {(_x select 1)} else {(_itemInfo select 1)}];
                     _itemList lbSetData[(lbSize _itemList)-1,(_itemInfo select 0)];
                     _itemList lbSetPicture[(lbSize _itemList)-1,(_itemInfo select 2)];
@@ -85,9 +85,9 @@ if ((uiNamespace getVariable ["Weapon_Magazine",0]) isEqualTo 1 || {(uiNamespace
         case 0: {
             _config = M_CONFIG(getArray,"WeaponShops",_shop,"items");
             {
-                _bool = [_x] call life_fnc_levelCheck;
+                _bool = [_x] call MPClient_fnc_levelCheck;
                 if (_bool) then {
-                    _itemInfo = [_x select 0] call life_fnc_fetchCfgDetails;
+                    _itemInfo = [_x select 0] call MPClient_fnc_fetchCfgDetails;
                     _itemList lbAdd format ["%1",if (!((_x select 1) isEqualTo "")) then {_x select 1} else {_itemInfo select 1}];
                     _itemList lbSetData[(lbSize _itemList)-1,_itemInfo select 0];
                     _itemList lbSetPicture[(lbSize _itemList)-1,_itemInfo select 2];
@@ -138,10 +138,10 @@ if ((uiNamespace getVariable ["Weapon_Magazine",0]) isEqualTo 1 || {(uiNamespace
                         _z = _y select _iS;
                             if (!((_z select 3) isEqualTo -1)) then {
 
-                                _bool = [_z] call life_fnc_levelCheck;
+                                _bool = [_z] call MPClient_fnc_levelCheck;
                                 if (_bool) then {
 
-                                    _itemInfo = [_x] call life_fnc_fetchCfgDetails;
+                                    _itemInfo = [_x] call MPClient_fnc_fetchCfgDetails;
                                     _listedItems pushBack _x;
 
                                     _itemCount = {_x == (_itemInfo select 0)} count _config;

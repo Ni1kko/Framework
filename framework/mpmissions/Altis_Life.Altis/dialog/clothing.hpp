@@ -39,7 +39,7 @@ class Life_Clothing {
             idc = 3101;
             text = "";
             sizeEx = 0.035;
-            onLBSelChanged = "[_this] call life_fnc_changeClothes;";
+            onLBSelChanged = "[_this] call MPClient_fnc_changeClothes;";
             x = 0.0842977 * safezoneW + safezoneX;
             y = 0.240498 * safezoneH + safezoneY;
             w = 0.3;
@@ -69,7 +69,7 @@ class Life_Clothing {
         class FilterList: Life_RscCombo {
             idc = 3105;
             colorBackground[] = {0,0,0,0.7};
-            onLBSelChanged  = "_this call life_fnc_clothingFilter";
+            onLBSelChanged  = "_this call MPClient_fnc_clothingFilter";
             x = 0.0822359 * safezoneW + safezoneX;
             y = 0.468 * safezoneH + safezoneY;
             w = 0.318;
@@ -79,7 +79,7 @@ class Life_Clothing {
         class CloseButtonKey: Life_RscButtonMenu {
             idc = -1;
             text = "$STR_Global_Close";
-            onButtonClick = "closeDialog 0; [] call life_fnc_playerSkins;";
+            onButtonClick = "closeDialog 0; [] call MPClient_fnc_playerSkins;";
             x = 0.157 * safezoneW + safezoneX;
             y = 0.489992 * safezoneH + safezoneY;
             w = (6.25 / 40);
@@ -89,7 +89,7 @@ class Life_Clothing {
         class BuyButtonKey: Life_RscButtonMenu {
             idc = -1;
             text = "$STR_Global_Buy";
-            onButtonClick = "[] call life_fnc_buyClothes;";
+            onButtonClick = "[] call MPClient_fnc_buyClothes;";
             x = 0.0822359 * safezoneW + safezoneX;
             y = 0.489992 * safezoneH + safezoneY;
             w = (6.25 / 40);
@@ -101,7 +101,7 @@ class Life_Clothing {
             colorActive[] = {1, 1, 1, 0.65};
             idc = 3107;
             text = "";
-            onSliderPosChanged = "[4,_this select 1] call life_fnc_s_onSliderChange;";
+            onSliderPosChanged = "[4,_this select 1] call MPClient_fnc_s_onSliderChange;";
             tooltip = "";
             x = 0.25 * safezoneW + safezoneX;
             y = 0.93 * safezoneH + safezoneY;

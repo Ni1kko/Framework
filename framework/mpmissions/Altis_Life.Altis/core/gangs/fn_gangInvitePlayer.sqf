@@ -26,7 +26,7 @@ _action = [
 ] call BIS_fnc_guiMessage;
 
 if (_action) then {
-    [profileName,group player] remoteExec ["life_fnc_gangInvite",_unit];
+    [profileName,group player] remoteExec ["MPClient_fnc_gangInvite",_unit];
     _members = group player getVariable "gang_members";
     _members pushBack getPlayerUID _unit;
     group player setVariable ["gang_members",_members,true];

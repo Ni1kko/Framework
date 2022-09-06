@@ -41,4 +41,4 @@ _owners deleteAt _index;
 _vehicle setVariable ["vehicle_info_owners", _owners, true];
 
 // Reload
-call life_fnc_keyMenu
+call MPClient_fnc_keyMenu

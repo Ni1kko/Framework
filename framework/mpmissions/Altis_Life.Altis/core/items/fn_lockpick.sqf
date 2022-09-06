@@ -38,7 +38,7 @@ _cP = 0.01;
 
 for "_i" from 0 to 1 step 0 do {
     if (animationState player != "AinvPknlMstpSnonWnonDnon_medic_1") then {
-        [player,"AinvPknlMstpSnonWnonDnon_medic_1",true] remoteExecCall ["life_fnc_animSync",RCLIENT];
+        [player,"AinvPknlMstpSnonWnonDnon_medic_1",true] remoteExecCall ["MPClient_fnc_animSync",RCLIENT];
         player switchMove "AinvPknlMstpSnonWnonDnon_medic_1";
         player playMoveNow "AinvPknlMstpSnonWnonDnon_medic_1";
     };
@@ -71,7 +71,7 @@ if (!alive player || life_istazed || life_isknocked) exitWith {life_var_isBusy =
 if (player getVariable ["restrained",false]) exitWith {life_var_isBusy = false;};
 if (!isNil "_badDistance") exitWith {titleText[localize "STR_ISTR_Lock_TooFar","PLAIN"]; life_var_isBusy = false;};
 if (life_interrupted) exitWith {life_interrupted = false; titleText[localize "STR_NOTF_ActionCancel","PLAIN"]; life_var_isBusy = false;};
-if (!([false,"lockpick",1] call life_fnc_handleInv)) exitWith {life_var_isBusy = false;};
+if (!([false,"lockpick",1] call MPClient_fnc_handleInv)) exitWith {life_var_isBusy = false;};
 
 life_var_isBusy = false;
 
@@ -99,7 +99,7 @@ if (!_isVehicle) then {
             [getPlayerUID player,profileName,"215"] remoteExecCall ["MPServer_fnc_wantedAdd",RSERV];
         };
 
-        [0,"STR_ISTR_Lock_FailedNOTF",true,[profileName]] remoteExecCall ["life_fnc_broadcast",west];
+        [0,"STR_ISTR_Lock_FailedNOTF",true,[profileName]] remoteExecCall ["MPClient_fnc_broadcast",west];
         titleText[localize "STR_ISTR_Lock_Failed","PLAIN"];
     };
 };

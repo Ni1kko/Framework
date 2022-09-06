@@ -42,23 +42,23 @@ switch (_mode) do {
         if (_deposit) then {
             _funds = _funds + _value;
             _group setVariable ["gang_bank",_funds,true];
-            [1,"STR_ATM_DepositSuccessG",true,[_value]] remoteExecCall ["life_fnc_broadcast",remoteExecutedOwner];
+            [1,"STR_ATM_DepositSuccessG",true,[_value]] remoteExecCall ["MPClient_fnc_broadcast",remoteExecutedOwner];
             _cash = _cash - _value;
         } else {
             if (_value > _funds) exitWith {
-                [1,"STR_ATM_NotEnoughFundsG",true] remoteExecCall ["life_fnc_broadcast",remoteExecutedOwner];
+                [1,"STR_ATM_NotEnoughFundsG",true] remoteExecCall ["MPClient_fnc_broadcast",remoteExecutedOwner];
                 breakOut "";
             };
             _funds = _funds - _value;
             _group setVariable ["gang_bank",_funds,true];
-            [_value] remoteExecCall ["life_fnc_gangBankResponse",remoteExecutedOwner];
+            [_value] remoteExecCall ["MPClient_fnc_gangBankResponse",remoteExecutedOwner];
             _cash = _cash + _value;
         };
         if (LIFE_SETTINGS(getNumber,"player_moneyLog") isEqualTo 1) then {
             if (LIFE_SETTINGS(getNumber,"battlEye_friendlyLogging") isEqualTo 1) then {
-                diag_log (format [localize "STR_DL_ML_withdrewGang_BEF",_value,[_funds] call life_fnc_numberText,[0] call life_fnc_numberText,[_cash] call life_fnc_numberText]);
+                diag_log (format [localize "STR_DL_ML_withdrewGang_BEF",_value,[_funds] call MPClient_fnc_numberText,[0] call MPClient_fnc_numberText,[_cash] call MPClient_fnc_numberText]);
             } else {
-                diag_log (format [localize "STR_DL_ML_withdrewGang",name _unit,(getPlayerUID _unit),_value,[_funds] call life_fnc_numberText,[0] call life_fnc_numberText,[_cash] call life_fnc_numberText]);
+                diag_log (format [localize "STR_DL_ML_withdrewGang",name _unit,(getPlayerUID _unit),_value,[_funds] call MPClient_fnc_numberText,[0] call MPClient_fnc_numberText,[_cash] call MPClient_fnc_numberText]);
             };
         };
         _query = format ["UPDATE gangs SET bank='%1' WHERE id='%2'",([_funds] call MPServer_fnc_numberSafe),_groupID];

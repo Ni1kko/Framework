@@ -23,7 +23,7 @@ if (isNull _spikeStrip) exitWith {life_spikestrip = objNull;};
 _spikeStrip setPos [(getPos _spikeStrip select 0),(getPos _spikeStrip select 1),0];
 _spikeStrip setDamage 1;
 
-life_action_spikeStripPickup = player addAction[localize "STR_ISTR_Spike_Pack",life_fnc_packupSpikes,"",0,false,false,"",
+life_action_spikeStripPickup = player addAction[localize "STR_ISTR_Spike_Pack",MPClient_fnc_packupSpikes,"",0,false,false,"",
 ' _spikes = nearestObjects[getPos player,["Land_Razorwire_F"],8] select 0; !isNil "_spikes" && !isNil {(_spikes getVariable "item")}'];
 
 if (count extdb_var_database_headless_clients > 0) then {

@@ -46,7 +46,7 @@ class Chop_Shop {
     class controls {
         class vehicleList: Life_RscListBox {
             idc = 39402;
-            onLBSelChanged = "_this call life_fnc_chopShopSelection";
+            onLBSelChanged = "_this call MPClient_fnc_chopShopSelection";
             sizeEx = 0.04;
             x = 0.11;
             y = 0.25;

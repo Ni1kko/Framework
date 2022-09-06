@@ -25,9 +25,9 @@ if !(count _queryResult isEqualTo 0) then {
     _amount = _queryResult param [3];
     if !(_amount isEqualTo 0) then {
         if (_half) then {
-            [((_amount) / 2),_amount] remoteExecCall ["life_fnc_bountyReceive",(owner _cop)];
+            [((_amount) / 2),_amount] remoteExecCall ["MPClient_fnc_bountyReceive",(owner _cop)];
         } else {
-            [_amount,_amount] remoteExecCall ["life_fnc_bountyReceive",(owner _cop)];
+            [_amount,_amount] remoteExecCall ["MPClient_fnc_bountyReceive",(owner _cop)];
         };
     };
 };

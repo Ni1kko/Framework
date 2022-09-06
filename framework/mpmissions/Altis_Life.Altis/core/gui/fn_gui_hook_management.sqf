@@ -43,7 +43,7 @@ if(_show)then{
 			};
 		};
         life_var_hud_eventhandle = addMissionEventHandler ["Draw3D", {//--- Render: Hooks
-			{0 call (missionNamespace getVariable [format["life_fnc_gui_render%1",_x] ,{}])}forEach (switch (true) do {
+			{0 call (missionNamespace getVariable [format["MPClient_fnc_gui_render%1",_x] ,{}])}forEach (switch (true) do {
 				case life_var_hud_layer1shown:{life_var_hud_layer1_hooks};
 				default {["Notifications"]};
 			});
@@ -77,12 +77,12 @@ life_var_hud_threads = compileFinal str(systemTimeUTC);
         //Hide
         waitUntil {true in (life_var_hud_layer_autohide_displays apply {if(typeName _x isEqualTo "STRING")then{!isNull(uiNamespace getVariable [_x,displayNull])}else{if(_x isEqualTo 12)then{visibleMap}else{!isNull(findDisplay _x)}}})};
 		if (life_var_hud_activelayer in life_var_hud_layer_autohide_hooks)then{
-			[false] call life_fnc_gui_hook_management;
+			[false] call MPClient_fnc_gui_hook_management;
 		};
         //Show
         waitUntil {!(true in (life_var_hud_layer_autohide_displays apply {if(typeName _x isEqualTo "STRING")then{!isNull(uiNamespace getVariable [_x,displayNull])}else{if(_x isEqualTo 12)then{visibleMap}else{!isNull(findDisplay _x)}}}))};
 		if (life_var_hud_activelayer in life_var_hud_layer_autohide_hooks)then{
-			[true] call life_fnc_gui_hook_management;
+			[true] call MPClient_fnc_gui_hook_management;
 		}; 
     };
 };

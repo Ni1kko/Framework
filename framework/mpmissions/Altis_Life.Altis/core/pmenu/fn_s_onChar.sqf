@@ -33,6 +33,6 @@ if (_onKeyUp) then {
     };
 
     missionNamespace setVariable [_varName,_value];
-    [] call life_fnc_settingsMenu;
-    [] call life_fnc_updateViewDistance;
+    [] call MPClient_fnc_settingsMenu;
+    [] call MPClient_fnc_updateViewDistance;
 };

@@ -40,15 +40,15 @@ call {
     if (parseNumber _value <= 0) exitWith {
         hint localize "STR_NOTF_enterAmountGive";
     };
-    if !([false,_item, parseNumber _value] call life_fnc_handleInv) exitWith {
+    if !([false,_item, parseNumber _value] call MPClient_fnc_handleInv) exitWith {
         hint localize "STR_NOTF_couldNotGive";
     };
 
-    [_unit, _value, _item, player] remoteExecCall ["life_fnc_receiveItem", _unit];
+    [_unit, _value, _item, player] remoteExecCall ["MPClient_fnc_receiveItem", _unit];
     private _type = M_CONFIG(getText,"VirtualItems",_item,"displayName");
     hint format [localize "STR_NOTF_youGaveItem", _unit getVariable ["realname", name _unit], _value, TEXT_LOCALIZE(_type)];
 
-    [] call life_fnc_p_updateMenu;
+    [] call MPClient_fnc_p_updateMenu;
 };
 
 ctrlShow[2002,true];

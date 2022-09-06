@@ -43,7 +43,7 @@ class RscDisplayCellPhone
 			y = 0.785581 * safezoneH + safezoneY;
 			w = 0.119454 * safezoneW;
 			h = 0.0279982 * safezoneH;
-			onKeyUp = "[] spawn life_fnc_cellphone_playerFilter;";
+			onKeyUp = "[] spawn MPClient_fnc_cellphone_playerFilter;";
 		};
 		class NewMessage : Life_RscButtonMenu
 		{
@@ -53,7 +53,7 @@ class RscDisplayCellPhone
 			y = 0.819181 * safezoneH + safezoneY;
 			w = 0.119461 * safezoneW;
 			h = 0.0279982 * safezoneH;
-			onButtonClick = "[] call life_fnc_cellphone_startMessage;";
+			onButtonClick = "[] call MPClient_fnc_cellphone_startMessage;";
 		};
 		class MyMessagesTitle : Life_RscText
 		{
@@ -94,7 +94,7 @@ class RscDisplayCellPhone
 			y = 0.290013 * safezoneH + safezoneY;
 			w = 0.432425 * safezoneW;
 			h = 0.114784 * safezoneH;
-			onLBSelChanged = "[] call life_fnc_cellphone_messageSelect;";
+			onLBSelChanged = "[] call MPClient_fnc_cellphone_messageSelect;";
 		};
 		class MessageViewerTitle : Life_RscText
 		{
@@ -166,7 +166,7 @@ class RscDisplayCellPhone
 			sizeEx = 0.030;
 			style = 16;
 			shadow = 0;
-			onKeyUp = "[] call life_fnc_cellphone_messageKeyUp;";
+			onKeyUp = "[] call MPClient_fnc_cellphone_messageKeyUp;";
 		};
 		class CurrentCharactersUsedTitle : Life_RscText
 		{
@@ -234,7 +234,7 @@ class RscDisplayCellPhone
 			y = 0.82198 * safezoneH + safezoneY;
 			w = 0.0788393 * safezoneW;
 			h = 0.0279982 * safezoneH;
-			onButtonClick = "closeDialog 0; [] spawn life_fnc_cellphone_show;";
+			onButtonClick = "closeDialog 0; [] spawn MPClient_fnc_cellphone_show;";
 		};
 	};
 };

@@ -19,7 +19,7 @@ _fuelCost = LIFE_SETTINGS(getNumber,"fuelCan_refuel");
 
 life_var_isBusy = true;
 _action = [
-    format [localize "STR_ISTR_Jerry_PopUp",[_fuelCost] call life_fnc_numberText],
+    format [localize "STR_ISTR_Jerry_PopUp",[_fuelCost] call MPClient_fnc_numberText],
     localize "STR_ISTR_Jerry_StationPump",
     localize "STR_Global_Yes",
     localize "STR_Global_No"
@@ -41,7 +41,7 @@ if (_action) then {
 
     for "_i" from 0 to 1 step 0 do {
         if (animationState player != "AinvPknlMstpSnonWnonDnon_medic_1") then {
-            [player,"AinvPknlMstpSnonWnonDnon_medic_1",true] remoteExecCall ["life_fnc_animSync",RCLIENT];
+            [player,"AinvPknlMstpSnonWnonDnon_medic_1",true] remoteExecCall ["MPClient_fnc_animSync",RCLIENT];
             player switchMove "AinvPknlMstpSnonWnonDnon_medic_1";
             player playMoveNow "AinvPknlMstpSnonWnonDnon_medic_1";
         };
@@ -68,10 +68,10 @@ if (_action) then {
     if (player getVariable ["restrained",false]) exitWith {life_var_isBusy = false;};
     if (!isNil "_badDistance") exitWith {titleText[localize "STR_ISTR_Lock_TooFar","PLAIN"]; life_var_isBusy = false;};
     if (life_interrupted) exitWith {life_interrupted = false; titleText[localize "STR_NOTF_ActionCancel","PLAIN"]; life_var_isBusy = false;};
-    if (!([false,"fuelEmpty",1] call life_fnc_handleInv)) exitWith {life_var_isBusy = false;};
+    if (!([false,"fuelEmpty",1] call MPClient_fnc_handleInv)) exitWith {life_var_isBusy = false;};
     life_var_isBusy = false;
     life_var_cash = life_var_cash - _fuelCost;
-    [true,"fuelFull",1] call life_fnc_handleInv;
+    [true,"fuelFull",1] call MPClient_fnc_handleInv;
     hint localize "STR_ISTR_Jerry_Refueled";
 } else {
     hint localize "STR_NOTF_ActionCancel";

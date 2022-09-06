@@ -34,9 +34,9 @@ _illegalValue = 0;
 } forEach (_containerInfo select 0);
 _value = _illegalValue;
 if (_value > 0) then {
-    [0,"STR_NOTF_ContainerContraband",true,[[_value] call life_fnc_numberText]] remoteExecCall ["life_fnc_broadcast",RCLIENT];
+    [0,"STR_NOTF_ContainerContraband",true,[[_value] call MPClient_fnc_numberText]] remoteExecCall ["MPClient_fnc_broadcast",RCLIENT];
     life_var_bank = life_var_bank + _value;
-    [1] call SOCK_fnc_updatePartial;
+    [1] call MPClient_fnc_updatePartial;
     _container setVariable ["Trunk",[[],0],true];
     [_container] remoteExecCall ["MPServer_fnc_updateHouseTrunk",2];
 } else {

@@ -57,7 +57,7 @@ class life_spawn_selection {
             y = 0.324 * safezoneH + safezoneY;
             w = 0.12375 * safezoneW;
             h = 0.374 * safezoneH;
-            onLBSelChanged = "_this call life_fnc_spawnPointSelected;";
+            onLBSelChanged = "_this call MPClient_fnc_spawnPointSelected;";
         };
 
         class spawnButton: Life_RscButtonMenu {
@@ -71,7 +71,7 @@ class life_spawn_selection {
                 1
             };
             text = "Spawn";
-            onButtonClick = "[] call life_fnc_spawnConfirm";
+            onButtonClick = "[] call MPClient_fnc_spawnConfirm";
             x = 0.247344 * safezoneW + safezoneX;
             y = 0.709 * safezoneH + safezoneY;
             w = 0.12375 * safezoneW;

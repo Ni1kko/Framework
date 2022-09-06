@@ -32,7 +32,7 @@ private _cP = 0.01;
 private _badDistance = false;
 for "_i" from 0 to 1 step 0 do {
     if !(animationState player isEqualTo "ainvpknlmstpsnonwnondnon_medic_1") then {
-        [player, "AinvPknlMstpSnonWnonDnon_medic_1"] remoteExecCall ["life_fnc_animSync", RCLIENT];
+        [player, "AinvPknlMstpSnonWnonDnon_medic_1"] remoteExecCall ["MPClient_fnc_animSync", RCLIENT];
         player playMoveNow "AinvPknlMstpSnonWnonDnon_medic_1";
     };
 
@@ -63,12 +63,12 @@ if (life_interrupted) exitWith {life_interrupted = false; titleText[localize "ST
 
 life_var_isBusy = false;
 _target setVariable ["Revive", true, true];
-[profileName] remoteExecCall ["life_fnc_revived", _target];
+[profileName] remoteExecCall ["MPClient_fnc_revived", _target];
 
 if (playerSide isEqualTo independent) then {
-    titleText[format [localize "STR_Medic_RevivePayReceive", _targetName,[_reviveCost] call life_fnc_numberText], "PLAIN"];
+    titleText[format [localize "STR_Medic_RevivePayReceive", _targetName,[_reviveCost] call MPClient_fnc_numberText], "PLAIN"];
     life_var_bank = life_var_bank + _reviveCost;
-    [1] call SOCK_fnc_updatePartial;
+    [1] call MPClient_fnc_updatePartial;
 };
 
 sleep .6;

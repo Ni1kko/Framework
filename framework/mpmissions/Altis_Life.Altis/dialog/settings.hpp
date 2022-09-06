@@ -93,7 +93,7 @@ class SettingsMenu {
         class VD_onfoot_slider: life_RscXSliderH {
             idc = 2901;
             text = "";
-            onSliderPosChanged = "[0,_this select 1] call life_fnc_s_onSliderChange;";
+            onSliderPosChanged = "[0,_this select 1] call MPClient_fnc_s_onSliderChange;";
             tooltip = "$STR_SM_ToolTip1";
             x = 0.42;
             y = 0.30 - (1 / 25);
@@ -104,8 +104,8 @@ class SettingsMenu {
         class VD_onfoot_value: Life_RscEdit {
             idc = 2902;
             text = "";
-            onChar = "[_this select 0, _this select 1,'ground',false] call life_fnc_s_onChar;";
-            onKeyUp = "[_this select 0, _this select 1,'ground',true] call life_fnc_s_onChar;";
+            onChar = "[_this select 0, _this select 1,'ground',false] call MPClient_fnc_s_onChar;";
+            onKeyUp = "[_this select 0, _this select 1,'ground',true] call MPClient_fnc_s_onChar;";
             x = .70;
             y = .258;
             w = .08;
@@ -115,7 +115,7 @@ class SettingsMenu {
         class VD_car_slider: life_RscXSliderH {
             idc = 2911;
             text = "";
-            onSliderPosChanged = "[1,_this select 1] call life_fnc_s_onSliderChange;";
+            onSliderPosChanged = "[1,_this select 1] call MPClient_fnc_s_onSliderChange;";
             tooltip = "$STR_SM_ToolTip2";
             x = 0.42;
             y = 0.35 - (1 / 25);
@@ -126,8 +126,8 @@ class SettingsMenu {
         class VD_car_value: Life_RscEdit {
             idc = 2912;
             text = "";
-            onChar = "[_this select 0, _this select 1,'vehicle',false] call life_fnc_s_onChar;";
-            onKeyUp = "[_this select 0, _this select 1,'vehicle',true] call life_fnc_s_onChar;";
+            onChar = "[_this select 0, _this select 1,'vehicle',false] call MPClient_fnc_s_onChar;";
+            onKeyUp = "[_this select 0, _this select 1,'vehicle',true] call MPClient_fnc_s_onChar;";
             x = .70;
             y = .31;
             w = .08;
@@ -137,7 +137,7 @@ class SettingsMenu {
         class VD_air_slider: life_RscXSliderH {
             idc = 2921;
             text = "";
-            onSliderPosChanged = "[2,_this select 1] call life_fnc_s_onSliderChange;";
+            onSliderPosChanged = "[2,_this select 1] call MPClient_fnc_s_onSliderChange;";
             tooltip = "$STR_SM_ToolTip3";
             x = 0.42;
             y = 0.40 - (1 / 25);
@@ -148,8 +148,8 @@ class SettingsMenu {
         class VD_air_value: Life_RscEdit {
             idc = 2922;
             text = "";
-            onChar = "[_this select 0, _this select 1,'air',false] call life_fnc_s_onChar;";
-            onKeyUp = "[_this select 0, _this select 1,'air',true] call life_fnc_s_onChar;";
+            onChar = "[_this select 0, _this select 1,'air',false] call MPClient_fnc_s_onChar;";
+            onKeyUp = "[_this select 0, _this select 1,'air',true] call MPClient_fnc_s_onChar;";
             x = 0.70;
             y = 0.36;
             w = .08;
@@ -160,7 +160,7 @@ class SettingsMenu {
             tooltip = "$STR_GUI_PlayTags";
             idc = 2970;
             sizeEx = 0.04;
-            onCheckedChanged = "['tags',_this select 1] call life_fnc_s_onCheckedChange;";
+            onCheckedChanged = "['tags',_this select 1] call MPClient_fnc_s_onCheckedChange;";
             x = 0.65;
             y = 0.43;
 
@@ -169,21 +169,21 @@ class SettingsMenu {
         class SideChatONOFF: PlayerTagsONOFF {
             idc = 2971;
             tooltip = "$STR_GUI_SideSwitch";
-            onCheckedChanged = "['sidechat',_this select 1] call life_fnc_s_onCheckedChange;";
+            onCheckedChanged = "['sidechat',_this select 1] call MPClient_fnc_s_onCheckedChange;";
             y = 0.48;
         };
 
         class RevealONOFF : PlayerTagsONOFF {
             idc = 2972;
             tooltip = "$STR_GUI_PlayerReveal";
-            onCheckedChanged = "['objects',_this select 1] call life_fnc_s_onCheckedChange;";
+            onCheckedChanged = "['objects',_this select 1] call MPClient_fnc_s_onCheckedChange;";
             y = 0.53;
         };
 
         class BroadcastONOFF : PlayerTagsONOFF {
             idc = 2973;
             tooltip = "$STR_GUI_BroadcastSwitch";
-            onCheckedChanged = "['broadcast',_this select 1] call life_fnc_s_onCheckedChange;";
+            onCheckedChanged = "['broadcast',_this select 1] call MPClient_fnc_s_onCheckedChange;";
             y = 0.58;
         };
 

@@ -34,4 +34,4 @@ if (playerSide isNotEqualTo civilian || !license_civ_bounty) then {
     ctrlShow[2024,false];
 };
 
-[] call life_fnc_p_updateMenu;
+[] call MPClient_fnc_p_updateMenu;

@@ -3,7 +3,7 @@ class Life_key_management {
     name= "life_key_chain";
     movingEnable = 0;
     enableSimulation = 1;
-    onLoad = "[] spawn life_fnc_keyMenu;";
+    onLoad = "[] spawn MPClient_fnc_keyMenu;";
 
     class controlsBackground {
         class Life_RscTitleBackground: Life_RscText {
@@ -67,7 +67,7 @@ class Life_key_management {
         class DropKey: Life_RscButtonMenu {
             idc = -1;
             text = "$STR_Keys_DropKey";
-            onButtonClick = "[] call life_fnc_keyDrop";
+            onButtonClick = "[] call MPClient_fnc_keyDrop";
             x = 0.1 + (6.25 / 40) + (1 / 250 / (safezoneW / safezoneH));
             y = 0.8 - (1 / 25);
             w = (6.25 / 40);
@@ -78,7 +78,7 @@ class Life_key_management {
             idc = 2703;
             text = "$STR_Keys_GiveKey";
             colorBackground[] = {"(profilenamespace getvariable ['GUI_BCG_RGB_R',0.3843])", "(profilenamespace getvariable ['GUI_BCG_RGB_G',0.7019])", "(profilenamespace getvariable ['GUI_BCG_RGB_B',0.8862])", 0.5};
-            onButtonClick = "[] call life_fnc_keyGive";
+            onButtonClick = "[] call MPClient_fnc_keyGive";
             x = 0.32;
             y = 0.69;
             w = (6.25 / 40);

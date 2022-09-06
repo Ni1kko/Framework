@@ -19,7 +19,7 @@ if !(_shopSide isEqualTo "") then {
 
 if (_exit) exitWith {};
 
-_exit = [_conditions] call life_fnc_levelCheck;
+_exit = [_conditions] call MPClient_fnc_levelCheck;
 if !(_exit) exitWith {hint localize "STR_Shop_Veh_NotAllowed";};
 
 uiNamespace setVariable ["Weapon_Shop",(_this select 3)];

@@ -32,7 +32,7 @@ _unit setVariable ["steam64id",(getPlayerUID player),true]; //Set the UID.
 
 life_is_alive = false;
 
-[_unit] call life_fnc_dropItems;
+[_unit] call MPClient_fnc_dropItems;
 
 life_var_isBusy = false;
 life_var_hunger = 100;
@@ -56,7 +56,7 @@ if (!isNull _killer && {!(_killer isEqualTo _unit)} && {!(side _killer isEqualTo
 
         //Get rid of this if you don't want automatic vehicle license removal.
         if (!local _killer) then {
-            [2] remoteExecCall ["life_fnc_removeLicenses",_killer];
+            [2] remoteExecCall ["MPClient_fnc_removeLicenses",_killer];
         };
     } else {
         if (count extdb_var_database_headless_clients > 0) then {
@@ -66,12 +66,12 @@ if (!isNull _killer && {!(_killer isEqualTo _unit)} && {!(side _killer isEqualTo
         };
 
         if (!local _killer) then {
-            [3] remoteExecCall ["life_fnc_removeLicenses",_killer];
+            [3] remoteExecCall ["MPClient_fnc_removeLicenses",_killer];
         };
     };
 };
 
-life_save_gear = [player] call life_fnc_fetchDeadGear;
+life_save_gear = [player] call MPClient_fnc_fetchDeadGear;
 
 if (LIFE_SETTINGS(getNumber,"drop_weapons_onDeath") isEqualTo 0) then {
     _unit removeWeapon (primaryWeapon _unit);
@@ -84,7 +84,7 @@ if (side _killer isEqualTo west && !(playerSide isEqualTo west)) then {
     life_copRecieve = _killer;
     //Did I rob the federal reserve?
     if (!life_var_ATMEnabled && {life_var_cash > 0}) then {
-        [format [localize "STR_Cop_RobberDead",[life_var_cash] call life_fnc_numberText]] remoteExecCall ["life_fnc_broadcast",RCLIENT];
+        [format [localize "STR_Cop_RobberDead",[life_var_cash] call MPClient_fnc_numberText]] remoteExecCall ["MPClient_fnc_broadcast",RCLIENT];
         life_var_cash = 0;
     };
 };
@@ -96,13 +96,13 @@ if (!isNull _killer && {!(_killer isEqualTo _unit)}) then {
 
 [player,life_settings_enableSidechannel,playerSide] remoteExecCall ["MPServer_fnc_managesc",RSERV];
 
-[0] call SOCK_fnc_updatePartial;
-[3] call SOCK_fnc_updatePartial;
+[0] call MPClient_fnc_updatePartial;
+[3] call MPClient_fnc_updatePartial;
 if (playerSide isEqualTo civilian) then {
-    [4] call SOCK_fnc_updatePartial;
+    [4] call MPClient_fnc_updatePartial;
 };
 
 //remove death screen
 if(isNull (findDisplay 38500))then{ 
-    [_unit,true,true] spawn life_fnc_deathScreen;
+    [_unit,true,true] spawn MPClient_fnc_deathScreen;
 };

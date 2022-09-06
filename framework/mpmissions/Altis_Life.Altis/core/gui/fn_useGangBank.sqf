@@ -24,7 +24,7 @@ if (!_deposit && _value > _gFund) exitWith {hint localize "STR_ATM_NotEnoughFund
 
 if (_deposit) then {
     life_var_cash = life_var_cash - _value;
-    [] call life_fnc_atmMenu;
+    [] call MPClient_fnc_atmMenu;
 };
 
 if (count extdb_var_database_headless_clients > 0) then {

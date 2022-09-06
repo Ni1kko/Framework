@@ -1,6 +1,6 @@
 /*
 
-	Function: 	life_fnc_deathScreen
+	Function: 	MPClient_fnc_deathScreen
 	Project: 	Misty Peaks RPG
 	Author:     Tonic, Merrick, Nikko, Affect & IceEagle132
 	Github:		https://github.com/AsYetUntitled/Framework
@@ -15,13 +15,13 @@ life_var_medicstatus = -1;
 life_var_medicstatusby = "";
 
 if(param [1,false])exitWith{ 
-	["all"] call life_fnc_removeBuff;
-	["RscDisplayDeathScreen"] call life_fnc_destroyRscLayer;
+	["all"] call MPClient_fnc_removeBuff;
+	["RscDisplayDeathScreen"] call MPClient_fnc_destroyRscLayer;
 	player setDamage 0;
 	if(param [2,true])then{
 		if(isNull (findDisplay 38500))then{
 			titleCut ["", "BLACK IN", 1];
-			[] call life_fnc_spawnMenu;
+			[] call MPClient_fnc_spawnMenu;
 			waitUntil{!isNull (findDisplay 38500)};
 			waitUntil{isNull (findDisplay 38500)};
 			player setVariable ["lifeState","HEALTHY",true];
@@ -34,7 +34,7 @@ if(param [1,false])exitWith{
 };
 
 //-- register our layer
-["RscDisplayDeathScreen","PLAIN"] call life_fnc_createRscLayer;
+["RscDisplayDeathScreen","PLAIN"] call MPClient_fnc_createRscLayer;
 
 
 //-- get our layers controls
@@ -45,7 +45,7 @@ private _txtBottomLeft = _display displayCtrl 66603;
 private _txtBottomRight = _display displayCtrl 66604;
 
 //-- register our input handler for the layer
-private _inputEH = (findDisplay 46) displayAddEventHandler ["KeyDown", "_this call life_fnc_deathScreenKeyHandler"];
+private _inputEH = (findDisplay 46) displayAddEventHandler ["KeyDown", "_this call MPClient_fnc_deathScreenKeyHandler"];
 uiNamespace setVariable ["Death_Screen_Inputhandler",_inputEH];
 
 //-- switch too third person
@@ -103,7 +103,7 @@ showChat true;
 (findDisplay 46) displayRemoveEventHandler ["KeyDown", _inputEH];
 
 //-- stop buff effects
-["all"] call life_fnc_removeBuff;
+["all"] call MPClient_fnc_removeBuff;
 
 //-- remove blood effect
 LIFE_PPE_DEATH_BLOOD ppEffectAdjust [1, 1, 0,[ 0, 0, 0, 0],[ 1, 1, 1, 1],[ 0, 0, 0, 0]];

@@ -18,19 +18,19 @@ if (!license_civ_home) exitWith {hint localize "STR_House_License"};
 if (count life_houses >= (LIFE_SETTINGS(getNumber,"house_limit"))) exitWith {hint format [localize "STR_House_Max_House",LIFE_SETTINGS(getNumber,"house_limit")]};
 closeDialog 0;
 
-_houseCfg = [(typeOf _house)] call life_fnc_houseConfig;
+_houseCfg = [(typeOf _house)] call MPClient_fnc_houseConfig;
 if (count _houseCfg isEqualTo 0) exitWith {};
 
 _action = [
     format [localize "STR_House_BuyMSG",
-    [(_houseCfg select 0)] call life_fnc_numberText,
+    [(_houseCfg select 0)] call MPClient_fnc_numberText,
     (_houseCfg select 1)],localize "STR_House_Purchase",localize "STR_Global_Buy",localize "STR_Global_Cancel"
 ] call BIS_fnc_guiMessage;
 
 if (_action) then {
     if (life_var_bank < (_houseCfg select 0)) exitWith {hint format [localize "STR_House_NotEnough"]};
     life_var_bank = life_var_bank - (_houseCfg select 0);
-    [1] call SOCK_fnc_updatePartial;
+    [1] call MPClient_fnc_updatePartial;
 
     if (count extdb_var_database_headless_clients > 0) then {
         [_uid,_house] remoteExec ["HC_fnc_addHouse",extdb_var_database_headless_client];
@@ -40,9 +40,9 @@ if (_action) then {
 
     if (LIFE_SETTINGS(getNumber,"player_advancedLog") isEqualTo 1) then {
         if (LIFE_SETTINGS(getNumber,"battlEye_friendlyLogging") isEqualTo 1) then {
-            advanced_log = format [localize "STR_DL_AL_boughtHouse_BEF",[(_houseCfg select 0)] call life_fnc_numberText,[life_var_bank] call life_fnc_numberText,[life_var_cash] call life_fnc_numberText];
+            advanced_log = format [localize "STR_DL_AL_boughtHouse_BEF",[(_houseCfg select 0)] call MPClient_fnc_numberText,[life_var_bank] call MPClient_fnc_numberText,[life_var_cash] call MPClient_fnc_numberText];
         } else {
-            advanced_log = format [localize "STR_DL_AL_boughtHouse",profileName,(getPlayerUID player),[(_houseCfg select 0)] call life_fnc_numberText,[life_var_bank] call life_fnc_numberText,[life_var_cash] call life_fnc_numberText];
+            advanced_log = format [localize "STR_DL_AL_boughtHouse",profileName,(getPlayerUID player),[(_houseCfg select 0)] call MPClient_fnc_numberText,[life_var_bank] call MPClient_fnc_numberText,[life_var_cash] call MPClient_fnc_numberText];
         };
         publicVariableServer "advanced_log";
     };

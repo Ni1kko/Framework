@@ -5,13 +5,13 @@
 */
 
 waitUntil {!(isNull (findDisplay 46))};
-[] call life_fnc_stripDownPlayer;
+[] call MPClient_fnc_stripDownPlayer;
 
 //--- Loadout
 if(count life_var_loadout > 0)then{
     player setUnitLoadout life_var_loadout;
 }else{
-    [] call life_fnc_startLoadout;
+    [] call MPClient_fnc_startLoadout;
 };
 
 //--- Carry Weight
@@ -19,8 +19,8 @@ life_maxWeight = if (backpack player isEqualTo "") then {LIFE_SETTINGS(getNumber
 
 //--- VirtualItems
 {
-    [true,(_x select 0),(_x select 1)] call life_fnc_handleInv;
+    [true,(_x select 0),(_x select 1)] call MPClient_fnc_handleInv;
 } forEach life_var_vitems;
 
 
-[] call life_fnc_playerSkins;
+[] call MPClient_fnc_playerSkins;

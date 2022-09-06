@@ -25,7 +25,7 @@ switch (_option) do {
         if (_state isEqualTo 1) then {
             life_settings_revealObjects = true;
             profileNamespace setVariable ["life_settings_revealObjects",true];
-            LIFE_ID_RevealObjects = addMissionEventHandler ["EachFrame",{_this call life_fnc_revealObjects}];
+            LIFE_ID_RevealObjects = addMissionEventHandler ["EachFrame",{_this call MPClient_fnc_revealObjects}];
         } else {
             life_settings_revealObjects = false;
             profileNamespace setVariable ["life_settings_revealObjects",false];

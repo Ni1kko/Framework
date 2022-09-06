@@ -49,7 +49,7 @@ class Life_ticket_give {
             idc = -1;
             text = "$STR_Ticket_GiveTicket";
             colorBackground[] = {"(profilenamespace getvariable ['GUI_BCG_RGB_R',0.3843])", "(profilenamespace getvariable ['GUI_BCG_RGB_G',0.7019])", "(profilenamespace getvariable ['GUI_BCG_RGB_B',0.8862])", 0.5};
-            onButtonClick = "[] call life_fnc_ticketGive";
+            onButtonClick = "[] call MPClient_fnc_ticketGive";
             x = 0.45;
             y = 0.35;
             w = (6.25 / 40);
@@ -99,7 +99,7 @@ class Life_ticket_pay {
             idc = -1;
             text = "$STR_Ticket_PayTicket";
             colorBackground[] = {"(profilenamespace getvariable ['GUI_BCG_RGB_R',0.3843])", "(profilenamespace getvariable ['GUI_BCG_RGB_G',0.7019])", "(profilenamespace getvariable ['GUI_BCG_RGB_B',0.8862])", 0.5};
-            onButtonClick = "[] call life_fnc_ticketPay;";
+            onButtonClick = "[] call MPClient_fnc_ticketPay;";
             x = 0.2 + (6.25 / 40) + (1 / 250 / (safezoneW / safezoneH));
             y = 0.42 - (1 / 25);
             w = (6.25 / 40);

@@ -1,6 +1,6 @@
 /*
 
-	Function: 	life_fnc_deathScreenKeyHandler
+	Function: 	MPClient_fnc_deathScreenKeyHandler
 	Project: 	Misty Peaks RPG
 	Author:     Tonic, Merrick, Nikko, Affect & IceEagle132
 	Github:		https://github.com/AsYetUntitled/Framework
@@ -19,7 +19,7 @@ switch _code do {
 	case _medicReqKey:
 	{
 		_handled = true;
-		[player] call life_fnc_requestMedic;
+		[player] call MPClient_fnc_requestMedic;
 	};
 	case DIK_R:
 	{
@@ -32,7 +32,7 @@ switch _code do {
 	{
 		if (call life_adminlevel > 0) then {
 			_handled = true;
-			[] spawn life_fnc_revived;
+			[] spawn MPClient_fnc_revived;
 		};
 	};
 	case DIK_MINUS:

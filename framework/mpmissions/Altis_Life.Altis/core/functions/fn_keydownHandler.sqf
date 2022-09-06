@@ -25,14 +25,14 @@ if(_keyCode isEqualTo DIK_I AND life_var_autorun AND isNull(findDisplay 602)) ex
 			hint "Inventory Opening...";
 		};
 		life_var_autorun_inventoryOpened = true;
-		["interrupt"] call life_fnc_autoruntoggle;
+		["interrupt"] call MPClient_fnc_autoruntoggle;
 		waitUntil{
 			uiSleep 1;
 			player action ["GEAR",objNull];//Force open inventory
 			!isNull(findDisplay 602)
 		};
 		waitUntil{isNull(findDisplay 602)};
-		["continue"] call life_fnc_autoruntoggle;
+		["continue"] call MPClient_fnc_autoruntoggle;
 		life_var_autorun_inventoryOpened = false; 
 	};
 	true

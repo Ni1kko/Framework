@@ -17,7 +17,7 @@ if (_BEGuid_Sender isEqualTo "") exitWith {};
 private _object_Sender =  [_BEGuid_Sender] call MPServer_fnc_util_getPlayerObject;
 private _gridPos_Sender = if(_senderLocation)then{mapGridPosition _object_Sender}else{"Unknown"};
 
-[name _object_Sender,_BEGuid_Sender,_requestType,_BEGuid_Receiver,_senderInput,_gridPos_Sender] remoteExec ["life_fnc_cellphone_messageReceived",switch (_requestType) do 
+[name _object_Sender,_BEGuid_Sender,_requestType,_BEGuid_Receiver,_senderInput,_gridPos_Sender] remoteExec ["MPClient_fnc_cellphone_messageReceived",switch (_requestType) do 
 {
 	//Player
 	case "XXX-REQ-PLAYER" : { 

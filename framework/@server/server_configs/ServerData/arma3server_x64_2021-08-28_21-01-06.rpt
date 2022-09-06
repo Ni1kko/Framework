@@ -696,7 +696,7 @@ a3_characters_f
 21:01:28 "[RCON SYSTEM]: Starting RCON"
 21:01:28 "[RCON SYSTEM]: Sending Command: #lock"
 21:01:28 "[RCON SYSTEM]: Lock Event: server locked for init"
-21:01:28 "Administrator/BIS_fnc_log: [preInit] Life_fnc_rcon_initialize (9.00078 ms)"
+21:01:28 "Administrator/BIS_fnc_log: [preInit] MPClient_fnc_rcon_initialize (9.00078 ms)"
 21:01:28 CallExtension loaded: extDB3 (E:\ExtremoServer\@server\extDB3_x64.dll) [���]
 
 21:01:28 "Administrator/BIS_fnc_log: [preInit] MPServer_fnc_database_initialize (24.9996 ms)"

@@ -61,7 +61,7 @@ if (_queryBankResult isEqualTo ["DB:Read:Task-failure",false]) exitWith {
 };
 
 if (count _queryResult isEqualTo 0 || count _queryBankResult isEqualTo 0) exitWith {
-    [] remoteExecCall ["SOCK_fnc_insertPlayerInfo",_ownerID];
+    [] remoteExecCall ["MPClient_fnc_insertPlayerInfo",_ownerID];
 };
 
 
@@ -151,4 +151,4 @@ _return pushBack (missionNamespace getVariable [format ["%1_KEYS_%2",_uid,_side]
 
 
 //--- Return
-_return remoteExec ["SOCK_fnc_requestReceived",_ownerID];
+_return remoteExec ["MPClient_fnc_requestReceived",_ownerID];

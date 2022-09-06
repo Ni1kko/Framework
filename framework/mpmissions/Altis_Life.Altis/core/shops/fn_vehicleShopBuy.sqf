@@ -53,12 +53,12 @@ if (_mode) then {
 
 private _conditions = M_CONFIG(getText,"LifeCfgVehicles",_className,"conditions");
 
-if !([_conditions] call life_fnc_levelCheck) exitWith {hint localize "STR_Shop_Veh_NoLicense";};
+if !([_conditions] call MPClient_fnc_levelCheck) exitWith {hint localize "STR_Shop_Veh_NoLicense";};
 
 private _colorIndex = lbValue[2304,(lbCurSel 2304)];
 
 if (_purchasePrice < 0) exitWith {closeDialog 0;}; //Bad price entry
-if (life_var_cash < _purchasePrice) exitWith {hint format [localize "STR_Shop_Veh_NotEnough",[_purchasePrice - life_var_cash] call life_fnc_numberText];closeDialog 0;};
+if (life_var_cash < _purchasePrice) exitWith {hint format [localize "STR_Shop_Veh_NotEnough",[_purchasePrice - life_var_cash] call MPClient_fnc_numberText];closeDialog 0;};
 
 private _spawnPoints = life_veh_shop select 1;
 private _spawnPoint = "";
@@ -81,11 +81,11 @@ if ((life_veh_shop select 0) == "med_air_hs") then {
 
 if (_spawnPoint isEqualTo "") exitWith {hint localize "STR_Shop_Veh_Block"; closeDialog 0;};
 life_var_cash = life_var_cash - _purchasePrice;
-[0] call SOCK_fnc_updatePartial;
+[0] call MPClient_fnc_updatePartial;
 if (_mode) then {
-    hint format [localize "STR_Shop_Veh_Bought",getText(configFile >> "CfgVehicles" >> _className >> "displayName"),[_purchasePrice] call life_fnc_numberText];
+    hint format [localize "STR_Shop_Veh_Bought",getText(configFile >> "CfgVehicles" >> _className >> "displayName"),[_purchasePrice] call MPClient_fnc_numberText];
 } else {
-    hint format [localize "STR_Shop_Veh_Rented",getText(configFile >> "CfgVehicles" >> _className >> "displayName"),[_purchasePrice] call life_fnc_numberText];
+    hint format [localize "STR_Shop_Veh_Rented",getText(configFile >> "CfgVehicles" >> _className >> "displayName"),[_purchasePrice] call MPClient_fnc_numberText];
 };
 
 //Spawn the vehicle and prep it.
@@ -110,8 +110,8 @@ if ((life_veh_shop select 0) == "med_air_hs") then {
 
 _vehicle lock 2;
 
-[_vehicle,_colorIndex] call life_fnc_colorVehicle;
-[_vehicle] call life_fnc_clearVehicleAmmo;
+[_vehicle,_colorIndex] call MPClient_fnc_colorVehicle;
+[_vehicle] call MPClient_fnc_clearVehicleAmmo;
 
 _vehicle setVariable ["trunk_in_use",false,true];
 _vehicle setVariable ["vehicle_info_owners",[[getPlayerUID player,profileName]],true];
@@ -121,15 +121,15 @@ _vehicle disableTIEquipment true; //No Thermals.. They're cheap but addictive.
 //Side Specific actions.
 switch (playerSide) do {
     case west: {
-        [_vehicle,"cop_offroad",true] spawn life_fnc_vehicleAnimate;
+        [_vehicle,"cop_offroad",true] spawn MPClient_fnc_vehicleAnimate;
     };
     case civilian: {
         if ((life_veh_shop select 2) isEqualTo "civ" && {_className == "B_Heli_Light_01_F"}) then {
-            [_vehicle,"civ_littlebird",true] spawn life_fnc_vehicleAnimate;
+            [_vehicle,"civ_littlebird",true] spawn MPClient_fnc_vehicleAnimate;
         };
     };
     case independent: {
-        [_vehicle,"med_offroad",true] spawn life_fnc_vehicleAnimate;
+        [_vehicle,"med_offroad",true] spawn MPClient_fnc_vehicleAnimate;
     };
 };
 
@@ -152,9 +152,9 @@ if (_mode) then {
 
 if (LIFE_SETTINGS(getNumber,"player_advancedLog") isEqualTo 1) then {
     if (LIFE_SETTINGS(getNumber,"battlEye_friendlyLogging") isEqualTo 1) then {
-        advanced_log = format [localize "STR_DL_AL_boughtVehicle_BEF",_className,[_purchasePrice] call life_fnc_numberText,[life_var_cash] call life_fnc_numberText,[life_var_bank] call life_fnc_numberText];
+        advanced_log = format [localize "STR_DL_AL_boughtVehicle_BEF",_className,[_purchasePrice] call MPClient_fnc_numberText,[life_var_cash] call MPClient_fnc_numberText,[life_var_bank] call MPClient_fnc_numberText];
     } else {
-        advanced_log = format [localize "STR_DL_AL_boughtVehicle",profileName,(getPlayerUID player),_className,[_purchasePrice] call life_fnc_numberText,[life_var_cash] call life_fnc_numberText,[life_var_bank] call life_fnc_numberText];
+        advanced_log = format [localize "STR_DL_AL_boughtVehicle",profileName,(getPlayerUID player),_className,[_purchasePrice] call MPClient_fnc_numberText,[life_var_cash] call MPClient_fnc_numberText,[life_var_bank] call MPClient_fnc_numberText];
     };
     publicVariableServer "advanced_log";
 };

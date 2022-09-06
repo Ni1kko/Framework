@@ -22,8 +22,8 @@ player playMove "AmovPercMstpSnonWnonDnon";
 if (life_is_arrested) exitWith {
     hint localize "STR_Jail_Suicide";
     life_is_arrested = false;
-    [player,true] spawn life_fnc_jail;
-    [] call SOCK_fnc_updateRequest;
+    [player,true] spawn MPClient_fnc_jail;
+    [] call MPClient_fnc_updateRequest;
 };
 
 //Johnny law got me but didn't let the EMS revive me, reward them half the bounty.
@@ -47,12 +47,12 @@ if (life_removeWanted) then {
     ['realname',profileName,true]
 ];
 
-[] call life_fnc_startLoadout;
-[] call life_fnc_setupActions;
+[] call MPClient_fnc_startLoadout;
+[] call MPClient_fnc_setupActions;
  
 [player,life_settings_enableSidechannel,playerSide] remoteExecCall ["MPServer_fnc_managesc",RSERV];
 if (LIFE_SETTINGS(getNumber,"enable_fatigue") isEqualTo 0) then {player enableFatigue false;};
 
 player playMoveNow "AmovPpneMstpSrasWrflDnon";
  
-[] call SOCK_fnc_updateRequest;
+[] call MPClient_fnc_updateRequest;

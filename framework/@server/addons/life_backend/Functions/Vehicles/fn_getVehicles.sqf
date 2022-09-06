@@ -15,7 +15,7 @@ _unit = [_this,3,objNull,[objNull]] call BIS_fnc_param;
 //Error checks
 if (_pid isEqualTo "" || _side isEqualTo sideUnknown || _type isEqualTo "" || isNull _unit) exitWith {
     if (!isNull _unit) then {
-        [[]] remoteExec ["life_fnc_garageMenu",(owner _unit)];
+        [[]] remoteExec ["MPClient_fnc_garageMenu",(owner _unit)];
     };
 };
 
@@ -28,7 +28,7 @@ _side = switch (_side) do {
 };
 
 if (_side == "Error") exitWith {
-    [[]] remoteExec ["life_fnc_garageMenu",(owner _unit)];
+    [[]] remoteExec ["MPClient_fnc_garageMenu",(owner _unit)];
 };
 
 _query = format ["SELECT id, side, classname, type, pid, alive, active, plate, color FROM vehicles WHERE pid='%1' AND alive='1' AND active='0' AND side='%2' AND type='%3' AND impounded='0'",_pid,_side,_type];
@@ -46,7 +46,7 @@ if (getNumber(configFile >> "CfgExtDB" >> "debugMode") isEqualTo 1) then {
 };
 
 if (_queryResult isEqualType "") exitWith {
-    [[]] remoteExec ["life_fnc_garageMenu",(owner _unit)];
+    [[]] remoteExec ["MPClient_fnc_garageMenu",(owner _unit)];
 };
 
-[_queryResult] remoteExec ["life_fnc_garageMenu",_unit];
+[_queryResult] remoteExec ["MPClient_fnc_garageMenu",_unit];

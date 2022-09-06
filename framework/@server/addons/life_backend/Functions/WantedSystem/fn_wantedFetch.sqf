@@ -20,7 +20,7 @@ private _units = [];
     false
 } count playableUnits;
 
-if (count _units isEqualTo 0) exitWith {[_list] remoteExec ["life_fnc_wantedList",_ret];};
+if (count _units isEqualTo 0) exitWith {[_list] remoteExec ["MPClient_fnc_wantedList",_ret];};
 
 {
     if (count _units > 1) then {
@@ -45,6 +45,6 @@ if (getNumber(configFile >> "CfgExtDB" >> "debugMode") isEqualTo 1) then {
     false
 } count _queryResult;
 
-if (count _list isEqualTo 0) exitWith {[_list] remoteExec ["life_fnc_wantedList",_ret];};
+if (count _list isEqualTo 0) exitWith {[_list] remoteExec ["MPClient_fnc_wantedList",_ret];};
 
-[_list] remoteExec ["life_fnc_wantedList",_ret];
+[_list] remoteExec ["MPClient_fnc_wantedList",_ret];

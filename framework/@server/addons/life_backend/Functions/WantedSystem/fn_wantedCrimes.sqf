@@ -32,4 +32,4 @@ private _crimesArr = [];
 
 _queryResult set[0,_crimesArr];
 
-[_queryResult] remoteExec ["life_fnc_wantedInfo",_ret];
+[_queryResult] remoteExec ["MPClient_fnc_wantedInfo",_ret];

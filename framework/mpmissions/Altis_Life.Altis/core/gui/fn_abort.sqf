@@ -1,6 +1,6 @@
 /*
 
-	Function: 	life_fnc_abort
+	Function: 	MPClient_fnc_abort
 	Project: 	AsYetUntitled
 	Author:     Nikko, IceEagle132
 	Github:		https://github.com/AsYetUntitled/Framework
@@ -21,16 +21,16 @@ for "_idd" from 140 to 46 do {
     startLoadingScreen ["","Life_Rsc_DisplayLoading"];
 
     //-- Sync player data to server
-    [] call SOCK_fnc_updateRequest;
-    ["Syncing your data", "", "red"] call life_fnc_setLoadingText;
+    [] call MPClient_fnc_updateRequest;
+    ["Syncing your data", "", "red"] call MPClient_fnc_setLoadingText;
     uiSleep 2;
 
     //--- Request server to clean up player
     [player] remoteExec ["MPServer_fnc_cleanupRequest",2];
-    ["Server Cleanup", "", "red"] call life_fnc_setLoadingText;
+    ["Server Cleanup", "", "red"] call MPClient_fnc_setLoadingText;
     uiSleep 2;
 
-    ["Thanks for playing","Till next time","red"] call life_fnc_setLoadingText;
+    ["Thanks for playing","Till next time","red"] call MPClient_fnc_setLoadingText;
     playSound "byebye";
     uiSleep 3;
     endLoadingScreen;

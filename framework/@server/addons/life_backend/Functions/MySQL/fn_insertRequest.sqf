@@ -34,14 +34,14 @@ private _queryResult = ["READ", "players", [["pid","serverID"], [["BEGuid",str _
 private _queryBankResult = ["READ", "bankaccounts", [["funds"],[["BEGuid",str _BEGuid]]],true]call MPServer_fnc_database_request;
 
 //--- Bad.. fail safe
-if (typeName _queryResult isNotEqualTo "ARRAY" || typeName _queryBankResult isNotEqualTo "ARRAY") exitWith{[] remoteExecCall ["SOCK_fnc_dataQuery",_ownerID]};
+if (typeName _queryResult isNotEqualTo "ARRAY" || typeName _queryBankResult isNotEqualTo "ARRAY") exitWith{[] remoteExecCall ["MPClient_fnc_dataQuery",_ownerID]};
 
 //--- Check for inserts
 private _insertBank = (count _queryBankResult isEqualTo 0);
 private _insertPlayer = (count _queryResult isEqualTo 0);
 
 //--- Double check to make sure the client isn't in the database... 
-if (!_insertBank AND !_insertPlayer) exitWith {[] remoteExecCall ["SOCK_fnc_dataQuery",_ownerID]};
+if (!_insertBank AND !_insertPlayer) exitWith {[] remoteExecCall ["MPClient_fnc_dataQuery",_ownerID]};
 
 //--- Add new player to database
 if(_insertPlayer)then{ 
@@ -81,4 +81,4 @@ if(_insertBank)then{
 
 
 //--- Tell client to re query for new data
-[] remoteExecCall ["SOCK_fnc_dataQuery",_ownerID];
+[] remoteExecCall ["MPClient_fnc_dataQuery",_ownerID];

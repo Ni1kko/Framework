@@ -3,8 +3,8 @@ class Life_Vehicle_Shop_v2_3D {
     name = "life_vehicle_shop";
     movingEnable = 0;
     enableSimulation = 1;
-    onLoad = "call life_fnc_3dPreviewInit; ctrlShow [2330,false];";
-    onUnLoad = "call life_fnc_3dPreviewExit;";
+    onLoad = "call MPClient_fnc_3dPreviewInit; ctrlShow [2330,false];";
+    onUnLoad = "call MPClient_fnc_3dPreviewExit;";
 
     class controlsBackground {
         class MainBackground: Life_RscText {
@@ -67,7 +67,7 @@ class Life_Vehicle_Shop_v2_3D {
         class RentCar: Life_RscButtonMenu {
             idc = -1;
             text = "$STR_Global_RentVeh";
-            onButtonClick = "[false] spawn life_fnc_vehicleShopBuy;";
+            onButtonClick = "[false] spawn MPClient_fnc_vehicleShopBuy;";
             x = 0.0964687 * safezoneW + safezoneX;
             y = 0.636393 * safezoneH + safezoneY;
             w = 0.0721724 * safezoneW;
@@ -77,7 +77,7 @@ class Life_Vehicle_Shop_v2_3D {
         class BuyCar: Life_RscButtonMenu {
             idc = 2309;
             text = "$STR_Global_Buy";
-            onButtonClick = "[true] spawn life_fnc_vehicleShopBuy;";
+            onButtonClick = "[true] spawn MPClient_fnc_vehicleShopBuy;";
             x = 0.0204687 * safezoneW + safezoneX;
             y = 0.636393 * safezoneH + safezoneY;
             w = 0.0721724 * safezoneW;
@@ -91,7 +91,7 @@ class Life_Vehicle_Shop_v2_3D {
             text = "";
             sizeEx = 0.04;
             colorBackground[] = {0.1,0.1,0.1,0.9};
-            onLBSelChanged = "_this call life_fnc_vehicleShopLBChange";
+            onLBSelChanged = "_this call MPClient_fnc_vehicleShopLBChange";
             x = 0.023487 * safezoneW + safezoneX;
             y = 0.095 * safezoneH + safezoneY;
             w = 0.144375 * safezoneW;
@@ -100,7 +100,7 @@ class Life_Vehicle_Shop_v2_3D {
 
         class ColorList: Life_RscCombo {
             idc = 2304;
-            onLBSelChanged = "call life_fnc_vehicleColor3DRefresh;";
+            onLBSelChanged = "call MPClient_fnc_vehicleColor3DRefresh;";
             x = 0.0204687 * safezoneW + safezoneX;
             y = 0.6034 * safezoneH + safezoneY;
             w = 0.149531 * safezoneW;

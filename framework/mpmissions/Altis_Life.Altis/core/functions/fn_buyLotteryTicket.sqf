@@ -2,7 +2,7 @@
 	## Nikko Renolds
 	## https://github.com/Ni1kko/Framework
 
-	[] call life_fnc_buyLotteryTicket
+	[] call MPClient_fnc_buyLotteryTicket
 */
 
 (call life_var_lotto_config) params [

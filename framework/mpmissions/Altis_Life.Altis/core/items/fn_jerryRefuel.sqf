@@ -14,7 +14,7 @@ if (isNull _vehicle) exitWith {hint localize "STR_ISTR_Jerry_NotLooking"};
 if (!(_vehicle isKindOF "LandVehicle") && !(_vehicle isKindOf "Air") && !(_vehicle isKindOf "Ship")) exitWith {};
 if (player distance _vehicle > 7.5) exitWith {hint localize "STR_ISTR_Jerry_NotNear"};
 
-if (!([false,"fuelFull",1] call life_fnc_handleInv)) exitWith {};
+if (!([false,"fuelFull",1] call MPClient_fnc_handleInv)) exitWith {};
 life_var_isBusy = true;
 
 _displayName = FETCH_CONFIG2(getText,"CfgVehicles",(typeOf _vehicle),"displayName");
@@ -33,7 +33,7 @@ _cP = 0.01;
 
 for "_i" from 0 to 1 step 0 do {
     if (animationState player != "AinvPknlMstpSnonWnonDnon_medic_1") then {
-        [player,"AinvPknlMstpSnonWnonDnon_medic_1",true] remoteExecCall ["life_fnc_animSync",RCLIENT];
+        [player,"AinvPknlMstpSnonWnonDnon_medic_1",true] remoteExecCall ["MPClient_fnc_animSync",RCLIENT];
         player switchMove "AinvPknlMstpSnonWnonDnon_medic_1";
         player playMoveNow "AinvPknlMstpSnonWnonDnon_medic_1";
     };
@@ -61,7 +61,7 @@ if (life_interrupted) exitWith {life_interrupted = false; titleText[localize "ST
 switch (true) do {
     case (_vehicle isKindOF "LandVehicle"): {
         if (!local _vehicle) then {
-            [_vehicle,(Fuel _vehicle) + 0.5] remoteExecCall ["life_fnc_setFuel",_vehicle];
+            [_vehicle,(Fuel _vehicle) + 0.5] remoteExecCall ["MPClient_fnc_setFuel",_vehicle];
         } else {
             _vehicle setFuel ((Fuel _vehicle) + 0.5);
         };
@@ -69,7 +69,7 @@ switch (true) do {
 
     case (_vehicle isKindOf "Air"): {
         if (!local _vehicle) then {
-            [_vehicle,(Fuel _vehicle) + 0.2] remoteExecCall ["life_fnc_setFuel",_vehicle];
+            [_vehicle,(Fuel _vehicle) + 0.2] remoteExecCall ["MPClient_fnc_setFuel",_vehicle];
         } else {
             _vehicle setFuel ((Fuel _vehicle) + 0.2);
         };
@@ -77,11 +77,11 @@ switch (true) do {
 
     case (_vehicle isKindOf "Ship"): {
         if (!local _vehicle) then {
-            [_vehicle,(Fuel _vehicle) + 0.35] remoteExecCall ["life_fnc_setFuel",_vehicle];
+            [_vehicle,(Fuel _vehicle) + 0.35] remoteExecCall ["MPClient_fnc_setFuel",_vehicle];
         } else {
             _vehicle setFuel ((Fuel _vehicle) + 0.35);
         };
     };
 };
 titleText[format [localize "STR_ISTR_Jerry_Success",_displayName],"PLAIN"];
-[true,"fuelEmpty",1] call life_fnc_handleInv;
+[true,"fuelEmpty",1] call MPClient_fnc_handleInv;

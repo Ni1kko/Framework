@@ -22,7 +22,7 @@ if (fuel _vehicle isEqualTo 0) exitWith {
 closeDialog 0; //Close the interaction menu.
 life_var_isBusy = true; //Lock out the interaction menu for a bit..
 
-_weight = [_vehicle] call life_fnc_vehicleWeight;
+_weight = [_vehicle] call MPClient_fnc_vehicleWeight;
 if ((_weight select 1) >= (_weight select 0)) exitWith {
     hint localize "STR_NOTF_DeviceFull";
     life_var_isBusy = false;
@@ -78,7 +78,7 @@ if (_zone isEqualTo "") exitWith {
 };
 
 _vehicle setVariable ["mining",true,true]; //Lock the device
-_vehicle remoteExec ["life_fnc_soundDevice",RCLIENT]; //Broadcast the 'mining' sound of the device for nearby units.
+_vehicle remoteExec ["MPClient_fnc_soundDevice",RCLIENT]; //Broadcast the 'mining' sound of the device for nearby units.
 
 life_var_isBusy = false; //Unlock it since it's going to do it's own thing...
 
@@ -127,9 +127,9 @@ for "_i" from 0 to 1 step 0 do {
     _inv = +(_vehicle_data select 0);
     _space = (_vehicle_data select 1);
     _itemIndex = [_resource,_inv] call MPServer_fnc_index;
-    _weight = [_vehicle] call life_fnc_vehicleWeight;
+    _weight = [_vehicle] call MPClient_fnc_vehicleWeight;
     _random = 10 + round((random(10)));
-    _sum = [_resource,_random,(_weight select 1),(_weight select 0)] call life_fnc_calWeightDiff; // Get a sum base of the remaining weight..
+    _sum = [_resource,_random,(_weight select 1),(_weight select 0)] call MPClient_fnc_calWeightDiff; // Get a sum base of the remaining weight..
 
     if (_sum < 1) exitWith {
         titleText[localize "STR_NOTF_DeviceFull","PLAIN"];
@@ -152,7 +152,7 @@ for "_i" from 0 to 1 step 0 do {
     if (local _vehicle) then {
         _vehicle setFuel (fuel _vehicle)-0.05;
     } else {
-        [_vehicle,(fuel _vehicle)-0.05] remoteExec ["life_fnc_setFuel",_vehicle];
+        [_vehicle,(fuel _vehicle)-0.05] remoteExec ["MPClient_fnc_setFuel",_vehicle];
     };
 
     if (fuel _vehicle < 0.1) exitWith {
@@ -162,10 +162,10 @@ for "_i" from 0 to 1 step 0 do {
 
     _itemName = M_CONFIG(getText,"VirtualItems",_resource,"displayName");
     titleText[format [localize "STR_NOTF_DeviceMined",_sum,TEXT_LOCALIZE(_itemName)],"PLAIN"];
-    _itemWeight = ([_resource] call life_fnc_itemWeight) * _sum;
+    _itemWeight = ([_resource] call MPClient_fnc_itemWeight) * _sum;
     _vehicle setVariable ["Trunk",[_inv,_space + _itemWeight],true];
-    _weight = [_vehicle] call life_fnc_vehicleWeight;
-    _sum = [_resource,_random,(_weight select 1),(_weight select 0)] call life_fnc_calWeightDiff; //Get a sum base of the remaining weight..
+    _weight = [_vehicle] call MPClient_fnc_vehicleWeight;
+    _sum = [_resource,_random,(_weight select 1),(_weight select 0)] call MPClient_fnc_calWeightDiff; //Get a sum base of the remaining weight..
 
     if (_sum < 1) exitWith {
         _vehicle setVariable ["mining",nil,true];

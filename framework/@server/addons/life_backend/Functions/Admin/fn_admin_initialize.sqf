@@ -850,7 +850,7 @@ try {
 					[]spawn{
 						[[],{
 							if(!hasInterface)exitWith{}; 
-							[] call SOCK_fnc_updateRequest; 
+							[] call MPClient_fnc_updateRequest; 
 							hint 'Admin Restart, Data saved... You will be kicked';
 						}]remoteExec ['call',-2];
 						uiSleep 45;
@@ -1193,7 +1193,7 @@ try {
 			"+_rnd_drawicons_evh+" = addMissionEventHandler ['Draw3D',"+_rnd_drawicons+"];
 			onMapSingleClick "+_rnd_mapsingleclick+";
 			[] call "+_rnd_adminmenugetfunctions+";
-			life_fnc_admin_showmenu = missionNamespace getVariable['"+_rnd_openmenu+"',{}];
+			MPClient_fnc_admin_showmenu = missionNamespace getVariable['"+_rnd_openmenu+"',{}];
 			(findDisplay 46) displayAddEventHandler ['KeyDown',{
 				params['_display','_key'];
 				if(_key == 0xD2) exitWith {

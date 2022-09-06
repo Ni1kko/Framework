@@ -49,7 +49,7 @@ switch (param [0,""]) do
                         };						
 
                         if(_open) exitWith {
-                            [0,format["The delivery to the %1 has been stopped as the bank is currently under attack/the doors are not closed!",_branchName]] remoteExecCall ["life_fnc_broadcast",west];
+                            [0,format["The delivery to the %1 has been stopped as the bank is currently under attack/the doors are not closed!",_branchName]] remoteExecCall ["MPClient_fnc_broadcast",west];
                         };
 
                         private _m = (_x#2) createVehicle [0,0,0];

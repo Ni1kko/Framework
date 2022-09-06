@@ -1,6 +1,6 @@
 /*
 
-	Function: 	life_fnc_spit
+	Function: 	MPClient_fnc_spit
 	Project: 	AsYetUntitled/Framework
 	Author:     Nikko
 	Github:		https://github.com/AsYetUntitled/Framework
@@ -28,4 +28,4 @@ private _targetDistance = _target distance2D player;
 if(_targetDistance > _spitDistance)exitWith {hint 'you cant spit that far get closer'};
 
 //Do spit action-effect on target
-[player, _targetDistance] remoteExec ["life_fnc_spat",_targetID];
+[player, _targetDistance] remoteExec ["MPClient_fnc_spat",_targetID];

@@ -49,12 +49,12 @@ if (count _vInfo isEqualTo 0) exitWith {life_var_severVehicles deleteAt _servInd
 
 if ((_vInfo select 5) isEqualTo 0) exitWith {
     life_var_severVehicles deleteAt _servIndex;
-    [1,"STR_Garage_SQLError_Destroyed",true,[_vInfo select 2]] remoteExecCall ["life_fnc_broadcast",_unit];
+    [1,"STR_Garage_SQLError_Destroyed",true,[_vInfo select 2]] remoteExecCall ["MPClient_fnc_broadcast",_unit];
 };
 
 if ((_vInfo select 6) isEqualTo 1) exitWith {
     life_var_severVehicles deleteAt _servIndex;
-    [1,"STR_Garage_SQLError_Active",true,[_vInfo select 2]] remoteExecCall ["life_fnc_broadcast",_unit];
+    [1,"STR_Garage_SQLError_Active",true,[_vInfo select 2]] remoteExecCall ["MPClient_fnc_broadcast",_unit];
 };
 
 private "_nearVehicles";
@@ -66,8 +66,8 @@ if !(_sp isEqualType "") then {
 
 if (count _nearVehicles > 0) exitWith {
     life_var_severVehicles deleteAt _servIndex;
-    [_price,_unit_return] remoteExecCall ["life_fnc_garageRefund",_unit];
-    [1,"STR_Garage_SpawnPointError",true] remoteExecCall ["life_fnc_broadcast",_unit];
+    [_price,_unit_return] remoteExecCall ["MPClient_fnc_garageRefund",_unit];
+    [1,"STR_Garage_SpawnPointError",true] remoteExecCall ["MPClient_fnc_broadcast",_unit];
 };
 
 _query = format ["UPDATE vehicles SET active='1', damage='""[]""' WHERE pid='%1' AND id='%2'",_pid,_vid];
@@ -98,17 +98,17 @@ if (_sp isEqualType "") then {
 };
 _vehicle allowDamage true;
 //Send keys over the network.
-[_vehicle] remoteExecCall ["life_fnc_addVehicle2Chain",_unit];
+[_vehicle] remoteExecCall ["MPClient_fnc_addVehicle2Chain",_unit];
 [_pid,_side,_vehicle,1] call MPServer_fnc_keyManagement;
 _vehicle lock 2;
 //Reskin the vehicle
-[_vehicle,(_vInfo select 8)] remoteExecCall ["life_fnc_colorVehicle",_unit];
+[_vehicle,(_vInfo select 8)] remoteExecCall ["MPClient_fnc_colorVehicle",_unit];
 _vehicle setVariable ["vehicle_id",_vInfo#0,true];
 _vehicle setVariable ["vehicle_info_owners",[[_pid,_name]],true];
 _vehicle setVariable ["dbInfo",[(_vInfo select 4),(_vInfo select 7)],true];
 _vehicle setVariable ["oUUID",_pid,true];
 _vehicle disableTIEquipment true; //No Thermals.. They're cheap but addictive.
-[_vehicle] call life_fnc_clearVehicleAmmo;
+[_vehicle] call MPClient_fnc_clearVehicleAmmo;
 
 _vehicle setVariable ["Trunk",_trunk,true];
 
@@ -131,7 +131,7 @@ if (_wasIllegal) then {
     } count ["NameCityCapital", "NameCity", "NameVillage"];
 
     _location = text _location;
-    [1,"STR_NOTF_BlackListedVehicle",true,[_location,_name]] remoteExecCall ["life_fnc_broadcast",west];
+    [1,"STR_NOTF_BlackListedVehicle",true,[_location,_name]] remoteExecCall ["MPClient_fnc_broadcast",west];
 
     _query = format ["UPDATE vehicles SET blacklist='0' WHERE id='%1' AND pid='%2'",_vid,_pid];
     [_query,1] call MPServer_fnc_database_rawasync_request;
@@ -168,16 +168,16 @@ if (count _damage > 0) then {
 
 //Sets of animations
 if ((_vInfo select 1) isEqualTo "civ" && (_vInfo select 2) isEqualTo "B_Heli_Light_01_F" && !((_vInfo select 8) isEqualTo 13)) then {
-    [_vehicle,"civ_littlebird",true] remoteExecCall ["life_fnc_vehicleAnimate",_unit];
+    [_vehicle,"civ_littlebird",true] remoteExecCall ["MPClient_fnc_vehicleAnimate",_unit];
 };
 
 if ((_vInfo select 1) isEqualTo "cop" && ((_vInfo select 2)) in ["C_Offroad_01_F","B_MRAP_01_F","C_SUV_01_F","C_Hatchback_01_sport_F","B_Heli_Light_01_F","B_Heli_Transport_01_F"]) then {
-    [_vehicle,"cop_offroad",true] remoteExecCall ["life_fnc_vehicleAnimate",_unit];
+    [_vehicle,"cop_offroad",true] remoteExecCall ["MPClient_fnc_vehicleAnimate",_unit];
 };
 
 if ((_vInfo select 1) isEqualTo "med" && (_vInfo select 2) isEqualTo "C_Offroad_01_F") then {
-    [_vehicle,"med_offroad",true] remoteExecCall ["life_fnc_vehicleAnimate",_unit];
+    [_vehicle,"med_offroad",true] remoteExecCall ["MPClient_fnc_vehicleAnimate",_unit];
 };
 
-[1,_spawntext] remoteExecCall ["life_fnc_broadcast",_unit];
+[1,_spawntext] remoteExecCall ["MPClient_fnc_broadcast",_unit];
 life_var_severVehicles deleteAt _servIndex;

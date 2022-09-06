@@ -15,7 +15,7 @@
 
     Example
     //--- Find if a unit is in building
-    [player] call life_fnc_playerInBuilding
+    [player] call MPClient_fnc_playerInBuilding
 */
 
 private ["_unit","_position","_roofCheck","_return"];

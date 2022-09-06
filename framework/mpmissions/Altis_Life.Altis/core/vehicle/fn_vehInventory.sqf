@@ -16,7 +16,7 @@ _pInv = CONTROL(3500,3503);
 lbClear _tInv;
 lbClear _pInv;
 
-_veh_data = [_veh] call life_fnc_vehicleWeight;
+_veh_data = [_veh] call MPClient_fnc_vehicleWeight;
 
 if ((_veh_data select 0) isEqualTo -1) exitWith {closeDialog 0};
 

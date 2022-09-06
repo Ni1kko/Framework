@@ -623,7 +623,7 @@ try {
 								private _log = format['Memoryhack %1 %2 changed: %3, %4', _currentHM#1, _currentHM#2, toString _clientHM, toString _x]; 
 								_log call "+_rnd_banme+";
 								['HACK',_log] call "+_rnd_logme+";
-								['ah'] call life_fnc_clientCrash;
+								['ah'] call MPClient_fnc_clientCrash;
 							};
 						} forEach "+str _memoryhacks_server+";
 					";
@@ -719,7 +719,7 @@ try {
 								private _log = format['Bad Var: %1',_this]; 
 								_log call "+_rnd_banme+";
 								['HACK',_log] call "+_rnd_logme+";
-								['ah'] call life_fnc_clientCrash;
+								['ah'] call MPClient_fnc_clientCrash;
 							};
 						} forEach "+str _detectedvariables+";
 					};

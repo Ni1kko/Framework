@@ -20,11 +20,11 @@ private _tanoaArray = [11074.2,11501.5,0.00137329];
 private _pos = [[["Altis", _altisArray], ["Tanoa", _tanoaArray]]] call MPServer_fnc_terrainSort;
 
 if ((nearestObject [_pos,_vaultHouse]) getVariable ["locked",true]) exitWith {hint localize "STR_ISTR_Blast_Exploit"};
-if (!([false,"blastingcharge",1] call life_fnc_handleInv)) exitWith {}; //Error?
+if (!([false,"blastingcharge",1] call MPClient_fnc_handleInv)) exitWith {}; //Error?
 
 _vault setVariable ["chargeplaced",true,true];
-[0,"STR_ISTR_Blast_Placed",true,[]] remoteExecCall ["life_fnc_broadcast",west];
+[0,"STR_ISTR_Blast_Placed",true,[]] remoteExecCall ["MPClient_fnc_broadcast",west];
 hint localize "STR_ISTR_Blast_KeepOff";
 
-[] remoteExec ["life_fnc_demoChargeTimer",[west,player]];
+[] remoteExec ["MPClient_fnc_demoChargeTimer",[west,player]];
 [] remoteExec ["MPServer_fnc_handleBlastingCharge",2];

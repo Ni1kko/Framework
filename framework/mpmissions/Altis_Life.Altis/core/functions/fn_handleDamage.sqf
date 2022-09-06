@@ -1,7 +1,7 @@
 #include "..\..\script_macros.hpp"
 /*
 
-    Function: 	life_fnc_handleDamage
+    Function: 	MPClient_fnc_handleDamage
 	Project: 	Misty Peaks RPG
 	Author:     Tonic, Merrick, Nikko, Affect & IceEagle132
 	Github:		https://github.com/AsYetUntitled/Framework
@@ -34,7 +34,7 @@ if (_projectile isEqualType objNull) then {
 
 if (alive _unit && _damage > 0) then {
     if((_unit getVariable ["lifeState",""]) isEqualTo "INCAPACITATED")then{
-        [_unit,_instigator,_damage,_projectile,_selection] spawn life_fnc_KilledInAgony;
+        [_unit,_instigator,_damage,_projectile,_selection] spawn MPClient_fnc_KilledInAgony;
     }else{
         if (!isNull _source && {_source != _unit}) then 
         {
@@ -48,10 +48,10 @@ if (alive _unit && _damage > 0) then {
                                 if !(isNull objectParent _unit) then {
                                     if (typeOf (vehicle _unit) isEqualTo "B_Quadbike_01_F") then {
                                         _unit action ["Eject",vehicle _unit];
-                                        [_unit,_source] spawn life_fnc_tazed;
+                                        [_unit,_source] spawn MPClient_fnc_tazed;
                                     };
                                 } else {
-                                    [_unit,_source] spawn life_fnc_tazed;
+                                    [_unit,_source] spawn MPClient_fnc_tazed;
                                 };
                             };
                         };
@@ -67,23 +67,23 @@ if (alive _unit && _damage > 0) then {
 
             if(_curWep isEqualTo "hgun_PDW2000_F") then { 
                 if(vehicle _source == _source && isPlayer _source && player distance _source < 50 && vehicle player == player) then {
-                    [_unit] remoteExec ["life_fnc_bountyHunterTaze",owner _source];
+                    [_unit] remoteExec ["MPClient_fnc_bountyHunterTaze",owner _source];
                 };
             };
         }else{
             if (_damage >= 0.89) then {
-                [_unit,_source,_instigator,_projectile] call life_fnc_Agony;
+                [_unit,_source,_instigator,_projectile] call MPClient_fnc_Agony;
             } else { 
                 if (_damage > 0) then {
                     switch (true) do {
                         case (_damage > 0.1 && _damage <= 0.3) : {
-                            ["life_var_bleeding","debuff",300] spawn life_fnc_addBuff;
+                            ["life_var_bleeding","debuff",300] spawn MPClient_fnc_addBuff;
                         };
                         case (_damage > 0.3 && _damage <= 0.45) : {
-                            ["life_var_pain_shock","debuff"] spawn life_fnc_addBuff;
+                            ["life_var_pain_shock","debuff"] spawn MPClient_fnc_addBuff;
                         };
                         case (_damage > 0.45 && _damage <= 0.9) : {
-                           ["life_var_critHit","debuff"] spawn life_fnc_addBuff;
+                           ["life_var_critHit","debuff"] spawn MPClient_fnc_addBuff;
                         };
                         default {}; 
                     };

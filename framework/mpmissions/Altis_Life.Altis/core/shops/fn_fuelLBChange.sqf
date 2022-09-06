@@ -15,7 +15,7 @@ params [
 private _className = _control lbData _index;
 private _vehicleFuelList = uiNamespace getVariable ["fuel_list",[]];
 (_vehicleFuelList select _index) params ["_vehicle"];
-private _vehicleInfo = [_className] call life_fnc_fetchVehInfo;
+private _vehicleInfo = [_className] call MPClient_fnc_fetchVehInfo;
 
 private _fuel = fuel _vehicle;
 private _fuelTank = _vehicleInfo select 12;

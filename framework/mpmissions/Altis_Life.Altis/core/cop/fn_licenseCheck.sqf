@@ -22,4 +22,4 @@ _licensesConfigs = "getText(_x >> 'side') isEqualTo 'civ'" configClasses (missio
 } forEach _licensesConfigs;
 
 if (_licenses isEqualTo "") then {_licenses = (localize "STR_Cop_NoLicensesFound");};
-[profileName,_licenses] remoteExecCall ["life_fnc_licensesRead",_cop];
+[profileName,_licenses] remoteExecCall ["MPClient_fnc_licensesRead",_cop];

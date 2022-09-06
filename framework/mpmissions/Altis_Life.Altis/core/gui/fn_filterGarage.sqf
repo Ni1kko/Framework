@@ -11,7 +11,7 @@ private _array = uiNamespace getVariable ["VehicleList", []];
 lbClear _listBox;
 
 {
-     _vehicleInfo = [(_x select 2)] call life_fnc_fetchVehInfo;
+     _vehicleInfo = [(_x select 2)] call MPClient_fnc_fetchVehInfo;
     if (toLower(ctrlText _ctrl) in toLower(_vehicleInfo select 3)) then {
          _listBox lbAdd (_vehicleInfo select 3);
         _tmp = [(_x select 2),(_x select 8)];

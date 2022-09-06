@@ -33,13 +33,13 @@ if(_spitEnabled) then{
     
     private _action = (player addAction[
         "Spit at player",
-        life_fnc_spit,
+        MPClient_fnc_spit,
         nil,		// arguments
         1.5,		// priority
         true,		// showWindow
         true,		// hideOnUse
         "",			// shortcut
-        "[_target, _this, _originalTarget, cursorTarget] call life_fnc_canspit", 	// condition
+        "[_target, _this, _originalTarget, cursorTarget] call MPClient_fnc_canspit", 	// condition
         3.5,			// radius
         false,		// unconscious
         "",			// selection

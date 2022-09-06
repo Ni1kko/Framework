@@ -25,7 +25,7 @@ switch (_mode) do {
 		if(life_var_autorun)then{
 			life_var_autorun = false; 
 		}else{
-			if(call life_fnc_util_canautorun)then{
+			if(call MPClient_fnc_util_canautorun)then{
 				life_var_autorun = true;
 				_state = "ON";
 			}else{

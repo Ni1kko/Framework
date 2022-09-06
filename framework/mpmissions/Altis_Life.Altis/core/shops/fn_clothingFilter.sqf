@@ -66,11 +66,11 @@ private "_details";
     ];
 
     if !(_className isEqualTo "NONE") then {
-        _details = [_className] call life_fnc_fetchCfgDetails;
+        _details = [_className] call MPClient_fnc_fetchCfgDetails;
         _pic = (_details select 2);
     };
 
-    if ([_x] call life_fnc_levelCheck) then {
+    if ([_x] call MPClient_fnc_levelCheck) then {
 
         if (isNil "_details") then {
             _list lbAdd _displayName;

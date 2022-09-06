@@ -1,6 +1,6 @@
 /*
 
-	Function: 	life_fnc_destroyRscLayer
+	Function: 	MPClient_fnc_destroyRscLayer
 	Project: 	Misty Peaks RPG
 	Author:     Tonic, Merrick, Nikko, Affect & IceEagle132
 	Github:		https://github.com/AsYetUntitled/Framework

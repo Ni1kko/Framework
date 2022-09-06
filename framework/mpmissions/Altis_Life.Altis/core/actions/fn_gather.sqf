@@ -50,15 +50,15 @@ if (_requiredItem != "") then {
 if (_exit) exitWith {life_var_isBusy = false;};
 
 _amount = round(random(_maxGather)) + 1;
-_diff = [_resource,_amount,life_var_carryWeight,life_maxWeight] call life_fnc_calWeightDiff;
+_diff = [_resource,_amount,life_var_carryWeight,life_maxWeight] call MPClient_fnc_calWeightDiff;
 if (_diff isEqualTo 0) exitWith {
     hint localize "STR_NOTF_InvFull";
     life_var_isBusy = false;
 };
 
 switch (_requiredItem) do {
-    case "pickaxe": {[player,"mining",35,1] remoteExecCall ["life_fnc_say3D",RCLIENT]};
-    default {[player,"harvest",35,1] remoteExecCall ["life_fnc_say3D",RCLIENT]};
+    case "pickaxe": {[player,"mining",35,1] remoteExecCall ["MPClient_fnc_say3D",RCLIENT]};
+    default {[player,"harvest",35,1] remoteExecCall ["MPClient_fnc_say3D",RCLIENT]};
 };
 
 for "_i" from 0 to 4 do {
@@ -67,7 +67,7 @@ for "_i" from 0 to 4 do {
     sleep 0.5;
 };
 
-if ([true,_resource,_diff] call life_fnc_handleInv) then {
+if ([true,_resource,_diff] call MPClient_fnc_handleInv) then {
     _itemName = M_CONFIG(getText,"VirtualItems",_resource,"displayName");
     titleText[format [localize "STR_NOTF_Gather_Success",TEXT_LOCALIZE(_itemName),_diff],"PLAIN"];
 };

@@ -1,6 +1,6 @@
 /*
 
-	Function: 	life_fnc_spat
+	Function: 	MPClient_fnc_spat
 	Project: 	AsYetUntitled/Framework
 	Author:     Nikko
 	Github:		https://github.com/AsYetUntitled/Framework

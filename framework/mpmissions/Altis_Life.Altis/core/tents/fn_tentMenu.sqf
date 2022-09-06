@@ -7,7 +7,7 @@ disableSerialization;
 
 //--- Get target object
 private _tent = param [0,objNull,[objNull]];
-if (isNull _tent OR {!(_tent call life_fnc_isTent)}) exitWith {false};
+if (isNull _tent OR {!(_tent call MPClient_fnc_isTent)}) exitWith {false};
 
 //-- Config
 private _config = call (missionNamespace getVariable ["life_var_tent_config",{[]}]);
@@ -25,7 +25,7 @@ life_pInact_tent = _tent;
 
 //--- BTN 1 (Packup campsite)
 _Btn1 ctrlSetText "Packup Campsite";
-_Btn1 buttonSetAction "closeDialog 0; [life_pInact_tent] spawn life_fnc_packupTent;";
+_Btn1 buttonSetAction "closeDialog 0; [life_pInact_tent] spawn MPClient_fnc_packupTent;";
 _Btn1 ctrlShow true;
 
 
@@ -48,12 +48,12 @@ _Btn3 ctrlShow true;
 if(_garages) then {
 	//--- BTN 5
 	_Btn5 ctrlSetText localize "STR_pInAct_AccessGarage";
-	_Btn5 buttonSetAction "closeDialog 0; [life_pInact_tent,""Car""] spawn life_fnc_vehicleGarage;";
+	_Btn5 buttonSetAction "closeDialog 0; [life_pInact_tent,""Car""] spawn MPClient_fnc_vehicleGarage;";
 	_Btn5 ctrlShow true;
 
 	//--- BTN 6
 	_Btn6 ctrlSetText localize "STR_pInAct_StoreVeh";
-	_Btn6 buttonSetAction "closeDialog 0; [life_pInact_tent,player] spawn life_fnc_storeVehicle;";
+	_Btn6 buttonSetAction "closeDialog 0; [life_pInact_tent,player] spawn MPClient_fnc_storeVehicle;";
 	_Btn6 ctrlShow true;
 };
 

@@ -20,7 +20,7 @@ _preview = [_this,7,false,[false]] call BIS_fnc_param;
 if (_item isEqualTo "") exitWith {};
 _isgun = false;
 
-_details = [_item] call life_fnc_fetchCfgDetails;
+_details = [_item] call MPClient_fnc_fetchCfgDetails;
 if (count _details isEqualTo 0) exitWith {};
 
 if (_bool) then {
@@ -53,7 +53,7 @@ if (_bool) then {
             clearAllItemsFromBackpack player;
 
             if (!isNil "_items") then {
-                {[_x,true,true,false,true] call life_fnc_handleItem; } forEach _items;
+                {[_x,true,true,false,true] call MPClient_fnc_handleItem; } forEach _items;
             };
         };
 
@@ -181,7 +181,7 @@ if (_bool) then {
                                     player addVest _item;
 
                                     if (!isNil "_items") then {
-                                        {[_x,true,false,false,true] spawn life_fnc_handleItem;} forEach _items;
+                                        {[_x,true,false,false,true] spawn MPClient_fnc_handleItem;} forEach _items;
                                     };
                                 };
                             };
@@ -193,7 +193,7 @@ if (_bool) then {
                             player addItemToBackpack _item;
                         } else {
                             private "_type";
-                            _type = [_item,201] call life_fnc_accType;
+                            _type = [_item,201] call MPClient_fnc_accType;
                             if (_ongun) then {
                                 switch (_type) do {
                                     case 1: { player addPrimaryWeaponItem _item; };
@@ -240,7 +240,7 @@ if (_bool) then {
                             player addItemToBackpack _item;
                         } else {
                             private "_type";
-                            _type = [_item,301] call life_fnc_accType;
+                            _type = [_item,301] call MPClient_fnc_accType;
 
                             if (_ongun) then {
                                 switch (_type) do {
@@ -288,7 +288,7 @@ if (_bool) then {
                             player addItemToBackpack _item;
                         } else {
                             private "_type";
-                            _type = [_item,101] call life_fnc_accType;
+                            _type = [_item,101] call MPClient_fnc_accType;
 
                             if (_ongun) then {
                                 switch (_type) do {

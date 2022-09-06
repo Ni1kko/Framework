@@ -3,14 +3,14 @@
 	## https://github.com/Ni1kko/Framework
 
 	
-	[east] spawn life_fnc_switchSide;
-	[west] spawn life_fnc_switchSide;
-	[civilian] spawn life_fnc_switchSide;
-	[independent] spawn life_fnc_switchSide;
+	[east] spawn MPClient_fnc_switchSide;
+	[west] spawn MPClient_fnc_switchSide;
+	[civilian] spawn MPClient_fnc_switchSide;
+	[independent] spawn MPClient_fnc_switchSide;
 */
 
 //-- File called and not scheduled
-if(!canSuspend) exitWith {_this spawn life_fnc_switchSide};
+if(!canSuspend) exitWith {_this spawn MPClient_fnc_switchSide};
 
 params [
 	["_newside",sideUnknown,[sideUnknown]]
@@ -42,13 +42,13 @@ if (_newside in [west,east,independent] AND life_blacklisted) exitWith {
 startLoadingScreen ["","life_Rsc_DisplayLoading"];
 
 //--
-["Saving Current Data", "Please Wait..."] call life_fnc_setLoadingText;
-private _sessionvar = [] call SOCK_fnc_updateRequest;
+["Saving Current Data", "Please Wait..."] call MPClient_fnc_setLoadingText;
+private _sessionvar = [] call MPClient_fnc_updateRequest;
 waitUntil {missionNamespace getVariable [_sessionvar,false]};
 
 //-- Switch side
 private _player = player;
-["Switching side", "Please Wait..."] call life_fnc_setLoadingText;
+["Switching side", "Please Wait..."] call MPClient_fnc_setLoadingText;
 [_player,_newside,true] remoteExec ["MPServer_fnc_switchSideRequest",2];
 
 //-- Wait for system to finish
@@ -59,7 +59,7 @@ if(!isNil {_player getVariable "sideswitch_error"})exitWith{
 	private _error = _player getVariable ["sideswitch_error",""];
 	if(typeName _error isEqualTo "STRING")then{
 		systemChat format ["Error: %1",_error];
-		["An Error Occured!",_error] call life_fnc_setLoadingText; 
+		["An Error Occured!",_error] call MPClient_fnc_setLoadingText; 
 		uiSleep 6;
 	};
 
@@ -74,17 +74,17 @@ if(_newside isEqualTo playerSide)then
 	//-- set rank
 	player setVariable ["rank",_rank,true];
 	
-	[_newside] call life_fnc_paychecks;
+	[_newside] call MPClient_fnc_paychecks;
 
 	//--
-	["Side Switched", "Please Wait..."] call life_fnc_setLoadingText; uiSleep(random[0.5,3,6]);
+	["Side Switched", "Please Wait..."] call MPClient_fnc_setLoadingText; uiSleep(random[0.5,3,6]);
 
 	//--
 	_return = true;
 };
 
 
-["Please Wait..."] call life_fnc_setLoadingText; 
+["Please Wait..."] call MPClient_fnc_setLoadingText; 
 uiSleep(random[0.5,3,6]);
 endLoadingScreen;
 

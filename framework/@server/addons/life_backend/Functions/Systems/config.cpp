@@ -38,7 +38,6 @@ class CfgFunctions
             class fix_headgear {};
             class whoDoneIt {};
             class index {};
-            class player_query {};
             class isNumber {};
             class clientGangKick {};
             class clientGetKey {};
