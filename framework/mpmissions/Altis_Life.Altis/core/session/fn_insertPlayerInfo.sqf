@@ -13,4 +13,4 @@ if (life_session_completed) exitWith {}; //Why did this get executed when the cl
 //0 cutFadeOut 9999999;
 ["The server didn't find a database record matching your BEGuid, attempting to add player into our database."] call life_fnc_setLoadingText; uiSleep(random[0.5,3,6]);
 
-[player] remoteExecCall ["DB_fnc_insertRequest",2];
+[player] remoteExecCall ["life_fnc_insertRequest",2];

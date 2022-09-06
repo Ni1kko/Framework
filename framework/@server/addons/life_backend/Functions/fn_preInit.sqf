@@ -23,7 +23,7 @@ waitUntil {isFinal "extdb_var_database_key"};
 life_var_currentDay = [] call life_fnc_util_getCurrentDay;
 
 //--- Server info
-private _serverDatabaseInit = [] spawn DB_fnc_loadServer;
+private _serverDatabaseInit = [] spawn life_fnc_loadServer;
 waitUntil{scriptDone _serverDatabaseInit};
 
 //--- Mission Event handlers

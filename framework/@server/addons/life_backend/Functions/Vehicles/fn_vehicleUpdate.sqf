@@ -28,7 +28,7 @@ switch (_mode) do {
             _cargo = [];
         };
 
-        _cargo = [_cargo] call DB_fnc_mresArray;
+        _cargo = [_cargo] call life_fnc_mresArray;
 
         _query = format ["UPDATE vehicles SET gear='%3' WHERE pid='%1' AND plate='%2'",_uid,_plate,_cargo];
         _thread = [_query,1] call life_fnc_database_rawasync_request;
@@ -48,7 +48,7 @@ switch (_mode) do {
             };
         }forEach _itemList;
         _trunk = [_items,_totalweight];
-        _trunk = [_trunk] call DB_fnc_mresArray;
+        _trunk = [_trunk] call life_fnc_mresArray;
 
         _query = format ["UPDATE vehicles SET inventory='%3' WHERE pid='%1' AND plate='%2'",_uid,_plate,_trunk];
         _thread = [_query,1] call life_fnc_database_rawasync_request;

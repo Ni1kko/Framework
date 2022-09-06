@@ -17,7 +17,7 @@ _vehWeapons = getWeaponCargo _container;
 _vehBackpacks = getBackpackCargo _container;
 _cargo = [_vehItems,_vehMags,_vehWeapons,_vehBackpacks];
 
-_cargo = [_cargo] call DB_fnc_mresArray;
+_cargo = [_cargo] call life_fnc_mresArray;
 
 _query = format ["UPDATE containers SET gear='%1' WHERE id='%2'",_cargo,_containerID];
 

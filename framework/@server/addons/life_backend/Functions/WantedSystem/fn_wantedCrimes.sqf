@@ -20,7 +20,7 @@ private _queryResult = [_query,2] call life_fnc_database_rawasync_request;
 
 _ret = owner _ret;
 
-private _type = [_queryResult select 0] call DB_fnc_mresToArray;
+private _type = [_queryResult select 0] call life_fnc_mresToArray;
 if (_type isEqualType "") then {_type = call compile format ["%1", _type];};
 
 private _crimesArr = [];

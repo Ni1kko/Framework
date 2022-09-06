@@ -72,9 +72,9 @@ if (count _nearVehicles > 0) exitWith {
 
 _query = format ["UPDATE vehicles SET active='1', damage='""[]""' WHERE pid='%1' AND id='%2'",_pid,_vid];
 
-private _trunk = [(_vInfo select 9)] call DB_fnc_mresToArray;
-private _gear = [(_vInfo select 10)] call DB_fnc_mresToArray;
-private _damage = [call compile (_vInfo select 12)] call DB_fnc_mresToArray;
+private _trunk = [(_vInfo select 9)] call life_fnc_mresToArray;
+private _gear = [(_vInfo select 10)] call life_fnc_mresToArray;
+private _damage = [call compile (_vInfo select 12)] call life_fnc_mresToArray;
 private _wasIllegal = _vInfo select 13;
 _wasIllegal = if (_wasIllegal isEqualTo 1) then { true } else { false };
 

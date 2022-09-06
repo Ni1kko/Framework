@@ -14,7 +14,7 @@ _containerID = _container getVariable ["container_id",-1];
 
 if (_containerID isEqualTo -1) exitWith {}; //Dafuq?
 
-_trunkData = [_trunkData] call DB_fnc_mresArray;
+_trunkData = [_trunkData] call life_fnc_mresArray;
 _query = format ["UPDATE containers SET inventory='%1' WHERE id='%2'",_trunkData,_containerID];
 
 [_query,1] call life_fnc_database_rawasync_request;
