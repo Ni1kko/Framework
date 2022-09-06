@@ -81,4 +81,4 @@ if(_insertBank)then{
 
 
 //--- Tell client to re query for new data
-[] remoteExecCall ["MPClient_fnc_dataQuery",_ownerID];
+[] remoteExec ["MPClient_fnc_dataQuery",_ownerID];
