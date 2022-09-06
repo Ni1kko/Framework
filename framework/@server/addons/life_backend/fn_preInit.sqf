@@ -17,7 +17,6 @@ life_var_banks = [];
 life_var_atms = [];
 life_var_spawndAnimals = [];
 life_var_severSchedulerStartUpQueue = {[]};
-life_var_currentDay = "Loading";
 
 publicVariable "life_var_serverLoaded";
 waitUntil {isFinal "extdb_var_database_key"};
