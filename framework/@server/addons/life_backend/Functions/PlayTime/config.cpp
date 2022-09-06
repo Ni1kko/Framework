@@ -23,6 +23,7 @@ class CfgFunctions
             file = "\life_backend\Functions\PlayTime";
             class setPlayTime {};
             class getPlayTime {};
+            class registerPlayTime {};
         };
     };
 };
