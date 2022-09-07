@@ -87,9 +87,16 @@ if _openSpawnMenu then
 //-- First spawn
 if (life_firstSpawn) then {
     life_firstSpawn = false;
-    [] spawn MPClient_fnc_intro; // Intro Cam Script
+	
+	//-- Play intro sound
+	playsound "intro"; 
+
+	//-- Camera effect
+	private _time = [6, 12] select _openSpawnMenu;
+	private _dist = [500, 350] select _openSpawnMenu;
+    [player,_time,_dist] spawn MPClient_fnc_cameraZoomIn;
 }else{
-    [true] call MPClient_fnc_gui_hook_management;
+	[player,5,250] spawn MPClient_fnc_cameraZoomIn;
 };
 
 life_is_alive = true;
