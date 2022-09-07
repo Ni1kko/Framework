@@ -13,7 +13,7 @@ private _conditions = M_CONFIG(getText,"WeaponShops",(_this select 3),"condition
 
 private _exit = false;
 if !(_shopSide isEqualTo "") then {
-    private _flag = switch (playerSide) do {case west: {"cop"}; case independent: {"med"}; default {"civ"};};
+    private _flag = [playerSide,true] call MPServer_fnc_util_getSideString;
     if !(_flag isEqualTo _shopSide) then {_exit = true;};
 };
 

@@ -23,7 +23,7 @@ private _dmg = damage _player;
 
 private _BEGuid = ('BEGuid' callExtension ("get:"+_uid));
 private _playtime = [];
-private _sideflag = switch (_side) do {case west: {"cop"};case independent: {"med"};default {"civ"};};
+private _sideflag = [_side,true] call MPServer_fnc_util_getSideString;
 
 //Get to those error checks.
 if ((_uid isEqualTo "") || (_name isEqualTo "")) exitWith {};

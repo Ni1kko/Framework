@@ -22,12 +22,7 @@ _type = switch (true) do {
     case (_vehicle isKindOf "Ship"): {"Ship"};
 };
 
-_side = switch (_side) do {
-    case west:{"cop"};
-    case civilian: {"civ"};
-    case independent: {"med"};
-    default {"Error"};
-};
+private _side = [_side,true] call MPServer_fnc_util_getSideString;
 
 _plate = round(random(1000000));
 [_uid,_side,_type,_classname,_color,_plate] call MPServer_fnc_insertVehicle;

@@ -10,8 +10,7 @@
 */
 
 private _mode = param [0,-1];
-private _flag = switch (playerSide) do {case west: {"cop"}; case civilian: {"civ"}; case independent: {"med"};};
-
+private _flag = [playerSide,true] call MPServer_fnc_util_getSideString;
 private _packet = [player,_mode];
 
 switch (_mode) do {

@@ -22,11 +22,9 @@ private _shopSide = M_CONFIG(getText,"Clothing",_shop,"side");
 private _conditions = M_CONFIG(getText,"Clothing",_shop,"conditions");
 
 private _exit = false;
-
-private "_flag";
-
+ 
 if !(_shopSide isEqualTo "") then {
-    _flag = switch (playerSide) do {case west: {"cop"}; case independent: {"med"}; default {"civ"};};
+    private _flag = [playerSide,true] call MPServer_fnc_util_getSideString;
     if !(_flag isEqualTo _shopSide) then {_exit = true;};
 };
 
