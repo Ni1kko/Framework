@@ -1,3 +1,4 @@
+#include "..\..\script_macros.hpp"
 /*
 	## Nikko Renolds
 	## https://github.com/Ni1kko/Framework
