@@ -13,18 +13,24 @@
 [![|Solid](https://i.imgur.com/gGC2TNF.png)](https://github.com/AsYetUntitled/Framework/)
 
 # Features:
-  - Antihack
-  - Admin-tools
-  - Police, Civilian, Medic & Rebel roles 
-  - Gangs
-  - Banking System
-  - Virtual Item system 
-  - Vitem shops, vehicle shops, weapon shops, clothing stores etc. 
-  - Housing System
-  - Camping System 
-  - Lottery System (Weekly picked, Rollover is stored in federal reserve vault)
-  - Persistent federal reserve vault can be claimed through winning Lottery or by robbing
-  - Persistent wanted system
-  - RCON
-  - DB Logging
+  - Antihack system
+  - Admin system
+  - Bounty hunter system
+  - Civilians
+  - Death system
+  - Gang system
+  - Licensed & Whitelisted rebels
+  - Virtual Item system
+  - Vitem, vehicle, weapon, clothing, license, ect shops
+  - RCON system
+  - Whitelisted police, medic, rebel roles
+  - Persistent banking system (federal reserve vault can be claimed through winning Lottery or by robbing)
+  - Persistent camping system (storage creates, garage accses, toggleable campfire)
+  - Persistent housing system (storage creates, garage accses, spawn option plus more)
+  - Persistent impound system (pay a fee to get you vehicle from imound, fee increses with each restart)
+  - Persistent logging system (rcon, antihack, admin logs)
+  - Persistent lottery system (weekly picked, Rollover is stored in federal reserve vault)
+  - Persistent vehicle system (vitem storage, cargo storage, damage, fuel, position)
+  - Persistent wanted system (can be hunted by cops or licensed bounty hunters)
+  
   - Plus much more.
