@@ -1,4 +1,3 @@
-#include "..\..\script_macros.hpp"
 /*
 	## Nikko Renolds
 	## https://github.com/Ni1kko/Framework
@@ -12,6 +11,8 @@ params [
 private _openSpawnMenu = false;
 private _spawnAtPosition = false;
 
+player setVariable ["life_var_teleported",true,true];
+
 if(playerSide in [civilian,east]) then 
 {
 	switch (true) do 
@@ -19,14 +20,22 @@ if(playerSide in [civilian,east]) then
 		//-- Put them back in jail as they logged off in jail.
 		case (life_is_arrested): 
 		{
-            life_is_arrested = false;
-            [player,true] spawn MPClient_fnc_jail;
+			if(life_var_loadingScreenActive) then {
+				["Prisioner detected!","You logged off in prision, you will be returned back to jail!"] call MPClient_fnc_setLoadingText; 
+				uiSleep(2);
+			};  
+			life_is_arrested = false;
+			[player,true] spawn MPClient_fnc_jail;
         };
 		//-- Reset loadout logged off during combat (combat logged).
 		case (life_firstSpawn AND not(life_is_alive) AND not(life_is_arrested)): 
 		{
             //-- Comabt logged
 			if (LIFE_SETTINGS(getNumber,"save_civilian_positionStrict") isEqualTo 1) then {
+				if(life_var_loadingScreenActive) then {
+					["Combat logged detected!","Your gear and cash have been reset"] call MPClient_fnc_setLoadingText; 
+					uiSleep(2);
+				};
 				[] call MPClient_fnc_startLoadout;
 				life_var_cash = 0;
 				[0] call MPClient_fnc_updatePartial;
@@ -55,25 +64,36 @@ if(playerSide in [civilian,east]) then
 //-- Open spawn menu
 if _openSpawnMenu then
 { 
-	[] call MPClient_fnc_spawnMenu;
-	waitUntil{!isNull (findDisplay 38500)}; //Wait for the spawn selection to be open.
-	waitUntil{isNull (findDisplay 38500)}; //Wait for the spawn selection to be done.	
+	if(life_var_loadingScreenActive) then {
+		[format["%1 Life",worldName],"Loading spawn selection"] call MPClient_fnc_setLoadingText; 
+		uiSleep(2);
+	};
+	private _display = [] call MPClient_fnc_spawnMenu;
+	if(life_var_loadingScreenActive) then {endLoadingScreen};
+	waitUntil{isNull _display};
 }else{
 	if _spawnAtPosition then { 
-        player setVariable ["life_var_teleported",true,true];
         player setVehiclePosition [_position, [], 0, "CAN_COLLIDE"];
 		
-		if(call BIS_fnc_isLoading) then {
-			[format["%1 Life"],worldName,"Returning player to last known position"] call MPClient_fnc_setLoadingText; 
+		if(life_var_loadingScreenActive) then {
+			[format["%1 Life",worldName],"Returning player to last known position"] call MPClient_fnc_setLoadingText; 
 			uiSleep(2);
 			endLoadingScreen;//Terminate Loading Screen  
 		};
-		
-		5 spawn{uiSleep _this; player setVariable ["life_var_teleported",false,true]};
-		disableUserInput false; // Let the user have input 
 	};
 };
 
+//-- First spawn
+if (life_firstSpawn) then {
+    life_firstSpawn = false;
+    [] spawn MPClient_fnc_intro; // Intro Cam Script
+}else{
+    [true] call MPClient_fnc_gui_hook_management;
+};
+
 life_is_alive = true;
+disableUserInput false; // Let the user have input 
+player allowDamage true; // Let the player take damage
+5 spawn{uiSleep _this; player setVariable ["life_var_teleported",false,true]};
 
 true

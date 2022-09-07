@@ -25,12 +25,6 @@ private _MPClient_fnc_exit = compile '
 startLoadingScreen ["","life_Rsc_DisplayLoading"];
 ["Setting up client", "Please Wait..."] call MPClient_fnc_setLoadingText; uiSleep(random[0.5,3,6]);
 
-// -- Make it so they are now allowed to walk on debug
-disableUserInput true;
-
-// -- Load configuration variables
-[] call MPClient_fnc_configuration;
-
 // --
 diag_log "[Life Client] Waiting for the server to be ready...";
 waitUntil {!isNil "life_var_serverLoaded" && {!isNil "extdb_var_database_error"}};
@@ -100,6 +94,7 @@ if (LIFE_SETTINGS(getNumber,"enable_fatigue") isEqualTo 0) then {
  
 [] call MPClient_fnc_setupEVH;
 [] call MPClient_fnc_setupActions;
+[] spawn MPClient_fnc_briefing;
 [] spawn MPClient_fnc_escInterupt;
 [] spawn MPClient_fnc_setupStationService;
 [] spawn MPClient_fnc_initTents;
@@ -119,7 +114,8 @@ private _sideCode = missionNamespace getVariable [format["MPClient_fnc_init%1",_
 //-- 
 [player, _MPClient_fnc_exit] call _sideCode;
 [("Welcome " + profilename),"Have Fun And Respect The Rules!..."] call MPClient_fnc_setLoadingText; uiSleep(5);
-[life_is_alive,life_position] call MPClient_fnc_spawnPlayer;
+private _spawnPlayerThread = [life_is_alive,life_position] spawn MPClient_fnc_spawnPlayer;
+waitUntil{scriptDone _spawnPlayerThread};
 
 //-- Paychecks
 [_side] call MPClient_fnc_paychecks;

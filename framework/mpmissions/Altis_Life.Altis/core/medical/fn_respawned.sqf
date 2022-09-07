@@ -1,24 +1,21 @@
-#include "..\..\script_macros.hpp"
 /*
-    File: fn_respawned.sqf
-    Author: Bryan "Tonic" Boardwine
-
-    Description:
-    Sets the player up if he/she used the respawn option.
+	## Nikko Renolds
+	## https://github.com/Ni1kko/Framework
 */
-private ["_handle"];
-//Reset our weight and other stuff
 
+//--- Reset our player vars
 life_var_isBusy = false;
 life_var_ATMEnabled = true;
 life_var_hunger = 100;
 life_var_thirst = 100;
 life_var_carryWeight = 0;
 life_var_cash = 0; //Make sure we don't get our cash back.
-life_var_respawned = false;
+life_is_alive = false;
+
+//--- Play animation
 player playMove "AmovPercMstpSnonWnonDnon";
 
-//Bad boy
+//-- Died whilst jailed
 if (life_is_arrested) exitWith {
     hint localize "STR_Jail_Suicide";
     life_is_arrested = false;
@@ -26,18 +23,18 @@ if (life_is_arrested) exitWith {
     [] call MPClient_fnc_updateRequest;
 };
 
-//Johnny law got me but didn't let the EMS revive me, reward them half the bounty.
+//-- Johnny law got me but didn't let the EMS revive me, reward them half the bounty.
 if (!isNil "life_copRecieve") then {
     [getPlayerUID player,player,life_copRecieve,true] remoteExecCall ["MPServer_fnc_wantedBounty",RSERV];
     life_copRecieve = nil;
 };
 
-//So I guess a fellow gang member, cop or myself killed myself so get me off that Altis Most Wanted
+//-- So I guess a fellow gang member, cop or myself killed myself so get me off that Altis Most Wanted
 if (life_removeWanted) then {
     [getPlayerUID player] remoteExecCall ["MPServer_fnc_wantedRemove",RSERV];
 };
 
-//Set some vars on our new body.
+//-- Set some vars on our new body.
 {player setVariable _x} forEach [
     ['restrained',false,true],
     ['Escorting',false,true],
@@ -49,10 +46,21 @@ if (life_removeWanted) then {
 
 [] call MPClient_fnc_startLoadout;
 [] call MPClient_fnc_setupActions;
- 
-[player,life_settings_enableSidechannel,playerSide] remoteExecCall ["MPServer_fnc_managesc",RSERV];
+
+//-- Fatigue
 if (LIFE_SETTINGS(getNumber,"enable_fatigue") isEqualTo 0) then {player enableFatigue false;};
 
+//--- Spawn Them
+private _spawnPlayerThread = [false] spawn MPClient_fnc_spawnPlayer;
+waitUntil {scriptDone _spawnPlayerThread};
+
+//--- Play animation
 player playMoveNow "AmovPpneMstpSrasWrflDnon";
  
+//-- Handle side chat
+[player,life_settings_enableSidechannel,playerSide] remoteExecCall ["MPServer_fnc_managesc",RSERV];
+
+//--- Database sync
 [] call MPClient_fnc_updateRequest;
+
+true

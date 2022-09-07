@@ -2,7 +2,8 @@
 class life_Rsc_DisplayLoading {
 
 	idd = 8000;
-	onLoad = "uiNamespace setVariable [ 'life_Rsc_DisplayLoading', _this select 0 ]";
+	onLoad = "uiNamespace setVariable [ 'life_Rsc_DisplayLoading', _this select 0 ]; life_var_loadingScreenActive = true;";
+	onUnload = "uiNamespace setVariable [ 'life_Rsc_DisplayLoading', displayNull ]; life_var_loadingScreenActive = false;";
 	fadein = 0;
 	duration = 1e+011;
 	fadeout = 0;

@@ -6,12 +6,6 @@
     Spawns the player where he selected.
 */
 private ["_spCfg","_sp","_spawnPos"];
-closeDialog 0;
-//cutText ["","BLACK IN"];
-
-
-
-player setVariable ["life_var_teleported",true,true];
 
 if (life_spawn_point isEqualTo []) then {
     private ["_sp","_spCfg"];
@@ -60,16 +54,8 @@ if (life_spawn_point isEqualTo []) then {
     titleText[format ["%2 %1",life_spawn_point select 1,localize "STR_Spawn_Spawned"],"BLACK IN"];
 };
 
-if (life_firstSpawn) then {
-    life_firstSpawn = false;
-    [] spawn MPClient_fnc_intro; // Intro Cam Script
-}else{
-    [true] call MPClient_fnc_gui_hook_management;
-};
-
 [] call MPClient_fnc_playerSkins;
 
-[]spawn{
-    uiSleep 5;
-    player setVariable ["life_var_teleported",false,true];
-};
+closeDialog 0;
+
+true

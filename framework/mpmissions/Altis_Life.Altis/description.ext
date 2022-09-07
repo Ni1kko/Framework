@@ -65,7 +65,7 @@ class CfgFunctions
             class setupEVH {};
             class survival {};
             class briefing {};
-            class configuration {};
+            class configuration {preInit = 1;};
             class setupStationService {};
         };
         

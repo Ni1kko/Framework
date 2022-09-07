@@ -6,6 +6,7 @@
 private _variablesFlagged = [];
 private _variableTooSet = [ 
     ["life_var_serverTimeout", 0],
+    ["life_var_loadingScreenActive", false],
     ["life_action_delay", time],
     ["life_trunk_vehicle", objNull],
     ["life_session_completed", false],
@@ -21,7 +22,6 @@ private _variableTooSet = [
     ["life_spikestrip", objNull],
     ["life_knockout", false],
     ["life_interrupted", false],
-    ["life_var_respawned", false],
     ["life_removeWanted", false],
     ["life_action_gathering", false],
     ["life_god", false],
@@ -144,5 +144,7 @@ if(count _variablesFlagged > 0)exitWith{
     {diag_log (format ["[LIFE] %1 = %2;"] + _x)}forEach _variablesFlagged;
     endMission "Antihack";
 };
+
+[] spawn MPClient_fnc_init;
 
 true

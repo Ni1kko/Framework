@@ -1,40 +1,30 @@
 /*
-    File: fn_spawnMenu.sqf
-    Author: Bryan "Tonic" Boardwine
-
-    Description:
-    Initializes the spawn point selection menu.
+	## Nikko Renolds
+	## https://github.com/Ni1kko/Framework
 */
-private ["_spCfg","_sp","_ctrl"];
+
 disableSerialization;
 
-if (life_is_arrested) exitWith {
-    [] call MPClient_fnc_respawned;
-};
+private _display = createDialog ["life_spawn_selection",true];
+private _listBox = _display displayCtrl 38510;
+private _configSpawnPoints = [playerSide] call MPClient_fnc_spawnPointCfg;
+life_spawn_point = _configSpawnPoints#0; //First option is set by default
 
-if (life_var_respawned) then {
-    [] call MPClient_fnc_respawned;
-};
+_display displaySetEventHandler ["keyDown","_this call MPClient_fnc_displayHandler"];
 
-endLoadingScreen;//Terminate Loading Screen 
-
-disableUserInput false; // Let the user have input
-
-if (!(createDialog "life_spawn_selection")) exitWith {[] call MPClient_fnc_spawnMenu;};
-(findDisplay 38500) displaySetEventHandler ["keyDown","_this call MPClient_fnc_displayHandler"];
-
-_spCfg = [playerSide] call MPClient_fnc_spawnPointCfg;
-
-_ctrl = ((findDisplay 38500) displayCtrl 38510);
 {
-    _ctrl lnbAddRow[(_spCfg select _ForEachIndex) select 1,(_spCfg select _ForEachIndex) select 0,""];
-    _ctrl lnbSetPicture[[_ForEachIndex,0],(_spCfg select _ForEachIndex) select 2];
-    _ctrl lnbSetData[[_ForEachIndex,0],(_spCfg select _ForEachIndex) select 0];
-} forEach _spCfg;
+    _listBox lnbAddRow[(_configSpawnPoints#_ForEachIndex)#1,(_configSpawnPoints#_ForEachIndex)#0,""];
+    _listBox lnbSetPicture[[_ForEachIndex,0],(_configSpawnPoints#_ForEachIndex)#2];
+    _listBox lnbSetData[[_ForEachIndex,0],(_configSpawnPoints#_ForEachIndex)#0];
+} forEach _configSpawnPoints;
 
-_sp = _spCfg select 0; //First option is set by default
+life_spawn_point param [
+    ["_SpawnMarker",""],
+    ["_SpawnName",""]
+];
 
-[((findDisplay 38500) displayCtrl 38502),1,0.1,getMarkerPos (_sp select 0)] call MPClient_fnc_setMapPosition;
-life_spawn_point = _sp;
+[_display displayCtrl 38502,1,0.1,getMarkerPos _SpawnMarker] call MPClient_fnc_setMapPosition;
 
-ctrlSetText[38501,format ["%2: %1",_sp select 1,localize "STR_Spawn_CSP"]];
+ctrlSetText[38501,format ["%2: %1",_SpawnName,localize "STR_Spawn_CSP"]];
+
+_display

@@ -19,14 +19,10 @@ if(param [1,false])exitWith{
 	["RscDisplayDeathScreen"] call MPClient_fnc_destroyRscLayer;
 	player setDamage 0;
 	if(param [2,true])then{
-		if(isNull (findDisplay 38500))then{
-			titleCut ["", "BLACK IN", 1];
-			[] call MPClient_fnc_spawnMenu;
-			waitUntil{!isNull (findDisplay 38500)};
-			waitUntil{isNull (findDisplay 38500)};
-			player setVariable ["lifeState","HEALTHY",true];
-			life_is_alive = true;
-		};
+		closeDialog 0;
+		player setVariable ["lifeState","HEALTHY",true];
+		[] call MPClient_fnc_respawned;
+		titleCut ["", "BLACK IN", 1];
 	}else{
 		player setVariable ["lifeState","HEALTHY",true];
 		life_is_alive = true;
