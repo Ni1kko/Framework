@@ -59,10 +59,18 @@ if _openSpawnMenu then
 	waitUntil{!isNull (findDisplay 38500)}; //Wait for the spawn selection to be open.
 	waitUntil{isNull (findDisplay 38500)}; //Wait for the spawn selection to be done.	
 }else{
-	if _spawnAtPosition then {
+	if _spawnAtPosition then { 
         player setVariable ["life_var_teleported",true,true];
-        player setVehiclePosition [_position, [], 0, "CAN_COLLIDE"];
-        5 spawn{uiSleep _this; player setVariable ["life_var_teleported",false,true]};
+        player setVehiclePosition [_position, [], 0, "CAN_COLLIDE"]
+		
+		if(call BIS_fnc_isLoading) then {
+			[format["%1 Life"],worldName,"Returning player to last known position"] call MPClient_fnc_setLoadingText; 
+			uiSleep(2);
+			endLoadingScreen;//Terminate Loading Screen  
+		};
+		
+		5 spawn{uiSleep _this; player setVariable ["life_var_teleported",false,true]};
+		disableUserInput false; // Let the user have input 
 	};
 };
 
