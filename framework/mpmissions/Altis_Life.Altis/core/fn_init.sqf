@@ -8,10 +8,15 @@ waitUntil{uiSleep 0.5;(getClientState isEqualTo "BRIEFING READ") && !isNull find
 enableSentences false;
 
 private _MPClient_fnc_exit = compile '
+    params [
+       ["_title",""],
+       ["_text",""],
+       ["_ending","END1"]
+    ];
     _this call MPClient_fnc_setLoadingText;
     uiSleep 5;
     endLoadingScreen;
-    endMission "END1"; 
+    [_ending,false,true] call BIS_fnc_endMission;
     disableUserInput false;
     true
 ';
@@ -46,15 +51,16 @@ if !life_var_serverLoaded then {
     }; 
 };
 
-[] call MPClient_fnc_setupEVH;
-[] call MPClient_fnc_setupActions;
 [] call MPClient_fnc_dataQuery;
 waitUntil {
     if(life_var_session_attempts > MAX_ATTEMPTS_TOO_QUERY_DATA) exitWith {["Unable to load player data", "Please try again"] call _MPClient_fnc_exit};
     uiSleep 1;    
     life_session_completed
 };
- 
+
+MPServer_fnc_requestClientId = player;
+publicVariableServer "MPServer_fnc_requestClientId";
+
 ["Setting up player..."] call MPClient_fnc_setLoadingText; uiSleep(random[0.5,3,6]);
 {player setVariable _x} forEach [
     ['restrained', false, true],
@@ -72,9 +78,6 @@ if (LIFE_SETTINGS(getNumber,"enable_fatigue") isEqualTo 0) then {
     }; 
 };
 
-MPServer_fnc_requestClientId = player;
-publicVariableServer "MPServer_fnc_requestClientId";
-
 {
     /*
         https://feedback.bistudio.com/T117205 - disableChannels settings cease to work when leaving/rejoining mission
@@ -87,7 +90,6 @@ publicVariableServer "MPServer_fnc_requestClientId";
     _chan enableChannel [!_noText, !_noVoice];
 } forEach getArray (missionConfigFile >> "disableChannels");
 
-//-- 
 [] spawn {
     for "_i" from 0 to 1 step 0 do {
         waitUntil {(!isNull (findDisplay 49)) && {(!isNull (findDisplay 602))}}; // Check if Inventory and ESC dialogs are open
@@ -95,36 +97,38 @@ publicVariableServer "MPServer_fnc_requestClientId";
         (findDisplay 602) closeDisplay 2; // Close Inventory dialog
     };
 };
-
-//-- 
+ 
+[] call MPClient_fnc_setupEVH;
+[] call MPClient_fnc_setupActions;
 [] spawn MPClient_fnc_escInterupt;
+[] spawn MPClient_fnc_setupStationService;
+[] spawn MPClient_fnc_initTents;
 
 //-- Input handlers
 (findDisplay 46) displayAddEventHandler ["KeyDown", "_this call MPClient_fnc_keydownHandler"];
 (findDisplay 46) displayAddEventHandler ["KeyUp", "_this call MPClient_fnc_keyupHandler"];
 
-[("Welcome " + profilename),"Have Fun And Respect The Rules!..."] call MPClient_fnc_setLoadingText; uiSleep(5);
-
-//--
-switch (playerSide) do {
-    case west: {0 call MPClient_fnc_initCop};
-    case civilian: {0 call MPClient_fnc_initCiv};
-    case independent: {0 call MPClient_fnc_initMedic};
-};
-
-//-- Paychecks
-[playerSide] call MPClient_fnc_paychecks;
-
 //-- Update wanted prifle
 [getPlayerUID player, profileName] remoteExec ["MPServer_fnc_wantedProfUpdate", 2];
+
+private _side = side player;
+private _sideVar = [_side,true] call MPServer_fnc_util_getSideString;
+private _sideCode = missionNamespace getVariable [format["MPClient_fnc_init%1",_sideVar],{}];
+
+
+//-- 
+[player, _MPClient_fnc_exit] call _sideCode;
+[("Welcome " + profilename),"Have Fun And Respect The Rules!..."] call MPClient_fnc_setLoadingText; uiSleep(5);
+[life_is_alive,life_position] call MPClient_fnc_spawnPlayer;
+
+//-- Paychecks
+[_side] call MPClient_fnc_paychecks;
 
 //--
 [player, life_settings_enableSidechannel, playerSide] remoteExecCall ["MPServer_fnc_managesc", 2];
 
-[] spawn MPClient_fnc_setupStationService;
 [] spawn MPClient_fnc_cellphone;//temp
 [] spawn MPClient_fnc_survival;
-[] spawn MPClient_fnc_initTents;
 
 ["objects", 1] call MPClient_fnc_s_onCheckedChange;
 ["tags", 1] call MPClient_fnc_s_onCheckedChange;

@@ -64,22 +64,22 @@ class Loadouts {
     // MED
     class GUER {
         uniform[] = {
-            {"U_Rangemaster", "call life_medicLevel >= 1"}
+            {"U_Rangemaster", "call life_medLevel >= 1"}
         };
         headgear[] = {
-            {"H_Cap_red", "call life_medicLevel >= 1"}
+            {"H_Cap_red", "call life_medLevel >= 1"}
         };
         vest[] = {};
         backpack[] = {};
         weapon[] = {};
         mags[] = {};
         items[] = {
-            {"FirstAidKit", 2, "call life_medicLevel >= 1"}
+            {"FirstAidKit", 2, "call life_medLevel >= 1"}
         };
         linkedItems[] = {
-            {"ItemMap", "call life_medicLevel >= 1"},
-            {"ItemCompass", "call life_medicLevel >= 1"},
-            {"ItemWatch", "call life_medicLevel >= 1"}
+            {"ItemMap", "call life_medLevel >= 1"},
+            {"ItemCompass", "call life_medLevel >= 1"},
+            {"ItemWatch", "call life_medLevel >= 1"}
         };
     };
 };

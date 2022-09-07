@@ -61,9 +61,6 @@ class CfgFunctions
         {
             file = "core";
             class init {};
-            class initCiv {};
-            class initCop {};
-            class initMedic {};
             class setupActions {};
             class setupEVH {};
             class survival {};
@@ -121,6 +118,7 @@ class CfgFunctions
         class Civilian 
         {
             file = "core\civilian";
+            class initCiv {};
             class civMarkers {};
             class demoChargeTimer {};
             class freezePlayer {};
@@ -146,6 +144,7 @@ class CfgFunctions
         class Cop 
         {
             file = "core\cop";
+            class initCop {};
             class bountyReceive {};
             class containerInvSearch {};
             class copInteractionMenu {};
@@ -231,6 +230,7 @@ class CfgFunctions
             class paychecks {};
             class buyLotteryTicket {};
             class bountySelect {};
+            class spawnPlayer {};
         };
 
         class Gangs 
@@ -340,9 +340,10 @@ class CfgFunctions
             class storageBox {}; 
         };
 
-        class Medical_System 
+        class Medical
         {
             file = "core\medical";
+            class initMed {};
             class deathScreen {};
             class deathScreenKeyHandler {};
             class medicLights {};
@@ -357,7 +358,7 @@ class CfgFunctions
             class revivePlayer {};
         };
 
-        class Medical_Agony_System 
+        class Medical_Agony
         {
             file = "core\medical\agony";
             //main damage handler
@@ -409,6 +410,12 @@ class CfgFunctions
             class wantedInfo {};
             class wantedList {};
             class wantedMenu {};
+        };
+
+        class Rebel
+        {
+            file = "core\rebel";
+            class initReb {};
         };
 
         class Shops 

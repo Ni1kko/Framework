@@ -55,7 +55,7 @@ life_adminlevel = compileFinal str(if !(player call life_isdev)then{_adminRank}e
 life_donorlevel = compileFinal str(_donatorRank);
 life_joblevel = compileFinal str(_jobRank);
 life_reblevel = compileFinal str(_rebelRank);
-life_medicLevel = compileFinal str(_medicRank);
+life_medLevel = compileFinal str(_medicRank);
 life_coplevel = compileFinal str(_copRank);
 
 //--- Licenses

@@ -8,7 +8,7 @@
 
 private _lifeConfig = missionConfigFile >> "Life_Settings";
 private _spitConfig = _lifeConfig >> "spitting";
-private _side = player call MPServer_fnc_util_getSideString;
+private _side = [player] call MPServer_fnc_util_getSideString;
 
 life_actions = [];
 

@@ -22,7 +22,7 @@ private _admin = (call (missionNamespace getVariable ["life_adminlevel",{0}])) >
 //-- Get player rank for given side
 private _rank = (switch _newside do {
 	case west: {call (missionNamespace getVariable ["life_coplevel",{0}])};
-	case independent: {call (missionNamespace getVariable ["life_medicLevel",{0}])};
+	case independent: {call (missionNamespace getVariable ["life_medLevel",{0}])};
 	default {0};
 });
  

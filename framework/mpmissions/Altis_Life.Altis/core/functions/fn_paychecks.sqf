@@ -10,7 +10,7 @@ params [
 private _adminlevel = call life_adminlevel;
 private _donorlevel = call life_donorlevel;
 private _policeRank = call life_coplevel;
-private _medicRank = call life_mediclevel;
+private _medicRank = call life_medLevel;
 private _rebelRank = call life_reblevel;
 private _civJobRank = call life_joblevel;
 
