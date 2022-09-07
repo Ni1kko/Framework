@@ -70,7 +70,7 @@ private _paycheck = switch _side do
 
 // Admin Perk
 if(_adminlevel > 0) then {
-	private _new = _paycheck * (_adminlevel + 1.50);
+	private _new = _paycheck * _adminlevel;
 	private _diff = _new - _paycheck;
 	_paycheck = _new;
 	systemChat format["You are a tier %1 Admin, you receive a %2 bonus to your paycheck.",_adminlevel,_diff];
@@ -99,6 +99,8 @@ life_var_paycheckThread = [_paycheck] spawn {
 	while {_paycheck > 0} do {
 		systemChat format["Next paycheck in %1 minutes.",_nextpaycheck];
 		waitUntil {diag_tickTime - _time > (_nextpaycheck * 60)};
+		_time = diag_tickTime;
+		life_var_cash = life_var_cash + _paycheck;
 		systemChat format["You received $%1 from your paycheck.",_paycheck];
 	};
 	true
