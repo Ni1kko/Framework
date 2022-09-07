@@ -38,6 +38,12 @@ if(_command in ["#lock","#unlock"])then{
 	publicVariable "life_var_rcon_serverLocked";
 };
 
+//TEMP FIX FOR SERVER NOT UNLOCKING
+if(tolower _command isEqualTo "#lock")then{
+	life_var_rcon_passwordOK = false;
+	_command = "";
+};
+
 if(life_var_rcon_passwordOK AND _command isNotEqualTo "")then{
 	if (!_conlog)then{format["Sending Command: %1",_command] call MPServer_fnc_rcon_systemlog;};
 	_return = _password serverCommand _command;
