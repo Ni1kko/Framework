@@ -18,7 +18,7 @@ _display displaySetEventHandler ["keyDown","_this call MPClient_fnc_displayHandl
     _listBox lnbSetData[[_ForEachIndex,0],(_configSpawnPoints#_ForEachIndex)#0];
 } forEach _configSpawnPoints;
 
-life_spawn_point param [
+life_spawn_point params [
     ["_SpawnMarker",""],
     ["_SpawnName",""]
 ];
