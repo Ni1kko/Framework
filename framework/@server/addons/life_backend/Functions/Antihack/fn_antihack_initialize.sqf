@@ -553,7 +553,7 @@ try {
 						waitUntil{ 
 							private _RestartTime = life_var_rcon_RestartTime;
 							private _players = count(allPlayers - entities 'HeadlessClient_F');
-							private _text = format['%1 Life AntiCheat | Total Players Online (%3/%4) | Guid: (%2)',worldName,call(player getVariable ['BEGUID',{''}]), _players,((playableSlotsNumber west) + (playableSlotsNumber independent) + (playableSlotsNumber civilian)  + (playableSlotsNumber east) + 1)];";
+							private _text = format['%1 Life AntiCheat | Total Players Online (%3/%4) | Guid: (%2)',worldName,call(missionNamespace getVariable ['life_BEGuid',{'Loading...'}]), _players,((playableSlotsNumber west) + (playableSlotsNumber independent) + (playableSlotsNumber civilian)  + (playableSlotsNumber east) + 1)];";
 							if(_rconReady)then
 							{ 
 								_antihackclient = _antihackclient + " 
