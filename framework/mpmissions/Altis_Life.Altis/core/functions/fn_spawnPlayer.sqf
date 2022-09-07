@@ -61,7 +61,7 @@ if _openSpawnMenu then
 }else{
 	if _spawnAtPosition then { 
         player setVariable ["life_var_teleported",true,true];
-        player setVehiclePosition [_position, [], 0, "CAN_COLLIDE"]
+        player setVehiclePosition [_position, [], 0, "CAN_COLLIDE"];
 		
 		if(call BIS_fnc_isLoading) then {
 			[format["%1 Life"],worldName,"Returning player to last known position"] call MPClient_fnc_setLoadingText; 
