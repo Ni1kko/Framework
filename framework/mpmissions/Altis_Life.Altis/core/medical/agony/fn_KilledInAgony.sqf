@@ -16,3 +16,5 @@ params [
 
 ["all"] call MPClient_fnc_removeBuff;
 _unit setDamage 1;
+
+true
