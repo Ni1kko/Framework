@@ -108,6 +108,10 @@ private _variableTooSet = [
     ["life_isknocked", false],
     ["life_vehicles", []],
 
+    //--- Settings EVH
+    ["life_var_playerTagsEVH", -1],
+    ["life_var_revealObjectsEVH", -1],
+    
     //-- Setup Gang hideouts
     ["life_hideoutBuildings", (LIFE_SETTINGS(getArray,"gang_area")) apply {nearestBuilding(getMarkerPos _x)}]
 ];

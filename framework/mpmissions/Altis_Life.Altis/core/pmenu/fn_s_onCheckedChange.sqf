@@ -15,9 +15,11 @@ switch (_option) do {
         if (_state isEqualTo 1) then {
             life_settings_tagson = true;
             profileNamespace setVariable ["life_settings_tagson",true];
+            life_var_playerTagsEVH = addMissionEventHandler ["EachFrame", MPClient_fnc_playerTags];
         } else {
             life_settings_tagson = false;
             profileNamespace setVariable ["life_settings_tagson",false];
+            removeMissionEventHandler ["EachFrame", life_var_playerTagsEVH];
         };
     };
 
@@ -25,11 +27,11 @@ switch (_option) do {
         if (_state isEqualTo 1) then {
             life_settings_revealObjects = true;
             profileNamespace setVariable ["life_settings_revealObjects",true];
-            LIFE_ID_RevealObjects = addMissionEventHandler ["EachFrame",{_this call MPClient_fnc_revealObjects}];
+            life_var_revealObjectsEVH = addMissionEventHandler ["EachFrame",{_this call MPClient_fnc_revealObjects}];
         } else {
             life_settings_revealObjects = false;
             profileNamespace setVariable ["life_settings_revealObjects",false];
-            removeMissionEventHandler ["EachFrame", LIFE_ID_RevealObjects];
+            removeMissionEventHandler ["EachFrame",  life_var_revealObjectsEVH];
         };
     };
 

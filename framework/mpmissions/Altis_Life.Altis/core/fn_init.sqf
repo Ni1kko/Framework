@@ -126,6 +126,8 @@ switch (playerSide) do {
 [] spawn MPClient_fnc_survival;
 [] spawn MPClient_fnc_initTents;
 
-addMissionEventHandler ["EachFrame", MPClient_fnc_playerTags];
-addMissionEventHandler ["EachFrame", MPClient_fnc_revealObjects];
+["objects", 1] call MPClient_fnc_s_onCheckedChange;
+["tags", 1] call MPClient_fnc_s_onCheckedChange;
+
+true
  
