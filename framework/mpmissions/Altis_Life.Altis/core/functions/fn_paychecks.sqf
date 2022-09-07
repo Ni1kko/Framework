@@ -105,3 +105,5 @@ life_var_paycheckThread = [_paycheck] spawn {
 	};
 	true
 };
+
+true
