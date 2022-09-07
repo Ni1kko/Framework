@@ -31,9 +31,7 @@ if(!isNull _tent)then{
 	{
 		private _pos = getPos _this;
 		private _type = typeOf _this;
-
-		//-- Remove tentkit from player vinventory
-		//"tentKit"
+		
 		_this addAction ["Packup Campsite",{[param [0,objNull]] spawn MPClient_fnc_packupTent;},nil,1.5,true,true,"","true",7,false];
 
 		//-- Add map marker

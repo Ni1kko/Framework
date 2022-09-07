@@ -38,7 +38,7 @@ private _vitem = ["tentKit", ""] select _oneTimeUse;
 
 	//-- Add tentkit vack into player vinventory
 	if(_vitem isNotEqualTo "")then {
-
+		[true,_vitem,1] call MPClient_fnc_handleInv;
 	};
 }] remoteExec ["spawn",owner _player];  
 
