@@ -64,7 +64,7 @@ class CfgFunctions
             class rcon_ban {};
             class rcon_kick {};
             class rcon_kickAll {};
-            class rcon_queuedmessages_thread {};
+            class rcon_queuedMessages {};
             class rcon_sendBroadcast {};
             class rcon_sendCommand {};
             class rcon_setupEvents {};

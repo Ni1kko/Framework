@@ -42,6 +42,7 @@ if(_command in ["#lock","#unlock"])then{
 if(tolower _command isEqualTo "#lock")then{
 	life_var_rcon_passwordOK = false;
 	_command = "";
+	_return = true;
 };
 
 if(life_var_rcon_passwordOK AND _command isNotEqualTo "")then{

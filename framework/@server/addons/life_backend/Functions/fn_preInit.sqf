@@ -41,6 +41,8 @@ life_var_entityRespawnedEVH =   addMissionEventHandler ["EntityRespawned",      
 cleanupFSM = [] call MPServerFSM_fnc_cleanup;
 
 private _severSchedulerStartUpQueue = [ 
+	//--- Every 5 seconds
+ 	[5 , 	  "MPServer_fnc_rcon_queuedMessages"],
 	//--- Every 10 seconds
 	[10, 	  "MPServer_fnc_updateHuntingZone"],
 	//--- Every 3 minutes

@@ -23,10 +23,7 @@ private _rconshutdown = getNumber(configFile >> "CfgRCON" >> "useShutdown") isEq
 if(!life_var_rcon_passwordOK)then{
 	_rconlocked = false;
 };
-
-//--- Broadcast event
-[]spawn MPServer_fnc_rcon_queuedmessages_thread;
-
+ 
 "Events thread resumed: System fully initialized!" call MPServer_fnc_rcon_systemlog;
 
 if (_rconlocked && life_var_rcon_RestartMode isEqualTo 0) then{
@@ -48,45 +45,46 @@ while {true} do
 {
 	private _timeRestart = [life_var_rcon_nextRestart] call MPServer_fnc_util_getRemainingTime;
 
-	if(_timeRestart isNotEqualTo -1)then{
-		 
-		private _timeRestart_hh_mm = _timeRestart call _mins2hrsmins;
-		private _timeRestart_message = format["Next %1 In: %2h %3min",(if(_rconshutdown)then{'Shutdown'}else{'Restart'}),_timeRestart_hh_mm#0,_timeRestart_hh_mm#1];
-		
-		//--- Main events
-		if(_serveruptime > 0 && _rconuptime > 0)then
-		{ 
-			//--- Restart event (1min)
-			if (_serveruptime mod 1 isEqualTo 0) then
+	//--- Main events
+	if(_serveruptime > 0 && _rconuptime > 0)then
+	{ 
+		//--- Restart event (1min)
+		if (_serveruptime mod 1 isEqualTo 0) then
+		{
+			//--- Needs unlocked
+			if (life_var_rcon_RestartMode isEqualTo 0 && _rconlocked) then{
+				"#unlock" call MPServer_fnc_rcon_sendCommand;
+				_rconlocked = false;
+				"Lock Event: server unlocked and accepting players!" call MPServer_fnc_rcon_systemlog;
+			};
+
+			//--- Realtime
+			if(_realtime isNotEqualTo life_var_rcon_RealTime)then{
+				life_var_rcon_RealTime = _realtime;
+				publicVariable "life_var_rcon_RealTime";
+			};
+
+			//--- Uptime
+			if(life_var_rcon_upTime isNotEqualTo _rconuptime)then{
+				life_var_rcon_upTime = _rconuptime;
+				publicVariable "life_var_rcon_upTime";
+			};
+
+			//--- Restart time
+			if(_timeRestart isNotEqualTo life_var_rcon_RestartTime)then{
+				life_var_rcon_RestartTime = _timeRestart;
+				publicVariable "life_var_rcon_RestartTime";
+			};
+			
+			if(_timeRestart isNotEqualTo -1)then
 			{
-				//--- Needs unlocked
-				if (life_var_rcon_RestartMode isEqualTo 0 && _rconlocked) then{
-					"#unlock" call MPServer_fnc_rcon_sendCommand;
-					_rconlocked = false;
-					"Lock Event: server unlocked and accepting players!" call MPServer_fnc_rcon_systemlog;
-				};
-
-				//--- Restart time
-				if(_timeRestart isNotEqualTo life_var_rcon_RestartTime)then{
-					life_var_rcon_RestartTime = _timeRestart;
-					publicVariable "life_var_rcon_RestartTime";
-				};
-
-				//--- Realtime
-				if(_realtime isNotEqualTo life_var_rcon_RealTime)then{
-					life_var_rcon_RealTime = _realtime;
-					publicVariable "life_var_rcon_RealTime";
-				};
-
-				//--- Uptime
-				if(life_var_rcon_upTime isNotEqualTo _rconuptime)then{
-					life_var_rcon_upTime = _rconuptime;
-					publicVariable "life_var_rcon_upTime";
-				};
-
 				//--- Warning messages
 				if (typeName life_var_rcon_RestartMessages isEqualTo "ARRAY") then { 
-					if !(life_var_rcon_RestartMessages isEqualTo []) then {
+					if !(life_var_rcon_RestartMessages isEqualTo []) then 
+					{
+						private _timeRestart_hh_mm = _timeRestart call _mins2hrsmins;
+						private _timeRestart_message = format["Next %1 In: %2h %3min",(if(_rconshutdown)then{'Shutdown'}else{'Restart'}),_timeRestart_hh_mm#0,_timeRestart_hh_mm#1];
+
 						{ 
 							if (_timeRestart < _x) then {
 								format["Server is going to restart in %1 min! Log out before the restart to prevent gear loss.", _x] remoteExec ["hint",-2]; 
@@ -135,43 +133,44 @@ while {true} do
 					}; 
 				};
 			};
+		};
 
-			//--- unlocked
-			if(!_rconlocked)then
-			{
-				//--- Heartbeat event (3min)
-				if (_rconuptime mod 3 isEqualTo 0) then { 
-					private _time_mmhh = _rconuptime call _mins2hrsmins;
-					_heartbeat = _heartbeat + 1;
-					format["Events heartbeat#%1, Thread Still Active - RCON UPTIME: (%2h %3min) %4",_heartbeat,_time_mmhh#0,_time_mmhh#1,_timeRestart_message] call MPServer_fnc_rcon_systemlog; 
-				};
-				
-				//--- Reload bans event (15mins)
-				if (_serveruptime mod 15 isEqualTo 0) then {
-					"#beserver loadBans" call MPServer_fnc_rcon_sendCommand;
-				};
+		//--- unlocked
+		if(!_rconlocked)then
+		{
+			//--- Heartbeat event (3min)
+			if (_rconuptime mod 3 isEqualTo 0) then { 
+				private _time_mmhh = _rconuptime call _mins2hrsmins;
+				_heartbeat = _heartbeat + 1;
+				format["Events heartbeat#%1, Thread Still Active - RCON UPTIME: (%2h %3min) %4",_heartbeat,_time_mmhh#0,_time_mmhh#1,_timeRestart_message] call MPServer_fnc_rcon_systemlog; 
+			};
+			
+			//--- Reload bans event (15mins)
+			if (_serveruptime mod 15 isEqualTo 0) then {
+				"#beserver loadBans" call MPServer_fnc_rcon_sendCommand;
+			};
 
-				//---
-				if (_serveruptime mod 30 isEqualTo 0) then {
-					_timeRestart_message call MPServer_fnc_rcon_sendBroadcast; 
-				}; 
+			//---
+			if (_serveruptime mod 30 isEqualTo 0) then {
+				_timeRestart_message call MPServer_fnc_rcon_sendBroadcast; 
+			}; 
 
-				//--- messages event
-				if(count life_var_rcon_FriendlyMessages > 0)then{
-					{
-						_x params ["_n","_messages"];
-						if(_serveruptime mod _n isEqualTo 0)then{
-							{
-								if(count life_var_rcon_messagequeue < 10)then{
-									_x call MPServer_fnc_rcon_sendBroadcast;
-								};
-							} forEach (_messages call BIS_fnc_arrayShuffle);
-						};
-					} forEach (life_var_rcon_FriendlyMessages call BIS_fnc_arrayShuffle);
-				};
+			//--- messages event
+			if(count life_var_rcon_FriendlyMessages > 0)then{
+				{
+					_x params ["_n","_messages"];
+					if(_serveruptime mod _n isEqualTo 0)then{
+						{
+							if(count life_var_rcon_messagequeue < 10)then{
+								_x call MPServer_fnc_rcon_sendBroadcast;
+							};
+						} forEach (_messages call BIS_fnc_arrayShuffle);
+					};
+				} forEach (life_var_rcon_FriendlyMessages call BIS_fnc_arrayShuffle);
 			};
 		};
 	};
+ 
 	
 	uiSleep 60;
 };
