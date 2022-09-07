@@ -22,9 +22,9 @@ _type = switch (true) do {
     case (_vehicle isKindOf "Ship"): {"Ship"};
 };
 
-private _side = [_side,true] call MPServer_fnc_util_getSideString;
+private _sideVar = [_side,true] call MPServer_fnc_util_getSideString;
 
 _plate = round(random(1000000));
-[_uid,_side,_type,_classname,_color,_plate] call MPServer_fnc_insertVehicle;
+[_uid,_sideVar,_type,_classname,_color,_plate] call MPServer_fnc_insertVehicle;
 _vehicle setVariable ["oUUID",_uid,true];
 _vehicle setVariable ["dbInfo",[_uid,_plate],true];
