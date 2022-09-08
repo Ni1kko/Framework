@@ -79,7 +79,7 @@ switch (param [1,-1]) do {
         ["UPDATE", "players", [
             [//What
                 ["alive",   ["DB","BOOL", param [2,false]] call MPServer_fnc_database_parse],	
-                ["position",["DB","POSITION", param [3,[]]] call MPServer_fnc_database_parse]	
+                ["position",["DB","ARRAY", param [3,[]]] call MPServer_fnc_database_parse]	
             ],
             [//Where
                 ["BEGuid",str _BEGuid]
