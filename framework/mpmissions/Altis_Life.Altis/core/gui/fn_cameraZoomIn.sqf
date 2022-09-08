@@ -33,7 +33,7 @@ _camera camCommit 0;
 waitUntil {camCommitted _camera};
 
 //-- Adjust view to object
-_camera camSetTarget [[_object, vehicle _object] select (_object isKindOf "Man")]; 
+_camera camSetTarget ([_object, vehicle _object] select (_object isKindOf "Man"));
 _camera camSetRelPos [0,0,2];
 _camera camCommit _camTime;
 waitUntil {camCommitted _camera};
