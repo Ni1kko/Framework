@@ -24,6 +24,7 @@ class CfgFunctions
             class util_getPlayerObject {};
             class util_randomString {};
             class util_getSideString {};
+            class util_getTypeString {};
             class util_tooExpression {};
             class util_getCurrentDay {};
             class util_getCurrentTime {};

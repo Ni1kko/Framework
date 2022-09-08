@@ -97,6 +97,7 @@ life_var_serverLoaded = true;
     "life_var_playtimeValues",
     "life_var_serverLoaded",
     "MPServer_fnc_util_getSideString",
+	"MPServer_fnc_util_getTypeString",
     "MPServer_fnc_util_getPlayerObject",
 	"life_var_currentDay"
 ];

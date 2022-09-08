@@ -61,3 +61,6 @@
 #define SIDE_TARGET_GLOBAL 0
 #define SIDE_TARGET_SERVERS 2
 #define SIDE_TARGET_CLIENTS -2
+
+//
+#define TYPE_NOT_FOUND "Undefined"

@@ -13,7 +13,8 @@ titleText[localize "STR_NOTF_NetDrop","PLAIN"];
 sleep 5;
 if (_fish isEqualTo []) exitWith {titleText[localize "STR_NOTF_NetDropFail","PLAIN"]; life_net_dropped = false;};
 {
-    if (_x isKindOf "Fish_Base_F") then {
+    private _typeStr = [_x] call  MPServer_fnc_util_getTypeString;
+    if (_typeStr isEqualTo "Fish") then {
         switch (true) do {
             case ((typeOf _x) isEqualTo "Salema_F"): {_typeName = localize "STR_ANIM_Salema"; _type = "salema_raw";};
             case ((typeOf _x) isEqualTo "Ornate_random_F") : {_typeName = localize "STR_ANIM_Ornate"; _type = "ornate_raw";};
@@ -23,7 +24,7 @@ if (_fish isEqualTo []) exitWith {titleText[localize "STR_NOTF_NetDropFail","PLA
             case ((typeOf _x) isEqualTo "CatShark_F") : {_typeName = localize "STR_ANIM_Catshark"; _type = "catshark_raw";};
             default {_type = "";};
         };
-
+ 
         sleep 3;
 
         if ([true,_type,1] call MPClient_fnc_handleInv) then {
