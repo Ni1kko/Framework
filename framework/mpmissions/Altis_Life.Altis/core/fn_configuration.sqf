@@ -24,7 +24,6 @@ private _variableTooSet = [
     ["life_interrupted", false],
     ["life_removeWanted", false],
     ["life_action_gathering", false],
-    ["life_god", false],
     ["life_frozen", false],
     ["life_save_gear", []],
     ["life_container_activeObj", objNull],
@@ -103,15 +102,22 @@ private _variableTooSet = [
     ["life_var_thirst", 100],
     ["life_var_hunger", 100],
     ["life_var_cash", 0],
-
     ["life_istazed", false],
     ["life_isknocked", false],
+
+    //--- Owned house, vehicles are added to this array
     ["life_vehicles", []],
 
     //--- Settings EVH
     ["life_var_playerTagsEVH", -1],
     ["life_var_revealObjectsEVH", -1],
+
+    //--- RemoteExec related
+    ["life_var_serverRequest",false],
     
+    //--- Shop related
+    ["life_veh_shop",[nil,nil,"Undefined"]],
+
     //-- Setup Gang hideouts
     ["life_hideoutBuildings", (LIFE_SETTINGS(getArray,"gang_area")) apply {nearestBuilding(getMarkerPos _x)}]
 ];

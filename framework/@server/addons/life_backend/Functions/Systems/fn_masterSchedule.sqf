@@ -27,76 +27,74 @@ while{true} do
 	if(count _MasterSchedule > 0)then
 	{
 		{
-			private _schedulerOkay = _x params [
+			_x params [
 				["_time", 0, [0]],
 				["_function", "", ["",{}]],
 				["_params", []],
 				["_target", "SERVER", [""]],
 				["_isSpawn",false, [false]]
 			];
-
-			if _scheduleOkay then
+			
+			if(_time < 3)then{_time = 3};
+			
+			if(_target in ["CLIENT","SERVER","GLOBAL"])then
 			{
-				if(_time < 3)then{_time = 3};
-				
-				if(_target in ["CLIENT","SERVER","GLOBAL"])then
-				{
-					if((_runtime mod _time) isEqualTo 0)then
-					{ 
-						switch _target do 
-						{
-							case "SERVER": 
-							{ 
-								private _code = compile ("diag_log 'Error: Function [" + _function + "] not found'");
+				if((_runtime mod _time) isEqualTo 0)then
+				{ 
+					switch _target do 
+					{
+						case "SERVER": 
+						{ 
+							private _code = compile ("diag_log 'Error: Function [" + _function + "] not found'");
 
-								if(typeName _function isEqualTo "CODE")then{
-									_code = _function;
-								}else{
-									_code = missionNamespace getVariable [_function, _code];
-								};
+							if(typeName _function isEqualTo "CODE")then{
+								_code = _function;
+							}else{
+								_code = missionNamespace getVariable [_function, _code];
+							};
 
+							if _isSpawn then {
+								_params spawn _code;
+							}else{
+								_params call _code;
+							};
+						};
+						case "CLIENT": 
+						{ 
+							if(typeName _function isEqualTo "CODE")then{ 
 								if _isSpawn then {
-									_params spawn _code;
+									[_params,_function] remoteExec ["spawn", -2];
 								}else{
-									_params call _code;
+									[_params,_function] remoteExec ["call", -2];
+								};
+							}else{
+								if _isSpawn then {
+									_params remoteExec [_function, -2];
+								}else{
+									_params remoteExecCall [_function, -2];
+								}; 
+							};
+						};
+						case "GLOBAL": 
+						{ 
+							if(typeName _function isEqualTo "CODE")then{ 
+								if _isSpawn then {
+									[_params,_function] remoteExec ["spawn", 0];
+								}else{
+									[_params,_function] remoteExec ["call", 0];
+								};
+							}else{
+								if _isSpawn then {
+									_params remoteExec [_function, 0];
+								}else{
+									_params remoteExecCall [_function, 0];
 								};
 							};
-							case "CLIENT": 
-							{ 
-								if(typeName _function isEqualTo "CODE")then{ 
-									if _isSpawn then {
-										[_params,_function] remoteExec ["spawn", -2];
-									}else{
-										[_params,_function] remoteExec ["call", -2];
-									};
-								}else{
-									if _isSpawn then {
-										_params remoteExec [_function, -2];
-									}else{
-										_params remoteExecCall [_function, -2];
-									}; 
-								};
-							};
-							case "GLOBAL": 
-							{ 
-								if(typeName _function isEqualTo "CODE")then{ 
-									if _isSpawn then {
-										[_params,_function] remoteExec ["spawn", 0];
-									}else{
-										[_params,_function] remoteExec ["call", 0];
-									};
-								}else{
-									if _isSpawn then {
-										_params remoteExec [_function, 0];
-									}else{
-										_params remoteExecCall [_function, 0];
-									};
-								};
-							};
-						};	
-					};
+						};
+					};	
 				};
-			}; 
+			};
+		 
 		}forEach (_MasterSchedule call BIS_fnc_arrayShuffle)
 		
 	};

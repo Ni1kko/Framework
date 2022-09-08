@@ -57,6 +57,7 @@ class CfgFunctions
             class database_request {};
             class database_parse {};
             class database_systemlog {};
+            class database_getUpTime {};
         };
     };
 };
