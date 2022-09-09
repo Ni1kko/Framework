@@ -258,8 +258,8 @@ MPServer_fnc_vehicle_buyRequest = {
 		{
 			params [
 				["_vehicle",objNull,[objNull]],
+				["_price",0,[0]],
 				["_purchased",false,[false]],
-				["_price",0,[0]]
 			];
 
 			private _class = typeOf _vehicle;
@@ -341,7 +341,7 @@ MPServer_fnc_vehicle_lockingRequest = {
 	
 	//-- Toggle lcok system
 	if _locked then {
-		_vehicle lock 0;
+		_vehicle lock false;
 		[_vehicle,"unlockCarSound",50,1] remoteExec ["MPClient_fnc_say3D",0];
 		if _animate then 
 		{ 
@@ -369,7 +369,7 @@ MPServer_fnc_vehicle_lockingRequest = {
 		(localize "STR_MISC_VehUnlock") remoteExec ["systemChat",owner _player];
 		_locked = false;
 	} else {
-		_vehicle lock 2;
+		_vehicle lock true;
 		[_vehicle,"lockCarSound",50,1] remoteExec ["MPClient_fnc_say3D",0];
 		if _animate then 
 		{
