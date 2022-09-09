@@ -68,6 +68,7 @@ try {
 		"_rnd_toggleoffcolor",
 		"_rnd_playermenutoggle",
 		"_rnd_godmodetoggle",
+		"_rnd_godmodetoggleThread",
 		"_rnd_vehiclemenutoggle",
 		"_rnd_weaponmenutoggle",
 		"_rnd_cratemenutoggle",
@@ -152,6 +153,7 @@ try {
 		"+_rnd_toggleoffcolor+" = [0,0.47,0.41,1];
 		"+_rnd_playermenutoggle+" = false;
 		"+_rnd_godmodetoggle+" = false;
+		"+_rnd_godmodetoggleThread+" = scriptNull;
 		"+_rnd_vehiclemenutoggle+" = false;
 		"+_rnd_weaponmenutoggle+" = false;
 		"+_rnd_cratemenutoggle+" = false;
@@ -398,15 +400,50 @@ try {
 			_pos;
 		"";
 		"+_rnd_adminmenugetfunctions+" = compileFinal ""
-			private _godmode = {
-				systemChat 'test';
-				if("+_rnd_godmodetoggle+")then{
-					titleText [localize 'STR_ANOTF_godModeOn','PLAIN']; titleFadeOut 2;
-					player allowDamage false;
-					['INFO','Enabled Invincibility'] call "+_rnd_log+";
-				}else{ 
+			private _godmode = { 
+				if("+_rnd_godmodetoggle+")then
+				{
+					"+_rnd_godmodetoggleThread+" = [] spawn {
+						['INFO','Enabled Invincibility'] call "+_rnd_log+";
+						titleText [localize 'STR_ANOTF_godModeOn','PLAIN']; 
+						titleFadeOut 2;
+						while{"+_rnd_godmodetoggle+"}do{
+							life_var_hunger = 1000;
+							life_var_thirst = 1000;
+							life_var_bleeding = false;
+							life_var_pain_shock = false;
+							life_var_critHit = false;
+							player allowDamage false;
+							waitUntil{
+								uiSleep 6;
+								if(isNil 'life_var_thirst')then{life_var_thirst = 1000};
+								if(isNil 'life_var_hunger')then{life_var_hunger = 1000};
+								if(isNil 'life_var_bleeding')then{life_var_bleeding = false};
+								if(isNil 'life_var_pain_shock')then{life_var_pain_shock = false};
+								if(isNil 'life_var_critHit')then{life_var_critHit = false}; 
+								(
+									isDamageAllowed player
+									OR
+									life_var_thirst <= 60 
+									OR 
+									life_var_hunger <= 60 
+									OR 
+									life_var_bleeding 
+									OR 
+									life_var_pain_shock 
+									OR 
+									life_var_critHit
+								)
+							};
+						};
+					};
+				}else{
+					['INFO','Disabled Invincibility'] call "+_rnd_log+";
 					titleText [localize 'STR_ANOTF_godModeOff','PLAIN']; titleFadeOut 2;
 					player allowDamage true;
+					terminate "+_rnd_godmodetoggleThread+";
+					life_var_hunger = 100;
+					life_var_thirst = 100;
 				};
 			};
 			private _infammo = { 
@@ -449,6 +486,11 @@ try {
 			private _heal = {
 				resetCamShake; 
 				player setDamage 0;
+				life_var_hunger = 100;
+				life_var_thirst = 100;
+				life_var_bleeding = false;
+				life_var_pain_shock = false;
+				life_var_critHit = false;
 				['INFO','SelfHealed'] call "+_rnd_log+";
 			};
 			private _repaircurs = {
@@ -524,8 +566,13 @@ try {
 				private _target = call "+_rnd_adminmenu_getselectedtarget+";
 				if(isNull _target) exitWith {};
 				[_target,{
-					resetCamShake;
+					resetCamShake; 
 					player setDamage 0;
+					life_var_hunger = 100;
+					life_var_thirst = 100;
+					life_var_bleeding = false;
+					life_var_pain_shock = false;
+					life_var_critHit = false;
 				}] call "+_rnd_runtarget+";
 				['INFO',format['Healed %1',getPlayerUID _target]] call "+_rnd_log+";
 			};
@@ -1212,7 +1259,7 @@ try {
 				waitUntil{!isNil 'life_radio_staff'};
 				["+_rnd_fnc_joinAdminChat+",[player]] call "+_rnd_runserver+";
 			};
-			
+
 			systemChat '--------------------------------------------------------------------------------------';
 			systemChat 'Welcome Admin, OPEN Menu using INSERT';
 			systemChat '--------------------------------------------------------------------------------------';
