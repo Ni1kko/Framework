@@ -1,22 +1,8 @@
-class CarShops {
-    /*
-    *    ARRAY FORMAT:
-    *        0: STRING (Classname)
-    *        1: STRING (Condition)
-    *    FORMAT:
-    *        STRING (Conditions) - Must return boolean :
-    *            String can contain any amount of conditions, aslong as the entire
-    *            string returns a boolean. This allows you to check any levels, licenses etc,
-    *            in any combination. For example:
-    *                "call life_coplevel && license_civ_someLicense"
-    *            This will also let you call any other function.
-    *
-    *   BLUFOR Vehicle classnames can be found here: https://community.bistudio.com/wiki/Arma_3_CfgVehicles_WEST
-    *   OPFOR Vehicle classnames can be found here: https://community.bistudio.com/wiki/Arma_3_CfgVehicles_EAST
-    *   Independent Vehicle classnames can be found here: https://community.bistudio.com/wiki/Arma_3_CfgVehicles_GUER
-    *   Civilian Vehicle classnames can be found here: https://community.bistudio.com/wiki/Arma_3_CfgVehicles_CIV
-    */
-    class civ_car {
+
+class cfgVehicleTraders 
+{
+    class civ_car 
+    {
         side = "civ";
         conditions = "";
         vehicles[] = {
@@ -30,7 +16,8 @@ class CarShops {
         };
     };
 
-    class kart_shop {
+    class kart_shop 
+    {
         side = "civ";
         conditions = "";
         vehicles[] = {
@@ -41,7 +28,8 @@ class CarShops {
         };
     };
 
-    class civ_truck {
+    class civ_truck 
+    {
         side = "civ";
         conditions = "";
         vehicles[] = {
@@ -59,7 +47,8 @@ class CarShops {
         };
     };
 
-    class civ_air {
+    class civ_air 
+    {
         side = "civ";
         conditions = "";
         vehicles[] = {
@@ -70,7 +59,8 @@ class CarShops {
         };
     };
 
-     class civ_ship {
+    class civ_ship 
+    {
         side = "civ";
         conditions = "";
         vehicles[] = {
@@ -82,7 +72,8 @@ class CarShops {
         };
     };
 
-    class reb_car {
+    class reb_car 
+    {
         side = "civ";
         conditions = "";
         vehicles[] = {
@@ -95,7 +86,8 @@ class CarShops {
         };
     };
 
-    class med_shop {
+    class med_shop 
+    {
         side = "med";
         conditions = "";
         vehicles[] = {
@@ -106,7 +98,8 @@ class CarShops {
         };
     };
 
-    class med_air_hs {
+    class med_air_hs 
+    {
         side = "med";
         conditions = "";
         vehicles[] = {
@@ -115,7 +108,8 @@ class CarShops {
         };
     };
 
-    class cop_car {
+    class cop_car 
+    {
         side = "cop";
         conditions = "";
         vehicles[] = {
@@ -127,7 +121,8 @@ class CarShops {
         };
     };
 
-    class cop_air {
+    class cop_air 
+    {
         side = "cop";
         conditions = "call life_coplevel >= 3";
         vehicles[] = {
@@ -136,7 +131,8 @@ class CarShops {
         };
     };
 
-    class cop_ship {
+    class cop_ship 
+    {
         side = "cop";
         conditions = "";
         vehicles[] = {
@@ -149,7 +145,8 @@ class CarShops {
     };
 };
 
-class LifeCfgVehicles {
+class cfgVehicleArsenal 
+{
     /*
     *    Vehicle Configs (Contains textures and other stuff)
     *
@@ -532,15 +529,15 @@ class LifeCfgVehicles {
         price = 15000;
         textures[] = {};
     };
-/*
-To edit another information in this classes you can use this exemple.
-class C_Kart_01_Fuel_F : C_Kart_01_Blu_F{
-    vItemSpace = 40;
-    price = ;
-};
+    /*
+    To edit another information in this classes you can use this exemple.
+    class C_Kart_01_Fuel_F : C_Kart_01_Blu_F{
+        vItemSpace = 40;
+        price = ;
+    };
 
-will modify the virtual space and the price of the vehicle, but other information such as license and textures will pick up the vehicle declare at : Vehicle {};
-*/
+    will modify the virtual space and the price of the vehicle, but other information such as license and textures will pick up the vehicle declare at : Vehicle {};
+    */
     class C_Kart_01_Fuel_F : C_Kart_01_Blu_F{}; // Get all information of C_Kart_01_Blu_F
     class C_Kart_01_Red_F : C_Kart_01_Blu_F{};
     class C_Kart_01_Vrana_F : C_Kart_01_Blu_F{};

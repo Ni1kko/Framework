@@ -6,7 +6,7 @@
 *        illegal = Illegal License
 *        side = side indicator
 */
-class Licenses {
+class cfgLicenses {
     //Civilian Licenses
     class driver {
         variable = "driver";
@@ -158,14 +158,6 @@ class Licenses {
         variable = "marijuana";
         displayName = "STR_License_Marijuana";
         price = 19500;
-        illegal = true;
-        side = "civ";
-    };
-
-    class rebel {
-        variable = "rebel";
-        displayName = "STR_License_Rebel";
-        price = 75000;
         illegal = true;
         side = "civ";
     };

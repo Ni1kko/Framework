@@ -185,7 +185,7 @@ class VirtualItems
         illegal = false;
         edible = -1;
         drinkable = -1;
-        icon = "icons\ico_pickaxe.paa";
+        icon = "textures\icons\ico_pickaxe.paa";
         object = "Land_Suitcase_F";
     };
 
@@ -198,7 +198,7 @@ class VirtualItems
         illegal = false;
         edible = -1;
         drinkable = -1;
-        icon = "icons\ico_defibrillator.paa";
+        icon = "textures\icons\ico_defibrillator.paa";
         object = "Land_Suitcase_F";
     };
 
@@ -237,7 +237,7 @@ class VirtualItems
         illegal = false;
         edible = -1;
         drinkable = -1;
-        icon = "icons\ico_fuelEmpty.paa";
+        icon = "textures\icons\ico_fuelEmpty.paa";
         object = "Land_CanisterFuel_F";
     };
 
@@ -250,7 +250,7 @@ class VirtualItems
         illegal = false;
         edible = -1;
         drinkable = -1;
-        icon = "icons\ico_fuel.paa";
+        icon = "textures\icons\ico_fuel.paa";
         object = "Land_CanisterFuel_F";
     };
 
@@ -263,7 +263,7 @@ class VirtualItems
         illegal = true;
         edible = -1;
         drinkable = -1;
-        icon = "icons\ico_spikeStrip.paa";
+        icon = "textures\icons\ico_spikeStrip.paa";
         object = "Land_Suitcase_F";
     };
 
@@ -276,7 +276,7 @@ class VirtualItems
         illegal = true;
         edible = -1;
         drinkable = -1;
-        icon = "icons\ico_lockpick.paa";
+        icon = "textures\icons\ico_lockpick.paa";
         object = "Land_Suitcase_F";
     };
 
@@ -289,7 +289,7 @@ class VirtualItems
         illegal = true;
         edible = -1;
         drinkable = -1;
-        icon = "icons\ico_goldBar.paa";
+        icon = "textures\icons\ico_goldBar.paa";
         object = "Land_Suitcase_F";
     };
 
@@ -302,7 +302,7 @@ class VirtualItems
         illegal = true;
         edible = -1;
         drinkable = -1;
-        icon = "icons\ico_blastingCharge.paa";
+        icon = "textures\icons\ico_blastingCharge.paa";
         object = "Land_Suitcase_F";
     };
 
@@ -315,7 +315,7 @@ class VirtualItems
         illegal = true;
         edible = -1;
         drinkable = -1;
-        icon = "icons\ico_boltCutter.paa";
+        icon = "textures\icons\ico_boltCutter.paa";
         object = "Land_Suitcase_F";
     };
 
@@ -328,7 +328,7 @@ class VirtualItems
         illegal = true;
         edible = -1;
         drinkable = -1;
-        icon = "icons\ico_defuseKit.paa";
+        icon = "textures\icons\ico_defuseKit.paa";
         object = "Land_Suitcase_F";
     };
 
@@ -341,7 +341,7 @@ class VirtualItems
         illegal = false;
         edible = -1;
         drinkable = -1;
-        icon = "icons\ico_storageSmall.paa";
+        icon = "textures\icons\ico_storageSmall.paa";
         object = "Land_Suitcase_F";
     };
 
@@ -354,7 +354,7 @@ class VirtualItems
         illegal = false;
         edible = -1;
         drinkable = -1;
-        icon = "icons\ico_storageBig.paa";
+        icon = "textures\icons\ico_storageBig.paa";
         object = "Land_Suitcase_F";
     };
 
@@ -368,7 +368,7 @@ class VirtualItems
         illegal = false;
         edible = -1;
         drinkable = -1;
-        icon = "icons\ico_oilUnprocessed.paa";
+        icon = "textures\icons\ico_oilUnprocessed.paa";
         object = "Land_Suitcase_F";
     };
 
@@ -381,7 +381,7 @@ class VirtualItems
         illegal = false;
         edible = -1;
         drinkable = -1;
-        icon = "icons\ico_oilProcessed.paa";
+        icon = "textures\icons\ico_oilProcessed.paa";
         object = "Land_Suitcase_F";
     };
 
@@ -394,7 +394,7 @@ class VirtualItems
         illegal = false;
         edible = -1;
         drinkable = -1;
-        icon = "icons\ico_copperOre.paa";
+        icon = "textures\icons\ico_copperOre.paa";
         object = "Land_Suitcase_F";
     };
 
@@ -407,7 +407,7 @@ class VirtualItems
         illegal = false;
         edible = -1;
         drinkable = -1;
-        icon = "icons\ico_copper.paa";
+        icon = "textures\icons\ico_copper.paa";
         object = "Land_Suitcase_F";
     };
 
@@ -420,7 +420,7 @@ class VirtualItems
         illegal = false;
         edible = -1;
         drinkable = -1;
-        icon = "icons\ico_ironOre.paa";
+        icon = "textures\icons\ico_ironOre.paa";
         object = "Land_Suitcase_F";
     };
 
@@ -433,7 +433,7 @@ class VirtualItems
         illegal = false;
         edible = -1;
         drinkable = -1;
-        icon = "icons\ico_iron.paa";
+        icon = "textures\icons\ico_iron.paa";
         object = "Land_Suitcase_F";
     };
 
@@ -446,7 +446,7 @@ class VirtualItems
         illegal = false;
         edible = -1;
         drinkable = -1;
-        icon = "icons\ico_saltUnprocessed.paa";
+        icon = "textures\icons\ico_saltUnprocessed.paa";
         object = "Land_Suitcase_F";
     };
 
@@ -459,7 +459,7 @@ class VirtualItems
         illegal = false;
         edible = -1;
         drinkable = -1;
-        icon = "icons\ico_saltProcessed.paa";
+        icon = "textures\icons\ico_saltProcessed.paa";
         object = "Land_Suitcase_F";
     };
 
@@ -472,7 +472,7 @@ class VirtualItems
         illegal = false;
         edible = -1;
         drinkable = -1;
-        icon = "icons\ico_sand.paa";
+        icon = "textures\icons\ico_sand.paa";
         object = "Land_Suitcase_F";
     };
 
@@ -485,7 +485,7 @@ class VirtualItems
         illegal = false;
         edible = -1;
         drinkable = -1;
-        icon = "icons\ico_glass.paa";
+        icon = "textures\icons\ico_glass.paa";
         object = "Land_Suitcase_F";
     };
 
@@ -498,7 +498,7 @@ class VirtualItems
         illegal = false;
         edible = -1;
         drinkable = -1;
-        icon = "icons\ico_diamondUncut.paa";
+        icon = "textures\icons\ico_diamondUncut.paa";
         object = "Land_Suitcase_F";
     };
 
@@ -511,7 +511,7 @@ class VirtualItems
         illegal = false;
         edible = -1;
         drinkable = -1;
-        icon = "icons\ico_diamondCut.paa";
+        icon = "textures\icons\ico_diamondCut.paa";
         object = "Land_Suitcase_F";
     };
 
@@ -524,7 +524,7 @@ class VirtualItems
         illegal = false;
         edible = -1;
         drinkable = -1;
-        icon = "icons\ico_rock.paa";
+        icon = "textures\icons\ico_rock.paa";
         object = "Land_Suitcase_F";
     };
 
@@ -537,7 +537,7 @@ class VirtualItems
         illegal = false;
         edible = -1;
         drinkable = -1;
-        icon = "icons\ico_cement.paa";
+        icon = "textures\icons\ico_cement.paa";
         object = "Land_Suitcase_F";
     };
 
@@ -551,7 +551,7 @@ class VirtualItems
         illegal = true;
         edible = -1;
         drinkable = -1;
-        icon = "icons\ico_opiumpoppy.paa";
+        icon = "textures\icons\ico_opiumpoppy.paa";
         object = "Land_Suitcase_F";
     };
 
@@ -564,7 +564,7 @@ class VirtualItems
         illegal = true;
         edible = -1;
         drinkable = -1;
-        icon = "icons\ico_heroinProcessed.paa";
+        icon = "textures\icons\ico_heroinProcessed.paa";
         object = "Land_Suitcase_F";
     };
 
@@ -577,7 +577,7 @@ class VirtualItems
         illegal = true;
         edible = -1;
         drinkable = -1;
-        icon = "icons\ico_morpine.paa";//need image
+        icon = "textures\icons\ico_morpine.paa";//need image
         object = "Land_Suitcase_F";
     };
 
@@ -590,7 +590,7 @@ class VirtualItems
         illegal = false;
         edible = 1;
         drinkable = 1;
-        icon = "icons\ico_codeine.paa";//need image
+        icon = "textures\icons\ico_codeine.paa";//need image
         object = "Land_Suitcase_F";
     };
 
@@ -603,7 +603,7 @@ class VirtualItems
         illegal = true;
         edible = -1;
         drinkable = -1;
-        icon = "icons\ico_cannabis.paa";
+        icon = "textures\icons\ico_cannabis.paa";
         object = "Land_Suitcase_F";
     };
 
@@ -616,7 +616,7 @@ class VirtualItems
         illegal = true;
         edible = -1;
         drinkable = -1;
-        icon = "icons\ico_marijuana.paa";
+        icon = "textures\icons\ico_marijuana.paa";
         object = "Land_Suitcase_F";
     };
 
@@ -629,7 +629,7 @@ class VirtualItems
         illegal = true;
         edible = -1;
         drinkable = -1;
-        icon = "icons\ico_cocaineUnprocessed.paa";
+        icon = "textures\icons\ico_cocaineUnprocessed.paa";
         object = "Land_Suitcase_F";
     };
 
@@ -642,7 +642,7 @@ class VirtualItems
         illegal = true;
         edible = -1;
         drinkable = -1;
-        icon = "icons\ico_cocaineProcessed.paa";
+        icon = "textures\icons\ico_cocaineProcessed.paa";
         object = "Land_Suitcase_F";
     };
 
@@ -656,7 +656,7 @@ class VirtualItems
         illegal = false;
         edible = -1;
         drinkable = 50;
-        icon = "icons\ico_redgull.paa";
+        icon = "textures\icons\ico_redgull.paa";
         object = "Land_Can_V3_F";
     };
 
@@ -669,7 +669,7 @@ class VirtualItems
         illegal = false;
         edible = -1;
         drinkable = 100;
-        icon = "icons\ico_coffee.paa";
+        icon = "textures\icons\ico_coffee.paa";
         object = "Land_Can_V3_F";
     };
 
@@ -682,7 +682,7 @@ class VirtualItems
         illegal = false;
         edible = -1;
         drinkable = 100;
-        icon = "icons\ico_waterBottle.paa";
+        icon = "textures\icons\ico_waterBottle.paa";
         object = "Land_BottlePlastic_V1_F";
     };
 
@@ -696,7 +696,7 @@ class VirtualItems
         illegal = false;
         edible = 10;
         drinkable = -1;
-        icon = "icons\ico_apple.paa";
+        icon = "textures\icons\ico_apple.paa";
         object = "Land_Suitcase_F";
     };
 
@@ -709,7 +709,7 @@ class VirtualItems
         illegal = false;
         edible = 10;
         drinkable = -1;
-        icon = "icons\ico_peach.paa";
+        icon = "textures\icons\ico_peach.paa";
         object = "Land_Suitcase_F";
     };
 
@@ -722,7 +722,7 @@ class VirtualItems
         illegal = false;
         edible = 40;
         drinkable = -1;
-        icon = "icons\ico_tBacon.paa";
+        icon = "textures\icons\ico_tBacon.paa";
         object = "Land_TacticalBacon_F";
     };
 
@@ -735,7 +735,7 @@ class VirtualItems
         illegal = false;
         edible = 30;
         drinkable = -1;
-        icon = "icons\ico_donuts.paa";
+        icon = "textures\icons\ico_donuts.paa";
         object = "Land_Suitcase_F";
     };
 
@@ -748,7 +748,7 @@ class VirtualItems
         illegal = false;
         edible = -1;
         drinkable = -1;
-        icon = "icons\ico_rabbitRaw.paa";
+        icon = "textures\icons\ico_rabbitRaw.paa";
         object = "Land_Suitcase_F";
     };
 
@@ -761,7 +761,7 @@ class VirtualItems
         illegal = false;
         edible = 20;
         drinkable = -1;
-        icon = "icons\ico_rabbit.paa";
+        icon = "textures\icons\ico_rabbit.paa";
         object = "Land_Suitcase_F";
     };
 
@@ -774,7 +774,7 @@ class VirtualItems
         illegal = false;
         edible = -1;
         drinkable = -1;
-        icon = "icons\ico_salemaRaw.paa";
+        icon = "textures\icons\ico_salemaRaw.paa";
         object = "Land_Suitcase_F";
     };
 
@@ -787,7 +787,7 @@ class VirtualItems
         illegal = false;
         edible = 30;
         drinkable = -1;
-        icon = "icons\ico_cookedFish.paa";
+        icon = "textures\icons\ico_cookedFish.paa";
         object = "Land_Suitcase_F";
     };
 
@@ -800,7 +800,7 @@ class VirtualItems
         illegal = false;
         edible = -1;
         drinkable = -1;
-        icon = "icons\ico_ornateRaw.paa";
+        icon = "textures\icons\ico_ornateRaw.paa";
         object = "Land_Suitcase_F";
     };
 
@@ -813,7 +813,7 @@ class VirtualItems
         illegal = false;
         edible = 25;
         drinkable = -1;
-        icon = "icons\ico_cookedFish.paa";
+        icon = "textures\icons\ico_cookedFish.paa";
         object = "Land_Suitcase_F";
     };
 
@@ -826,7 +826,7 @@ class VirtualItems
         illegal = false;
         edible = -1;
         drinkable = -1;
-        icon = "icons\ico_mackerelRaw.paa";
+        icon = "textures\icons\ico_mackerelRaw.paa";
         object = "Land_Suitcase_F";
     };
 
@@ -839,7 +839,7 @@ class VirtualItems
         illegal = false;
         edible = 30;
         drinkable = -1;
-        icon = "icons\ico_cookedFish.paa";
+        icon = "textures\icons\ico_cookedFish.paa";
         object = "Land_Suitcase_F";
     };
 
@@ -852,7 +852,7 @@ class VirtualItems
         illegal = false;
         edible = -1;
         drinkable = -1;
-        icon = "icons\ico_tunaRaw.paa";
+        icon = "textures\icons\ico_tunaRaw.paa";
         object = "Land_Suitcase_F";
     };
 
@@ -865,7 +865,7 @@ class VirtualItems
         illegal = false;
         edible = 100;
         drinkable = -1;
-        icon = "icons\ico_cookedFish.paa";
+        icon = "textures\icons\ico_cookedFish.paa";
         object = "Land_Suitcase_F";
     };
 
@@ -878,7 +878,7 @@ class VirtualItems
         illegal = false;
         edible = -1;
         drinkable = -1;
-        icon = "icons\ico_mulletRaw.paa";
+        icon = "textures\icons\ico_mulletRaw.paa";
         object = "Land_Suitcase_F";
     };
 
@@ -891,7 +891,7 @@ class VirtualItems
         illegal = false;
         edible = 80;
         drinkable = -1;
-        icon = "icons\ico_cookedFish.paa";
+        icon = "textures\icons\ico_cookedFish.paa";
         object = "Land_Suitcase_F";
     };
 
@@ -904,7 +904,7 @@ class VirtualItems
         illegal = false;
         edible = -1;
         drinkable = -1;
-        icon = "icons\ico_catsharkRaw.paa";
+        icon = "textures\icons\ico_catsharkRaw.paa";
         object = "Land_Suitcase_F";
     };
 
@@ -917,7 +917,7 @@ class VirtualItems
         illegal = false;
         edible = 100;
         drinkable = -1;
-        icon = "icons\ico_cookedFish.paa";
+        icon = "textures\icons\ico_cookedFish.paa";
         object = "Land_Suitcase_F";
     };
 
@@ -930,7 +930,7 @@ class VirtualItems
         illegal = true;
         edible = -1;
         drinkable = -1;
-        icon = "icons\ico_turtleRaw.paa";
+        icon = "textures\icons\ico_turtleRaw.paa";
         object = "Land_Suitcase_F";
     };
 
@@ -943,7 +943,7 @@ class VirtualItems
         illegal = false;
         edible = 100;
         drinkable = -1;
-        icon = "icons\ico_turtleSoup.paa";
+        icon = "textures\icons\ico_turtleSoup.paa";
         object = "Land_Suitcase_F";
     };
 
@@ -956,7 +956,7 @@ class VirtualItems
         illegal = false;
         edible = -1;
         drinkable = -1;
-        icon = "icons\ico_wholeChickenRaw.paa";
+        icon = "textures\icons\ico_wholeChickenRaw.paa";
         object = "Land_Suitcase_F";
     };
 
@@ -969,7 +969,7 @@ class VirtualItems
         illegal = false;
         edible = 65;
         drinkable = -1;
-        icon = "icons\ico_wholeChicken.paa";
+        icon = "textures\icons\ico_wholeChicken.paa";
         object = "Land_Suitcase_F";
     };
 
@@ -982,7 +982,7 @@ class VirtualItems
         illegal = false;
         edible = -1;
         drinkable = -1;
-        icon = "icons\ico_chickenDrumstickRaw.paa";
+        icon = "textures\icons\ico_chickenDrumstickRaw.paa";
         object = "Land_Suitcase_F";
     };
 
@@ -995,7 +995,7 @@ class VirtualItems
         illegal = false;
         edible = 45;
         drinkable = -1;
-        icon = "icons\ico_chickenDrumstick.paa";
+        icon = "textures\icons\ico_chickenDrumstick.paa";
         object = "Land_Suitcase_F";
     };
 
@@ -1008,7 +1008,7 @@ class VirtualItems
         illegal = false;
         edible = -1;
         drinkable = -1;
-        icon = "icons\ico_lambChopRaw.paa";
+        icon = "textures\icons\ico_lambChopRaw.paa";
         object = "Land_Suitcase_F";
     };
 
@@ -1021,7 +1021,7 @@ class VirtualItems
         illegal = false;
         edible = 100;
         drinkable = -1;
-        icon = "icons\ico_lambChop.paa";
+        icon = "textures\icons\ico_lambChop.paa";
         object = "Land_Suitcase_F";
     };
 
@@ -1034,7 +1034,7 @@ class VirtualItems
         illegal = false;
         edible = -1;
         drinkable = -1;
-        icon = "icons\ico_muttonLegRaw.paa";
+        icon = "textures\icons\ico_muttonLegRaw.paa";
         object = "Land_Suitcase_F";
     };
 
@@ -1047,7 +1047,7 @@ class VirtualItems
         illegal = false;
         edible = 100;
         drinkable = -1;
-        icon = "icons\ico_muttonLeg.paa";
+        icon = "textures\icons\ico_muttonLeg.paa";
         object = "Land_Suitcase_F";
     };
 };

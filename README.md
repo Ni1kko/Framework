@@ -1,10 +1,10 @@
 
 ### AsYetUntitled
 
-[![LastCommit](https://img.shields.io/github/last-commit/Ni1kko/Framework.svg?style=plastic)](https://github.com/Ni1kko/Framework/commits) 
-[![PullRequests](https://img.shields.io/github/issues-pr/ExtremoDevTeam/Framework.svg?style=plastic)](https://github.com/Ni1kko/Framework/pulls) 
-[![Issues](https://img.shields.io/github/issues/Ni1kko/Framework)](https://github.com/Ni1kko/Framework/issues)
-[![Discussions](https://img.shields.io/github/discussions/Ni1kko/Framework)](https://github.com/Ni1kko/Framework/discussions)
+[![LastCommit](https://img.shields.io/github/last-commit/Ni1kko/Framework.svg?style=plastic)](https://github.com/Ni1kko/FrameworkV2/commits) 
+[![PullRequests](https://img.shields.io/github/issues-pr/ExtremoDevTeam/Framework.svg?style=plastic)](https://github.com/Ni1kko/FrameworkV2/pulls) 
+[![Issues](https://img.shields.io/github/issues/Ni1kko/Framework)](https://github.com/Ni1kko/FrameworkV2/issues)
+[![Discussions](https://img.shields.io/github/discussions/Ni1kko/Framework)](https://github.com/Ni1kko/FrameworkV2/discussions)
 
 ### Live Development Server
   - steam://connect/82.36.141.201:2302

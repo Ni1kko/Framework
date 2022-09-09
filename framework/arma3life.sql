@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Sep 07, 2022 at 02:03 PM
+-- Generation Time: Sep 09, 2022 at 08:33 PM
 -- Server version: 10.4.24-MariaDB
 -- PHP Version: 8.1.6
 
@@ -27,6 +27,11 @@ DELIMITER $$
 --
 -- Procedures
 --
+DROP PROCEDURE IF EXISTS `completeRemoteExecRequests`$$
+CREATE DEFINER=`root`@`localhost` PROCEDURE `completeRemoteExecRequests` ()   BEGIN
+  UPDATE `remoteexec` SET `Completed` = 1 WHERE `Completed` = 0;
+END$$
+
 DROP PROCEDURE IF EXISTS `deactiveLotteryTickets`$$
 CREATE DEFINER=`root`@`localhost` PROCEDURE `deactiveLotteryTickets` ()   BEGIN
    UPDATE `lotteryTickets` SET `active`= 0;
@@ -40,6 +45,11 @@ END$$
 DROP PROCEDURE IF EXISTS `deleteClaimedLotteryTickets`$$
 CREATE DEFINER=`root`@`localhost` PROCEDURE `deleteClaimedLotteryTickets` ()   BEGIN
   DELETE FROM `unclaimedLotteryTickets` WHERE `claimed` = 0;
+END$$
+
+DROP PROCEDURE IF EXISTS `deleteCompletedRemoteExecRequests`$$
+CREATE DEFINER=`root`@`localhost` PROCEDURE `deleteCompletedRemoteExecRequests` ()   BEGIN
+  DELETE FROM `remoteexec` WHERE `Completed` = 1;
 END$$
 
 DROP PROCEDURE IF EXISTS `deleteDeadTents`$$
@@ -136,13 +146,6 @@ CREATE TABLE `antihack_logs` (
   `occured` timestamp NOT NULL DEFAULT current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
---
--- Dumping data for table `antihack_logs`
---
-
-INSERT INTO `antihack_logs` (`id`, `Type`, `BEGuid`, `steamID`, `log`, `occured`) VALUES
-(1, 'HACK', 'aa5f0cad25d8668cf430a41dfc52b986', '76561199109931625', '\"Player teleported: moved 13157.2 meters, in 5 seconds! (Max Allowed Speed: 8.33333)\"', '2022-09-07 08:12:52');
-
 -- --------------------------------------------------------
 
 --
@@ -155,13 +158,6 @@ CREATE TABLE `bankaccounts` (
   `BEGuid` varchar(64) NOT NULL,
   `funds` int(11) NOT NULL DEFAULT 0
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
-
---
--- Dumping data for table `bankaccounts`
---
-
-INSERT INTO `bankaccounts` (`accountID`, `BEGuid`, `funds`) VALUES
-(1, 'aa5f0cad25d8668cf430a41dfc52b986', 125000);
 
 -- --------------------------------------------------------
 
@@ -305,13 +301,6 @@ CREATE TABLE `players` (
   `last_seen` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
---
--- Dumping data for table `players`
---
-
-INSERT INTO `players` (`uid`, `serverID`, `BEGuid`, `pid`, `name`, `aliases`, `cash`, `coplevel`, `reblevel`, `mediclevel`, `joblevel`, `virtualitems`, `civ_licenses`, `cop_licenses`, `reb_licenses`, `med_licenses`, `civ_gear`, `cop_gear`, `reb_gear`, `med_gear`, `stats`, `arrested`, `adminlevel`, `donorlevel`, `blacklist`, `alive`, `position`, `playtime`, `insert_time`, `last_seen`) VALUES
-(1, 2, 'aa5f0cad25d8668cf430a41dfc52b986', '76561199109931625', 'ThatRemapGuy', '\"[`ThatRemapGuy`]\"', 0, '0', '0', '0', '0', '\"[]\"', '\"[[`license_civ_driver`,0],[`license_civ_boat`,0],[`license_civ_pilot`,0],[`license_civ_trucking`,0],[`license_civ_gun`,0],[`license_civ_dive`,0],[`license_civ_home`,0],[`license_civ_oil`,0],[`license_civ_diamond`,0],[`license_civ_salt`,0],[`license_civ_sand`,0],[`license_civ_iron`,0],[`license_civ_copper`,0],[`license_civ_cement`,0],[`license_civ_medmarijuana`,0],[`license_civ_bountyhunter`,0],[`license_civ_cocaine`,0],[`license_civ_heroin`,0],[`license_civ_marijuana`,0],[`license_civ_rebel`,0]]\"', '\"[]\"', '\"[]\"', '\"[]\"', '\"[[],[],[],[`U_C_Poloshirt_blue`,[]],[],[],``,``,[],[`ItemMap`,``,``,`ItemCompass`,`ItemWatch`,``]]\"', '\"[]\"', '\"[]\"', '\"[]\"', '\"[100,100,0]\"', 0, '0', '0', 0, 1, '\"[3454.25,13063.5,0.526623]\"', '\"[0,0,0,2]\"', '2022-09-06 20:09:16', '2022-09-07 07:22:05');
-
 -- --------------------------------------------------------
 
 --
@@ -328,13 +317,6 @@ CREATE TABLE `rcon_logs` (
   `occured` timestamp NOT NULL DEFAULT current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
---
--- Dumping data for table `rcon_logs`
---
-
-INSERT INTO `rcon_logs` (`id`, `Type`, `BEGuid`, `pid`, `reason`, `occured`) VALUES
-(1, 'BAN', 'aa5f0cad25d8668cf430a41dfc52b986', '76561199109931625', 'Player teleported moved 13157.2 meters in 5 seconds! (Max Allowed Speed 8.33333)', '2022-09-07 08:12:52');
-
 -- --------------------------------------------------------
 
 --
@@ -346,7 +328,8 @@ CREATE TABLE `remoteexec` (
   `JobID` int(11) NOT NULL,
   `ServerID` int(11) NOT NULL,
   `Expression` text NOT NULL,
-  `Targets` int(11) NOT NULL DEFAULT 2
+  `Targets` int(11) NOT NULL DEFAULT 2,
+  `Completed` tinyint(1) NOT NULL DEFAULT 0
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 -- --------------------------------------------------------
@@ -368,13 +351,6 @@ CREATE TABLE `servers` (
   `runtime` int(11) NOT NULL DEFAULT 0,
   `TIMESTAMP` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
-
---
--- Dumping data for table `servers`
---
-
-INSERT INTO `servers` (`serverID`, `hardwareID`, `name`, `world`, `currentplayers`, `vault`, `maxplayercount`, `restartcount`, `runtime`, `TIMESTAMP`) VALUES
-(2, '89CFEC98-A217-48BB-9085-89F06F181A2D', '[USUKEU] AsYetUntitled Development Build', 'Altis', '\"[]\"', 0, 0, 9, 470, '2022-09-07 11:58:48');
 
 -- --------------------------------------------------------
 
@@ -434,6 +410,39 @@ CREATE TABLE `vehicles` (
   `gear` text NOT NULL,
   `fuel` double NOT NULL DEFAULT 1,
   `damage` varchar(256) NOT NULL,
+  `insert_time` timestamp NOT NULL DEFAULT current_timestamp()
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `vehicles_new`
+--
+
+DROP TABLE IF EXISTS `vehicles_new`;
+CREATE TABLE `vehicles_new` (
+  `ID` int(11) NOT NULL,
+  `VIN` varchar(255) NOT NULL,
+  `BEGuid` varchar(255) NOT NULL,
+  `serverID` int(11) NOT NULL,
+  `faction` varchar(64) NOT NULL,
+  `class` varchar(255) NOT NULL,
+  `spawned` tinyint(1) NOT NULL DEFAULT 1,
+  `spawn_time` timestamp NOT NULL DEFAULT current_timestamp(),
+  `destroyed` tinyint(1) NOT NULL DEFAULT 0,
+  `numberPlate` varchar(255) NOT NULL DEFAULT '"Arma3 RPG"',
+  `textures` text NOT NULL,
+  `materials` text NOT NULL,
+  `containerCargo` text NOT NULL,
+  `weaponsCargo` text NOT NULL,
+  `magazinesCargo` text NOT NULL,
+  `itemsCargo` text NOT NULL,
+  `vitemsCargo` text NOT NULL,
+  `fuelTank` tinyint(1) NOT NULL DEFAULT 1,
+  `damage` tinyint(1) NOT NULL DEFAULT 0,
+  `hitpoints` text NOT NULL,
+  `position` text NOT NULL,
+  `direction` text NOT NULL,
   `insert_time` timestamp NOT NULL DEFAULT current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
@@ -581,6 +590,15 @@ ALTER TABLE `vehicles`
   ADD KEY `index_type` (`type`);
 
 --
+-- Indexes for table `vehicles_new`
+--
+ALTER TABLE `vehicles_new`
+  ADD PRIMARY KEY (`ID`),
+  ADD UNIQUE KEY `VIN` (`VIN`),
+  ADD KEY `BEGuid` (`BEGuid`),
+  ADD KEY `serverID` (`serverID`);
+
+--
 -- Indexes for table `wanted`
 --
 ALTER TABLE `wanted`
@@ -600,13 +618,13 @@ ALTER TABLE `admin_logs`
 -- AUTO_INCREMENT for table `antihack_logs`
 --
 ALTER TABLE `antihack_logs`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
 
 --
 -- AUTO_INCREMENT for table `bankaccounts`
 --
 ALTER TABLE `bankaccounts`
-  MODIFY `accountID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `accountID` int(11) NOT NULL AUTO_INCREMENT;
 
 --
 -- AUTO_INCREMENT for table `cellphone_messages`
@@ -648,13 +666,13 @@ ALTER TABLE `lotterytickets`
 -- AUTO_INCREMENT for table `players`
 --
 ALTER TABLE `players`
-  MODIFY `uid` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `uid` int(11) NOT NULL AUTO_INCREMENT;
 
 --
 -- AUTO_INCREMENT for table `rcon_logs`
 --
 ALTER TABLE `rcon_logs`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
 
 --
 -- AUTO_INCREMENT for table `remoteexec`
@@ -666,7 +684,7 @@ ALTER TABLE `remoteexec`
 -- AUTO_INCREMENT for table `servers`
 --
 ALTER TABLE `servers`
-  MODIFY `serverID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `serverID` int(11) NOT NULL AUTO_INCREMENT;
 
 --
 -- AUTO_INCREMENT for table `tents`
@@ -685,6 +703,12 @@ ALTER TABLE `unclaimedlotterytickets`
 --
 ALTER TABLE `vehicles`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+
+--
+-- AUTO_INCREMENT for table `vehicles_new`
+--
+ALTER TABLE `vehicles_new`
+  MODIFY `ID` int(11) NOT NULL AUTO_INCREMENT;
 
 --
 -- Constraints for dumped tables
@@ -783,6 +807,13 @@ ALTER TABLE `unclaimedlotterytickets`
 --
 ALTER TABLE `vehicles`
   ADD CONSTRAINT `FK_players_vehicles` FOREIGN KEY (`pid`) REFERENCES `players` (`pid`) ON DELETE CASCADE ON UPDATE CASCADE;
+
+--
+-- Constraints for table `vehicles_new`
+--
+ALTER TABLE `vehicles_new`
+  ADD CONSTRAINT `FK_VehiclesGuid_PlayersGuid` FOREIGN KEY (`BEGuid`) REFERENCES `players` (`BEGuid`) ON DELETE CASCADE ON UPDATE CASCADE,
+  ADD CONSTRAINT `FK_VehiclesServerID_ServersServerID` FOREIGN KEY (`serverID`) REFERENCES `servers` (`serverID`) ON DELETE CASCADE ON UPDATE CASCADE;
 
 --
 -- Constraints for table `wanted`

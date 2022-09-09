@@ -36,15 +36,15 @@ allowFunctionsRecompile = 0; // 0: disabled - 1: enabled. Default: 0
 allowFunctionsLog = 1;// Allow RPT loging
 unsafeCVL = 1; // Allows createVehicleLocal to be executed in Multiplayer
 
-#include "dialog\MasterHandler.hpp"
+#include "gui\MasterHandler.hpp"
 #include "config\Config_Master.hpp"
 
 class RscTitles {
-    #include "dialog\progress.hpp"
-    #include "dialog\hud_nameTags.hpp"
-    #include "dialog\RscPlayerHUD.hpp"
-    #include "dialog\deathScreen.hpp"
-    #include "dialog\spitScreen.hpp"
+    #include "gui\progress.hpp"
+    #include "gui\hud_nameTags.hpp"
+    #include "gui\RscPlayerHUD.hpp"
+    #include "gui\deathScreen.hpp"
+    #include "gui\spitScreen.hpp"
 };
 
 class CfgFunctions 
@@ -53,31 +53,27 @@ class CfgFunctions
     {
         class FiniteStateMachine
         {
-            file="core\fsm"; 
+            file="scripts\fsm"; 
             class timeModule {ext=".fsm";};
         };
 
         class Root
         {
-            file = "core";
+            file = "scripts";
             class init {};
-            class setupActions {};
-            class setupEVH {};
-            class survival {};
-            class briefing {};
             class configuration {preInit = 1;};
-            class setupStationService {};
         };
         
         class Antihack
         {
-            file="core\antihack"; 
+            file="scripts\antihack"; 
             class clientCrash {};
+            class checkMoney {};
         };
 
         class Actions 
         {
-            file = "core\actions";
+            file = "scripts\actions";
             class arrestAction {};
             class buyLicense {};
             class captureHideout {};
@@ -117,7 +113,7 @@ class CfgFunctions
         
         class Civilian 
         {
-            file = "core\civilian";
+            file = "scripts\civilian";
             class initCiv {};
             class civMarkers {};
             class demoChargeTimer {};
@@ -134,7 +130,7 @@ class CfgFunctions
 
         class Config 
         {
-            file = "core\config";
+            file = "scripts\config";
             class houseConfig {};
             class itemWeight {};
             class vehicleAnimate {};
@@ -143,7 +139,7 @@ class CfgFunctions
 
         class Cop 
         {
-            file = "core\cop";
+            file = "scripts\cop";
             class initCop {};
             class bountyReceive {};
             class containerInvSearch {};
@@ -174,7 +170,7 @@ class CfgFunctions
 
         class Functions 
         {
-            file = "core\functions";
+            file = "scripts\functions";
             class AAN {};
             class accType {};
             class actionKeyHandler {};
@@ -231,11 +227,17 @@ class CfgFunctions
             class buyLotteryTicket {};
             class bountySelect {};
             class spawnPlayer {};
+            class handleMoney {};
+            class setupActions {};
+            class setupEVH {};
+            class survival {};
+            class briefing {};
+            class setupStationService {};
         };
 
         class Gangs 
         {
-            file = "core\gangs";
+            file = "scripts\gangs";
             class createGang {};
             class gangCreated {};
             class gangDisband {};
@@ -252,7 +254,7 @@ class CfgFunctions
 
         class Gui 
         {
-            file = "core\gui";
+            file = "scripts\gui";
             class cameraZoomIn {};
             class bankDeposit {};
             class bankTransfer {};
@@ -295,7 +297,7 @@ class CfgFunctions
 
         class Housing 
         {
-            file = "core\housing";
+            file = "scripts\housing";
             class buyHouse {};
             class buyHouseGarage {};
             class containerMenu {};
@@ -318,7 +320,7 @@ class CfgFunctions
         
         class Tents 
         {
-            file = "core\tents";
+            file = "scripts\tents";
             class deployTent {};
             class packupTent {};
             class initTents {};
@@ -327,7 +329,7 @@ class CfgFunctions
 
         class Items 
         {
-            file = "core\items";
+            file = "scripts\items";
             class blastingCharge {};
             class boltcutter {};
             class defuseKit {};
@@ -342,7 +344,7 @@ class CfgFunctions
 
         class Medical
         {
-            file = "core\medical";
+            file = "scripts\medical";
             class initMed {};
             class deathScreen {};
             class deathScreenKeyHandler {};
@@ -360,7 +362,7 @@ class CfgFunctions
 
         class Medical_Agony
         {
-            file = "core\medical\agony";
+            file = "scripts\medical\agony";
             //main damage handler
             class Agony {};
             class KilledInAgony {};
@@ -377,7 +379,7 @@ class CfgFunctions
 
         class Network 
         {
-            file = "core\functions\network";
+            file = "scripts\functions\network";
             class broadcast {};
             class corpse {};
             class jumpFnc {};
@@ -389,7 +391,7 @@ class CfgFunctions
 
         class Player_Menu 
         {
-            file = "core\pmenu";
+            file = "scripts\pmenu";
             class cellphone {};
             class giveItem {};
             class giveMoney {};
@@ -414,13 +416,13 @@ class CfgFunctions
 
         class Rebel
         {
-            file = "core\rebel";
+            file = "scripts\rebel";
             class initReb {};
         };
 
         class Shops 
         {
-            file = "core\shops";
+            file = "scripts\shops";
             class 3dPreviewDisplay {};
             class 3dPreviewExit {};
             class 3dPreviewInit {};
@@ -453,7 +455,7 @@ class CfgFunctions
 
         class Session 
         {
-            file = "core\session";
+            file = "scripts\session";
             class dataQuery {};
             class insertPlayerInfo {};
             class requestReceived {};
@@ -464,7 +466,7 @@ class CfgFunctions
 
         class Utils 
         {
-            file = "core\utils";
+            file = "scripts\utils";
             class util_canautorun {};
             class util_math_round {};
             class util_array_toLower {};
@@ -476,7 +478,7 @@ class CfgFunctions
 
         class Vehicle
         {
-            file = "core\vehicle";
+            file = "scripts\vehicle";
             class addVehicle2Chain {};
             class colorVehicle {};
             class deviceMine {};
@@ -579,6 +581,7 @@ class CfgRemoteExec {
             F(MPServer_fnc_clientGetKey,CLIENT)
             F(MPClient_fnc_spat,CLIENT)
             F(MPClient_fnc_bountyHunterTaze,CLIENT)
+            F(MPClient_fnc_handleMoney,CLIENT)
 
         /* Server only functions */
             F(MPServer_fnc_rcon_ban,SERVER)
@@ -613,10 +616,18 @@ class CfgRemoteExec {
             F(MPServer_fnc_updateGang,SERVER)
             F(MPServer_fnc_updateHouseContainers,SERVER)
             F(MPServer_fnc_updateHouseTrunk,SERVER)
+
+            //-- To be removed
             F(MPServer_fnc_vehicleCreate,SERVER)
             F(MPServer_fnc_vehicleDelete,SERVER)
             F(MPServer_fnc_vehicleStore,SERVER)
             F(MPServer_fnc_vehicleUpdate,SERVER)
+            //////////////////////////////////////////
+
+            //--- New functions
+            F(MPServer_fnc_vehicle_buyRequest,SERVER)
+            //////////////////////////////////////////
+            
             F(MPServer_fnc_handleBlastingCharge,SERVER)
             F(MPServer_fnc_houseGarage,SERVER)
             F(MPServer_fnc_switchSideRequest,SERVER)
@@ -827,7 +838,7 @@ class CfgNotifications {
 
     class TextMessage {
         title = "$STR_TextMessage_Title";
-        iconPicture = "icons\ico_messageNew.paa";
+        iconPicture = "textures\icons\ico_messageNew.paa";
         description = "%1";
         duration = 10;
         priority = 6;
@@ -835,7 +846,7 @@ class CfgNotifications {
 
     class PoliceDispatch {
         title = "$STR_PoliceDispatch_Title";
-        iconPicture = "icons\ico_messagePolice.paa";
+        iconPicture = "textures\icons\ico_messagePolice.paa";
         description = "%1";
         duration = 10;
         priority = 6;
@@ -843,7 +854,7 @@ class CfgNotifications {
 
     class AdminDispatch {
         title = "$STR_AdminDispatch_Title";
-        iconPicture = "icons\ico_messageAdmin.paa";
+        iconPicture = "textures\icons\ico_messageAdmin.paa";
         description = "%1";
         duration = 10;
         priority = 6;
@@ -851,7 +862,7 @@ class CfgNotifications {
 
     class AdminMessage {
         title = "$STR_AdminMessage_Title";
-        iconPicture = "icons\ico_messageAdmin.paa";
+        iconPicture = "textures\icons\ico_messageAdmin.paa";
         description = "%1";
         duration = 10;
         priority = 5;
