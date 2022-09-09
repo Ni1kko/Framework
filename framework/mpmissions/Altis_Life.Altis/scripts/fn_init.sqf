@@ -52,9 +52,6 @@ waitUntil {
     life_session_completed
 };
 
-MPServer_fnc_requestClientId = player;
-publicVariableServer "MPServer_fnc_requestClientId";
-
 ["Setting up player", "Please wait..."] call MPClient_fnc_setLoadingText; uiSleep(random[0.5,3,6]);
 {player setVariable _x} forEach [
     ['restrained', false, true],
