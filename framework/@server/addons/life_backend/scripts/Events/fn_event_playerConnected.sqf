@@ -69,4 +69,6 @@ if(count _serverQuery > 0)then{
 	["UPDATE", "servers", [_serverQuery,[["serverID", ["DB","INT", (call life_var_serverID)] call MPServer_fnc_database_parse]]]]call MPServer_fnc_database_request;
 };
 
-diag_log format ["[Player Login]: `%1` - (%2) - (%3)", _name, _BEGuid, _steamID];
+[format ["[Player Login]: `%1` - (%2) - (%3)", _name, _BEGuid, _steamID]] call MPServer_fnc_log;
+
+true

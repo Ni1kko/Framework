@@ -80,7 +80,7 @@ if (alive _unit && _damage > 0) then {
                             ["life_var_bleeding","debuff",300] spawn MPClient_fnc_addBuff;
                         };
                         case (_damage > 0.3 && _damage <= 0.45) : {
-                            ["life_var_pain_shock","debuff"] spawn MPClient_fnc_addBuff;
+                            ["life_var_painShock","debuff"] spawn MPClient_fnc_addBuff;
                         };
                         case (_damage > 0.45 && _damage <= 0.9) : {
                            ["life_var_critHit","debuff"] spawn MPClient_fnc_addBuff;

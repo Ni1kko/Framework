@@ -411,7 +411,7 @@ try {
 							life_var_hunger = 1000;
 							life_var_thirst = 1000;
 							life_var_bleeding = false;
-							life_var_pain_shock = false;
+							life_var_painShock = false;
 							life_var_critHit = false;
 							player allowDamage false;
 							waitUntil{
@@ -419,7 +419,7 @@ try {
 								if(isNil 'life_var_thirst')then{life_var_thirst = 1000};
 								if(isNil 'life_var_hunger')then{life_var_hunger = 1000};
 								if(isNil 'life_var_bleeding')then{life_var_bleeding = false};
-								if(isNil 'life_var_pain_shock')then{life_var_pain_shock = false};
+								if(isNil 'life_var_painShock')then{life_var_painShock = false};
 								if(isNil 'life_var_critHit')then{life_var_critHit = false}; 
 								(
 									isDamageAllowed player
@@ -430,7 +430,7 @@ try {
 									OR 
 									life_var_bleeding 
 									OR 
-									life_var_pain_shock 
+									life_var_painShock 
 									OR 
 									life_var_critHit
 								)
@@ -483,13 +483,21 @@ try {
 				['Open',true] spawn bis_fnc_arsenal;
 				['INFO','Opened Arsenal'] call "+_rnd_log+";
 			};
+			private _resetHypothalamus = {
+				resetCamShake; 
+				life_var_hunger = 100;
+				life_var_thirst = 100;
+				life_var_bleeding = false;
+				life_var_painShock = false;
+				life_var_critHit = false;
+			};
 			private _heal = {
 				resetCamShake; 
 				player setDamage 0;
 				life_var_hunger = 100;
 				life_var_thirst = 100;
 				life_var_bleeding = false;
-				life_var_pain_shock = false;
+				life_var_painShock = false;
 				life_var_critHit = false;
 				['INFO','SelfHealed'] call "+_rnd_log+";
 			};
@@ -571,10 +579,22 @@ try {
 					life_var_hunger = 100;
 					life_var_thirst = 100;
 					life_var_bleeding = false;
-					life_var_pain_shock = false;
+					life_var_painShock = false;
 					life_var_critHit = false;
 				}] call "+_rnd_runtarget+";
 				['INFO',format['Healed %1',getPlayerUID _target]] call "+_rnd_log+";
+			};
+			private _resetHypothalamusTarg = {
+				private _target = call "+_rnd_adminmenu_getselectedtarget+";
+				if(isNull _target) exitWith {};
+				[_target,{
+					resetCamShake; 
+					life_var_hunger = 100;
+					life_var_thirst = 100;
+					life_var_bleeding = false;
+					life_var_painShock = false;
+					life_var_critHit = false;
+				}] call "+_rnd_runtarget+";
 			};
 			private _repairtarg = {
 				private _target = call "+_rnd_adminmenu_getselectedtarget+";
@@ -916,6 +936,7 @@ try {
 					['Fast Fire',1,_fastfire,'"+_rnd_fastfiretoggle+"'],
 					['No Grass',1,_nograss,'"+_rnd_nograsstoggle+"'], 
 					['Arsenal',2,_arsenal],
+					['Reset Hypothalamus',2_resetHypothalamus],
 					['Heal',2,_heal],
 					['Repair Cursor',2,_repaircurs],
 					['Delete Cursor',2,_deletecurs],
@@ -931,6 +952,7 @@ try {
 					['Kill',2,_killtarg],
 					['Repair',2,_repairtarg],
 					['Heal',2,_healtarg],
+					['Reset Hypothalamus',2_resetHypothalamusTarg],
 					['Message',2,_messagetarget],
 					['Lock Input',2,_lockinput],
 					['Unlock Input',2,_unlockinput],

@@ -6,7 +6,8 @@
 if(!canSuspend)exitWith{_this spawn MPServer_fnc_lottery_init};
 
 waitUntil {!isNil "life_var_currentDay"};
-diag_log "[Life Lottery] Initializing...";
+
+["[Life Lottery System] Initializing..."] call MPServer_fnc_log;
 
 private _timer = 0;
 private _vaultObject = objNull; 
@@ -46,12 +47,12 @@ if _ticketsReclaim then{
 	[] spawn MPServer_fnc_lottery_checkOldTickets;
 };
 
-diag_log "[Life Lottery] Initialized!";
- 
+["[Life Lottery System] Initialized"] call MPServer_fnc_log;
+
 //-- Start the lottery
 if(count _ticketDrawTimes > 0)then
 {
-	diag_log "[Life Lottery] Winners Will Be Picked Today!";
+	["[Life Lottery System] Winners Will Be Picked Today!"] call MPServer_fnc_log;
  
 	while {true} do
 	{
@@ -70,8 +71,8 @@ if(count _ticketDrawTimes > 0)then
 			(_timeInfo#0) > 0
 		};
 	};
-}else{
-	diag_log format["[Life Lottery] Winners Will Be Picked on %1!",_ticketDrawDay];
+}else{ 
+	[format["[Life Lottery System] Winners Will Be Picked on %1!",_ticketDrawDay]] call MPServer_fnc_log;
 };
 
 true

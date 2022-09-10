@@ -20,7 +20,7 @@ if((getNumber(_config >> "conlogs") isEqualTo 1) AND life_var_rcon_passwordOK)th
 }else{
 	//--- RPT
 	if(getNumber(_config >> "rptlogs") isEqualTo 1)then{
-		diag_log _logmessage2;
+		[_logmessage2] call MPServer_fnc_log;
 	};
 };
 

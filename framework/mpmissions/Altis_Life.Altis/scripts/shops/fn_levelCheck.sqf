@@ -12,7 +12,10 @@ scopeName "main";
 
 private _return = false;
 
-if (_itemConfig isEqualTo []) exitWith {diag_log localize "STR_NOTF_emptyArray_levelCheck"; _return};
+if (_itemConfig isEqualTo []) exitWith { 
+    [localize "STR_NOTF_emptyArray_levelCheck"] call MPClient_fnc_log;
+    _return
+};
 
 if (_itemConfig isEqualType []) then {
     private _lastElement = _itemConfig select (count _itemConfig - 1);

@@ -19,7 +19,7 @@ if (isNil "_vehicle") exitWith {hint localize "STR_Garage_Selection_Error"};
 if ((time - life_action_delay) < 1.5) exitWith {hint localize "STR_NOTF_ActionDelay";};
 if (!isClass (missionConfigFile >> "cfgVehicleArsenal" >> _vehicleLife)) then {
     _vehicleLife = "Default"; //Use Default class if it doesn't exist
-    diag_log format ["%1: cfgVehicleArsenal class doesn't exist",_vehicle];
+    [format ["%1: cfgVehicleArsenal class doesn't exist",_vehicle],true,true] call MPClient_fnc_log;
 };
 
 _price = M_CONFIG(getNumber,"cfgVehicleArsenal",_vehicleLife,"price");

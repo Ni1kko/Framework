@@ -48,7 +48,7 @@ _lightLeft setLightAmbient [0.1,0.1,1];
 }) params ["_leftOffset", "_rightOffset"];
 
 if (_leftOffset isEqualTo [-1]) exitWith {
-    diag_log format ["Vehicle emergency lights not set for: %1", _vehicle];
+    [format ["Vehicle emergency lights not set for: %1", _vehicle],true,true] call MPClient_fnc_log;
     hint localize "STR_NOTF_ELSNotSet";
 };
 

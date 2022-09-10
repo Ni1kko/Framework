@@ -9,7 +9,7 @@
 */
 
 if !(call extdb_var_database_prepared)exitWith{ 
-    diag_log "extDB3: Protocol Error, cant use `MPServer_fnc_database_prepared_request` with SQL Raw";
+    ["Protocol Error, cant use `MPServer_fnc_database_prepared_request` with SQL Raw"] call MPServer_fnc_database_systemlog;
 };
 
 if(life_var_rcon_RestartMode > 0)exitWith{false};
@@ -53,7 +53,7 @@ while{_loop} do
 	{
 		if (_queryResult isEqualTo "[3]") then
 		{
-			diag_log format ["extDB3: uisleep [4]: %1", diag_tickTime];
+    		[format ["uisleep [4]: %1", diag_tickTime]] call MPServer_fnc_database_systemlog;
 			uisleep 0.25;
 		} else {
 			_loop = false;
@@ -61,7 +61,7 @@ while{_loop} do
 	};
 };
 
-diag_log format ["extDB3: QUERY: %1 ALLTIME: %3 GETTIME: %4 RESULT: %2", _queryStmt,_queryResult,diag_tickTime - _tickTime,diag_tickTime - _fetchTime];
+[format ["QUERY: %1 ALLTIME: %3 GETTIME: %4 RESULT: %2", _queryStmt,_queryResult,diag_tickTime - _tickTime,diag_tickTime - _fetchTime]] call MPServer_fnc_database_systemlog;
 
 extdb_var_database_prepared_asynclock = false;
 extdb_var_database_preparedAsync = false;
@@ -69,7 +69,10 @@ extdb_var_database_preparedAsync = false;
 _queryResult = call compile _queryResult;
 
 // Not needed, its SQF Code incase extDB ever returns error message i.e Database Died
-if ((_queryResult select 0) isEqualTo 0) exitWith {diag_log format ["extDB3: Protocol Error: %1", _queryResult]; []};
+if ((_queryResult select 0) isEqualTo 0) exitWith {
+	[format ["Protocol Error: %1", _queryResult]] call MPServer_fnc_database_systemlog;
+	[]
+};
 
 //Multiarray request, but the array was empty... Instead of returning [[]] (Causes an error in scripts that loop)
 //Return [], therefore the forEaches in all the scripts such as the garage will not run. Backwards Compatible.

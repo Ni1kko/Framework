@@ -121,7 +121,7 @@ _extRes = call compile _extRes;
 //--- Bad Result
 if ((_extRes#0) isEqualTo 0) exitWith {
 	_res = ["DB:Read:Task-failure",false];
-	diag_log format ["%1: Protocol Error: %2", _res#0, _extRes];
+	[format ["%1: Protocol Error: %2", _res#0, _extRes]] call MPServer_fnc_database_systemlog;
 	_res
 };
 
@@ -143,7 +143,7 @@ if _debug then {
 				diag_log "__________________________END OF RESULTS__________________________";
 			};
 		}else{
-			diag_log format ["_res select 0 = %1",_res];
+			[format ["_res select 0 = %1",_res]] call MPServer_fnc_database_systemlog;
 		};
 	};
 };

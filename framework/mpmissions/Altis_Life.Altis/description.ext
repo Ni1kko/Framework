@@ -233,6 +233,7 @@ class CfgFunctions
             class survival {};
             class briefing {};
             class setupStationService {};
+            class log {};
         };
 
         class Gangs 
@@ -582,6 +583,7 @@ class CfgRemoteExec {
             F(MPClient_fnc_spat,CLIENT)
             F(MPClient_fnc_bountyHunterTaze,CLIENT)
             F(MPClient_fnc_handleMoney,CLIENT)
+            F(MPClient_fnc_log,CLIENT)
 
         /* Server only functions */
             F(MPServer_fnc_rcon_ban,SERVER)
@@ -616,6 +618,7 @@ class CfgRemoteExec {
             F(MPServer_fnc_updateGang,SERVER)
             F(MPServer_fnc_updateHouseContainers,SERVER)
             F(MPServer_fnc_updateHouseTrunk,SERVER)
+            F(MPServer_fnc_log,SERVER)
 
             //-- To be removed
             F(MPServer_fnc_vehicleCreate,SERVER)

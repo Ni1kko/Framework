@@ -11,13 +11,13 @@ private _type = param [0,"",[""]];
     switch (_type) do {
         case "debuffs": {
             life_var_bleeding = false;
-            life_var_pain_shock = false;
+            life_var_painShock = false;
             life_var_critHit = false;
         }; 
         case "buffs": {};
         case "all": {
             life_var_bleeding = false;
-            life_var_pain_shock = false;
+            life_var_painShock = false;
             life_var_critHit = false;
         };
         case "revived": {

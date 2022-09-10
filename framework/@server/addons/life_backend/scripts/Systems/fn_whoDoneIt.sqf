@@ -35,6 +35,6 @@ if (isServer) then {
     if (_message isEqualTo "") then {
         _message = format ["Death Message: %1 has killed %2", (name _killer), (name _victim)];
     };
-
-    diag_log format ["death_log: %1",_message];
+    
+    [format ["death_log: %1",_message]] call MPServer_fnc_log;
 };

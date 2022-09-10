@@ -543,7 +543,6 @@ try {
 		if(_interuptinfo)then{
 			_antihackclient = _antihackclient + "
 				"+_rnd_codetwo+" = compileFinal ""
-					if("+_rnd_isadmin+")then{diag_log 'Antihack Codetwo Active!'};
 					"+(call _junkCode)+"
 
 					while{true}do{
@@ -580,7 +579,7 @@ try {
 
 		"+_rnd_threadone+" = [] spawn 
 		{
-			if((call "+_rnd_adminlvl+") >= 5)exitWith{diag_log 'Antihack Thread#1 Active!';};
+			if((call "+_rnd_adminlvl+") >= 5)exitWith{};
 			"+(call _junkCode)+"";
 
 			if(_checkdetectedmenus)then{
@@ -635,7 +634,7 @@ try {
 
 		"+_rnd_threadtwo+" = [] spawn 
 		{
-			if("+_rnd_isadmin+")then{diag_log 'Antihack Thread#2 Active!'};
+			if("+_rnd_isadmin+")then{};
 			"+(call _junkCode)+"
 
 			terminate (missionNamespace getVariable ['"+_rnd_threadinterupt+"',scriptNull]);
@@ -799,7 +798,7 @@ try {
 
 		"+_rnd_threadthree+" = []spawn 
 		{ 
-			if("+_rnd_isadmin+")exitwith{diag_log 'Antihack Thread#2 Active!'};
+			if("+_rnd_isadmin+")exitwith{};
 			"+(call _junkCode)+"
 			
 			{
@@ -848,7 +847,7 @@ try {
 
 		"+_rnd_threadfour+" = []spawn
 		{
-			if((call "+_rnd_adminlvl+") >= 3)exitWith{diag_log 'Antihack Thread#4 Active!';}; 
+			if((call "+_rnd_adminlvl+") >= 3)exitWith{d}; 
 			private _detectedstrings = "+str _detectedstrings+"; 
 			private _inittime = diag_tickTime;
 			"+(call _junkCode)+"
@@ -939,7 +938,7 @@ try {
 		
 		"+_rnd_threadfive+" = []spawn
 		{
-			if((call "+_rnd_adminlvl+") >= 4)exitWith{diag_log 'Antihack Thread#5 Active!';};
+			if((call "+_rnd_adminlvl+") >= 4)exitWith{};
 			while {true} do {";
 				if(_checkgear)then{
 					if(_checkuniform)then{

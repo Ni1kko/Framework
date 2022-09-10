@@ -45,8 +45,8 @@ while{true} do
 					{
 						case "SERVER": 
 						{ 
-							private _code = compile ("diag_log 'Error: Function [" + _function + "] not found'");
-
+							private _code = compile ("['Error: Function [" + _function + "] not found'] call MPServer_fnc_log");
+							
 							if(typeName _function isEqualTo "CODE")then{
 								_code = _function;
 							}else{

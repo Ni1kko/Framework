@@ -5,20 +5,20 @@
 	Author:     Merrick, Nikko, Affect & IceEagle132
 	
 */
-if(missionNamespace getVariable ["MPClient_fnc_effects_critHit_active",false]) exitWith{};
+if(life_var_critHitRunning) exitWith{false};
+life_var_critHitRunning = true;
 
-MPClient_fnc_effects_critHit_active = true;
-
-private["_sound","_critColorEffect"];
-while {life_var_critHit} do {
+while {life_var_critHit} do 
+{
     uiSleep (15*60);
-    if (life_var_critHit && alive(player) && player == vehicle player) then {
-        _critColorEffect = ppEffectCreate ["colorCorrections", 2008];
+    if (life_var_critHit && alive(player) && player == vehicle player) then 
+    {
+        private _critColorEffect = ppEffectCreate ["colorCorrections", 2008];
         _critColorEffect ppEffectEnable true;
         _critColorEffect ppEffectAdjust [1, 1.1, -0.05, [0.4, 0.2, 0.3, -0.1], [0.3, 0.05, 0, 0], [0.5,0.5,0.5,0], [0,0,0,0,0,0,4]];
         _critColorEffect ppEffectCommit 18;
         [player,"ActsPknlMstpSnonWnonDnon_TreatingInjured_NikitinDead",true,true] remoteExecCall ["MPClient_fnc_animSync",-2];
-        _sound = ["action_cry_0", "action_cry_1"] call BIS_fnc_selectRandom;
+        private _sound = ["action_cry_0", "action_cry_1"] call BIS_fnc_selectRandom;
         player say3D _sound;
         for "_i" from 1 to 20 do {
             titleText[format["You have a traumatic shock caused by a serious injury! You will wake up in %1 sec.", (21 - _i)],"PLAIN"];
@@ -36,4 +36,6 @@ while {life_var_critHit} do {
     };
 };
 
-MPClient_fnc_effects_critHit_active = false;
+life_var_critHitRunning = false;
+
+true

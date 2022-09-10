@@ -158,7 +158,6 @@ private _transferAntiHack = {
 	missionNamespace setVariable [_this#2, _this#3];
 	[[_this#0,_this#1],{
 		params ['_code','_func'];
-		diag_log "Anticheat Thread Loaded";
 		life_var_antihack_networkReady = true;
 		publicVariableServer "life_var_antihack_networkReady";
 		while {true} do {

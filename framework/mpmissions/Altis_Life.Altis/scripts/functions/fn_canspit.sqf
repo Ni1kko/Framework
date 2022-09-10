@@ -18,7 +18,7 @@ if(missionNamespace getVariable ["testparmas_runonce",true])then{
 	testparmas_runonce = false;
 	systemChat str _this;
 	hint str _this;
-	diag_log  str _this;
+	[(str _this)] call MPClient_fnc_log;
 };
 
 true

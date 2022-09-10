@@ -18,12 +18,7 @@ _containerPos = getPosATL _container;
 _className = typeOf _container;
 _dir = [vectorDir _container, vectorUp _container];
 
-_query = format ["INSERT INTO containers (pid, pos, classname, inventory, gear, owned, dir) VALUES('%1', '%2', '%3', '""[[],0]""', '""[]""', '1', '%4')",_uid,_containerPos,_className,_dir];
-if (getNumber(configFile >> "CfgExtDB" >> "debugMode") isEqualTo 1) then {
-    diag_log format ["Query: %1",_query];
-};
-
-[_query,1] call MPServer_fnc_database_rawasync_request;
+[format ["INSERT INTO containers (pid, pos, classname, inventory, gear, owned, dir) VALUES('%1', '%2', '%3', '""[[],0]""', '""[]""', '1', '%4')",_uid,_containerPos,_className,_dir],1] call MPServer_fnc_database_rawasync_request;
 
 uiSleep 0.3;
 

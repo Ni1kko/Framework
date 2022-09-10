@@ -76,9 +76,8 @@ life_var_severSchedulerStartUpQueue = compileFinal str _severSchedulerStartUpQue
 {life_var_severScheduler pushBack _x}forEach _severSchedulerStartUpQueue;
  
 //--- Variable Event handlers
-"money_log" addPublicVariableEventHandler {diag_log (_this select 1)};
-"advanced_log" addPublicVariableEventHandler {diag_log (_this select 1)};
-
+"money_log" addPublicVariableEventHandler {[_this#1] call MPServer_fnc_log};
+"advanced_log" addPublicVariableEventHandler {[_this#1] call MPServer_fnc_log};
 
 //--- Tell clients that the server is ready and is accepting queries
 life_var_serverLoaded = true;

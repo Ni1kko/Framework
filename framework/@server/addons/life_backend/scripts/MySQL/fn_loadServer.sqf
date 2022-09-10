@@ -63,7 +63,7 @@ if (count _serverQueryResult isEqualTo 0) then {
 
 //--- She fucked it
 if(_serverQueryTries >= _serverQueryMaxTries)exitwith{
-    diag_log "database `servers` error. @server\addons\life_backend\scripts\MySQL\fn_loadServer.sqf";
+    ["database `servers` error. MPServer_fnc_loadServer"] call MPServer_fnc_log;
     '#shutdown' call MPServer_fnc_rcon_sendCommand;
 };
 
@@ -80,7 +80,7 @@ _serverQueryResult params [
 
 //--- Bad return
 if(_serverID isEqualTo -1)exitwith{
-    diag_log "database `servers` column `serverID` @server\addons\life_backend\scripts\MySQL\fn_loadServer.sqf";
+    ["database `servers` column `serverID` error. MPServer_fnc_loadServer"] call MPServer_fnc_log;
     '#shutdown' call MPServer_fnc_rcon_sendCommand;
 };
 

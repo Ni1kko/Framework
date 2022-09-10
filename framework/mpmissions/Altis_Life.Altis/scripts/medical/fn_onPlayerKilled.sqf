@@ -13,7 +13,9 @@ params [
 
 disableSerialization;
 
-diag_log format ["You got killed by %1(%2)",_killer getVariable["realname",""],getPlayerUID _killer];
+//-- Log death
+//[format ["%1(%2) killed %1(%2)",_killer getVariable["realname",""],getPlayerUID _killer,_unit getVariable["realname",""],getPlayerUID _unit],true,true] call MPClient_fnc_log;
+
 if  !((vehicle _unit) isEqualTo _unit) then {
     UnAssignVehicle _unit;
     _unit action ["getOut", vehicle _unit];

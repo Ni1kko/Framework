@@ -4,8 +4,23 @@
 	## https://github.com/Ni1kko/FrameworkV2
 */
 
-waitUntil{uiSleep 0.5;(getClientState isEqualTo "BRIEFING READ") && !isNull findDisplay 46};
-enableSentences false;
+//-- Handle file runing before preInit (Ban hacker)
+if (isFinal "life_var_preInitTime")exitWith{
+    ["MPClient_fnc_init ran before preInit hacker detected"] call MPClient_fnc_log;
+    endMission "Antihack";
+    false;
+};
+
+//-- Handle file runing after init (Ban hacker)
+if (isFinal "life_var_initTime")exitWith{
+    ["`life_var_initTime` already final, Hacker detected"] call MPClient_fnc_log;
+    endMission "Antihack";
+    false;
+};
+ 
+life_var_initTime = compileFinal str(diag_tickTime);
+
+["Loading client init"] call MPClient_fnc_log;
 
 private _MPClient_fnc_exit = compile '
     params [
@@ -16,17 +31,24 @@ private _MPClient_fnc_exit = compile '
     _this call MPClient_fnc_setLoadingText;
     uiSleep 5;
     endLoadingScreen;
+    [_title,true,true] call MPClient_fnc_log;
     [_ending,false,true] call BIS_fnc_endMission;
     disableUserInput false;
     true
 ';
+
+waitUntil{uiSleep 0.5;(getClientState isEqualTo "BRIEFING READ") && !isNull findDisplay 46};
+
+// -- 
+enableSentences false;
+enableRadio false;
 
 // -- Start Loading Screen
 startLoadingScreen ["","life_Rsc_DisplayLoading"];
 ["Setting up client", "Please Wait..."] call MPClient_fnc_setLoadingText; uiSleep(random[0.5,3,6]);
 
 // --
-diag_log "[Life Client] Waiting for the server to be ready...";
+["Waiting for the server to be ready..."] call MPClient_fnc_log;
 waitUntil {!isNil "life_var_serverLoaded" && {!isNil "extdb_var_database_error"}};
 if (extdb_var_database_error) exitWith {["Database failed to load", "Please contact an administrator"] call _MPClient_fnc_exit};
 if !life_var_serverLoaded then { 
@@ -45,6 +67,7 @@ if !life_var_serverLoaded then {
     }; 
 };
 
+["Waiting for player data..."] call MPClient_fnc_log;
 [] spawn MPClient_fnc_dataQuery;
 waitUntil {
     if(life_var_session_attempts > MAX_ATTEMPTS_TOO_QUERY_DATA) exitWith {["Unable to load player data", "Please try again"] call _MPClient_fnc_exit};
@@ -112,7 +135,9 @@ private _sideCode = missionNamespace getVariable [format["MPClient_fnc_init%1",_
 [player, _MPClient_fnc_exit] call _sideCode;
 [("Welcome " + profilename),"Have Fun And Respect The Rules!..."] call MPClient_fnc_setLoadingText; uiSleep(5);
 private _spawnPlayerThread = [life_is_alive,life_position] spawn MPClient_fnc_spawnPlayer;
+["Waiting for player to spawn!"] call MPClient_fnc_log;
 waitUntil{scriptDone _spawnPlayerThread};
+enableRadio true;
 
 //-- Paychecks
 [_side] call MPClient_fnc_paychecks;
@@ -125,6 +150,8 @@ waitUntil{scriptDone _spawnPlayerThread};
 
 ["objects", 1] call MPClient_fnc_s_onCheckedChange;
 ["tags", 1] call MPClient_fnc_s_onCheckedChange;
+
+[format["Client init completed! Took %1 seconds",diag_tickTime - (call life_var_initTime)]] call MPClient_fnc_log
 
 true
  

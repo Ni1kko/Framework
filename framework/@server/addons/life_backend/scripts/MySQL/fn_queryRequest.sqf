@@ -42,8 +42,8 @@ private _queryParams = [
 
 private _queryResult = ["READ", "players", [_queryParams,_queryClause],true]call MPServer_fnc_database_request;
 private _queryBankResult = ["READ", "bankaccounts", [["funds"],_queryClause],true]call MPServer_fnc_database_request;
-if (_queryResult isEqualTo ["DB:Read:Task-failure",false]) exitWith {diag_log format ["Error reading player: %1",_BEGuid]};
-if (_queryBankResult isEqualTo ["DB:Read:Task-failure",false]) exitWith {diag_log format ["Error reading player-bank: %1",_BEGuid]};
+if (_queryResult isEqualTo ["DB:Read:Task-failure",false]) exitWith {[format ["Error reading player: %1",_BEGuid]] call MPServer_fnc_log};
+if (_queryBankResult isEqualTo ["DB:Read:Task-failure",false]) exitWith {[format ["Error reading bank: %1",_BEGuid]] call MPServer_fnc_log};
 if (count _queryResult isEqualTo 0 || count _queryBankResult isEqualTo 0) exitWith {[] remoteExec ["MPClient_fnc_insertPlayerInfo",_ownerID]};
 
 private _bank = ["GAME","A2NET", (_queryBankResult#0)] call MPServer_fnc_database_parse;

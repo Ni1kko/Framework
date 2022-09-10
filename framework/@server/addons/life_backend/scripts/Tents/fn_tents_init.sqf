@@ -7,7 +7,7 @@ if(!canSuspend)exitWith{_this spawn MPServer_fnc_tents_init};
 
 waitUntil {isFinal "extdb_var_database_key"}; 
 
-diag_log "[Life Tents] Initializing...";
+["[Life Tents] Initializing..."] call MPServer_fnc_log;
 
 life_var_tent_config = compileFinal str [
 	getNumber(configFile >> "CfgTents" >> "oneTimeUse") isEqualTo 1,
@@ -37,4 +37,6 @@ private _queryTents = ["READ", "tents",
 
 publicVariable "life_var_allTents";
 
-diag_log "[Life Tents] Initialized!";
+["[Life Tents] Initialized"] call MPServer_fnc_log;
+
+true

@@ -56,9 +56,9 @@ switch (_mode) do {
         };
         if (LIFE_SETTINGS(getNumber,"player_moneyLog") isEqualTo 1) then {
             if (LIFE_SETTINGS(getNumber,"battlEye_friendlyLogging") isEqualTo 1) then {
-                diag_log (format [localize "STR_DL_ML_withdrewGang_BEF",_value,[_funds] call MPClient_fnc_numberText,[0] call MPClient_fnc_numberText,[_cash] call MPClient_fnc_numberText]);
+                [format [localize "STR_DL_ML_withdrewGang_BEF",_value,[_funds] call MPClient_fnc_numberText,[0] call MPClient_fnc_numberText,[_cash] call MPClient_fnc_numberText]] call MPServer_fnc_log;
             } else {
-                diag_log (format [localize "STR_DL_ML_withdrewGang",name _unit,(getPlayerUID _unit),_value,[_funds] call MPClient_fnc_numberText,[0] call MPClient_fnc_numberText,[_cash] call MPClient_fnc_numberText]);
+                [format [localize "STR_DL_ML_withdrewGang",name _unit,(getPlayerUID _unit),_value,[_funds] call MPClient_fnc_numberText,[0] call MPClient_fnc_numberText,[_cash] call MPClient_fnc_numberText]] call MPServer_fnc_log;
             };
         };
         _query = format ["UPDATE gangs SET bank='%1' WHERE id='%2'",([_funds] call MPServer_fnc_numberSafe),_groupID];

@@ -15,7 +15,7 @@ if (_isInCfg) then {
     if (isNull life_3dPreview_object || {!(_className isEqualTo typeOf life_3dPreview_object)}) then {
         if (!isNull life_3dPreview_object) then {deleteVehicle life_3dPreview_object;};
         private _object = _className createVehicleLocal [0, 0, 0];
-        if (isNull _object) exitWith {diag_log format ["3dPreview - problem creating object: %1", _className]};
+        if (isNull _object) exitWith {[format ["3dPreview - problem creating object: %1", _className]] call MPClient_fnc_log};
         life_3dPreview_object = _object;
         life_3dPreview_object enableSimulation false;
         life_3dPreview_object setPos life_3dPreview_position;

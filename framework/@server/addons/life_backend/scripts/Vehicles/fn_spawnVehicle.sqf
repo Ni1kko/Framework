@@ -29,17 +29,7 @@ life_var_severVehicles pushBack _vid;
 private _servIndex = life_var_severVehicles find _vid;
 
 private _query = format ["SELECT id, side, classname, type, pid, alive, active, plate, color, inventory, gear, fuel, damage, blacklist FROM vehicles WHERE id='%1' AND pid='%2' AND impounded='0'",_vid,_pid];
-
-private _tickTime = diag_tickTime;
 private _queryResult = [_query,2] call MPServer_fnc_database_rawasync_request;
-
-if (getNumber(configFile >> "CfgExtDB" >> "debugMode") isEqualTo 1) then {
-    diag_log "------------- Client Query Request -------------";
-    diag_log format ["QUERY: %1",_query];
-    diag_log format ["Time to complete: %1 (in seconds)",(diag_tickTime - _tickTime)];
-    diag_log format ["Result: %1",_queryResult];
-    diag_log "------------------------------------------------";
-};
 
 if (_queryResult isEqualType "") exitWith {};
 

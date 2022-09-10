@@ -15,12 +15,7 @@ if (isNull _house || _uid isEqualTo "") exitWith {};
 
 _housePos = getPosATL _house;
 
-_query = format ["INSERT INTO houses (pid, pos, owned) VALUES('%1', '%2', '1')",_uid,_housePos];
-if (getNumber(configFile >> "CfgExtDB" >> "debugMode") isEqualTo 1) then {
-    diag_log format ["Query: %1",_query];
-};
-
-[_query,1] call MPServer_fnc_database_rawasync_request;
+[format ["INSERT INTO houses (pid, pos, owned) VALUES('%1', '%2', '1')",_uid,_housePos],1] call MPServer_fnc_database_rawasync_request;
 
 uiSleep 0.3;
 

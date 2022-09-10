@@ -9,7 +9,7 @@
 */
 
 if (call extdb_var_database_prepared)exitWith{ 
-    diag_log "extDB3: Protocol Error, cant use `MPServer_fnc_database_rawasync_request` with SQL Custom";
+    ["Protocol Error, cant use `MPServer_fnc_database_rawasync_request` with SQL Custom"] call MPServer_fnc_database_systemlog;
 };
 
 if(life_var_rcon_RestartMode > 0)exitWith{false};
@@ -46,7 +46,10 @@ if (_queryResult isEqualTo "[5]") then {
     };
 };
 _queryResult = call compile _queryResult;
-if ((_queryResult select 0) isEqualTo 0) exitWith {diag_log format ["extDB3: Protocol Error: %1", _queryResult]; []};
+if ((_queryResult select 0) isEqualTo 0) exitWith {
+    [format ["Protocol Error: %1", _queryResult]] call MPServer_fnc_database_systemlog;
+    []
+};
 private _return = (_queryResult select 1);
 if (!_multiarr && count _return > 0) then {
     _return = (_return select 0);

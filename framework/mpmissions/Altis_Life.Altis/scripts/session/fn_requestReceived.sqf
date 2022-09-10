@@ -27,7 +27,7 @@ params [
 ];
 
 if (life_session_completed) exitWith {
-    diag_log "Framework: `fn_requestReceived` => Session already completed";
+    ["`MPClient_fnc_requestReceived` => Session already completed"] call MPClient_fnc_log;
     false
 };
 
@@ -96,7 +96,10 @@ player setDamage _health;
 //--- Position
 life_position = _position;
 if (life_is_alive) then {
-    if !(count life_position isEqualTo 3) then {diag_log format ["[requestReceived] Bad position received. Data: %1",life_position];life_is_alive =false;};
+    if !(count life_position isEqualTo 3) then { 
+        [format ["[Bad position received. Data: %1",life_position],true,true] call MPClient_fnc_log;
+        life_is_alive = false;
+    };
     if (life_position distance (getMarkerPos "respawn_civilian") < 300) then {life_is_alive = false;};
 }; 
 

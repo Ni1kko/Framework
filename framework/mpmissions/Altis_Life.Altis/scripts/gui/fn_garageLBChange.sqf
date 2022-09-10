@@ -19,7 +19,7 @@ _classNameLife = _className;
 
 if (!isClass (missionConfigFile >> "cfgVehicleArsenal" >> _classNameLife)) then {
     _classNameLife = "Default"; //Use Default class if it doesn't exist
-    diag_log format ["%1: cfgVehicleArsenal class doesn't exist",_className];
+    [format ["%1: cfgVehicleArsenal class doesn't exist",_className],true,true] call MPClient_fnc_log;
 };
 
 _vehicleColor = ((M_CONFIG(getArray,"cfgVehicleArsenal",_classNameLife,"textures") select (_dataArr select 1)) select 0);

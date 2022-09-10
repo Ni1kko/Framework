@@ -18,8 +18,8 @@ if(not(_action in ["ADD","SUB","ZERO","BANKRUPT"]) OR not(_type in ["CASH","BANK
 {
 	private _steamID = getPlayerUID player;
 
-	//-- ToDo: trigger anticheat here
-	diag_log format ["[ERROR] Invalid action or type: %1 %2",_action,_type];
+	//-- ToDo: trigger anticheat here 
+	[format ["Error Invalid action or type: %1 %2",_action,_type],true,true] call MPClient_fnc_log;
 
 	//--Return
 	[0,0,0]
@@ -31,7 +31,7 @@ if(isRemoteExecutedJIP OR (isRemoteExecuted AND remoteExecutedOwner isNotEqualTo
 	private _ownerID = remoteExecutedOwner;
 
 	//-- ToDo: trigger anticheat here
-	diag_log "[ERROR] Invalid remoteExec target or JIP enabled";
+	["Error Invalid remoteExec target or JIP enabled",true,true] call MPClient_fnc_log;
 
 	//--Return
 	[0,0,0]

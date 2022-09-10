@@ -49,6 +49,7 @@ class CfgFunctions
             class stripNpcs {};
             class setupRadioChannels {};
             class masterSchedule {};
+            class log {};
         };
     };
 };

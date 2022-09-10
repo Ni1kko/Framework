@@ -5,7 +5,7 @@
 
 if(hasInterface AND {('extDB3' callExtension '9:VERSION') isEqualTo ''}) exitWith {
 	private _exitmsg = 'Error [MPServer_fnc_database_getUpTime] requires extDB3!';
-	diag_log _exitmsg; systemChat _exitmsg;
+	[_exitmsg] call MPServer_fnc_database_systemlog;
 	-1
 };
 

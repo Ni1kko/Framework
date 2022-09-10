@@ -1,6 +1,6 @@
 /*
 	## Nikko Renolds
-	## https://github.com/Ni1kko/FrameworkV2
+	## https://github.com/Ni1kko/Framework
 */
 
 params [
@@ -31,6 +31,6 @@ if(_playerIndex isNotEqualTo -1)then{
                 ["serverID", ["DB","INT", (call life_var_serverID)] call MPServer_fnc_database_parse]
             ]
         ]]call MPServer_fnc_database_request;
-        diag_log format ["[Player Logout]: `%1` - (%2) - (%3) ", _name, _BEGuid, _steamID];
-   };
+        [format ["[Player Logout]: `%1` - (%2) - (%3) ", _name, _BEGuid, _steamID]] call MPServer_fnc_log;
+    };
 };

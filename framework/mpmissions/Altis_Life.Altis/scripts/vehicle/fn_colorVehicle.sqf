@@ -23,7 +23,7 @@ if (local _vehicle) then {
 };
 
 if (!isClass (missionConfigFile >> "cfgVehicleArsenal" >> _className)) then {
-    diag_log format ["%1: cfgVehicleArsenal class doesn't exist",_className];
+    [format ["%1: cfgVehicleArsenal class doesn't exist",_className],true,true] call MPClient_fnc_log;
     _className = "Default"; //Use Default class if it doesn't exist
 };
 

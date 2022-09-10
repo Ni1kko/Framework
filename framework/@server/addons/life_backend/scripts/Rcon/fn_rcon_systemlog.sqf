@@ -18,7 +18,7 @@ if((getNumber(_config >> "conlogs") isEqualTo 1) AND life_var_rcon_passwordOK)th
 	format ["#debug %1", _logmessage] call MPServer_fnc_rcon_sendCommand;
 }else{
 	if(getNumber(_config >> "rptlogs") isEqualTo 1)then{
-		diag_log _logmessage;
+		[_logmessage] call MPServer_fnc_log;
 	};
 };
 

@@ -19,17 +19,8 @@ if (_pid isEqualTo "" || _side isEqualTo sideUnknown || _type isEqualTo "" || is
         [[]] remoteExec ["MPClient_fnc_garageMenu",(owner _unit)];
     };
 };
- 
-private _tickTime = diag_tickTime;
-private _queryResult = [format ["SELECT id, side, classname, type, pid, alive, active, plate, color FROM vehicles WHERE pid='%1' AND alive='1' AND active='0' AND side='%2' AND type='%3' AND impounded='0'",_pid,_sideVar,_type],2,true] call MPServer_fnc_database_rawasync_request;
 
-if (getNumber(configFile >> "CfgExtDB" >> "debugMode") isEqualTo 1) then {
-    diag_log "------------- Client Query Request -------------";
-    diag_log format ["QUERY: %1",_query];
-    diag_log format ["Time to complete: %1 (in seconds)",(diag_tickTime - _tickTime)];
-    diag_log format ["Result: %1",_queryResult];
-    diag_log "------------------------------------------------";
-};
+private _queryResult = [format ["SELECT id, side, classname, type, pid, alive, active, plate, color FROM vehicles WHERE pid='%1' AND alive='1' AND active='0' AND side='%2' AND type='%3' AND impounded='0'",_pid,_sideVar,_type],2,true] call MPServer_fnc_database_rawasync_request;
 
 if (_queryResult isEqualType "") exitWith {
     [[]] remoteExec ["MPClient_fnc_garageMenu",(owner _unit)];

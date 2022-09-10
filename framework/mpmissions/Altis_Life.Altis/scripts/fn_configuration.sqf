@@ -5,14 +5,22 @@
 */
 
 if !(hasInterface)exitWith{
-    diag_log "Framework: Loading server preInit";
+    ["Loading server preInit"] call MPServer_fnc_log;
 };
 
-diag_log "Framework: Loading client preInit";
+if (isFinal "life_var_preInitTime")exitWith{ 
+    ["`life_var_preInitTime` already final, Client looping or hacker detected"] call MPClient_fnc_log;
+    endMission "Antihack";
+    false;
+};
+
+["Loading client preInit"] call MPClient_fnc_log;
 
 private _threadsToMonitor = [];
 private _variablesFlagged = [];
 private _variableTooSet = [ 
+    ["life_var_preInitTime", compileFinal str(diag_tickTime)],
+    ["life_var_initTime", compile str(-1)],
     ["life_var_serverTimeout", 0],
     ["life_var_loadingScreenActive", false],
     ["life_action_delay", time],
@@ -75,9 +83,16 @@ private _variableTooSet = [
     //--- Death system
     ["life_var_medicstatus", -1],
     ["life_var_medicstatusby", ""],
+     
+    //-- Hypothalamus
+    ["life_var_thirst", 100],
+    ["life_var_hunger", 100],
     ["life_var_bleeding", false],
-    ["life_var_pain_shock", false],
+    ["life_var_bleedingRunning", false],
+    ["life_var_painShock", false],
+    ["life_var_painShockRunning",false],
     ["life_var_critHit", false],
+    ["life_var_critHitRunning",false],
 
     //--- cellphone
     ["life_cellphone_contacts", []],
@@ -106,9 +121,7 @@ private _variableTooSet = [
     ["life_var_ATMEnabled", true],
     ["life_is_arrested", false],
     ["life_is_alive", false],
-    ["life_delivery_in_progress", false],
-    ["life_var_thirst", 100],
-    ["life_var_hunger", 100],
+    ["life_delivery_in_progress", false], 
     ["life_var_cash", 0],
     ["life_istazed", false],
     ["life_isknocked", false],
@@ -157,8 +170,8 @@ private _variableTooSet = [
 //-- flagged variable found. TODO: handle this through anticheat on server once detected
 if(count _variablesFlagged > 0)exitWith{ 
     [0,format["[Antihack] Hacker Detected %1 Variables flagged",getPlayerUID player],true,[profileNameSteam, profileName]] remoteExecCall ["MPClient_fnc_broadcast",-2];
-    diag_log format ["[LIFE] %1 Variables flagged",count _variablesFlagged];
-    {diag_log (format ["[LIFE] %1 = %2;",_x#0,_x#1] )}forEach _variablesFlagged;
+    [format ["[LIFE] %1 Variables flagged",count _variablesFlagged]] call MPClient_fnc_log;
+    {[format ["[LIFE] %1 = %2;",_x#0,_x#1]] call MPClient_fnc_log; uiSleep 0.6}forEach _variablesFlagged;
     endMission "Antihack";
 };
 
@@ -174,5 +187,7 @@ _threadsToMonitor pushBackUnique (["cash"] spawn MPClient_fnc_checkMoney);
 
 //-- Thread set 3
 _threadsToMonitor spawn {uiSleep floor(random 30); {_x spawn {waitUntil {uiSleep floor(random 30);isNull _this};endMission "Antihack"}}forEach _this};_threadsToMonitor = nil;
+
+[format["Client preInit completed! Took %1 seconds",diag_tickTime - (call life_var_preInitTime)]] call MPClient_fnc_log;
 
 true

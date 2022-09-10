@@ -46,8 +46,8 @@ if(_tentIndex isNotEqualTo -1)then{
 	_tent setVariable ["BEGuid",_BEGuid,true];
 	_tent setVariable ["tentID",_tentID,true];
 	_tent setVariable ["vitems",_vitems,true];
-
-	diag_log format ["Spawned Campsite #%1 - OwnerGuid: %2",_tentIndex,_BEGuid];
+ 
+	[format ["[Life Tents] Spawned Campsite #%1 - OwnerGuid: %2",_tentIndex,_BEGuid]] call MPServer_fnc_log;
 };
 
 _tent

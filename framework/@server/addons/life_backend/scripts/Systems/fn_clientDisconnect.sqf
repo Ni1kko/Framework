@@ -26,7 +26,7 @@ if (isNil "HC_UID" || {!(_uid isEqualTo HC_UID)}) then {
 
 
 if !(alive _unit) then {
-    diag_log format["%1 disconnected while dead.",_uid];
+    [format["%1 disconnected while dead.",_uid]] call MPServer_fnc_log;
 } else {
     {
         _x params [
@@ -36,7 +36,7 @@ if !(alive _unit) then {
         if (_corpseUID isEqualTo _uid) exitWith {
             if (isNull _corpse) exitWith {life_var_corpses deleteAt _forEachIndex};
             [_corpse] remoteExecCall ["MPClient_fnc_corpse",0];
-            diag_log format["%1 disconnected while dead.",_corpseUID];
+            [format["%1 disconnected while dead.",_corpseUID]] call MPServer_fnc_log;
             life_var_corpses deleteAt _forEachIndex;
         };
     } forEach life_var_corpses;
