@@ -4,7 +4,7 @@ class CfgPatches
     {
         units[] = {};
         weapons[] = {};
-        requiredAddons[] = {"Database"};
+        requiredAddons[] = {"Systems"};
         authors[] = {"Ni1kko"};
     };
 };
