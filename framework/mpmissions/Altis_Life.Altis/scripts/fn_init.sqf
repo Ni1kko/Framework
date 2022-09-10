@@ -5,7 +5,7 @@
 */
 
 //-- Handle file runing before preInit (Ban hacker)
-if (isFinal "life_var_preInitTime")exitWith{
+if (!isFinal "life_var_preInitTime")exitWith{
     ["MPClient_fnc_init ran before preInit hacker detected"] call MPClient_fnc_log;
     endMission "Antihack";
     false;
@@ -151,7 +151,7 @@ enableRadio true;
 ["objects", 1] call MPClient_fnc_s_onCheckedChange;
 ["tags", 1] call MPClient_fnc_s_onCheckedChange;
 
-[format["Client init completed! Took %1 seconds",diag_tickTime - (call life_var_initTime)]] call MPClient_fnc_log
+[format["Client init completed! Took %1 seconds",diag_tickTime - (call life_var_initTime)]] call MPClient_fnc_log;
 
 true
  
