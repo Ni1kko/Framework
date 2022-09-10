@@ -214,7 +214,8 @@ class CfgFunctions
             class receiveItem {};
             class receiveMoney {};
             class revealObjects {};
-            class saveGear {};
+            class getGear {};
+            class getLicenses {};
             class simDisable {};
             class startLoadout {};
             class stripDownPlayer {};

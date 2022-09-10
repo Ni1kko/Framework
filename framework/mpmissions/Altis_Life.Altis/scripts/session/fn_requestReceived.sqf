@@ -66,15 +66,9 @@ if (count _licenses > 0) then {
     {missionNamespace setVariable [_x#0,_x#1]} forEach _licenses;
 };
 
-_gear params [
-    ["_loadout",[],[[]]],
-    ["_vItems",[],[[]]]
-];
+//--- Gear & VirtualItems
+[player, _gear] call MPClient_fnc_loadGear;
 
-//--- Gear
-life_var_loadout = _loadout;
-//--- VirtualItems
-life_var_vitems  = _vItems;
 //--- Arrested
 life_is_arrested = _arrested;
 //--- Blacklist
@@ -132,8 +126,6 @@ if (count _keychain > 0) then {
 };
   
 life_isAdmin = compileFinal str ((call life_adminlevel) > 0);
-
-[] call MPClient_fnc_loadGear;
  
 life_session_completed = true;
 

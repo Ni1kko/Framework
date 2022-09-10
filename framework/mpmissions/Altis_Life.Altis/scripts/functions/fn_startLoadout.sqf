@@ -90,4 +90,5 @@ if !(_linkedItems isEqualTo []) then {
 };
 
 [] call MPClient_fnc_playerSkins;
-[] call MPClient_fnc_saveGear;
+
+true

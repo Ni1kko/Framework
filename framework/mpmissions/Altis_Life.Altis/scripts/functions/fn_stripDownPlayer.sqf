@@ -63,7 +63,7 @@ if _isDead then
     [_player] call MPClient_fnc_dropItems;
 
     //-- Save loadout array after dropping weapon.
-    life_save_gear = [] call MPClient_fnc_saveGear;
+    life_save_gear = getUnitLoadout _player;
 };
 
 //-- Remove head mounted gear

@@ -3,7 +3,7 @@
 	Function: 	MPClient_fnc_canspit
 	Project: 	AsYetUntitled/Framework
 	Author:     Nikko
-	Github:		https://github.com/AsYetUntitled/Framework
+	Github:		https://github.com/Ni1kko/FrameworkV2
 	
 */
 

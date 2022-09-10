@@ -61,13 +61,19 @@ switch (param [1,-1]) do {
     };
 
     case 3: {
+        (param [2,[]]) params [
+            ["_loadout",[],[[]]],
+            ["_vItems",[],[[]]]
+        ];
+        
         ["UPDATE", "players", [
             [//What
                 [(switch (_side) do {
                     case west: {"cop_gear"};
                     case independent: {"med_gear"};
                     default {"civ_gear"};
-                }),["DB","ARRAY", param [2,[]]] call MPServer_fnc_database_parse]	
+                }),["DB","ARRAY", _loadout] call MPServer_fnc_database_parse],
+                ["virtualitems",["DB","ARRAY", _vItems] call MPServer_fnc_database_parse]
             ],
             [//Where
                 ["BEGuid",str _BEGuid]

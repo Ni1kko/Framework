@@ -1,7 +1,7 @@
 /*
 
 	Function: 	MPClient_fnc_addBuff
-	Project: 	Misty Peaks RPG
+	Project: 	AsYetUntitled
 	Author:     Merrick, Nikko, Affect & IceEagle132
 	
 */

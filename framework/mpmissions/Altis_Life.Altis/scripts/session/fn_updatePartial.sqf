@@ -20,23 +20,14 @@ switch (_mode) do
     //-- Bank
     case 1: {_packet set[2,life_var_lastBalance#1]};
     //-- Licenses    
-    case 2: {
-        private _array = [];
-
-        {
-            _varName = LICENSE_VARNAME(configName _x,_flag);
-            _array pushBack [_varName,LICENSE_VALUE(configName _x,_flag)];
-        } forEach (format ["getText(_x >> 'side') isEqualTo '%1'",_flag] configClasses (missionConfigFile >> "cfgLicenses"));
-
-        _packet set[2,_array];
-    };
-    //-- Loadout
-    case 3: {_packet set[2,[] call MPClient_fnc_saveGear]};
+    case 2: {_packet set[2,([player] call MPClient_fnc_getGear)]};
+    //-- Gear
+    case 3: {_packet set[2,([player] call MPClient_fnc_getGear)]};
     //-- Position
     case 4: {_packet append [life_is_alive, getPosATL player]};
     //-- Arrested
     case 5: {_packet set[2,life_is_arrested]};
-    //-- Used for mainly for MPClient_fnc_handleMoney
+    //-- Money
     case 6: {_packet append life_var_lastBalance};
     //-- Used for keychain
     case 7: {};

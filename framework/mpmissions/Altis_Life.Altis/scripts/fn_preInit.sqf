@@ -147,10 +147,10 @@ private _variableTooSet = [
 ];
 
 //-- Setup VirtualItems
-{_variableTooSet pushBackUnique [ITEM_VARNAME(configName _x),0]} forEach ("true" configClasses (missionConfigFile >> "VirtualItems"));
+_variableTooSet append (([player,false] call MPClient_fnc_getGear)#1);
 
 //-- Setup Licenses
-{ _variableTooSet pushBackUnique [LICENSE_VARNAME(getText(_x >> "variable"),getText(_x >> "side")),false]} forEach ("true" configClasses (missionConfigFile >> "cfgLicenses"));
+_variableTooSet append ([player,false] call MPClient_fnc_getLicenses);
 
 //-- init Variables
 {

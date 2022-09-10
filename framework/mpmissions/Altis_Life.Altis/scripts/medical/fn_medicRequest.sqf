@@ -1,9 +1,9 @@
 /*
 
 	Function: 	MPClient_fnc_medicRequest
-	Project: 	Misty Peaks RPG
+	Project: 	AsYetUntitled
 	Author:     Tonic, Merrick, Nikko, Affect & IceEagle132
-	Github:		https://github.com/AsYetUntitled/Framework
+	Github:		https://github.com/Ni1kko/FrameworkV2
 	
 */
 

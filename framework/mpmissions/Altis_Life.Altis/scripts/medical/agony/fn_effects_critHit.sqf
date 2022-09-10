@@ -1,7 +1,7 @@
 /*
 
 	Function: 	MPClient_fnc_effects_critHit
-	Project: 	Misty Peaks RPG
+	Project: 	AsYetUntitled
 	Author:     Merrick, Nikko, Affect & IceEagle132
 	
 */

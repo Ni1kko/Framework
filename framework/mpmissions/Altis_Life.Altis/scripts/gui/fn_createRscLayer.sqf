@@ -1,9 +1,9 @@
 /*
 
 	Function: 	MPClient_fnc_createRscLayer
-	Project: 	Misty Peaks RPG
+	Project: 	AsYetUntitled
 	Author:     Tonic, Merrick, Nikko, Affect & IceEagle132
-	Github:		https://github.com/AsYetUntitled/Framework
+	Github:		https://github.com/Ni1kko/FrameworkV2
 	
 */
 
@@ -19,3 +19,5 @@ if ([_resource] call MPClient_fnc_hasDisplay) then {
 };
 
 (_resource call BIS_fnc_rscLayer) cutRsc [_resource,_type,_speed,_showOnMap];
+
+true

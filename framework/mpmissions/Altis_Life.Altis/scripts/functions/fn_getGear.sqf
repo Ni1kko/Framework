@@ -1,15 +1,26 @@
+#include "..\..\script_macros.hpp"
 /*
 	## Nikko Renolds
 	## https://github.com/Ni1kko/FrameworkV2
 */
 
-life_var_vitems = [];
-life_var_loadout = getUnitLoadout player;
+params [
+	["_player",objNull,[objNull]],
+	["_owned",true,[false]]
+];
+
+private _vitems = [];
 
 {
     private _item = format ["life_inv_%1",getText(missionConfigFile >> "VirtualItems" >> _x >> "variable")];
     private _count = missionNamespace getVariable [_item,0];
-    if (_count > 0) then {life_var_vitems pushBack [_x,_count]};
+	if _owned then {
+		if (_count > 0) then {
+			_vitems pushBackUnique [_x,_count];
+		};
+	}else{
+		_vitems pushBackUnique [_x,0];
+	};
 } forEach getArray(missionConfigFile >> "Life_Settings" >> "saved_virtualItems");
 
-_loadout
+[getUnitLoadout _player,_vitems]

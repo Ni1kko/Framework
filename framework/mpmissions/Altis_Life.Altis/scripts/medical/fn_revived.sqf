@@ -1,11 +1,7 @@
 #include "..\..\script_macros.hpp"
 /*
-
-	Function: 	MPClient_fnc_revived
-	Project: 	Misty Peaks RPG
-	Author:     Tonic, Merrick, Nikko, Affect & IceEagle132
-	Github:		https://github.com/Ni1kko/FrameworkV2
-	
+	## Nikko Renolds
+	## https://github.com/Ni1kko/FrameworkV2
 */
 
 private _reviversName = param [0,"Unknown Medic",[""]];
@@ -13,17 +9,8 @@ private _reviveCost = LIFE_SETTINGS(getNumber,"revive_fee");
  
 //-- Stop bleeding
 ["revived"] call MPClient_fnc_removeBuff;
-
-//-- remove death screen
-["RscDisplayDeathScreen"] call MPClient_fnc_destroyRscLayer;
-closeDialog 0;
-
-player setUnitLoadout life_save_gear;
-
-life_is_alive = true;
-player setUnconscious false;
-player playMoveNow "amovpercmstpsnonwnondnon";
-
+ 
+//--
 {player setVariable _x} forEach [
 	['medicStatus',nil,true],
 	['Revive',nil,true],
@@ -32,14 +19,32 @@ player playMoveNow "amovpercmstpsnonwnondnon";
 	["lifeState","HEALTHY",true]
 ];
 
-//Take fee for services.
-["SUB","CASH",_reviveCost] call MPClient_fnc_handleMoney;
-
-hint format [localize "STR_Medic_RevivePay",_reviversName,[_reviveCost] call MPClient_fnc_numberText];
+//-- remove death screen
+["RscDisplayDeathScreen"] call MPClient_fnc_destroyRscLayer;
+closeDialog 0;
  
+//-- Bring back to life
+life_is_alive = true;
+player setUnconscious false;
+4 fadeSound 1;
+cutText ["You have came to your senses ...", "BLACK IN", 5];
+
+//-- Reload there gear
+if(count life_save_gear > 0)then{player setUnitLoadout life_save_gear};
+systemChat "You have been revived, Dont forget to pick up any dropped items!";
+
+//-- Texture update
 [] call MPClient_fnc_playerSkins;
+
+//-- Animate
+player playMoveNow "amovpercmstpsnonwnondnon";
+uiSleep 3;
+
+//-- Take fee for services.
+["SUB","BANK",_reviveCost] call MPClient_fnc_handleMoney;
+systemChat format [localize "STR_Medic_RevivePay",_reviversName,[_reviveCost] call MPClient_fnc_numberText];
+
+//-- Database update
 [] call MPClient_fnc_updateRequest;
 
-2 fadeSound 1;
-cutText ["You come to your senses ...", "BLACK IN", 5];
-uiSleep 4;
+true

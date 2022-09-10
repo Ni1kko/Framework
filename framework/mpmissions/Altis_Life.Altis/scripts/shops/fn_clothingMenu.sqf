@@ -308,7 +308,6 @@ if ((life_clothing_purchase select 4) isEqualTo -1) then {
 };
 
 life_clothing_purchase = [-1,-1,-1,-1,-1];
-[] call MPClient_fnc_saveGear;
 
 [] spawn {
     uiSleep 5;
