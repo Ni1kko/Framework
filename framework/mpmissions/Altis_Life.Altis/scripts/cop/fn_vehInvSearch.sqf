@@ -34,7 +34,7 @@ _illegalValue = 0;
 } forEach (_vehicleInfo select 0);
 _value = _illegalValue;
 if (_value > 0) then {
-    [0,"STR_NOTF_VehContraband",true,[[_value] call MPClient_fnc_numberText]] remoteExecCall ["MPClient_fnc_broadcast",RCLIENT];
+    [0,"STR_NOTF_VehContraband",true,[[_value] call MPClient_fnc_numberText]] remoteExecCall ["MPClient_fnc_broadcast",RE_CLIENT];
     ["ADD","BANK",_value] call MPClient_fnc_handleMoney;
     _vehicle setVariable ["Trunk",[[],0],true];
 } else {

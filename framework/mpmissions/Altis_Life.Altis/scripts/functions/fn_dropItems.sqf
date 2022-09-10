@@ -37,7 +37,7 @@ private _pos = _unit modelToWorld[0,3,0];
     //Handle droping item.
     if (_itemValue > 0) then {
         private _obj = _itemObject createVehicle _itemObjectPos;
-        [_obj] remoteExecCall ["MPClient_fnc_simDisable",RANY];
+        [_obj] remoteExecCall ["MPClient_fnc_simDisable",RE_GLOBAL];
         _obj setPos _itemObjectPos;
         _obj setVariable ["item",[_item,_itemValue],true];
         missionNamespace setVariable [_itemName,0];

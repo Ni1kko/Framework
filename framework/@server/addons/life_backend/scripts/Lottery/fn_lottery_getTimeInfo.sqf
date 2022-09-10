@@ -1,9 +1,10 @@
+#include "\life_backend\script_macros.hpp"
 /*
 	## Nikko Renolds
 	## https://github.com/Ni1kko/FrameworkV2
 */
 
-private _timeRemaining = 9999 ^ 9.6330;//0.001 before Infinte
+private _timeRemaining = INFINTE;
 private _configIndex = -1;
 private _config = call life_var_lotto_config;
 private _ticketDrawTimes = _config param [5,[]];

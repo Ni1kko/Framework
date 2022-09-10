@@ -17,7 +17,9 @@ class CfgFunctions
         class Root_Functions
         {
             file = "\life_backend\scripts";
+            class init {};
             class preInit {preInit = 1;};
+            class postInit {postInit = 1;};
         }; 
     };
 };

@@ -28,7 +28,7 @@ if ((_veh isKindOf "Car") || (_veh isKindOf "Ship") || (_veh isKindOf "Air")) th
 
         for "_i" from 0 to 1 step 0 do {
             if (animationState player != "AinvPknlMstpSnonWnonDnon_medic_1") then {
-                [player,"AinvPknlMstpSnonWnonDnon_medic_1",true] remoteExecCall ["MPClient_fnc_animSync",RCLIENT];
+                [player,"AinvPknlMstpSnonWnonDnon_medic_1",true] remoteExecCall ["MPClient_fnc_animSync",RE_CLIENT];
                 player switchMove "AinvPknlMstpSnonWnonDnon_medic_1";
                 player playMoveNow "AinvPknlMstpSnonWnonDnon_medic_1";
             };

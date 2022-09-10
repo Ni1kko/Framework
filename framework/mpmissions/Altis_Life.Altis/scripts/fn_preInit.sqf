@@ -3,23 +3,22 @@
 	## Nikko Renolds
 	## https://github.com/Ni1kko/FrameworkV2
 */
-
-if !(hasInterface)exitWith{
-    ["Loading server preInit"] call MPServer_fnc_log;
-};
+if !(canSuspend)exitWith{_this spawn MPClient_fnc_preInit; false};
+if !(hasInterface)exitWith{false};
 
 if (isFinal "life_var_preInitTime")exitWith{ 
-    ["`life_var_preInitTime` already final, Client looping or hacker detected"] call MPClient_fnc_log;
-    endMission "Antihack";
+    ["Hack Detected", "`life_var_preInitTime` already final, Client looping or hacker detected", "Antihack"] call MPClient_fnc_endMission;
     false;
 };
 
 ["Loading client preInit"] call MPClient_fnc_log;
+waitUntil{uiSleep 0.5;(getClientState isEqualTo "BRIEFING READ") && !isNull findDisplay 46};
 
 private _threadsToMonitor = [];
 private _variablesFlagged = [];
 private _variableTooSet = [ 
     ["life_var_preInitTime", compileFinal str(diag_tickTime)],
+    ["life_var_postInitTime", compile str(-1)],
     ["life_var_initTime", compile str(-1)],
     ["life_var_serverTimeout", 0],
     ["life_var_loadingScreenActive", false],
@@ -179,11 +178,12 @@ if(count _variablesFlagged > 0)exitWith{
 _threadsToMonitor pushBackUnique (["bank"] spawn MPClient_fnc_checkMoney);
 _threadsToMonitor pushBackUnique (["cash"] spawn MPClient_fnc_checkMoney);
 
+//-- Start client
+private _initThread = [serverName,missionName,worldName,worldSize] spawn MPClient_fnc_init;
+waitUntil {scriptDone _initThread};
+
 //-- Thread set 2
 {_threadsToMonitor set [_forEachIndex, _x spawn {waitUntil {uiSleep floor(random 15);isNull _this};endMission "Antihack"}]}forEach _threadsToMonitor;
-
-//-- Start client
-[] spawn MPClient_fnc_init;
 
 //-- Thread set 3
 _threadsToMonitor spawn {uiSleep floor(random 30); {_x spawn {waitUntil {uiSleep floor(random 30);isNull _this};endMission "Antihack"}}forEach _this};_threadsToMonitor = nil;

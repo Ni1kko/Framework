@@ -17,7 +17,7 @@ _vehicleData = _vehicle getVariable ["vehicle_info_owners",[]];
 if (_vehicleData isEqualTo 0) exitWith {deleteVehicle _vehicle}; //Bad vehicle.
 _vehicleName = FETCH_CONFIG2(getText,"CfgVehicles",(typeOf _vehicle),"displayName");
 _price = M_CONFIG(getNumber,"cfgVehicleArsenal",(typeOf _vehicle),"price");
-[0,"STR_NOTF_BeingImpounded",true,[((_vehicleData select 0) select 1),_vehicleName]] remoteExecCall ["MPClient_fnc_broadcast",RCLIENT];
+[0,"STR_NOTF_BeingImpounded",true,[((_vehicleData select 0) select 1),_vehicleName]] remoteExecCall ["MPClient_fnc_broadcast",RE_CLIENT];
 life_var_isBusy = true;
 
 _upp = localize "STR_NOTF_Impounding";
@@ -55,14 +55,14 @@ if (count crew _vehicle isEqualTo 0) then {
     if (count extdb_var_database_headless_clients > 0) then {
         [_vehicle,true,player] remoteExec ["HC_fnc_vehicleStore",extdb_var_database_headless_client];
     } else {
-        [_vehicle,true,player] remoteExec ["MPServer_fnc_vehicleStore",RSERV];
+        [_vehicle,true,player] remoteExec ["MPServer_fnc_vehicleStore",RE_SERVER];
     };
 
     waitUntil {!life_impound_inuse};
     if (playerSide isEqualTo west) then {
         _impoundMultiplier = LIFE_SETTINGS(getNumber,"vehicle_cop_impound_multiplier");
         _value = _price * _impoundMultiplier;
-        [0,"STR_NOTF_HasImpounded",true,[profileName,((_vehicleData select 0) select 1),_vehicleName]] remoteExecCall ["MPClient_fnc_broadcast",RCLIENT];
+        [0,"STR_NOTF_HasImpounded",true,[profileName,((_vehicleData select 0) select 1),_vehicleName]] remoteExecCall ["MPClient_fnc_broadcast",RE_CLIENT];
         if (_vehicle in life_vehicles) then {
             hint format [localize "STR_NOTF_OwnImpounded",[_value] call MPClient_fnc_numberText,_type];
             ["SUB","BANK",_value] call MPClient_fnc_handleMoney;

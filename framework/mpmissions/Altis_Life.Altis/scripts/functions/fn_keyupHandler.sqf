@@ -333,9 +333,9 @@ switch (_keyCode) do
                 _veh setVariable ["siren",true,true];
                 private "_jip";
                 if (playerSide isEqualTo west) then {
-                    _jip = [_veh] remoteExec ["MPClient_fnc_copSiren",RCLIENT,true];
+                    _jip = [_veh] remoteExec ["MPClient_fnc_copSiren",RE_CLIENT,true];
                 } else {
-                    _jip = [_veh] remoteExec ["MPClient_fnc_medicSiren",RCLIENT,true];
+                    _jip = [_veh] remoteExec ["MPClient_fnc_medicSiren",RE_CLIENT,true];
                 };
                 _veh setVariable ["sirenJIP",_jip,true];
             };
@@ -443,7 +443,7 @@ switch (_keyCode) do
         if (isNil "jumpActionTime") then {jumpActionTime = 0;};
         if (_shiftState && {!(animationState player isEqualTo "AovrPercMrunSrasWrflDf")} && {isTouchingGround player} && {stance player isEqualTo "STAND"} && {speed player > 2} && {!life_is_arrested} && {((velocity player) select 2) < 2.5} && {time - jumpActionTime > 1.5}) then {
             jumpActionTime = time; //Update the time.
-            [player] remoteExec ["MPClient_fnc_jumpFnc",RANY]; //Global execution
+            [player] remoteExec ["MPClient_fnc_jumpFnc",RE_GLOBAL]; //Global execution
             _stopPropagation = true;
         };
     };

@@ -58,7 +58,7 @@ if (LIFE_SETTINGS(getNumber,"jail_seize_inventory") isEqualTo 1) then {
 if (count extdb_var_database_headless_clients > 0) then {
     [player,_bad] remoteExecCall ["HC_fnc_jailSys",extdb_var_database_headless_client];
 } else {
-    [player,_bad] remoteExecCall ["MPServer_fnc_jailSys",RSERV];
+    [player,_bad] remoteExecCall ["MPServer_fnc_jailSys",RE_SERVER];
 };
 
 [5] call MPClient_fnc_updatePartial;

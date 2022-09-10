@@ -46,7 +46,7 @@ if ([true,_type,_amount] call MPClient_fnc_handleInv) then {
             if (count extdb_var_database_headless_clients > 0) then {
                 [1,group player] remoteExecCall ["HC_fnc_updateGang",extdb_var_database_headless_client];
             } else {
-                [1,group player] remoteExecCall ["MPServer_fnc_updateGang",RSERV];
+                [1,group player] remoteExecCall ["MPServer_fnc_updateGang",RE_SERVER];
             };
 
         } else {

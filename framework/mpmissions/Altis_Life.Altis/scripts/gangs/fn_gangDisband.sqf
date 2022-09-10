@@ -21,7 +21,7 @@ if (_action) then {
     if (count extdb_var_database_headless_clients > 0) then {
         [group player] remoteExec ["HC_fnc_removeGang",extdb_var_database_headless_client];
     } else {
-        [group player] remoteExec ["MPServer_fnc_removeGang",RSERV];
+        [group player] remoteExec ["MPServer_fnc_removeGang",RE_SERVER];
     };
 
 } else {

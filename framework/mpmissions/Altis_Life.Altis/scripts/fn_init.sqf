@@ -4,40 +4,19 @@
 	## https://github.com/Ni1kko/FrameworkV2
 */
 
+params ["_serverName","_missionName","_worldName","_worldSize"];
+
 //-- Handle file runing before preInit (Ban hacker)
-if (!isFinal "life_var_preInitTime")exitWith{
-    ["MPClient_fnc_init ran before preInit hacker detected"] call MPClient_fnc_log;
-    endMission "Antihack";
+if (!isFinal "life_var_preInitTime")exitWith{ 
+    ["Hack Detected", "MPClient_fnc_init ran before preInit hacker detected", "Antihack"] call MPClient_fnc_endMission;
     false;
 };
 
 //-- Handle file runing after init (Ban hacker)
 if (isFinal "life_var_initTime")exitWith{
-    ["`life_var_initTime` already final, Hacker detected"] call MPClient_fnc_log;
-    endMission "Antihack";
+    ["Hack Detected", "`life_var_initTime` already final, Hacker detected", "Antihack"] call MPClient_fnc_endMission;
     false;
 };
- 
-life_var_initTime = compileFinal str(diag_tickTime);
-
-["Loading client init"] call MPClient_fnc_log;
-
-private _MPClient_fnc_exit = compile '
-    params [
-       ["_title",""],
-       ["_text",""],
-       ["_ending","END1"]
-    ];
-    _this call MPClient_fnc_setLoadingText;
-    uiSleep 5;
-    endLoadingScreen;
-    [_title,true,true] call MPClient_fnc_log;
-    [_ending,false,true] call BIS_fnc_endMission;
-    disableUserInput false;
-    true
-';
-
-waitUntil{uiSleep 0.5;(getClientState isEqualTo "BRIEFING READ") && !isNull findDisplay 46};
 
 // -- 
 enableSentences false;
@@ -46,14 +25,18 @@ enableRadio false;
 // -- Start Loading Screen
 startLoadingScreen ["","life_Rsc_DisplayLoading"];
 ["Setting up client", "Please Wait..."] call MPClient_fnc_setLoadingText; uiSleep(random[0.5,3,6]);
+ 
+life_var_initTime = compileFinal str(diag_tickTime);
+
+["Loading client init"] call MPClient_fnc_log;
 
 // --
 ["Waiting for the server to be ready..."] call MPClient_fnc_log;
 waitUntil {!isNil "life_var_serverLoaded" && {!isNil "extdb_var_database_error"}};
-if (extdb_var_database_error) exitWith {["Database failed to load", "Please contact an administrator"] call _MPClient_fnc_exit};
+if (extdb_var_database_error) exitWith {["Database failed to load", "Please contact an administrator"] call MPClient_fnc_endMission};
 if !life_var_serverLoaded then { 
     waitUntil {
-        if(life_var_serverTimeout > MAX_SECS_TOO_WAIT_FOR_SERVER) exitWith {["Server failed to load", "Please try again"] call _MPClient_fnc_exit};
+        if(life_var_serverTimeout > MAX_SECS_TOO_WAIT_FOR_SERVER) exitWith {["Server failed to load", "Please try again"] call MPClient_fnc_endMission};
         ["Waiting for the server to be ready", "Please wait"] call MPClient_fnc_setLoadingText; 
         uiSleep 0.2;
         ["Waiting for the server to be ready", "Please wait."] call MPClient_fnc_setLoadingText; 
@@ -70,7 +53,7 @@ if !life_var_serverLoaded then {
 ["Waiting for player data..."] call MPClient_fnc_log;
 [] spawn MPClient_fnc_dataQuery;
 waitUntil {
-    if(life_var_session_attempts > MAX_ATTEMPTS_TOO_QUERY_DATA) exitWith {["Unable to load player data", "Please try again"] call _MPClient_fnc_exit};
+    if(life_var_session_attempts > MAX_ATTEMPTS_TOO_QUERY_DATA) exitWith {["Unable to load player data", "Please try again"] call MPClient_fnc_endMission};
     uiSleep 1;    
     life_session_completed
 };
@@ -91,26 +74,6 @@ if (LIFE_SETTINGS(getNumber,"enable_fatigue") isEqualTo 0) then {
         [] spawn MPClient_fnc_autoruninit;
     }; 
 };
-
-{
-    /*
-        https://feedback.bistudio.com/T117205 - disableChannels settings cease to work when leaving/rejoining mission
-        Universal workaround for usage in a preInit function. - AgentRev
-        Remove if Bohemia actually fixes the issue.
-    */
-    _x params [["_chan",-1,[0]], ["_noText","false",[""]], ["_noVoice","false",[""]]];
-    _noText = [false,true] select ((["false","true"] find toLower _noText) max 0);
-    _noVoice = [false,true] select ((["false","true"] find toLower _noVoice) max 0);
-    _chan enableChannel [!_noText, !_noVoice];
-} forEach getArray (missionConfigFile >> "disableChannels");
-
-[] spawn {
-    for "_i" from 0 to 1 step 0 do {
-        waitUntil {(!isNull (findDisplay 49)) && {(!isNull (findDisplay 602))}}; // Check if Inventory and ESC dialogs are open
-        (findDisplay 49) closeDisplay 2; // Close ESC dialog
-        (findDisplay 602) closeDisplay 2; // Close Inventory dialog
-    };
-};
  
 [] call MPClient_fnc_setupEVH;
 [] call MPClient_fnc_setupActions;
@@ -129,8 +92,7 @@ if (LIFE_SETTINGS(getNumber,"enable_fatigue") isEqualTo 0) then {
 private _side = side player;
 private _sideVar = [_side,true] call MPServer_fnc_util_getSideString;
 private _sideCode = missionNamespace getVariable [format["MPClient_fnc_init%1",_sideVar],{}];
-
-
+ 
 //-- 
 [player, _MPClient_fnc_exit] call _sideCode;
 [("Welcome " + profilename),"Have Fun And Respect The Rules!..."] call MPClient_fnc_setLoadingText; uiSleep(5);

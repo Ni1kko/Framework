@@ -7,16 +7,9 @@
     When uncommented it enables proper testing via local testing
     Otherwise leave it commented out for "LIVE" servers
 */
-#define DEBUG 1
-
-#ifdef DEBUG
-#define RCLIENT 0
-#else
-#define RCLIENT -2
-#endif
-
-#define RSERV 2
-#define RANY 0
+#define RE_CLIENT -2
+#define RE_SERVER 2
+#define RE_GLOBAL 0
 
 //Scripting Macros
 #define CONST(var1,var2) var1 = compileFinal (if (var2 isEqualType "") then {var2} else {str(var2)})
@@ -64,3 +57,6 @@
 
 //
 #define TYPE_NOT_FOUND "Undefined"
+
+//--
+#define INFINTE 1e+011

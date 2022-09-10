@@ -6,7 +6,7 @@
 params [ 
 	["_contents","",[""]], 
 	["_client",true,[false]],
-	["_server",false,[false]],
+	["_server",false,[false]]
 ];
 
 if(count _contents isEqualTo 0) exitWith {false};

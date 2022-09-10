@@ -36,7 +36,7 @@ if (_action) then {
     if (count extdb_var_database_headless_clients > 0) then {
         [_uid,_house] remoteExec ["HC_fnc_addHouse",extdb_var_database_headless_client];
     } else {
-        [_uid,_house] remoteExec ["MPServer_fnc_addHouse",RSERV];
+        [_uid,_house] remoteExec ["MPServer_fnc_addHouse",RE_SERVER];
     };
 
     if (LIFE_SETTINGS(getNumber,"player_advancedLog") isEqualTo 1) then {

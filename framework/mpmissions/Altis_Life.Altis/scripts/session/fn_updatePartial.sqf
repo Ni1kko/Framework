@@ -42,6 +42,6 @@ switch (_mode) do
     case 7: {};
 };
 
-_packet remoteExecCall ["MPServer_fnc_updatePartial",RSERV];
+_packet remoteExecCall ["MPServer_fnc_updatePartial",RE_SERVER];
 
 true

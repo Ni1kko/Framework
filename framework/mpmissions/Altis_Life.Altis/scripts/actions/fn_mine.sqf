@@ -88,7 +88,7 @@ if (_diff isEqualTo 0) exitWith {
     life_var_isBusy = false;
 };
 
-[player,"mining",35,1] remoteExecCall ["MPClient_fnc_say3D",RCLIENT];
+[player,"mining",35,1] remoteExecCall ["MPClient_fnc_say3D",RE_CLIENT];
 
 for "_i" from 0 to 4 do {
     player playMoveNow "AinvPercMstpSnonWnonDnon_Putdown_AmovPercMstpSnonWnonDnon";

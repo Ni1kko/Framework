@@ -1,3 +1,4 @@
+#include "..\..\..\script_macros.hpp"
 /*
 
 	Function: 	MPClient_fnc_effects_bleeding
@@ -5,7 +6,6 @@
 	Author:     Merrick, Nikko, Affect & IceEagle132
 	
 */
-#define INFINTE 1e+011
 
 if(life_var_bleedingRunning) exitWith{false};
 life_var_bleedingRunning = true;

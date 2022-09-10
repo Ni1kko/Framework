@@ -52,7 +52,7 @@ if (!isNull _killer && {!(_killer isEqualTo _unit)} && {!(side _killer isEqualTo
         if (count extdb_var_database_headless_clients > 0) then {
             [getPlayerUID _killer,_killer getVariable ["realname",name _killer],"187V"] remoteExecCall ["HC_fnc_wantedAdd",extdb_var_database_headless_client];
         } else {
-            [getPlayerUID _killer,_killer getVariable ["realname",name _killer],"187V"] remoteExecCall ["MPServer_fnc_wantedAdd",RSERV];
+            [getPlayerUID _killer,_killer getVariable ["realname",name _killer],"187V"] remoteExecCall ["MPServer_fnc_wantedAdd",RE_SERVER];
         };
 
         //Get rid of this if you don't want automatic vehicle license removal.
@@ -63,7 +63,7 @@ if (!isNull _killer && {!(_killer isEqualTo _unit)} && {!(side _killer isEqualTo
         if (count extdb_var_database_headless_clients > 0) then {
             [getPlayerUID _killer,_killer getVariable ["realname",name _killer],"187"] remoteExecCall ["HC_fnc_wantedAdd",extdb_var_database_headless_client];
         } else {
-            [getPlayerUID _killer,_killer getVariable ["realname",name _killer],"187"] remoteExecCall ["MPServer_fnc_wantedAdd",RSERV];
+            [getPlayerUID _killer,_killer getVariable ["realname",name _killer],"187"] remoteExecCall ["MPServer_fnc_wantedAdd",RE_SERVER];
         };
 
         if (!local _killer) then {
@@ -85,7 +85,7 @@ if (side _killer isEqualTo west && !(playerSide isEqualTo west)) then {
     life_copRecieve = _killer;
     //Did I rob the federal reserve?
     if (!life_var_ATMEnabled && {life_var_cash > 0}) then {
-        [format [localize "STR_Cop_RobberDead",[life_var_cash] call MPClient_fnc_numberText]] remoteExecCall ["MPClient_fnc_broadcast",RCLIENT];
+        [format [localize "STR_Cop_RobberDead",[life_var_cash] call MPClient_fnc_numberText]] remoteExecCall ["MPClient_fnc_broadcast",RE_CLIENT];
         ["ZERO","CASH"] call MPClient_fnc_handleMoney;
     };
 };
@@ -94,7 +94,7 @@ if (!isNull _killer && {!(_killer isEqualTo _unit)}) then {
     life_removeWanted = true;
 };
  
-[player,life_settings_enableSidechannel,playerSide] remoteExecCall ["MPServer_fnc_managesc",RSERV];
+[player,life_settings_enableSidechannel,playerSide] remoteExecCall ["MPServer_fnc_managesc",RE_SERVER];
 
 //-- Stop bleeding
 ["all"] call MPClient_fnc_removeBuff;

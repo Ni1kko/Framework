@@ -75,7 +75,7 @@ switch (true) do {
         if (count extdb_var_database_headless_clients > 0) then {
             [getPlayerUID player] remoteExecCall ["HC_fnc_wantedRemove", extdb_var_database_headless_client];
         } else {
-            [getPlayerUID player] remoteExecCall ["MPServer_fnc_wantedRemove", RSERV];
+            [getPlayerUID player] remoteExecCall ["MPServer_fnc_wantedRemove", RE_SERVER];
         };
 
         [5] call MPClient_fnc_updatePartial;
@@ -84,12 +84,12 @@ switch (true) do {
     case (_esc): {
         life_is_arrested = false;
         hint localize "STR_Jail_EscapeSelf";
-        [0, "STR_Jail_EscapeNOTF", true, [profileName]] remoteExecCall ["MPClient_fnc_broadcast", RCLIENT];
+        [0, "STR_Jail_EscapeNOTF", true, [profileName]] remoteExecCall ["MPClient_fnc_broadcast", RE_CLIENT];
 
         if (count extdb_var_database_headless_clients > 0) then {
             [getPlayerUID player, profileName, "901"] remoteExecCall ["HC_fnc_wantedAdd", extdb_var_database_headless_client];
         } else {
-            [getPlayerUID player, profileName, "901"] remoteExecCall ["MPServer_fnc_wantedAdd", RSERV];
+            [getPlayerUID player, profileName, "901"] remoteExecCall ["MPServer_fnc_wantedAdd", RE_SERVER];
         };
 
         [5] call MPClient_fnc_updatePartial;
@@ -102,7 +102,7 @@ switch (true) do {
         if (count extdb_var_database_headless_clients > 0) then {
             [getPlayerUID player] remoteExecCall ["HC_fnc_wantedRemove", extdb_var_database_headless_client];
         } else {
-            [getPlayerUID player] remoteExecCall ["MPServer_fnc_wantedRemove", RSERV];
+            [getPlayerUID player] remoteExecCall ["MPServer_fnc_wantedRemove", RE_SERVER];
         };
         player setVariable ["life_var_teleported",true,true];
         player setPos (getMarkerPos "jail_release");

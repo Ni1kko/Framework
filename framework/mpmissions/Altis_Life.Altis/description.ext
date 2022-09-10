@@ -61,7 +61,8 @@ class CfgFunctions
         {
             file = "scripts";
             class init {};
-            class configuration {preInit = 1;};
+            class preInit {preInit = 1;};
+            class postInit {postInit = 1;};
         };
         
         class Antihack
@@ -234,6 +235,7 @@ class CfgFunctions
             class briefing {};
             class setupStationService {};
             class log {};
+            class endMission {};
         };
 
         class Gangs 

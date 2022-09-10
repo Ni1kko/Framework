@@ -2274,7 +2274,6 @@
         </Key>
         <Key ID="STR_Bounty_Title">
 			<Original>Bounty List</Original>
-			<English>Bounty List</English>
 			<German>Fahndungsliste</German>
 			<French>Interpol</French>
 			<Italian>Lista Ricercati</Italian>
@@ -2282,7 +2281,6 @@
 		</Key>
         <Key ID="STR_Bounty_Select">
 			<Original>Buy Tip</Original>
-			<English>Buy Tip</English>
 			<German>Buy Tip</German>
 			<French>Buy Tip</French>
 			<Italian>Buy Tip</Italian>

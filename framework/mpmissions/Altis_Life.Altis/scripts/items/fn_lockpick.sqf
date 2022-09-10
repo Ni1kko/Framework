@@ -38,7 +38,7 @@ _cP = 0.01;
 
 for "_i" from 0 to 1 step 0 do {
     if (animationState player != "AinvPknlMstpSnonWnonDnon_medic_1") then {
-        [player,"AinvPknlMstpSnonWnonDnon_medic_1",true] remoteExecCall ["MPClient_fnc_animSync",RCLIENT];
+        [player,"AinvPknlMstpSnonWnonDnon_medic_1",true] remoteExecCall ["MPClient_fnc_animSync",RE_CLIENT];
         player switchMove "AinvPknlMstpSnonWnonDnon_medic_1";
         player playMoveNow "AinvPknlMstpSnonWnonDnon_medic_1";
     };
@@ -88,7 +88,7 @@ if (!_isVehicle) then {
         if (count extdb_var_database_headless_clients > 0) then {
             [getPlayerUID player,profileName,"487"] remoteExecCall ["HC_fnc_wantedAdd",extdb_var_database_headless_client];
         } else {
-            [getPlayerUID player,profileName,"487"] remoteExecCall ["MPServer_fnc_wantedAdd",RSERV];
+            [getPlayerUID player,profileName,"487"] remoteExecCall ["MPServer_fnc_wantedAdd",RE_SERVER];
         };
 
     } else {
@@ -96,7 +96,7 @@ if (!_isVehicle) then {
         if (count extdb_var_database_headless_clients > 0) then {
             [getPlayerUID player,profileName,"215"] remoteExecCall ["HC_fnc_wantedAdd",extdb_var_database_headless_client];
         } else {
-            [getPlayerUID player,profileName,"215"] remoteExecCall ["MPServer_fnc_wantedAdd",RSERV];
+            [getPlayerUID player,profileName,"215"] remoteExecCall ["MPServer_fnc_wantedAdd",RE_SERVER];
         };
 
         [0,"STR_ISTR_Lock_FailedNOTF",true,[profileName]] remoteExecCall ["MPClient_fnc_broadcast",west];

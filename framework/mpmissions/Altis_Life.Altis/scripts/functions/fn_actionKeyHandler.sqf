@@ -117,11 +117,11 @@ if (isPlayer _curObject && _curObject isKindOf "CAManBase") then {
     } else {
         //OK, it wasn't a vehicle so let's see what else it could be?
         if ((typeOf _curObject) in _miscItems) then {
-            [_curObject,player,false] remoteExecCall ["MPServer_fnc_pickupAction",RSERV];
+            [_curObject,player,false] remoteExecCall ["MPServer_fnc_pickupAction",RE_SERVER];
         } else {
             //It wasn't a misc item so is it money?
             if ((typeOf _curObject) isEqualTo "Land_Money_F" && {!(_curObject getVariable ["inUse",false])}) then {
-                [_curObject,player,true] remoteExecCall ["MPServer_fnc_pickupAction",RSERV];
+                [_curObject,player,true] remoteExecCall ["MPServer_fnc_pickupAction",RE_SERVER];
             };
         };
     };

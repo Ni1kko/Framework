@@ -34,7 +34,7 @@ if (_action) then {
     if (count extdb_var_database_headless_clients > 0) then {
         [_house] remoteExecCall ["HC_fnc_sellHouse",extdb_var_database_headless_client];
     } else {
-        [_house] remoteExecCall ["MPServer_fnc_sellHouse",RSERV];
+        [_house] remoteExecCall ["MPServer_fnc_sellHouse",RE_SERVER];
     };
 
     _house setVariable ["locked",false,true];
@@ -74,7 +74,7 @@ if (_action) then {
             if (count extdb_var_database_headless_clients > 0) then {
                 [_x] remoteExecCall ["HC_fnc_sellHouseContainer",extdb_var_database_headless_client];
             } else {
-                [_x] remoteExecCall ["MPServer_fnc_sellHouseContainer",RSERV];
+                [_x] remoteExecCall ["MPServer_fnc_sellHouseContainer",RE_SERVER];
             };
 
         } forEach _containers;

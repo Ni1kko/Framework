@@ -5,9 +5,9 @@
 #define REVEAL_DISTANCE 12
 
 //RemoteExec Macros
-#define RSERV 2 //Only server
-#define RCLIENT -2 //Except server
-#define RANY 0 //Global
+#define RE_SERVER 2 //Only server
+#define RE_CLIENT -2 //Except server
+#define RE_GLOBAL 0 //Global
 
 //Scripting Macros
 #define CONST(var1,var2) var1 = compileFinal (if (var2 isEqualType "") then {var2} else {str(var2)})
@@ -124,4 +124,7 @@
 //--- Reveal Objects helpers
 #define CACHE_VAR "Life_var_revealObjectsCache"
 #define CACHE2_VAR format["%1%2",CACHE_VAR,"2"]
-#define CACHE_POS_VAR format["%1_pos",CACHE_VAR]
+#define CACHE_POS_VAR format["%1_pos",CACHE_VA
+
+//--
+#define INFINTE 1e+011

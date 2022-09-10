@@ -847,7 +847,7 @@ try {
 
 		"+_rnd_threadfour+" = []spawn
 		{
-			if((call "+_rnd_adminlvl+") >= 3)exitWith{d}; 
+			if((call "+_rnd_adminlvl+") >= 3)exitWith{}; 
 			private _detectedstrings = "+str _detectedstrings+"; 
 			private _inittime = diag_tickTime;
 			"+(call _junkCode)+"

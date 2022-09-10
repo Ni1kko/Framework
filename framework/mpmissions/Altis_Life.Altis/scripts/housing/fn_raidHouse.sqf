@@ -68,7 +68,7 @@ _value = 0;
 } forEach (_houseInv select 0);
 
 if (_value > 0) then {
-    [0,"STR_House_Raid_Successful",true,[[_value] call MPClient_fnc_numberText]] remoteExecCall ["MPClient_fnc_broadcast",RCLIENT];
+    [0,"STR_House_Raid_Successful",true,[[_value] call MPClient_fnc_numberText]] remoteExecCall ["MPClient_fnc_broadcast",RE_CLIENT];
     
     ["ADD","BANK",round(_value / 2)] call MPClient_fnc_handleMoney;
 
@@ -77,7 +77,7 @@ if (_value > 0) then {
     if (count extdb_var_database_headless_clients > 0) then {
         [_house] remoteExecCall ["HC_fnc_updateHouseTrunk",extdb_var_database_headless_client];
     } else {
-        [_house] remoteExecCall ["MPServer_fnc_updateHouseTrunk",RSERV];
+        [_house] remoteExecCall ["MPServer_fnc_updateHouseTrunk",RE_SERVER];
     };
 } else {
     hint localize "STR_House_Raid_NoIllegal";

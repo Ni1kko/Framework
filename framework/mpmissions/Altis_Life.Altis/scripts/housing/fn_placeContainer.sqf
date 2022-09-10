@@ -40,7 +40,7 @@ if (!isNull _house) then {
                     if (count extdb_var_database_headless_clients > 0) then {
                         [_uid,_container] remoteExec ["HC_fnc_addContainer",extdb_var_database_headless_client];
                     } else {
-                        [_uid,_container] remoteExec ["MPServer_fnc_addContainer",RSERV];
+                        [_uid,_container] remoteExec ["MPServer_fnc_addContainer",RE_SERVER];
                     };
                     _container setVariable ["Trunk",[[],0],true];
                     _container setVariable ["container_owner",[_uid],true];

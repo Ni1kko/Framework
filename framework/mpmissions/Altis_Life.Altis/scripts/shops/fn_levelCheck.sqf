@@ -26,6 +26,7 @@ if (_itemConfig isEqualType []) then {
     };
 };
 
+if (isNil {_itemConfig}) exitWith {true};
 if (_itemConfig isEqualTo "") exitWith {true};
 
 private _evaluation = call compile _itemConfig;

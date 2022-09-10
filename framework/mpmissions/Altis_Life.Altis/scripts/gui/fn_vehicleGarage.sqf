@@ -30,7 +30,7 @@ life_garage_type = _type;
 if (count extdb_var_database_headless_clients > 0) then {
     [getPlayerUID player,playerSide,_type,player] remoteExec ["HC_fnc_getVehicles",extdb_var_database_headless_client];
 } else {
-    [getPlayerUID player,playerSide,_type,player] remoteExec ["MPServer_fnc_getVehicles",RSERV];
+    [getPlayerUID player,playerSide,_type,player] remoteExec ["MPServer_fnc_getVehicles",RE_SERVER];
 };
 
 createDialog "Life_impound_menu";

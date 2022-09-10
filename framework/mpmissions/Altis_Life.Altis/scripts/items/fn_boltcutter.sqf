@@ -31,9 +31,9 @@ if (_door isEqualTo 0) exitWith {hint localize "STR_Cop_NotaDoor"}; //Not near a
 if ((_building getVariable [format ["bis_disabled_Door_%1",_door],0]) isEqualTo 0) exitWith {hint localize "STR_House_Raid_DoorUnlocked"};
 
 if ((nearestObject [_pos,"Land_Dome_Big_F"]) == _building || (nearestObject [_pos,_vaultHouse]) == _building) then {
-    [[1,2],"STR_ISTR_Bolt_AlertFed",true,[]] remoteExecCall ["MPClient_fnc_broadcast",RCLIENT];
+    [[1,2],"STR_ISTR_Bolt_AlertFed",true,[]] remoteExecCall ["MPClient_fnc_broadcast",RE_CLIENT];
 } else {
-    [0,"STR_ISTR_Bolt_AlertHouse",true,[profileName]] remoteExecCall ["MPClient_fnc_broadcast",RCLIENT];
+    [0,"STR_ISTR_Bolt_AlertHouse",true,[profileName]] remoteExecCall ["MPClient_fnc_broadcast",RE_CLIENT];
 };
 
 life_var_isBusy = true;
@@ -57,7 +57,7 @@ switch (typeOf _building) do {
 
 for "_i" from 0 to 1 step 0 do {
     if (animationState player != "AinvPknlMstpSnonWnonDnon_medic_1") then {
-        [player,"AinvPknlMstpSnonWnonDnon_medic_1",true] remoteExecCall ["MPClient_fnc_animSync",RCLIENT];
+        [player,"AinvPknlMstpSnonWnonDnon_medic_1",true] remoteExecCall ["MPClient_fnc_animSync",RE_CLIENT];
         player switchMove "AinvPknlMstpSnonWnonDnon_medic_1";
         player playMoveNow "AinvPknlMstpSnonWnonDnon_medic_1";
     };
@@ -97,5 +97,5 @@ _building setVariable ["locked",false,true];
 if (count extdb_var_database_headless_clients > 0) then {
     [getPlayerUID player,profileName,"459"] remoteExecCall ["HC_fnc_wantedAdd",extdb_var_database_headless_client];
 } else {
-    [getPlayerUID player,profileName,"459"] remoteExecCall ["MPServer_fnc_wantedAdd",RSERV];
+    [getPlayerUID player,profileName,"459"] remoteExecCall ["MPServer_fnc_wantedAdd",RE_SERVER];
 };

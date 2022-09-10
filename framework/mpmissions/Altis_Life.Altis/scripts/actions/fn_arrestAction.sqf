@@ -18,13 +18,13 @@ if (!((side _unit) in [civilian,independent])) exitWith {}; //Not a civ
 if (count extdb_var_database_headless_clients > 0) then {
     [getPlayerUID _unit,_unit,player,false] remoteExecCall ["HC_fnc_wantedBounty",extdb_var_database_headless_client];
 } else {
-    [getPlayerUID _unit,_unit,player,false] remoteExecCall ["MPServer_fnc_wantedBounty",RSERV];
+    [getPlayerUID _unit,_unit,player,false] remoteExecCall ["MPServer_fnc_wantedBounty",RE_SERVER];
 };
 
 if (isNull _unit) exitWith {}; //Not valid
 detach _unit;
 [_unit,false] remoteExecCall ["MPClient_fnc_jail",_unit];
-[0,"STR_NOTF_Arrested_1",true, [_unit getVariable ["realname",name _unit], profileName]] remoteExecCall ["MPClient_fnc_broadcast",RCLIENT];
+[0,"STR_NOTF_Arrested_1",true, [_unit getVariable ["realname",name _unit], profileName]] remoteExecCall ["MPClient_fnc_broadcast",RE_CLIENT];
 
 if (LIFE_SETTINGS(getNumber,"player_advancedLog") isEqualTo 1) then {
     if (LIFE_SETTINGS(getNumber,"battlEye_friendlyLogging") isEqualTo 1) then {

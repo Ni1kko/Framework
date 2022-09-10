@@ -29,13 +29,14 @@ while {!isNil "life_var_cash" OR !isNil "life_var_bank"} do {
 			systemChat "Your money has been changed by another script!";
 			uiSleep 1;
 		};
-		systemChat format ["You should have $%1 instead of $%2",_lastActualBalance,_currentBalance];
+		private _log = format ["You should have $%1 instead of $%2",_lastActualBalance,_currentBalance];
+		systemChat _log;
 		uiSleep 2;
-		endMission "Antihack";
+		["Hack Detected", _log, "Antihack"] call MPClient_fnc_endMission;
 	};
 };
 
 //-- Code reached only if cash or bank vars become nil (ToDo: kick player and log event)
-endMission "Antihack";
+["Hack Detected", "Nil money vars", "Antihack"] call MPClient_fnc_endMission;
 
 false

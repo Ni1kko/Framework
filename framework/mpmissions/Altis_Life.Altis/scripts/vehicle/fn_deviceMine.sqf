@@ -78,7 +78,7 @@ if (_zone isEqualTo "") exitWith {
 };
 
 _vehicle setVariable ["mining",true,true]; //Lock the device
-_vehicle remoteExec ["MPClient_fnc_soundDevice",RCLIENT]; //Broadcast the 'mining' sound of the device for nearby units.
+_vehicle remoteExec ["MPClient_fnc_soundDevice",RE_CLIENT]; //Broadcast the 'mining' sound of the device for nearby units.
 
 life_var_isBusy = false; //Unlock it since it's going to do it's own thing...
 
