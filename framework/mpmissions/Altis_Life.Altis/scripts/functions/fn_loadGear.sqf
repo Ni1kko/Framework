@@ -5,7 +5,7 @@
 */
 
 waitUntil {!(isNull (findDisplay 46))};
-[] call MPClient_fnc_stripDownPlayer;
+[player,false] call MPClient_fnc_stripDownPlayer;
 
 //--- Loadout
 if(count life_var_loadout > 0)then{
@@ -24,3 +24,5 @@ life_maxWeight = if (backpack player isEqualTo "") then {LIFE_SETTINGS(getNumber
 
 
 [] call MPClient_fnc_playerSkins;
+
+true

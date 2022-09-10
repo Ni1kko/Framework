@@ -59,6 +59,7 @@ private _variableTooSet = [
     ["life_var_autorun_inventoryOpened", false], 
     ["life_var_autorun_interrupt", false],
     ["life_var_lastSynced", time],
+    ["life_var_weaponHolders", []],
 
     //--- Hud
     ["life_var_hud_threads", nil],

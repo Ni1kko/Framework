@@ -18,7 +18,7 @@ private _reviveCost = LIFE_SETTINGS(getNumber,"revive_fee");
 ["RscDisplayDeathScreen"] call MPClient_fnc_destroyRscLayer;
 closeDialog 0;
 
-[life_save_gear] spawn MPClient_fnc_loadDeadGear;
+player setUnitLoadout life_save_gear;
 
 life_is_alive = true;
 player setUnconscious false;

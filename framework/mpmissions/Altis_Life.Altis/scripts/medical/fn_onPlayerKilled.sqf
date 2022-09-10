@@ -38,8 +38,8 @@ life_var_isBusy = false;
 life_var_hunger = 0;
 life_var_thirst = 0;
 
-[_unit] call MPClient_fnc_dropItems;
-["ZERO","CASH"] call MPClient_fnc_handleMoney;
+//-- Drop items and strip player
+[_unit,true] call MPClient_fnc_stripDownPlayer;
 
 //close the esc dialog
 if (dialog) then {
@@ -70,14 +70,6 @@ if (!isNull _killer && {!(_killer isEqualTo _unit)} && {!(side _killer isEqualTo
             [3] remoteExecCall ["MPClient_fnc_removeLicenses",_killer];
         };
     };
-};
-
-life_save_gear = [player] call MPClient_fnc_fetchDeadGear;
-
-if (LIFE_SETTINGS(getNumber,"drop_weapons_onDeath") isEqualTo 0) then {
-    _unit removeWeapon (primaryWeapon _unit);
-    _unit removeWeapon (handgunWeapon _unit);
-    _unit removeWeapon (secondaryWeapon _unit);
 };
 
 //Killed by cop stuff...

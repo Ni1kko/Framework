@@ -1,22 +1,99 @@
 /*
-    File: fn_stripDownPlayer.sqf
-    Author: Tobias 'Xetoxyc' Sittenauer
-
-    Description: Strip the player down
+	## Nikko Renolds
+	## https://github.com/Ni1kko/FrameworkV2
 */
-removeAllWeapons player;
-{player removeMagazine _x;} forEach (magazines player);
-removeUniform player;
-removeVest player;
-removeBackpack player;
-removeGoggles player;
-removeHeadGear player;
 
+params [
+    ["_player", player, [objNull]]
+    ["_isDead", false, [false]]
+];
+
+private _headMountedGear = hmd _player;
+private _headGear = headgear _player;
+private _goggles = goggles _player;
+private _backpack = backpack _player;
+private _vest = vest _player;
+private _uniform = uniform _player;
+private _weapons = weapons _player;
+private _magazines = magazines _player;
+private _assignedItems = assignedItems _player;
+private _currentWeapon = currentWeapon _player;
+ 
+//-- Drop stuff
+if _isDead then 
 {
-    player unassignItem _x;
-    player removeItem _x;
-} forEach (assignedItems player);
+    private _weaponHolderDir = random(360);            // Get a random direction for the weapon holder
+    private _weaponHolderSpeed = 1.5;                  // Set the speed of the weapon holder
+     
+    //-- Create weapon holder to drop weapon.
+    private _weaponHolderIndex = life_var_weaponHolders pushBackUnique ("WeaponHolderSimulated" createVehicle [0,0,0]);
 
-if (hmd player != "") then {
-    player unlinkItem (hmd player);
+    if(_weaponHolderIndex isNotEqualTo -1)then
+    { 
+        private _weaponHolder = life_var_weaponHolders#_weaponHolderIndex;
+
+        if(!isNull _weaponHolder)then
+        { 
+            if (count _currentWeapon > 0)then
+            { 
+                //-- Take weapon.
+                _player removeWeaponGlobal _currentWeapon;
+
+                //-- Drop weapon.
+                _weaponHolder addWeaponCargoGlobal [_currentWeapon,1];
+
+                //-- Clear weapon name now its dropped.
+                _currentWeapon = "";
+            };
+
+            _weaponHolder setVariable ["virtualItems",_vitems,true];
+
+            //-- Prevent player coliding with weapon holder.
+            _weaponHolder disableCollisionWith _player;
+
+            //-- Position weapon holder near hands.
+            _weaponHolder setPos (_player modelToWorld [0,.2,1.2]);
+
+            //-- Set weapon holder fall velocity in m/s.
+            _weaponHolder setVelocity [_weaponHolderSpeed * sin(_weaponHolderDir), _weaponHolderSpeed * cos(_weaponHolderDir),4];
+        };
+    };
+
+    //-- Drop virtual items
+    [_player] call MPClient_fnc_dropItems;
+
+    //-- Save loadout array after dropping weapon.
+    life_save_gear = [] call MPClient_fnc_saveGear;
 };
+
+//-- Remove head mounted gear
+if (count _headMountedGear > 0) then {_player unlinkItem _headMountedGear};
+
+//-- Remove head gear
+if (count _headGear > 0) then {removeHeadGear _player};
+
+//-- Remove goggles
+if (count _goggles > 0) then {removeGoggles _player};
+
+//-- Remove backpack
+if (count _backpack > 0) then {removeBackpack _player}; 
+
+//-- Remove vest
+if (count _vest > 0) then {removeVest _player};
+
+//-- Remove uniform
+if (count _uniform > 0) then {removeUniform _player};
+
+//-- Remove weapons
+if (count _weapons > 0) then {removeAllWeapons _player};
+
+//-- Remove magazines
+if (count _magazines > 0) then {{_player removeMagazines _x} forEach _magazines};
+
+//-- Remove assigned items
+if (count _assignedItems > 0) then {{_player unassignItem _x; _player removeItem _x} forEach _assignedItems};
+
+//--- Reset Carry Weight
+life_maxWeight =  getNumber(missionConfigFile >> "Life_Settings" >> "total_maxWeight");
+
+true

@@ -183,10 +183,10 @@ class CfgFunctions
             class checkMap {};
             class clearVehicleAmmo {};
             class canspit {};
+            class dropItem {};
             class dropItems {};
             class escInterupt {};
             class fetchCfgDetails {};
-            class fetchDeadGear {};
             class fetchVehInfo {};
             class isDamaged {};
             class giveDiff {};
@@ -199,7 +199,6 @@ class CfgFunctions
             class isUIDActive {};
             class keyupHandler {};
             class keydownHandler {};
-            class loadDeadGear {};
             class loadGear {};
             class nearATM {};
             class nearestDoor {};

@@ -16,7 +16,7 @@ private _pItems = M_CONFIG(getArray,"Loadouts",str(playerSide),"items");
 private _linkedItems = M_CONFIG(getArray,"Loadouts",str(playerSide),"linkedItems");
 
 // Removing every default items before adding the custom ones
-[] call MPClient_fnc_stripDownPlayer;
+[player,false] call MPClient_fnc_stripDownPlayer;
 
 if !(_pUniform isEqualTo []) then {
     if (playerSide isEqualTo civilian) then {

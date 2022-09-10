@@ -34,10 +34,7 @@ class Life_Settings {
     federalReserve_AddMid = 25; //
     federalReserve_AddMax = 70; //
     federalReserve_resetAfterRestart = 0; //
-
-    /*Death settings*/
-    drop_weapons_onDeath = true; //Set true to enable weapon dropping on death. False (default) will delete player weapons on death, allowing them to be revived with them instead
-
+    
     /* Basic System Configurations */
     donor_level = true; //Enable the donor level set in database (var = life_donorlevel; levels = 0,1,2,3,4,5). ATTENTION! Before enabling, read: https://www.bistudio.com/community/game-content-usage-rules & https://www.bistudio.com/monetization
     enable_fatigue = false; //Set to false to disable the ARMA 3 fatigue system
