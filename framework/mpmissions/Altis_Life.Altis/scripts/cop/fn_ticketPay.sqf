@@ -30,8 +30,7 @@ if (life_var_cash < life_ticket_val) exitWith {
     closeDialog 0;
 };
 
-life_var_cash = life_var_cash - life_ticket_val;
-[0] call MPClient_fnc_updatePartial;
+["SUB","CASH",life_ticket_val] call MPClient_fnc_handleMoney;
 life_ticket_paid = true;
 
 if (count extdb_var_database_headless_clients > 0) then {

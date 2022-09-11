@@ -30,7 +30,7 @@ if (_action) then {
     if (player distance (_this select 0) > 5) exitWith {life_var_isBusy = false; titleText[localize "STR_NOTF_HS_ToFar","PLAIN"]};
     titleText[localize "STR_NOTF_HS_Healed","PLAIN"];
     player setDamage 0;
-    life_var_cash = life_var_cash - _healCost;
+    ["SUB","CASH",_healCost] call MPClient_fnc_handleMoney;
     life_var_isBusy = false;
 } else {
     hint localize "STR_NOTF_ActionCancel";

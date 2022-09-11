@@ -22,8 +22,7 @@ if (!isNil "_value") exitWith {
 
     player playMove "AinvPknlMstpSlayWrflDnon";
     titleText[format [localize "STR_NOTF_PickedMoney",[_value] call MPClient_fnc_numberText],"PLAIN"];
-    life_var_cash = life_var_cash + _value;
-    [0] call MPClient_fnc_updatePartial;
+    ["ADD","CASH",_value] call MPClient_fnc_handleMoney;
     life_action_delay = time;
 
     if (LIFE_SETTINGS(getNumber,"player_moneyLog") isEqualTo 1) then {

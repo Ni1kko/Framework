@@ -49,7 +49,7 @@ if (_exit) exitWith {life_is_processing = false; hint localize "STR_NOTF_NotEnou
 if (_vendor in [mari_processor,coke_processor,heroin_processor]) then {
     _hasLicense = true;
 } else {
-    _hasLicense = LICENSE_VALUE(_type,"civ");
+    _hasLicense = LICENSE_VALUE(_type);
 };
 
 _cost = _cost * (count _oldItem);
@@ -140,8 +140,7 @@ if (_hasLicense) then {
 
     "progressBar" cutText ["","PLAIN"];
     if (_minimumConversions isEqualTo (_totalConversions call BIS_fnc_lowestNum)) then {hint localize "STR_NOTF_ItemProcess";} else {hint localize "STR_Process_Partial";};
-    life_var_cash = life_var_cash - _cost;
-    [0] call MPClient_fnc_updatePartial;
+    ["SUB","CASH",_cost] call MPClient_fnc_handleMoney;
     life_is_processing = false;
     life_var_isBusy = false;
 };

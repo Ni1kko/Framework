@@ -37,7 +37,7 @@ if (player distance (getMarkerPos "jail_marker") > 40) then {
     player setPos (getMarkerPos "jail_marker");
 };
 
-[1] call MPClient_fnc_removeLicenses;
+[player, ["gun", "driver", "rebel"]] call MPClient_fnc_removeLicenses;
 
 {
     _amount = ITEM_VALUE(_x);

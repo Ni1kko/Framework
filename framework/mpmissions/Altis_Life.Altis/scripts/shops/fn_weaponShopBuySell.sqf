@@ -24,7 +24,7 @@ if ((_itemInfo select 6) != "CfgVehicles") then {
 if (_bad != "") exitWith {hint _bad};
 
 if ((uiNamespace getVariable ["Weapon_Shop_Filter",0]) isEqualTo 1) then {
-    life_var_cash = life_var_cash + _price;
+    ["ADD","CASH",_price] call MPClient_fnc_handleMoney;
     [_item,false] call MPClient_fnc_handleItem;
     hint parseText format [localize "STR_Shop_Weapon_Sold",_itemInfo select 1,[_price] call MPClient_fnc_numberText];
     [nil,(uiNamespace getVariable ["Weapon_Shop_Filter",0])] call MPClient_fnc_weaponShopFilter; //Update the menu.
@@ -60,13 +60,13 @@ if ((uiNamespace getVariable ["Weapon_Shop_Filter",0]) isEqualTo 1) then {
         } else {
             if (_price > life_var_cash) exitWith {hint localize "STR_NOTF_NotEnoughMoney"};
             hint parseText format [localize "STR_Shop_Weapon_BoughtItem",_itemInfo select 1,[_price] call MPClient_fnc_numberText];
-            life_var_cash = life_var_cash - _price;
+            ["SUB","CASH",_price] call MPClient_fnc_handleMoney;
             [_item,true] call MPClient_fnc_handleItem;
         };
     } else {
         if (_price > life_var_cash) exitWith {hint localize "STR_NOTF_NotEnoughMoney"};
         hint parseText format [localize "STR_Shop_Weapon_BoughtItem",_itemInfo select 1,[_price] call MPClient_fnc_numberText];
-        life_var_cash = life_var_cash - _price;
+        ["SUB","CASH",_price] call MPClient_fnc_handleMoney;
         [_item,true] call MPClient_fnc_handleItem;
     };
 };

@@ -70,7 +70,7 @@ if (_action) then {
     if (life_interrupted) exitWith {life_interrupted = false; titleText[localize "STR_NOTF_ActionCancel","PLAIN"]; life_var_isBusy = false;};
     if (!([false,"fuelEmpty",1] call MPClient_fnc_handleInv)) exitWith {life_var_isBusy = false;};
     life_var_isBusy = false;
-    life_var_cash = life_var_cash - _fuelCost;
+    ["SUB","CASH",_fuelCost] call MPClient_fnc_handleMoney;
     [true,"fuelFull",1] call MPClient_fnc_handleInv;
     hint localize "STR_ISTR_Jerry_Refueled";
 } else {

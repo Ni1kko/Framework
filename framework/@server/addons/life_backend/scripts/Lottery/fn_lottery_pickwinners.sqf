@@ -152,7 +152,7 @@ _vaultObject setVariable ["safe",0,true];
 							format["You have won $%1 from the lottery bonusball!",[_bonusBallPayout] call MPClient_fnc_numberText]
 						] select _bonusBallWinner);
 
-						life_var_cash = life_var_cash + _totalPayout;
+						["ADD","CASH",_totalPayout] call MPClient_fnc_handleMoney;
 					}
 				] remoteExec ["spawn",_ownerID];
 

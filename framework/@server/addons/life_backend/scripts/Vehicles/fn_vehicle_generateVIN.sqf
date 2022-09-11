@@ -276,7 +276,7 @@ MPServer_fnc_vehicle_buyRequest = {
 			life_vehicles pushBack _vehicle;
 
 			//-- I want paid...
-			life_var_cash = life_var_cash - _price;
+			["SUB","CASH",_price] call MPClient_fnc_handleMoney;
 			
 			//-- Update cash in db
 			[0] call MPClient_fnc_updatePartial;

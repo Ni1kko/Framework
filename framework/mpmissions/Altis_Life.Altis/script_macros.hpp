@@ -1,6 +1,4 @@
 /* System Wide Stuff */
-#define SYSTEM_TAG "life"
-#define ITEM_TAG format ["%1%2",SYSTEM_TAG,"item_"]
 #define GANG_FUNDS group player getVariable ["gang_bank",0];
 #define REVEAL_DISTANCE 12
 
@@ -21,7 +19,10 @@
 
 //System Macros
 #define LICENSE_VARNAME(varName,flag) format ["license_%1_%2",flag,M_CONFIG(getText,"cfgLicenses",varName,"variable")]
-#define LICENSE_VALUE(varName,flag) missionNamespace getVariable [LICENSE_VARNAME(varName,flag),false]
+#define LICENSE_NAME(VAR) LICENSE_VARNAME(VAR,([playerSide,true] call MPServer_fnc_util_getSideString))
+#define LICENSE_VALUE(VAR) (missionNamespace getVariable [LICENSE_NAME(VAR),false])
+#define GIVE_LICENSE(VAR) (missionNamespace setVariable [LICENSE_NAME(VAR),true])
+#define TAKE_LICENSE(VAR) (missionNamespace setVariable [LICENSE_NAME(VAR),false])
 #define ITEM_VARNAME(varName) format ["life_inv_%1",M_CONFIG(getText,"VirtualItems",varName,"variable")]
 #define ITEM_VALUE(varName) missionNamespace getVariable [ITEM_VARNAME(varName),0]
 #define ITEM_ILLEGAL(varName) M_CONFIG(getNumber,"VirtualItems",varName,"illegal")

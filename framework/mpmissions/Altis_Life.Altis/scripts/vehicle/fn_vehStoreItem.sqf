@@ -36,8 +36,8 @@ if (_ctrl == "money") then {
         _inv set[_index,[_ctrl,_val + _num]];
     };
 
-    life_var_cash = life_var_cash - _num;
-    [0] call MPClient_fnc_updatePartial;
+    ["SUB","CASH",_num] call MPClient_fnc_handleMoney;
+    
     life_trunk_vehicle setVariable ["Trunk",[_inv,(_veh_data select 1) + _itemWeight],true];
     [life_trunk_vehicle] call MPClient_fnc_vehInventory;
 } else {

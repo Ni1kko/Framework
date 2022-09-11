@@ -57,7 +57,7 @@ if (!isNull _killer && {!(_killer isEqualTo _unit)} && {!(side _killer isEqualTo
 
         //Get rid of this if you don't want automatic vehicle license removal.
         if (!local _killer) then {
-            [2] remoteExecCall ["MPClient_fnc_removeLicenses",_killer];
+            [_killer, ["pilot","driver","trucking","boat"], "STR_Civ_LicenseRemove_1"] remoteExecCall ["MPClient_fnc_removeLicenses",owner _killer];
         };
     } else {
         if (count extdb_var_database_headless_clients > 0) then {
@@ -67,7 +67,7 @@ if (!isNull _killer && {!(_killer isEqualTo _unit)} && {!(side _killer isEqualTo
         };
 
         if (!local _killer) then {
-            [3] remoteExecCall ["MPClient_fnc_removeLicenses",_killer];
+            [_killer, ["gun"], "STR_Civ_LicenseRemove_2"] remoteExecCall ["MPClient_fnc_removeLicenses",owner _killer];
         };
     };
 };
@@ -84,6 +84,7 @@ if (side _killer isEqualTo west && !(playerSide isEqualTo west)) then {
 
 if (!isNull _killer && {!(_killer isEqualTo _unit)}) then {
     life_removeWanted = true;
+    [_killer, ["rebel", "driver", "heroin", "marijuana", "cocaine"]] remoteExecCall ["MPClient_fnc_removeLicenses",owner _killer];
 };
  
 [player,life_settings_enableSidechannel,playerSide] remoteExecCall ["MPServer_fnc_managesc",RE_SERVER];

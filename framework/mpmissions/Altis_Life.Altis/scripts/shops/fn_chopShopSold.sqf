@@ -14,7 +14,6 @@ params [
 life_var_isBusy = false;
 
 if (_price > 0) then {
-    life_var_cash = life_var_cash + _price;
-    [0] call MPClient_fnc_updatePartial;
+    ["ADD","CASH",_price] call MPClient_fnc_handleMoney;
     titleText [format[(localize "STR_NOTF_ChopSoldCar"),_displayName,[_price] call MPClient_fnc_numberText],"PLAIN",1];
 };

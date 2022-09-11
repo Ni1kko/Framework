@@ -52,12 +52,12 @@ if ([true,_type,_amount] call MPClient_fnc_handleInv) then {
         } else {
             if ((_price * _amount) > life_var_cash) exitWith {[false,_type,_amount] call MPClient_fnc_handleInv; hint localize "STR_NOTF_NotEnoughMoney";};
             hint format [localize "STR_Shop_Virt_BoughtItem",_amount,TEXT_LOCALIZE(_name),[(_price * _amount)] call MPClient_fnc_numberText];
-            life_var_cash = life_var_cash - _price * _amount;
+            ["SUB","CASH",_price * _amount] call MPClient_fnc_handleMoney;
         };
     } else {
         if ((_price * _amount) > life_var_cash) exitWith {hint localize "STR_NOTF_NotEnoughMoney"; [false,_type,_amount] call MPClient_fnc_handleInv;};
         hint format [localize "STR_Shop_Virt_BoughtItem",_amount,TEXT_LOCALIZE(_name),[(_price * _amount)] call MPClient_fnc_numberText];
-        life_var_cash = life_var_cash - _price * _amount;
+        ["SUB","CASH",_price * _amount] call MPClient_fnc_handleMoney;
     };
     [] call MPClient_fnc_virt_update;
 };

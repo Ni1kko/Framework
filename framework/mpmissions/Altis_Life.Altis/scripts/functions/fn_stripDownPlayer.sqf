@@ -24,38 +24,33 @@ if _isDead then
 {
     private _weaponHolderDir = random(360);            // Get a random direction for the weapon holder
     private _weaponHolderSpeed = 1.5;                  // Set the speed of the weapon holder
-     
-    //-- Create weapon holder to drop weapon.
-    private _weaponHolderIndex = life_var_weaponHolders pushBackUnique ("WeaponHolderSimulated" createVehicle [0,0,0]);
+    
+    if (count _currentWeapon > 0)then
+    {
+        //-- Create weapon holder to drop weapon.
+        private _weaponHolderIndex = life_var_weaponHolders pushBackUnique ("WeaponHolderSimulated" createVehicle [0,0,0]);
 
-    if(_weaponHolderIndex isNotEqualTo -1)then
-    { 
-        private _weaponHolder = life_var_weaponHolders#_weaponHolderIndex;
+        if(_weaponHolderIndex isNotEqualTo -1)then
+        {
+            private _weaponHolder = life_var_weaponHolders#_weaponHolderIndex;
 
-        if(!isNull _weaponHolder)then
-        { 
-            if (count _currentWeapon > 0)then
-            { 
-                //-- Take weapon.
-                _player removeWeaponGlobal _currentWeapon;
+            if(!isNull _weaponHolder)then
+            {  
+                //-- Prevent player coliding with weapon holder.
+                _weaponHolder disableCollisionWith _player;
+
+                //-- Position weapon holder near hands.
+                _weaponHolder setPos (_player modelToWorld [0,.2,1.2]);
 
                 //-- Drop weapon.
-                _weaponHolder addWeaponCargoGlobal [_currentWeapon,1];
+                _player action ["DropWeapon", _currentWeapon, _currentWeapon];
 
                 //-- Clear weapon name now its dropped.
                 _currentWeapon = "";
+                
+                //-- Set weapon holder fall velocity in m/s.
+                _weaponHolder setVelocity [_weaponHolderSpeed * sin(_weaponHolderDir), _weaponHolderSpeed * cos(_weaponHolderDir),4];
             };
-
-            _weaponHolder setVariable ["virtualItems",_vitems,true];
-
-            //-- Prevent player coliding with weapon holder.
-            _weaponHolder disableCollisionWith _player;
-
-            //-- Position weapon holder near hands.
-            _weaponHolder setPos (_player modelToWorld [0,.2,1.2]);
-
-            //-- Set weapon holder fall velocity in m/s.
-            _weaponHolder setVelocity [_weaponHolderSpeed * sin(_weaponHolderDir), _weaponHolderSpeed * cos(_weaponHolderDir),4];
         };
     };
 

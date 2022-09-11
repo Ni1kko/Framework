@@ -26,7 +26,7 @@ if (_badCharacter) exitWith {hint localize "STR_News_UnsupportedCharacter"};
 
 [_broadcastHeader,_broadcastMessage,profileName] remoteExec ['MPClient_fnc_AAN',-2];
 
-life_var_cash = life_var_cash - LIFE_SETTINGS(getNumber,"news_broadcast_cost");
-[0] call MPClient_fnc_updatePartial;
+["SUB","CASH",LIFE_SETTINGS(getNumber,"news_broadcast_cost")] call MPClient_fnc_handleMoney;
+
 life_broadcastTimer = time;
 publicVariable "life_broadcastTimer";

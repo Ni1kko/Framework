@@ -1,5 +1,3 @@
-#define SYSTEM_TAG "life"
-#define ITEM_TAG format ["%1%2",SYSTEM_TAG,"item_"]
 #define GANG_FUNDS group player getVariable ["gang_bank",0];
 
 /*

@@ -25,8 +25,8 @@ if (isNull _unit) exitWith {ctrlShow[2001,true];};
 if (isNil "_unit") exitWith {ctrlShow[2001,true]; hint localize "STR_NOTF_notWithinRange";};
 
 hint format [localize "STR_NOTF_youGaveMoney",[(parseNumber(_amount))] call MPClient_fnc_numberText,_unit getVariable ["realname",name _unit]];
-life_var_cash = life_var_cash - (parseNumber(_amount));
-[0] call MPClient_fnc_updatePartial;
+
+["SUB","CASH",parseNumber _amount] call MPClient_fnc_handleMoney;
 
 [_unit,_amount,player] remoteExecCall ["MPClient_fnc_receiveMoney",_unit];
 [] call MPClient_fnc_p_updateMenu;

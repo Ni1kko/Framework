@@ -23,8 +23,7 @@ _price = (_price * _amount);
 _name = M_CONFIG(getText,"VirtualItems",_type,"displayName");
 if ([false,_type,_amount] call MPClient_fnc_handleInv) then {
     hint format [localize "STR_Shop_Virt_SellItem",_amount,TEXT_LOCALIZE(_name),[_price] call MPClient_fnc_numberText];
-    life_var_cash = life_var_cash + _price;
-    [0] call MPClient_fnc_updatePartial;
+    ["ADD","CASH",_price] call MPClient_fnc_handleMoney;
     [] call MPClient_fnc_virt_update;
 };
 

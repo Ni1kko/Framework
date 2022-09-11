@@ -13,8 +13,8 @@ private _sideflag = [side _player,true] call MPServer_fnc_util_getSideString;
 private _licenses = [];
  
 {
-	private _value = LICENSE_VALUE(configName _x,_sideflag);
-	private _license = LICENSE_VARNAME(configName _x,_sideflag);
+	private _value = LICENSE_VALUE(configName _x);
+	private _license = LICENSE_NAME(configName _x);
 	
 	if _owned then {
 		if _value then {

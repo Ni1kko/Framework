@@ -118,8 +118,7 @@ if (_fuelFeedState <= 0) then {titleText [localize "STR_FuelTank_FeedFull","PLAI
 if (_fuelState <= 0) then {titleText [localize "STR_FuelTank_Empty","PLAIN"]};
 sleep 2;
 
-life_var_cash = life_var_cash + _win;
-[0] call MPClient_fnc_updatePartial;
+["ADD","CASH",_win] call MPClient_fnc_handleMoney;
 
 titleText [format [localize "STR_FuelTank_Money", _win], "PLAIN"];
 "progressBar" cutText ["","PLAIN"];

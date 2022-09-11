@@ -36,7 +36,8 @@ for "_i" from 0 to 1 step 0 do {
 
 if (!alive (_search select 0) || (_search select 0) distance air_sp > 15) exitWith {life_var_isBusy = false; hint localize "STR_Service_Chopper_Missing"};
 
-life_var_cash = life_var_cash - _serviceCost;
+["SUB","CASH",_serviceCost] call MPClient_fnc_handleMoney;
+
 if (!local (_search select 0)) then {
     [(_search select 0),1] remoteExecCall ["MPClient_fnc_setFuel",(_search select 0)];
 } else {

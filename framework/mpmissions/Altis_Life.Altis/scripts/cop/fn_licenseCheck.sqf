@@ -16,7 +16,7 @@ _licenses = "";
 _licensesConfigs = "getText(_x >> 'side') isEqualTo 'civ'" configClasses (missionConfigFile >> "cfgLicenses");
 
 {
-    if (LICENSE_VALUE(configName _x,"civ")) then {
+    if (LICENSE_VALUE(configName _x)) then {
         _licenses = _licenses + TEXT_LOCALIZE(getText(_x >> "displayName")) + "<br/>";
     };
 } forEach _licensesConfigs;

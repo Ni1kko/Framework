@@ -23,7 +23,7 @@ if (_deposit && _value > life_var_cash) exitWith {hint localize "STR_ATM_NotEnou
 if (!_deposit && _value > _gFund) exitWith {hint localize "STR_ATM_NotEnoughFundsG"};
 
 if (_deposit) then {
-    life_var_cash = life_var_cash - _value;
+    ["SUB","CASH",_value] call MPClient_fnc_handleMoney;
     [] call MPClient_fnc_atmMenu;
 };
 
