@@ -40,7 +40,7 @@ private _variableTooSet = [
     ["life_removeWanted", false],
     ["life_action_gathering", false],
     ["life_frozen", false],
-    ["life_save_gear", []],
+    ["life_var_gearWhenDied", []],
     ["life_container_activeObj", objNull],
     ["life_disable_getIn", false],
     ["life_disable_getOut", false],

@@ -28,7 +28,7 @@ if _isDead then
     if (count _currentWeapon > 0)then
     {
         //-- Create weapon holder to drop weapon.
-        private _weaponHolderIndex = life_var_weaponHolders pushBackUnique ("WeaponHolderSimulated" createVehicle [0,0,0]);
+        private _weaponHolderIndex = life_var_weaponHolders pushBackUnique ("WeaponHolderSimulated" createVehicle [0,0,0]);//"GroundWeaponHolder_Scripted"
 
         if(_weaponHolderIndex isNotEqualTo -1)then
         {
@@ -58,7 +58,7 @@ if _isDead then
     [_player] call MPClient_fnc_dropItems;
 
     //-- Save loadout array after dropping weapon.
-    life_save_gear = getUnitLoadout _player;
+    life_var_gearWhenDied = getUnitLoadout _player;
 };
 
 //-- Remove head mounted gear
