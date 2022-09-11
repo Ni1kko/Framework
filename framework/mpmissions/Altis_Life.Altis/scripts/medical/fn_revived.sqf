@@ -30,11 +30,8 @@ player setUnconscious false;
 cutText ["You have came to your senses ...", "BLACK IN", 5];
 
 //-- Reload there gear
-if(count life_save_gear > 0)then{player setUnitLoadout life_save_gear};
+if(count life_var_gearWhenDied > 0)then{player setUnitLoadout life_var_gearWhenDied};
 systemChat "You have been revived, Dont forget to pick up any dropped items!";
-
-//-- Texture update
-[] call MPClient_fnc_playerSkins;
 
 //-- Animate
 player playMoveNow "amovpercmstpsnonwnondnon";

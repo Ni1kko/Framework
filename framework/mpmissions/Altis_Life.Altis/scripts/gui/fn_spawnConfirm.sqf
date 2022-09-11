@@ -54,8 +54,6 @@ if (life_spawn_point isEqualTo []) then {
     titleText[format ["%2 %1",life_spawn_point select 1,localize "STR_Spawn_Spawned"],"BLACK IN"];
 };
 
-[] call MPClient_fnc_playerSkins;
-
 closeDialog 0;
 
 true

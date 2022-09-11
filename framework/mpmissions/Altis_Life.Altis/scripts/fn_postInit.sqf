@@ -39,6 +39,9 @@ life_var_postInitTime = compileFinal str(diag_tickTime);
     };
 };
 
+//-- Texture patch
+[] spawn MPClient_fnc_playerTextures;
+
 [format["Client preInit completed! Took %1 seconds",diag_tickTime - (call life_var_postInitTime)]] call MPClient_fnc_log;
 
 true

@@ -25,9 +25,6 @@ if(count _loadout > 0)then{
     [] call MPClient_fnc_startLoadout;
 };
 
-//--- Update textures
-[_player] call MPClient_fnc_playerSkins;
-
 //--- Carry Weight
 life_maxWeight = if (backpack _player isEqualTo "") then {LIFE_SETTINGS(getNumber,"total_maxWeight")} else {LIFE_SETTINGS(getNumber,"total_maxWeight") + round(FETCH_CONFIG2(getNumber,"CfgVehicles",(backpack _player),"maximumload") / 4)};
 

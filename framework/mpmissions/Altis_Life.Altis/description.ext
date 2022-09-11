@@ -206,7 +206,7 @@ class CfgFunctions
             class numberText {};
             class onFired {};
             class onTakeItem {};
-            class playerSkins {};
+            class playerTextures {};
             class playerTags {};
             class postNewsBroadcast {};
             class pullOutVeh {};

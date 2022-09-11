@@ -49,7 +49,7 @@ disableSerialization;
 
 ctrlSetText [3103,localize _shopTitle];
 
-(findDisplay 3100) displaySetEventHandler ["KeyDown","if ((_this select 1) isEqualTo 1) then {closeDialog 0; [] call MPClient_fnc_playerSkins;}"]; //Fix Custom Skin after ESC
+(findDisplay 3100) displaySetEventHandler ["KeyDown","if ((_this select 1) isEqualTo 1) then {closeDialog 0;}"];
 
 sliderSetRange [3107, 0, 360];
 
@@ -179,8 +179,6 @@ _filter lbAdd localize "STR_Shop_UI_Backpack";
 
 _filter lbSetCurSel 0;
 
-[] call MPClient_fnc_playerSkins;
-
 waitUntil {isNull (findDisplay 3100)};
 if (LIFE_SETTINGS(getNumber,"clothing_noTP") isEqualTo 0) then {
     {
@@ -252,7 +250,6 @@ if (isNil "life_clothesPurchased") exitWith {
             };
         };
     };
-    [] call MPClient_fnc_playerSkins;
 };
 life_clothesPurchased = nil;
 

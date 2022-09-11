@@ -20,5 +20,4 @@ if (_price > life_var_cash) exitWith {titleText[localize "STR_Shop_NotEnoughClot
 ["SUB","CASH",_price] call MPClient_fnc_handleMoney;
 
 life_clothesPurchased = true;
-[] call MPClient_fnc_playerSkins;
 closeDialog 0;

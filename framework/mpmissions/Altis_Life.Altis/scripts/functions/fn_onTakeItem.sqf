@@ -17,12 +17,8 @@ _restrictedWeapons = LIFE_SETTINGS(getArray,"restricted_weapons");
 
 switch (playerSide) do
 {
-    case west: {
-        if (_item in ["U_Rangemaster"]) then {
-            [] call MPClient_fnc_playerSkins;
-        };
-    };
-    case civilian: {
+    case civilian:
+    {
         if (LIFE_SETTINGS(getNumber,"restrict_clothingPickup") isEqualTo 1) then {
             if (_item in _restrictedClothing) then {
                 [_item,false,false,false,false] call MPClient_fnc_handleItem;
@@ -33,14 +29,9 @@ switch (playerSide) do
                 [_item,false,false,false,false] call MPClient_fnc_handleItem;
             };
         };
-        if (_item in ["U_C_Poloshirt_blue","U_C_Poloshirt_burgundy","U_C_Poloshirt_stripped","U_C_Poloshirt_tricolour","U_C_Poloshirt_salmon","U_C_Poloshirt_redwhite","U_C_Commoner1_1"]) then {
-            [] call MPClient_fnc_playerSkins;
-        };
     };
-    case independent: {
-        if (_item in ["U_Rangemaster"]) then {
-            [] call MPClient_fnc_playerSkins;
-        };
+    case independent: 
+    {
         // -- Restrict Weapons
         if (LIFE_SETTINGS(getNumber,"restrict_medic_weapons") isEqualTo 1) then {
             // -- Check if the type is a weapon
