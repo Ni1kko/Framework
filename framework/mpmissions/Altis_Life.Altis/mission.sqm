@@ -165,10 +165,10 @@ class AddonsMetaData
 randomSeed=2639488;
 class ScenarioData
 {
-	author="Tonic";
-	overViewPicture="textures\armalife.jpg";
-	overViewPictureLocked="textures\armalife.jpg";
-	loadScreen="textures\armalife.jpg";
+	author="Tonic, Daniel, BoGuu, NiiRoZz & Ni1kko";
+	overViewPicture="";
+	overViewPictureLocked="";
+	loadScreen="";
 	saving=0;
 	respawnDialog=0;
 	disabledAI=1;

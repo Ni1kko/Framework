@@ -16,7 +16,7 @@ class RscDisplaySpitScreen
 		class SpitPicture: Life_RscPicture
 		{
 			idc = -1;
-			text = "textures\spit.paa";
+			text = "textures\gui\RscDisplaySpitScreen\spit.paa";
 			x = 0.2375 * safezoneW + safezoneX;
 			y = 0.15 * safezoneH + safezoneY;
 			w = 0.525 * safezoneW;

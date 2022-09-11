@@ -9,7 +9,7 @@ params [
     ["_show",true]//note hide before changing layer or will bug 
 ];
 
-private _layer1 = "RscPlayerHUD"; 
+private _layer1 = "RscDisplayPlayerHUD"; 
 private _layer1_id = (_layer1 call BIS_fnc_rscLayer); 
 private _display1 = uiNamespace getVariable [_layer1,displayNull]; 
 

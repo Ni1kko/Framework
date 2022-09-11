@@ -7,7 +7,7 @@ disableSerialization;
 if (diag_tickTime - life_var_hud_lastgrprendered_at >= 1) then
 {
 	life_var_hud_lastgrprendered_at = diag_tickTime;
-	private _display = uiNamespace getVariable "RscPlayerHUD";
+	private _display = uiNamespace getVariable "RscDisplayPlayerHUD";
 	private _groupControl = _display displayCtrl 1000;
 	if (((group player) getVariable ["gang_id",-1]) <= 0) then {
 		if (ctrlShown _groupControl) then {
@@ -31,16 +31,16 @@ if (diag_tickTime - life_var_hud_lastgrprendered_at >= 1) then
 					private _role = _x call MPClient_fnc_util_getVehicleRole;
 					switch (_role) do {
 						case "driver": {
-							_lines = _lines + format ["<t color='%1'>%2 <img image='textures\hud\hud_group_driver.paa'/></t><br/>", _color, name _x];
+							_lines = _lines + format ["<t color='%1'>%2 <img image='textures\gui\RscDisplayPlayerHUD\hud_group_driver.paa'/></t><br/>", _color, name _x];
 						};
 						case "gunner": {
-							_lines = _lines + format ["<t color='%1'>%2 <img image='textures\hud\hud_group_gunner.paa'/></t><br/>", _color, name _x];
+							_lines = _lines + format ["<t color='%1'>%2 <img image='textures\gui\RscDisplayPlayerHUD\hud_group_gunner.paa'/></t><br/>", _color, name _x];
 						};
 						case "commander": {
-							_lines = _lines + format ["<t color='%1'>%2 <img image='textures\hud\hud_group_commander.paa'/></t><br/>", _color, name _x];
+							_lines = _lines + format ["<t color='%1'>%2 <img image='textures\gui\RscDisplayPlayerHUD\hud_group_commander.paa'/></t><br/>", _color, name _x];
 						};
 						default  {
-							_lines = _lines + format ["<t color='%1'>%2 <img image='textures\hud\hud_group_passenger.paa'/></t><br/>", _color, name _x];
+							_lines = _lines + format ["<t color='%1'>%2 <img image='textures\gui\RscDisplayPlayerHUD\hud_group_passenger.paa'/></t><br/>", _color, name _x];
 						};
 					};
 				};

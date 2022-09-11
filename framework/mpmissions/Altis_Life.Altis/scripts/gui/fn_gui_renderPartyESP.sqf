@@ -71,7 +71,7 @@ if (alive player) then {
 							_distanceToCenterOfScreen = _markerScreenPosition distance2D [0.5, 0.5];
 							_adjustedMarkerAlpha = linearConversion [0.1, 0.4, _distanceToCenterOfScreen, 0.15, _markerAlpha, true];
 							drawIcon3D [
-								"textures\hud\hud_icon_marker_ca.paa",
+								"textures\gui\RscDisplayPlayerHUD\hud_icon_marker_ca.paa",
 								[1, 1, 1, _adjustedMarkerAlpha],
 								ASLtoAGL _markerPosition, 
 								1, 

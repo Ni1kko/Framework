@@ -1,27 +1,32 @@
-class life_spawn_selection {
+class RscDisplaySpawnSelection 
+{
     idd = 38500;
     movingEnabled = 0;
     enableSimulation = 1;
 
-    class controlsBackground {
-        class BackgroundImage: Life_RscPicture {
+    class controlsBackground 
+    {
+        class BackgroundImage: Life_RscPicture 
+        {
             idc = 38531;
-            text = "textures\spawn\background.jpg";
+            text = "textures\gui\RscDisplaySpawnSelection\background.jpg";
             x = 0 * safezoneW + safezoneX;
             y = 0 * safezoneH + safezoneY;
             w = 1 * safezoneW;
             h = 1 * safezoneH;
         };
-        class SpawnScreen: Life_RscPicture {
+        class SpawnScreen: Life_RscPicture 
+        {
             idc = 38531;
-            text = "textures\spawn\back_spawn.paa";
+            text = "textures\gui\RscDisplaySpawnSelection\selectionFrame.paa";
             x = 0.190625 * safezoneW + safezoneX;
             y = 0.093 * safezoneH + safezoneY;
             w = 0.629062 * safezoneW;
             h = 0.792 * safezoneH;
         };
 
-        class MapView: Life_RscMapControl {
+        class MapView: Life_RscMapControl 
+        {
             idc = 38502;
             colorBackground[] = {
                 0,
@@ -39,8 +44,10 @@ class life_spawn_selection {
         };
     };
 
-    class controls {
-        class SpawnPointList: Life_RscListNBox {
+    class controls 
+    {
+        class SpawnPointList: Life_RscListNBox 
+        {
             idc = 38510;
             text = "";
             sizeEx = 0.041;
@@ -60,7 +67,8 @@ class life_spawn_selection {
             onLBSelChanged = "_this call MPClient_fnc_spawnPointSelected;";
         };
 
-        class spawnButton: Life_RscButtonMenu {
+        class spawnButton: Life_RscButtonMenu 
+        {
             idc = -1;
             type = 1;
             style = "0x02";

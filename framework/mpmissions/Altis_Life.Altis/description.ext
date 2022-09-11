@@ -42,7 +42,7 @@ unsafeCVL = 1; // Allows createVehicleLocal to be executed in Multiplayer
 class RscTitles {
     #include "gui\progress.hpp"
     #include "gui\hud_nameTags.hpp"
-    #include "gui\RscPlayerHUD.hpp"
+    #include "gui\RscDisplayPlayerHUD.hpp"
     #include "gui\deathScreen.hpp"
     #include "gui\spitScreen.hpp"
 };

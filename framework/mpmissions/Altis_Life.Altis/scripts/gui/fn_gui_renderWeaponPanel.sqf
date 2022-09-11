@@ -5,7 +5,7 @@
 
 private["_display", "_weaponPanelControl", "_weaponPanelType", "_currentTurretPath", "_vehicle", "_vehicleRole", "_currentZeroing", "_currentWeaponState", "_currentWeaponClassName", "_currentFireMode", "_currentMagazineClassName", "_currentAmmoCount", "_compatibleMagazines", "_currentMagazineCount", "_needReload", "_currentMuzzle", "_ammoColor", "_ammoControl", "_magazineControl", "_zeroingControl", "_fireModeControl", "_muzzleDisplayName", "_muzzleControl"];
 disableSerialization;
-_display = uiNamespace getVariable "RscPlayerHUD";
+_display = uiNamespace getVariable "RscDisplayPlayerHUD";
 _weaponPanelControl = _display displayCtrl 1100;
 _weaponPanelType = 0;
 _currentTurretPath = [];

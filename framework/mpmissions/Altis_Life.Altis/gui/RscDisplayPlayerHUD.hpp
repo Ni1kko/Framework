@@ -3,14 +3,14 @@
 	## https://github.com/Ni1kko/FrameworkV2
 */
 
-class RscPlayerHUD
+class RscDisplayPlayerHUD
 {
     idd=24014;
     duration=999999;
     fadein=1;
     fadeout=1;
-    onLoad="uiNamespace setVariable ['RscPlayerHUD', _this select 0];";
-    onUnload="uiNamespace setVariable ['RscPlayerHUD', displayNull]";
+    onLoad="uiNamespace setVariable ['RscDisplayPlayerHUD', _this select 0];";
+    onUnload="uiNamespace setVariable ['RscDisplayPlayerHUD', displayNull]";
     class controls
     {
         class Grenade: Life_RscControlsGroup
@@ -31,7 +31,7 @@ class RscPlayerHUD
                     w="256 * pixelW";
                     h="128 * pixelH";
                     colorText[]={1,1,1,1};
-                    text="textures\hud\hud_panel_grenade_ca.paa";
+                    text="textures\gui\RscDisplayPlayerHUD\hud_panel_grenade_ca.paa";
                 };
                 class Ammo: Life_RscText
                 {
@@ -137,7 +137,7 @@ class RscPlayerHUD
                     w="256 * pixelW";
                     h="128 * pixelH";
                     colorText[]={1,1,1,1};
-                    text="textures\hud\hud_panel_weapon_ca.paa";
+                    text="textures\gui\RscDisplayPlayerHUD\hud_panel_weapon_ca.paa";
                 };
                 class Ammo: Life_RscText
                 {
@@ -234,7 +234,7 @@ class RscPlayerHUD
                     w="256 * pixelW";
                     h="128 * pixelH";
                     colorText[]={1,1,1,1};
-                    text="textures\hud\hud_panel_weapon_ca.paa";
+                    text="textures\gui\RscDisplayPlayerHUD\hud_panel_weapon_ca.paa";
                 };
                 class Speed: Life_RscText
                 {
@@ -316,7 +316,7 @@ class RscPlayerHUD
                     w="256 * pixelW";
                     h="64 * pixelH";
                     colorText[]={1,1,1,1};
-                    text="textures\hud\hud_panel_player_ca.paa";
+                    text="textures\gui\RscDisplayPlayerHUD\hud_panel_player_ca.paa";
                 };
                 class HungerLabel: Life_RscText
                 {
@@ -475,7 +475,7 @@ class RscPlayerHUD
             y="(safeZoneY + safeZoneH) - 630 * pixelH - 64 * pixelH";
             w="64 * pixelW";
             h="64 * pixelH";
-            text="textures\hud\hud_icon_hunger_ca.paa";
+            text="textures\gui\RscDisplayPlayerHUD\hud_icon_hunger_ca.paa";
             shadow=0;
             show="false";
             colorText[]={1,1,1,1};
@@ -488,7 +488,7 @@ class RscPlayerHUD
             y="(safeZoneY + safeZoneH) - 720 * pixelH - 64 * pixelH";
             w="64 * pixelW";
             h="64 * pixelH";
-            text="textures\hud\hud_icon_thirst_ca.paa";
+            text="textures\gui\RscDisplayPlayerHUD\hud_icon_thirst_ca.paa";
             shadow=0;
             show="false";
             colorText[]={1,1,1,1};
@@ -501,7 +501,7 @@ class RscPlayerHUD
             y="(safeZoneY + safeZoneH) - 810 * pixelH - 64 * pixelH";
             w="64 * pixelW";
             h="64 * pixelH";
-            text="textures\hud\hud_icon_combat_ca.paa";
+            text="textures\gui\RscDisplayPlayerHUD\hud_icon_combat_ca.paa";
             shadow=0;
             show="false";
             colorText[]={1,1,1,1};
@@ -514,7 +514,7 @@ class RscPlayerHUD
             y="(safeZoneY + safeZoneH) - 455 * pixelH - 64 * pixelH";
             w="64 * pixelW";
             h="64 * pixelH";
-            text="textures\hud\hud_icon_newlife_ca.paa";
+            text="textures\gui\RscDisplayPlayerHUD\hud_icon_newlife_ca.paa";
             shadow=0;
             show="false";
             colorText[]={1,1,1,1};
@@ -526,7 +526,7 @@ class RscPlayerHUD
             y="(safeZoneY + safeZoneH) - 365 * pixelH - 64 * pixelH";
             w="64 * pixelW";
             h="64 * pixelH";
-            text="textures\hud\hud_icon_earplugs_ca.paa";
+            text="textures\gui\RscDisplayPlayerHUD\hud_icon_earplugs_ca.paa";
             shadow=0;
             show="false";
             colorText[]={1,1,1,1};
@@ -538,7 +538,7 @@ class RscPlayerHUD
             y="(safeZoneY + safeZoneH) - 275 * pixelH - 64 * pixelH";
             w="64 * pixelW";
             h="64 * pixelH";
-            text="textures\hud\hud_icon_autorun_ca.paa";
+            text="textures\gui\RscDisplayPlayerHUD\hud_icon_autorun_ca.paa";
             shadow=0;
             show="false";
             colorText[]={1,1,1,1};

@@ -16,7 +16,7 @@ class RscDisplayDeathScreen
 		class DeathPicture: Life_RscPicture
 		{
 			idc = -1;
-			text = "textures\blood.paa";
+			text = "textures\gui\RscDisplayDeathScreen\blood.paa";
 			x = 0.2375 * safezoneW + safezoneX;
 			y = 0.15 * safezoneH + safezoneY;
 			w = 0.525 * safezoneW;

@@ -4,7 +4,7 @@
 */
 
 disableSerialization;
-private _display = uiNameSpace getVariable ["RscPlayerHUD", displayNull];  
+private _display = uiNameSpace getVariable ["RscDisplayPlayerHUD", displayNull];  
 private _panelControl = _display displayCtrl 1400;
 private _currentThrowable = currentThrowable player;
 private _showGrenadePanel = false;
@@ -30,7 +30,7 @@ if !(_showGrenadePanel) then {
 	private _ammoControl = _display displayCtrl 1402;  
 	_ammoControl ctrlSetText (str _grenadeAmmo);
 	if !(_grenadeClassName isEqualTo life_var_hud_lastrendered_grenadeclassname) then {
-		private _nameLines = getArray (configFile >> "RscPlayerHUD" >> "ShortItemNames" >> _grenadeClassName);
+		private _nameLines = getArray (configFile >> "RscDisplayPlayerHUD" >> "ShortItemNames" >> _grenadeClassName);
 		private _single = _display displayCtrl 1403;  
 		private _double1 = _display displayCtrl 1404;  
 		private _double2 = _display displayCtrl 1405;  

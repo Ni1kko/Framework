@@ -5,7 +5,7 @@
 
 disableSerialization;
 
-private _display = createDialog ["life_spawn_selection",true];
+private _display = createDialog ["RscDisplaySpawnSelection",true];
 private _listBox = _display displayCtrl 38510;
 private _configSpawnPoints = [playerSide] call MPClient_fnc_spawnPointCfg;
 life_spawn_point = _configSpawnPoints#0; //First option is set by default
