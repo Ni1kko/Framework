@@ -38,56 +38,51 @@ life_var_isBusy = false;
 life_var_hunger = 0;
 life_var_thirst = 0;
 
-//-- Drop items and strip player
-[_unit,true] call MPClient_fnc_stripDownPlayer;
-
 //close the esc dialog
 if (dialog) then {
     closeDialog 0;
 };
 
-//Make the killer wanted
-if (!isNull _killer && {!(_killer isEqualTo _unit)} && {!(side _killer isEqualTo west)} && {alive _killer}) then {
-    if (vehicle _killer isKindOf "LandVehicle") then {
-        if (count extdb_var_database_headless_clients > 0) then {
-            [getPlayerUID _killer,_killer getVariable ["realname",name _killer],"187V"] remoteExecCall ["HC_fnc_wantedAdd",extdb_var_database_headless_client];
-        } else {
-            [getPlayerUID _killer,_killer getVariable ["realname",name _killer],"187V"] remoteExecCall ["MPServer_fnc_wantedAdd",RE_SERVER];
-        };
+//-- Handle killer
+if (!isNull _killer) then 
+{  
+    private _isKillerCop = side _killer isEqualTo west;
+    private _isPlayerCop = side _unit isEqualTo west;
+    
+    //-- Handle Killed by police
+    if (_isKillerCop AND not(_isPlayerCop)) then 
+    {
+        life_copRecieve = _killer;
 
-        //Get rid of this if you don't want automatic vehicle license removal.
-        if (!local _killer) then {
-            [_killer, ["pilot","driver","trucking","boat"], "STR_Civ_LicenseRemove_1"] remoteExecCall ["MPClient_fnc_removeLicenses",owner _killer];
+        //-- Handle if they robbed the federal reserve?
+        if (!life_var_ATMEnabled AND life_var_cash > 0) then
+        {
+            [format [localize "STR_Cop_RobberDead",[life_var_cash] call MPClient_fnc_numberText]] remoteExecCall ["MPClient_fnc_broadcast",RE_CLIENT];
+            ["ZERO","CASH"] call MPClient_fnc_handleMoney;
         };
-    } else {
-        if (count extdb_var_database_headless_clients > 0) then {
-            [getPlayerUID _killer,_killer getVariable ["realname",name _killer],"187"] remoteExecCall ["HC_fnc_wantedAdd",extdb_var_database_headless_client];
-        } else {
-            [getPlayerUID _killer,_killer getVariable ["realname",name _killer],"187"] remoteExecCall ["MPServer_fnc_wantedAdd",RE_SERVER];
-        };
+    };
 
-        if (!local _killer) then {
-            [_killer, ["gun"], "STR_Civ_LicenseRemove_2"] remoteExecCall ["MPClient_fnc_removeLicenses",owner _killer];
+    //-- Handle wanted
+    if (_killer isNotEqualTo _unit) then
+    {
+        //-- Make the killer wanted
+        if (alive _killer AND not(local _killer)) then 
+        {
+            if (vehicle _killer isKindOf "LandVehicle") then {  
+                [getPlayerUID _killer,_killer getVariable ["realname",name _killer],"187V"] remoteExecCall ["MPServer_fnc_wantedAdd",2];
+                //[_killer, ["pilot","driver","trucking","boat"], "STR_Civ_LicenseRemove_1"] remoteExecCall ["MPClient_fnc_removeLicenses",owner _killer];
+            } else {
+                [getPlayerUID _killer,_killer getVariable ["realname",name _killer],"187"] remoteExecCall ["MPServer_fnc_wantedAdd",2];
+                //[_killer, ["gun"], "STR_Civ_LicenseRemove_2"] remoteExecCall ["MPClient_fnc_removeLicenses",owner _killer];
+            };
+        }else{ 
+            life_removeWanted = true;
         };
     };
 };
 
-//Killed by cop stuff...
-if (side _killer isEqualTo west && !(playerSide isEqualTo west)) then {
-    life_copRecieve = _killer;
-    //Did I rob the federal reserve?
-    if (!life_var_ATMEnabled && {life_var_cash > 0}) then {
-        [format [localize "STR_Cop_RobberDead",[life_var_cash] call MPClient_fnc_numberText]] remoteExecCall ["MPClient_fnc_broadcast",RE_CLIENT];
-        ["ZERO","CASH"] call MPClient_fnc_handleMoney;
-    };
-};
-
-if (!isNull _killer && {!(_killer isEqualTo _unit)}) then {
-    life_removeWanted = true;
-    [_killer, ["rebel", "driver", "heroin", "marijuana", "cocaine"]] remoteExecCall ["MPClient_fnc_removeLicenses",owner _killer];
-};
- 
-[player,life_settings_enableSidechannel,playerSide] remoteExecCall ["MPServer_fnc_managesc",RE_SERVER];
+//-- Drop items and strip player
+[_unit,true] call MPClient_fnc_stripDownPlayer;
 
 //-- Stop bleeding
 ["all"] call MPClient_fnc_removeBuff;
@@ -99,6 +94,9 @@ player setDamage 0;
 ["RscDisplayDeathScreen"] call MPClient_fnc_destroyRscLayer;
 closeDialog 0;		
 titleCut ["", "BLACK IN", 1];
+
+//-- Leave side chat 
+[_unit,false,side _unit] remoteExecCall ["MPServer_fnc_managesc",2];
 
 //--
 [] spawn MPClient_fnc_respawned;

@@ -103,4 +103,7 @@ disableUserInput false; // Let the user have input
 player allowDamage true; // Let the player take damage
 5 spawn{uiSleep _this; player setVariable ["life_var_teleported",false,true]};
 
+//-- Side chat
+[player,life_settings_enableSidechannel,playerSide] remoteExecCall ["MPServer_fnc_managesc",RE_SERVER];
+
 true
