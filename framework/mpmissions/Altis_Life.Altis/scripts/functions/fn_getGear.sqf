@@ -21,6 +21,6 @@ private _vitems = [];
 	}else{
 		_vitems pushBackUnique [_x,0];
 	};
-} forEach getArray(missionConfigFile >> "Life_Settings" >> "saved_virtualItems");
+} forEach (keys life_var_marketConfig);
 
 [getUnitLoadout _player,_vitems]

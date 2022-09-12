@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Sep 09, 2022 at 08:33 PM
+-- Generation Time: Sep 12, 2022 at 04:08 PM
 -- Server version: 10.4.24-MariaDB
 -- PHP Version: 8.1.6
 
@@ -264,6 +264,24 @@ CREATE TABLE `lotterytickets` (
 -- --------------------------------------------------------
 
 --
+-- Table structure for table `market`
+--
+
+DROP TABLE IF EXISTS `market`;
+CREATE TABLE `market` (
+  `ID` int(11) NOT NULL,
+  `item` varchar(255) NOT NULL,
+  `buyPrice` int(11) NOT NULL DEFAULT -1,
+  `sellPrice` int(11) NOT NULL DEFAULT -1,
+  `stock` int(11) NOT NULL DEFAULT 0,
+  `illegal` tinyint(1) NOT NULL DEFAULT 0,
+  `lastUpdated` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp(),
+  `insertTime` timestamp NOT NULL DEFAULT current_timestamp()
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+-- --------------------------------------------------------
+
+--
 -- Table structure for table `players`
 --
 
@@ -430,7 +448,7 @@ CREATE TABLE `vehicles_new` (
   `spawned` tinyint(1) NOT NULL DEFAULT 1,
   `spawn_time` timestamp NOT NULL DEFAULT current_timestamp(),
   `destroyed` tinyint(1) NOT NULL DEFAULT 0,
-  `numberPlate` varchar(255) NOT NULL DEFAULT '"Arma3 RPG"',
+  `numberPlate` varchar(255) NOT NULL DEFAULT 'Arma3 RPG',
   `textures` text NOT NULL,
   `materials` text NOT NULL,
   `containerCargo` text NOT NULL,
@@ -532,6 +550,13 @@ ALTER TABLE `lotterytickets`
   ADD PRIMARY KEY (`ticketID`),
   ADD KEY `fkIdx_players_lottery` (`BEGuid`),
   ADD KEY `fkIdx_servers_serverID` (`serverID`);
+
+--
+-- Indexes for table `market`
+--
+ALTER TABLE `market`
+  ADD PRIMARY KEY (`ID`),
+  ADD UNIQUE KEY `item` (`item`);
 
 --
 -- Indexes for table `players`
@@ -661,6 +686,12 @@ ALTER TABLE `impounded_vehicles`
 --
 ALTER TABLE `lotterytickets`
   MODIFY `ticketID` int(11) NOT NULL AUTO_INCREMENT;
+
+--
+-- AUTO_INCREMENT for table `market`
+--
+ALTER TABLE `market`
+  MODIFY `ID` int(11) NOT NULL AUTO_INCREMENT;
 
 --
 -- AUTO_INCREMENT for table `players`

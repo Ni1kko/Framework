@@ -67,6 +67,8 @@ if(getNumber(configFile >> "CfgRemoteExec" >> "enabled") isEqualTo 1)then
 life_var_severSchedulerStartUpQueue = compileFinal str _severSchedulerStartUpQueue;
 {life_var_severScheduler pushBack _x}forEach _severSchedulerStartUpQueue;
 
+//-- Wait till market has loaded
+waitUntil {!isNil "life_var_marketConfig"};
 
 //--- Tell clients that the server is ready and is accepting queries
 life_var_serverLoaded = true;
