@@ -3,102 +3,154 @@
 	## https://github.com/Ni1kko/FrameworkV2
 */
 
+//-- Wait for ranks to be set
+waitUntil {(missionNamespace getVariable ["life_session_completed",false])};
+
+//-- Get ranks
+private _adminlevel = call (missionNamespace getVariable ["life_adminlevel",{0}]);
+private _donorlevel = call (missionNamespace getVariable ["life_donorlevel",{0}]);
+private _policeRank = call (missionNamespace getVariable ["life_coplevel",{0}]);
+private _medicRank =  call (missionNamespace getVariable ["life_medLevel",{0}]);
+private _rebelRank =  call (missionNamespace getVariable ["life_reblevel",{0}]);
+private _civJobRank = call (missionNamespace getVariable ["life_joblevel",{0}]);
+
+//--
+private _lastUniform = "";
 private _lastUniformTextures = [];
-private _side = playerSide;
+private _lastVest = "";
+private _lastVestTextures = [];
+private _lastBackpack = "";
+private _lastBackpackTextures = [];
+private _lastPlayerSide = playerSide;
 
-private _adminlevel = call life_adminlevel;
-private _donorlevel = call life_donorlevel;
-private _policeRank = call life_coplevel;
-private _medicRank = call life_medLevel;
-private _rebelRank = call life_reblevel;
-private _civJobRank = call life_joblevel;
-
-//-- Handle backpacks
-[]spawn {
-	private _side = playerSide;
-	private _backpack = unitBackpack player;
-	while{true}do
-	{ 
-		waitUntil {(playerSide isNotEqualTo _side) OR (unitBackpack player isNotEqualTo _backpack)};
-
-		if(playerSide in [west,independent]) then {
-			(unitBackpack player) setObjectTextureGlobal [0,""];
-		};
-
-		_backpack = unitBackpack player;
-		_side = playerSide;
-	};
-};
-
-//-- Handle vests
-[]spawn {
-	private _side = playerSide;
-	private _vest = vestContainer player;
-	while{true}do
-	{ 
-		waitUntil {(playerSide isNotEqualTo _side) OR (vestContainer player isNotEqualTo _vest)};
-
-		if(playerSide isEqualTo independent) then {
-			(vestContainer player) setObjectTextureGlobal [0, "textures\medic\vests\carry-rig.paa"];
-		};
-
-		_vest = vestContainer player;
-		_side = playerSide;
-	};
-};
-
-//-- Handle uniforms
 while{true}do
-{ 
-	waitUntil {(playerSide isNotEqualTo _side) OR ((getObjectTextures player) isNotEqualTo _lastUniformTextures)};
-		
-	private _texture = (switch (uniform player) do 
+{
+	//-- Wait for change
+	waitUntil {
+		uiSleep 0.2;
+		playerSide isNotEqualTo _lastPlayerSide 
+		OR {(uniform player) isNotEqualTo _lastUniform
+		OR {(getObjectTextures(uniformContainer player)) isNotEqualTo _lastUniformTextures 
+		OR {(vest player) isNotEqualTo _lastVest 
+		OR {(getObjectTextures(vestContainer player)) isNotEqualTo _lastVestTextures 
+		OR {(backpack player) isNotEqualTo _lastBackpack
+		OR {(getObjectTextures(unitBackpack player)) isNotEqualTo _lastBackpackTextures	
+	}}}}}}};
+
+	//-- Re-texturing
+	switch (true) do
 	{
-		//-- Police Uniforms (1 - 7)
-		case "U_Rangemaster": 
-        { 
-            switch (side player) do 
-            { 
-                case west:          {format["textures\police\uniforms\uniform%1",[".paa",format["_%1.jpg",_policeRank]] select (_policeRank >= 1 AND _policeRank <= 7)]};
-                case independent:	{format["textures\medic\uniforms\uniform%1", [".jpg",format["_%1.jpg",_medicRank]] select (_medicRank >= 1 AND _medicRank <= 5)]};
-                default 			{""};
-            };
-        }; 
-		//-- Police Uniforms (8 - 9) NPAS & RTU 
-		case "U_O_OfficerUniform_ocamo": 
-        { 
-            switch (side player) do 
-            { 
-                case west:          {format["textures\police\uniforms\uniform%1",["_9.paa",format["_8.jpg",_policeRank]] select (_policeRank isEqualTo 8)]};
-                default 			{""};
-            };
-        };
-		//-- Police Uniforms (10 - 14)
-		case "U_OG_Guerrilla_6_1": 
-        { 
-            switch (side player) do 
-            { 
-                case west:          {format["textures\police\uniforms\uniform%1.jpg",["_10",format["_%1",_policeRank]] select (_policeRank >= 10 AND _policeRank <= 14)]};
-                default 			{""};
-            };
-        };
-		case "U_C_Poloshirt_blue": 			{"textures\civilian\uniforms\uniform_1.paa"};
-		case "U_C_Poloshirt_burgundy": 	    {"textures\civilian\uniforms\uniform_2.paa"};
-		case "U_C_Poloshirt_stripped": 	    {"textures\civilian\uniforms\uniform_3.paa"};
-		case "U_C_Poloshirt_tricolour": 	{"textures\civilian\uniforms\uniform_4.paa"};
-		case "U_C_Poloshirt_salmon": 		{"textures\civilian\uniforms\uniform_5.paa"};
-		case "U_C_Poloshirt_redwhite": 	    {"textures\civilian\uniforms\uniform_6.paa"};
-		case "U_C_Commoner1_1": 			{"textures\civilian\uniforms\uniform_7.paa"};
-		case "U_B_CombatUniform_mcam_worn": {"textures\civilian\uniforms\uniform_bountyhunter.paa"};
-        default 							{""};
-	});
- 
-    if(count _texture > 0) then {
-        player setObjectTextureGlobal [0, _texture];
-    };
-	
-	_lastUniformTextures = getObjectTextures player;
-	_side = playerSide;
+		//-- Handle uniforms
+		case (getObjectTextures(uniformContainer player) isNotEqualTo _lastUniformTextures OR (uniform player) isNotEqualTo _lastUniform): 
+		{ 
+			private _uniformTexture = (switch (uniform player) do 
+			{
+				//-- Police Uniforms (1 - 7)
+				case "U_Rangemaster": 
+				{ 
+					switch (side player) do 
+					{ 
+						case west:          {format["textures\police\uniforms\uniform%1",[".paa",format["_%1.jpg",_policeRank]] select (_policeRank >= 1 AND _policeRank <= 7)]};
+						case independent:	{format["textures\medic\uniforms\uniform%1", [".jpg",format["_%1.jpg",_medicRank]] select (_medicRank >= 1 AND _medicRank <= 5)]};
+						default 			{""};
+					};
+				}; 
+				//-- Police Uniforms (8 - 9) NPAS & RTU 
+				case "U_O_OfficerUniform_ocamo": 
+				{ 
+					switch (side player) do 
+					{ 
+						case west:          {format["textures\police\uniforms\uniform%1",["_9.paa",format["_8.jpg",_policeRank]] select (_policeRank isEqualTo 8)]};
+						default 			{""};
+					};
+				};
+				//-- Police Uniforms (10 - 14)
+				case "U_OG_Guerrilla_6_1": 
+				{ 
+					switch (side player) do 
+					{ 
+						case west:          {format["textures\police\uniforms\uniform%1.jpg",["_10",format["_%1",_policeRank]] select (_policeRank >= 10 AND _policeRank <= 14)]};
+						default 			{""};
+					};
+				};
+				case "U_C_Poloshirt_blue": 			{"textures\civilian\uniforms\uniform_1.paa"};
+				case "U_C_Poloshirt_burgundy": 	    {"textures\civilian\uniforms\uniform_2.paa"};
+				case "U_C_Poloshirt_stripped": 	    {"textures\civilian\uniforms\uniform_3.paa"};
+				case "U_C_Poloshirt_tricolour": 	{"textures\civilian\uniforms\uniform_4.paa"};
+				case "U_C_Poloshirt_salmon": 		{"textures\civilian\uniforms\uniform_5.paa"};
+				case "U_C_Poloshirt_redwhite": 	    {"textures\civilian\uniforms\uniform_6.paa"};
+				case "U_C_Commoner1_1": 			{"textures\civilian\uniforms\uniform_7.paa"};
+				case "U_B_CombatUniform_mcam_worn": {"textures\civilian\uniforms\uniform_bountyhunter.paa"};
+				default 							{""};
+			});
+
+			if(_adminlevel >= 1) then 
+			{
+				private _customTexture = player getVariable ["customUniformTexture", ""]; 
+				if(count _customTexture > 0) then {
+					_uniformTexture = _customTexture;
+				};
+			};
+
+			if(count _uniformTexture > 0) then {
+				(uniformContainer player) setObjectTextureGlobal [0, _uniformTexture];
+			};
+			
+			_lastUniformTextures = getObjectTextures(uniformContainer player);
+			_lastUniform = uniform player;
+		};
+		//-- Handle vests
+		case (getObjectTextures(vestContainer player) isNotEqualTo _lastVestTextures OR (vest player) isNotEqualTo _lastVest):
+		{
+			private _vestTexture = (switch (side player) do 
+			{
+				case independent:	{"textures\medic\vests\carry-rig.paa"};
+				default 			{""};
+			});
+
+			if(_adminlevel >= 1) then 
+			{
+				private _customTexture = player getVariable ["customVestTexture", ""]; 
+				if(count _customTexture > 0) then {
+					_vestTexture = _customTexture;
+				};
+			};
+
+			if(count _vestTexture > 0) then {
+				(vestContainer player) setObjectTextureGlobal [0, _vestTexture];
+			};
+			
+			_lastVestTextures = getObjectTextures (vestContainer player);
+			_lastVest = vest player;
+		};
+		//-- Handle backpacks
+		case (getObjectTextures(unitBackpack player) isNotEqualTo _lastBackpackTextures OR (backpack player) isNotEqualTo _lastBackpack):
+		{
+			private _backpackTexture = (switch (side player) do 
+			{
+				case west:			{"Invisible"};
+				case independent:	{"Invisible"};
+				default 			{""};
+			});
+
+			if(_adminlevel >= 1) then 
+			{
+				private _customTexture = player getVariable ["customBackpackTexture", "Invisible"];
+				if(count _customTexture > 0) then {
+					_backpackTexture = _customTexture;
+				};
+			};
+
+			if(count _backpackTexture > 0) then {
+				(unitBackpack player) setObjectTextureGlobal [0, [_backpackTexture, ""] select (_backpackTexture isEqualTo "Invisible")];
+			};
+			
+			_lastBackpackTextures = getObjectTextures (unitBackpack player);
+			_lastBackpack = backpack player;
+		};
+	};
+	 
+	_lastPlayerSide = playerSide;
 };
 
 false
