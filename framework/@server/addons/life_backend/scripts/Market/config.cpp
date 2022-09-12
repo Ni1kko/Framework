@@ -11,8 +11,7 @@ class CfgPatches
  
 class CfgMarket
 {
-    oneTimeUse = 0; // disable too give back tent after packing up
-    garages = 1; // allow to store vehicles at placed campsites
+    
 };
 
 class CfgFunctions 
@@ -21,7 +20,7 @@ class CfgFunctions
     {
         class Market_Functions
         {
-            file = "\life_backend\scripts\Tents";
+            file = "\life_backend\scripts\Market";
             class loadMarket { postInit = 1; };
         };
     };
