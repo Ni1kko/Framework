@@ -60,7 +60,7 @@ while{true}do
             switch (side player) do 
             { 
                 case west:          {format["textures\police\uniforms\uniform%1",[".paa",format["_%1.jpg",_policeRank]] select (_policeRank >= 1 AND _policeRank <= 7)]};
-                case independent:	{format["textures\medic\uniforms\uniform%1", [".paa",format["_%1.jpg",_medicRank]] select (_medicRank >= 1 AND _medicRank <= 5)]};
+                case independent:	{format["textures\medic\uniforms\uniform%1", [".jpg",format["_%1.jpg",_medicRank]] select (_medicRank >= 1 AND _medicRank <= 5)]};
                 default 			{""};
             };
         }; 
