@@ -10,17 +10,20 @@ params [
 ];
 
 private _vitems = [];
+private _cfgVitems = missionConfigFile >> "VirtualItems";
 
-{
-    private _item = format ["life_inv_%1",getText(missionConfigFile >> "VirtualItems" >> _x >> "variable")];
+for "_currentIndex" from 0 to (count(_cfgVitems) - 1) do {
+	private _currentItem = _cfgVitems select _currentIndex;
+	private _currentItemName = configName _currentItem;
+	private _item = format ["life_inv_%1",getText(missionConfigFile >> "VirtualItems" >> _currentItemName >> "variable")];
     private _count = missionNamespace getVariable [_item,0];
 	if _owned then {
 		if (_count > 0) then {
-			_vitems pushBackUnique [_x,_count];
+			_vitems pushBackUnique [_currentItemName,_count];
 		};
 	}else{
-		_vitems pushBackUnique [_x,0];
+		_vitems pushBackUnique [_currentItemName,0];
 	};
-} forEach (keys life_var_marketConfig);
+};
 
 [getUnitLoadout _player,_vitems]

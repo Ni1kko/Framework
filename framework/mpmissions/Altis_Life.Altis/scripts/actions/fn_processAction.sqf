@@ -49,7 +49,7 @@ if (_exit) exitWith {life_is_processing = false; hint localize "STR_NOTF_NotEnou
 if (_vendor in [mari_processor,coke_processor,heroin_processor]) then {
     _hasLicense = true;
 } else {
-    _hasLicense = LICENSE_VALUE(_type);
+    _hasLicense = LICENSE_VALUE(_type,"civ");
 };
 
 _cost = _cost * (count _oldItem);

@@ -14,11 +14,14 @@ params [
 ];
 
 if(count _licenses isEqualTo 0)exitWith{false};
+
 private _hadLicense = false;
+private _licenseFlag = [side _player,true] call MPServer_fnc_util_getSideString;
 
 {
-    if(LICENSE_VALUE(_x))then{
-        TAKE_LICENSE(_x);
+    private _license = LICENSE_VARNAME(_x,_licenseFlag);
+    if(missionNamespace getVariable [_license,false])then{
+        missionNamespace setVariable [_license,false];
         _hadLicense = true
     };
 } forEach _licenses
@@ -29,4 +32,4 @@ if _hadLicense then {
 };
 
 //return
-_hadLicense
+(_hadLicense AND count _licenses > 0)

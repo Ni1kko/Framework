@@ -147,7 +147,7 @@ life_clothing_store = _shop;
 if (isClass(missionConfigFile >> "cfgLicenses" >> life_clothing_store)) then {
     _flag = M_CONFIG(getText,"cfgLicenses",life_clothing_store,"side");
     _displayName = M_CONFIG(getText,"cfgLicenses",life_clothing_store,"displayName");
-    if !(LICENSE_VALUE(life_clothing_store)) exitWith {
+    if !(LICENSE_VALUE(life_clothing_store,_flag)) exitWith {
         hint format [localize "STR_Shop_YouNeed",localize _displayName];
         closeDialog 0;
     };
