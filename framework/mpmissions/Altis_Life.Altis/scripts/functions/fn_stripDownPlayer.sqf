@@ -4,7 +4,7 @@
 */
 
 params [
-    ["_player", player, [objNull]]
+    ["_player", player, [objNull]],
     ["_isDead", false, [false]]
 ];
 
