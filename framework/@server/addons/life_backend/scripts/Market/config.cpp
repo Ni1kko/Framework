@@ -22,6 +22,7 @@ class CfgFunctions
         {
             file = "\life_backend\scripts\Market";
             class loadMarket { postInit = 1; };
+            class getMarketDataValue {};
         };
     };
 };

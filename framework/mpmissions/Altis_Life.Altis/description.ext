@@ -621,6 +621,7 @@ class CfgRemoteExec {
             F(MPServer_fnc_updateHouseContainers,SERVER)
             F(MPServer_fnc_updateHouseTrunk,SERVER)
             F(MPServer_fnc_log,SERVER)
+            F(MPServer_fnc_setMarketDataValue,SERVER)
 
             //-- To be removed
             F(MPServer_fnc_vehicleCreate,SERVER)
