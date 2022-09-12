@@ -141,7 +141,8 @@ private _variableTooSet = [
     
     //--- Shop related
     ["life_var_vehicleTraderData",["",[],"Undefined",true]],
-
+    ["life_var_marketConfig",createHashMap],
+    
     //-- Setup Gang hideouts
     ["life_hideoutBuildings", (LIFE_SETTINGS(getArray,"gang_area")) apply {nearestBuilding(getMarkerPos _x)}]
 ];
