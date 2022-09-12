@@ -96,7 +96,14 @@ if (count(_Winners) <= 0) exitWith {
 
 //-- Empty vault
 _vaultObject setVariable ["safe",0,true];
-["UPDATE", "servers", [[["vault",["DB","INT", 0] call MPServer_fnc_database_parse]],[["serverID",["DB","INT",call life_var_serverID] call MPServer_fnc_database_parse]]]]call MPServer_fnc_database_request;
+["UPDATE", "servers", [
+	[
+		["vault",["DB","INT", _JackPot] call MPServer_fnc_database_parse]
+	],
+	[
+		["serverID",["DB","INT",call life_var_serverID] call MPServer_fnc_database_parse]
+	]
+]]call MPServer_fnc_database_request;
 
 //-- Notify
 [0,format["Someone has won the lottery jackpot of $%1!",[_Jackpot] call MPClient_fnc_numberText]] remoteExec ["MPClient_fnc_broadcast",0];
