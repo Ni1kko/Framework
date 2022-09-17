@@ -87,16 +87,24 @@ while{true}do
 
 			if(_adminlevel >= 1) then 
 			{
-				private _customTexture = player getVariable ["customUniformTexture", ""]; 
+				private _customTexture = (uniformContainer player) getVariable ["customTexture", ""]; 
 				if(count _customTexture > 0) then {
 					_uniformTexture = _customTexture;
 				};
 			};
 
+			if(playerSide in [civilian,east] AND ((uniformContainer player) getVariable ["protectedTexture",false]))then{
+				_uniformTexture = "";
+			};
+			
 			if(count _uniformTexture > 0) then {
 				(uniformContainer player) setObjectTextureGlobal [0, _uniformTexture];
+				if(playerSide in [west,independent])then{
+					(uniformContainer player) setVariable ["protectedTexture",true,true];
+				};
 			}else{
 				{(uniformContainer player) setObjectTextureGlobal [_forEachIndex, _x]}forEach _defaultTextures;
+				(uniformContainer player) setVariable ["protectedTexture",false,true];
 			};
 			
 			_lastUniformTextures = getObjectTextures(uniformContainer player);
@@ -114,16 +122,24 @@ while{true}do
 
 			if(_adminlevel >= 1) then 
 			{
-				private _customTexture = player getVariable ["customVestTexture", ""]; 
+				private _customTexture = (vestContainer player) getVariable ["customTexture", ""]; 
 				if(count _customTexture > 0) then {
 					_vestTexture = _customTexture;
 				};
 			};
 
+			if(playerSide in [civilian,east] AND ((vestContainer player) getVariable ["protectedTexture",false]))then{
+				_vestTexture = "";
+			};
+
 			if(count _vestTexture > 0) then {
 				(vestContainer player) setObjectTextureGlobal [0, _vestTexture];
+				if(playerSide in [west,independent])then{
+					(vestContainer player) setVariable ["protectedTexture",true,true];
+				};
 			}else{
 				{(vestContainer player) setObjectTextureGlobal [_forEachIndex, _x]}forEach _defaultTextures;
+				(vestContainer player) setVariable ["protectedTexture",false,true];
 			};
 
 			_lastVestTextures = getObjectTextures (vestContainer player);
@@ -142,25 +158,33 @@ while{true}do
 
 			if(_adminlevel >= 1) then 
 			{
-				private _customTexture = player getVariable ["customBackpackTexture", "Invisible"];
+				private _customTexture = (backpackContainer player) getVariable ["customTexture", "Invisible"];
 				if(count _customTexture > 0) then {
 					_backpackTexture = _customTexture;
 				};
 			};
 
+			if(playerSide in [civilian,east] AND ((backpackContainer player) getVariable ["protectedTexture",false]))then{
+				_backpackTexture = "";
+			};
+
 			if(count _backpackTexture > 0) then {
 				//Load custom or invisible texture
 				(backpackContainer player) setObjectTextureGlobal [0, [_backpackTexture, ""] select (_backpackTexture isEqualTo "Invisible")];
+				if(playerSide in [west,independent])then{
+					(backpackContainer player) setVariable ["protectedTexture",true,true];
+				};
 			}else{
 				//Reload default textures (need for if player switches side without droping gear)
 				{(backpackContainer player) setObjectTextureGlobal [_forEachIndex, _x]}forEach _defaultTextures;
+				(backpackContainer player) setVariable ["protectedTexture",false,true];
 			};
 			
 			_lastBackpackTextures = getObjectTextures (backpackContainer player);
 			_lastBackpack = backpack player;
 		};
 	};
-	 
+	
 	_lastPlayerSide = playerSide;
 };
 
