@@ -34,7 +34,7 @@ while{true}do
 		OR {(vest player) isNotEqualTo _lastVest 
 		OR {(getObjectTextures(vestContainer player)) isNotEqualTo _lastVestTextures 
 		OR {(backpack player) isNotEqualTo _lastBackpack
-		OR {(getObjectTextures(unitBackpack player)) isNotEqualTo _lastBackpackTextures	
+		OR {(getObjectTextures(backpackContainer player)) isNotEqualTo _lastBackpackTextures	
 	}}}}}}};
 
 	//-- Re-texturing
@@ -43,6 +43,7 @@ while{true}do
 		//-- Handle uniforms
 		case (getObjectTextures(uniformContainer player) isNotEqualTo _lastUniformTextures OR (uniform player) isNotEqualTo _lastUniform): 
 		{ 
+			private _defaultTextures = getArray(configFile >> "CfgWeapons" >> (uniform player) >> "hiddenSelectionsTextures");
 			private _uniformTexture = (switch (uniform player) do 
 			{
 				//-- Police Uniforms (1 - 7)
@@ -94,6 +95,8 @@ while{true}do
 
 			if(count _uniformTexture > 0) then {
 				(uniformContainer player) setObjectTextureGlobal [0, _uniformTexture];
+			}else{
+				{(uniformContainer player) setObjectTextureGlobal [_forEachIndex, _x]}forEach _defaultTextures;
 			};
 			
 			_lastUniformTextures = getObjectTextures(uniformContainer player);
@@ -102,6 +105,7 @@ while{true}do
 		//-- Handle vests
 		case (getObjectTextures(vestContainer player) isNotEqualTo _lastVestTextures OR (vest player) isNotEqualTo _lastVest):
 		{
+			private _defaultTextures = getArray(configFile >> "CfgWeapons" >> (vest player) >> "hiddenSelectionsTextures");
 			private _vestTexture = (switch (side player) do 
 			{
 				case independent:	{"textures\medic\vests\carry-rig.paa"};
@@ -118,14 +122,17 @@ while{true}do
 
 			if(count _vestTexture > 0) then {
 				(vestContainer player) setObjectTextureGlobal [0, _vestTexture];
+			}else{
+				{(vestContainer player) setObjectTextureGlobal [_forEachIndex, _x]}forEach _defaultTextures;
 			};
-			
+
 			_lastVestTextures = getObjectTextures (vestContainer player);
 			_lastVest = vest player;
 		};
 		//-- Handle backpacks
-		case (getObjectTextures(unitBackpack player) isNotEqualTo _lastBackpackTextures OR (backpack player) isNotEqualTo _lastBackpack):
+		case (getObjectTextures(backpackContainer player) isNotEqualTo _lastBackpackTextures OR (backpack player) isNotEqualTo _lastBackpack):
 		{
+			private _defaultTextures = getArray(configFile >> "CfgVehicles" >> (backpack player) >> "hiddenSelectionsTextures");
 			private _backpackTexture = (switch (side player) do 
 			{
 				case west:			{"Invisible"};
@@ -142,10 +149,14 @@ while{true}do
 			};
 
 			if(count _backpackTexture > 0) then {
-				(unitBackpack player) setObjectTextureGlobal [0, [_backpackTexture, ""] select (_backpackTexture isEqualTo "Invisible")];
+				//Load custom or invisible texture
+				(backpackContainer player) setObjectTextureGlobal [0, [_backpackTexture, ""] select (_backpackTexture isEqualTo "Invisible")];
+			}else{
+				//Reload default textures (need for if player switches side without droping gear)
+				{(backpackContainer player) setObjectTextureGlobal [_forEachIndex, _x]}forEach _defaultTextures;
 			};
 			
-			_lastBackpackTextures = getObjectTextures (unitBackpack player);
+			_lastBackpackTextures = getObjectTextures (backpackContainer player);
 			_lastBackpack = backpack player;
 		};
 	};
