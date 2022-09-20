@@ -18,6 +18,8 @@ if (isFinal "life_var_initTime")exitWith{
     false;
 };
 
+waitUntil{uiSleep 0.2;(getClientState isEqualTo "BRIEFING READ") && !isNull findDisplay 46};
+
 // -- 
 enableSentences false;
 enableRadio false;

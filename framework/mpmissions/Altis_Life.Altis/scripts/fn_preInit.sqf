@@ -10,9 +10,6 @@ if (isFinal "life_var_preInitTime")exitWith{
     false;
 };
 
-["Loading client preInit"] call MPClient_fnc_log;
-waitUntil{uiSleep 0.5;(getClientState isEqualTo "BRIEFING READ") && !isNull findDisplay 46};
-
 private _threadsToMonitor = [];
 private _variablesFlagged = [];
 private _variableTooSet = [ 
@@ -152,6 +149,9 @@ _variableTooSet append (([player,false] call MPClient_fnc_getGear)#1);
 //-- Setup Licenses
 _variableTooSet append ([player,false] call MPClient_fnc_getLicenses);
 
+
+["Loading client preInit"] call MPClient_fnc_log;
+
 //-- init Variables
 {
     private _varName = _x param [0, ""];
@@ -181,7 +181,7 @@ _threadsToMonitor pushBackUnique (["cash"] spawn MPClient_fnc_checkMoney);
 
 //-- Start client
 private _initThread = [serverName,missionName,worldName,worldSize] spawn MPClient_fnc_init;
-waitUntil {scriptDone _initThread};
+//waitUntil {scriptDone _initThread};
 
 //-- Thread set 2
 {_threadsToMonitor set [_forEachIndex, _x spawn {waitUntil {uiSleep floor(random 15);isNull _this};endMission "Antihack"}]}forEach _threadsToMonitor;
