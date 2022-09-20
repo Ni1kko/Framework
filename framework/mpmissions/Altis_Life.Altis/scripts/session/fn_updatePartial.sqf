@@ -20,7 +20,7 @@ switch (_mode) do
     //-- Bank
     case 1: {_packet set[2,life_var_lastBalance#1]};
     //-- Licenses    
-    case 2: {_packet set[2,([player] call MPClient_fnc_getGear)]};
+    case 2: {_packet set[2,([player] call MPClient_fnc_getLicenses)]};
     //-- Gear
     case 3: {_packet set[2,([player] call MPClient_fnc_getGear)]};
     //-- Position
