@@ -138,6 +138,14 @@ class cfgLicenses {
     };
 
     //Illegal Licenses
+    class rebel {
+        variable = "rebel";
+        displayName = "STR_License_Rebel";
+        price = 75000;
+        illegal = true;
+        side = "civ";
+    };
+    
     class cocaine {
         variable = "cocaine";
         displayName = "STR_License_Cocaine";
