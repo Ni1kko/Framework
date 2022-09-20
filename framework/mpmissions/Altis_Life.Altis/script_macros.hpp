@@ -14,6 +14,7 @@
 
 //Display Macros
 #define CONTROL(disp,ctrl) ((findDisplay ##disp) displayCtrl ##ctrl)
+#define CONTROL_MCF(disp,ctrl) CONTROL(getNumber (missionConfigfile >> disp >> "idd"),##ctrl)
 #define CONTROL_DATA(ctrl) (lbData[ctrl,lbCurSel ctrl])
 #define CONTROL_DATAI(ctrl,index) ctrl lbData index
 

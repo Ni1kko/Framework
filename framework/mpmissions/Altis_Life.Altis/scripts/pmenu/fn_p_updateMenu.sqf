@@ -15,11 +15,11 @@ if (FETCH_CONST(life_adminlevel) < 1) then {
 
 private _side = [playerSide,true] call MPServer_fnc_util_getSideString;
 
-_inv = CONTROL(2001,2005);
-_lic = CONTROL(2001,2014);
-_near = CONTROL(2001,2022);
-_near_i = CONTROL(2001,2023);
-_mstatus = CONTROL(2001,2015);
+_inv = CONTROL_MCF("playerSettings", 2005);
+_lic = CONTROL_MCF("playerSettings", 2014);
+_near = CONTROL_MCF("playerSettings", 2022);
+_near_i = CONTROL_MCF("playerSettings", 2023);
+_mstatus = CONTROL_MCF("playerSettings", 2015);
 _struct = "";
 lbClear _inv;
 lbClear _near;

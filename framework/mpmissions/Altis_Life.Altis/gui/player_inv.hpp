@@ -1,7 +1,5 @@
-#include "player_sys.sqf"
-
 class playerSettings {
-    idd = playersys_DIALOG;
+    idd = 2001;
     movingEnable = 1;
     enableSimulation = 1;
 
@@ -45,7 +43,7 @@ class playerSettings {
         };
 
         class PlayersName: Title {
-            idc = carry_weight;
+            idc = 2009;
             style = 1;
             text = "";
         };
@@ -86,7 +84,7 @@ class playerSettings {
         };
 
         class itemList: Life_RscListBox {
-            idc = item_list;
+            idc = 2005;
             sizeEx = 0.030;
             x = 0.62;
             y = 0.30;
@@ -113,7 +111,7 @@ class playerSettings {
         };
 
         class moneyDrop: Life_RscButtonMenu {
-            idc = 2001;
+            idc = 2011;
             text = "$STR_Global_Give";
             colorBackground[] = {"(profilenamespace getvariable ['GUI_BCG_RGB_R',0.3843])", "(profilenamespace getvariable ['GUI_BCG_RGB_G',0.7019])", "(profilenamespace getvariable ['GUI_BCG_RGB_B',0.8862])", 0.5};
             onButtonClick = "[] call MPClient_fnc_giveMoney";
@@ -125,7 +123,7 @@ class playerSettings {
         };
 
         class itemEdit: Life_RscEdit {
-            idc = item_edit;
+            idc = 2010;
             text = "1";
             sizeEx = 0.030;
             x = 0.62;
@@ -143,6 +141,8 @@ class playerSettings {
             h = 0.03;
         };
 
+        /////////////////////////////////////////////////////////////////////////////////////////
+        //-- Item Controls
         class DropButton: Life_RscButtonMenu {
             idc = 2002;
             text = "$STR_Global_Give";
@@ -173,7 +173,11 @@ class playerSettings {
             w = (5.25 / 40);
             h = (1 / 25);
         };
+        /////////////////////////////////////////////////////////////////////////////////////////
+ 
 
+        /////////////////////////////////////////////////////////////////////////////////////////
+        //-- Menu Controls
         class ButtonClose: Life_RscButtonMenu {
             idc = -1;
             //shortcuts[] = {0x00050000 + 2};
