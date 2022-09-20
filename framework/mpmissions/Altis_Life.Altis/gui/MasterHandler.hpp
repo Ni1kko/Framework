@@ -2,6 +2,7 @@
     Master UI Resource File
 */
 #include "common.hpp"
+#include "RscDisplayStaticBackground.hpp"
 #include "shop_items.hpp"
 #include "player_inv.hpp"
 #include "gang.hpp"

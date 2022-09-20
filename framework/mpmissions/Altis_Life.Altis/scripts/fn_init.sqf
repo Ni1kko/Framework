@@ -96,7 +96,7 @@ private _sideVar = [_side,true] call MPServer_fnc_util_getSideString;
 private _sideCode = missionNamespace getVariable [format["MPClient_fnc_init%1",_sideVar],{}];
  
 //-- 
-[player, _MPClient_fnc_exit] call _sideCode;
+[player] call _sideCode;
 [("Welcome " + profilename),"Have Fun And Respect The Rules!..."] call MPClient_fnc_setLoadingText; uiSleep(5);
 private _spawnPlayerThread = [life_is_alive,life_position] spawn MPClient_fnc_spawnPlayer;
 ["Waiting for player to spawn!"] call MPClient_fnc_log;

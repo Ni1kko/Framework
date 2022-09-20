@@ -1,4 +1,4 @@
-class RscDisplaySpawnSelection 
+class RscDisplaySpawnSelection : RscDisplayStaticBackground
 {
     idd = 38500;
     movingEnabled = 0;
@@ -6,15 +6,6 @@ class RscDisplaySpawnSelection
 
     class controlsBackground 
     {
-        class BackgroundImage: Life_RscPicture 
-        {
-            idc = 38531;
-            text = "textures\gui\RscDisplaySpawnSelection\background.jpg";
-            x = 0 * safezoneW + safezoneX;
-            y = 0 * safezoneH + safezoneY;
-            w = 1 * safezoneW;
-            h = 1 * safezoneH;
-        };
         class SpawnScreen: Life_RscPicture 
         {
             idc = 38531;

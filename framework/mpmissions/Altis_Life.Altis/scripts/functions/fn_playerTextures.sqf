@@ -30,18 +30,18 @@ while{true}do
 		uiSleep 0.2;
 		playerSide isNotEqualTo _lastPlayerSide 
 		OR {(uniform player) isNotEqualTo _lastUniform
-		OR {(getObjectTextures(uniformContainer player)) isNotEqualTo _lastUniformTextures 
+		OR {(getObjectTextures(player)) isNotEqualTo _lastUniformTextures 
 		OR {(vest player) isNotEqualTo _lastVest 
 		OR {(getObjectTextures(vestContainer player)) isNotEqualTo _lastVestTextures 
 		OR {(backpack player) isNotEqualTo _lastBackpack
-		OR {(getObjectTextures(backpackContainer player)) isNotEqualTo _lastBackpackTextures	
+		OR {(getObjectTextures(unitBackpack player)) isNotEqualTo _lastBackpackTextures	
 	}}}}}}};
 
 	//-- Re-texturing
 	switch (true) do
 	{
 		//-- Handle uniforms
-		case (getObjectTextures(uniformContainer player) isNotEqualTo _lastUniformTextures OR (uniform player) isNotEqualTo _lastUniform): 
+		case (getObjectTextures(player) isNotEqualTo _lastUniformTextures OR (uniform player) isNotEqualTo _lastUniform): 
 		{ 
 			private _defaultTextures = getArray(configFile >> "CfgWeapons" >> (uniform player) >> "hiddenSelectionsTextures");
 			private _uniformTexture = (switch (uniform player) do 
@@ -87,7 +87,7 @@ while{true}do
 
 			if(_adminlevel >= 1) then 
 			{
-				private _customTexture = (uniformContainer player) getVariable ["customTexture", ""]; 
+				private _customTexture = (player) getVariable ["customTexture", ""]; 
 				if(count _customTexture > 0) then {
 					_uniformTexture = _customTexture;
 				};
@@ -98,26 +98,33 @@ while{true}do
 			};
 			
 			if(count _uniformTexture > 0) then {
-				(uniformContainer player) setObjectTextureGlobal [0, _uniformTexture];
+				(player) setObjectTextureGlobal [0, _uniformTexture];
 				if(playerSide in [west,independent])then{
 					(uniformContainer player) setVariable ["protectedTexture",true,true];
 				};
 			}else{
-				{(uniformContainer player) setObjectTextureGlobal [_forEachIndex, _x]}forEach _defaultTextures;
+				{(player) setObjectTextureGlobal [_forEachIndex, _x]}forEach _defaultTextures;
 				(uniformContainer player) setVariable ["protectedTexture",false,true];
 			};
 			
-			_lastUniformTextures = getObjectTextures(uniformContainer player);
+			_lastUniformTextures = getObjectTextures(player);
 			_lastUniform = uniform player;
 		};
 		//-- Handle vests
 		case (getObjectTextures(vestContainer player) isNotEqualTo _lastVestTextures OR (vest player) isNotEqualTo _lastVest):
 		{
 			private _defaultTextures = getArray(configFile >> "CfgWeapons" >> (vest player) >> "hiddenSelectionsTextures");
-			private _vestTexture = (switch (side player) do 
+			private _vestTexture = (switch (vest player) do 
 			{
-				case independent:	{"textures\medic\vests\carry-rig.paa"};
-				default 			{""};
+				case "V_Chestrig_rgr": 
+				{ 
+					switch (side player) do 
+                    {
+                        case independent:	{"textures\medic\vests\carry-rig.paa"};
+                        default 			{""};
+                    };
+				};
+				default {""};
 			});
 
 			if(_adminlevel >= 1) then 
@@ -146,15 +153,30 @@ while{true}do
 			_lastVest = vest player;
 		};
 		//-- Handle backpacks
-		case (getObjectTextures(backpackContainer player) isNotEqualTo _lastBackpackTextures OR (backpack player) isNotEqualTo _lastBackpack):
+		case (getObjectTextures(unitBackpack player) isNotEqualTo _lastBackpackTextures OR (backpack player) isNotEqualTo _lastBackpack):
 		{
 			private _defaultTextures = getArray(configFile >> "CfgVehicles" >> (backpack player) >> "hiddenSelectionsTextures");
-			private _backpackTexture = (switch (side player) do 
-			{
-				case west:			{"Invisible"};
-				case independent:	{"Invisible"};
-				default 			{""};
-			});
+			private _backpackTexture = (switch (backpack player) do {
+                case "B_Bergen_tna_F":
+                { 
+                    switch (side player) do 
+                    {
+                        case west:			{"Invisible"};
+                        case independent:	{"Invisible"};
+                        default 			{""};
+                    }
+                };
+                case "B_Carryall_ghex_F":
+                { 
+                    switch (side player) do 
+                    {
+                        case west:			{"Invisible"};
+                        case independent:	{"Invisible"};
+                        default 			{""};
+                    }
+                };
+                default {""};
+            });
 
 			if(_adminlevel >= 1) then 
 			{
@@ -170,17 +192,17 @@ while{true}do
 
 			if(count _backpackTexture > 0) then {
 				//Load custom or invisible texture
-				(backpackContainer player) setObjectTextureGlobal [0, [_backpackTexture, ""] select (_backpackTexture isEqualTo "Invisible")];
+				(unitBackpack player) setObjectTextureGlobal [0, [_backpackTexture, ""] select (_backpackTexture isEqualTo "Invisible")];
 				if(playerSide in [west,independent])then{
 					(backpackContainer player) setVariable ["protectedTexture",true,true];
 				};
 			}else{
 				//Reload default textures (need for if player switches side without droping gear)
-				{(backpackContainer player) setObjectTextureGlobal [_forEachIndex, _x]}forEach _defaultTextures;
+				{(unitBackpack player) setObjectTextureGlobal [_forEachIndex, _x]}forEach _defaultTextures;
 				(backpackContainer player) setVariable ["protectedTexture",false,true];
 			};
 			
-			_lastBackpackTextures = getObjectTextures (backpackContainer player);
+			_lastBackpackTextures = getObjectTextures (unitBackpack player);
 			_lastBackpack = backpack player;
 		};
 	};

@@ -3,8 +3,7 @@
 	## https://github.com/Ni1kko/FrameworkV2
 */
 params [
-	["_player",objNull,[objNull]],
-	["_exitCode",{},[{}]]
+	["_player",objNull,[objNull]]
 ];
 
 private _altisArray = ["Land_i_Shop_01_V1_F","Land_i_Shop_01_V2_F","Land_i_Shop_01_V3_F","Land_i_Shop_02_V1_F","Land_i_Shop_02_V2_F","Land_i_Shop_02_V3_F"];
