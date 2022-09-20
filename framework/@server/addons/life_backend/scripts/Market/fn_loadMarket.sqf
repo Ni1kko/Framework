@@ -17,25 +17,44 @@ for "_currentIndex" from 0 to (count(missionConfigFile >> "VirtualItems") - 1) d
 //-- Update market prices
 {  
 	private _item = life_var_marketConfig getOrDefault [_x,createHashMap];
-	private _buyPrice = _item getOrDefault ["buyPrice",-1];
-	private _sellPrice = _item getOrDefault ["sellPrice",-1];
-	private _illegal = _item getOrDefault ["illegal",false];
-	private _stock = _item getOrDefault ["stock",-1];
-	private _needsUpdate = false;
+	private _buyPrice = _item getOrDefault ["buyPrice",getNumber(missionConfigFile >> "VirtualItems" >> _x >> "buyPrice")];
+	private _sellPrice = _item getOrDefault ["sellPrice",getNumber(missionConfigFile >> "VirtualItems" >> _x >> "sellPrice")];
+	private _illegal = _item getOrDefault ["illegal",getNumber(missionConfigFile >> "VirtualItems" >> _x >> "illegal") isEqualTo 1];
+	private _stock = _item getOrDefault ["stock",getNumber(missionConfigFile >> "VirtualItems" >> _x >> "stock")];
 
+	
+	//TODO: SOME CALCULATIONS AND ALTER BUY & SELL PRICES 
+	if(_x in ["goldbar"])then{
+		_buyPrice = getNumber(missionConfigFile >> "VirtualItems" >> _x >> "buyPrice");
+		_sellPrice = getNumber(missionConfigFile >> "VirtualItems" >> _x >> "sellPrice");
+		_stock = -1;
+		_needsUpdate = true;
+	}else{
 
-	//TODO: SOME CALCULATIONS AND ALTER BUY & SELL PRICES
+		if(_buyPrice isNotEqualTo -1)then{
+			_buyPrice = ceil (_amount * (_x select 1));
+			if(_buyPrice < 0) then {
+				_buyPrice = -(_buyPrice);
+			};
+		};
 	
-	
-	if _needsUpdate then{ 
-		[_item,createHashMapFromArray[
-			["buyPrice",_buyPrice],
-			["sellPrice",_sellPrice],
-			["illegal",_illegal],
-			["stock",_stock]
-		]] call MPServer_fnc_setMarketDataValue;
-		uiSleep 0.2;
+
+		if(_stock isEqualTo 0)then{
+			_sellPrice = _sellPrice * 1.2; 
+		}else{
+			_buyPrice = _buyPrice / call compile (format["1.%1",_stock]);
+			_sellPrice = _sellPrice / call compile (format["1.%1",_stock]);
+		};
 	};
+  
+	[_x,createHashMapFromArray[
+		["buyPrice",_buyPrice],
+		["sellPrice",_sellPrice],
+		["illegal",_illegal],
+		["stock",_stock]
+	]] call MPServer_fnc_setMarketDataValue;
+	uiSleep 0.2;
+ 
 }forEach life_var_marketConfig;
  
 //-- Broadcast values
