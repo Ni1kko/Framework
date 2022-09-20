@@ -15,7 +15,7 @@ life_var_lastSynced = time;
 hint "Syncing player information to Hive.\n\nPlease wait atleast 10 seconds before leaving";
 
 //allow admins to sync anytime
-if life_isdev then{ 
+if (call life_isdev) then{ 
     life_session_time = false;
     life_var_lastSynced = (time + (5 * 60));
 }else{
