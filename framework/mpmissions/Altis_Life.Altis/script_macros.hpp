@@ -122,7 +122,7 @@
 //--- Reveal Objects helpers
 #define CACHE_VAR "Life_var_revealObjectsCache"
 #define CACHE2_VAR format["%1%2",CACHE_VAR,"2"]
-#define CACHE_POS_VAR format["%1_pos",CACHE_VA
+#define CACHE_POS_VAR format["%1_pos",CACHE_VAR]
 
 //--
 #define INFINTE 1e+011

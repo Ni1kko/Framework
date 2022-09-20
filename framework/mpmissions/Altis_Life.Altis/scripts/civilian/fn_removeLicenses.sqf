@@ -24,7 +24,7 @@ private _licenseFlag = [side _player,true] call MPServer_fnc_util_getSideString;
         missionNamespace setVariable [_license,false];
         _hadLicense = true
     };
-} forEach _licenses
+} forEach _licenses;
  
 
 if _hadLicense then {
