@@ -111,7 +111,20 @@ enableRadio true;
 
 [] spawn MPClient_fnc_cellphone;//temp
 [] spawn MPClient_fnc_survival;
+[] spawn {
+    if(getNumber(missionConfigFile >> "life_session" >> "autoSave") isNotEqualTo 1)exitWith{false};
 
+    while {true} do {
+
+        waitUntil{  
+            uiSleep 30;
+            ((time - life_var_lastSynced) > (getNumber(missionConfigFile >> "life_session" >> "autoSaveInterval") * 60))
+        };
+
+        [true,false,["Auto Syncing player information to Hive."]] call MPClient_fnc_syncData;
+        ["Player data auto synced..."] call MPClient_fnc_log;
+    };
+};
 ["objects", 1] call MPClient_fnc_s_onCheckedChange;
 ["tags", 1] call MPClient_fnc_s_onCheckedChange;
 

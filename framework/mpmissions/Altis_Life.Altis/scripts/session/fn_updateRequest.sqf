@@ -19,4 +19,7 @@ private _var = format["Sync_%1_Completed_%2",round(random[1000,5000,9999]),round
     getPosATL player
 ] remoteExecCall ["MPServer_fnc_updateRequest",2];
 
+//Prevent spamming server
+life_var_lastSynced = time;
+
 _var

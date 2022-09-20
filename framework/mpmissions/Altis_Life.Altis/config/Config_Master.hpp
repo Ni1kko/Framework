@@ -220,6 +220,13 @@ class life_timers
     resurrect = 60; //Secs till player can resurrect
 };
 
+class life_session 
+{
+    autoSave = 1; // 1 = true, 0 = false
+    autoSaveInterval = 25; //In minutes
+    manualSaveInterval = 5; //In minutes
+};
+
 #include "Config_Clothing.hpp"
 #include "Config_Licenses.hpp"
 #include "Config_Vehicles.hpp"

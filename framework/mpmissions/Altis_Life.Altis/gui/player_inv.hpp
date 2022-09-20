@@ -276,11 +276,11 @@ class playerSettings {
             h = (1 / 25);
         };
 
-        class ButtonSyncData: Life_RscButtonMenu {
+        class ButtonNotUsed: Life_RscButtonMenu {
             idc = -1;
             //shortcuts[] = {0x00050000 + 2};
-            text = "$STR_PM_SyncData";
-            onButtonClick = "[] call MPClient_fnc_syncData;";
+            text = "n/a";
+            onButtonClick = "";
             x = 0.1;
             y = 0.805;
             w = (6.25 / 40);
