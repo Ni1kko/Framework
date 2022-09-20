@@ -9,7 +9,7 @@ private _victim = [_this,0,ObjNull,[ObjNull]] call BIS_fnc_param;
 if(isNull _victim || !alive _victim) exitWith {false};
 
 //-- Check if player is a bounty hunter
-if(!license_civ_bounty || playerSide isNotEqualTo civilian) exitWith {false};
+if(!license_civ_bountyHunter || playerSide isNotEqualTo civilian) exitWith {false};
 
 //--- Check distance
 if(_victim distance player > 50) exitWith {false};

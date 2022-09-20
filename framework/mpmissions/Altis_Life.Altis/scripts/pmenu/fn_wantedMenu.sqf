@@ -9,9 +9,9 @@
 disableSerialization;
 
 //-- Make sure is bounty hunter or cop
-if (playerSide isNotEqualTo west AND not(license_civ_bounty)) exitWith {false};
-
-private _display = (if license_civ_bounty then{createDialog ["life_bounty_menu",true]}else{createDialog ["life_wanted_menu",true]});
+if (playerSide isNotEqualTo west AND not(license_civ_bountyHunter)) exitWith {false};
+ 
+private _display = (if license_civ_bountyHunter then{createDialog ["life_bounty_menu",true]}else{createDialog ["life_wanted_menu",true]});
 private _list = _display displayCtrl 2401;
 private _players = _display displayCtrl 2406;
 private _units = [];

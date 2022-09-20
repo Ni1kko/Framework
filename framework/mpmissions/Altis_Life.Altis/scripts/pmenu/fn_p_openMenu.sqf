@@ -30,7 +30,7 @@ if (FETCH_CONST(life_adminlevel) < 1) then {
 };
 
 //--- Bounty hunting
-if (playerSide isNotEqualTo civilian || !license_civ_bounty) then {
+if (playerSide isNotEqualTo civilian || !license_civ_bountyHunter) then {
     ctrlShow[2024,false];
 };
 

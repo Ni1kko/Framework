@@ -205,7 +205,7 @@ class WeaponShops {
     class bountyhunter {
         name = "Bounty Hunter Store";
         side = "civ";
-        conditions = "license_civ_bounty";
+        conditions = "license_civ_bountyHunter";
         items[] = {
             { "ItemGPS", "", 100, 50, "" },
             { "Binocular", "", 150, 75, "" },

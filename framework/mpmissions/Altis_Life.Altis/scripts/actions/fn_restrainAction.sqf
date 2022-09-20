@@ -16,9 +16,9 @@ if (player isEqualTo _unit) exitWith {};
 if (!isPlayer _unit) exitWith {};
 //
 
-private _civilianArrest = (playerSide isEqualTo civilian AND not(license_civ_bounty));
+private _civilianArrest = (playerSide isEqualTo civilian AND not(license_civ_bountyHunter));
 
-if((playerSide == west OR license_civ_bounty) AND not(_civilianArrest)) then {
+if((playerSide == west OR license_civ_bountyHunter) AND not(_civilianArrest)) then {
 	//-- Cuffs sound
     [_unit,"cuffson",50,1] remoteExec ["MPClient_fnc_say3D",0];
 	//-- Broadcast
@@ -34,6 +34,6 @@ _unit setVariable ["playerSurrender",false,true];
 _unit setVariable ["restrained",true,true];
 _unit setVariable ["civrestrained",_civilianArrest,true]; 
 
-[player,license_civ_bounty] remoteExec ["MPClient_fnc_restrain",_unit];
+[player,license_civ_bountyHunter] remoteExec ["MPClient_fnc_restrain",_unit];
 
 true
