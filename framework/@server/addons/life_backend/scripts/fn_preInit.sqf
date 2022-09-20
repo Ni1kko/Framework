@@ -3,9 +3,8 @@
 	## https://github.com/Ni1kko/FrameworkV2
 */
 
-if !(canSuspend)exitWith{_this spawn MPServer_fnc_preInit; false};
 if (hasInterface)exitWith{false};
-
+if !(canSuspend)exitWith{_this spawn MPServer_fnc_preInit; false};
 if (isFinal "life_var_preInitTime")exitWith{false};
 
 ["Loading server preInit"] call MPServer_fnc_log;

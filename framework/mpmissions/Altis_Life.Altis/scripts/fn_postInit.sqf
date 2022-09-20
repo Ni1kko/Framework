@@ -4,16 +4,18 @@
 */
 
 if !(hasInterface)exitWith{false};
- 
-//-- 
-if (isFinal "life_var_postInitTime")exitWith{  
+if !(canSuspend)exitWith{_this spawn MPClient_fnc_postInit; false};
+if (isFinal "life_var_postInitTime")exitWith{
     ["Hack Detected", "`life_var_postInitTime` already final, Client looping or hacker detected", "Antihack"] call MPClient_fnc_endMission;
     false;
 };
 
-life_var_postInitTime = compileFinal str(diag_tickTime);
+waitUntil {isFinal "life_var_preInitTime"};
 
+life_var_postInitTime = compileFinal str(diag_tickTime);
+ 
 ["Loading client postInit"] call MPClient_fnc_log;
+
 
 //-- Radio channels patch
 {

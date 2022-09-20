@@ -3,10 +3,9 @@
 	## Nikko Renolds
 	## https://github.com/Ni1kko/FrameworkV2
 */
-if !(canSuspend)exitWith{_this spawn MPClient_fnc_preInit; false};
 if !(hasInterface)exitWith{false};
-
-if (isFinal "life_var_preInitTime")exitWith{ 
+if !(canSuspend)exitWith{_this spawn MPClient_fnc_preInit; false};
+if (isFinal "life_var_preInitTime")exitWith{
     ["Hack Detected", "`life_var_preInitTime` already final, Client looping or hacker detected", "Antihack"] call MPClient_fnc_endMission;
     false;
 };
@@ -142,7 +141,7 @@ private _variableTooSet = [
     //--- Shop related
     ["life_var_vehicleTraderData",["",[],"Undefined",true]],
     ["life_var_marketConfig",createHashMap],
-    
+
     //-- Setup Gang hideouts
     ["life_hideoutBuildings", (LIFE_SETTINGS(getArray,"gang_area")) apply {nearestBuilding(getMarkerPos _x)}]
 ];

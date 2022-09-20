@@ -4,6 +4,7 @@
 */
 
 if (hasInterface)exitWith{false};
+if !(canSuspend)exitWith{_this spawn MPServer_fnc_postInit; false};
 if (isFinal "life_var_postInitTime")exitWith{false};
 
 life_var_postInitTime = compileFinal str(diag_tickTime);
