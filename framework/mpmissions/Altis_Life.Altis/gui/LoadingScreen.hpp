@@ -1,4 +1,4 @@
-class life_Rsc_DisplayLoading : RscDisplayStaticBackground
+class life_Rsc_DisplayLoading
 {
 	idd = 8000;
 	onLoad = "uiNamespace setVariable [ 'life_Rsc_DisplayLoading', _this select 0 ]; life_var_loadingScreenActive = true;";
@@ -6,6 +6,27 @@ class life_Rsc_DisplayLoading : RscDisplayStaticBackground
 
 	class Controls 
 	{
+		class Background: Life_RscText 
+		{
+
+			idc = 1;
+			x = "safezoneXAbs";
+			y = "safezoneY";
+			w = "safezoneWAbs";
+			h = "safezoneH";
+			colorBackground[] = { 0, 0, 0, 1 };
+		};
+
+		class SplashNoise: Life_RscPicture 
+		{
+			idc = 2;
+			x = "safezoneXAbs";
+			y = "safezoneY";
+			w = "safezoneWAbs";
+			h = "safezoneH";
+			text = "\A3\Ui_f\data\IGUI\RscTitles\SplashArma3\arma3_splashNoise_ca.paa";
+		};
+
 		class Message 
 		{
 			idc = 100;

@@ -1,4 +1,4 @@
-class RscDisplaySpawnSelection : RscDisplayStaticBackground
+class RscDisplaySpawnSelection
 {
     idd = 38500;
     movingEnabled = 0;
@@ -6,6 +6,27 @@ class RscDisplaySpawnSelection : RscDisplayStaticBackground
 
     class controlsBackground 
     {
+        class Background: Life_RscText 
+		{
+
+			idc = 1;
+			x = "safezoneXAbs";
+			y = "safezoneY";
+			w = "safezoneWAbs";
+			h = "safezoneH";
+			colorBackground[] = { 0, 0, 0, 1 };
+		};
+
+		class SplashNoise: Life_RscPicture 
+		{
+			idc = 2;
+			x = "safezoneXAbs";
+			y = "safezoneY";
+			w = "safezoneWAbs";
+			h = "safezoneH";
+			text = "\A3\Ui_f\data\IGUI\RscTitles\SplashArma3\arma3_splashNoise_ca.paa";
+		};
+        
         class SpawnScreen: Life_RscPicture 
         {
             idc = 38531;
