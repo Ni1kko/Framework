@@ -24,6 +24,15 @@ waitUntil{uiSleep 0.2;(getClientState isEqualTo "BRIEFING READ") && !isNull find
 enableSentences false;
 enableRadio false;
 
+// -- Handle BI Loading Screen
+if (call BIS_fnc_isLoading) then {
+    waitUntil{
+        endLoadingScreen;
+        uiSleep 0.2;
+        not(call BIS_fnc_isLoading)
+    };
+};
+
 // -- Start Loading Screen
 startLoadingScreen ["","life_Rsc_DisplayLoading"];
 ["Setting up client", "Please Wait..."] call MPClient_fnc_setLoadingText; uiSleep(random[0.5,3,6]);
@@ -98,6 +107,7 @@ private _sideCode = missionNamespace getVariable [format["MPClient_fnc_init%1",_
 //-- 
 [player] call _sideCode;
 [("Welcome " + profilename),"Have Fun And Respect The Rules!..."] call MPClient_fnc_setLoadingText; uiSleep(5);
+["Life_var_initBlackout"] call BIS_fnc_blackIn;//fail safe for loading screen
 private _spawnPlayerThread = [life_is_alive,life_position] spawn MPClient_fnc_spawnPlayer;
 ["Waiting for player to spawn!"] call MPClient_fnc_log;
 waitUntil{scriptDone _spawnPlayerThread};

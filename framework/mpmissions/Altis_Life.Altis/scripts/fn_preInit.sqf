@@ -151,6 +151,7 @@ _variableTooSet append ([player,false] call MPClient_fnc_getLicenses);
 
 
 ["Loading client preInit"] call MPClient_fnc_log;
+["Life_var_initBlackout"] call BIS_fnc_blackOut;//fail safe for loading screen
 
 //-- init Variables
 {
