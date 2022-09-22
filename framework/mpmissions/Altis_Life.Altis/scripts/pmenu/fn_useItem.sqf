@@ -10,11 +10,11 @@
 
 disableSerialization;
 
-if ((lbCurSel 2005) isEqualTo -1) exitWith {
+if ((lbCurSel 109) isEqualTo -1) exitWith {
     hint localize "STR_ISTR_SelectItemFirst";
 };
 
-private _item = CONTROL_DATA(2005);
+private _item = CONTROL_DATA(109);
 private _edible = M_CONFIG(getNumber, "VirtualItems", _item, "edible");
 private _drinkable = M_CONFIG(getNumber, "VirtualItems", _item, "drinkable");
 

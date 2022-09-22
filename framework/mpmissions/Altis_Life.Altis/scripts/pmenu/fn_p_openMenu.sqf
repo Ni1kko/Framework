@@ -1,37 +1,87 @@
-#include "..\..\script_macros.hpp"
 /*
-    File: fn_p_openMenu.sqf
-    Author: Bryan "Tonic" Boardwine
-
-    Description:
-    Opens the players virtual inventory menu
+	## Nikko Renolds
+	## https://github.com/Ni1kko/FrameworkV2
 */
-if (!alive player || dialog) exitWith {}; //Prevent them from opening this for exploits while dead.
-createDialog "playerSettings";
+
 disableSerialization;
 
-switch (playerSide) do {
-    case west: {
-        ctrlShow[2011,false];
-    };
+private _displayName = "RscDisplayInventory";
+private _display = uiNamespace getVariable [_displayName, displayNull];
 
-    case civilian: {
-        ctrlShow[2012,false];
-    };
-
-    case independent: {
-        ctrlShow[2012,false];
-        ctrlShow[2011,false];
-    };
+//--- If the display is already open, close it (Allows user to toggle inventory)
+if (!isNull _display) exitWith {
+    _display closeDisplay 0;
+    displayNull
 };
 
-if (FETCH_CONST(life_adminlevel) < 1) then {
-    ctrlShow[2021,false];
+//--- Double check no menus are open and make sure player is alive
+if (dialog OR not(life_is_alive)) exitWith {
+    systemChat "You cannot open this menu while dead or in a dialog";
+    displayNull
 };
 
-//--- Bounty hunting
-if (playerSide isNotEqualTo civilian || !license_civ_bountyHunter) then {
-    ctrlShow[2024,false];
+//-- Error loading display
+if !(isClass (missionConfigFile >> _displayName)) exitWith {
+    systemChat format["Error: Display %1 <NOT FOUND>",_displayName];
+    displayNull
 };
 
-[] call MPClient_fnc_p_updateMenu;
+//--- Open the display
+_display = createDialog [_displayName,true];
+
+//-- Error loading display
+if(isNull _display) exitWith {
+    systemChat format["Error: Display is %1 <NULL>",_displayName];
+    _display
+};
+
+private _controls = [
+    "ButtonClose",
+    "ButtonSettings",
+    "ButtonMyGang",
+    "ButtonWanted",
+    "ButtonKeys",
+    "ButtonCell",
+    "ButtonBountyList",
+    "ButtonAdminMenu"
+] apply {GETControl(_displayName, _x)};
+
+//-- Enable all controls
+{
+    _x ctrlEnabled true;
+    _x ctrlShow true;
+}forEach _controls;
+
+//-- Parse controls
+_controls params [
+    ["_controlBTN_Abort",       controlNull, [controlNull]],
+    ["_controlBTN_Settings",    controlNull, [controlNull]],
+    ["_controlBTN_Gang",        controlNull, [controlNull]],
+    ["_controlBTN_Wanted",      controlNull, [controlNull]],
+    ["_controlBTN_Keychain",    controlNull, [controlNull]],
+    ["_controlBTN_Cellphone",   controlNull, [controlNull]],
+    ["_controlBTN_Bounty",      controlNull, [controlNull]],
+    ["_controlBTN_Admin",       controlNull, [controlNull]]
+];
+ 
+//--- Gang menu
+_controlBTN_Gang ctrlShow (playerSide isEqualTo civilian);
+_controlBTN_Gang ctrlEnabled (playerSide isEqualTo civilian);
+
+//--- Wanted menu
+_controlBTN_Wanted ctrlShow (playerSide isEqualTo west);
+_controlBTN_Wanted ctrlEnabled ((call life_coplevel) > 0);
+
+//--- Bounty hunting menu
+_controlBTN_Bounty ctrlShow (playerSide isEqualTo civilian);
+_controlBTN_Bounty ctrlEnabled license_civ_bountyHunter;
+
+//--- Admin menu
+_controlBTN_Admin ctrlShow not(isNil 'MPClient_fnc_admin_showmenu');
+_controlBTN_Admin ctrlEnabled ((call life_adminlevel) > 0);
+
+//-- Update menu
+[_display] call MPClient_fnc_p_updateMenu;
+
+// Return display
+_display

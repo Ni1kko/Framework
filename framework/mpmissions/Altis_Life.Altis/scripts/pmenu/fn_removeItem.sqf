@@ -9,8 +9,8 @@
 */
 private ["_data","_value","_obj"];
 disableSerialization;
-_data = lbData[2005,(lbCurSel 2005)];
-_value = ctrlText 2010;
+_data = lbData[109,(lbCurSel 109)];
+_value = ctrlText 110;
 
 if (_data isEqualTo "") exitWith {hint localize "STR_NOTF_didNotSelectToRemove";};
 if (!([_value] call MPServer_fnc_isNumber)) exitWith {hint localize "STR_NOTF_notNumberFormat";};

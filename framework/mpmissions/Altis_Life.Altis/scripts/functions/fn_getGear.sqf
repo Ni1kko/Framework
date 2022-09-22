@@ -6,7 +6,9 @@
 
 params [
 	["_player",objNull,[objNull]],
-	["_owned",true,[false]]
+	["_owned",true,[false]],
+	["_displayNames",false,[false]],
+	["_configNames",false,[false]]
 ];
 
 private _vitems = [];
@@ -19,10 +21,18 @@ for "_currentIndex" from 0 to (count(_cfgVitems) - 1) do {
     private _count = missionNamespace getVariable [_item,0];
 	if _owned then {
 		if (_count > 0) then {
-			_vitems pushBackUnique [_currentItemName,_count];
+			if _configNames then{
+				_vitems pushBackUnique _currentItemName;
+			}else{
+				_vitems pushBackUnique [[_item, localize getText(_cfgVitems >> _currentItemName >> "displayName")]select _displayNames,_count];
+			};
 		};
 	}else{
-		_vitems pushBackUnique [_currentItemName,0];
+		if _configNames then{
+			_vitems pushBackUnique _currentItemName;
+		}else{
+			_vitems pushBackUnique [[_item, localize getText(_cfgVitems >> _currentItemName >> "displayName")]select _displayNames,0];
+		};
 	};
 };
 

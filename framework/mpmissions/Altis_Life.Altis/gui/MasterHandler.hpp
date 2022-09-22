@@ -3,7 +3,6 @@
 */
 #include "common.hpp"
 #include "shop_items.hpp"
-#include "player_inv.hpp"
 #include "gang.hpp"
 #include "key_chain.hpp"
 #include "impound.hpp"
@@ -11,6 +10,7 @@
 #include "veh_shop.hpp"
 #include "shops.hpp"
 #include "RscDisplayAdminMenu.hpp"
+#include "RscDisplayInventory.hpp"
 #include "RscDisplayCellPhone.hpp"
 #include "RscDisplaySpawnSelection.hpp"
 #include "wanted_list.hpp"
@@ -26,3 +26,12 @@
 #include "FuelStat.hpp"
 #include "newsStation.hpp"
 #include "LoadingScreen.hpp"
+
+
+class RscTitles {
+    #include "progress.hpp"
+    #include "hud_nameTags.hpp"
+    #include "RscDisplayPlayerHUD.hpp"
+    #include "deathScreen.hpp"
+    #include "spitScreen.hpp"
+};
