@@ -45,7 +45,7 @@ if (_edible > -1 || _drinkable > -1) exitWith {
         };
     };
 
-    [] call MPClient_fnc_p_updateMenu;
+    [] call MPClient_fnc_updateInventoryMenu;
 };
 
 switch (_item) do {
@@ -107,4 +107,4 @@ switch (_item) do {
     };
 };
 
-[] call MPClient_fnc_p_updateMenu;
+[] call MPClient_fnc_updateInventoryMenu;

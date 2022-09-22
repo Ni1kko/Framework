@@ -1,6 +1,8 @@
+#include "..\..\script_macros.hpp"
 /*
 	## Nikko Renolds
 	## https://github.com/Ni1kko/FrameworkV2
+    ## fn_openInventoryMenu.sqf
 */
 
 disableSerialization;
@@ -17,6 +19,12 @@ if (!isNull _display) exitWith {
 //--- Double check no menus are open and make sure player is alive
 if (dialog OR not(life_is_alive)) exitWith {
     systemChat "You cannot open this menu while dead or in a dialog";
+    displayNull
+};
+
+//--- Double check no menus are open and make sure player is alive
+if (life_var_isBusy OR (player getVariable ["restrained",false])) exitWith {
+    systemChat "You cannot open this menu while restrained or busy";
     displayNull
 };
 
@@ -81,7 +89,7 @@ _controlBTN_Admin ctrlShow not(isNil 'MPClient_fnc_admin_showmenu');
 _controlBTN_Admin ctrlEnabled ((call life_adminlevel) > 0);
 
 //-- Update menu
-[_display] call MPClient_fnc_p_updateMenu;
+[_display] call MPClient_fnc_updateInventoryMenu;
 
 // Return display
 _display

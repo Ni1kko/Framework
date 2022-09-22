@@ -228,8 +228,8 @@ switch (_keyCode) do
     };
 	case DIK_Y: 
 	{
-        if (!_altState && !_controlState && !dialog && !(player getVariable ["restrained",false]) && {!life_var_isBusy}) then {
-            [] call MPClient_fnc_p_openMenu;
+        if (!_altState && !_controlState) then {
+            [] call MPClient_fnc_openInventoryMenu;
         };
     };
 	case DIK_U: 

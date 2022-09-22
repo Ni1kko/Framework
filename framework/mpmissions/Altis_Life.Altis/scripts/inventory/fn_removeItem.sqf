@@ -21,4 +21,4 @@ if (!([false,_data,(parseNumber _value)] call MPClient_fnc_handleInv)) exitWith 
 
 hint format [localize "STR_NOTF_removedFromInventory",(parseNumber _value),(localize ITEM_NAME(_data))];
 
-[] call MPClient_fnc_p_updateMenu;
+[] call MPClient_fnc_updateInventoryMenu;

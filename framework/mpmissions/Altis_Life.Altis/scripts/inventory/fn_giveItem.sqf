@@ -47,7 +47,7 @@ if !([false,_item, parseNumber _value] call MPClient_fnc_handleInv) exitWith {
 private _type = M_CONFIG(getText,"VirtualItems",_item,"displayName");
 hint format [localize "STR_NOTF_youGaveItem", _unit getVariable ["realname", name _unit], _value, TEXT_LOCALIZE(_type)];
 
-[] call MPClient_fnc_p_updateMenu;
+[] call MPClient_fnc_updateInventoryMenu;
 
 
 ctrlShow[112,true];

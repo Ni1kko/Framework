@@ -29,6 +29,6 @@ hint format [localize "STR_NOTF_youGaveMoney",[(parseNumber(_amount))] call MPCl
 ["SUB","CASH",parseNumber _amount] call MPClient_fnc_handleMoney;
 
 [_unit,_amount,player] remoteExecCall ["MPClient_fnc_receiveMoney",_unit];
-[] call MPClient_fnc_p_updateMenu;
+[] call MPClient_fnc_updateInventoryMenu;
 
 ctrlShow[106,true];

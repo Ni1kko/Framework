@@ -21,8 +21,11 @@ ctrlSetText[2922, format ["%1", life_settings_viewDistanceAir]];
     slidersetRange [(_x select 0),100,8000];
     CONTROL(2900,(_x select 0)) sliderSetSpeed [100,100,100];
     sliderSetPosition [(_x select 0),(_x select 1)];
-} forEach [[2901,life_settings_viewDistanceFoot],[2911,life_settings_viewDistanceCar],[2921,life_settings_viewDistanceAir]];
-
+} forEach [
+    [2901,life_settings_viewDistanceFoot],
+    [2911,life_settings_viewDistanceCar],
+    [2921,life_settings_viewDistanceAir]
+];
 
 if (isNil "life_settings_revealObjects") then {
     life_settings_enableNewsBroadcast = profileNamespace setVariable ["life_enableNewsBroadcast",true];

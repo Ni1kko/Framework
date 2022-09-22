@@ -386,15 +386,15 @@ class CfgFunctions
 
         class Player_Menu 
         {
-            file = "scripts\pmenu";
+            file = "scripts\inventory";
             class cellphone {};
             class giveItem {};
             class giveMoney {};
             class keyDrop {};
             class keyGive {};
             class keyMenu {};
-            class p_openMenu {};
-            class p_updateMenu {};
+            class openInventoryMenu {};
+            class updateInventoryMenu {};
             class pardon {};
             class removeItem {};
             class s_onChar {};
