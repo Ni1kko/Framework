@@ -119,7 +119,6 @@ enableRadio true;
 //--
 [player, life_settings_enableSidechannel, playerSide] remoteExecCall ["MPServer_fnc_managesc", 2];
 
-[] spawn MPClient_fnc_cellphone;//temp
 [] spawn MPClient_fnc_survival;
 [] spawn {
     if(getNumber(missionConfigFile >> "life_session" >> "autoSave") isNotEqualTo 1)exitWith{false};

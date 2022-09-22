@@ -121,6 +121,21 @@ class CfgFunctions
             class tazed {};
         };
 
+        class Cellphone 
+        {
+            ile="scripts\cellphone"; 
+            class cellphone_show  {};
+            class cellphone_switchDialog {};
+            class cellphone_playerFilter {};
+            class cellphone_messageShow {};
+            class cellphone_startMessage {};
+            class cellphone_sendMessage {};
+            class cellphone_sendMessageCancel {};
+            class cellphone_reply {};
+            class cellphone_messageSelect  {};
+            class cellphone_messageKeyUp  {};
+            class cellphone_messageReceived  {};
+        };
         class Config 
         {
             file = "scripts\config";
@@ -228,6 +243,7 @@ class CfgFunctions
             class setupStationService {};
             class log {};
             class endMission {};
+            class stringReplace {};
         };
 
         class Gangs 
@@ -384,10 +400,9 @@ class CfgFunctions
             class bountyHunterTaze {};
         };
 
-        class Player_Menu 
+        class Inventory
         {
             file = "scripts\inventory";
-            class cellphone {};
             class giveItem {};
             class giveMoney {};
             class keyDrop {};
