@@ -57,9 +57,9 @@ hint format [localize "STR_Garage_SoldCar",[_sellPrice] call MPClient_fnc_number
 
 if (LIFE_SETTINGS(getNumber,"player_advancedLog") isEqualTo 1) then {
     if (LIFE_SETTINGS(getNumber,"battlEye_friendlyLogging") isEqualTo 1) then {
-        advanced_log = format [localize "STR_DL_AL_soldVehicle_BEF",_vehicleLife,[_sellPrice] call MPClient_fnc_numberText,[life_var_bank] call MPClient_fnc_numberText,[life_var_cash] call MPClient_fnc_numberText];
+        advanced_log = format [localize "STR_DL_AL_soldVehicle_BEF",_vehicleLife,[_sellPrice] call MPClient_fnc_numberText,[life_var_bank] call MPClient_fnc_numberText,[MONEY_CASH] call MPClient_fnc_numberText];
     } else {
-        advanced_log = format [localize "STR_DL_AL_soldVehicle",profileName,(getPlayerUID player),_vehicleLife,[_sellPrice] call MPClient_fnc_numberText,[life_var_bank] call MPClient_fnc_numberText,[life_var_cash] call MPClient_fnc_numberText];
+        advanced_log = format [localize "STR_DL_AL_soldVehicle",profileName,(getPlayerUID player),_vehicleLife,[_sellPrice] call MPClient_fnc_numberText,[life_var_bank] call MPClient_fnc_numberText,[MONEY_CASH] call MPClient_fnc_numberText];
     };
     publicVariableServer "advanced_log";
 };

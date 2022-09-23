@@ -1,12 +1,14 @@
+#include "..\..\script_macros.hpp"
 /*
 	## Nikko Renolds
 	## https://github.com/Ni1kko/FrameworkV2
-*/
+*/ 
 
 params [
 	["_action","",[""]],
 	["_type","",[""]],
-	["_value",0,[0]]
+	["_value",0,[0]],
+	["_target",objNull,[objNull]]
 ];
 
 //-- Make it upper case
@@ -14,7 +16,7 @@ _action = toUpper _action;
 _type = toUpper _type;
 
 //-- 
-if(not(_action in ["ADD","SUB","ZERO","BANKRUPT"]) OR not(_type in ["CASH","BANK","GANG-BANK"])) exitWith 
+if(not(_action in ["ADD","SUB","SET","GIVE","DROP","ZERO","BANKRUPT"]) OR not(_type in ["CASH","BANK","GANG-BANK"])) exitWith 
 {
 	private _steamID = getPlayerUID player;
 
@@ -41,10 +43,6 @@ if(isRemoteExecutedJIP OR (isRemoteExecuted AND remoteExecutedOwner isNotEqualTo
 if(isNil "life_var_lastBalance") then {life_var_lastBalance = [0,0,0]};
 if(typeName life_var_lastBalance isNotEqualTo "ARRAY") then {life_var_lastBalance = [0,0,0]};
 
-//-- Check `life_var_debtOwed` is vaild number
-if(isNil "life_var_debtOwed") then {life_var_debtOwed = 0};
-if(typeName life_var_debtOwed isNotEqualTo "SCALAR") then {life_var_debtOwed = 0};
-
 //-- Check `life_var_bankrupt` is vaild bool
 if(isNil "life_var_bankrupt") then {life_var_bankrupt = false};
 if(typeName life_var_bankrupt isNotEqualTo "BOOL") then {life_var_bankrupt = false};
@@ -55,38 +53,42 @@ if(_type isEqualTo "BANK" AND life_var_bankrupt) exitWith {
 	[0,0,0]
 };
 
+if(_action isNotEqualTo "GIVE")then{
+	[_type,_action,_value,player,true] remoteExecCall ["MPClient_fnc_handleMoneyRequest",2];
+};
+
 //-- Handle money
 switch _type do 
 {
 	case "CASH": 
-	{ 
-		if(isNil "life_var_cash") then {life_var_cash = 0;};
-		if(typeName life_var_cash isNotEqualTo "SCALAR") then {life_var_cash = 0};
-
+	{  
 		switch _action do 
 		{
 			case "ADD": 
 			{
-				if (life_var_debtOwed > 0)then{
+				if (MONEY_DEBT > 0)then{
 					[_action,"BANK",_value] call MPClient_fnc_handleMoney;
 				}else{
-					life_var_cash = life_var_cash + _value;
+					player setVariable ["money_cash",MONEY_CASH + _value,true];
 				};
 			};
 			case "SUB": 
 			{
-				life_var_cash = life_var_cash - _value;
-				if (life_var_cash < 0) then {life_var_cash = 0};
-				if (life_var_cash < _value)then{
-					private _newDebt = _value - life_var_cash;
+				player setVariable ["money_cash",MONEY_CASH - _value,true];
+				if (MONEY_CASH < 0) then {player setVariable ["money_cash",0,true]};
+				if (MONEY_CASH < _value)then{
+					private _newDebt = _value - MONEY_CASH;
 					[_action,"BANK",_newDebt] call MPClient_fnc_handleMoney;
 				};
 			};
-			case "ZERO": {life_var_cash = 0};
+			case "GIVE": {[_type,_action,_value,_target] remoteExecCall ["MPClient_fnc_handleMoneyRequest",2]};
+			case "DROP": {[player,VITEM_MISC_MONEY,_value] call MPClient_fnc_dropItem};
+			case "SET": {player setVariable ["money_cash",_value,true]};
+			case "ZERO": {player setVariable ["money_cash",0,true]};
 		};
 
-		if(life_var_cash < 0) then {life_var_cash = 0};
-		life_var_lastBalance set [0,life_var_cash];
+		if(MONEY_CASH < 0) then {player setVariable ["money_cash",0,true]};
+		life_var_lastBalance set [0,MONEY_CASH];
 	};
 	case "BANK": 
 	{ 
@@ -97,11 +99,11 @@ switch _type do
 		{
 			case "ADD": 
 			{
-				if (life_var_debtOwed > 0)then{
-					life_var_debtOwed = life_var_debtOwed - _value; 
-					if(life_var_debtOwed < 0) then {life_var_debtOwed = 0};
-					if(life_var_debtOwed > 0) then {
-						life_var_bank = life_var_bank - life_var_debtOwed;
+				if (MONEY_DEBT > 0)then{
+					player setVariable ["money_debt",MONEY_DEBT - _value,true];
+					if(MONEY_DEBT < 0) then {player setVariable ["money_debt",0,true]};
+					if(MONEY_DEBT > 0) then {
+						life_var_bank = life_var_bank - MONEY_DEBT;
 					}else{
 						life_var_bank = life_var_bank + _value;
 					};
@@ -115,15 +117,16 @@ switch _type do
 				if (life_var_bank < 0) then {life_var_bank = 0};
 				if (life_var_bank < _value)then{
 					private _newDebt = _value - life_var_bank;
-					life_var_debtOwed  = life_var_debtOwed + _newDebt;
+					player setVariable ["money_debt",MONEY_DEBT + _newDebt,true];
 				};
 			};
+			case "SET": {life_var_bank = _value};
 			case "ZERO": {life_var_bank = 0};
 			case "BANKRUPT": 
 			{
 				["ZERO","CASH"] call MPClient_fnc_handleMoney;
 				["ZERO","BANK"] call MPClient_fnc_handleMoney;
-				life_var_debtOwed = 0;
+				player setVariable ["money_debt",0,true];
 				life_var_bankrupt = true;
 			};
 		}; 
@@ -144,7 +147,7 @@ switch _type do
 };
 
 //-- No negative values
-if(life_var_debtOwed < 0) then {life_var_debtOwed = 0};
+if(MONEY_DEBT < 0) then {player setVariable ["money_debt",0,true]};
 
 //-- Update database
 [6] call MPClient_fnc_updatePartial;

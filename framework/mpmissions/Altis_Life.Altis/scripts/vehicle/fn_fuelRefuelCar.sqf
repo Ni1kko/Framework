@@ -31,7 +31,7 @@ if (_car distance player > 10 && !(isNull objectParent player)) exitWith {
 };
 
 private _fuelCost = uiNamespace getVariable ["fuel_cost",0];
-if ((life_var_cash - (_fueltoput * _fuelCost)) > 0) then {
+if ((MONEY_CASH - (_fueltoput * _fuelCost)) > 0) then {
     life_is_processing = true;
     //Setup our progress bar.
     disableSerialization;

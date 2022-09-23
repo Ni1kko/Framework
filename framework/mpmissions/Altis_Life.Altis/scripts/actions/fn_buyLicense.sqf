@@ -14,7 +14,7 @@ private _price = M_CONFIG(getNumber,"cfgLicenses",_type,"price");
 private _sideFlag = M_CONFIG(getText,"cfgLicenses",_type,"side");
 private _varName = LICENSE_VARNAME(_type,_sideFlag);
 
-if (life_var_cash < _price) exitWith {hint format [localize "STR_NOTF_NE_1",[_price] call MPClient_fnc_numberText,localize _displayName];};
+if (MONEY_CASH < _price) exitWith {hint format [localize "STR_NOTF_NE_1",[_price] call MPClient_fnc_numberText,localize _displayName];};
 ["SUB","CASH",_price] call MPClient_fnc_handleMoney;
 
 titleText[format [localize "STR_NOTF_B_1", localize _displayName,[_price] call MPClient_fnc_numberText],"PLAIN"];

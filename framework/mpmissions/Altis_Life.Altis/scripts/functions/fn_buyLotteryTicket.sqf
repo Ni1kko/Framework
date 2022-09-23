@@ -16,7 +16,7 @@
 if (_ticketPrice == -1) exitWith {hint "Error: No ticket price set in config!"; false};
 if (_ticketLength == -1) exitWith {hint "Error: No ticket length set in config!"; false};
 if (_ticketDrawCount == -1) exitWith {hint "Error: No ticket draw count set in config!"; false};
-if (life_var_cash < _ticketPrice) exitWith {hint "You don't have enough money to buy a ticket!"; false};
+if (MONEY_CASH < _ticketPrice) exitWith {hint "You don't have enough money to buy a ticket!"; false};
 
 private _return = true;
 private _bonusBall = true;
@@ -26,7 +26,7 @@ if(count _ticketNumbers isNotEqualTo _ticketLength)exitWith{hint "Error: Not eno
 
 if(_bonusBall) then { 
 	if (_ticketBonusballPrice == -1) exitWith {hint "Error: No bonusball ticket price set in config!"; _return = false};
-	if (life_var_cash < (_ticketPrice + _ticketBonusballPrice)) exitWith {hint "You don't have enough money to buy a ticket!"; _return =  false};
+	if (MONEY_CASH < (_ticketPrice + _ticketBonusballPrice)) exitWith {hint "You don't have enough money to buy a ticket!"; _return =  false};
 	
 	//-- 0 = no bonus ball | 1-99 = bonus ball
 	private _bonusBallNumber = [] call MPServer_fnc_lottery_generateBonusBall; 

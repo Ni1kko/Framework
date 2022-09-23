@@ -29,9 +29,9 @@ hint format [localize "STR_ATM_SentMoneySuccess",[_value] call MPClient_fnc_numb
 
 if (LIFE_SETTINGS(getNumber,"player_moneyLog") isEqualTo 1) then {
     if (LIFE_SETTINGS(getNumber,"battlEye_friendlyLogging") isEqualTo 1) then {
-        money_log = format [localize "STR_DL_ML_transferredBank_BEF",_value,_unit getVariable ["realname",name _unit],[life_var_bank] call MPClient_fnc_numberText,[life_var_cash] call MPClient_fnc_numberText];
+        money_log = format [localize "STR_DL_ML_transferredBank_BEF",_value,_unit getVariable ["realname",name _unit],[life_var_bank] call MPClient_fnc_numberText,[MONEY_CASH] call MPClient_fnc_numberText];
     } else {
-        money_log = format [localize "STR_DL_ML_transferredBank",profileName,(getPlayerUID player),_value,_unit getVariable ["realname",name _unit],[life_var_bank] call MPClient_fnc_numberText,[life_var_cash] call MPClient_fnc_numberText];
+        money_log = format [localize "STR_DL_ML_transferredBank",profileName,(getPlayerUID player),_value,_unit getVariable ["realname",name _unit],[life_var_bank] call MPClient_fnc_numberText,[MONEY_CASH] call MPClient_fnc_numberText];
     };
     publicVariableServer "money_log";
 };

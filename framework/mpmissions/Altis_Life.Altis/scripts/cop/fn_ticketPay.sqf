@@ -7,7 +7,7 @@
     Pays the ticket.
 */
 if (isNil "life_ticket_val" || isNil "life_ticket_cop") exitWith {};
-if (life_var_cash < life_ticket_val) exitWith {
+if (MONEY_CASH < life_ticket_val) exitWith {
     if (life_var_bank < life_ticket_val) exitWith {
         hint localize "STR_Cop_Ticket_NotEnough";
         [1,"STR_Cop_Ticket_NotEnoughNOTF",true,[profileName]] remoteExecCall ["MPClient_fnc_broadcast",life_ticket_cop];

@@ -59,3 +59,10 @@
 
 //--
 #define INFINTE 1e+011
+
+
+//--
+#define MONEY_CASH (player getVariable ["money_cash",0])
+#define MONEY_DEBT (player getVariable ["money_debt",0])
+#define MONEY_BANK(steamID) (missionNamespace getVariable [format["life_var_bank_%1", steamID],0])
+#define MONEY_GANG ((group player) getVariable ["gang_bank",0])

@@ -50,6 +50,7 @@ class CfgFunctions
             class setupRadioChannels {};
             class masterSchedule {};
             class log {};
+            class handleMoneyRequest {};
         };
     };
 };

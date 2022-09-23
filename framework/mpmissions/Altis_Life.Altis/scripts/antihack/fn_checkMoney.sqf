@@ -1,14 +1,15 @@
+#include "..\..\script_macros.hpp"
 /*
 	## Nikko Renolds
 	## https://github.com/Ni1kko/FrameworkV2
 */
 
-private _moneyvar = format ["life_var_%1",param [0, "undefined"]];
-private _lastVal = missionNamespace getVariable [_moneyvar,0];
-private _moneyIndex = _moneyvar isEqualTo "life_var_bank";
+private _moneyvar = param [0, "undefined"];
+private _lastVal = MONEY_CASH
+private _moneyIndex = _moneyvar isEqualTo "bank";
 private _lastActualBalance = _lastVal;
 
-while {!isNil "life_var_cash" OR !isNil "life_var_bank"} do {
+while {true} do {
 	
 	//-- Wait for a change to the player money
 	waitUntil {
@@ -20,7 +21,7 @@ while {!isNil "life_var_cash" OR !isNil "life_var_bank"} do {
 	uiSleep 2;
 
 	//-- Checking it against the last balance
-	private _currentBalance = missionNamespace getVariable [_moneyvar,0];
+	private _currentBalance = MONEY_CASH;
 	_lastActualBalance = life_var_lastBalance select _moneyIndex; 
 	
 	//-- Temp ToDo: ban player and log event

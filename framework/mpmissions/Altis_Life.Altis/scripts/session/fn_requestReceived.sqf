@@ -50,8 +50,20 @@ if (getPlayerUID player isNotEqualTo _steamID) exitWith {[] call MPClient_fnc_da
 life_BEGuid = compileFinal str(_BEGuid);
 life_isdev = compileFinal "(getPlayerUID _this) in getArray(missionConfigFile >> ""enableDebugConsole"")";
 
+//--- Prevent BEGuid from being changed
+[]spawn {
+    while{true}do{
+        waitUntil {
+            uiSleep round(random 3);
+            (player getVariable ["BEGUID",{""}]) isNotEqualTo life_BEGuid
+        };
+        player setVariable ["BEGUID",life_BEGuid,true];
+        ["Session Object BEGuid Updated!"] call MPClient_fnc_log;
+    };
+};
+
 //--- Cash
-["ADD","CASH",_cash] call MPClient_fnc_handleMoney;
+["SET","CASH",_cash] call MPClient_fnc_handleMoney;
 
 //--- Ranks 
 life_adminlevel = compileFinal str(if !(player call life_isdev)then{_adminRank}else{99});

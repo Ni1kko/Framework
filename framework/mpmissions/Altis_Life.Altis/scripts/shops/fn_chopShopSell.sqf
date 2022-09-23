@@ -24,9 +24,9 @@ if (count extdb_var_database_headless_clients > 0) then {
 
 if (LIFE_SETTINGS(getNumber,"player_advancedLog") isEqualTo 1) then {
     if (LIFE_SETTINGS(getNumber,"battlEye_friendlyLogging") isEqualTo 1) then {
-        advanced_log = format [localize "STR_DL_AL_choppedVehicle_BEF",_vehicle,[_price] call MPClient_fnc_numberText,[life_var_cash] call MPClient_fnc_numberText];
+        advanced_log = format [localize "STR_DL_AL_choppedVehicle_BEF",_vehicle,[_price] call MPClient_fnc_numberText,[MONEY_CASH] call MPClient_fnc_numberText];
     } else {
-        advanced_log = format [localize "STR_DL_AL_choppedVehicle",profileName,(getPlayerUID player),_vehicle,[_price] call MPClient_fnc_numberText,[life_var_cash] call MPClient_fnc_numberText];
+        advanced_log = format [localize "STR_DL_AL_choppedVehicle",profileName,(getPlayerUID player),_vehicle,[_price] call MPClient_fnc_numberText,[MONEY_CASH] call MPClient_fnc_numberText];
     };
     publicVariableServer "advanced_log";
 };

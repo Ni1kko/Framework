@@ -28,7 +28,7 @@ if (_ctrl == "goldbar" && {!(life_trunk_vehicle isKindOf "LandVehicle")}) exitWi
 
 if (_ctrl == "money") then {
     _index = [_ctrl,_inv] call MPServer_fnc_index;
-    if (life_var_cash < _num) exitWith {hint localize "STR_NOTF_notEnoughCashToStoreInVeh";};
+    if (MONEY_CASH < _num) exitWith {hint localize "STR_NOTF_notEnoughCashToStoreInVeh";};
     if (_index isEqualTo -1) then {
         _inv pushBack [_ctrl,_num];
     } else {

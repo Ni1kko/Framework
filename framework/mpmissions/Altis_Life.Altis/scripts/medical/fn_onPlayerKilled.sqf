@@ -55,9 +55,9 @@ if (!isNull _killer) then
         life_copRecieve = _killer;
 
         //-- Handle if they robbed the federal reserve?
-        if (!life_var_ATMEnabled AND life_var_cash > 0) then
+        if (!life_var_ATMEnabled AND MONEY_CASH > 0) then
         {
-            [format [localize "STR_Cop_RobberDead",[life_var_cash] call MPClient_fnc_numberText]] remoteExecCall ["MPClient_fnc_broadcast",RE_CLIENT];
+            [format [localize "STR_Cop_RobberDead",[MONEY_CASH] call MPClient_fnc_numberText]] remoteExecCall ["MPClient_fnc_broadcast",RE_CLIENT];
             ["ZERO","CASH"] call MPClient_fnc_handleMoney;
         };
     };

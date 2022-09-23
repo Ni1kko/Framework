@@ -9,7 +9,7 @@ private _var = format["Sync_%1_Completed_%2",round(random[1000,5000,9999]),round
 [
     _var,
     player,
-    life_var_cash,
+    MONEY_CASH,
     life_var_bank,
     ([player] call MPClient_fnc_getLicenses),
     ([player] call MPClient_fnc_getGear),

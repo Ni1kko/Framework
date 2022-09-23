@@ -76,8 +76,8 @@ if((_purchased AND _buyMultiplier > 0) OR (!_purchased AND _rentMultiplier > 0))
 };
 
 //--- Check if the player has enough money
-if (life_var_cash < _purchasePrice) exitWith {
-    hint format [localize "STR_Shop_Veh_NotEnough",[_purchasePrice - life_var_cash] call MPClient_fnc_numberText];
+if (MONEY_CASH < _purchasePrice) exitWith {
+    hint format [localize "STR_Shop_Veh_NotEnough",[_purchasePrice - MONEY_CASH] call MPClient_fnc_numberText];
     closeDialog 0;
 };
 

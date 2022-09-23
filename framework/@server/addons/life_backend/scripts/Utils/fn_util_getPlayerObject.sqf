@@ -13,6 +13,10 @@ private _mode = switch (true) do {
 	default {"BEGUID"};
 };
 
+if(_mode isEqualTo "ownerID" AND {_input isEqualTo 2}) exitWith {
+	objNull
+};
+
 private _player = objNull;
 
 {

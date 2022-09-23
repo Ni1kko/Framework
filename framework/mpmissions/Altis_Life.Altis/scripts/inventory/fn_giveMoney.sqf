@@ -20,7 +20,7 @@ if (isNull _unit) exitWith {ctrlShow[106,true];};
 if (!life_var_ATMEnabled) exitWith {hint localize "STR_NOTF_recentlyRobbedBank";ctrlShow[106,true];};
 if (!([_amount] call MPServer_fnc_isNumber)) exitWith {hint localize "STR_NOTF_notNumberFormat";ctrlShow[106,true];};
 if (parseNumber(_amount) <= 0) exitWith {hint localize "STR_NOTF_enterAmount";ctrlShow[106,true];};
-if (parseNumber(_amount) > life_var_cash) exitWith {hint localize "STR_NOTF_notEnoughtToGive";ctrlShow[106,true];};
+if (parseNumber(_amount) > MONEY_CASH) exitWith {hint localize "STR_NOTF_notEnoughtToGive";ctrlShow[106,true];};
 if (isNull _unit) exitWith {ctrlShow[106,true];};
 if (isNil "_unit") exitWith {ctrlShow[106,true]; hint localize "STR_NOTF_notWithinRange";};
 

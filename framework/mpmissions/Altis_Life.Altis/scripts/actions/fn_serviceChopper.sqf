@@ -15,7 +15,7 @@ _serviceCost = LIFE_SETTINGS(getNumber,"service_chopper");
 _search = nearestObjects[getPos air_sp, ["Air"],10];
 
 if (count _search isEqualTo 0) exitWith {hint localize "STR_Service_Chopper_NoAir"};
-if (life_var_cash < _serviceCost) exitWith {hint localize "STR_Serive_Chopper_NotEnough"};
+if (MONEY_CASH < _serviceCost) exitWith {hint localize "STR_Serive_Chopper_NotEnough"};
 
 life_var_isBusy = true;
 "progressBar" cutRsc ["life_progress","PLAIN"];

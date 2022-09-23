@@ -16,7 +16,7 @@ _price = 0;
     };
 } forEach life_clothing_purchase;
 
-if (_price > life_var_cash) exitWith {titleText[localize "STR_Shop_NotEnoughClothes","PLAIN"];};
+if (_price > MONEY_CASH) exitWith {titleText[localize "STR_Shop_NotEnoughClothes","PLAIN"];};
 ["SUB","CASH",_price] call MPClient_fnc_handleMoney;
 
 life_clothesPurchased = true;

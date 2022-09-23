@@ -20,7 +20,7 @@ private _altisArray = ["Land_u_Barracks_V2_F","Land_i_Barracks_V2_F"];
 private _tanoaArray = ["Land_School_01_F","Land_Warehouse_03_F","Land_House_Small_02_F"];
 private _hideoutObjs = [[["Altis", _altisArray], ["Tanoa", _tanoaArray]]] call MPServer_fnc_terrainSort;
 _hideout = (nearestObjects[getPosATL player,_hideoutObjs,25]) select 0;
-if ((_price * _amount) > life_var_cash && {!isNil "_hideout" && {!isNil {group player getVariable "gang_bank"}} && {(group player getVariable "gang_bank") <= _price * _amount}}) exitWith {hint localize "STR_NOTF_NotEnoughMoney"};
+if ((_price * _amount) > MONEY_CASH && {!isNil "_hideout" && {!isNil {group player getVariable "gang_bank"}} && {(group player getVariable "gang_bank") <= _price * _amount}}) exitWith {hint localize "STR_NOTF_NotEnoughMoney"};
 if ((time - life_action_delay) < 0.2) exitWith {hint localize "STR_NOTF_ActionDelay";};
 life_action_delay = time;
 
@@ -31,7 +31,7 @@ if ([true,_type,_amount] call MPClient_fnc_handleInv) then {
         _action = [
             format [(localize "STR_Shop_Virt_Gang_FundsMSG")+ "<br/><br/>" +(localize "STR_Shop_Virt_Gang_Funds")+ " <t color='#8cff9b'>$%1</t><br/>" +(localize "STR_Shop_Virt_YourFunds")+ " <t color='#8cff9b'>$%2</t>",
                 [(group player getVariable "gang_bank")] call MPClient_fnc_numberText,
-                [life_var_cash] call MPClient_fnc_numberText
+                [MONEY_CASH] call MPClient_fnc_numberText
             ],
             localize "STR_Shop_Virt_YourorGang",
             localize "STR_Shop_Virt_UI_GangFunds",
@@ -50,12 +50,12 @@ if ([true,_type,_amount] call MPClient_fnc_handleInv) then {
             };
 
         } else {
-            if ((_price * _amount) > life_var_cash) exitWith {[false,_type,_amount] call MPClient_fnc_handleInv; hint localize "STR_NOTF_NotEnoughMoney";};
+            if ((_price * _amount) > MONEY_CASH) exitWith {[false,_type,_amount] call MPClient_fnc_handleInv; hint localize "STR_NOTF_NotEnoughMoney";};
             hint format [localize "STR_Shop_Virt_BoughtItem",_amount,TEXT_LOCALIZE(_name),[(_price * _amount)] call MPClient_fnc_numberText];
             ["SUB","CASH",_price * _amount] call MPClient_fnc_handleMoney;
         };
     } else {
-        if ((_price * _amount) > life_var_cash) exitWith {hint localize "STR_NOTF_NotEnoughMoney"; [false,_type,_amount] call MPClient_fnc_handleInv;};
+        if ((_price * _amount) > MONEY_CASH) exitWith {hint localize "STR_NOTF_NotEnoughMoney"; [false,_type,_amount] call MPClient_fnc_handleInv;};
         hint format [localize "STR_Shop_Virt_BoughtItem",_amount,TEXT_LOCALIZE(_name),[(_price * _amount)] call MPClient_fnc_numberText];
         ["SUB","CASH",_price * _amount] call MPClient_fnc_handleMoney;
     };

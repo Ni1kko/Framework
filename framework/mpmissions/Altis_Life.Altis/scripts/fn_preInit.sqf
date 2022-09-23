@@ -117,11 +117,9 @@ private _variableTooSet = [
     ["life_var_ATMEnabled", true],
     ["life_is_arrested", false],
     ["life_is_alive", false],
-    ["life_delivery_in_progress", false], 
-    ["life_var_cash", 0],
+    ["life_delivery_in_progress", false],
     ["life_istazed", false],
     ["life_isknocked", false],
-    ["life_var_debtOwed", 0],
     ["life_var_lastBalance",[0,0,0]],
     ["life_var_bankrupt", false],
 

@@ -116,7 +116,7 @@ if (_hasLicense) then {
     if (_minimumConversions isEqualTo (_totalConversions call BIS_fnc_lowestNum)) then {hint localize "STR_NOTF_ItemProcess";} else {hint localize "STR_Process_Partial";};
     life_is_processing = false; life_var_isBusy = false;
 } else {
-    if (life_var_cash < _cost) exitWith {hint format [localize "STR_Process_License",[_cost] call MPClient_fnc_numberText]; "progressBar" cutText ["","PLAIN"]; life_is_processing = false; life_var_isBusy = false;};
+    if (MONEY_CASH < _cost) exitWith {hint format [localize "STR_Process_License",[_cost] call MPClient_fnc_numberText]; "progressBar" cutText ["","PLAIN"]; life_is_processing = false; life_var_isBusy = false;};
 
     for "_i" from 0 to 1 step 0 do {
         uiSleep  0.9;
@@ -128,7 +128,7 @@ if (_hasLicense) then {
     };
 
     if (player distance _vendor > 10) exitWith {hint localize "STR_Process_Stay"; "progressBar" cutText ["","PLAIN"]; life_is_processing = false; life_var_isBusy = false;};
-    if (life_var_cash < _cost) exitWith {hint format [localize "STR_Process_License",[_cost] call MPClient_fnc_numberText]; "progressBar" cutText ["","PLAIN"]; life_is_processing = false; life_var_isBusy = false;};
+    if (MONEY_CASH < _cost) exitWith {hint format [localize "STR_Process_License",[_cost] call MPClient_fnc_numberText]; "progressBar" cutText ["","PLAIN"]; life_is_processing = false; life_var_isBusy = false;};
 
     {
         [false,(_x select 0),((_x select 1)*(_minimumConversions))] call MPClient_fnc_handleInv;
