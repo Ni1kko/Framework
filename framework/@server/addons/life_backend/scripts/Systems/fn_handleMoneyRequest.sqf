@@ -41,7 +41,6 @@ private _moneyVar = format ["%1_%2",toLower _action, getPlayerUID _target];
 private _moneyClient = 0;
 private _moneyBefore = (serverNamespace getVariable [_moneyVar,0]);
 private _moneyAfter = _moneyBefore + _value;
-serverNamespace setVariable [_moneyVar,_moneyAfter];
 
 switch (_type) do {
 	case "CASH": {_moneyClient = MONEY_CASH};
@@ -50,6 +49,7 @@ switch (_type) do {
 };
 
 if(_moneyClient > _moneyBefore)then{
+	_moneyAfter = _moneyClient;
 	diag_log format["Money hack detected -> %1",getPlayerUID _target];
 	["Hack Detected", "Money client does not match server money", "Antihack"] remoteExecCall ["MPClient_fnc_endMission",_senderOwnerID];
 };
@@ -57,5 +57,7 @@ if(_moneyClient > _moneyBefore)then{
 if !_serverUpdateOnly then {
 	[_action,_type,_value] remoteExecCall ["MPClient_fnc_handleMoney", _targetOwnerID];
 };
+
+serverNamespace setVariable [_moneyVar,_moneyAfter];
 
 true
