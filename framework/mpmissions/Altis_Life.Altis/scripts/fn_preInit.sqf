@@ -123,7 +123,7 @@ private _missionVariables = [
     ["life_delivery_in_progress", false],
     ["life_istazed", false],
     ["life_isknocked", false],
-    ["life_var_lastBalance",[0,0,0]],
+    ["life_var_lastBalance",[0,0,0,0]],
     ["life_var_bankrupt", false],
     ["life_var_bankruptTime", nil],
 
