@@ -140,10 +140,10 @@
 #define GET_CASH_VAR "money_cash"
 #define GET_GANG_MONEY_VAR "money_gang"
 
-#define GET_MONEY_CASH(target) target getVariable [GET_CASH_VAR,0]
-#define GET_MONEY_DEBT(target) target getVariable [GET_DEBT_VAR(target),0]
-#define GET_MONEY_BANK(target) missionNamespace getVariable [GET_BANK_VAR(target),0]
-#define GET_MONEY_GANG(target) (group target) getVariable [GET_GANG_MONEY_VAR,0]
+#define GET_MONEY_CASH(target) (target getVariable [GET_CASH_VAR,0])
+#define GET_MONEY_DEBT(target) (target getVariable [GET_DEBT_VAR(target),0])
+#define GET_MONEY_BANK(target) (missionNamespace getVariable [GET_BANK_VAR(target),0])
+#define GET_MONEY_GANG(target) ((group target) getVariable [GET_GANG_MONEY_VAR,0])
 
 #define GET_MONEY_CASH_FORMATTED(target) [GET_MONEY_CASH(target)] call MPClient_fnc_numberText
 #define GET_MONEY_DEBT_FORMATTED(target) [GET_MONEY_DEBT(target)] call MPClient_fnc_numberText
@@ -155,19 +155,19 @@
 #define SET_MONEY_BANK(target, value) missionNamespace setVariable [GET_BANK_VAR(target),##value,true]
 #define SET_MONEY_GANG(target, value) (group target) setVariable [GET_GANG_MONEY_VAR,##value,true]
 
-#define ADD_MONEY_CASH(target, value) SET_MONEY_CASH(target, GET_MONEY_CASH(target) + (##value))
-#define ADD_MONEY_DEBT(target, value) SET_MONEY_DEBT(target, GET_MONEY_DEBT(target) + (##value))
-#define ADD_MONEY_BANK(target, value) SET_MONEY_BANK(target, GET_MONEY_BANK(target) + (##value))
-#define ADD_MONEY_GANG(target, value) SET_MONEY_GANG(target, GET_MONEY_GANG(target) + (##value))
+#define ADD_MONEY_CASH(target, value) SET_MONEY_CASH(target, GET_MONEY_CASH(target) + value)
+#define ADD_MONEY_DEBT(target, value) SET_MONEY_DEBT(target, GET_MONEY_DEBT(target) + value)
+#define ADD_MONEY_BANK(target, value) SET_MONEY_BANK(target, GET_MONEY_BANK(target) + value)
+#define ADD_MONEY_GANG(target, value) SET_MONEY_GANG(target, GET_MONEY_GANG(target) + value)
 
-#define SUB_MONEY_CASH(target, value) SET_MONEY_CASH(target, GET_MONEY_CASH(target) - (##value))
-#define SUB_MONEY_DEBT(target, value) SET_MONEY_DEBT(target, GET_MONEY_DEBT(target) - (##value))
-#define SUB_MONEY_BANK(target, value) SET_MONEY_BANK(target, GET_MONEY_BANK(target) - (##value))
-#define SUB_MONEY_GANG(target, value) SET_MONEY_GANG(target, GET_MONEY_GANG(target) - (##value))
+#define SUB_MONEY_CASH(target, value) SET_MONEY_CASH(target, GET_MONEY_CASH(target) - value)
+#define SUB_MONEY_DEBT(target, value) SET_MONEY_DEBT(target, GET_MONEY_DEBT(target) - value)
+#define SUB_MONEY_BANK(target, value) SET_MONEY_BANK(target, GET_MONEY_BANK(target) - value)
+#define SUB_MONEY_GANG(target, value) SET_MONEY_GANG(target, GET_MONEY_GANG(target) - value)
 
 #define MONEY_CASH GET_MONEY_CASH(player)
 #define MONEY_DEBT GET_MONEY_DEBT(player)
-#define MONEY_BANK GET_MONEY_BANK(player) 
+#define MONEY_BANK GET_MONEY_BANK(player)
 #define MONEY_GANG GET_MONEY_GANG(player)
 
 #define MONEY_CASH_FORMATTED GET_MONEY_CASH_FORMATTED(player)

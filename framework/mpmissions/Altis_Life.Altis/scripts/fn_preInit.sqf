@@ -211,6 +211,8 @@ if(count _profileVariables > 0)then{
 //-- Thread set 1 Monitor money vars TODO: handle this through anticheat 
 _threadsToMonitor pushBackUnique (["bank"] spawn MPClient_fnc_checkMoney);
 _threadsToMonitor pushBackUnique (["cash"] spawn MPClient_fnc_checkMoney);
+_threadsToMonitor pushBackUnique (["gang"] spawn MPClient_fnc_checkMoney);
+_threadsToMonitor pushBackUnique (["debt"] spawn MPClient_fnc_checkMoney);
 
 //-- Load main init
 [serverName,missionName,worldName,worldSize] spawn MPClient_fnc_init;

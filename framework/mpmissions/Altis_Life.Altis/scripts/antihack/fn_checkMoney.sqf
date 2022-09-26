@@ -7,8 +7,9 @@
 private _moneyvar = param [0, "undefined"];
 private _playerBalance = switch (toUpper _moneyvar) do {
 	case "CASH": {MONEY_CASH};
-	case "GANG": {MONEY_BANK};
-	case "BANK": {MONEY_GANG};
+	case "BANK": {MONEY_BANK};
+	case "GANG": {MONEY_GANG};
+	case "DEBT": {MONEY_DEBT};
 	default {0};
 };
 
@@ -16,9 +17,9 @@ private _moneyIndex = switch (toUpper _moneyvar) do {
 	case "CASH": {0};
 	case "BANK": {1};
 	case "GANG": {2};
+	case "DEBT": {3};
 	default {-1};
 };
-
 
 private _actualPlayerBalance = life_var_lastBalance select _moneyIndex;
 
@@ -38,8 +39,9 @@ while {true} do {
 	//-- Checking it against the last balance
 	private _currentBalance = switch (toUpper _moneyvar) do {
 		case "CASH": {MONEY_CASH};
-		case "GANG": {MONEY_BANK};
-		case "BANK": {MONEY_GANG};
+		case "BANK": {MONEY_BANK};
+		case "GANG": {MONEY_GANG};
+		case "DEBT": {MONEY_DEBT};
 		default {0};
 	};
 
@@ -63,7 +65,7 @@ while {true} do {
 		["Hack Detected", _log, "Antihack"] call MPClient_fnc_endMission;
 	}else{
 		_playerBalance = _currentBalance;
-	}
+	};
 };
 
 //-- Code reached only if cash or bank vars become nil (ToDo: kick player and log event)

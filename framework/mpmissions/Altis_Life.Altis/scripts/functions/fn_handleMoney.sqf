@@ -45,8 +45,8 @@ if(not(_action in ["ADD","SUB","SET","GIVE","DROP","ZERO","BANKRUPT"]) OR not(_t
 };
 
 //-- Check `life_var_lastBalance` is vaild array
-if(isNil "life_var_lastBalance") then {life_var_lastBalance = [0,0,0]};
-if(typeName life_var_lastBalance isNotEqualTo "ARRAY") then {life_var_lastBalance = [0,0,0]};
+if(isNil "life_var_lastBalance") then {life_var_lastBalance = [0,0,0,0]};
+if(typeName life_var_lastBalance isNotEqualTo "ARRAY") then {life_var_lastBalance = [0,0,0,0]};
 
 //-- Check `life_var_bankrupt` is vaild bool
 if(isNil "life_var_bankrupt") then {life_var_bankrupt = false};
@@ -148,6 +148,7 @@ switch _type do
 		}; 
 		if(MONEY_BANK < 0) then {SET_MONEY_BANK(player, 0)};
 		life_var_lastBalance set [1,MONEY_BANK];
+		life_var_lastBalance set [3,MONEY_DEBT];
 	};
 	case "GANG": 
 	{ 
