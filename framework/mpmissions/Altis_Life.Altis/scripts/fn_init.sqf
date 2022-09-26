@@ -25,15 +25,10 @@ enableSentences false;
 enableRadio false;
 
 // -- Start Loading Screen (Arma likes to be a prick and sometimes it fails to load, this is a workaround for it)
-waitUntil{
-    if (call BIS_fnc_isLoading) then {
-        endLoadingScreen;
-        uiSleep 0.5;
-    };
-    startLoadingScreen ["","life_Rsc_DisplayLoading"];
-    uiSleep 1.2;
-    life_var_loadingScreenActive AND (call BIS_fnc_isLoading)
-};
+endLoadingScreen;
+waitUntil{not(call BIS_fnc_isLoading)};
+uiSleep 0.2;
+startLoadingScreen ["","life_Rsc_DisplayLoading"];
 
 ["Setting up client", "Please Wait..."] call MPClient_fnc_setLoadingText; uiSleep(random[0.5,3,6]);
  
