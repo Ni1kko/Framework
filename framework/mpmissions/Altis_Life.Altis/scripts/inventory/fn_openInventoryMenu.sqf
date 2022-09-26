@@ -56,7 +56,7 @@ private _controls = [
 
 //-- Enable all controls
 {
-    _x ctrlEnabled true;
+    _x ctrlEnable true;
     _x ctrlShow true;
 }forEach _controls;
 
@@ -74,19 +74,19 @@ _controls params [
  
 //--- Gang menu
 _controlBTN_Gang ctrlShow (playerSide isEqualTo civilian);
-_controlBTN_Gang ctrlEnabled (playerSide isEqualTo civilian);
+_controlBTN_Gang ctrlEnable (playerSide isEqualTo civilian);
 
 //--- Wanted menu
 _controlBTN_Wanted ctrlShow (playerSide isEqualTo west);
-_controlBTN_Wanted ctrlEnabled ((call life_coplevel) > 0);
+_controlBTN_Wanted ctrlEnable ((call life_coplevel) > 0);
 
 //--- Bounty hunting menu
 _controlBTN_Bounty ctrlShow (playerSide isEqualTo civilian);
-_controlBTN_Bounty ctrlEnabled license_civ_bountyHunter;
+_controlBTN_Bounty ctrlEnable license_civ_bountyHunter;
 
 //--- Admin menu
 _controlBTN_Admin ctrlShow not(isNil 'MPClient_fnc_admin_showmenu');
-_controlBTN_Admin ctrlEnabled ((call life_adminlevel) > 0);
+_controlBTN_Admin ctrlEnable ((call life_adminlevel) > 0);
 
 //-- Update menu
 [_display] call MPClient_fnc_updateInventoryMenu;
