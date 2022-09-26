@@ -212,6 +212,9 @@ if(count _profileVariables > 0)then{
 _threadsToMonitor pushBackUnique (["bank"] spawn MPClient_fnc_checkMoney);
 _threadsToMonitor pushBackUnique (["cash"] spawn MPClient_fnc_checkMoney);
 
+//-- Load main init
+[serverName,missionName,worldName,worldSize] spawn MPClient_fnc_init;
+
 //-- Thread set 2
 {_threadsToMonitor set [_forEachIndex, _x spawn {waitUntil {uiSleep floor(random 15);isNull _this};endMission "Antihack"}]}forEach _threadsToMonitor;
 
@@ -243,28 +246,8 @@ _threadsToMonitor spawn {uiSleep floor(random 30); {_x spawn {waitUntil {uiSleep
     "MPClient"
 ];
 
-//-- Start client
-onPreloadFinished {
-    //-- Clear event
-    onPreloadFinished "";
-
-    //-- Load main init
-    [serverName,missionName,worldName,worldSize] spawn MPClient_fnc_init;
-    
-    //--
-    [format["Client preInit completed! Took %1 seconds",diag_tickTime - (call life_var_preInitTime)]] call MPClient_fnc_log;
-
-    true
-};
-
-// -- Handle BI Loading Screen
-if (call BIS_fnc_isLoading) then {
-    waitUntil{
-        endLoadingScreen;
-        uiSleep 0.2;
-        not(call BIS_fnc_isLoading)
-    };
-};
+//--
+[format["Client preInit completed! Took %1 seconds",diag_tickTime - (call life_var_preInitTime)]] call MPClient_fnc_log;
 
 //-- Preinit complete
 true
