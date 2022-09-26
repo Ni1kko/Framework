@@ -33,11 +33,11 @@ if ((uiNamespace getVariable ["Weapon_Shop_Filter",0]) isEqualTo 1) then {
     private _tanoaArray = ["Land_School_01_F","Land_Warehouse_03_F","Land_House_Small_02_F"];
     private _hideoutObjs = [[["Altis", _altisArray], ["Tanoa", _tanoaArray]]] call MPServer_fnc_terrainSort;
     private _hideout = (nearestObjects[getPosATL player,_hideoutObjs,25]) select 0;
-    if (!isNil "_hideout" && {!isNil {group player getVariable "gang_bank"}} && {(group player getVariable "gang_bank") >= _price}) then {
+    if (!isNil "_hideout" && {MONEY_GANG >= _price}) then {
         _action = [
             format [(localize "STR_Shop_Virt_Gang_FundsMSG")+ "<br/><br/>" +(localize "STR_Shop_Virt_Gang_Funds")+ " <t color='#8cff9b'>$%1</t><br/>" +(localize "STR_Shop_Virt_YourFunds")+ " <t color='#8cff9b'>$%2</t>",
-                [(group player getVariable "gang_bank")] call MPClient_fnc_numberText,
-                [MONEY_CASH] call MPClient_fnc_numberText
+                MONEY_GANG_FORMATTED,
+                MONEY_CASH_FORMATTED
             ],
             localize "STR_Shop_Virt_YourorGang",
             localize "STR_Shop_Virt_UI_GangFunds",
@@ -45,9 +45,7 @@ if ((uiNamespace getVariable ["Weapon_Shop_Filter",0]) isEqualTo 1) then {
         ] call BIS_fnc_guiMessage;
         if (_action) then {
             hint parseText format [localize "STR_Shop_Weapon_BoughtGang",_itemInfo select 1,[_price] call MPClient_fnc_numberText];
-            _funds = group player getVariable "gang_bank";
-            _funds = _funds - _price;
-            group player setVariable ["gang_bank",_funds,true];
+            ["SUB","GANG",_price] call MPClient_fnc_handleMoney;
             [_item,true] call MPClient_fnc_handleItem;
 
             if (count extdb_var_database_headless_clients > 0) then {

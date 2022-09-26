@@ -20,18 +20,18 @@ private _altisArray = ["Land_u_Barracks_V2_F","Land_i_Barracks_V2_F"];
 private _tanoaArray = ["Land_School_01_F","Land_Warehouse_03_F","Land_House_Small_02_F"];
 private _hideoutObjs = [[["Altis", _altisArray], ["Tanoa", _tanoaArray]]] call MPServer_fnc_terrainSort;
 _hideout = (nearestObjects[getPosATL player,_hideoutObjs,25]) select 0;
-if ((_price * _amount) > MONEY_CASH && {!isNil "_hideout" && {!isNil {group player getVariable "gang_bank"}} && {(group player getVariable "gang_bank") <= _price * _amount}}) exitWith {hint localize "STR_NOTF_NotEnoughMoney"};
+if ((_price * _amount) > MONEY_CASH && {!isNil "_hideout" && {(MONEY_GANG) <= _price * _amount}}) exitWith {hint localize "STR_NOTF_NotEnoughMoney"};
 if ((time - life_action_delay) < 0.2) exitWith {hint localize "STR_NOTF_ActionDelay";};
 life_action_delay = time;
 
 _name = M_CONFIG(getText,"VirtualItems",_type,"displayName");
 
 if ([true,_type,_amount] call MPClient_fnc_handleInv) then {
-    if (!isNil "_hideout" && {!isNil {group player getVariable "gang_bank"}} && {(group player getVariable "gang_bank") >= _price}) then {
+    if (!isNil "_hideout" && {MONEY_GANG >= _price}) then {
         _action = [
             format [(localize "STR_Shop_Virt_Gang_FundsMSG")+ "<br/><br/>" +(localize "STR_Shop_Virt_Gang_Funds")+ " <t color='#8cff9b'>$%1</t><br/>" +(localize "STR_Shop_Virt_YourFunds")+ " <t color='#8cff9b'>$%2</t>",
-                [(group player getVariable "gang_bank")] call MPClient_fnc_numberText,
-                [MONEY_CASH] call MPClient_fnc_numberText
+                MONEY_GANG_FORMATTED,
+                MONEY_CASH_FORMATTED
             ],
             localize "STR_Shop_Virt_YourorGang",
             localize "STR_Shop_Virt_UI_GangFunds",
@@ -39,9 +39,8 @@ if ([true,_type,_amount] call MPClient_fnc_handleInv) then {
         ] call BIS_fnc_guiMessage;
         if (_action) then {
             hint format [localize "STR_Shop_Virt_BoughtGang",_amount,TEXT_LOCALIZE(_name),[(_price * _amount)] call MPClient_fnc_numberText];
-            _funds = group player getVariable "gang_bank";
-            _funds = _funds - (_price * _amount);
-            group player setVariable ["gang_bank",_funds,true];
+            private _value = (_price * _amount);
+            ["SUB","GANG",_value] call MPClient_fnc_handleMoney;
 
             if (count extdb_var_database_headless_clients > 0) then {
                 [1,group player] remoteExecCall ["HC_fnc_updateGang",extdb_var_database_headless_client];

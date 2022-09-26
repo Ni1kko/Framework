@@ -16,7 +16,7 @@ _ownerID = group player getVariable ["gang_owner",""];
 if (_ownerID isEqualTo "") exitWith {closeDialog 0;}; //Bad juju
 
 _gangName = group player getVariable "gang_name";
-_gangBank = GANG_FUNDS;
+_gangBank = MONEY_GANG;
 _gangMax = group player getVariable "gang_maxMembers";
 
 if !(_ownerID isEqualTo getPlayerUID player) then {

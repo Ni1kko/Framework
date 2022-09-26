@@ -11,7 +11,7 @@ params [
 ];
 
 private _value = parseNumber(ctrlText 2702);
-private _gFund = GANG_FUNDS;
+private _gFund = MONEY_GANG;
 if ((time - life_action_delay) < 0.5) exitWith {hint localize "STR_NOTF_ActionDelay"};
 
 //Series of stupid checks

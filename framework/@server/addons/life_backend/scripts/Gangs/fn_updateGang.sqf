@@ -19,7 +19,7 @@ if (_groupID isEqualTo -1) exitWith {};
 
 switch (_mode) do {
     case 0: {
-        _bank = [(_group getVariable ["gang_bank",0])] call MPServer_fnc_numberSafe;
+        _bank = [(_group getVariable [GET_GANG_MONEY_VAR,0])] call MPServer_fnc_numberSafe;
         _maxMembers = _group getVariable ["gang_maxMembers",8];
         _members = [(_group getVariable "gang_members")] call MPServer_fnc_mresArray;
         _owner = _group getVariable ["gang_owner",""];
@@ -37,32 +37,62 @@ switch (_mode) do {
             ["_unit",objNull,[objNull]],
             ["_cash",0,[0]]
         ];
+        
+        private _sessionvar = format ["MPServer_var_gangBankResponse_%1",_groupID];
+        private _sessionlocked = missionNamespace getVariable [_sessionvar,false];
 
-        private _funds = _group getVariable ["gang_bank",0];
+        if _sessionlocked exitWith {
+            [1,"You or a fellow gang member are already performing a bank transaction. Please wait a moment.",true] remoteExecCall ["MPClient_fnc_broadcast",remoteExecutedOwner];
+        };
+
+        missionNamespace setVariable [_sessionvar,true];
+
         if (_deposit) then {
-            _funds = _funds + _value;
-            _group setVariable ["gang_bank",_funds,true];
-            [1,"STR_ATM_DepositSuccessG",true,[_value]] remoteExecCall ["MPClient_fnc_broadcast",remoteExecutedOwner];
-            _cash = _cash - _value;
-        } else {
-            if (_value > _funds) exitWith {
+            if (_value > (GET_MONEY_CASH(_unit))) exitWith {
                 [1,"STR_ATM_NotEnoughFundsG",true] remoteExecCall ["MPClient_fnc_broadcast",remoteExecutedOwner];
                 breakOut "";
             };
-            _funds = _funds - _value;
-            _group setVariable ["gang_bank",_funds,true];
-            [_value] remoteExecCall ["MPClient_fnc_gangBankResponse",remoteExecutedOwner];
-            _cash = _cash + _value;
-        };
-        if (LIFE_SETTINGS(getNumber,"player_moneyLog") isEqualTo 1) then {
-            if (LIFE_SETTINGS(getNumber,"battlEye_friendlyLogging") isEqualTo 1) then {
-                [format [localize "STR_DL_ML_withdrewGang_BEF",_value,[_funds] call MPClient_fnc_numberText,[0] call MPClient_fnc_numberText,[_cash] call MPClient_fnc_numberText]] call MPServer_fnc_log;
-            } else {
-                [format [localize "STR_DL_ML_withdrewGang",name _unit,(getPlayerUID _unit),_value,[_funds] call MPClient_fnc_numberText,[0] call MPClient_fnc_numberText,[_cash] call MPClient_fnc_numberText]] call MPServer_fnc_log;
+            [_sessionvar, _value,{
+                params [
+                    ["_sessionvar",""],
+                    ["_value",0,[0]]
+                ];
+                ["ADD","GANG",_value] call MPClient_fnc_handleMoney;
+                ["SUB","CASH",_value] call MPClient_fnc_handleMoney;
+                [1,"STR_ATM_DepositSuccessG",true,[_value]] call MPClient_fnc_broadcast;
+                missionNamespace setVariable [_sessionvar,false];
+                publicVariableServer _sessionvar;
+            }] remoteExecCall ["call",remoteExecutedOwner];
+        } else {
+            if (_value > (_group getVariable [GET_GANG_MONEY_VAR,0])) exitWith {
+                [1,"STR_ATM_NotEnoughFundsG",true] remoteExecCall ["MPClient_fnc_broadcast",remoteExecutedOwner];
+                breakOut "";
             };
+            [_sessionvar, _value,{
+                params [
+                    ["_sessionvar",""],
+                    ["_value",0,[0]]
+                ];
+                ["SUB","GANG",_value] call MPClient_fnc_handleMoney;
+                ["ADD","CASH",_value] call MPClient_fnc_handleMoney;
+                [_value] call MPClient_fnc_gangBankResponse;
+                missionNamespace setVariable [_sessionvar,false];
+                publicVariableServer _sessionvar;
+            }] remoteExecCall ["call",remoteExecutedOwner];
         };
-        _query = format ["UPDATE gangs SET bank='%1' WHERE id='%2'",([_funds] call MPServer_fnc_numberSafe),_groupID];
-        [getPlayerUID _unit,side _unit,_cash,0] call MPServer_fnc_updatePartial;
+
+        //-- Wait for transaction to complete on client
+        [_group, _groupID, _sessionvar]spawn{
+            params [
+                ["_group",grpNull],
+                ["_groupID",-1],
+                ["_sessionvar",""]
+            ];
+            waitUntil {not(missionNamespace getVariable [_sessionvar,false]) OR isNull _group};
+            if (isNull _group) exitWith {false};
+            [format ["UPDATE gangs SET bank='%1' WHERE id='%2'",([_group getVariable [GET_GANG_MONEY_VAR,0]] call MPServer_fnc_numberSafe),_groupID]] call MPServer_fnc_queryRequest;
+            true
+        };
     };
 
     case 2: {

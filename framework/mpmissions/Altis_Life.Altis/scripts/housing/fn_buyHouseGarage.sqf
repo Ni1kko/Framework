@@ -27,7 +27,7 @@ _action = [
 
 if (_action) then {
 
-    if (life_var_bank < _price) exitWith {hint format [localize "STR_House_NotEnough"]};
+    if (MONEY_BANK < _price) exitWith {hint format [localize "STR_House_NotEnough"]};
     
     ["SUB","BANK",_price] call MPClient_fnc_handleMoney;
 

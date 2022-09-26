@@ -26,7 +26,7 @@ lbClear _controlListbox_NearPlayers1;
 lbClear _controlListbox_NearPlayers2;
 
 //--- Money Info
- _controlStructuredText_MoneyInfo ctrlSetStructuredText parseText format ["<img size='1.3' image='textures\icons\ico_bank.paa'/> <t size='0.8px'>$%1</t><br/><img size='1.2' image='textures\icons\ico_money.paa'/> <t size='0.8'>$%2</t>",[life_var_bank] call MPClient_fnc_numberText,[MONEY_CASH] call MPClient_fnc_numberText];
+ _controlStructuredText_MoneyInfo ctrlSetStructuredText parseText format ["<img size='1.3' image='textures\icons\ico_bank.paa'/> <t size='0.8px'>$%1</t><br/><img size='1.2' image='textures\icons\ico_money.paa'/> <t size='0.8'>$%2</t>",[MONEY_BANK] call MPClient_fnc_numberText,[MONEY_CASH] call MPClient_fnc_numberText];
  
 //--- Near players
 if(count _nearByPlayers > 0)then{

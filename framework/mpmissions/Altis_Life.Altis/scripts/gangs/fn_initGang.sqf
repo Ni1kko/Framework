@@ -38,6 +38,6 @@ if (!isNil "_group") then {
     _group setVariable ["gang_owner",(life_gangData select 1),true];
     _group setVariable ["gang_name",(life_gangData select 2),true];
     _group setVariable ["gang_maxMembers",(life_gangData select 3),true];
-    _group setVariable ["gang_bank",(life_gangData select 4),true];
+    ["SET","GANG",(life_gangData select 4)] call MPClient_fnc_handleMoney;
     _group setVariable ["gang_members",(life_gangData select 5),true];
 };

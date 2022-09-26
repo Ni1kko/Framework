@@ -19,11 +19,11 @@ _action = [
 ] call BIS_fnc_guiMessage;
 
 if (_action) then {
-    if (life_var_bank < _upgradePrice) exitWith {
+    if (MONEY_BANK < _upgradePrice) exitWith {
         hint parseText format [
             (localize "STR_GNOTF_NotEoughMoney_2")+ "<br/><br/>" +(localize "STR_GNOTF_Current")+ " <t color='#8cff9b'>$%1</t><br/>" +(localize "STR_GNOTF_Lacking")+ " <t color='#FF0000'>$%2</t>",
-            [life_var_bank] call MPClient_fnc_numberText,
-            [_upgradePrice - life_var_bank] call MPClient_fnc_numberText
+            [MONEY_BANK] call MPClient_fnc_numberText,
+            [_upgradePrice - MONEY_BANK] call MPClient_fnc_numberText
         ];
     };
     ["SUB","BANK",_upgradePrice] call MPClient_fnc_handleMoney;

@@ -38,26 +38,43 @@ if(_sender isEqualTo _target)exitWith{
 };
 
 private _moneyVar = format ["%1_%2",toLower _action, getPlayerUID _target];
-private _moneyClient = 0;
 private _moneyBefore = (serverNamespace getVariable [_moneyVar,0]);
 private _moneyAfter = _moneyBefore + _value;
 
-switch (_type) do {
-	case "CASH": {_moneyClient = MONEY_CASH};
-	case "BANK": {_moneyClient = MONEY_BANK(getPlayerUID _target)};
-	case "GANG-BANK": {_moneyClient = MONEY_GANG};
+//-- Get client values
+private _moneyClient = switch (_type) do {
+	case "CASH": 		{GET_MONEY_CASH(_target)};
+	case "BANK": 		{GET_MONEY_BANK(_target)};
+	case "GANG-BANK": 	{GET_MONEY_GANG(_target)};
+	default {0}
 };
 
+//-- Server values don't match client values (Hacker?)
 if(_moneyClient > _moneyBefore)then{
 	_moneyAfter = _moneyClient;
 	diag_log format["Money hack detected -> %1",getPlayerUID _target];
 	["Hack Detected", "Money client does not match server money", "Antihack"] remoteExecCall ["MPClient_fnc_endMission",_senderOwnerID];
 };
 
-if !_serverUpdateOnly then {
-	[_action,_type,_value] remoteExecCall ["MPClient_fnc_handleMoney", _targetOwnerID];
+//-- Send money to another player
+if (_action isEqualTo "GIVE" AND alive _target AND alive _sender AND not(_serverUpdateOnly)) then {
+	private _senderMoney = switch (_type) do {
+		case "CASH": 		{GET_MONEY_CASH(_sender)};
+		case "BANK": 		{GET_MONEY_BANK(_sender)};
+		case "GANG-BANK": 	{GET_MONEY_GANG(_sender)};
+		default {0}
+	};
+
+	//-- do they have enough
+	if(_senderMoney < _value)exitWith{
+		(format["Sorry No Can Do!\nYou don't have %1 to send!",_value]) remoteExec ["hint",_senderOwnerID]
+	};
+
+	["SUB",_type,_value] remoteExecCall ["MPClient_fnc_handleMoney", _senderOwnerID];
+	["ADD",_type,_value] remoteExecCall ["MPClient_fnc_handleMoney", _targetOwnerID];
 };
 
+//-- Update server values
 serverNamespace setVariable [_moneyVar,_moneyAfter];
 
 true

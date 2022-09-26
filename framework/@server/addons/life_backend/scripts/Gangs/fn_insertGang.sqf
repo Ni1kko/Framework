@@ -56,7 +56,7 @@ _queryResult = [_query,1] call MPServer_fnc_database_rawasync_request;
 
 _group setVariable ["gang_name",_gangName,true];
 _group setVariable ["gang_owner",_uid,true];
-_group setVariable ["gang_bank",0,true];
+_group setVariable [GET_GANG_MONEY_VAR,0,true];
 _group setVariable ["gang_maxMembers",8,true];
 _group setVariable ["gang_members",[_uid],true];
 [_group] remoteExecCall ["MPClient_fnc_gangCreated",_ownerID];

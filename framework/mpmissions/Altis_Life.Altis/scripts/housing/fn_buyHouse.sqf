@@ -29,7 +29,7 @@ _action = [
 ] call BIS_fnc_guiMessage;
 
 if (_action) then {
-    if (life_var_bank < _cost) exitWith {hint format [localize "STR_House_NotEnough"]};
+    if (MONEY_BANK < _cost) exitWith {hint format [localize "STR_House_NotEnough"]};
 
     ["SUB","BANK",_cost] call MPClient_fnc_handleMoney;
 
@@ -41,9 +41,9 @@ if (_action) then {
 
     if (LIFE_SETTINGS(getNumber,"player_advancedLog") isEqualTo 1) then {
         if (LIFE_SETTINGS(getNumber,"battlEye_friendlyLogging") isEqualTo 1) then {
-            advanced_log = format [localize "STR_DL_AL_boughtHouse_BEF",[_cost] call MPClient_fnc_numberText,[life_var_bank] call MPClient_fnc_numberText,[MONEY_CASH] call MPClient_fnc_numberText];
+            advanced_log = format [localize "STR_DL_AL_boughtHouse_BEF",[_cost] call MPClient_fnc_numberText, MONEY_BANK_FORMATTED, MONEY_CASH_FORMATTED];
         } else {
-            advanced_log = format [localize "STR_DL_AL_boughtHouse",profileName,(getPlayerUID player),[_cost] call MPClient_fnc_numberText,[life_var_bank] call MPClient_fnc_numberText,[MONEY_CASH] call MPClient_fnc_numberText];
+            advanced_log = format [localize "STR_DL_AL_boughtHouse",profileName,(getPlayerUID player),[_cost] call MPClient_fnc_numberText, MONEY_BANK_FORMATTED, MONEY_CASH_FORMATTED];
         };
         publicVariableServer "advanced_log";
     };

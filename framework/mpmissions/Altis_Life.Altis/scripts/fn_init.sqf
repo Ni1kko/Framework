@@ -18,23 +18,24 @@ if (isFinal "life_var_initTime")exitWith{
     false;
 };
 
-waitUntil{uiSleep 0.2;(getClientState isEqualTo "BRIEFING READ") && !isNull findDisplay 46};
+// --
+waitUntil{!isNull findDisplay 46};
 
 // -- 
 enableSentences false;
 enableRadio false;
 
-// -- Handle BI Loading Screen
-if (call BIS_fnc_isLoading) then {
-    waitUntil{
+// -- Start Loading Screen (Arma likes to be a prick and sometimes it fails to load, this is a workaround for it)
+ waitUntil{
+    if (life_var_loadingScreenActive OR (call BIS_fnc_isLoading)) then {
         endLoadingScreen;
-        uiSleep 0.2;
-        not(call BIS_fnc_isLoading)
+        uiSleep 0.5;
     };
+    startLoadingScreen ["","life_Rsc_DisplayLoading"];
+    uiSleep 1.2;
+    life_var_loadingScreenActive
 };
 
-// -- Start Loading Screen
-startLoadingScreen ["","life_Rsc_DisplayLoading"];
 ["Setting up client", "Please Wait..."] call MPClient_fnc_setLoadingText; uiSleep(random[0.5,3,6]);
  
 life_var_initTime = compileFinal str(diag_tickTime);

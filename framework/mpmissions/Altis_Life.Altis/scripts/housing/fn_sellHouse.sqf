@@ -47,9 +47,9 @@ if (_action) then {
 
     if (LIFE_SETTINGS(getNumber,"player_advancedLog") isEqualTo 1) then {
         if (LIFE_SETTINGS(getNumber,"battlEye_friendlyLogging") isEqualTo 1) then {
-            advanced_log = format [localize "STR_DL_AL_soldHouse_BEF",(round((_houseCfg select 0)/2)),[life_var_bank] call MPClient_fnc_numberText];
+            advanced_log = format [localize "STR_DL_AL_soldHouse_BEF",(round((_houseCfg select 0)/2)),[MONEY_BANK] call MPClient_fnc_numberText];
         } else {
-            advanced_log = format [localize "STR_DL_AL_soldHouse",profileName,(getPlayerUID player),(round((_houseCfg select 0)/2)),[life_var_bank] call MPClient_fnc_numberText];
+            advanced_log = format [localize "STR_DL_AL_soldHouse",profileName,(getPlayerUID player),(round((_houseCfg select 0)/2)),[MONEY_BANK] call MPClient_fnc_numberText];
             };
         publicVariableServer "advanced_log";
     };

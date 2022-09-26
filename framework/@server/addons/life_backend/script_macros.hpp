@@ -1,5 +1,3 @@
-#define GANG_FUNDS group player getVariable ["gang_bank",0];
-
 /*
     remoteExec Section
     When uncommented it enables proper testing via local testing
@@ -60,9 +58,12 @@
 //--
 #define INFINTE 1e+011
 
+#define GET_BANK_VAR(target) format["money_bank_%1", getPlayerUID target]
+#define GET_DEBT_VAR(target) format["money_debt_%1", getPlayerUID target]
+#define GET_CASH_VAR "money_cash"
+#define GET_GANG_MONEY_VAR "money_gang"
 
-//--
-#define MONEY_CASH (player getVariable ["money_cash",0])
-#define MONEY_DEBT (player getVariable ["money_debt",0])
-#define MONEY_BANK(steamID) (missionNamespace getVariable [format["life_var_bank_%1", steamID],0])
-#define MONEY_GANG ((group player) getVariable ["gang_bank",0])
+#define GET_MONEY_CASH(target) target getVariable [GET_CASH_VAR,0]
+#define GET_MONEY_DEBT(target) target getVariable [GET_DEBT_VAR(target),0]
+#define GET_MONEY_BANK(target) missionNamespace getVariable [GET_BANK_VAR(target),0]
+#define GET_MONEY_GANG(target) (group target) getVariable [GET_GANG_MONEY_VAR,0]

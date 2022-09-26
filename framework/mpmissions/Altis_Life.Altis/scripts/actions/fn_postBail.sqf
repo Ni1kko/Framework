@@ -12,7 +12,7 @@ _unit = param [1,objNull,[objNull]];
 if (life_bail_paid) exitWith {};
 if (isNil "life_bail_amount") then {life_bail_amount = 3500;};
 if (!life_canpay_bail) exitWith {hint localize "STR_NOTF_Bail_Post"};
-if (life_var_bank < life_bail_amount) exitWith {hint format [localize "STR_NOTF_Bail_NotEnough",life_bail_amount];};
+if (MONEY_BANK < life_bail_amount) exitWith {hint format [localize "STR_NOTF_Bail_NotEnough",life_bail_amount];};
 
 ["SUB","BANK",life_bail_amount] call MPClient_fnc_handleMoney;
 life_bail_paid = true;

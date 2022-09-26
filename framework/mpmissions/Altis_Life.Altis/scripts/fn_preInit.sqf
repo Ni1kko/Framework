@@ -12,7 +12,10 @@ if (isFinal "life_var_preInitTime")exitWith{
 
 private _threadsToMonitor = [];
 private _variablesFlagged = [];
-private _variableTooSet = [ 
+private _playerVariables = [
+    [GET_CASH_VAR, 0]
+];
+private _missionVariables = [ 
     ["life_var_preInitTime", compileFinal str(diag_tickTime)],
     ["life_var_postInitTime", compile str(-1)],
     ["life_var_initTime", compile str(-1)],
@@ -122,6 +125,7 @@ private _variableTooSet = [
     ["life_isknocked", false],
     ["life_var_lastBalance",[0,0,0]],
     ["life_var_bankrupt", false],
+    ["life_var_bankruptTime", nil],
 
     //--- Owned house, vehicles are added to this array
     ["life_vehicles", []],
@@ -137,34 +141,59 @@ private _variableTooSet = [
     ["life_var_vehicleTraderData",["",[],"Undefined",true]],
     ["life_var_marketConfig",createHashMap],
 
+    //--- Money related
+    [GET_BANK_VAR(player), 0],
+    [GET_DEBT_VAR(player), 0],
+
     //-- Setup Gang hideouts
     ["life_hideoutBuildings", (LIFE_SETTINGS(getArray,"gang_area")) apply {nearestBuilding(getMarkerPos _x)}]
 ];
+private _parserVariables = [
+    
+];
+private _profileVariables = [
+    
+];
+private _uiVariables = [
+    
+];
 
 //-- Setup VirtualItems
-_variableTooSet append (([player,false] call MPClient_fnc_getGear)#1);
+_missionVariables append (([player,false] call MPClient_fnc_getGear)#1);
 
 //-- Setup Licenses
-_variableTooSet append ([player,false] call MPClient_fnc_getLicenses);
-
+_missionVariables append ([player,false] call MPClient_fnc_getLicenses);
 
 ["Loading client preInit"] call MPClient_fnc_log;
 ["Life_var_initBlackout"] call BIS_fnc_blackOut;//fail safe for loading screen
 
 //-- init Variables
 {
-    private _varName = _x param [0, ""];
-    private _varValue =  missionNamespace getVariable [_varName,nil];
+    _x params ["_namespace", "_verifyIsNil", "_varlist"];
 
-    if(isNil {_varValue})then{
-        _varValue =  _x param [1, nil];
-        if(!isNil {_varValue})then{
-            missionNamespace setVariable [_varName,_varValue];
+    {
+        private _varName = _x param [0, ""];
+        private _varValue =  _namespace getVariable [_varName,nil];
+        private _varPublic =  _x param [2, false];
+
+        if(isNil {_varValue} OR not(_verifyIsNil))then{
+            _varValue =  _x param [1, nil];
+            if(!isNil {_varValue})then{
+                _namespace setVariable [_varName,_varValue,_varPublic];
+            }else{
+                _namespace setVariable [_varName,nil,_varPublic];
+            };
+        }else{
+            _variablesFlagged pushBackUnique [_varName,_varValue];
         };
-    }else{
-        _variablesFlagged pushBackUnique [_varName,_varValue];
-    };
-} forEach _variableTooSet;
+    }forEach _varlist;
+} forEach [
+    [missionNamespace,true,_missionVariables],
+    [uiNamespace,true,_uiVariables],
+    [profileNamespace,false,_profileVariables],
+    [parsingNamespace,true,_parserVariables],
+    [player,true,_playerVariables]
+];
 
 //-- flagged variable found. TODO: handle this through anticheat on server once detected
 if(count _variablesFlagged > 0)exitWith{ 
@@ -174,13 +203,14 @@ if(count _variablesFlagged > 0)exitWith{
     endMission "Antihack";
 };
 
+//-- save proflie vars
+if(count _profileVariables > 0)then{
+    saveProfileNamespace;
+};
+
 //-- Thread set 1 Monitor money vars TODO: handle this through anticheat 
 _threadsToMonitor pushBackUnique (["bank"] spawn MPClient_fnc_checkMoney);
 _threadsToMonitor pushBackUnique (["cash"] spawn MPClient_fnc_checkMoney);
-
-//-- Start client
-private _initThread = [serverName,missionName,worldName,worldSize] spawn MPClient_fnc_init;
-//waitUntil {scriptDone _initThread};
 
 //-- Thread set 2
 {_threadsToMonitor set [_forEachIndex, _x spawn {waitUntil {uiSleep floor(random 15);isNull _this};endMission "Antihack"}]}forEach _threadsToMonitor;
@@ -188,6 +218,53 @@ private _initThread = [serverName,missionName,worldName,worldSize] spawn MPClien
 //-- Thread set 3
 _threadsToMonitor spawn {uiSleep floor(random 30); {_x spawn {waitUntil {uiSleep floor(random 30);isNull _this};endMission "Antihack"}}forEach _this};_threadsToMonitor = nil;
 
-[format["Client preInit completed! Took %1 seconds",diag_tickTime - (call life_var_preInitTime)]] call MPClient_fnc_log;
+//-- Check Client function are final
+{
+    private _cfgClientFunctions = missionConfigFile >> "cfgFunctions" >> _x;
+    private _clientFunctions = [];
+    for "_currentIndex" from 0 to (count(_cfgClientFunctions) - 1) do 
+    {
+        private _functionClassList = (_cfgClientFunctions >> configName (_cfgClientFunctions select _currentIndex));
+        for "_currentInnerIndex" from 0 to (count(_functionClassList) - 1) do 
+        {
+            private _currentInnerItem = _functionClassList select _currentInnerIndex;
+            _clientFunctions pushBackUnique (format ["%1_fnc_%2",_x,configName _currentInnerItem]);
+        };
+    };
 
+    //-- Check all client function are final
+    if ({isFinal (missionNamespace getVariable [_x, {}])} count _clientFunctions isNotEqualTo count _clientFunctions)then{
+        for "_i" from 0 to 10 do{
+            uiSleep 0.2;
+            ["Warning Client Functions Not Final, Major Security Risk!",false,true] call MPClient_fnc_log;
+        };
+    };
+}forEach [
+    "MPClient"
+];
+
+//-- Start client
+onPreloadFinished {
+    //-- Clear event
+    onPreloadFinished "";
+
+    //-- Load main init
+    [serverName,missionName,worldName,worldSize] spawn MPClient_fnc_init;
+    
+    //--
+    [format["Client preInit completed! Took %1 seconds",diag_tickTime - (call life_var_preInitTime)]] call MPClient_fnc_log;
+
+    true
+};
+
+// -- Handle BI Loading Screen
+if (call BIS_fnc_isLoading) then {
+    waitUntil{
+        endLoadingScreen;
+        uiSleep 0.2;
+        not(call BIS_fnc_isLoading)
+    };
+};
+
+//-- Preinit complete
 true

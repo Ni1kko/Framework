@@ -10,7 +10,7 @@ private _display = findDisplay 2400;
 private _list = _display displayCtrl 2402;
 private _data = call compile format["%1", lbData[2401,(lbCurSel 2401)]];
 
-if(2500 > life_var_bank) exitWith {hint "You do not have enough money in your bank to pay the civilian."; false};
+if(2500 > MONEY_BANK) exitWith {hint "You do not have enough money in your bank to pay the civilian."; false};
 if(isNil "_data" OR {typeName _data isNotEqualTo "ARRAY" OR {count _data < 2}}) exitWith {hint "An error occured, please try again."; false};
 
 //--- Find player

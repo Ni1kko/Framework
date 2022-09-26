@@ -27,9 +27,9 @@ if (!isNil "_value") exitWith {
 
     if (LIFE_SETTINGS(getNumber,"player_moneyLog") isEqualTo 1) then {
         if (LIFE_SETTINGS(getNumber,"battlEye_friendlyLogging") isEqualTo 1) then {
-            money_log = format [localize "STR_DL_ML_pickedUpMoney_BEF",[_value] call MPClient_fnc_numberText,[life_var_bank] call MPClient_fnc_numberText,[MONEY_CASH] call MPClient_fnc_numberText];
+            money_log = format [localize "STR_DL_ML_pickedUpMoney_BEF",[_value] call MPClient_fnc_numberText,[MONEY_BANK] call MPClient_fnc_numberText,[MONEY_CASH] call MPClient_fnc_numberText];
         } else {
-            money_log = format [localize "STR_DL_ML_pickedUpMoney",profileName,(getPlayerUID player),[_value] call MPClient_fnc_numberText,[life_var_bank] call MPClient_fnc_numberText,[MONEY_CASH] call MPClient_fnc_numberText];
+            money_log = format [localize "STR_DL_ML_pickedUpMoney",profileName,(getPlayerUID player),[_value] call MPClient_fnc_numberText,[MONEY_BANK] call MPClient_fnc_numberText,[MONEY_CASH] call MPClient_fnc_numberText];
         };
     publicVariableServer "money_log";
     };

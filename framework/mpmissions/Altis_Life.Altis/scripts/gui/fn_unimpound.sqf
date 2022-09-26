@@ -34,7 +34,7 @@ switch (playerSide) do {
 _price = _purchasePrice * _storageFee;
 
 if (!(_price isEqualType 0) || _price < 1) then {_price = 500;};
-if (life_var_bank < _price) exitWith {hint format [(localize "STR_Garage_CashError"),[_price] call MPClient_fnc_numberText];};
+if (MONEY_BANK < _price) exitWith {hint format [(localize "STR_Garage_CashError"),[_price] call MPClient_fnc_numberText];};
 
 if (life_garage_sp isEqualType []) then {
     if (count extdb_var_database_headless_clients > 0) then {
