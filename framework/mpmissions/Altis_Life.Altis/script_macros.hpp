@@ -13,12 +13,16 @@
 
 //Display Macros
 #define GETDisplayNumber(var) getNumber(([missionConfigFile,missionConfigFile >> "RscTitles"] select isClass (missionConfigFile >> "RscTitles" >> var)) >> var >> "idd")
-#define GETControlNumber(var, var2) getNumber(([missionConfigFile,missionConfigFile >> "RscTitles"] select isClass (missionConfigFile >> "RscTitles" >> var)) >> var >> var2 >> "idc")
-#define GETControlGroupNumber(var, var2, var3) getNumber(([missionConfigFile,missionConfigFile >> "RscTitles"] select isClass (missionConfigFile >> "RscTitles" >> var)) >> var >> var2 >> var3 >> "idc")
+#define GETControlNumber(var, var2) getNumber(([missionConfigFile,missionConfigFile >> "RscTitles"] select isClass (missionConfigFile >> "RscTitles" >> var)) >> var >> "controls" >> var2 >> "idc")
+#define GETControlBGNumber(var, var2) getNumber(([missionConfigFile,missionConfigFile >> "RscTitles"] select isClass (missionConfigFile >> "RscTitles" >> var)) >> var >> "controlsBackground" >> var2 >> "idc")
+#define GETControlGroupNumber(var, var2, var3) getNumber(([missionConfigFile,missionConfigFile >> "RscTitles"] select isClass (missionConfigFile >> "RscTitles" >> var)) >> var >> var2 >> "controls" >> var3 >> "idc")
+#define GETControlGroupBGNumber(var, var2, var3) getNumber(([missionConfigFile,missionConfigFile >> "RscTitles"] select isClass (missionConfigFile >> "RscTitles" >> var)) >> var >> var2 >> "controlsBackground" >> var3 >> "idc")
 
 #define GETDisplay(var) (uiNamespace getVariable [var, findDisplay (GETDisplayNumber(var))])
 #define GETControl(var, var2) GETDisplay(var) displayCtrl GETControlNumber(var, var2)
+#define GETControlBG(var, var2) GETDisplay(var) displayCtrl GETControlBGNumber(var, var2)
 #define GETControlGroup(var, var2, var3) GETDisplay(var) displayCtrl GETControlGroupNumber(var, var2, var3)
+#define GETControlGroupBG(var, var2, var3) GETDisplay(var) displayCtrl GETControlGroupBGNumber(var, var2, var3)
 
 #define CONTROL(disp,ctrl) ((findDisplay ##disp) displayCtrl ##ctrl)
 #define CONTROL_DATA(ctrl) (lbData[ctrl,lbCurSel ctrl])
@@ -27,7 +31,7 @@
 //System Macros
 #define LICENSE_VARNAME(varName,flag) format ["license_%1_%2",flag,M_CONFIG(getText,"cfgLicenses",varName,"variable")]
 #define LICENSE_VALUE(varName,flag) (missionNamespace getVariable [LICENSE_VARNAME(varName,flag),false])
-#define LICENSE_DISPLAYNAME(varName,flag) localize M_CONFIG(getText,"cfgLicenses",varName,"displayName")
+#define LICENSE_DISPLAYNAME(varName) localize M_CONFIG(getText,"cfgLicenses",varName,"displayName")
 #define ITEM_VARNAME(varName) format ["life_inv_%1",M_CONFIG(getText,"VirtualItems",varName,"variable")]
 #define ITEM_VALUE(varName) missionNamespace getVariable [ITEM_VARNAME(varName),0]
 #define ITEM_ILLEGAL(varName) M_CONFIG(getNumber,"VirtualItems",varName,"illegal")

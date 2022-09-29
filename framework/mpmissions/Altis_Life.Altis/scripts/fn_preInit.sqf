@@ -13,7 +13,7 @@ if (isFinal "life_var_preInitTime")exitWith{
 private _threadsToMonitor = [];
 private _variablesFlagged = [];
 private _playerVariables = [
-    [GET_CASH_VAR, 0]
+    [GET_CASH_VAR, 0,true]
 ];
 private _missionVariables = [ 
     ["life_var_preInitTime", compileFinal str(diag_tickTime)],
@@ -112,7 +112,7 @@ private _missionVariables = [
     ["life_clothing_purchase", [-1, -1, -1, -1, -1]],
     
     //--- Weight Variables
-    ["life_maxWeight", LIFE_SETTINGS(getNumber, "total_maxWeight")],
+    ["life_var_maxCarryWeight", LIFE_SETTINGS(getNumber, "total_maxWeight")],
     ["life_var_carryWeight", 0], //Represents the players current inventory weight (MUST START AT 0).
 
     //--- Life Variables
@@ -158,11 +158,12 @@ private _uiVariables = [
     
 ];
 
+
 //-- Setup VirtualItems
-_missionVariables append (([player,false] call MPClient_fnc_getGear)#1);
+_missionVariables append (([objNull,false] call MPClient_fnc_getGear)#1);
 
 //-- Setup Licenses
-_missionVariables append ([player,false] call MPClient_fnc_getLicenses);
+_missionVariables append ([objNull,false,false,false,false] call MPClient_fnc_getLicenses);
 
 ["Loading client preInit"] call MPClient_fnc_log;
 ["Life_var_initBlackout"] call BIS_fnc_blackOut;//fail safe for loading screen

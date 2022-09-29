@@ -20,7 +20,7 @@
 //System Macros
 #define LICENSE_VARNAME(varName,flag) format ["license_%1_%2",flag,M_CONFIG(getText,"cfgLicenses",varName,"variable")]
 #define LICENSE_VALUE(varName,flag) missionNamespace getVariable [LICENSE_VARNAME(varName,flag),false]
-#define LICENSE_DISPLAYNAME(varName,flag) localize M_CONFIG(getText,"cfgLicenses",varName,"displayName")
+#define LICENSE_DISPLAYNAME(varName) localize M_CONFIG(getText,"cfgLicenses",varName,"displayName")
 #define ITEM_VARNAME(varName) format ["life_inv_%1",M_CONFIG(getText,"VirtualItems",varName,"variable")]
 #define ITEM_VALUE(varName) missionNamespace getVariable [ITEM_VARNAME(varName),0]
 #define ITEM_ILLEGAL(varName) M_CONFIG(getNumber,"VirtualItems",ITEM_VARNAME(varName),"illegal")
