@@ -14,11 +14,9 @@ private _nearByPlayers = (playableUnits apply {if (alive _x AND player distance 
 private _ownedVirtualItemConfigNames = ([player,true,false,true] call MPClient_fnc_getGear)#1;
 private _ownedLicenseDisplayNames = [player,true,true,false] call MPClient_fnc_getLicenses;
 
-private _controlStructuredText_MoneyInfo = GETControl(_displayName, "moneyStatusInfo");
 private _controlListbox_NearPlayers1 = GETControl(_displayName, "NearPlayersListbox1");
-private _controlListbox_VirtualItems = GETControl(_displayName, "itemListBox");
 private _controlListbox_NearPlayers2 = GETControl(_displayName, "NearPlayersListbox2");
-private _controlStructuredText_Licenses = GETControlGroup(_displayName, "Licenses_Group" >> "NearPlayersListbox2");
+private _controlListbox_VirtualItems = GETControl(_displayName, "itemListBox");
 
 //-- Clear list boxes
 lbClear _controlListbox_VirtualItems;
@@ -26,24 +24,32 @@ lbClear _controlListbox_NearPlayers1;
 lbClear _controlListbox_NearPlayers2;
 
 //--- Money Info
- _controlStructuredText_MoneyInfo ctrlSetStructuredText parseText format ["<img size='1.3' image='textures\icons\ico_bank.paa'/> <t size='0.8px'>$%1</t><br/><img size='1.2' image='textures\icons\ico_money.paa'/> <t size='0.8'>$%2</t>",[MONEY_BANK] call MPClient_fnc_numberText,[MONEY_CASH] call MPClient_fnc_numberText];
- 
+GETControl(_displayName, "moneyStatusInfo") ctrlSetStructuredText parseText ([
+    format ["<img size='1.3' image='textures\icons\ico_bank.paa'/> <t size='0.8'>$%1</t>",MONEY_BANK_FORMATTED],
+    format ["<img size='1.2' image='textures\icons\ico_money.paa'/> <t size='0.8'>$%1</t>",MONEY_CASH_FORMATTED]
+] joinString "<br/>");
+
 //--- Near players
 if(count _nearByPlayers > 0)then{
     {
-        if !(isNull _x) then {
-            // Near players 1
-            _controlListbox_NearPlayers1 lbAdd format ["%1 - %2",_x getVariable ["realname",name _x], side _x];
-            _controlListbox_NearPlayers1 lbSetData [(lbSize _controlListbox_NearPlayers1)-1,str(_x)];
-            // Near players 2
-            _controlListbox_NearPlayers2 lbAdd format ["%1 - %2",_x getVariable ["realname",name _x], side _x];
-            _controlListbox_NearPlayers2 lbSetData [(lbSize _controlListbox_NearPlayers1)-1,str(_x)];
-        };
+        private _side = side _x;
+        private _sideVar = [_side,true] call MPServer_fnc_util_getSideString;
+        private _name = _x getVariable ["realname",name _x];
+        private _label = format ["[%2] %1",_x getVariable ["realname",name _x], _sideVar];
+        private _data = [_forEachIndex, str(_x)];
+        
+        {
+            _x lbAdd _label;
+            _x lbSetData _data;
+        }forEach [
+            _controlListbox_NearPlayers1,
+            _controlListbox_NearPlayers2
+        ];
     } forEach _nearByPlayers;
 };
 
 //--- Virtual items
-if(count _ownedVirtualItemConfigNames)then{
+if(count _ownedVirtualItemConfigNames > 0)then{
     { 
         _controlListbox_VirtualItems lbAdd format ["%2 [x%1]",ITEM_VALUE(_x),localize (getText(_x >> "displayName"))];
         _controlListbox_VirtualItems lbSetData [(lbSize _controlListbox_VirtualItems)-1,_x];
@@ -55,13 +61,9 @@ if(count _ownedVirtualItemConfigNames)then{
 };
 
 //-- Display licenses
-if(count _ownedLicenseDisplayNames > 0)then{
-    _controlStructuredText_Licenses ctrlSetStructuredText parseText format ["<t size='0.8px'>%1</t>",_ownedLicenseDisplayNames joinString "<br/>"]
-}else{
-    _controlStructuredText_Licenses ctrlSetStructuredText parseText "No Licenses";
-};
+GETControlGroup(_displayName, "Licenses_Group", "Life_Licenses") ctrlSetStructuredText parseText (if(count _ownedLicenseDisplayNames > 0)then{format ["<t size='0.8px'>%1</t>",_ownedLicenseDisplayNames joinString "<br/>"]}else{"No Licenses"});
 
-//Carry weight 
-ctrlSetText[121,format ["Weight: %1 / %2", life_var_carryWeight, life_maxWeight]];
+//Carry weight
+GETControl(_displayName, "Weight") ctrlSetText format ["Weight: %1 / %2", life_var_carryWeight, life_var_maxCarryWeight];
 
 true
