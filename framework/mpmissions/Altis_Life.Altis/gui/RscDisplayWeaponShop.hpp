@@ -1,7 +1,11 @@
-class life_weapon_shop {
+class RscDisplayWeaponShop 
+{
     idd = 38400;
     movingEnable = 0;
     enableSimulation = 1;
+    onLoad="uiNamespace setVariable ['RscDisplayWeaponShop', _this#0];";
+    onUnload="uiNamespace setVariable ['RscDisplayWeaponShop', displayNull]";
+    onDestroy="uiNamespace setVariable ['RscDisplayWeaponShop', displayNull]";
 
     class controlsBackground {
         class RscTitleBackground: Life_RscText {

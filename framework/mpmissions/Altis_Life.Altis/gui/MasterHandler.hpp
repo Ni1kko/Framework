@@ -8,7 +8,7 @@
 #include "impound.hpp"
 #include "bank.hpp"
 #include "veh_shop.hpp"
-#include "shops.hpp"
+#include "RscDisplayWeaponShop.hpp"
 #include "RscDisplayAdminMenu.hpp"
 #include "RscDisplayInventory.hpp"
 #include "RscDisplayCellPhone.hpp"

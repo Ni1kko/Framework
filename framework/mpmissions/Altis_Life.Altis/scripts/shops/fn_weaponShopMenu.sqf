@@ -1,56 +1,65 @@
 #include "..\..\script_macros.hpp"
 /*
-    File: fn_weaponShopMenu.sqf
-    Author: Bryan "Tonic" Boardwine
-
-    Description:
-    Something
+	## Nikko Renolds
+	## https://github.com/Ni1kko/FrameworkV2
+    ## fn_weaponShopMenu.sqf
 */
 
-private _shopTitle = M_CONFIG(getText,"WeaponShops",(_this select 3),"name");
-private _shopSide = M_CONFIG(getText,"WeaponShops",(_this select 3),"side");
-private _conditions = M_CONFIG(getText,"WeaponShops",(_this select 3),"conditions");
+private _shop = param [3,""];
+private _shopTitle = M_CONFIG(getText,"WeaponShops",_shop,"name");
+private _shopSide = M_CONFIG(getText,"WeaponShops",_shop,"side");
+private _conditions = M_CONFIG(getText,"WeaponShops",_shop,"conditions");
 private _playerSide = [playerSide,true] call MPServer_fnc_util_getSideString;
  
 if (not(MPClient_adminShop) AND count _shopSide > 0 AND  {_playerSide isNotEqualTo _shopSide}) exitWith {false};
 if (not(MPClient_adminShop) AND count _conditions > 0 AND {not([_conditions] call MPClient_fnc_levelCheck)}) exitWith {hint localize "STR_Shop_Veh_NotAllowed";false};
 
-uiNamespace setVariable ["Weapon_Shop",(_this select 3)];
-uiNamespace setVariable ["Weapon_Magazine",0];
-uiNamespace setVariable ["Weapon_Accessories",0];
-uiNamespace setVariable ["Magazine_Array",[]];
-uiNamespace setVariable ["Accessories_Array",[]];
+if (!isClass(missionConfigFile >> "WeaponShops" >> _shop)) exitWith {false}; //Bad config entry.
+if (!isClass(missionConfigFile >> "RscDisplayWeaponShop")) exitWith {false}; //Missing class `RscDisplayWeaponShop`
 
-if (!isClass(missionConfigFile >> "WeaponShops" >> (_this select 3))) exitWith {false}; //Bad config entry.
-
-private _display = createDialog ["life_weapon_shop",true];
+private _display = createDialog ["RscDisplayWeaponShop",true];
 disableSerialization;
 
+//--- 
+{uiNamespace setVariable _x}forEach [
+    ["Accessories_Array",[]],
+    ["Magazine_Array",[]],
+    ["Weapon_Accessories",0],
+    ["Weapon_Magazine",0],
+    ["Weapon_Shop",_shop]
+];
+
+//--- Get controls
 [
     (_display displayCtrl 38401),
-    (_display displayCtrl 38402)
+    (_display displayCtrl 38402),
+    (_display displayCtrl 38405),
+    (_display displayCtrl 38406),
+    (_display displayCtrl 38407)
 ]params [
     "_control_title",
-    "_control_filters"
+    "_control_filters",
+    "_control_confirm",
+    "_control_mags",
+    "_control_accs"
 ];
 
 //--- Set Title
 _control_title ctrlSetText _shopTitle;
  
-//--- Clear listbox
+//--- Clear combo
 lbClear _control_filters;
 
 //--- Disable buttons
 {
-    private _control = (_display displayCtrl _x);
-    _control ctrlShow true;
-    _control ctrlEnable false;
+    _x ctrlShow true;
+    _x ctrlEnable false;
 }forEach [
-    38406,
-    38407
+    _control_mags,
+    _control_accs
 ];
 
-//--- Add filters 
+//--- Add combo filters 
 {
     private _name = (if(isLocalized _x)then{localize _x}else{_x});
     _control_filters lbAdd _name;

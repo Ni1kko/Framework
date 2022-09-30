@@ -3,6 +3,9 @@ class RscDisplaySpawnSelection
     idd = 38500;
     movingEnabled = 0;
     enableSimulation = 1;
+    onLoad="uiNamespace setVariable ['RscDisplaySpawnSelection', _this#0];";
+    onUnload="uiNamespace setVariable ['RscDisplaySpawnSelection', displayNull]";
+    onDestroy="uiNamespace setVariable ['RscDisplaySpawnSelection', displayNull]";
 
     class controlsBackground 
     {

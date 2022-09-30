@@ -1,9 +1,11 @@
 class RscDisplayCellPhone
 {
 	idd = 8500;
-	name = "RscDisplayCellPhone";
-	movingEnabled = false;
-	enableSimulation = true;
+	movingEnabled = 0;
+    enableSimulation = 1;
+	onLoad="uiNamespace setVariable ['RscDisplayCellPhone', _this#0];";
+    onUnload="uiNamespace setVariable ['RscDisplayCellPhone', displayNull]";
+    onDestroy="uiNamespace setVariable ['RscDisplayCellPhone', displayNull]";
 	
 	class controls
 	{

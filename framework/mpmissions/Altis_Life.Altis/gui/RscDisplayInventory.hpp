@@ -5,6 +5,7 @@ class RscDisplayInventory
     enableSimulation = 1;
     onLoad="uiNamespace setVariable ['RscDisplayInventory', _this#0];";
     onUnload="uiNamespace setVariable ['RscDisplayInventory', displayNull]";
+    onDestroy="uiNamespace setVariable ['RscDisplayInventory', displayNull]";
 
     class controlsBackground 
     {

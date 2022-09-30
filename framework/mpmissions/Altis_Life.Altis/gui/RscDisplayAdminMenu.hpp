@@ -3,6 +3,10 @@ class RscDisplayAdminMenu
 	idd = 1776;
 	movingEnable = 1;
 	enableSimulation = 1;
+	onLoad="uiNamespace setVariable ['RscDisplayAdminMenu', _this#0];";
+    onUnload="uiNamespace setVariable ['RscDisplayAdminMenu', displayNull]";
+    onDestroy="uiNamespace setVariable ['RscDisplayAdminMenu', displayNull]";
+	
 	class controlsBackground{};
 	class Controls
 	{

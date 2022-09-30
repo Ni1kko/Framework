@@ -9,8 +9,10 @@ class RscDisplayPlayerHUD
     duration=999999;
     fadein=1;
     fadeout=1;
-    onLoad="uiNamespace setVariable ['RscDisplayPlayerHUD', _this select 0];";
+    onLoad="uiNamespace setVariable ['RscDisplayPlayerHUD', _this#0];";
     onUnload="uiNamespace setVariable ['RscDisplayPlayerHUD', displayNull]";
+    onDestroy="uiNamespace setVariable ['RscDisplayPlayerHUD', displayNull]";
+
     class controls
     {
         class Grenade: Life_RscControlsGroup
