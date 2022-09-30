@@ -50,6 +50,16 @@
 			<Chinesesimp>完成客户端设置程序...</Chinesesimp>
         </Key>
     </Package>
+
+    <Package name="EndMision">
+        <Key ID="STR_EndMission_Logoff_Title">
+            <Original>Thanks for playing</Original>
+        </Key>
+        <Key ID="STR_EndMission_Logoff_Desc">
+            <Original>Till next time</Original>
+        </Key>
+    </Package>
+
     <Package name="Shop_Names">
         <Key ID="STR_Shops_C_Bruce">
             <Original>Bruce's Outback Outfits</Original>

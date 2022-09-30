@@ -20,16 +20,29 @@ disableSerialization;
 
 //Long boring series of checks
 if (dialog) exitWith {};
-if (_shop isEqualTo "") exitWith {};
-if (!(_sideCheck isEqualTo sideUnknown) && {!(playerSide isEqualTo _sideCheck)}) exitWith {hint localize "STR_Shop_Veh_NotAllowed"};
+if (count _shop isEqualTo 0) exitWith {false};
+if (not(MPClient_adminShop) AND _sideCheck isNotEqualTo sideUnknown AND {!(playerSide isNotEqualTo _sideCheck)}) exitWith {hint localize "STR_Shop_Veh_NotAllowed"};
 
 private _conditions = M_CONFIG(getText,"cfgVehicleTraders",_shop,"conditions");
-if !([_conditions] call MPClient_fnc_levelCheck) exitWith {hint localize "STR_Shop_Veh_NotAllowed"};
+if (not(MPClient_adminShop) AND !([_conditions] call MPClient_fnc_levelCheck)) exitWith {hint localize "STR_Shop_Veh_NotAllowed"};
 
 if (LIFE_SETTINGS(getNumber,"vehicleShop_3D") isEqualTo 1) then {
   createDialog "Life_Vehicle_Shop_v2_3D";
 } else {
   createDialog "Life_Vehicle_Shop_v2";
+};
+
+if(MPClient_adminShop) then {
+    _shopTitle = format["Admin %1 Shop",_shop];
+    _shopFlag = M_CONFIG(getText,"WeaponShops",_shop,"side");
+    
+    if(count (missionNamespace getVariable ["MPClient_adminShopSpawnMarker",""]) > 0) then {
+       deleteMarkerLocal MPClient_adminShopSpawnMarker;
+    };
+
+    MPClient_adminShopSpawnMarker = createMarkerLocal ["adminVehShopSpawnMarker", position player];
+
+    _spawnpoints = [MPClient_adminShopSpawnMarker];
 };
 
 life_var_vehicleTraderData = [_shop,_spawnpoints,_shopFlag,_disableBuy]; //Store it so so other parts of the system can access it.

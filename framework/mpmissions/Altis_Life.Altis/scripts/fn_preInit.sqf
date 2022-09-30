@@ -141,6 +141,9 @@ private _missionVariables = [
     ["life_var_vehicleTraderData",["",[],"Undefined",true]],
     ["life_var_marketConfig",createHashMap],
 
+    //
+    ["MPClient_var_licenses",createHashMap],
+
     //--- Money related
     [GET_BANK_VAR(player), 0],
     [GET_DEBT_VAR(player), 0],

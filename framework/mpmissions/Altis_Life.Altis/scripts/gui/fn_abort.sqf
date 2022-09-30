@@ -6,33 +6,40 @@
 	Github:		https://github.com/Ni1kko/FrameworkV2
 	
 */
- 
-//-- Close escape menu (must be closed before display 46 is closed)
-(findDisplay 49) closeDisplay 2;
 
-for "_idd" from 140 to 46 do {
+for "_idd" from 140 to 46 step -1 do 
+{
     private _display = (findDisplay _idd);
-    if(!isNull _display)then{
-        _display closeDisplay 2;
+    
+    switch _idd do 
+    {
+        //-- Escape menu closing lets start outro
+        case 49:
+        {
+            startLoadingScreen ["","Life_Rsc_DisplayLoading"];
+            uiSleep 0.5;
+        };
+        //-- Mission end screen update outro
+        case 46:
+        {
+            private ["_script"];
+
+            //-- Sync player data to server
+            [] call MPClient_fnc_updateRequest;
+            _script = ["Syncing your data", "Please wait...", "red"] spawn MPClient_fnc_setLoadingText;
+            waitUntil {uiSleep 1.2; scriptDone _script};
+            
+            //--- Request server to clean up player
+            [player] remoteExec ["MPServer_fnc_cleanupRequest",2];
+            _script = ["Server Cleanup", "Please wait...", "red"] spawn MPClient_fnc_setLoadingText;
+            waitUntil {uiSleep 1.2; scriptDone _script};
+
+            //-- Kick player out server    
+            _script = ["STR_EndMission_Logoff_Title", "STR_EndMission_Logoff_Desc", "Logoff"] spawn MPClient_fnc_endMission;
+            waitUntil {uiSleep 1.2; scriptDone _script};
+        };
     };
+    _display closeDisplay 2
 };
 
-(findDisplay 46) spawn{
-    startLoadingScreen ["","Life_Rsc_DisplayLoading"];
-
-    //-- Sync player data to server
-    [] call MPClient_fnc_updateRequest;
-    ["Syncing your data", "Please wait...", "red"] call MPClient_fnc_setLoadingText;
-    uiSleep 2;
-
-    //--- Request server to clean up player
-    [player] remoteExec ["MPServer_fnc_cleanupRequest",2];
-    ["Server Cleanup", "Please wait...", "red"] call MPClient_fnc_setLoadingText;
-    uiSleep 2;
-
-    ["Thanks for playing","Till next time","red"] call MPClient_fnc_setLoadingText;
-    playSound "byebye";
-    uiSleep 3;
-    endLoadingScreen;
-    _this closeDisplay 2; 
-};
+true

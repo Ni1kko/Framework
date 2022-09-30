@@ -178,3 +178,5 @@
 #define MONEY_DEBT_FORMATTED GET_MONEY_DEBT_FORMATTED(player)
 #define MONEY_BANK_FORMATTED GET_MONEY_BANK_FORMATTED(player)
 #define MONEY_GANG_FORMATTED GET_MONEY_GANG_FORMATTED(player)
+
+#define FORCE_SUSPEND(fnc) if !canSuspend exitWith{_this spawn (missionNamespace getVariable [fnc,{}]); true}

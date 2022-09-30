@@ -12,7 +12,7 @@ params [
 //--- Handle Bad input
 if (isNil "_val") exitWith {""};
 if !(_mode in ["DB","GAME"]) exitWith {_val};
-if !(_type in ["ARRAY","STRING","BOOL","ENUM","A2NET"]) exitWith {_val};
+if !(_type in ["ARRAY","STRING","BOOL","ENUM","A2NET","LICENSES","POSITION","TEXT"]) exitWith {_val};
 
 //--- Mode... where are we parsing too?
 switch (_mode) do {
@@ -32,6 +32,12 @@ switch (_mode) do {
 					};
 				}forEach _val;
 				_val = str(str(toString _val));
+			};
+			case "LICENSES":
+			{   
+				_val = ["DB","ARRAY", (_val apply{
+					[_x#0,["DB","BOOL", _x#1] call MPServer_fnc_database_parse]
+				})] call MPServer_fnc_database_parse;
 			};
 			case "STRING": //String => (MYSQL Real-Escape)
 			{   
@@ -53,7 +59,7 @@ switch (_mode) do {
 				_val = if (typeName _val isEqualTo "ARRAY") then {_val} else {[]};
 				_val = if (count _val isEqualTo 3) then {_val} else {[0,0,0]};
 				_val = toArray str _val;
-        		_val = str(str(toString _val));
+        		_val = str(toString _val);
 			};
 			case "BOOL": //Bool => (MYSQL Tiny-int)
 			{
@@ -101,6 +107,12 @@ switch (_mode) do {
 
 				while {typeName _val isEqualTo "STRING"} do {
 					_val = call compile _val;	
+				};
+			};
+			case "LICENSES":
+			{   
+				_val = (["GAME","ARRAY", _val] call MPServer_fnc_database_parse) apply{
+					[_x#0,["GAME","BOOL", _X#1] call MPServer_fnc_database_parse]
 				};
 			};
 			case "POSITION": //Position => (MYSQL Position safe)

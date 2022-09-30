@@ -1,7 +1,11 @@
+#include "..\..\script_macros.hpp"
 /*
 	## Nikko Renolds
 	## https://github.com/Ni1kko/FrameworkV2
+    ## fn_insertPlayerInfo.sqf (Client)
 */
+
+FORCE_SUSPEND("MPClient_fnc_insertPlayerInfo");
 
 if (life_session_completed) exitWith { 
     ["`MPClient_fnc_insertPlayerInfo` => Session already completed"] call MPClient_fnc_log;

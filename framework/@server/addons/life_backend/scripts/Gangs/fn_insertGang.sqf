@@ -17,7 +17,7 @@ _group = group _ownerID;
 if (isNull _ownerID || _uid isEqualTo "" || _gangName isEqualTo "") exitWith {}; //Fail
 
 _ownerID = owner _ownerID;
-_gangName = [_gangName] call MPServer_fnc_mresString;
+_gangName = ["DB","STRING", _gangName] call MPServer_fnc_database_parse;
 _query = format ["SELECT id FROM gangs WHERE name='%1' AND active='1'",_gangName];
 
 _queryResult = [_query,2] call MPServer_fnc_database_rawasync_request;
@@ -44,7 +44,7 @@ if (!(count _queryResult isEqualTo 0)) exitWith {
 _query = format ["SELECT id, active FROM gangs WHERE name='%1' AND active='0'",_gangName];
 
 _queryResult = [_query,2] call MPServer_fnc_database_rawasync_request;
-_gangMembers = [[_uid]] call MPServer_fnc_mresArray;
+_gangMembers = ["DB","ARRAY", [_uid]] call MPServer_fnc_database_parse;
 
 if (!(count _queryResult isEqualTo 0)) then {
     _query = format ["UPDATE gangs SET active='1', owner='%1',members='%2' WHERE id='%3'",_uid,_gangMembers,(_queryResult select 0)];

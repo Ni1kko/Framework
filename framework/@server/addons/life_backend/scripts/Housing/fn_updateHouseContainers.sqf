@@ -17,7 +17,7 @@ _vehWeapons = getWeaponCargo _container;
 _vehBackpacks = getBackpackCargo _container;
 _cargo = [_vehItems,_vehMags,_vehWeapons,_vehBackpacks];
 
-_cargo = [_cargo] call MPServer_fnc_mresArray;
+_cargo = ["DB","ARRAY", _cargo] call MPServer_fnc_database_parse;
 
 _query = format ["UPDATE containers SET gear='%1' WHERE id='%2'",_cargo,_containerID];
 

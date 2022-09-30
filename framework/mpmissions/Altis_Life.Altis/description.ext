@@ -223,6 +223,8 @@ class CfgFunctions
             class revealObjects {};
             class getGear {};
             class getLicenses {};
+            class setLicense {};
+            class setLicenses {};
             class simDisable {};
             class startLoadout {};
             class stripDownPlayer {};
@@ -811,6 +813,15 @@ class CfgDebriefing {
         title = "Antihack";
         subtitle = "Nobody likes a hacker";
         description = "You have been flagged for hacking";
+        pictureBackground = "";
+        picture = "";
+        pictureColor[] = {0,0.3,0.6,1};
+    };
+
+    class Logoff {
+        title = "Logged Off";
+        subtitle = "You have logged off!";
+        description = "Thank you for playing on our server!";
         pictureBackground = "";
         picture = "";
         pictureColor[] = {0,0.3,0.6,1};

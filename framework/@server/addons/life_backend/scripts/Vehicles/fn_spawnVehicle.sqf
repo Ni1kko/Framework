@@ -62,9 +62,9 @@ if (count _nearVehicles > 0) exitWith {
 
 _query = format ["UPDATE vehicles SET active='1', damage='""[]""' WHERE pid='%1' AND id='%2'",_pid,_vid];
 
-private _trunk = [(_vInfo select 9)] call MPServer_fnc_mresToArray;
-private _gear = [(_vInfo select 10)] call MPServer_fnc_mresToArray;
-private _damage = [call compile (_vInfo select 12)] call MPServer_fnc_mresToArray;
+private _trunk = ["GAME","ARRAY", _vInfo#9] call MPServer_fnc_database_parse; 
+private _gear = ["GAME","ARRAY", _vInfo#10] call MPServer_fnc_database_parse;
+private _damage = ["GAME","ARRAY",call compile (_vInfo select 12)] call MPServer_fnc_database_parse;
 private _wasIllegal = _vInfo select 13;
 _wasIllegal = if (_wasIllegal isEqualTo 1) then { true } else { false };
 

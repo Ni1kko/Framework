@@ -1,26 +1,24 @@
 /*
-    File: fn_updatePartial.sqf
-    Author: Bryan "Tonic" Boardwine
-
-    Description:
-    Takes partial data of a player and updates it, this is meant to be
-    less network intensive towards data flowing through it for updates.
-    
-    Edits by:
-    ## Nikko Renolds
+	## Nikko Renolds
 	## https://github.com/Ni1kko/FrameworkV2
+    ## fn_updatePartial.sqf (Server)
 */
 
 private _player = param [0,objNull];
 private _uid = getPlayerUID _player;
 private _BEGuid = call (_player getVariable ["BEGUID",{""}]);
 private _side = side _player;
+private _sideVar = [_side,true] call MPServer_fnc_util_getSideString;
 
-if (isNull _player  OR _uid isEqualTo "") exitWith {}; //Bad.
+if (isNull _player  OR _uid isEqualTo "") exitWith {false}; //Bad.
 if (_BEGuid isEqualTo "")then{
-    _BEGuid = ('BEGuid' callExtension ("get:"+_uid));
+    _BEGuid = ('BEGuid' callExtension (["get", _uid] joinString ":"));
     _player setVariable ["BEGUID",compileFinal str _BEGuid,true];
 };
+
+private _whereClause = [
+    ["BEGuid",str _BEGuid]
+];
 
 switch (param [1,-1]) do {
     case 0: {
@@ -28,35 +26,26 @@ switch (param [1,-1]) do {
             [//What
                 ["cash",["DB","A2NET", param [2,0]] call MPServer_fnc_database_parse]
             ],
-            [//Where
-                ["BEGuid",str _BEGuid]
-            ]
+            _whereClause
         ]]call MPServer_fnc_database_request;
     };
 
     case 1: { 
         ["UPDATE", "bankaccounts", [
             [//What
-                ["funds",["DB","A2NET", param [2,0]] call MPServer_fnc_database_parse]
+                ["funds",["DB","A2NET", param [2,0]] call MPServer_fnc_database_parse],
+                ["debt",["DB","A2NET", param [3,0]] call MPServer_fnc_database_parse]
             ],
-            [//Where
-                ["BEGuid",str _BEGuid]
-            ]
+            _whereClause
         ]]call MPServer_fnc_database_request;
     };
 
     case 2: {
         ["UPDATE", "players", [
             [//What
-                [(switch (_side) do {
-                    case west: {"cop_licenses"};
-                    case independent: {"med_licenses"};
-                    default {"civ_licenses"};
-                }),["DB","ARRAY", ((param [2,0]) apply{[_x#0,["DB","BOOL", _x#1] call MPServer_fnc_database_parse]})] call MPServer_fnc_database_parse]	
+                [format["%1_licenses",_sideVar], ["DB","LICENSES", param [2,0]] call MPServer_fnc_database_parse]
             ],
-            [//Where
-                ["BEGuid",str _BEGuid]
-            ]
+            _whereClause
         ]]call MPServer_fnc_database_request;
     };
 
@@ -68,16 +57,10 @@ switch (param [1,-1]) do {
         
         ["UPDATE", "players", [
             [//What
-                [(switch (_side) do {
-                    case west: {"cop_gear"};
-                    case independent: {"med_gear"};
-                    default {"civ_gear"};
-                }),["DB","ARRAY", _loadout] call MPServer_fnc_database_parse],
-                ["virtualitems",["DB","ARRAY", _vItems] call MPServer_fnc_database_parse]
+                [format["%1_gear",_sideVar],    ["DB","ARRAY", _loadout] call MPServer_fnc_database_parse],
+                ["virtualitems",                ["DB","ARRAY", _vItems] call MPServer_fnc_database_parse]
             ],
-            [//Where
-                ["BEGuid",str _BEGuid]
-            ]
+            _whereClause
         ]]call MPServer_fnc_database_request;
     };
 
@@ -85,11 +68,9 @@ switch (param [1,-1]) do {
         ["UPDATE", "players", [
             [//What
                 ["alive",   ["DB","BOOL", param [2,false]] call MPServer_fnc_database_parse],	
-                ["position",["DB","ARRAY", param [3,[]]] call MPServer_fnc_database_parse]	
+                ["position",["DB","POSITION", param [3,[]]] call MPServer_fnc_database_parse]	
             ],
-            [//Where
-                ["BEGuid",str _BEGuid]
-            ]
+            _whereClause
         ]]call MPServer_fnc_database_request;
     };
 
@@ -98,9 +79,7 @@ switch (param [1,-1]) do {
             [//What
                 ["arrested",["DB","BOOL", param [2,0]] call MPServer_fnc_database_parse]
             ],
-            [//Where
-                ["BEGuid",str _BEGuid]
-            ]
+            _whereClause
         ]]call MPServer_fnc_database_request;
     };
 
@@ -109,17 +88,15 @@ switch (param [1,-1]) do {
             [//What
                 ["cash",["DB","A2NET", param [2,0]] call MPServer_fnc_database_parse]
             ],
-            [//Where
-                ["BEGuid",str _BEGuid]
-            ]
+            _whereClause
         ]]call MPServer_fnc_database_request;
+
         ["UPDATE", "bankaccounts", [
             [//What
-                ["funds",["DB","A2NET", param [3,0]] call MPServer_fnc_database_parse]
+                ["funds",["DB","A2NET", param [3,0]] call MPServer_fnc_database_parse],
+                ["debt",["DB","A2NET", param [4,0]] call MPServer_fnc_database_parse]
             ],
-            [//Where
-            ["BEGuid",str _BEGuid]
-            ]
+            _whereClause
         ]]call MPServer_fnc_database_request;
     };
 
@@ -127,3 +104,5 @@ switch (param [1,-1]) do {
         [_uid,_side,param [2,0]] call MPServer_fnc_keyManagement;
     };
 };
+
+true

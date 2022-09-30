@@ -106,7 +106,12 @@ try {
 		"_rnd_adminmenu_mappos",
 		"_rnd_adminmenu_addlogs2list",
 		"_rnd_fnc_joinAdminChat",
-		"_rnd_fnc_leaveAdminChat"
+		"_rnd_fnc_leaveAdminChat",
+		"_rnd_fnc_adminShopMenu",
+		"_rnd_fnc_adminShopVehMenu",
+		"_rnd_fnc_adminShopClothingMenu",
+		"_rnd_fnc_adminShopWepMenu",
+		"_rnd_fnc_adminShopMarketMenu"
 	];
 
 	//--- create random vars
@@ -167,7 +172,126 @@ try {
 		"+_rnd_vehiclemarkerstoggle+" = false;
 		"+_rnd_aimarkerstoggle+" = false;
 		"+_rnd_mapsingleclick+" = 'if(_alt && "+_rnd_maptptoggle+") then {(vehicle player) setpos _pos;};';
+		"+_rnd_fnc_adminShopMenu+" = {
+			disableSerialization;
+			MPClient_var_SelectedAdminShop = '';
+			
+			private _display = createDialog ['RscDisplayChooseEditorLayout',true];
 
+			(_display displayctrl 1000) ctrlSetText 'Admin Shop Menu';
+			
+			lbClear (_display displayctrl 101);
+			{ 
+				(_display displayctrl 101) lbAdd _x; 
+				(_display displayctrl 101) lbSetData [_ForEachIndex, _x];
+			} forEach [
+				'clothing',
+				'weapons',
+				'market',
+				'vehicle'
+			];
+			(_display displayctrl 101) ctrlAddEventHandler ['LbSelChanged',{disableSerialization; MPClient_var_SelectedAdminShop = lbData[101,_this#1]}];
+			(_display displayctrl 101) ctrlCommit 0;
+			
+			(_display displayctrl 1) ctrlSetText 'Confirm';
+			(_display displayctrl 1) buttonSetAction '
+			if(count MPClient_var_SelectedAdminShop isEqualTo 0)then{hint ""No Admin Shop Selected!""}else{
+				switch MPClient_var_SelectedAdminShop do 
+				{
+					case ""clothing"": {[findDisplay 164] call "+_rnd_fnc_adminShopClothingMenu+"};
+					case ""weapons"": {[findDisplay 164] call "+_rnd_fnc_adminShopWepMenu+"};
+					case ""market"": {[findDisplay 164] call "+_rnd_fnc_adminShopVehMenu+"};
+					case ""vehicle"": {[findDisplay 164] call "+_rnd_fnc_adminShopMarketMenu+"};
+				}
+			};';
+			(_display displayctrl 1) ctrlCommit 0;
+
+		};
+		"+_rnd_fnc_adminShopVehMenu+" = {
+			disableSerialization;
+			MPClient_var_SelectedAdminVehicleShop = '';
+
+			private _display = createDialog ['RscDisplayChooseEditorLayout',true];
+			
+			(_display displayctrl 1000) ctrlSetText 'All Vehicle Shops';
+
+			lbClear (_display displayctrl 101);	
+			{ 
+				(_display displayctrl 101) lbAdd format ['[%1] %2', getText(missionConfigFile >> 'cfgVehicleTraders' >> _x >> 'side'), _x]; 
+				(_display displayctrl 101) lbSetData [_ForEachIndex, _x];
+			} forEach (('true' configClasses (missionConfigFile >> 'cfgVehicleTraders')) apply {configName _x});
+			
+			(_display displayctrl 101) ctrlAddEventHandler ['LbSelChanged',{disableSerialization; MPClient_var_SelectedAdminVehicleShop = lbData[101,_this#1]}];
+			(_display displayctrl 101) ctrlCommit 0;
+			
+			(_display displayctrl 1) ctrlSetText 'Confirm';
+			(_display displayctrl 1) buttonSetAction 'if(count MPClient_var_SelectedAdminVehicleShop isEqualTo 0)then{hint ""No Admin Shop Selected!""}else{MPClient_adminShop = true;[toString [34,34],toString [34,34],toString [34,34],[MPClient_var_SelectedAdminVehicleShop]] spawn MPClient_fnc_vehicleShopMenu};';
+			(_display displayctrl 1) ctrlCommit 0; 
+		};
+		"+_rnd_fnc_adminShopWepMenu+" = {
+			disableSerialization;
+			MPClient_var_SelectedAdminWeaponShop = '';
+
+			private _display = createDialog ['RscDisplayChooseEditorLayout',true];
+			
+			(_display displayctrl 1000) ctrlSetText 'All Weapon & item Shops';
+
+			lbClear (_display displayctrl 101);	
+			{ 
+				(_display displayctrl 101) lbAdd format ['[%1] %2', getText(missionConfigFile >> 'WeaponShops' >> _x >> 'side'), getText(missionConfigFile >> 'WeaponShops' >> _x >> 'name')]; 
+				(_display displayctrl 101) lbSetData [_ForEachIndex, _x];
+			} forEach (('true' configClasses (missionConfigFile >> 'WeaponShops')) apply {configName _x});
+			
+			(_display displayctrl 101) ctrlAddEventHandler ['LbSelChanged',{disableSerialization; MPClient_var_SelectedAdminWeaponShop = lbData[101,_this#1]}];
+			(_display displayctrl 101) ctrlCommit 0;
+			
+			(_display displayctrl 1) ctrlSetText 'Confirm';
+			(_display displayctrl 1) buttonSetAction 'if(count MPClient_var_SelectedAdminWeaponShop isEqualTo 0)then{hint ""No Admin Shop Selected!""}else{MPClient_adminShop = true;[toString [34,34],toString [34,34],toString [34,34],MPClient_var_SelectedAdminWeaponShop] spawn MPClient_fnc_weaponShopMenu};';
+			(_display displayctrl 1) ctrlCommit 0; 
+		};
+		"+_rnd_fnc_adminShopMarketMenu+" = {
+			disableSerialization;
+			MPClient_var_SelectedAdminMarketShop = '';
+			
+			private _display = createDialog ['RscDisplayChooseEditorLayout',true];
+		
+			(_display displayctrl 1000) ctrlSetText 'All Market Shops';
+
+			lbClear (_display displayctrl 101);	
+			{ 
+				(_display displayctrl 101) lbAdd format ['[%1] %2', getText(missionConfigFile >> 'VirtualShops' >> _x >> 'side'),localize getText(missionConfigFile >> 'VirtualShops' >> _x >> 'name')]; 
+				(_display displayctrl 101) lbSetData [_ForEachIndex, _x];
+			} forEach (('true' configClasses (missionConfigFile >> 'VirtualShops')) apply {configName _x});
+			
+			(_display displayctrl 101) ctrlAddEventHandler ['LbSelChanged',{disableSerialization; MPClient_var_SelectedAdminMarketShop = lbData[101,_this#1]}];
+			(_display displayctrl 101) ctrlCommit 0;
+			
+			(_display displayctrl 1) ctrlSetText 'Confirm';
+			(_display displayctrl 1) buttonSetAction 'if(count MPClient_var_SelectedAdminMarketShop isEqualTo 0)then{hint ""No Admin Shop Selected!""}else{MPClient_adminShop = true;[toString [34,34],toString [34,34],toString [34,34],MPClient_var_SelectedAdminMarketShop] spawn MPClient_fnc_virt_menu;};';
+			(_display displayctrl 1) ctrlCommit 0; 
+		};
+		"+_rnd_fnc_adminShopClothingMenu+" = {
+			disableSerialization;
+			MPClient_var_SelectedAdminClothingShop = '';
+			MPClient_adminShop = true;
+			
+			private _display = createDialog ['RscDisplayChooseEditorLayout',true];
+		
+			(_display displayctrl 1000) ctrlSetText 'All Clothing Shops';
+
+			lbClear (_display displayctrl 101);	
+			{ 
+				(_display displayctrl 101) lbAdd format ['[%1] %2', getText(missionConfigFile >> 'Clothing' >> _x >> 'side'), localize getText(missionConfigFile >> 'Clothing' >> _x >> 'title')]; 
+				(_display displayctrl 101) lbSetData [_ForEachIndex, _x];
+			} forEach (('true' configClasses (missionConfigFile >> 'Clothing')) apply {configName _x});
+			
+			(_display displayctrl 101) ctrlAddEventHandler ['LbSelChanged',{disableSerialization; MPClient_var_SelectedAdminClothingShop = lbData[101,_this#1]}];
+			(_display displayctrl 101) ctrlCommit 0;
+			
+			(_display displayctrl 1) ctrlSetText 'Confirm';
+			(_display displayctrl 1) buttonSetAction 'if(count MPClient_var_SelectedAdminClothingShop isEqualTo 0)then{hint ""No Admin Shop Selected!""}else{[toString [34,34],toString [34,34],toString [34,34],MPClient_var_SelectedAdminClothingShop] spawn MPClient_fnc_clothingMenu;};';
+			(_display displayctrl 1) ctrlCommit 0; 
+		};
 		"+_rnd_drawmarkers+" = compileFinal ""
 			disableserialization;
 			params['_ctrl'];
@@ -927,6 +1051,11 @@ try {
 					};
 				}] call "+_rnd_runserver+";
 				['INFO','Restarted Server'] call "+_rnd_log+";
+			}; 
+			private _openShopsMenu = {
+				(findDisplay 1776) closeDisplay 2;
+				closeDialog 2;
+				[]spawn "+_rnd_fnc_adminShopMenu+"; 
 			};
 			"+_rnd_adminmenufunctions+" = [
 				['- Main',0],
@@ -940,6 +1069,7 @@ try {
 					['Heal',2,_heal],
 					['Repair Cursor',2,_repaircurs],
 					['Delete Cursor',2,_deletecurs],
+					['Shops',2,_openShopsMenu],
 
 				['- Players',0],
 					['Show Players',1,_toggle_players,'"+_rnd_playermenutoggle+"'],
@@ -1188,21 +1318,20 @@ try {
 				};
 				_index = _main lbAdd _text;
 				_main lbSetData [_index,str(_forEachIndex)];
-				if(_type == 0) then {
-					_main lbSetColor [_index,"+_rnd_titlecolor+"];
-				};
-				if(_type == 1) then {
-					_variable = _x select 3;
-					_value = missionNamespace getVariable [_variable,false];
-					if(_value) then {
-						_main lbSetColor [_index,"+_rnd_toggleoncolor+"];
-					} else {
-						_main lbSetColor [_index,"+_rnd_toggleoffcolor+"];
+
+				switch (_type) do 
+				{
+					case 0: {_main lbSetColor [_index,"+_rnd_titlecolor+"]};
+					case 1: {
+						if(missionNamespace getVariable [_x param [3, ''],false]) then {
+							_main lbSetColor [_index,"+_rnd_toggleoncolor+"];
+						} else {
+							_main lbSetColor [_index,"+_rnd_toggleoffcolor+"];
+						};
 					};
+					case 2: {_main lbSetColor [_index,"+_rnd_notogglecolor+"]};
 				};
-				if(_type == 2) then {
-					_main lbSetColor [_index,"+_rnd_notogglecolor+"];
-				};
+
 			} forEach "+_rnd_adminmenufunctions+";
 			_main ctrlAddEventHandler ['LBDblClick',"+_rnd_adminmenuDBLclick+"];
 			

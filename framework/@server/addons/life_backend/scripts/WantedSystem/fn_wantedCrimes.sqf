@@ -20,7 +20,7 @@ private _queryResult = [_query,2] call MPServer_fnc_database_rawasync_request;
 
 _ret = owner _ret;
 
-private _type = [_queryResult select 0] call MPServer_fnc_mresToArray;
+private _type = ["GAME","ARRAY", _queryResult#0] call MPServer_fnc_database_parse;
 if (_type isEqualType "") then {_type = call compile format ["%1", _type];};
 
 private _crimesArr = [];

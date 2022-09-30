@@ -12,7 +12,7 @@ private _display = param [0, uiNamespace getVariable [_displayName, GETDisplay(_
 private _side = [playerSide,true] call MPServer_fnc_util_getSideString;
 private _nearByPlayers = (playableUnits apply {if (alive _x AND player distance _x < 10 AND _x isNotEqualTo player) then {_x}else{""}}) - [""];
 private _ownedVirtualItemConfigNames = ([player,true,false,true] call MPClient_fnc_getGear)#1;
-private _ownedLicenseDisplayNames = [player,true,true,false] call MPClient_fnc_getLicenses;
+private _ownedLicenseDisplayNames = ([player,true,true,false] call MPClient_fnc_getLicenses);
 
 private _controlListbox_NearPlayers1 = GETControl(_displayName, "NearPlayersListbox1");
 private _controlListbox_NearPlayers2 = GETControl(_displayName, "NearPlayersListbox2");

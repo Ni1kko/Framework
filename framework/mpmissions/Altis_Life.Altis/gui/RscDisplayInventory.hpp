@@ -1,7 +1,7 @@
 class RscDisplayInventory 
 {
     idd = 2001;
-    movingEnable = 1;
+    movingEnable = 0;
     enableSimulation = 1;
     onLoad="uiNamespace setVariable ['RscDisplayInventory', _this#0];";
     onUnload="uiNamespace setVariable ['RscDisplayInventory', displayNull]";
@@ -248,6 +248,7 @@ class RscDisplayInventory
             idc = 124;
             text = "$STR_PM_MyGang";
             onButtonClick = "if (isNil ""life_action_gangInUse"") then {if (isNil {(group player) getVariable ""gang_owner""}) then {createDialog ""Life_Create_Gang_Diag"";} else {[] spawn MPClient_fnc_gangMenu;};};";
+            show = 0;
             x = 0.1 + (6.25 / 19.8) + (1 / 250 / (safezoneW / safezoneH));
             y = 0.8 - (1 / 25);
             w = (6.25 / 40);
@@ -259,6 +260,7 @@ class RscDisplayInventory
             idc = 125;
             text = "$STR_PM_WantedList";
             onButtonClick = "[] call MPClient_fnc_wantedMenu";
+            show = 0;
             x = 0.1 + (6.25 / 19.8) + (1 / 250 / (safezoneW / safezoneH));
             y = 0.8 - (1 / 25);
             w = (6.25 / 40);
@@ -292,6 +294,7 @@ class RscDisplayInventory
             idc = 128;
             text = "$STR_PM_BountyList";
             onButtonClick = "[true] call MPClient_fnc_wantedMenu";
+            show = 0;
             x = 0.1 + (6.25 / 40) + (1 / 250 / (safezoneW / safezoneH));
             y = 0.805;
             w = (6.25 / 40);
@@ -300,7 +303,7 @@ class RscDisplayInventory
         //-- Admin menu (idc: 129)
         class ButtonAdminMenu: Life_RscButtonMenu {
             idc = 129;
-            text = "$STR_PM_AdminMenu";
+            text = "Admin Menu";
             onButtonClick = "closeDialog 0;[]spawn MPClient_fnc_admin_showmenu;";
             show = 0;
             x = 0.1;

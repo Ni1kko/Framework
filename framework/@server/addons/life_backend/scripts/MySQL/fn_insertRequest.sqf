@@ -1,17 +1,10 @@
 #include "\life_backend\script_macros.hpp"
 /*
-    File: fn_insertRequest.sqf
-    Author: Bryan "Tonic" Boardwine
-
-    Description:
-    Adds a player to the database upon first joining of the server.
-    Recieves information from scripts\sesison\fn_insertPlayerInfo.sqf
-
-    Edits by:
-    ## Nikko Renolds
+	## Nikko Renolds
 	## https://github.com/Ni1kko/FrameworkV2
+    ## fn_insertRequest.sqf (Server)
 */
- 
+
 params [
     ["_player",objNull,[objNull]]
 ];
@@ -31,7 +24,7 @@ if (_BEGuid isEqualTo "") exitWith {systemChat "Bad BEGuid";};
 
 //--- read database
 private _queryResult = ["READ", "players", [["pid","serverID"], [["BEGuid",str _BEGuid]]], true]call MPServer_fnc_database_request;
-private _queryBankResult = ["READ", "bankaccounts", [["funds"],[["BEGuid",str _BEGuid]]],true]call MPServer_fnc_database_request;
+private _queryBankResult = ["READ", "bankaccounts", [["funds","debt"],[["BEGuid",str _BEGuid]]],true]call MPServer_fnc_database_request;
 
 //--- Bad.. fail safe
 if (typeName _queryResult isNotEqualTo "ARRAY" || typeName _queryBankResult isNotEqualTo "ARRAY") exitWith{[] remoteExecCall ["MPClient_fnc_dataQuery",_ownerID]};

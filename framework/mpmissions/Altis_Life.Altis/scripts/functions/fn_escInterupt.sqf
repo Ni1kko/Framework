@@ -114,7 +114,7 @@ for "_i" from 0 to 1 step 0 do {
     //Exit Btn
     ((uiNamespace getVariable "RscDisplayMPInterrupt") displayCtrl 104) ctrlEnable false;
     ((uiNamespace getVariable "RscDisplayMPInterrupt") displayCtrl 104) ctrlSetText "Exit";
-    ((uiNamespace getVariable "RscDisplayMPInterrupt") displayCtrl 104) ctrlAddEventHandler ["ButtonClick","[] spawn MPClient_fnc_abort; (findDisplay 49) closeDisplay 2; true"];
+    ((uiNamespace getVariable "RscDisplayMPInterrupt") displayCtrl 104) buttonSetAction "[] spawn MPClient_fnc_abort";
     ((uiNamespace getVariable "RscDisplayMPInterrupt") displayCtrl 104) ctrlSetToolTip "Abandon Server And Sync Data";
 
     

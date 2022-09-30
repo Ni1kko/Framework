@@ -16,7 +16,7 @@ if (!isNull _display) exitWith {
     displayNull
 };
 
-//--- Double check no menus are open and make sure player is alive
+//--- Double check no other menus are open and make sure player is alive
 if (dialog OR not(life_is_alive)) exitWith {
     systemChat "You cannot open this menu while dead or in a dialog";
     displayNull
@@ -72,19 +72,19 @@ _controls params [
     ["_controlBTN_Admin",       controlNull, [controlNull]]
 ];
  
-//--- Gang menu
-_controlBTN_Gang ctrlShow (playerSide isEqualTo civilian);
-_controlBTN_Gang ctrlEnable (playerSide isEqualTo civilian);
+//--- Gang menu (civilians & rebels only)
+_controlBTN_Gang ctrlShow (playerSide in [civilian,east]);
+_controlBTN_Gang ctrlEnable (ctrlShown _controlBTN_Gang);
 
-//--- Wanted menu
+//--- Wanted menu (cops only)
 _controlBTN_Wanted ctrlShow (playerSide isEqualTo west);
 _controlBTN_Wanted ctrlEnable ((call life_coplevel) > 0);
 
-//--- Bounty hunting menu
+//--- Bounty hunting menu (civs only)
 _controlBTN_Bounty ctrlShow (playerSide isEqualTo civilian);
 _controlBTN_Bounty ctrlEnable license_civ_bountyHunter;
 
-//--- Admin menu
+//--- Admin menu (staff only)
 _controlBTN_Admin ctrlShow not(isNil 'MPClient_fnc_admin_showmenu');
 _controlBTN_Admin ctrlEnable ((call life_adminlevel) > 0);
 

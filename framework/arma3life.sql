@@ -156,7 +156,8 @@ DROP TABLE IF EXISTS `bankaccounts`;
 CREATE TABLE `bankaccounts` (
   `accountID` int(11) NOT NULL,
   `BEGuid` varchar(64) NOT NULL,
-  `funds` int(11) NOT NULL DEFAULT 0
+  `funds` int(11) NOT NULL DEFAULT 0,
+  `debt` int(11) NOT NULL DEFAULT 0
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 -- --------------------------------------------------------

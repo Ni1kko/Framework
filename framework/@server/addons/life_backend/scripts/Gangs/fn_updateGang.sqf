@@ -19,9 +19,9 @@ if (_groupID isEqualTo -1) exitWith {};
 
 switch (_mode) do {
     case 0: {
-        _bank = [(_group getVariable [GET_GANG_MONEY_VAR,0])] call MPServer_fnc_numberSafe;
+        _bank = ["DB","A2NET", _group getVariable [GET_GANG_MONEY_VAR,0]] call MPServer_fnc_database_parse;
         _maxMembers = _group getVariable ["gang_maxMembers",8];
-        _members = [(_group getVariable "gang_members")] call MPServer_fnc_mresArray;
+        _members = ["DB","ARRAY", _group getVariable ["gang_members",[]]] call MPServer_fnc_database_parse;
         _owner = _group getVariable ["gang_owner",""];
         if (_owner isEqualTo "") exitWith {};
 
@@ -90,7 +90,8 @@ switch (_mode) do {
             ];
             waitUntil {not(missionNamespace getVariable [_sessionvar,false]) OR isNull _group};
             if (isNull _group) exitWith {false};
-            [format ["UPDATE gangs SET bank='%1' WHERE id='%2'",([_group getVariable [GET_GANG_MONEY_VAR,0]] call MPServer_fnc_numberSafe),_groupID]] call MPServer_fnc_queryRequest;
+            
+            [format ["UPDATE gangs SET bank='%1' WHERE id='%2'",(["DB","A2NET", _group getVariable [GET_GANG_MONEY_VAR,0]] call MPServer_fnc_database_parse),_groupID]] call MPServer_fnc_queryRequest;
             true
         };
     };
@@ -115,7 +116,7 @@ switch (_mode) do {
         } else {
             _membersFinal = _group getVariable "gang_members";
         };
-        _membersFinal = [_membersFinal] call MPServer_fnc_mresArray;
+        _membersFinal = ["DB","ARRAY", _membersFinal] call MPServer_fnc_database_parse;
         _query = format ["UPDATE gangs SET members='%1' WHERE id='%2'",_membersFinal,_groupID];
     };
 };

@@ -6,7 +6,7 @@
 
 params [
     ["_player",player,[objNull]],
-    ["_loadout",[],[[]]], 
+    ["_gear",[],[[]]], 
     ["_isDead",false,[false]]
 ];
 

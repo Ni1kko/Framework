@@ -13,35 +13,39 @@ params [
 ];
 
 private _cfgLicenses = missionConfigFile >> "CfgLicenses";
-private _sideflagActual = [side _player,true] call (missionNamespace getvariable ["MPServer_fnc_util_getSideString",{}]);
+private _sideflagActual = [side _player,true] call (missionNamespace getvariable ["MPServer_fnc_util_getSideString",{"Undefined"}]);
+private _alliLcenses = missionNamespace getVariable ["MPClient_var_licenses",createHashMap];
 private _licenses = [];
 
 //-- preInit loads before server is ready, so we force get all sides
-if (isNil {_sideflagActual})then{
+if (_sideflagActual isEqualTo "Undefined")then{
 	_sideOnly = false;
-	_sideflagActual = "Undefined";
 };
 
 {
 	private _classname = configName _x;
 	private _sideflag = [getText(_cfgLicenses >> _classname >> "side"),_sideflagActual]select _sideOnly;
-	private _license = [LICENSE_VARNAME(_classname,_sideflag),LICENSE_DISPLAYNAME(_classname)] select _useDisplayNames;
+	private _varname = LICENSE_VARNAME(_classname,_sideflag);
+
+	private _licenseData = _alliLcenses getOrDefault [_varname,createHashMapFromArray [
+		["Name", _varname],
+		["State", false]
+	]];
+
+	private _altName = switch (true) do {
+		case _useDisplayNames: {LICENSE_DISPLAYNAME(_classname)};
+		case _useConfigNames: {_classname}; 
+		default {_varname};
+	};
 	
 	if _ownedOnly then {
-		if (LICENSE_VALUE(_classname,_sideflag)) then {
-			if _useConfigNames then {
-				_licenses pushBackUnique _classname;
-			}else{
-				_licenses pushBackUnique [_license,true];
-			};
+		if((_licenseData getOrDefault ["State", false]) OR LICENSE_VALUE(_classname,_sideflag))then{
+			_licenses pushBackUnique ([[_licenseData get "Name" ,true], _altName] select (_useDisplayNames OR _useConfigNames));
 		};
 	}else{
-		if _useConfigNames then {
-			_licenses pushBackUnique _classname;
-		}else{
-			_licenses pushBackUnique [_license,false];
-		};
+		_licenses pushBackUnique ([[_licenseData get "Name",false], _altName] select (_useDisplayNames OR _useConfigNames));
 	};
+
 }forEach ("true" configClasses _cfgLicenses);
 
 _licenses

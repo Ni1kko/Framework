@@ -2,28 +2,13 @@
 /*
 	## Nikko Renolds
 	## https://github.com/Ni1kko/FrameworkV2
+    ## fn_requestReceived.sqf (Client)
 */
 
+FORCE_SUSPEND("MPClient_fnc_requestReceived");
+
 params [
-    ["_userdata",[],[[]]], 
-    ["_cash",0,[0]],
-    ["_adminRank",0,[0]],
-    ["_donatorRank",0,[0]],
-    ["_jobRank",0,[0]],
-    ["_rebelRank",0,[0]],
-    ["_medicRank",0,[0]],
-    ["_copRank",0,[0]],
-    ["_licenses",[],[[]]],
-    ["_gear",[],[[]]],
-    ["_arrested",false,[false]],
-    ["_blacklist",false,[false]],
-    ["_alive",false,[false]],
-    ["_stats",[],[[]]],
-    ["_position",[],[[]]],
-    ["_tents",[],[[]]],
-    ["_houses",[],[[]]],
-    ["_gang",[],[[]]],
-    ["_keychain",[],[[]]]
+    ["_playerData",createHashMap,[createHashMap]]
 ];
 
 if (life_session_completed) exitWith {
@@ -36,82 +21,86 @@ if (life_session_completed) exitWith {
 
 //--- Timeout sanity check
 life_var_session_attempts = life_var_session_attempts + 1;
-if (life_var_session_attempts > MAX_ATTEMPTS_TOO_QUERY_DATA) exitWith {["There was an error in trying to setup your client"] call MPClient_fnc_setLoadingText;};
+if (life_var_session_attempts > MAX_ATTEMPTS_TOO_QUERY_DATA) exitWith {
+    ["An Error Occured", "There was an error in trying to setup your client"] call MPClient_fnc_endMission;
+};
  
 //--- Bad data
-if (count _userdata isNotEqualTo 2) exitWith {[] call MPClient_fnc_insertPlayerInfo};
+if (count (_playerData getOrDefault ["UserData",[]]) isNotEqualTo 2) exitWith {[] call MPClient_fnc_insertPlayerInfo};
 
 //-- parse data
-_userdata params [["_steamID","",[""]],["_BEGuid","",[""]]];
+(_playerData get "UserData") params [["_steamID","",[""]],["_BEGuid","",[""]]];
 
 //--- Wrong client
 if (getPlayerUID player isNotEqualTo _steamID) exitWith {[] call MPClient_fnc_dataQuery};
 
-life_BEGuid = compileFinal str(_BEGuid);
-life_isdev = compileFinal "(getPlayerUID _this) in getArray(missionConfigFile >> ""enableDebugConsole"")";
-
 //--- Prevent BEGuid from being changed
 []spawn {
+    private _lastBEGuid = "";
+    waitUntil {isFinal "life_BEGuid"};
+    ["Session Object BEGuid Loading!"] call MPClient_fnc_log;
     while{true}do{
         waitUntil {
             uiSleep round(random 3);
             (player getVariable ["BEGUID",{""}]) isNotEqualTo life_BEGuid
         };
         player setVariable ["BEGUID",life_BEGuid,true];
-        ["Session Object BEGuid Updated!"] call MPClient_fnc_log;
+
+        if(count _lastBEGuid > 0 AND count (call (player getVariable ["BEGUID",{""}])) > 0)then{
+            [format["Session Object BEGuid(%1) Changed Too BEGuid(%2)!",_lastBEGuid,call (player getVariable ["BEGUID",{""}])]] call MPClient_fnc_log;
+        }else{
+            [format["Session Object BEGuid(%1) Set!",call (player getVariable ["BEGUID",{""}])]] call MPClient_fnc_log;
+        };
+
+        _lastBEGuid = call (player getVariable ["BEGUID",{""}]);
     };
 };
 
+life_BEGuid =       compileFinal str(_playerData getOrDefault ["BEGuid",_BEGuid]);
+life_isdev =        compileFinal "(getPlayerUID _this) in getArray(missionConfigFile >> ""enableDebugConsole"")";
+life_adminlevel =   compileFinal str(if !(player call life_isdev)then{_playerData getOrDefault ["AdminRank",-1]}else{99});
+life_isAdmin =      compileFinal str((call life_adminlevel) > 0);
+life_donorlevel =   compileFinal str(_playerData getOrDefault ["DonatorRank",-1]);
+life_joblevel =     compileFinal str(_playerData getOrDefault ["JobRank",-1]);
+life_reblevel =     compileFinal str(_playerData getOrDefault ["RebelRank",-1]);
+life_medLevel =     compileFinal str(_playerData getOrDefault ["MedicRank",-1]);
+life_coplevel =     compileFinal str(_playerData getOrDefault ["PoliceRank",-1]);
+life_is_arrested =  _playerData getOrDefault ["Arrested",false];
+life_blacklisted =  _playerData getOrDefault ["Blacklist",false];
+life_is_alive =     _playerData getOrDefault ["Alive",false];
+
 //--- Cash
-["SET","CASH",_cash] call MPClient_fnc_handleMoney;
-
-//--- Ranks 
-life_adminlevel = compileFinal str(if !(player call life_isdev)then{_adminRank}else{99});
-life_donorlevel = compileFinal str(_donatorRank);
-life_joblevel = compileFinal str(_jobRank);
-life_reblevel = compileFinal str(_rebelRank);
-life_medLevel = compileFinal str(_medicRank);
-life_coplevel = compileFinal str(_copRank);
-
+["SET","CASH",_playerData getOrDefault ["Cash",0]] call MPClient_fnc_handleMoney;
+ 
 //--- Licenses
-if (count _licenses > 0) then {
-    {missionNamespace setVariable [_x#0,_x#1]} forEach _licenses;
+if (count (_playerData getOrDefault ["Licenses",[]]) > 0) then {
+    {[player, _x#0, _x#1, false] call MPClient_fnc_setLicenses} forEach (_playerData get "Licenses");
 };
 
 //--- Gear & VirtualItems
-[player, _gear] call MPClient_fnc_loadGear;
-
-//--- Arrested
-life_is_arrested = _arrested;
-//--- Blacklist
-life_blacklisted = _blacklist;
-//--- Alive
-life_is_alive = _alive;
-
-_stats params [
-    ["_hunger",100,[0]],
-    ["_thirst",100,[0]],
-    ["_health",100,[0]]
-];
+[player, [
+    _playerData getOrDefault ["Gear",[]], 
+    _playerData getOrDefault ["VItems",[]]
+]] call MPClient_fnc_loadGear;
 
 //--- Stats
-life_var_hunger = _hunger;
-life_var_thirst = _thirst;
-player setDamage _health;
+life_var_hunger = _playerData getOrDefault ["Hunger",100];
+life_var_thirst = _playerData getOrDefault ["Thirst",100];
+player setDamage (_playerData getOrDefault ["Damage",0]);
 
 //--- Position
-life_position = _position;
+life_position = _playerData getOrDefault ["Position",[]];
 if (life_is_alive) then {
     if !(count life_position isEqualTo 3) then { 
         [format ["[Bad position received. Data: %1",life_position],true,true] call MPClient_fnc_log;
-        life_is_alive = false;
+        life_position = getMarkerPos "respawn_civilian";
     };
-    if (life_position distance (getMarkerPos "respawn_civilian") < 300) then {life_is_alive = false;};
-}; 
+    if (life_position distance (getMarkerPos "respawn_civilian") < 700) then {life_is_alive = false;life_position = [];};
+};
 
 //--- Houses
 ["Loading houses", "Please wait..."] call MPClient_fnc_setLoadingText; uiSleep(random[0.5,3,6]);
-life_houses = _houses;
+life_houses = _playerData getOrDefault ["HouseData",[]];
 {
     private _house = nearestObject [(call compile format ["%1",(_x select 0)]), "House"];
     life_vehicles pushBack _house;
@@ -120,24 +109,22 @@ life_houses = _houses;
 
 //--- Gang
 ["Loading gangs", "Please wait..."] call MPClient_fnc_setLoadingText; uiSleep(random[0.5,3,6]);
-life_gangData = _gang;
+life_gangData = _playerData getOrDefault ["GangData",[]];
 if (count life_gangData > 0) then {
     [] spawn MPClient_fnc_initGang;
 };
 
 //--- Tents
 ["Loading tents", "Please wait..."] call MPClient_fnc_setLoadingText; uiSleep(random[0.5,3,6]);
-life_tents = _tents;
-if(count _tents > 0) then {
+life_tents = _playerData getOrDefault ["TentData",[]];
+if (count life_tents > 0) then {
     //[] spawn MPClient_fnc_initTents;
 };
 
 //-- Keychain
-if (count _keychain > 0) then {
-    {life_vehicles pushBackUnique _x} forEach _keychain;
+if (count (_playerData getOrDefault ["Keychain",[]]) > 0) then {
+    {life_vehicles pushBackUnique _x} forEach (_playerData get "Keychain");
 };
-  
-life_isAdmin = compileFinal str ((call life_adminlevel) > 0);
  
 life_session_completed = true;
 

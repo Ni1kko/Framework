@@ -1,12 +1,8 @@
 #include "..\..\script_macros.hpp"
 /*
-    File: fn_updatePartial.sqf
-    Author: Bryan "Tonic" Boardwine
-
-    Description:
-    Sends specific information to the server to update on the player,
-    meant to keep the network traffic down with large sums of data flowing
-    through remoteExec
+	## Nikko Renolds
+	## https://github.com/Ni1kko/FrameworkV2
+    ## fn_updatePartial.sqf (Client)
 */
 
 private _mode = param [0,-1];
@@ -18,7 +14,7 @@ switch (_mode) do
     //-- Cash
     case 0: {_packet set[2,life_var_lastBalance#0]};
     //-- Bank
-    case 1: {_packet set[2,life_var_lastBalance#1]};
+    case 1: {_packet append (life_var_lastBalance select [1, 2])};
     //-- Licenses    
     case 2: {_packet set[2,([player] call MPClient_fnc_getLicenses)]};
     //-- Gear

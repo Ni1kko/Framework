@@ -1,10 +1,9 @@
 /*
-    File: fn_insertVehicle.sqf
-    Author: Bryan "Tonic" Boardwine
-
-    Description:
-    Inserts the vehicle into the database
+	## Nikko Renolds
+	## https://github.com/Ni1kko/FrameworkV2
+    ## fn_insertVehicle.sqf (Server)
 */
+
 private ["_query","_sql"];
 params [
     "_uid",
