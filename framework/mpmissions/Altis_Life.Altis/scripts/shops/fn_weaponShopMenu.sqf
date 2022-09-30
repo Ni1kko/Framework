@@ -21,25 +21,46 @@ uiNamespace setVariable ["Weapon_Accessories",0];
 uiNamespace setVariable ["Magazine_Array",[]];
 uiNamespace setVariable ["Accessories_Array",[]];
 
-if !(createDialog "life_weapon_shop") exitWith {};
-if (!isClass(missionConfigFile >> "WeaponShops" >> (_this select 3))) exitWith {}; //Bad config entry.
+if (!isClass(missionConfigFile >> "WeaponShops" >> (_this select 3))) exitWith {false}; //Bad config entry.
 
+private _display = createDialog ["life_weapon_shop",true];
 disableSerialization;
 
-ctrlSetText[38401,_shopTitle];
+[
+    (_display displayCtrl 38401),
+    (_display displayCtrl 38402)
+]params [
+    "_control_title",
+    "_control_filters"
+];
 
-private _filters = ((findDisplay 38400) displayCtrl 38402);
-lbClear _filters;
+//--- Set Title
+_control_title ctrlSetText _shopTitle;
+ 
+//--- Clear listbox
+lbClear _control_filters;
 
-ctrlShow [38406,true];
-ctrlEnable [38406,false];
-ctrlShow [38407,true];
-ctrlEnable [38407,false];
+//--- Disable buttons
+{
+    private _control = (_display displayCtrl _x);
+    _control ctrlShow true;
+    _control ctrlEnable false;
+}forEach [
+    38406,
+    38407
+];
 
-_filters lbAdd localize "STR_Shop_Weapon_ShopInv";
-_filters lbAdd localize "STR_Shop_Weapon_YourInv";
-
-_filters lbSetCurSel 0;
+//--- Add filters 
+{
+    private _name = (if(isLocalized _x)then{localize _x}else{_x});
+    _control_filters lbAdd _name;
+    if(_forEachIndex == 0)then{
+        _control_filters lbSetCurSel 0;
+    };
+}forEach [
+    "STR_Shop_Weapon_ShopInv",
+    "STR_Shop_Weapon_YourInv"
+];
 
 MPClient_adminShop = false;
 
