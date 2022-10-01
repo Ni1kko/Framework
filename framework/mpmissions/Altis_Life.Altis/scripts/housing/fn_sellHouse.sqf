@@ -43,7 +43,7 @@ if (_action) then {
 
     ["ADD","BANK",round((_houseCfg select 0)/2)] call MPClient_fnc_handleMoney;
 
-    _index = life_vehicles find _house;
+    _index = life_var_vehicles find _house;
 
     if (LIFE_SETTINGS(getNumber,"player_advancedLog") isEqualTo 1) then {
         if (LIFE_SETTINGS(getNumber,"battlEye_friendlyLogging") isEqualTo 1) then {
@@ -55,7 +55,7 @@ if (_action) then {
     };
 
     if !(_index isEqualTo -1) then {
-        life_vehicles deleteAt _index;
+        life_var_vehicles deleteAt _index;
     };
 
     _index = [str(getPosATL _house),life_houses] call MPServer_fnc_index;

@@ -1,12 +1,10 @@
-#include "..\..\script_macros.hpp"
+#include "..\..\..\script_macros.hpp"
 /*
-    File: fn_weaponShopSelection.sqf
-    Author: Bryan "Tonic" Boardwine
-    Edited: mohsen98
-
-    Description:
-    Checks the weapon & adds the price tag.
+	## Nikko Renolds
+	## https://github.com/Ni1kko/FrameworkV2
+    ## fn_weaponShopSelection.sqf
 */
+
 private ["_control","_index","_shop","_priceTag","_price","_item","_itemArray","_bool"];
 _control = [_this,0,controlNull,[controlNull]] call BIS_fnc_param;
 _index = [_this,1,-1,[0]] call BIS_fnc_param;

@@ -1,11 +1,10 @@
-#include "..\..\script_macros.hpp"
+#include "..\..\..\script_macros.hpp"
 /*
-	File: fn_chopShopSold.sqf
-	Author: Casperento
-	
-	Description:
-	Finish chopshop sell process properly
+	## Nikko Renolds
+	## https://github.com/Ni1kko/FrameworkV2
+    ## fn_chopShopSold.sqf
 */
+
 params [
     ["_price",-1,[-1]],
     ["_displayName","",[""]]

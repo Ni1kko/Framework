@@ -12,7 +12,7 @@ params [
 ];
 
 private _cfgLicenses = missionConfigFile >> "CfgLicenses";;
-private _licenseData = MPClient_var_licenses getOrDefault [_licenseName,createHashMapFromArray [
+private _licenseData = life_var_licenses getOrDefault [_licenseName,createHashMapFromArray [
 	["Name", _licenseName],
 	["State", _licenseState]
 ]];
@@ -24,7 +24,7 @@ private _licenseData = MPClient_var_licenses getOrDefault [_licenseName,createHa
 	
 	if(_licenseName isEqualTo _classname)exitWith{
 		_licenseName = LICENSE_VARNAME(_classname,_sideflag);
-		_licenseData = MPClient_var_licenses getOrDefault [_licenseName,createHashMapFromArray [
+		_licenseData = life_var_licenses getOrDefault [_licenseName,createHashMapFromArray [
 			["Name", _licenseName],
 			["State", _licenseState]
 		]];
@@ -32,7 +32,7 @@ private _licenseData = MPClient_var_licenses getOrDefault [_licenseName,createHa
 }forEach ("true" configClasses _cfgLicenses);
 
 //-- Update hashMap
-MPClient_var_licenses set [_licenseData get "Name",_licenseData];
+life_var_licenses set [_licenseData get "Name",_licenseData];
 
 //-- TEMP (OLD system method)
 missionNamespace setVariable [_licenseData get "Name",_licenseData get "State"];

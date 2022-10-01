@@ -1,14 +1,12 @@
+#include "..\script_macros.hpp"
 /*
 	## Nikko Renolds
 	## https://github.com/Ni1kko/FrameworkV2
 */
 
-if !(hasInterface)exitWith{false};
-if !(canSuspend)exitWith{_this spawn MPClient_fnc_postInit; false};
-if (isFinal "life_var_postInitTime")exitWith{
-    ["Hack Detected", "`life_var_postInitTime` already final, Client looping or hacker detected", "Antihack"] call MPClient_fnc_endMission;
-    false;
-};
+RUN_CLIENT_ONLY;
+FORCE_SUSPEND("MPClient_fnc_postInit");
+AH_CHECK_FINAL("life_var_postInitTime");
 
 waitUntil {isFinal "life_var_preInitTime"};
 

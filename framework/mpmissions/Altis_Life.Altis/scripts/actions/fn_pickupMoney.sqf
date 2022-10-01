@@ -7,7 +7,7 @@
     Picks up money
 */
 private "_value";
-if ((time - life_action_delay) < 1.5) exitWith {hint localize "STR_NOTF_ActionDelay"; _this setVariable ["inUse",false,true];};
+if ((time - life_var_actionDelay) < 1.5) exitWith {hint localize "STR_NOTF_ActionDelay"; _this setVariable ["inUse",false,true];};
 if (isNull _this || {player distance _this > 3}) exitWith {_this setVariable ["inUse",false,true];};
 
 _value = ((_this getVariable "item") select 1);
@@ -23,7 +23,7 @@ if (!isNil "_value") exitWith {
     player playMove "AinvPknlMstpSlayWrflDnon";
     titleText[format [localize "STR_NOTF_PickedMoney",[_value] call MPClient_fnc_numberText],"PLAIN"];
     ["ADD","CASH",_value] call MPClient_fnc_handleMoney;
-    life_action_delay = time;
+    life_var_actionDelay = time;
 
     if (LIFE_SETTINGS(getNumber,"player_moneyLog") isEqualTo 1) then {
         if (LIFE_SETTINGS(getNumber,"battlEye_friendlyLogging") isEqualTo 1) then {

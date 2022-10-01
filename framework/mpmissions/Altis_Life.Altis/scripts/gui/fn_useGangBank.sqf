@@ -12,7 +12,7 @@ params [
 
 private _value = parseNumber(ctrlText 2702);
 private _gFund = MONEY_GANG;
-if ((time - life_action_delay) < 0.5) exitWith {hint localize "STR_NOTF_ActionDelay"};
+if ((time - life_var_actionDelay) < 0.5) exitWith {hint localize "STR_NOTF_ActionDelay"};
 
 //Series of stupid checks
 if (isNil {(group player) getVariable "gang_name"}) exitWith {hint localize "STR_ATM_NotInGang"}; // Checks if player isn't in a gang
@@ -33,4 +33,4 @@ if (count extdb_var_database_headless_clients > 0) then {
     [1,group player,_deposit,_value,player,MONEY_CASH] remoteExecCall ["MPServer_fnc_updateGang",RE_SERVER]; //Update the database.
 };
 
-life_action_delay = time;
+life_var_actionDelay = time;

@@ -273,7 +273,7 @@ MPServer_fnc_vehicle_buyRequest = {
 			[_vehicle] call MPClient_fnc_clearVehicleAmmo;
 
 			//-- Yep you own it.
-			life_vehicles pushBack _vehicle;
+			life_var_vehicles pushBack _vehicle;
 
 			//-- I want paid...
 			["SUB","CASH",_price] call MPClient_fnc_handleMoney;
@@ -328,7 +328,7 @@ MPServer_fnc_vehicle_lockingRequest = {
 		if(count _code > 0 AND count _dbCode > 0)then{
 			if(_code isEqualTo _dbCode)then{
 				_keys = [_steamID,_faction,_vehicle] call MPServer_fnc_keyManagement;
-				[_vehicle,{life_vehicles pushBackUnique _this}] remoteExecCall ["call",owner _player];
+				[_vehicle,{life_var_vehicles pushBackUnique _this}] remoteExecCall ["call",owner _player];
 			};
 		};
 	};

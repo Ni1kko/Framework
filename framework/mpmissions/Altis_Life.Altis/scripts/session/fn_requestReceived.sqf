@@ -11,7 +11,7 @@ params [
     ["_playerData",createHashMap,[createHashMap]]
 ];
 
-if (life_session_completed) exitWith {
+if (life_var_sessionDone) exitWith {
     ["`MPClient_fnc_requestReceived` => Session already completed"] call MPClient_fnc_log;
     false
 };
@@ -20,8 +20,8 @@ if (life_session_completed) exitWith {
 ["Received request from server", "Validating..."] call MPClient_fnc_setLoadingText; uiSleep(random[0.5,3,6]);
 
 //--- Timeout sanity check
-life_var_session_attempts = life_var_session_attempts + 1;
-if (life_var_session_attempts > MAX_ATTEMPTS_TOO_QUERY_DATA) exitWith {
+life_var_sessionAttempts = life_var_sessionAttempts + 1;
+if (life_var_sessionAttempts > MAX_ATTEMPTS_TOO_QUERY_DATA) exitWith {
     ["An Error Occured", "There was an error in trying to setup your client"] call MPClient_fnc_endMission;
 };
  
@@ -65,9 +65,9 @@ life_joblevel =     compileFinal str(_playerData getOrDefault ["JobRank",-1]);
 life_reblevel =     compileFinal str(_playerData getOrDefault ["RebelRank",-1]);
 life_medLevel =     compileFinal str(_playerData getOrDefault ["MedicRank",-1]);
 life_coplevel =     compileFinal str(_playerData getOrDefault ["PoliceRank",-1]);
-life_is_arrested =  _playerData getOrDefault ["Arrested",false];
+life_var_arrested =  _playerData getOrDefault ["Arrested",false];
 life_blacklisted =  _playerData getOrDefault ["Blacklist",false];
-life_is_alive =     _playerData getOrDefault ["Alive",false];
+life_var_alive =     _playerData getOrDefault ["Alive",false];
 
 //--- Cash
 ["SET","CASH",_playerData getOrDefault ["Cash",0]] call MPClient_fnc_handleMoney;
@@ -89,13 +89,13 @@ life_var_thirst = _playerData getOrDefault ["Thirst",100];
 player setDamage (_playerData getOrDefault ["Damage",0]);
 
 //--- Position
-life_position = _playerData getOrDefault ["Position",[]];
-if (life_is_alive) then {
-    if !(count life_position isEqualTo 3) then { 
-        [format ["[Bad position received. Data: %1",life_position],true,true] call MPClient_fnc_log;
-        life_position = getMarkerPos "respawn_civilian";
+life_var_position = _playerData getOrDefault ["Position",[]];
+if (life_var_alive) then {
+    if !(count life_var_position isEqualTo 3) then { 
+        [format ["[Bad position received. Data: %1",life_var_position],true,true] call MPClient_fnc_log;
+        life_var_position = getMarkerPos "respawn_civilian";
     };
-    if (life_position distance (getMarkerPos "respawn_civilian") < 700) then {life_is_alive = false;life_position = [];};
+    if (life_var_position distance (getMarkerPos "respawn_civilian") < 700) then {life_var_alive = false;life_var_position = [];};
 };
 
 //--- Houses
@@ -103,7 +103,7 @@ if (life_is_alive) then {
 life_houses = _playerData getOrDefault ["HouseData",[]];
 {
     private _house = nearestObject [(call compile format ["%1",(_x select 0)]), "House"];
-    life_vehicles pushBack _house;
+    life_var_vehicles pushBack _house;
 } forEach life_houses;
 [] spawn MPClient_fnc_initHouses;
 
@@ -123,9 +123,9 @@ if (count life_tents > 0) then {
 
 //-- Keychain
 if (count (_playerData getOrDefault ["Keychain",[]]) > 0) then {
-    {life_vehicles pushBackUnique _x} forEach (_playerData get "Keychain");
+    {life_var_vehicles pushBackUnique _x} forEach (_playerData get "Keychain");
 };
  
-life_session_completed = true;
+life_var_sessionDone = true;
 
 true

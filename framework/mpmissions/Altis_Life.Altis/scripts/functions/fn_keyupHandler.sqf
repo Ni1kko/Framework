@@ -24,16 +24,16 @@ if (LIFE_SETTINGS(getNumber,"disableCommanderView") isEqualTo 1) then {
 };
 
 //Vault handling...
-if ((_keyCode in (actionKeys "GetOver") || _keyCode in (actionKeys "salute") || _keyCode in (actionKeys "SitDown") || _keyCode in (actionKeys "Throw") || _keyCode in (actionKeys "GetIn") || _keyCode in (actionKeys "GetOut") || _keyCode in (actionKeys "Fire") || _keyCode in (actionKeys "ReloadMagazine") || _keyCode in [16,18]) && ((player getVariable ["restrained",false]) || (player getVariable ["playerSurrender",false]) || life_isknocked || life_istazed)) exitWith {
+if ((_keyCode in (actionKeys "GetOver") || _keyCode in (actionKeys "salute") || _keyCode in (actionKeys "SitDown") || _keyCode in (actionKeys "Throw") || _keyCode in (actionKeys "GetIn") || _keyCode in (actionKeys "GetOut") || _keyCode in (actionKeys "Fire") || _keyCode in (actionKeys "ReloadMagazine") || _keyCode in [16,18]) && ((player getVariable ["restrained",false]) || (player getVariable ["playerSurrender",false]) || life_var_unconscious || life_var_tazed)) exitWith {
     true;
 };
 
 if (life_var_isBusy) exitWith {
-    if (!life_interrupted && _keyCode in _interruptionKeys) then {
+    if (!life_var_interrupted && _keyCode in _interruptionKeys) then {
         if (life_var_autorun) then {
             ["abort"] call MPClient_fnc_autoruntoggle;
         };
-        life_interrupted = true
+        life_var_interrupted = true
     };
     _stopPropagation;
 };
@@ -95,11 +95,11 @@ if (life_container_active) exitwith {
     };
     //handle other keys
     if (_keyCode isEqualTo DIK_SPACE) then {//space key -> place
-        life_storagePlacing = 0 spawn MPClient_fnc_placestorage;
+        life_var_storagePlacing = 0 spawn MPClient_fnc_placestorage;
     } else { //other keys -> abort
-        if (!isNull life_storagePlacing) exitWith {}; //already placing down a box
-        if (!isNull life_container_activeObj) then {
-            deleteVehicle life_container_activeObj;
+        if (!isNull life_var_storagePlacing) exitWith {}; //already placing down a box
+        if (!isNull life_var_activeContaineObject) then {
+            deleteVehicle life_var_activeContaineObject;
             titleText [localize "STR_NOTF_PlaceContainerAbort", "PLAIN"];
         };
         life_container_active = false;
@@ -200,9 +200,9 @@ switch (_keyCode) do
 	};
 	case DIK_T: 
 	{
-        if (!_altState && {!_controlState} && {!dialog} && {!life_var_isBusy} && {!(player getVariable ["playerSurrender",false])} && {!(player getVariable ["restrained",false])} && {!life_isknocked} && {!life_istazed}) then {
+        if (!_altState && {!_controlState} && {!dialog} && {!life_var_isBusy} && {!(player getVariable ["playerSurrender",false])} && {!(player getVariable ["restrained",false])} && {!life_var_unconscious} && {!life_var_tazed}) then {
             if (!(isNull objectParent player) && alive vehicle player) then {
-                if ((vehicle player) in life_vehicles) then {
+                if ((vehicle player) in life_var_vehicles) then {
                     [vehicle player] spawn MPClient_fnc_openInventory;
                 };
             } else {
@@ -218,7 +218,7 @@ switch (_keyCode) do
                 } else {
                     _list = ["landVehicle","Air","Ship"];
                     if (KINDOF_ARRAY(cursorObject,_list) && {player distance cursorObject < 7} && {isNull objectParent player} && {alive cursorObject} && {!life_var_isBusy}) then {
-                        if (cursorObject in life_vehicles || {locked cursorObject isEqualTo 0}) then {
+                        if (cursorObject in life_var_vehicles || {locked cursorObject isEqualTo 0}) then {
                             [cursorObject] spawn MPClient_fnc_openInventory;
                         };
                     };
@@ -245,7 +245,7 @@ switch (_keyCode) do
             };
 
             if (_veh isKindOf "House_F") then {
-                if (_veh in life_vehicles && {player distance _veh < 20}) then {
+                if (_veh in life_var_vehicles && {player distance _veh < 20}) then {
                     private _door = [_veh] call MPClient_fnc_nearestDoor;
                     if (_door isEqualTo 0) exitWith {hint localize "STR_House_Door_NotNear"};
                     private _locked = _veh getVariable [format ["bis_disabled_Door_%1",_door],0];
@@ -261,7 +261,7 @@ switch (_keyCode) do
                     };
                 };
             } else { 
-                if (_veh in life_vehicles && {player distance _veh < 20}) then {
+                if (_veh in life_var_vehicles && {player distance _veh < 20}) then {
                     [player, _veh, _shiftState] remoteExec ["MPServer_fnc_vehicle_lockingRequest",2];
                 }else{
                     //create dialog for user to enter lockcode and gain keys. [player, _veh, false, ""] remoteExec ["MPServer_fnc_vehicle_lockingRequest",2]; 
@@ -311,11 +311,11 @@ switch (_keyCode) do
 	};
 	case DIK_F: 
 	{
-        if (playerSide in [west,independent] && {vehicle player != player} && {!life_siren_active} && {((driver vehicle player) == player)}) then {
+        if (playerSide in [west,independent] && {vehicle player != player} && {!life_var_sirenActive} && {((driver vehicle player) == player)}) then {
             [] spawn {
-                life_siren_active = true;
+                life_var_sirenActive = true;
                 sleep 4.7;
-                life_siren_active = false;
+                life_var_sirenActive = false;
             };
 
             private _veh = vehicle player;
@@ -344,7 +344,7 @@ switch (_keyCode) do
 	case DIK_G: 
 	{ 
 		if (_shiftState && playerSide isEqualTo civilian && !isNull cursorObject && cursorObject isKindOf "CAManBase" && isPlayer cursorObject && alive cursorObject && cursorObject distance player < 4 && speed cursorObject < 1) then {
-            if ((animationState cursorObject) != "Incapacitated" && (currentWeapon player == primaryWeapon player || currentWeapon player == handgunWeapon player) && currentWeapon player != "" && !life_knockout && !(player getVariable ["restrained",false]) && !life_istazed && !life_isknocked) then {
+            if ((animationState cursorObject) != "Incapacitated" && (currentWeapon player == primaryWeapon player || currentWeapon player == handgunWeapon player) && currentWeapon player != "" && !life_var_knockoutBusy && !(player getVariable ["restrained",false]) && !life_var_tazed && !life_var_unconscious) then {
                 [cursorObject] spawn MPClient_fnc_knockoutAction;
             };
             _stopPropagation = true;
@@ -441,7 +441,7 @@ switch (_keyCode) do
             ["abort"] call MPClient_fnc_autoruntoggle;
         };
         if (isNil "jumpActionTime") then {jumpActionTime = 0;};
-        if (_shiftState && {!(animationState player isEqualTo "AovrPercMrunSrasWrflDf")} && {isTouchingGround player} && {stance player isEqualTo "STAND"} && {speed player > 2} && {!life_is_arrested} && {((velocity player) select 2) < 2.5} && {time - jumpActionTime > 1.5}) then {
+        if (_shiftState && {!(animationState player isEqualTo "AovrPercMrunSrasWrflDf")} && {isTouchingGround player} && {stance player isEqualTo "STAND"} && {speed player > 2} && {!life_var_arrested} && {((velocity player) select 2) < 2.5} && {time - jumpActionTime > 1.5}) then {
             jumpActionTime = time; //Update the time.
             [player] remoteExec ["MPClient_fnc_jumpFnc",RE_GLOBAL]; //Global execution
             _stopPropagation = true;

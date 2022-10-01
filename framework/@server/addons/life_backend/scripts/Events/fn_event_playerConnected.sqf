@@ -1,9 +1,11 @@
+#include "\life_backend\script_macros.hpp"
 /*
 	## Nikko Renolds
 	## https://github.com/Ni1kko/FrameworkV2
 */
 
-if(!canSuspend)exitWith{_this spawn MPServer_fnc_event_playerConnected};
+RUN_DEDI_SERVER_ONLY;
+FORCE_SUSPEND("MPServer_fnc_event_playerConnected");
 
 params [
     ["_directPlayID",-100,[0]],		    // Number - is the unique DirectPlay ID. Quite useless as the number is too big for in-built string representation and gets rounded. It is also the same id used for user placed markers.

@@ -1,20 +1,17 @@
-#include "..\..\script_macros.hpp"
+#include "..\..\..\script_macros.hpp"
 /*
-    File: fn_atmMenu.sqf
-    Author: Bryan "Tonic" Boardwine
-
-    Description:
-    Opens and manages the bank menu.
+	## Nikko Renolds
+	## https://github.com/Ni1kko/FrameworkV2
+    ## fn_atmMenu.sqf
 */
+
 private ["_units","_type"];
 
 if (!life_var_ATMEnabled) exitWith {
     hint format [localize "STR_Shop_ATMRobbed",(LIFE_SETTINGS(getNumber,"federalReserve_atmRestrictionTimer"))];
 };
 
-if (!dialog) then {
-    if (!(createDialog "Life_atm_management")) exitWith {};
-};
+private _display = createDialog ["Life_atm_management",true];
 
 disableSerialization;
 _units = CONTROL(2700,2703);

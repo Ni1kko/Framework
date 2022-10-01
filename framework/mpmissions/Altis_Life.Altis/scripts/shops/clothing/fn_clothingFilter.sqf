@@ -1,10 +1,8 @@
-#include "..\..\script_macros.hpp"
+#include "..\..\..\script_macros.hpp"
 /*
-    File: fn_clothingFilter.sqf
-    Author: Bryan "Tonic" Boardwine
-
-    Description:
-    Functionality for filtering clothing types in the menu.
+	## Nikko Renolds
+	## https://github.com/Ni1kko/FrameworkV2
+    ## fn_clothingFilter.sqf
 */
 
 disableSerialization;
@@ -14,7 +12,7 @@ params [
     ["_selection", 0, [0]]
 ];
 
-life_clothing_filter = _selection;
+life_var_clothingTraderFilter = _selection;
 
 switch (_selection) do {
     case 4: {
@@ -70,7 +68,7 @@ private "_details";
         _pic = (_details select 2);
     };
 
-    if ([_x] call MPClient_fnc_levelCheck) then {
+    if ([_x] call MPClient_fnc_checkConditions) then {
 
         if (isNil "_details") then {
             _list lbAdd _displayName;

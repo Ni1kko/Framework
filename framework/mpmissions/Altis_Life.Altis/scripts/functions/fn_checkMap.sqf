@@ -16,5 +16,5 @@
         case civilian: {[] spawn MPClient_fnc_civMarkers};
     };
  } else {
-    life_markers_active = false;
+    life_var_markers_active = false;
  };

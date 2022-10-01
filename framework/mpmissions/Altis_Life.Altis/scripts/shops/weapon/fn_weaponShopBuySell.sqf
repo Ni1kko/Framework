@@ -1,11 +1,10 @@
-#include "..\..\script_macros.hpp"
+#include "..\..\..\script_macros.hpp"
 /*
-    File: fn_weaponShopBuySell.sqf
-    Author: Bryan "Tonic" Boardwine
-
-    Description:
-    Master handling of the weapon shop for buying / selling an item.
+	## Nikko Renolds
+	## https://github.com/Ni1kko/FrameworkV2
+    ## fn_weaponShopBuySell.sqf
 */
+
 disableSerialization;
 private ["_price","_item","_itemInfo","_bad"];
 if ((lbCurSel 38403) isEqualTo -1) exitWith {hint localize "STR_Shop_Weapon_NoSelect"};

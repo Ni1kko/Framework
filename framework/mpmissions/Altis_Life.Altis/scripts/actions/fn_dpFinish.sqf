@@ -9,7 +9,7 @@
 */
 private ["_dp","_dis","_price"];
 _dp = [_this,0,objNull,[objNull]] call BIS_fnc_param;
-life_delivery_in_progress = false;
+life_var_deliveringPackage = false;
 life_dp_point = nil;
 _dis = round((getPos life_dp_start) distance (getPos _dp));
 _price = round(1.7 * _dis);

@@ -20,9 +20,9 @@ switch (_mode) do
     //-- Gear
     case 3: {_packet set[2,([player] call MPClient_fnc_getGear)]};
     //-- Position
-    case 4: {_packet append [life_is_alive, getPosATL player]};
+    case 4: {_packet append [life_var_alive, getPosATL player]};
     //-- Arrested
-    case 5: {_packet set[2,life_is_arrested]};
+    case 5: {_packet set[2,life_var_arrested]};
     //-- Money
     case 6: {_packet append life_var_lastBalance};
     //-- Used for keychain

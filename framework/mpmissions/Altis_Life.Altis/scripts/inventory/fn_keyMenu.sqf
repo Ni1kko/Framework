@@ -20,8 +20,8 @@ _near_units = [];
 
 { if (player distance _x < 20) then {_near_units pushBack _x};} forEach playableUnits;
 
-for "_i" from 0 to (count life_vehicles)-1 do {
-    _veh = life_vehicles select _i;
+for "_i" from 0 to (count life_var_vehicles)-1 do {
+    _veh = life_var_vehicles select _i;
     if (!isNull _veh && alive _veh) then {
         _color = ((M_CONFIG(getArray,"cfgVehicleArsenal",(typeOf _veh),"textures") select (_veh getVariable "Life_VEH_color")) select 0);
         if (isNil "_color") then {_color = ""};

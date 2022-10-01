@@ -12,7 +12,7 @@ private _messageList = _display displayCtrl 1501;
 private _messageViewer = _display displayCtrl 1004;
 if(lbCurSel _messageList < 0) exitWith {};
 private _messageIndex = _messageList lnbValue[(lbCurSel _messageList),0];
-private _messageData = life_cellphone_messages select _messageIndex;
+private _messageData = life_var_phoneMessages select _messageIndex;
 
 private _postion = "Sender Position: Withheld";
 if((_messageData#4) isNotEqualTo "Unknown") then {
@@ -47,7 +47,7 @@ _messageViewer ctrlSetStructuredText parseText format[
 	(_messageData#6)#0
 ];
 
-(life_cellphone_messages select _messageIndex) set [5, true];
+(life_var_phoneMessages select _messageIndex) set [5, true];
 [] call MPClient_fnc_cellphone_messageShow;
 
 true

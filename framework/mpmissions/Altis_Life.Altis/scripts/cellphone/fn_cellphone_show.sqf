@@ -34,8 +34,8 @@ if(isNull _display) exitWith {
 private _playerList = _display displayCtrl 1500;
 private _messageList = _display displayCtrl 1501;
 
-life_cellphone_receiver = []; 
-life_cellphone_contacts = [
+life_var_phoneTarget = []; 
+life_var_phoneContacts = [
 	[" Police Request", "999-REQ-POLICE", "", "\A3\ui_f\data\gui\Rsc\RscDisplayMultiplayerSetup\disabledai_ca.paa"],
 	[" NHS Request", "999-REQ-MEDIC", "", "textures\icons\cellphone\nhs.paa"],
 	[" Admin Request", "XXX-REQ-ADMIN", "", "textures\icons\cellphone\admin.paa"]
@@ -48,7 +48,7 @@ life_cellphone_contacts = [
 	
 	if(!alive _x) then {_name = _x getVariable["realname", name _x];};
 	if(_BEGuid isNotEqualTo "") then {
-		life_cellphone_contacts pushBack [_name, 0, _BEGuid, _icon];
+		life_var_phoneContacts pushBack [_name, 0, _BEGuid, _icon];
 	};
 } forEach playableUnits;
 

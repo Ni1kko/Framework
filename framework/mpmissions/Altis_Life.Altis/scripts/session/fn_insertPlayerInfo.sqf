@@ -7,7 +7,7 @@
 
 FORCE_SUSPEND("MPClient_fnc_insertPlayerInfo");
 
-if (life_session_completed) exitWith { 
+if (life_var_sessionDone) exitWith { 
     ["`MPClient_fnc_insertPlayerInfo` => Session already completed"] call MPClient_fnc_log;
     false
 };

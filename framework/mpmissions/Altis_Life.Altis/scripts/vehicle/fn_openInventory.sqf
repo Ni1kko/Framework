@@ -28,7 +28,7 @@ if (_veh_data select 0 isEqualTo -1) exitWith {closeDialog 0; _vehicle setVariab
 
 ctrlSetText[3504,format [(localize "STR_MISC_Weight")+ " %1/%2",_veh_data select 1,_veh_data select 0]];
 [_vehicle] call MPClient_fnc_vehInventory;
-life_trunk_vehicle = _vehicle;
+life_var_vehicleTrunk = _vehicle;
 
 _vehicle spawn {
     waitUntil {isNull (findDisplay 3500)};

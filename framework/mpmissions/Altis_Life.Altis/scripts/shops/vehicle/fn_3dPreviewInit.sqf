@@ -1,9 +1,8 @@
+#include "..\..\..\script_macros.hpp"
 /*
-    File: fn_3dPreviewInit.sqf
-    Author: BoGuu & KLM
-
-    Description:
-    Called to initialize the 3d preview.
+	## Nikko Renolds
+	## https://github.com/Ni1kko/FrameworkV2
+    ## fn_3dPreviewInit.sqf
 */
 
 if !(params [["_display", displayNull, [displayNull]]]) exitWith {};

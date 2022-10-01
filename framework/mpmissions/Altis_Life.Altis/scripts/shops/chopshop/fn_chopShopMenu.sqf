@@ -1,11 +1,10 @@
-#include "..\..\script_macros.hpp"
+#include "..\..\..\script_macros.hpp"
 /*
-    File: fn_chopShopMenu.sqf
-    Author: Bryan "Tonic" Boardwine
-
-    Description:
-    Opens & initializes the chop shop menu.
+	## Nikko Renolds
+	## https://github.com/Ni1kko/FrameworkV2
+    ## fn_chopShopMenu.sqf
 */
+
 if (life_var_isBusy) exitWith {hint localize "STR_NOTF_ActionInProc"};
 if !(playerSide isEqualTo civilian) exitWith {hint localize "STR_NOTF_notAllowed"};
 

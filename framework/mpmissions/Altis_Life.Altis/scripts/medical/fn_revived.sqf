@@ -24,7 +24,7 @@ private _reviveCost = LIFE_SETTINGS(getNumber,"revive_fee");
 closeDialog 0;
  
 //-- Bring back to life
-life_is_alive = true;
+life_var_alive = true;
 player setUnconscious false;
 4 fadeSound 1;
 cutText ["You have came to your senses ...", "BLACK IN", 5];

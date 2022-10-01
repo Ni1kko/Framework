@@ -10,10 +10,10 @@
 private ["_container","_isFloating"];
 
 if (!life_container_active) exitWith {};
-if (life_container_activeObj isEqualTo objNull) exitWith {};
-if (!((typeOf life_container_activeObj) in ["B_supplyCrate_F","Box_IND_Grenades_F"])) exitWith {};
+if (life_var_activeContaineObject isEqualTo objNull) exitWith {};
+if (!((typeOf life_var_activeContaineObject) in ["B_supplyCrate_F","Box_IND_Grenades_F"])) exitWith {};
 
-_container = life_container_activeObj;
+_container = life_var_activeContaineObject;
 _isFloating = if (((getPos _container) select 2) < 0.1) then {false} else {true};
 detach _container;
 [_container,true] remoteExecCall ["MPClient_fnc_simDisable",RE_GLOBAL];
@@ -29,4 +29,4 @@ if ((typeOf _container) == "B_supplyCrate_F") then {
 
 [_container, _isFloating] call MPClient_fnc_placeContainer;
 life_container_active = false;
-life_container_activeObj = objNull;
+life_var_activeContaineObject = objNull;

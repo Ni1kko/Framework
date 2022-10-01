@@ -11,7 +11,7 @@ private _isLegsBroken = ((player getHit "legs") >= 0.5);
 private _isStarving = (life_var_hunger < 25);
 private _isDehydrated = (life_var_thirst < 25);
 private _isForcedWalked = (isForcedWalk player);
-private _isDead = (!life_is_alive);
+private _isDead = (!life_var_alive);
 private _isStanding = ((stance player) isEqualTo "STAND");
 private _isInterrupted = (life_var_autorun_interrupt);
 

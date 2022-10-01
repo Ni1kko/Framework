@@ -28,19 +28,19 @@ if !(_ret isEqualTo []) then {
 };
 
 [_bad] spawn {
-    life_canpay_bail = false;
+    life_var_canAffordBail = false;
     if (_this select 0) then {
         sleep (10 * 60);
     } else {
         sleep (5 * 60);
     };
-    life_canpay_bail = true;
+    life_var_canAffordBail = true;
 };
 
 for "_i" from 0 to 1 step 0 do {
     if (round(_time - time) > 0) then {
         _countDown = [(_time - time), "MM:SS.MS"] call BIS_fnc_secondsToString;
-        hintSilent parseText format [(localize "STR_Jail_Time") + "<br/> <t size='2'><t color='#FF0000'>%1</t></t><br/><br/>" + (localize "STR_Jail_Pay") + " %3<br/>" + (localize "STR_Jail_Price") + " $%2", _countDown, [life_bail_amount] call MPClient_fnc_numberText, if (life_canpay_bail) then {"Yes"} else {"No"}];
+        hintSilent parseText format [(localize "STR_Jail_Time") + "<br/> <t size='2'><t color='#FF0000'>%1</t></t><br/><br/>" + (localize "STR_Jail_Pay") + " %3<br/>" + (localize "STR_Jail_Price") + " $%2", _countDown, [life_bail_amount] call MPClient_fnc_numberText, if (life_var_canAffordBail) then {"Yes"} else {"No"}];
     };
 
     if (LIFE_SETTINGS(getNumber,"jail_forceWalk") isEqualTo 1) then {
@@ -53,7 +53,7 @@ for "_i" from 0 to 1 step 0 do {
         _esc = true;
     };
 
-    if (life_bail_paid) exitWith {
+    if (life_var_bailPaid) exitWith {
         _bail = true;
     };
 
@@ -65,8 +65,8 @@ for "_i" from 0 to 1 step 0 do {
 
 switch (true) do {
     case (_bail): {
-        life_is_arrested = false;
-        life_bail_paid = false;
+        life_var_arrested = false;
+        life_var_bailPaid = false;
 
         hint localize "STR_Jail_Paid";
         player setVariable ["life_var_teleported",true,true];
@@ -82,7 +82,7 @@ switch (true) do {
     };
 
     case (_esc): {
-        life_is_arrested = false;
+        life_var_arrested = false;
         hint localize "STR_Jail_EscapeSelf";
         [0, "STR_Jail_EscapeNOTF", true, [profileName]] remoteExecCall ["MPClient_fnc_broadcast", RE_CLIENT];
 
@@ -96,7 +96,7 @@ switch (true) do {
     };
 
     case (alive player && {!_esc} && {!_bail}): {
-        life_is_arrested = false;
+        life_var_arrested = false;
         hint localize "STR_Jail_Released";
 
         if (count extdb_var_database_headless_clients > 0) then {

@@ -8,7 +8,7 @@
 */
 private ["_vehicle","_displayName","_upp","_ui","_progress","_pgText","_cP","_previousState"];
 _vehicle = cursorObject;
-life_interrupted = false;
+life_var_interrupted = false;
 
 if (isNull _vehicle) exitWith {hint localize "STR_ISTR_Jerry_NotLooking"};
 if (!(_vehicle isKindOF "LandVehicle") && !(_vehicle isKindOf "Air") && !(_vehicle isKindOf "Ship")) exitWith {};
@@ -49,13 +49,13 @@ for "_i" from 0 to 1 step 0 do {
     _pgText ctrlSetText format ["%3 (%1%2)...",round(_cP * 100),"%",_upp];
     if (_cP >= 1) exitWith {};
     if (!alive player) exitWith {};
-    if (life_interrupted) exitWith {};
+    if (life_var_interrupted) exitWith {};
 };
 life_var_isBusy = false;
 "progressBar" cutText ["","PLAIN"];
 player playActionNow "stop";
 if (!alive player) exitWith {};
-if (life_interrupted) exitWith {life_interrupted = false; titleText[localize "STR_NOTF_ActionCancel","PLAIN"];};
+if (life_var_interrupted) exitWith {life_var_interrupted = false; titleText[localize "STR_NOTF_ActionCancel","PLAIN"];};
 
 
 switch (true) do {

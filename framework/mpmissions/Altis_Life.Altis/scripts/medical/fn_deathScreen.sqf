@@ -20,7 +20,7 @@ if(param [1,false])exitWith{
 		titleCut ["", "BLACK IN", 1];
 	}else{
 		player setVariable ["lifeState","HEALTHY",true];
-		life_is_alive = true;
+		life_var_alive = true;
 	};
 };
 

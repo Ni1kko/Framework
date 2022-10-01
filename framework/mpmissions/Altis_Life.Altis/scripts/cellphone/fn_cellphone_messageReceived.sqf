@@ -31,7 +31,7 @@ private _msgData = switch (_cellphoneMode) do {
 
 ["Message",_msgData] call bis_fnc_showNotification;
 
-life_cellphone_messages pushBack [_senderName, _senderBEGuid, _cellphoneMode, _message, _pos, false, date];
-//life_cellphone_messages pushBack [_cellphoneMode, _message, _pos, _senderName, _senderBEGuid, _receiverBEGuid];
+life_var_phoneMessages pushBack [_senderName, _senderBEGuid, _cellphoneMode, _message, _pos, false, date];
+//life_var_phoneMessages pushBack [_cellphoneMode, _message, _pos, _senderName, _senderBEGuid, _receiverBEGuid];
 
 true

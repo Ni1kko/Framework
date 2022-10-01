@@ -6,7 +6,8 @@
 params [
     ["_force",false,[false]],
     ["_silent",false,[false]],
-    ["_messages",[],[[]]]
+    ["_messages",[],[[]]],
+    ["_savePNS",true,[false]]
 ]; 
 
 _messages params [
@@ -22,8 +23,11 @@ if (_syncNotReady AND not(_syncOverride)) exitWith {
     false
 };
 
+//-- Sync data to the server
 [] call MPClient_fnc_updateRequest;
-//life_var_lastSynced = time;
+
+//-- Saves the variables stored in profileNamespace to the persistent active user profile
+if _savePNS then {saveProfileNamespace};
 
 if !_silent then {
     hint format["%1\n\nPlease wait atleast 10 seconds before leaving",_onSuccses];

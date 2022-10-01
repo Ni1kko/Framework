@@ -39,7 +39,7 @@ _Btn8 = CONTROL(37400,Btn8);
 
 life_pInact_curTarget = _curTarget;
 
-if (_curTarget in life_hideoutBuildings) exitWith {
+if (_curTarget in life_var_gangHideoutBuildings) exitWith {
     closeDialog 0;
     hint localize "STR_House_Hideout";
 };
@@ -88,7 +88,7 @@ if (_curTarget isKindOf "House_F" && playerSide isEqualTo west) exitWith {
     };
 };
 
-if (!(_curTarget in life_vehicles) || isNil {_curTarget getVariable "house_owner"}) then {
+if (!(_curTarget in life_var_vehicles) || isNil {_curTarget getVariable "house_owner"}) then {
     private _isHouse = (isClass (missionConfigFile >> "Housing" >> worldName >> typeOf _curTarget));
     private _buildingPurchaseString = [
         "STR_pInAct_BuyGarage",

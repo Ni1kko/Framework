@@ -18,7 +18,7 @@ _line = _this select 1;
 _sender = _this select 2;
 disableSerialization;
 
-if (!life_settings_enableNewsBroadcast || isStreamFriendlyUIEnabled) exitWith {};
+if (!life_var_enableNewsBroadcast || isStreamFriendlyUIEnabled) exitWith {};
 
 30 cutRsc ["rscAAN","plain"];
 _display = uiNamespace getVariable "BIS_AAN";

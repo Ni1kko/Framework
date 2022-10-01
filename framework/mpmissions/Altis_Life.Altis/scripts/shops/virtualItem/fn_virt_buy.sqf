@@ -1,11 +1,10 @@
-#include "..\..\script_macros.hpp"
+#include "..\..\..\script_macros.hpp"
 /*
-    File: fn_virt_buy.sqf
-    Author: Bryan "Tonic" Boardwine
-
-    Description:
-    Buy a virtual item from the store.
+	## Nikko Renolds
+	## https://github.com/Ni1kko/FrameworkV2
+    ## fn_virt_buy.sqf
 */
+
 private ["_type","_price","_amount","_diff","_name","_hideout"];
 if ((lbCurSel 2401) isEqualTo -1) exitWith {hint localize "STR_Shop_Virt_Nothing"};
 _type = lbData[2401,(lbCurSel 2401)];
@@ -21,8 +20,8 @@ private _tanoaArray = ["Land_School_01_F","Land_Warehouse_03_F","Land_House_Smal
 private _hideoutObjs = [[["Altis", _altisArray], ["Tanoa", _tanoaArray]]] call MPServer_fnc_terrainSort;
 _hideout = (nearestObjects[getPosATL player,_hideoutObjs,25]) select 0;
 if ((_price * _amount) > MONEY_CASH && {!isNil "_hideout" && {(MONEY_GANG) <= _price * _amount}}) exitWith {hint localize "STR_NOTF_NotEnoughMoney"};
-if ((time - life_action_delay) < 0.2) exitWith {hint localize "STR_NOTF_ActionDelay";};
-life_action_delay = time;
+if ((time - life_var_actionDelay) < 0.2) exitWith {hint localize "STR_NOTF_ActionDelay";};
+life_var_actionDelay = time;
 
 _name = M_CONFIG(getText,"VirtualItems",_type,"displayName");
 

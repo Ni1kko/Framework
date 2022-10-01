@@ -22,4 +22,4 @@ if (count _licenses > 0) then
     } forEach _licenses;
 };
 
-MPClient_var_licenses
+life_var_licenses

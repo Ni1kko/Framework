@@ -59,9 +59,9 @@ if !life_var_serverLoaded then {
 ["Waiting for player data..."] call MPClient_fnc_log;
 [] spawn MPClient_fnc_dataQuery;
 waitUntil {
-    if(life_var_session_attempts > MAX_ATTEMPTS_TOO_QUERY_DATA) exitWith {["Unable to load player data", "Please try again"] call MPClient_fnc_endMission};
+    if(life_var_sessionAttempts > MAX_ATTEMPTS_TOO_QUERY_DATA) exitWith {["Unable to load player data", "Please try again"] call MPClient_fnc_endMission};
     uiSleep 1;    
-    life_session_completed
+    life_var_sessionDone
 };
 
 ["Setting up player", "Please wait..."] call MPClient_fnc_setLoadingText; uiSleep(random[0.5,3,6]);
@@ -103,7 +103,7 @@ private _sideCode = missionNamespace getVariable [format["MPClient_fnc_init%1",_
 [player] call _sideCode;
 [("Welcome " + profilename),"Have Fun And Respect The Rules!..."] call MPClient_fnc_setLoadingText; uiSleep(5);
 ["Life_var_initBlackout"] call BIS_fnc_blackIn;//fail safe for loading screen
-private _spawnPlayerThread = [life_is_alive,life_position] spawn MPClient_fnc_spawnPlayer;
+private _spawnPlayerThread = [life_var_alive,life_var_position] spawn MPClient_fnc_spawnPlayer;
 ["Waiting for player to spawn!"] call MPClient_fnc_log;
 waitUntil{scriptDone _spawnPlayerThread};
 enableRadio true;
@@ -112,7 +112,7 @@ enableRadio true;
 [_side] call MPClient_fnc_paychecks;
 
 //--
-[player, life_settings_enableSidechannel, playerSide] remoteExecCall ["MPServer_fnc_managesc", 2];
+[player, life_var_enableSidechannel, playerSide] remoteExecCall ["MPServer_fnc_managesc", 2];
 
 [] spawn MPClient_fnc_survival;
 [] spawn {

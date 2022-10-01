@@ -1,11 +1,10 @@
-#include "..\..\script_macros.hpp"
+#include "..\..\..\script_macros.hpp"
 /*
-    File: fn_fuelLBChange.sqf
-    Author: NiiRoZz
-
-    Description:
-    Changes when slider is changed.
+	## Nikko Renolds
+	## https://github.com/Ni1kko/FrameworkV2
+    ## fn_fuelLBChange.sqf
 */
+
 params [
     ["_control",controlNull,[controlNull]],
     ["_index",-1,[0]]

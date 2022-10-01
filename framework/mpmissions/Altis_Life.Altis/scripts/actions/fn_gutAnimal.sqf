@@ -10,7 +10,7 @@ private ["_animalCorpse","_upp","_ui","_progress","_pgText","_cP","_displayName"
 _animalCorpse = param [0,objNull,[objNull]];
 if (isNull _animalCorpse) exitWith {}; //Object passed is null?
 
-life_interrupted = false;
+life_var_interrupted = false;
 if (player distance _animalCorpse > 3.5) exitWith {}; //WTF need check with nearest objects I love Arma
 life_var_isBusy = true;
 
@@ -50,14 +50,14 @@ for "_i" from 0 to 1 step 0 do {
     if (!alive player) exitWith {};
     if (isNull _animalCorpse) exitWith {};
     if !(isNull objectParent player) exitWith {};
-    if (life_interrupted) exitWith {};
+    if (life_var_interrupted) exitWith {};
 };
 
 life_var_isBusy = false;
 "progressBar" cutText ["","PLAIN"];
 player playActionNow "stop";
 if (isNull _animalCorpse) exitWith {life_var_isBusy = false;};
-if (life_interrupted) exitWith {life_interrupted = false; titleText[localize "STR_NOTF_ActionCancel","PLAIN"]; life_var_isBusy = false;};
+if (life_var_interrupted) exitWith {life_var_interrupted = false; titleText[localize "STR_NOTF_ActionCancel","PLAIN"]; life_var_isBusy = false;};
 if !(isNull objectParent player) exitWith {titleText[localize "STR_NOTF_ActionInVehicle","PLAIN"];};
 
 if ([true,_item,1] call MPClient_fnc_handleInv) then {

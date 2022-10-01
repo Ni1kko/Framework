@@ -40,13 +40,13 @@ class Loadouts {
     // CIV
     class CIV {
         uniform[] = {
-            {"U_C_Poloshirt_blue", "!life_is_arrested"},
-            {"U_C_Poloshirt_burgundy", "!life_is_arrested"},
-            {"U_C_Poloshirt_stripped", "!life_is_arrested"},
-            {"U_C_Poloshirt_tricolour", "!life_is_arrested"},
-            {"U_C_Poloshirt_salmon", "!life_is_arrested"},
-            {"U_C_Poloshirt_redwhite", "!life_is_arrested"},
-            {"U_C_Commoner1_1", "!life_is_arrested"}
+            {"U_C_Poloshirt_blue", "!life_var_arrested"},
+            {"U_C_Poloshirt_burgundy", "!life_var_arrested"},
+            {"U_C_Poloshirt_stripped", "!life_var_arrested"},
+            {"U_C_Poloshirt_tricolour", "!life_var_arrested"},
+            {"U_C_Poloshirt_salmon", "!life_var_arrested"},
+            {"U_C_Poloshirt_redwhite", "!life_var_arrested"},
+            {"U_C_Commoner1_1", "!life_var_arrested"}
         };
         headgear[] = {};
         vest[] = {};

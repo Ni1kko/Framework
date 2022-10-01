@@ -1,24 +1,24 @@
+#include "\life_backend\script_macros.hpp"
 /*
 	## Nikko Renolds
 	## https://github.com/Ni1kko/FrameworkV2
 */
 
+
+RUN_DEDI_SERVER_ONLY;
+FORCE_SUSPEND("MPServer_fnc_antihack_initialize");
+AH_CHECK("life_var_antihack_loaded");
+
+//-- Wait for Rcon startup 
 waitUntil {!isNil "life_var_rcon_passwordOK"};
+AH_BAN_REMOTE_EXECUTED("MPServer_fnc_antihack_initialize");
 
-if(!isServer)exitwith{false};
-if(!canSuspend)exitwith{[]spawn MPServer_fnc_antihack_initialize};
-if(missionNamespace getVariable ["life_var_antihack_loaded",false])exitwith{false};
-if(isRemoteExecuted AND life_var_rcon_passwordOK)exitwith{[remoteExecutedOwner,"RemoteExecuted `fn_antihack_initialize.sqf`"] call MPServer_fnc_rcon_ban;};
-
+//--
 ["Starting AntiHack!"] call MPServer_fnc_antihack_systemlog;
-
 life_var_antihack_loaded = false;
 life_var_antihack_networkReady = false;
 life_var_antihack_logs = [];
-
 JxMxE_PublishVehicle = compileFinal str(false);
-
-waitUntil {isFinal "extdb_var_database_key"};
 
 try {
 	private _config = (configFile >> "CfgAntiHack");
@@ -79,6 +79,9 @@ try {
 	private _goggleswhitelist = getArray(_config >> "goggleswhitelist");
 	private _vestwhitelist = getArray(_config >> "vestwhitelist");
 	private _backpackwhitelist = getArray(_config >> "backpackwhitelist");
+	
+	//--- Add admin menu to bad menus (Prevents non admins opening menu)
+	_badmenus pushBackUnique (getNumber(missionConfigFile >> "RscDisplayAdminMenu" >> "idd"));
 
 	//--- Setup memory hack arrays
 	if(_checkmemoryhack)then{
@@ -242,11 +245,14 @@ try {
 		};
 	};
 	
+	//--- Wait for database system to ready up
+	waitUntil {isFinal "extdb_var_database_key"};
+	
 	//--- Load logs
 	if(_dbLogs)then{
 		private _logs = ["READ", "antihack_logs",[["Type","log","steamID"],[]],false] call MPServer_fnc_database_request;
 		{
-			life_var_antihack_logs pushback _x;
+			life_var_antihack_logs pushBackUnique _x;
 		}forEach _logs;
 	};
 	publicVariable "life_var_antihack_logs";
@@ -746,7 +752,7 @@ try {
 
 								private _distance = _oldPos distance _newPos;
 
-								if((_distance > _maxSpeed * _checkTime) && life_is_alive && (player == (driver _newVehicle)) && local _newVehicle) then {
+								if((_distance > _maxSpeed * _checkTime) && life_var_alive && (player == (driver _newVehicle)) && local _newVehicle) then {
 									if!(player getVariable ['life_var_teleported',false]) then {
 										private _log = format['Player teleported: moved %1 meters, in %2 seconds! (Max Allowed Speed: %3)',_distance,_checkTime,_maxSpeed]; 
 										_log call "+_rnd_banme+";

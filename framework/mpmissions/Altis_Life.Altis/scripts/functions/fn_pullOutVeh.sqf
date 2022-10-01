@@ -10,11 +10,11 @@ if (player getVariable "restrained") then {
     detach player;
     player setVariable ["Escorting",false,true];
     player setVariable ["transporting",false,true];
-    life_disable_getOut = false;
+    life_var_preventGetOut = false;
     player action ["Eject", vehicle player];
     titleText[localize "STR_NOTF_PulledOut","PLAIN"];
     titleFadeOut 4;
-    life_disable_getIn = true;
+    life_var_preventGetIn = true;
 } else {
     player action ["Eject", vehicle player];
     titleText[localize "STR_NOTF_PulledOut","PLAIN"];

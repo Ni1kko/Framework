@@ -1,9 +1,8 @@
+#include "..\..\..\script_macros.hpp"
 /*
-    File: fn_3dPreviewExit.sqf
-    Author: KLM
-
-    Description:
-    Handles the cleanup of the 3d preview.
+	## Nikko Renolds
+	## https://github.com/Ni1kko/FrameworkV2
+    ## fn_3dPreviewExit.sqf
 */
 
 if !(params [["_display", displayNull, [displayNull]]]) exitWith {};

@@ -22,7 +22,7 @@ _receiverName = switch (_receiver select 1) do
 	case "XXX-REQ-ADMIN":  {"Admin Message - Emergencies Only!"};
 };
 
-life_cellphone_receiver = _receiver;
+life_var_phoneTarget = _receiver;
 _writingTo ctrlSetText format["Writing to %1", _receiverName];
 
 true

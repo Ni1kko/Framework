@@ -32,7 +32,7 @@ if (_car distance player > 10 && !(isNull objectParent player)) exitWith {
 
 private _fuelCost = uiNamespace getVariable ["fuel_cost",0];
 if ((MONEY_CASH - (_fueltoput * _fuelCost)) > 0) then {
-    life_is_processing = true;
+    life_var_processingResource = true;
     //Setup our progress bar.
     disableSerialization;
     "progressBar" cutRsc ["life_progress","PLAIN"];
@@ -62,7 +62,7 @@ if ((MONEY_CASH - (_fueltoput * _fuelCost)) > 0) then {
         hint localize "STR_Distance_Vehicle_Pump";
     };
     [0] call MPClient_fnc_updatePartial;
-    life_is_processing = false;
+    life_var_processingResource = false;
 } else {
     hint localize "STR_NOTF_NotEnoughMoney";
 };

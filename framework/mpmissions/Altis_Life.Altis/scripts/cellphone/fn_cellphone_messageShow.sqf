@@ -8,8 +8,8 @@ disableSerialization;
 _display = findDisplay 8500;
 _messageList = _display displayCtrl 1501;
 lnbClear _messageList;
-for "_i" from count life_cellphone_messages -1 to 0 step -1 do {
-	_item = life_cellphone_messages select _i;
+for "_i" from count life_var_phoneMessages -1 to 0 step -1 do {
+	_item = life_var_phoneMessages select _i;
 	_excerpt = [_item select 3,23] call {
 		private["_in","_len","_arr","_out"];
 		_in=_this select 0;

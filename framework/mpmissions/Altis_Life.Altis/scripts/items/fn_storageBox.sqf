@@ -10,7 +10,7 @@ private ["_object","_attachPos"];
 params [
     ["_size",false,[false]]
 ];
-if (!(nearestObject [player, "House"] in life_vehicles)) exitWith {hint localize "STR_ISTR_Box_NotinHouse";};
+if (!(nearestObject [player, "House"] in life_var_vehicles)) exitWith {hint localize "STR_ISTR_Box_NotinHouse";};
 
 life_container_active = true;
 closeDialog 0;
@@ -21,7 +21,7 @@ if (_size) then {
     _object = "Box_IND_Grenades_F" createVehicle [0,0,0];
 };
 
-life_container_activeObj = _object;
+life_var_activeContaineObject = _object;
 _attachPos = [0.16, 3, ((boundingBoxReal _object) select 1) select 2];
 [_object] remoteExecCall ["MPClient_fnc_simDisable",RE_GLOBAL];
 _object attachTo[player, _attachPos];

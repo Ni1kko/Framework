@@ -17,7 +17,7 @@ _plist = _dialog displayCtrl 2702;
 _sel = lbCurSel _list;
 if ((_list lbData _sel) isEqualTo "") exitWith {hint localize "STR_NOTF_didNotSelectVehicle";};
 _vehicle = _list lbData _sel;
-_vehicle = life_vehicles select parseNumber(_vehicle);
+_vehicle = life_var_vehicles select parseNumber(_vehicle);
 
 if ((lbCurSel 2702) isEqualTo -1) exitWith {hint localize "STR_NOTF_didNotSelectPlayer";};
 _sel = lbCurSel _plist;

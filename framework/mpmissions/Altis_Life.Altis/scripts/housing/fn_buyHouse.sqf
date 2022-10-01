@@ -53,7 +53,7 @@ if (_action) then {
     _house setVariable ["containers",[],true];
     _house setVariable ["uid",floor(random 99999),true];
 
-    life_vehicles pushBack _house;
+    life_var_vehicles pushBack _house;
     life_houses pushBack [str(getPosATL _house),[]];
     _marker = createMarkerLocal [format ["house_%1",(_house getVariable "uid")],getPosATL _house];
     _houseName = FETCH_CONFIG2(getText,"CfgVehicles",(typeOf _house), "displayName");

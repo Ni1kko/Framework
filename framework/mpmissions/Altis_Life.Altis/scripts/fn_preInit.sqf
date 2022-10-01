@@ -3,12 +3,10 @@
 	## Nikko Renolds
 	## https://github.com/Ni1kko/FrameworkV2
 */
-if !(hasInterface)exitWith{false};
-if !(canSuspend)exitWith{_this spawn MPClient_fnc_preInit; false};
-if (isFinal "life_var_preInitTime")exitWith{
-    ["Hack Detected", "`life_var_preInitTime` already final, Client looping or hacker detected", "Antihack"] call MPClient_fnc_endMission;
-    false;
-};
+
+RUN_CLIENT_ONLY;
+FORCE_SUSPEND("MPClient_fnc_preInit");
+AH_CHECK_FINAL("life_var_preInitTime");
 
 private _threadsToMonitor = [];
 private _variablesFlagged = [];
@@ -21,35 +19,29 @@ private _missionVariables = [
     ["life_var_initTime", compile str(-1)],
     ["life_var_serverTimeout", 0],
     ["life_var_loadingScreenActive", false],
-    ["life_action_delay", time],
-    ["life_trunk_vehicle", objNull],
-    ["life_session_completed", false],
-    ["life_garage_store", false],
-    ["life_var_session_attempts", 0],
-    ["life_siren_active", false],
-    ["life_clothing_filter", 0],
-    ["life_redgull_effect", time],
-    ["life_is_processing", false],
-    ["life_bail_paid", false],
-    ["life_impound_inuse", false],
+    ["life_var_actionDelay", time],
+    ["life_var_vehicleTrunk", objNull],
+    ["life_var_sirenActive", false],
+    ["life_var_effectEnergyDrink", time],
+    ["life_var_processingResource", false],
+    ["life_var_gatheringResource", false],
+    ["life_var_bailPaid", false],
     ["life_var_isBusy", false],
-    ["life_spikestrip", objNull],
-    ["life_knockout", false],
-    ["life_interrupted", false],
-    ["life_removeWanted", false],
-    ["life_action_gathering", false],
-    ["life_frozen", false],
+    ["life_var_vehicleStinger", objNull],
+    ["life_var_knockoutBusy", false],
+    ["life_var_interrupted", false],
+    ["life_var_removeWanted", false],
+    ["life_var_adminFrozen", false],
     ["life_var_gearWhenDied", []],
-    ["life_container_activeObj", objNull],
-    ["life_disable_getIn", false],
-    ["life_disable_getOut", false],
-    ["life_admin_debug", false],
-    ["life_position", []],
-    ["life_markers", false],
-    ["life_markers_active", false],
-    ["life_canpay_bail", true],
-    ["life_storagePlacing", scriptNull],
-    ["life_firstSpawn", true],
+    ["life_var_activeContaineObject", objNull],
+    ["life_var_preventGetIn", false],
+    ["life_var_preventGetOut", false],
+    ["life_var_position", []],
+    ["life_var_markers", false],
+    ["life_var_markers_active", false],
+    ["life_var_canAffordBail", true],
+    ["life_var_storagePlacing", scriptNull],
+    ["life_var_firstSpawn", true],
     ["life_var_newlife", false],
     ["life_var_earplugs", false],
     ["life_var_autorun", false],
@@ -59,6 +51,12 @@ private _missionVariables = [
     ["life_var_autorun_interrupt", false],
     ["life_var_lastSynced", time],
     ["life_var_weaponHolders", []],
+
+    //--- Session
+    ["life_var_sessionAttempts", 0],
+    ["life_var_sessionDone", false],
+    ["life_var_sessionGarageRequest", false],
+    ["life_var_sessionGarageImpoundRequest", false],
 
     //--- Hud
     ["life_var_hud_threads", nil],
@@ -94,41 +92,38 @@ private _missionVariables = [
     ["life_var_critHitRunning",false],
 
     //--- cellphone
-    ["life_cellphone_contacts", []],
-    ["life_cellphone_messages", []],
-    ["life_cellphone_receiver", []],
-    ["life_cellphone_filterWorking", false],
+    ["life_var_phoneContacts", []],
+    ["life_var_phoneMessages", []],
+    ["life_var_phoneTarget", []],
+    ["life_var_phoneFilter", false],
 
     //--- Settings
-    ["life_settings_enableNewsBroadcast", profileNamespace getVariable ["life_enableNewsBroadcast", true]],
-    ["life_settings_enableSidechannel", profileNamespace getVariable ["life_enableSidechannel", true]],
-    ["life_settings_tagson", profileNamespace getVariable ["life_settings_tagson", true]],
-    ["life_settings_revealObjects", profileNamespace getVariable ["life_settings_revealObjects", true]],
-    ["life_settings_viewDistanceFoot", profileNamespace getVariable ["life_viewDistanceFoot", 1250]],
-    ["life_settings_viewDistanceCar", profileNamespace getVariable ["life_viewDistanceCar", 1250]],
-    ["life_settings_viewDistanceAir", profileNamespace getVariable ["life_viewDistanceAir", 1250]],
-
-    //--- Uniform price (0),Hat Price (1),Glasses Price (2),Vest Price (3),Backpack Price (4)
-    ["life_clothing_purchase", [-1, -1, -1, -1, -1]],
+    ["life_var_enableNewsBroadcast", profileNamespace getVariable ["life_var_enableNewsBroadcast", true]],
+    ["life_var_enableSidechannel", profileNamespace getVariable ["life_var_enableSidechannel", true]],
+    ["life_var_enablePlayerTags", profileNamespace getVariable ["life_var_enablePlayerTags", true]],
+    ["life_var_enableRevealObjects", profileNamespace getVariable ["life_var_enableRevealObjects", true]],
+    ["life_var_viewDistanceFoot", profileNamespace getVariable ["life_var_viewDistanceFoot", 1250]],
+    ["life_var_viewDistanceCar", profileNamespace getVariable ["life_var_viewDistanceCar", 1250]],
+    ["life_var_viewDistanceAir", profileNamespace getVariable ["life_var_viewDistanceAir", 1250]],
     
     //--- Weight Variables
     ["life_var_maxCarryWeight", LIFE_SETTINGS(getNumber, "total_maxWeight")],
     ["life_var_carryWeight", 0], //Represents the players current inventory weight (MUST START AT 0).
 
     //--- Life Variables
-    ["life_net_dropped", false],
+    ["life_var_fishingNetOut", false],
     ["life_var_ATMEnabled", true],
-    ["life_is_arrested", false],
-    ["life_is_alive", false],
-    ["life_delivery_in_progress", false],
-    ["life_istazed", false],
-    ["life_isknocked", false],
+    ["life_var_arrested", false],
+    ["life_var_alive", false],
+    ["life_var_deliveringPackage", false],
+    ["life_var_tazed", false],
+    ["life_var_unconscious", false],
     ["life_var_lastBalance",[0,0,0,0]],
     ["life_var_bankrupt", false],
     ["life_var_bankruptTime", nil],
-
+ 
     //--- Owned house, vehicles are added to this array
-    ["life_vehicles", []],
+    ["life_var_vehicles", []],
 
     //--- Settings EVH
     ["life_var_playerTagsEVH", -1],
@@ -138,18 +133,21 @@ private _missionVariables = [
     ["life_var_serverRequest",false],
     
     //--- Shop related
+    ["life_var_clothingTraderData", [-1, -1, -1, -1, -1]],
+    ["life_var_clothingTraderFilter", 0],
     ["life_var_vehicleTraderData",["",[],"Undefined",true]],
     ["life_var_marketConfig",createHashMap],
+    ["life_var_adminShop",false],
 
     //
-    ["MPClient_var_licenses",createHashMap],
+    ["life_var_licenses",createHashMap],
 
     //--- Money related
     [GET_BANK_VAR(player), 0],
     [GET_DEBT_VAR(player), 0],
 
     //-- Setup Gang hideouts
-    ["life_hideoutBuildings", (LIFE_SETTINGS(getArray,"gang_area")) apply {nearestBuilding(getMarkerPos _x)}]
+    ["life_var_gangHideoutBuildings", (LIFE_SETTINGS(getArray,"gang_area")) apply {nearestBuilding(getMarkerPos _x)}]
 ];
 private _parserVariables = [
     

@@ -1,9 +1,8 @@
+#include "..\..\..\script_macros.hpp"
 /*
-    File: fn_3dPreviewDisplay.sqf
-    Author: KLM
-
-    Description:
-    Called to change the object in the 3d preview.
+	## Nikko Renolds
+	## https://github.com/Ni1kko/FrameworkV2
+    ## fn_3dPreviewDisplay.sqf
 */
 
 if !(params [["_className", "", [""]]]) exitWith {};

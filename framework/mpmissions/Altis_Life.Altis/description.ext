@@ -246,6 +246,7 @@ class CfgFunctions
             class log {};
             class endMission {};
             class stringReplace {};
+            class checkConditions {};
         };
 
         class Gangs 
@@ -432,31 +433,60 @@ class CfgFunctions
             class initReb {};
         };
 
-        class Shops 
+        class Shops_Atm
         {
-            file = "scripts\shops";
-            class 3dPreviewDisplay {};
-            class 3dPreviewExit {};
-            class 3dPreviewInit {};
+            file = "scripts\shops\atm";
             class atmMenu {};
-            class buyClothes {};
-            class changeClothes {};
+        };
+
+        class Shops_ChopShop
+        {
+            file = "scripts\shops\chopshop";
             class chopShopMenu {};
             class chopShopSelection {};
             class chopShopSell {};
             class chopShopSold {};
+        };
+
+        class Shops_Clothing
+        {
+            file = "scripts\shops\clothing";
+            class buyClothes {};
+            class changeClothes {};
             class clothingFilter {};
             class clothingMenu {};
+        };
+
+        class Shops_FuelPump
+        {
+            file = "scripts\shops\fuelPump";
             class fuelLBchange {};
             class fuelStatOpen {};
-            class levelCheck {};
+        };
+
+        class Shops_Vehicle
+        {
+            file = "scripts\shops\vehicle";
+            class 3dPreviewDisplay {};
+            class 3dPreviewExit {};
+            class 3dPreviewInit {};
             class vehicleShopBuy {};
             class vehicleShopLBChange {};
             class vehicleShopMenu {};
+        };
+        
+        class Shops_VirtualItem
+        {
+            file = "scripts\shops\virtualItem";
             class virt_buy {};
             class virt_menu {};
             class virt_sell {};
             class virt_update {};
+        };
+
+        class Shops_Weapon
+        {
+            file = "scripts\shops\weapon";
             class weaponShopAccs {};
             class weaponShopBuySell {};
             class weaponShopFilter {};

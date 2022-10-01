@@ -94,14 +94,14 @@ if (playerSide isEqualTo west) then {
     if (typeOf _curTarget == "O_Truck_03_device_F") then {
         _Btn3 ctrlSetText localize "STR_vInAct_DeviceMine";
         _Btn3 buttonSetAction "[life_vInact_curTarget] spawn MPClient_fnc_deviceMine";
-        if (!isNil {(_curTarget getVariable "mining")} || !local _curTarget && {_curTarget in life_vehicles}) then {
+        if (!isNil {(_curTarget getVariable "mining")} || !local _curTarget && {_curTarget in life_var_vehicles}) then {
             _Btn3 ctrlEnable false;
         } else {
             _Btn3 ctrlEnable true;
         };
     } else {
         _Btn3 ctrlShow false;
-        if (typeOf (_curTarget) in ["C_Van_01_fuel_F","I_Truck_02_fuel_F","B_Truck_01_fuel_F"] && _curTarget in life_vehicles) then {
+        if (typeOf (_curTarget) in ["C_Van_01_fuel_F","I_Truck_02_fuel_F","B_Truck_01_fuel_F"] && _curTarget in life_var_vehicles) then {
             if (!isNil {_curTarget getVariable "fuelTankWork"}) then {
                 _Btn3 ctrlSetText localize "STR_FuelTank_Stop";
                 _Btn3 buttonSetAction "life_vInact_curTarget setVariable [""fuelTankWork"",nil,true]; closeDialog 0;";

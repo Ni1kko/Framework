@@ -40,7 +40,7 @@ private _crimes = LIFE_SETTINGS(getArray,"crimes");
 
 ctrlSetText[2404,"Establishing connection..."];
 
-if (FETCH_CONST(life_coplevel) < 3 && {FETCH_CONST(life_adminlevel) isEqualTo 0}) then {
+if ((call life_coplevel) < 3 && {(call life_adminlevel) isEqualTo 0}) then {
     ctrlShow[2405,false];
 };
 

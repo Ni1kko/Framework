@@ -14,7 +14,7 @@ params [
 
 private _cfgLicenses = missionConfigFile >> "CfgLicenses";
 private _sideflagActual = [side _player,true] call (missionNamespace getvariable ["MPServer_fnc_util_getSideString",{"Undefined"}]);
-private _alliLcenses = missionNamespace getVariable ["MPClient_var_licenses",createHashMap];
+private _alliLcenses = missionNamespace getVariable ["life_var_licenses",createHashMap];
 private _licenses = [];
 
 //-- preInit loads before server is ready, so we force get all sides

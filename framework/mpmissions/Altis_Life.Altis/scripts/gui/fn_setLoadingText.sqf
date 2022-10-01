@@ -4,17 +4,10 @@
 	## https://github.com/Ni1kko/FrameworkV2
 	## fn_setLoadingText.sqf
 */
-
-params [
-	["_HeaderText","",[""]],
-	["_BodyText","",[""]],
-	["_color","green"],
-	["_bodycolor",""] 
-];
-
 disableSerialization; 
 
 private _display = uiNamespace getVariable ["life_Rsc_DisplayLoading", displayNull];
+private _controlText = _display displayCtrl 100;
 
 private _getcolorcode = {
 	switch (param [0,""]) do 
@@ -31,23 +24,18 @@ private _getcolorcode = {
 	};
 };
 
-private _structuredText = [
-	["<t", "size='1.4'", format["color='%1'", _color call _getcolorcode], ">", _HeaderText, "</t>"] joinString " ",
-	[
-		_BodyText,
-		["<t", format["color='%1'", _bodycolor call _getcolorcode], ">", _HeaderText, "</t>"] joinString " "
-	]select (count _bodycolor > 0)
-	
-] joinString "<br/>";
+private _HeaderString = ["<t", "size='1.4'", format["color='%1'", [param[2, "green",[""]]] call _getcolorcode], ">", (param[0, "",[""]]) call BIS_fnc_localize, "</t>"] joinString " ";
+private _BodyString = ["<t", format["color='%1'", [param[3, "white",[""]]] call _getcolorcode], ">", (param[1, "",[""]]) call BIS_fnc_localize, "</t>"] joinString " ";
+private _structuredText = parseText([_HeaderString,_BodyString] joinString "<br/>");
 
 if(isNull _display OR not(life_var_loadingScreenActive))then
 {
 	FORCE_SUSPEND("MPClient_fnc_setLoadingText");
 	startLoadingScreen ["","Life_Rsc_DisplayLoading"];
-	waitUntil{life_var_loadingScreenActive AND {call BIS_fnc_isLoading}};
-	(_display displayCtrl 100) ctrlSetStructuredText parseText(_structuredText);
+	waitUntil{life_var_loadingScreenActive};
+	_controlText ctrlSetStructuredText _structuredText;
 }else{
-	(_display displayCtrl 100) ctrlSetStructuredText parseText(_structuredText);
+	_controlText ctrlSetStructuredText _structuredText;
 };
 
 true;

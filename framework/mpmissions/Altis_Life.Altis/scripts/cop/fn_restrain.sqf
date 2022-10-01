@@ -41,8 +41,8 @@ if(side _cop == west || _isBountyHunter) then {
 	titleText[format[localize "STR_Civ_Ziptied",_cop getVariable["realname",name _cop]],"PLAIN"];		
 };
 
-life_disable_getIn = true;
-life_disable_getOut = false;
+life_var_preventGetIn = true;
+life_var_preventGetOut = false;
 
 while {player getVariable  "restrained"} do {
     if (isNull objectParent player) then {
@@ -64,7 +64,7 @@ while {player getVariable  "restrained"} do {
         detach player;
     };
 
-    if (!(isNull objectParent player) && life_disable_getIn) then {
+    if (!(isNull objectParent player) && life_var_preventGetIn) then {
         player action["eject",vehicle player];
     };
 
@@ -72,16 +72,16 @@ while {player getVariable  "restrained"} do {
         _vehicle = vehicle player;
     };
 
-    if (isNull objectParent player && life_disable_getOut) then {
+    if (isNull objectParent player && life_var_preventGetOut) then {
         player moveInCargo _vehicle;
     };
 
-    if (!(isNull objectParent player) && life_disable_getOut && (driver (vehicle player) isEqualTo player)) then {
+    if (!(isNull objectParent player) && life_var_preventGetOut && (driver (vehicle player) isEqualTo player)) then {
         player action["eject",vehicle player];
         player moveInCargo _vehicle;
     };
 
-    if (!(isNull objectParent player) && life_disable_getOut) then {
+    if (!(isNull objectParent player) && life_var_preventGetOut) then {
         _turrets = [[-1]] + allTurrets _vehicle;
         {
             if (_vehicle turretUnit [_x select 0] isEqualTo player) then {

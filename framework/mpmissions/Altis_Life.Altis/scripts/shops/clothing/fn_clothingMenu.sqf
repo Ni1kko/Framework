@@ -1,14 +1,11 @@
-#include "..\..\script_macros.hpp"
+#include "..\..\..\script_macros.hpp"
 /*
-    File: fn_clothingMenu.sqf
-    Author: Bryan "Tonic" Boardwine
-
-    Description:
-    Opens and initializes the clothing store menu.
-    Started clean, finished messy.
+	## Nikko Renolds
+	## https://github.com/Ni1kko/FrameworkV2
+    ## fn_clothingMenu.sqf
 */
 
-params ["","","",["_shop","",[""]]];
+private _shop = param [3, "",[""]];
 
 if (_shop isEqualTo "") exitWith {};
 if !(isNull objectParent player) exitWith {titleText[localize "STR_NOTF_ActionInVehicle","PLAIN"];};
@@ -30,7 +27,7 @@ if !(_shopSide isEqualTo "") then {
 
 if (_exit) exitWith {};
 
-_exit = [_conditions] call MPClient_fnc_levelCheck;
+_exit = [_conditions] call MPClient_fnc_checkConditions;
 if !(_exit) exitWith {hint localize "STR_Shop_Veh_NoLicense";};
 
 //Save old inventory
@@ -208,9 +205,9 @@ if (LIFE_SETTINGS(getNumber,"clothing_noTP") isEqualTo 0) then {
 };
 life_shop_cam cameraEffect ["TERMINATE","BACK"];
 camDestroy life_shop_cam;
-life_clothing_filter = 0;
+life_var_clothingTraderFilter = 0;
 if (isNil "life_clothesPurchased") exitWith {
-    life_clothing_purchase = [-1,-1,-1,-1,-1];
+    life_var_clothingTraderData = [-1,-1,-1,-1,-1];
     if !(life_oldClothes isEqualTo "") then {player addUniform life_oldClothes;} else {removeUniform player};
     if !(life_oldHat isEqualTo "") then {player addHeadgear life_oldHat} else {removeHeadgear player;};
     if !(life_oldGlasses isEqualTo "") then {player addGoggles life_oldGlasses;} else {removeGoggles player};
@@ -254,11 +251,11 @@ if (isNil "life_clothesPurchased") exitWith {
 life_clothesPurchased = nil;
 
 //Check uniform purchase.
-if ((life_clothing_purchase select 0) isEqualTo -1) then {
+if ((life_var_clothingTraderData select 0) isEqualTo -1) then {
     if (life_oldClothes != uniform player) then {player addUniform life_oldClothes;};
 };
 //Check hat
-if ((life_clothing_purchase select 1) isEqualTo -1) then {
+if ((life_var_clothingTraderData select 1) isEqualTo -1) then {
     if (life_oldHat != headgear player) then {
         if (life_oldHat isEqualTo "") then {
             removeHeadGear player;
@@ -268,7 +265,7 @@ if ((life_clothing_purchase select 1) isEqualTo -1) then {
     };
 };
 //Check glasses
-if ((life_clothing_purchase select 2) isEqualTo -1) then {
+if ((life_var_clothingTraderData select 2) isEqualTo -1) then {
     if (life_oldGlasses != goggles player) then {
         if (life_oldGlasses isEqualTo "") then  {
             removeGoggles player;
@@ -278,7 +275,7 @@ if ((life_clothing_purchase select 2) isEqualTo -1) then {
     };
 };
 //Check Vest
-if ((life_clothing_purchase select 3) isEqualTo -1) then {
+if ((life_var_clothingTraderData select 3) isEqualTo -1) then {
     if (life_oldVest != vest player) then {
         if (life_oldVest isEqualTo "") then {removeVest player;} else {
             player addVest life_oldVest;
@@ -291,7 +288,7 @@ if ((life_clothing_purchase select 3) isEqualTo -1) then {
 };
 
 //Check Backpack
-if ((life_clothing_purchase select 4) isEqualTo -1) then {
+if ((life_var_clothingTraderData select 4) isEqualTo -1) then {
     if (life_oldBackpack != backpack player) then {
         if (life_oldBackpack isEqualTo "") then {removeBackpack player;} else {
             removeBackpack player;
@@ -304,7 +301,7 @@ if ((life_clothing_purchase select 4) isEqualTo -1) then {
     };
 };
 
-life_clothing_purchase = [-1,-1,-1,-1,-1];
+life_var_clothingTraderData = [-1,-1,-1,-1,-1];
 
 [] spawn {
     uiSleep 5;

@@ -13,24 +13,24 @@ _state = _this select 1;
 switch (_option) do {
     case "tags": {
         if (_state isEqualTo 1) then {
-            life_settings_tagson = true;
-            profileNamespace setVariable ["life_settings_tagson",true];
+            life_var_enablePlayerTags = true;
+            profileNamespace setVariable ["life_var_enablePlayerTags",true];
             life_var_playerTagsEVH = addMissionEventHandler ["EachFrame", MPClient_fnc_playerTags];
         } else {
-            life_settings_tagson = false;
-            profileNamespace setVariable ["life_settings_tagson",false];
+            life_var_enablePlayerTags = false;
+            profileNamespace setVariable ["life_var_enablePlayerTags",false];
             removeMissionEventHandler ["EachFrame", life_var_playerTagsEVH];
         };
     };
 
     case "objects": {
         if (_state isEqualTo 1) then {
-            life_settings_revealObjects = true;
-            profileNamespace setVariable ["life_settings_revealObjects",true];
+            life_var_enableRevealObjects = true;
+            profileNamespace setVariable ["life_var_enableRevealObjects",true];
             life_var_revealObjectsEVH = addMissionEventHandler ["EachFrame",{_this call MPClient_fnc_revealObjects}];
         } else {
-            life_settings_revealObjects = false;
-            profileNamespace setVariable ["life_settings_revealObjects",false];
+            life_var_enableRevealObjects = false;
+            profileNamespace setVariable ["life_var_enableRevealObjects",false];
             removeMissionEventHandler ["EachFrame",  life_var_revealObjectsEVH];
         };
     };
@@ -39,24 +39,24 @@ switch (_option) do {
         if (_state isEqualTo 1) then {
             life_enableSidechannel = true;
             profileNamespace setVariable ["life_enableSidechannel",true];
-            life_settings_enableSidechannel = profileNamespace getVariable ["life_enableSidechannel",true];
+            life_var_enableSidechannel = profileNamespace getVariable ["life_enableSidechannel",true];
         } else {
             life_enableSidechannel = false;
             profileNamespace setVariable ["life_enableSidechannel",false];
-            life_settings_enableSidechannel = profileNamespace getVariable ["life_enableSidechannel",false];
+            life_var_enableSidechannel = profileNamespace getVariable ["life_enableSidechannel",false];
         };
-        [player,life_settings_enableSidechannel,playerSide] remoteExecCall ["MPServer_fnc_managesc",RE_SERVER];
+        [player,life_var_enableSidechannel,playerSide] remoteExecCall ["MPServer_fnc_managesc",RE_SERVER];
     };
 
     case "broadcast": {
         if (_state isEqualTo 1) then {
             life_enableNewsBroadcast = true;
             profileNamespace setVariable ["life_enableNewsBroadcast",true];
-            life_settings_enableNewsBroadcast = profileNamespace getVariable ["life_enableNewsBroadcast",true];
+            life_var_enableNewsBroadcast = profileNamespace getVariable ["life_enableNewsBroadcast",true];
         } else {
             life_enableNewsBroadcast = false;
             profileNamespace setVariable ["life_enableNewsBroadcast",false];
-            life_settings_enableNewsBroadcast = profileNamespace getVariable ["life_enableNewsBroadcast",false];
+            life_var_enableNewsBroadcast = profileNamespace getVariable ["life_enableNewsBroadcast",false];
         };
     };
 };

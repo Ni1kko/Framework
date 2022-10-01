@@ -33,7 +33,7 @@ if  !((vehicle _unit) isEqualTo _unit) then {
     ['realname',profileName,true]
 ];
 
-life_is_alive = false;
+life_var_alive = false;
 life_var_isBusy = false;
 life_var_hunger = 0;
 life_var_thirst = 0;
@@ -76,7 +76,7 @@ if (!isNull _killer) then
                 //[_killer, ["gun"], "STR_Civ_LicenseRemove_2"] remoteExecCall ["MPClient_fnc_removeLicenses",owner _killer];
             };
         }else{ 
-            life_removeWanted = true;
+            life_var_removeWanted = true;
         };
     };
 };

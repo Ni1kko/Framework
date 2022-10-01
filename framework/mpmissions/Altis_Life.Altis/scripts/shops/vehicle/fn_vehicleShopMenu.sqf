@@ -1,10 +1,8 @@
-#include "..\..\script_macros.hpp"
+#include "..\..\..\script_macros.hpp"
 /*
-    File: fn_vehicleShopMenu.sqf
-    Author: Bryan "Tonic" Boardwine
-
-    Description:
-    Blah
+	## Nikko Renolds
+	## https://github.com/Ni1kko/FrameworkV2
+    ## fn_vehicleShopMenu.sqf
 */
 
 (_this select 3) params [
@@ -21,10 +19,10 @@ disableSerialization;
 //Long boring series of checks
 if (dialog) exitWith {};
 if (count _shop isEqualTo 0) exitWith {false};
-if (not(MPClient_adminShop) AND _sideCheck isNotEqualTo sideUnknown AND {!(playerSide isNotEqualTo _sideCheck)}) exitWith {hint localize "STR_Shop_Veh_NotAllowed"};
+if (not(life_var_adminShop) AND _sideCheck isNotEqualTo sideUnknown AND {!(playerSide isNotEqualTo _sideCheck)}) exitWith {hint localize "STR_Shop_Veh_NotAllowed"};
 
 private _conditions = M_CONFIG(getText,"cfgVehicleTraders",_shop,"conditions");
-if (not(MPClient_adminShop) AND !([_conditions] call MPClient_fnc_levelCheck)) exitWith {hint localize "STR_Shop_Veh_NotAllowed"};
+if (not(life_var_adminShop) AND !([_conditions] call MPClient_fnc_checkConditions)) exitWith {hint localize "STR_Shop_Veh_NotAllowed"};
 
 if (LIFE_SETTINGS(getNumber,"vehicleShop_3D") isEqualTo 1) then {
   createDialog "Life_Vehicle_Shop_v2_3D";
@@ -32,17 +30,17 @@ if (LIFE_SETTINGS(getNumber,"vehicleShop_3D") isEqualTo 1) then {
   createDialog "Life_Vehicle_Shop_v2";
 };
 
-if(MPClient_adminShop) then {
+if(life_var_adminShop) then {
     _shopTitle = format["Admin %1 Shop",_shop];
     _shopFlag = M_CONFIG(getText,"WeaponShops",_shop,"side");
     
-    if(count (missionNamespace getVariable ["MPClient_adminShopSpawnMarker",""]) > 0) then {
-       deleteMarkerLocal MPClient_adminShopSpawnMarker;
+    if(count (missionNamespace getVariable ["life_var_adminShopSpawnMarker",""]) > 0) then {
+       deleteMarkerLocal life_var_adminShopSpawnMarker;
     };
 
-    MPClient_adminShopSpawnMarker = createMarkerLocal ["adminVehShopSpawnMarker", position player];
+    life_var_adminShopSpawnMarker = createMarkerLocal ["adminVehShopSpawnMarker", position player];
 
-    _spawnpoints = [MPClient_adminShopSpawnMarker];
+    _spawnpoints = [life_var_adminShopSpawnMarker];
 };
 
 life_var_vehicleTraderData = [_shop,_spawnpoints,_shopFlag,_disableBuy]; //Store it so so other parts of the system can access it.
@@ -66,7 +64,7 @@ ctrlShow [2304,false];
 {
     _x params["_className"];
 
-    private _toShow = [_x] call MPClient_fnc_levelCheck;
+    private _toShow = [_x] call MPClient_fnc_checkConditions;
 
     if (_toShow) then {
         _vehicleInfo = [_className] call MPClient_fnc_fetchVehInfo;

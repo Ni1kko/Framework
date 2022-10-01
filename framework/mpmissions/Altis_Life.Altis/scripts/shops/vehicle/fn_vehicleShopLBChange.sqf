@@ -1,13 +1,10 @@
-#include "..\..\script_macros.hpp"
+#include "..\..\..\script_macros.hpp"
 /*
-    File: fn_vehicleShopLBChange.sqf
-    Author: Bryan "Tonic" Boardwine
-    Modified : NiiRoZz
-
-    Description:
-    Called when a new selection is made in the list box and
-    displays various bits of information about the vehicle.
+	## Nikko Renolds
+	## https://github.com/Ni1kko/FrameworkV2
+    ## fn_vehicleShopLBChange.sqf
 */
+
 disableSerialization;
 private ["_className","_classNameLife","_initalPrice","_buyMultiplier","_rentMultiplier","_vehicleInfo","_colorArray","_ctrl","_trunkSpace","_maxspeed","_horsepower","_passengerseats","_fuel","_armor"];
 
@@ -80,7 +77,7 @@ _colorArray = M_CONFIG(getArray,"cfgVehicleArsenal",_classNameLife,"textures");
     _textureName = (_x select 0);
     if ((life_var_vehicleTraderData select 2) isEqualTo _flag) then {
         _x params ["_texture"];
-        private _toShow = [_x] call MPClient_fnc_levelCheck;
+        private _toShow = [_x] call MPClient_fnc_checkConditions;
         if (_toShow) then {
             _ctrl lbAdd _textureName;
             _ctrl lbSetValue [(lbSize _ctrl)-1,_forEachIndex];

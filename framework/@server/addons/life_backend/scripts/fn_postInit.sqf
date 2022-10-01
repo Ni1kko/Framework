@@ -1,11 +1,12 @@
+#include "\life_backend\script_macros.hpp"
 /*
 	## Nikko Renolds
 	## https://github.com/Ni1kko/FrameworkV2
 */
 
-if (hasInterface)exitWith{false};
-if !(canSuspend)exitWith{_this spawn MPServer_fnc_postInit; false};
-if (isFinal "life_var_postInitTime")exitWith{false};
+RUN_DEDI_SERVER_ONLY;
+FORCE_SUSPEND("MPServer_fnc_postInit");
+AH_CHECK_FINAL("life_var_postInitTime");
 
 life_var_postInitTime = compileFinal str(diag_tickTime);
 

@@ -1,11 +1,10 @@
-#include "..\..\script_macros.hpp"
+#include "..\..\..\script_macros.hpp"
 /*
-    File: fn_chopShopSell.sqf
-    Author: Bryan "Tonic" Boardwine
-
-    Description:
-    Sells the selected vehicle off.
+	## Nikko Renolds
+	## https://github.com/Ni1kko/FrameworkV2
+    ## fn_chopShopSell.sqf
 */
+
 disableSerialization;
 
 private _control = CONTROL(39400,39402);

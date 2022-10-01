@@ -1,7 +1,8 @@
-#include "..\..\script_macros.hpp"
+#include "..\..\..\script_macros.hpp"
 /*
 	## Nikko Renolds
 	## https://github.com/Ni1kko/FrameworkV2
+    ## fn_vehicleShopBuy.sqf
 */
 
 params [
@@ -10,8 +11,8 @@ params [
 
 if (life_var_serverRequest) exitWith {hint "Please wait\nLast request still in progress!";closeDialog 0;};
 if ((lbCurSel 2302) isEqualTo -1) exitWith {hint localize "STR_Shop_Veh_DidntPick";closeDialog 0;};
-if ((time - life_action_delay) < 0.2) exitWith {hint localize "STR_NOTF_ActionDelay";};
-life_action_delay = time;
+if ((time - life_var_actionDelay) < 0.2) exitWith {hint localize "STR_NOTF_ActionDelay";};
+life_var_actionDelay = time;
 
 private _className = lbData[2302,(lbCurSel 2302)];
 private _textureIndex = lbValue[2304,(lbCurSel 2304)];
@@ -30,7 +31,7 @@ private _numberPlate = "";//support for custom plates
 private _lockcode = "";//support for custom lockcodes
 
 //-- Check if the player has meets the conditions
-if !([_conditions] call MPClient_fnc_levelCheck) exitWith {hint localize "STR_Shop_Veh_NoLicense";};
+if !([_conditions] call MPClient_fnc_checkConditions) exitWith {hint localize "STR_Shop_Veh_NoLicense";};
 if (_purchasePrice < 0) exitWith {closeDialog 0;hint "Bad config: price error"};
 
 //-- Get shop info

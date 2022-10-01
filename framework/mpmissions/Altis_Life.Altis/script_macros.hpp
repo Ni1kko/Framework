@@ -1,15 +1,15 @@
-/* System Wide Stuff */
+/*
+	## Nikko Renolds
+	## https://github.com/Ni1kko/FrameworkV2
+    ## mpmission\script_macros.hpp
+*/
+
 #define REVEAL_DISTANCE 12
 
 //RemoteExec Macros
 #define RE_SERVER 2 //Only server
 #define RE_CLIENT -2 //Except server
 #define RE_GLOBAL 0 //Global
-
-//Scripting Macros
-#define CONST(var1,var2) var1 = compileFinal (if (var2 isEqualType "") then {var2} else {str(var2)})
-#define CONSTVAR(var) var = compileFinal (if (var isEqualType "") then {var} else {str(var)})
-#define FETCH_CONST(var) (call var)
 
 //Display Macros
 #define GETDisplayNumber(var) getNumber(([missionConfigFile,missionConfigFile >> "RscTitles"] select isClass (missionConfigFile >> "RscTitles" >> var)) >> var >> "idd")
@@ -180,3 +180,11 @@
 #define MONEY_GANG_FORMATTED GET_MONEY_GANG_FORMATTED(player)
 
 #define FORCE_SUSPEND(fnc) if !canSuspend exitWith{_this spawn (missionNamespace getVariable [fnc,{}]); true}
+
+#define RUN_SERVER_ONLY (if (hasInterface OR not(isServer))exitWith{false})
+#define RUN_DEDI_SERVER_ONLY (if (hasInterface OR not(isServer) OR not(isDedicated))exitWith{false})
+#define RUN_CLIENT_ONLY (if not(hasInterface)exitWith{false})
+
+#define AH_CHECK(var) (if (missionNamespace getVariable [var,false])exitWith{["Hack Detected", format["`%1` already set, Client looping or hacker detected",var], "Antihack"] call MPClient_fnc_endMission; false})
+#define AH_CHECK_FINAL(var) (if (isFinal var)exitWith{["Hack Detected", format["`%1` already final, Client looping or hacker detected",var], "Antihack"] call MPClient_fnc_endMission;false})
+#define AH_BAN_REMOTE_EXECUTED(var) (if(isRemoteExecuted AND (missionNamespace getVariable ["life_var_rcon_passwordOK",false]))exitwith{[remoteExecutedOwner,format["RemoteExecuted `%1`",var]] call MPServer_fnc_rcon_ban;})

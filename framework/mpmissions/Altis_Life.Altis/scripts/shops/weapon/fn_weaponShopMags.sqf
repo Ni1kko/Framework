@@ -1,11 +1,10 @@
-#include "..\..\script_macros.hpp"
+#include "..\..\..\script_macros.hpp"
 /*
-    File: fn_weaponShopMags.sqf
-    Author: Daniel Stuart
-
-    Description:
-    Set Weapon Shop in magazine mode
+	## Nikko Renolds
+	## https://github.com/Ni1kko/FrameworkV2
+    ## fn_weaponShopMags.sqf
 */
+
 disableSerialization;
 
 if ((uiNamespace getVariable ["Weapon_Magazine",0]) isEqualTo 0) then {

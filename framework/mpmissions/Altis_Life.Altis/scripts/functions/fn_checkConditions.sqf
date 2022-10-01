@@ -1,9 +1,8 @@
+#include "..\..\script_macros.hpp"
 /*
-    File: fn_levelCheck.sqf
-    Author: BoGuu
-
-    Description:
-    xx
+	## Nikko Renolds
+	## https://github.com/Ni1kko/FrameworkV2
+    ## fn_checkConditions.sqf
 */
 
 if !(params [["_itemConfig", [], [[],""]]]) exitWith {};
@@ -13,7 +12,7 @@ scopeName "main";
 private _return = false;
 
 if (_itemConfig isEqualTo []) exitWith { 
-    [localize "STR_NOTF_emptyArray_levelCheck"] call MPClient_fnc_log;
+    [localize "STR_NOTF_emptyArray_checkConditions"] call MPClient_fnc_log;
     _return
 };
 

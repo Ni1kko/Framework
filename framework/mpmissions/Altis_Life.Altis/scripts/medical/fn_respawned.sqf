@@ -28,15 +28,15 @@ player playMove "AmovPercMstpSnonWnonDnon";
 if (LIFE_SETTINGS(getNumber,"enable_fatigue") isEqualTo 0) then {player enableFatigue false;};
  
 //-- Handle side chat
-[player,life_settings_enableSidechannel,playerSide] remoteExecCall ["MPServer_fnc_managesc",2];
+[player,life_var_enableSidechannel,playerSide] remoteExecCall ["MPServer_fnc_managesc",2];
 
 //--- Database sync
 [] call MPClient_fnc_updateRequest;
 
 //-- Died whilst jailed
-if (life_is_arrested) exitWith {
+if (life_var_arrested) exitWith {
     hint localize "STR_Jail_Suicide";
-    life_is_arrested = false;
+    life_var_arrested = false;
     [player,true] spawn MPClient_fnc_jail;
     [] call MPClient_fnc_updateRequest;
 };
@@ -48,7 +48,7 @@ if (!isNil "life_copRecieve") then {
 };
 
 //-- So I guess a fellow gang member, cop or myself killed myself so get me off that Altis Most Wanted
-if (life_removeWanted) then {
+if (life_var_removeWanted) then {
     [getPlayerUID player] remoteExecCall ["MPServer_fnc_wantedRemove",2];
 };
 

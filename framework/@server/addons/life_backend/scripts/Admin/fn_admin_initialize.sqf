@@ -200,8 +200,8 @@ try {
 				{
 					case ""clothing"": {[findDisplay 164] call "+_rnd_fnc_adminShopClothingMenu+"};
 					case ""weapons"": {[findDisplay 164] call "+_rnd_fnc_adminShopWepMenu+"};
-					case ""market"": {[findDisplay 164] call "+_rnd_fnc_adminShopVehMenu+"};
-					case ""vehicle"": {[findDisplay 164] call "+_rnd_fnc_adminShopMarketMenu+"};
+					case ""vehicle"": {[findDisplay 164] call "+_rnd_fnc_adminShopVehMenu+"};
+					case ""market"": {[findDisplay 164] call "+_rnd_fnc_adminShopMarketMenu+"};
 				}
 			};';
 			(_display displayctrl 1) ctrlCommit 0;
@@ -225,7 +225,7 @@ try {
 			(_display displayctrl 101) ctrlCommit 0;
 			
 			(_display displayctrl 1) ctrlSetText 'Confirm';
-			(_display displayctrl 1) buttonSetAction 'if(count MPClient_var_SelectedAdminVehicleShop isEqualTo 0)then{hint ""No Admin Shop Selected!""}else{MPClient_adminShop = true;[toString [34,34],toString [34,34],toString [34,34],[MPClient_var_SelectedAdminVehicleShop]] spawn MPClient_fnc_vehicleShopMenu};';
+			(_display displayctrl 1) buttonSetAction 'if(count MPClient_var_SelectedAdminVehicleShop isEqualTo 0)then{hint ""No Admin Shop Selected!""}else{life_var_adminShop = true;[toString [34,34],toString [34,34],toString [34,34],[MPClient_var_SelectedAdminVehicleShop]] spawn MPClient_fnc_vehicleShopMenu};';
 			(_display displayctrl 1) ctrlCommit 0; 
 		};
 		"+_rnd_fnc_adminShopWepMenu+" = {
@@ -246,7 +246,7 @@ try {
 			(_display displayctrl 101) ctrlCommit 0;
 			
 			(_display displayctrl 1) ctrlSetText 'Confirm';
-			(_display displayctrl 1) buttonSetAction 'if(count MPClient_var_SelectedAdminWeaponShop isEqualTo 0)then{hint ""No Admin Shop Selected!""}else{MPClient_adminShop = true;[toString [34,34],toString [34,34],toString [34,34],MPClient_var_SelectedAdminWeaponShop] spawn MPClient_fnc_weaponShopMenu};';
+			(_display displayctrl 1) buttonSetAction 'if(count MPClient_var_SelectedAdminWeaponShop isEqualTo 0)then{hint ""No Admin Shop Selected!""}else{life_var_adminShop = true;[toString [34,34],toString [34,34],toString [34,34],MPClient_var_SelectedAdminWeaponShop] spawn MPClient_fnc_weaponShopMenu};';
 			(_display displayctrl 1) ctrlCommit 0; 
 		};
 		"+_rnd_fnc_adminShopMarketMenu+" = {
@@ -267,13 +267,13 @@ try {
 			(_display displayctrl 101) ctrlCommit 0;
 			
 			(_display displayctrl 1) ctrlSetText 'Confirm';
-			(_display displayctrl 1) buttonSetAction 'if(count MPClient_var_SelectedAdminMarketShop isEqualTo 0)then{hint ""No Admin Shop Selected!""}else{MPClient_adminShop = true;[toString [34,34],toString [34,34],toString [34,34],MPClient_var_SelectedAdminMarketShop] spawn MPClient_fnc_virt_menu;};';
+			(_display displayctrl 1) buttonSetAction 'if(count MPClient_var_SelectedAdminMarketShop isEqualTo 0)then{hint ""No Admin Shop Selected!""}else{life_var_adminShop = true;[player,toString [34,34],toString [34,34],MPClient_var_SelectedAdminMarketShop] spawn MPClient_fnc_virt_menu;};';
 			(_display displayctrl 1) ctrlCommit 0; 
 		};
 		"+_rnd_fnc_adminShopClothingMenu+" = {
 			disableSerialization;
 			MPClient_var_SelectedAdminClothingShop = '';
-			MPClient_adminShop = true;
+			life_var_adminShop = true;
 			
 			private _display = createDialog ['RscDisplayChooseEditorLayout',true];
 		
@@ -1394,13 +1394,21 @@ try {
 			MPClient_fnc_admin_showmenu = missionNamespace getVariable['"+_rnd_openmenu+"',{}];
 			(findDisplay 46) displayAddEventHandler ['KeyDown',{
 				params['_display','_key'];
-				if(_key == 0xD2) exitWith {
+				if(_key == 0xB8) exitWith {
 					if(isNull(findDisplay 1776))then{
 						[] spawn "+_rnd_openmenu+";
 					}else{
 						(findDisplay 1776) closeDisplay 2;
 						closeDialog 2;
 					};
+					true;
+				};
+				if(_key == 0x3C) exitWith {
+					if(!isNull(findDisplay 1776))then{
+						(findDisplay 1776) closeDisplay 2;
+					};
+					closeDialog 2;
+					[]spawn "+_rnd_fnc_adminShopMenu+"; 
 					true;
 				};
 				false;
@@ -1412,7 +1420,7 @@ try {
 			};
 
 			systemChat '--------------------------------------------------------------------------------------';
-			systemChat 'Welcome Admin, OPEN Menu using INSERT';
+			systemChat 'Welcome Admin, you can open the admin tools with the DIK: <menu key>';
 			systemChat '--------------------------------------------------------------------------------------';
 		"";
 

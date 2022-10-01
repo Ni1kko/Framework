@@ -12,11 +12,11 @@ params [
     ["_shooter",objNull,[objNull]]
 ];
 
-if (isNull _unit || isNull _shooter) exitWith {player allowDamage true; life_istazed = false;};
+if (isNull _unit || isNull _shooter) exitWith {player allowDamage true; life_var_tazed = false;};
 
 if (_shooter isKindOf "CAManBase" && alive player) then {
-    if (!life_istazed) then {
-        life_istazed = true;
+    if (!life_var_tazed) then {
+        life_var_tazed = true;
         _curWep = currentWeapon player;
         _curMags = magazines player;
         _attach = if (!(primaryWeapon player isEqualTo "")) then {primaryWeaponItems player} else {[]};
@@ -49,11 +49,11 @@ if (_shooter isKindOf "CAManBase" && alive player) then {
         if (!(player getVariable ["Escorting",false])) then {
             detach player;
         };
-        life_istazed = false;
+        life_var_tazed = false;
         player allowDamage true;
         disableUserInput false;
     };
 } else {
     _unit allowDamage true;
-    life_istazed = false;
+    life_var_tazed = false;
 };

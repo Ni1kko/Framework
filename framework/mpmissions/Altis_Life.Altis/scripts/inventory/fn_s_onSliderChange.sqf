@@ -15,7 +15,7 @@ if (_mode isEqualTo -1 || _value isEqualTo -1) exitWith {};
 switch _mode do {
     case 0:
     {
-        life_settings_viewDistanceFoot = round(_value);
+        life_var_viewDistanceFoot = round(_value);
         ctrlSetText[2902,format ["%1",round(_value)]];
         [] call MPClient_fnc_updateViewDistance;
         profileNamespace setVariable ["life_viewDistanceFoot",round(_value)];
@@ -23,7 +23,7 @@ switch _mode do {
 
     case 1:
     {
-        life_settings_viewDistanceCar = round(_value);
+        life_var_viewDistanceCar = round(_value);
         ctrlSetText[2912,format ["%1",round(_value)]];
         [] call MPClient_fnc_updateViewDistance;
         profileNamespace setVariable ["life_viewDistanceCar",round(_value)];
@@ -31,7 +31,7 @@ switch _mode do {
 
     case 2:
     {
-        life_settings_viewDistanceAir = round(_value);
+        life_var_viewDistanceAir = round(_value);
         ctrlSetText[2922,format ["%1",round(_value)]];
         [] call MPClient_fnc_updateViewDistance;
         profileNamespace setVariable ["life_viewDistanceAir",round(_value)];

@@ -1,11 +1,10 @@
-#include "..\..\script_macros.hpp"
+#include "..\..\..\script_macros.hpp"
 /*
-    File: fn_virt_update.sqf
-    Author: Bryan "Tonic" Boardwine
-
-    Description:
-    Update and fill the virtual shop menu.
+	## Nikko Renolds
+	## https://github.com/Ni1kko/FrameworkV2
+    ## fn_virt_update.sqf
 */
+
 disableSerialization;
 
 //Setup control vars.

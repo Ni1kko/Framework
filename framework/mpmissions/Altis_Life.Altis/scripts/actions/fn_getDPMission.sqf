@@ -22,7 +22,7 @@ if (str(_target) in LIFE_SETTINGS(getArray,"delivery_points")) then {
 };
 
 life_dp_start = _target;
-life_delivery_in_progress = true;
+life_var_deliveringPackage = true;
 
 life_dp_point = call compile format ["%1",_dp];
 _dp = toUpper((_dp splitString "_") joinString " ");
@@ -35,12 +35,12 @@ player setCurrentTask life_cur_task;
 ["DeliveryAssigned",[format [localize "STR_NOTF_DPTask",_dp]]] call bis_fnc_showNotification;
 
 [] spawn {
-    waitUntil {!life_delivery_in_progress || !alive player};
+    waitUntil {!life_var_deliveringPackage || !alive player};
     if (!alive player) then {
         life_cur_task setTaskState "Failed";
         player removeSimpleTask life_cur_task;
         ["DeliveryFailed",[localize "STR_NOTF_DPFailed"]] call BIS_fnc_showNotification;
-        life_delivery_in_progress = false;
+        life_var_deliveringPackage = false;
         life_dp_point = nil;
     };
 };

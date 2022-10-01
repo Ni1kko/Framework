@@ -52,7 +52,7 @@ private _SaveSync = {
 };
 
 private _canUseControls = {
-    (playerSide isEqualTo west) || {!((player getVariable ["restrained",false]) || {player getVariable ["Escorting",false]} || {player getVariable ["transporting",false]} || {life_is_arrested} || {life_istazed} || {life_isknocked})}
+    (playerSide isEqualTo west) || {!((player getVariable ["restrained",false]) || {player getVariable ["Escorting",false]} || {player getVariable ["transporting",false]} || {life_var_arrested} || {life_var_tazed} || {life_var_unconscious})}
 };
 
 //Handle Esacpe Menu > Configure Btn
@@ -114,7 +114,7 @@ for "_i" from 0 to 1 step 0 do {
     //Exit Btn
     ((uiNamespace getVariable "RscDisplayMPInterrupt") displayCtrl 104) ctrlEnable false;
     ((uiNamespace getVariable "RscDisplayMPInterrupt") displayCtrl 104) ctrlSetText "Exit";
-    ((uiNamespace getVariable "RscDisplayMPInterrupt") displayCtrl 104) buttonSetAction "[] spawn MPClient_fnc_abort";
+    ((uiNamespace getVariable "RscDisplayMPInterrupt") displayCtrl 104) buttonSetAction "[] spawn MPClient_fnc_abort; true";
     ((uiNamespace getVariable "RscDisplayMPInterrupt") displayCtrl 104) ctrlSetToolTip "Abandon Server And Sync Data";
 
     

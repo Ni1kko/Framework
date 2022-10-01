@@ -8,10 +8,10 @@
 private ["_fish","_type","_typeName"];
 if (!(vehicle player isKindOf "Ship")) exitWith {};
 _fish = (nearestObjects[getPos vehicle player,["Fish_Base_F"],20]);
-life_net_dropped = true;
+life_var_fishingNetOut = true;
 titleText[localize "STR_NOTF_NetDrop","PLAIN"];
 sleep 5;
-if (_fish isEqualTo []) exitWith {titleText[localize "STR_NOTF_NetDropFail","PLAIN"]; life_net_dropped = false;};
+if (_fish isEqualTo []) exitWith {titleText[localize "STR_NOTF_NetDropFail","PLAIN"]; life_var_fishingNetOut = false;};
 {
     private _typeStr = [_x] call  MPServer_fnc_util_getTypeString;
     if (_typeStr isEqualTo "Fish") then {
@@ -36,4 +36,4 @@ if (_fish isEqualTo []) exitWith {titleText[localize "STR_NOTF_NetDropFail","PLA
 
 sleep 1.5;
 titleText[localize "STR_NOTF_NetUp","PLAIN"];
-life_net_dropped = false;
+life_var_fishingNetOut = false;

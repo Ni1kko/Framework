@@ -17,11 +17,11 @@ if (isNull _vehicle || isNull _unit) exitWith
     private _ownerID = [owner _unit , remoteExecutedOwner] select (isRemoteExecuted AND isNull _unit);
   
     if _impound then{
-        life_impound_inuse = false;
-        _ownerID publicVariableClient "life_impound_inuse";
+        life_var_sessionGarageImpoundRequest = false;
+        _ownerID publicVariableClient "life_var_sessionGarageImpoundRequest";
     }else{
-        life_garage_store = false;
-        _ownerID publicVariableClient "life_garage_store";
+        life_var_sessionGarageRequest = false;
+        _ownerID publicVariableClient "life_var_sessionGarageRequest";
     };
 };
 
@@ -39,20 +39,20 @@ if (count _vInfo isEqualTo 0) exitWith {
             deleteVehicle _vehicle;
             waitUntil {isNull _vehicle};
         };
-        life_impound_inuse = false;
-        (owner _unit) publicVariableClient "life_impound_inuse";
+        life_var_sessionGarageImpoundRequest = false;
+        (owner _unit) publicVariableClient "life_var_sessionGarageImpoundRequest";
     }else{ 
         [1,"STR_Garage_Store_NotPersistent",true] remoteExecCall ["MPClient_fnc_broadcast",(owner _unit)];
-        life_garage_store = false;
-        (owner _unit) publicVariableClient "life_garage_store"; 
+        life_var_sessionGarageRequest = false;
+        (owner _unit) publicVariableClient "life_var_sessionGarageRequest"; 
     };
 };
 
 //-- Not the vehicles owner
 if (_uid isNotEqualTo getPlayerUID _unit AND !_impound) exitWith {
     [1,"STR_Garage_Store_NoOwnership",true] remoteExecCall ["MPClient_fnc_broadcast",(owner _unit)];
-    life_garage_store = false;
-    (owner _unit) publicVariableClient "life_garage_store";
+    life_var_sessionGarageRequest = false;
+    (owner _unit) publicVariableClient "life_var_sessionGarageRequest";
 };
 
 //--- Parse vInfo into local vars with default values
@@ -130,14 +130,14 @@ if (["impounded",["DB","BOOL", true] call MPServer_fnc_database_parse] in _query
         ]
     ] call MPServer_fnc_database_request;
 
-    life_impound_inuse = false;
-    (owner _unit) publicVariableClient "life_impound_inuse";
+    life_var_sessionGarageImpoundRequest = false;
+    (owner _unit) publicVariableClient "life_var_sessionGarageImpoundRequest";
 
     true
 };
 
 //--- Return succses
-life_garage_store = false;
-(owner _unit) publicVariableClient "life_garage_store";
+life_var_sessionGarageRequest = false;
+(owner _unit) publicVariableClient "life_var_sessionGarageRequest";
 [1,_storetext] remoteExecCall ["MPClient_fnc_broadcast",(owner _unit)];
 true

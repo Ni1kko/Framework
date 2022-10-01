@@ -17,7 +17,7 @@ if (!isNull _display) exitWith {
 };
 
 //--- Double check no other menus are open and make sure player is alive
-if (dialog OR not(life_is_alive)) exitWith {
+if (dialog OR not(life_var_alive)) exitWith {
     systemChat "You cannot open this menu while dead or in a dialog";
     displayNull
 };

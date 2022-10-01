@@ -16,7 +16,7 @@ _vid = lbValue[2802,(lbCurSel 2802)];
 _pid = getPlayerUID player;
 
 if (isNil "_vehicle") exitWith {hint localize "STR_Garage_Selection_Error"};
-if ((time - life_action_delay) < 1.5) exitWith {hint localize "STR_NOTF_ActionDelay";};
+if ((time - life_var_actionDelay) < 1.5) exitWith {hint localize "STR_NOTF_ActionDelay";};
 if (!isClass (missionConfigFile >> "cfgVehicleArsenal" >> _vehicleLife)) then {
     _vehicleLife = "Default"; //Use Default class if it doesn't exist
     [format ["%1: cfgVehicleArsenal class doesn't exist",_vehicle],true,true] call MPClient_fnc_log;
@@ -64,5 +64,5 @@ if (LIFE_SETTINGS(getNumber,"player_advancedLog") isEqualTo 1) then {
     publicVariableServer "advanced_log";
 };
 
-life_action_delay = time;
+life_var_actionDelay = time;
 closeDialog 0;

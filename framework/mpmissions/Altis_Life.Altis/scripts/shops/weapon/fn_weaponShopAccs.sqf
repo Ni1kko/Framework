@@ -1,11 +1,10 @@
-#include "..\..\script_macros.hpp"
+#include "..\..\..\script_macros.hpp"
 /*
-    File: fn_weaponShopAccs.sqf
-    Author: Daniel Stuart
-
-    Description:
-    Set Weapon Shop in accessories mode
+	## Nikko Renolds
+	## https://github.com/Ni1kko/FrameworkV2
+    ## fn_weaponShopAccs.sqf
 */
+
 disableSerialization;
 
 if ((uiNamespace getVariable ["Weapon_Accessories", 0]) isEqualTo 0) then {

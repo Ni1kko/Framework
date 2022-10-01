@@ -1,7 +1,8 @@
+#include "..\..\script_macros.hpp"
 /*
 	## Nikko Renolds
 	## https://github.com/Ni1kko/FrameworkV2
-
+	## fn_switchSide.sqf
 	
 	[east] spawn MPClient_fnc_switchSide;
 	[west] spawn MPClient_fnc_switchSide;
@@ -10,7 +11,7 @@
 */
 
 //-- File called and not scheduled
-if(!canSuspend) exitWith {_this spawn MPClient_fnc_switchSide};
+FORCE_SUSPEND("MPClient_fnc_switchSide");
 
 params [
 	["_newside",sideUnknown,[sideUnknown]]

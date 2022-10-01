@@ -103,7 +103,7 @@ if (_newside in [east,west,independent] AND _rank <= 0)exitWith {
 		[] call MPClient_fnc_setupEVH;
 
 		//--- Join side chat for new side
-		[_newplayerObject, life_settings_enableSidechannel, playerSide] remoteExecCall ["MPServer_fnc_managesc", 2];
+		[_newplayerObject, life_var_enableSidechannel, playerSide] remoteExecCall ["MPServer_fnc_managesc", 2];
 
 		//-- Show new player object
 		_newplayerObject hideObjectGlobal false;

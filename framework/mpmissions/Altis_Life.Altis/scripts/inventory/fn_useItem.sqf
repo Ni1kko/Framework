@@ -35,10 +35,10 @@ if (_edible > -1 || _drinkable > -1) exitWith {
             };
             if (_item isEqualTo "redgull" && {LIFE_SETTINGS(getNumber, "enable_fatigue") isEqualTo 1}) then {
                 [] spawn {
-                    life_redgull_effect = time;
+                    life_var_effectEnergyDrink = time;
                     titleText [localize "STR_ISTR_RedGullEffect", "PLAIN"];
                     player enableFatigue false;
-                    waitUntil {!alive player || ((time - life_redgull_effect) > (3 * 60))};
+                    waitUntil {!alive player || ((time - life_var_effectEnergyDrink) > (3 * 60))};
                     player enableFatigue true;
                 };
             };
@@ -79,7 +79,7 @@ switch (_item) do {
     };
 
     case "spikeStrip": {
-        if (!isNull life_spikestrip) exitWith {hint localize "STR_ISTR_SpikesDeployment"; closeDialog 0};
+        if (!isNull life_var_vehicleStinger) exitWith {hint localize "STR_ISTR_SpikesDeployment"; closeDialog 0};
         if ([false, _item, 1] call MPClient_fnc_handleInv) then {
             [] spawn MPClient_fnc_spikeStrip;
             closeDialog 0;

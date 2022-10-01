@@ -1,11 +1,10 @@
-#include "..\..\script_macros.hpp"
+#include "..\..\..\script_macros.hpp"
 /*
-    File: fn_changeClothes.sqf
-    Author: Bryan "Tonic" Boardwine
-
-    Description:
-    Used in the clothing store to show a 'preview' of the piece of clothing.
+	## Nikko Renolds
+	## https://github.com/Ni1kko/FrameworkV2
+    ## fn_changeClothes.sqf
 */
+
 disableSerialization;
 private ["_control","_selection","_data","_price","_total","_totalPrice"];
 _control = (_this select 0) select 0;
@@ -17,11 +16,11 @@ if (isNull _control) exitWith {hint localize "STR_Shop_NoDisplay"};
 if (life_cMenu_lock) exitWith {};
 life_cMenu_lock = true;
 
-life_clothing_purchase set[life_clothing_filter,(_control lbValue _selection)];
+life_var_clothingTraderData set[life_var_clothingTraderFilter,(_control lbValue _selection)];
 _data = _control lbData _selection;
 
 if (_data isEqualTo "NONE") then {
-    _item = switch (life_clothing_filter) do {
+    _item = switch (life_var_clothingTraderFilter) do {
         case 0: {uniform player};
         case 1: {headGear player};
         case 2: {goggles player};
@@ -42,7 +41,7 @@ _totalPrice = 0;
     if (_x != -1) then {
         _totalPrice = _totalPrice + _x;
     };
-} forEach life_clothing_purchase;
+} forEach life_var_clothingTraderData;
 
 _total ctrlSetStructuredText parseText format [(localize "STR_Shop_Total")+ " <t color='#8cff9b'>$%1</t>",[_totalPrice] call MPClient_fnc_numberText];
 

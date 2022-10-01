@@ -5,6 +5,6 @@
     Set a variable on the player so that he can't get out of a vehicle
 */
 
-life_disable_getIn = false;
+life_var_preventGetIn = false;
 player moveInCargo (_this select 0);
-life_disable_getOut = true;
+life_var_preventGetOut = true;

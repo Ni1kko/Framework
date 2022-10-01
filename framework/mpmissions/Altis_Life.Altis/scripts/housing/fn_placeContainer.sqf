@@ -28,7 +28,7 @@ if (!isNull _house) then {
     _message = 1;
     if (([player] call MPClient_fnc_playerInBuilding) && {([_container] call MPClient_fnc_playerInBuilding)}) then {
         _message = 2;
-        if ((_house in life_vehicles) && !(isNil {_house getVariable "house_owner"})) then {
+        if ((_house in life_var_vehicles) && !(isNil {_house getVariable "house_owner"})) then {
             _message = 3;
             if (!_isFloating) then {
                 _message = 4;

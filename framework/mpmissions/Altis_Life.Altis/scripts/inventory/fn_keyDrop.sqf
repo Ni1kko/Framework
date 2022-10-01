@@ -20,7 +20,7 @@ if (_list lbData _sel isEqualTo "") exitWith {
 };
 
 private _index = parseNumber (_list lbData _sel);
-private _vehicle = life_vehicles param [_index, objNull, [objNull]];
+private _vehicle = life_var_vehicles param [_index, objNull, [objNull]];
 if isNull _vehicle exitWith {};
 
 // Do not let them drop the key to a house
@@ -33,7 +33,7 @@ if (objectParent player isEqualTo _vehicle && {locked _vehicle isEqualTo 2}) exi
     hint localize "STR_NOTF_cannotDropKeys"
 };
 
-life_vehicles = life_vehicles - [_vehicle];
+life_var_vehicles = life_var_vehicles - [_vehicle];
 
 // Update vehicle owners
 private _owners = _vehicle getVariable ["vehicle_info_owners", []];

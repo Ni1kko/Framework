@@ -1,9 +1,11 @@
+#include "\life_backend\script_macros.hpp"
 /*
 	## Nikko Renolds
 	## https://github.com/Ni1kko/FrameworkV2
 */
 
-if(!canSuspend)exitWith{_this spawn MPServer_fnc_lottery_init};
+RUN_SERVER_ONLY;
+FORCE_SUSPEND("MPServer_fnc_lottery_init");
 
 waitUntil {!isNil "life_var_currentDay"};
 

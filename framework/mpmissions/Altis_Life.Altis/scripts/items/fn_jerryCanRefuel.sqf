@@ -8,7 +8,7 @@
     Refuels the empty fuel canister at a gas pump. Based off the jerryRefuel/lockpick scripts by Tonic.
 */
 private ["_startPos","_badDistance","_title","_ui","_progress","_pgText","_cP","_action","_fuelCost"];
-life_interrupted = false;
+life_var_interrupted = false;
 if (life_inv_fuelEmpty isEqualTo 0) exitWith {};
 if (count(nearestObjects [player,["Land_FuelStation_Feed_F","Land_fs_feed_F"],3.5]) isEqualTo 0) exitWith { hint localize "STR_ISTR_Jerry_Distance";};
 if (life_var_isBusy) exitWith {};
@@ -57,17 +57,17 @@ if (_action) then {
         _pgText ctrlSetText format ["%3 (%1%2)...",round(_cP * 100),"%",_title];
         if (_cP >= 1) exitWith {};
         if (!alive player) exitWith {life_var_isBusy = false;};
-        if (life_interrupted) exitWith {life_interrupted = false; life_var_isBusy = false;};
+        if (life_var_interrupted) exitWith {life_var_interrupted = false; life_var_isBusy = false;};
     };
 
     //Kill the UI display and check for various states
     "progressBar" cutText ["","PLAIN"];
     player playActionNow "stop";
 
-    if (!alive player || life_istazed || life_isknocked) exitWith {life_var_isBusy = false;};
+    if (!alive player || life_var_tazed || life_var_unconscious) exitWith {life_var_isBusy = false;};
     if (player getVariable ["restrained",false]) exitWith {life_var_isBusy = false;};
     if (!isNil "_badDistance") exitWith {titleText[localize "STR_ISTR_Lock_TooFar","PLAIN"]; life_var_isBusy = false;};
-    if (life_interrupted) exitWith {life_interrupted = false; titleText[localize "STR_NOTF_ActionCancel","PLAIN"]; life_var_isBusy = false;};
+    if (life_var_interrupted) exitWith {life_var_interrupted = false; titleText[localize "STR_NOTF_ActionCancel","PLAIN"]; life_var_isBusy = false;};
     if (!([false,"fuelEmpty",1] call MPClient_fnc_handleInv)) exitWith {life_var_isBusy = false;};
     life_var_isBusy = false;
     ["SUB","CASH",_fuelCost] call MPClient_fnc_handleMoney;

@@ -4523,17 +4523,17 @@
             <German>Gangversteck einnehmen</German>
 			<Chinesesimp>占领帮派藏身处</Chinesesimp>
         </Key>
-        <Key ID="STR_NOTF_emptyArray_levelCheck">
-            <Original>An empty array was passed to fn_levelCheck.sqf</Original>
-            <Czech>An empty array was passed to fn_levelCheck.sqf</Czech>
-            <French>An empty array was passed to fn_levelCheck.sqf</French>
-            <Spanish>An empty array was passed to fn_levelCheck.sqf</Spanish>
-            <Italian>An empty array was passed to fn_levelCheck.sqf</Italian>
-            <Polish>An empty array was passed to fn_levelCheck.sqf</Polish>
-            <Portuguese>An empty array was passed to fn_levelCheck.sqf</Portuguese>
-            <Russian>An empty array was passed to fn_levelCheck.sqf</Russian>
-            <German>Ein leeres Feld wurde an fn_levelCheck.sqf übergeben.</German>
-			<Chinesesimp>一个空字段传递给fn_levelCheck.sqf</Chinesesimp>
+        <Key ID="STR_NOTF_emptyArray_checkConditions">
+            <Original>An empty array was passed to fn_checkConditions.sqf</Original>
+            <Czech>An empty array was passed to fn_checkConditions.sqf</Czech>
+            <French>An empty array was passed to fn_checkConditions.sqf</French>
+            <Spanish>An empty array was passed to fn_checkConditions.sqf</Spanish>
+            <Italian>An empty array was passed to fn_checkConditions.sqf</Italian>
+            <Polish>An empty array was passed to fn_checkConditions.sqf</Polish>
+            <Portuguese>An empty array was passed to fn_checkConditions.sqf</Portuguese>
+            <Russian>An empty array was passed to fn_checkConditions.sqf</Russian>
+            <German>Ein leeres Feld wurde an fn_checkConditions.sqf übergeben.</German>
+			<Chinesesimp>一个空字段传递给fn_checkConditions.sqf</Chinesesimp>
         </Key>
     </Package>
     <Package name="News_Strings">

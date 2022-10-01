@@ -50,7 +50,7 @@ for "_i" from 0 to 1 step 0 do {
     _progressBar progressSetPosition _cP;
     _titleText ctrlSetText format ["%3 (%1%2)...",round(_cP * 100),"%",_title];
     if (_cP >= 1 || !alive player) exitWith {};
-    if (life_interrupted) exitWith {};
+    if (life_var_interrupted) exitWith {};
 };
 
 //Kill the UI display and check for various states
@@ -58,7 +58,7 @@ for "_i" from 0 to 1 step 0 do {
 player playActionNow "stop";
 
 if (!alive player) exitWith {life_var_isBusy = false;};
-if (life_interrupted) exitWith {life_interrupted = false; titleText[localize "STR_NOTF_ActionCancel","PLAIN"]; life_var_isBusy = false;};
+if (life_var_interrupted) exitWith {life_var_interrupted = false; titleText[localize "STR_NOTF_ActionCancel","PLAIN"]; life_var_isBusy = false;};
 
 life_var_isBusy = false;
 _house animateSource [format ["Door_%1_source", _door], 1];

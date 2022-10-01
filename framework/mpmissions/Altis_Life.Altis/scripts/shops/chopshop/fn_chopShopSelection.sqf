@@ -1,10 +1,10 @@
+#include "..\..\..\script_macros.hpp"
 /*
-    File: fn_chopShopSelection.sqf
-    Author: Bryan "Tonic" Boardwine
-
-    Description:
-    Displays the pricing for the currently selected vehicle.
+	## Nikko Renolds
+	## https://github.com/Ni1kko/FrameworkV2
+    ## fn_chopShopSelection.sqf
 */
+
 params [
     ["_control",controlNull,[controlNull]],
     ["_selection",-1,[0]]

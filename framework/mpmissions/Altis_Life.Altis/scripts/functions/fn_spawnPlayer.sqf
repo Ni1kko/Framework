@@ -19,17 +19,17 @@ if(playerSide in [civilian,east]) then
 	switch (true) do 
 	{
 		//-- Put them back in jail as they logged off in jail.
-		case (life_is_arrested): 
+		case (life_var_arrested): 
 		{
 			if(life_var_loadingScreenActive) then {
 				["Prisioner detected!","You logged off in prision, you will be returned back to jail!"] call MPClient_fnc_setLoadingText; 
 				uiSleep(2);
 			};  
-			life_is_arrested = false;
+			life_var_arrested = false;
 			[player,true] spawn MPClient_fnc_jail;
         };
 		//-- Reset loadout logged off during combat (combat logged).
-		case (life_firstSpawn AND not(life_is_alive) AND not(life_is_arrested)): 
+		case (life_var_firstSpawn AND not(life_var_alive) AND not(life_var_arrested)): 
 		{
             //-- Comabt logged
 			if (LIFE_SETTINGS(getNumber,"save_civilian_positionStrict") isEqualTo 1) then {
@@ -84,8 +84,8 @@ if _openSpawnMenu then
 };
 
 //-- First spawn
-if (life_firstSpawn) then {
-    life_firstSpawn = false;
+if (life_var_firstSpawn) then {
+    life_var_firstSpawn = false;
 	
 	//-- Play intro sound
 	playsound "intro"; 
@@ -98,12 +98,12 @@ if (life_firstSpawn) then {
 	[player,5,250] spawn MPClient_fnc_cameraZoomIn;
 };
 
-life_is_alive = true;
+life_var_alive = true;
 disableUserInput false; // Let the user have input 
 player allowDamage true; // Let the player take damage
 5 spawn{uiSleep _this; player setVariable ["life_var_teleported",false,true]};
 
 //-- Side chat
-[player,life_settings_enableSidechannel,playerSide] remoteExecCall ["MPServer_fnc_managesc",RE_SERVER];
+[player,life_var_enableSidechannel,playerSide] remoteExecCall ["MPServer_fnc_managesc",RE_SERVER];
 
 true

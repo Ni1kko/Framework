@@ -1,11 +1,12 @@
+#include "\life_backend\script_macros.hpp"
 /*
 	## Nikko Renolds
 	## https://github.com/Ni1kko/FrameworkV2
 */
 
-if (hasInterface)exitWith{false};
-if !(canSuspend)exitWith{_this spawn MPServer_fnc_preInit; false};
-if (isFinal "life_var_preInitTime")exitWith{false};
+RUN_DEDI_SERVER_ONLY;
+FORCE_SUSPEND("MPServer_fnc_preInit");
+AH_CHECK_FINAL("life_var_preInitTime");
 
 ["Loading server preInit"] call MPServer_fnc_log;
 

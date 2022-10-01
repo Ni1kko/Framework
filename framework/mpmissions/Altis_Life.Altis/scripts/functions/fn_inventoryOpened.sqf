@@ -27,14 +27,14 @@ private _list = ["LandVehicle", "Ship", "Air"];
 
     if (_containerType in ["Box_IND_Grenades_F", "B_supplyCrate_F"]) exitWith {
         private _house = nearestObject [player, "House"];
-        if (!(_house in life_vehicles) && {_house getVariable ["locked",true]}) exitWith {
+        if (!(_house in life_var_vehicles) && {_house getVariable ["locked",true]}) exitWith {
             hint localize "STR_House_ContainerDeny";
             true breakOut "main";
         };
     };
 
     if (KINDOF_ARRAY(_x, _list)) exitWith {
-        if (!(_x in life_vehicles) && {locked _x isEqualTo 2}) exitWith {
+        if (!(_x in life_var_vehicles) && {locked _x isEqualTo 2}) exitWith {
             hint localize "STR_MISC_VehInventory";
             true breakOut "main";
         };

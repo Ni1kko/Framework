@@ -10,7 +10,7 @@
 private ["_curObject","_isWater","_CrateModelNames","_crate","_fish","_animal","_whatIsIt","_handle"];
 _curObject = cursorObject;
 if (life_var_isBusy) exitWith {}; //Action is in use, exit to prevent spamming.
-if (life_interrupted) exitWith {life_interrupted = false;};
+if (life_var_interrupted) exitWith {life_var_interrupted = false;};
 _isWater = surfaceIsWater (visiblePositionASL player);
 
 if (playerSide isEqualTo west && {player getVariable ["isEscorting",false]}) exitWith {
@@ -38,16 +38,16 @@ if (isNull _curObject) exitWith {
             };
         } else {
             private "_handle";
-            if (playerSide isEqualTo civilian && !life_action_gathering) then {
+            if (playerSide isEqualTo civilian && !life_var_gatheringResource) then {
           _whatIsIt = [] call MPClient_fnc_whereAmI;
-                if (life_action_gathering) exitWith {};                 //Action is in use, exit to prevent spamming.
+                if (life_var_gatheringResource) exitWith {};                 //Action is in use, exit to prevent spamming.
                 switch (_whatIsIt) do {
                     case "mine" : { _handle = [] spawn MPClient_fnc_mine };
                     default { _handle = [] spawn MPClient_fnc_gather };
                 };
-                life_action_gathering = true;
+                life_var_gatheringResource = true;
                 waitUntil {scriptDone _handle};
-                life_action_gathering = false;
+                life_var_gatheringResource = false;
             };
         };
     };
@@ -110,7 +110,7 @@ if (isPlayer _curObject && _curObject isKindOf "CAManBase") then {
     //It's a vehicle! open the vehicle interaction key!
     if (_isVehicle) then {
         if (!dialog) then {
-            if (player distance _curObject < ((boundingBox _curObject select 1) select 0)+2 && (!(player getVariable ["restrained",false])) && (!(player getVariable ["playerSurrender",false])) && !life_isknocked && !life_istazed) then {
+            if (player distance _curObject < ((boundingBox _curObject select 1) select 0)+2 && (!(player getVariable ["restrained",false])) && (!(player getVariable ["playerSurrender",false])) && !life_var_unconscious && !life_var_tazed) then {
                 [_curObject] call MPClient_fnc_vInteractionMenu;
             };
         };

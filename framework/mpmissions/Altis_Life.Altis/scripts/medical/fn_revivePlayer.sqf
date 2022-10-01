@@ -41,7 +41,7 @@ for "_i" from 0 to 1 step 0 do {
     _progressBar progressSetPosition _cP;
     _titleText ctrlSetText format ["%3 (%1%2)...", round(_cP * 100), "%", _title];
     if (_cP >= 1 || {!alive player}) exitWith {};
-    if (life_istazed || {life_isknocked} || {life_interrupted}) exitWith {};
+    if (life_var_tazed || {life_var_unconscious} || {life_var_interrupted}) exitWith {};
     if (player getVariable ["restrained", false]) exitWith {};
     if (player distance _target > 4) exitWith {_badDistance = true;};
     if (_target getVariable ["Revive", false]) exitWith {};
@@ -55,11 +55,11 @@ player playActionNow "stop";
 if !(_target getVariable ["Reviving", objNull] isEqualTo player) exitWith {hint localize "STR_Medic_AlreadyReviving"; life_var_isBusy = false;};
 _target setVariable ["Reviving", nil, true];
 
-if (!alive player || {life_istazed} || {life_isknocked}) exitWith {life_var_isBusy = false;};
+if (!alive player || {life_var_tazed} || {life_var_unconscious}) exitWith {life_var_isBusy = false;};
 if (_target getVariable ["Revive", false]) exitWith {hint localize "STR_Medic_RevivedRespawned"; life_var_isBusy = false;};
 if (player getVariable ["restrained", false]) exitWith {life_var_isBusy = false;};
 if (_badDistance) exitWith {titleText[localize "STR_Medic_TooFar","PLAIN"]; life_var_isBusy = false;};
-if (life_interrupted) exitWith {life_interrupted = false; titleText[localize "STR_NOTF_ActionCancel", "PLAIN"]; life_var_isBusy = false;};
+if (life_var_interrupted) exitWith {life_var_interrupted = false; titleText[localize "STR_NOTF_ActionCancel", "PLAIN"]; life_var_isBusy = false;};
 
 life_var_isBusy = false;
 _target setVariable ["Revive", true, true];

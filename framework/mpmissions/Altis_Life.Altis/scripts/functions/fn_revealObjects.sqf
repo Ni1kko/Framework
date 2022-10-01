@@ -10,7 +10,7 @@
     Can be taxing on low-end systems or AMD CPU users.
 */
 
-if (!life_settings_revealObjects) exitWith {};
+if (!life_var_enableRevealObjects) exitWith {};
 
 private _reveal = {
     params[

@@ -38,4 +38,4 @@ if (count extdb_var_database_headless_clients > 0) then {
 };
 
 hint localize "STR_Garage_Store_Server";
-life_garage_store = true;
+life_var_sessionGarageRequest = true;

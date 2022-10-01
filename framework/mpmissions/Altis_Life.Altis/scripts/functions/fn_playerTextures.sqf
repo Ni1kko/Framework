@@ -4,7 +4,7 @@
 */
 
 //-- Wait for ranks to be set
-waitUntil {(missionNamespace getVariable ["life_session_completed",false])};
+waitUntil {(missionNamespace getVariable ["life_var_sessionDone",false])};
 
 //-- Get ranks
 private _adminlevel = call (missionNamespace getVariable ["life_adminlevel",{0}]);

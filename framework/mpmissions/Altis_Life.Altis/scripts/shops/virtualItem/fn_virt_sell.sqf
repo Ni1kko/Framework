@@ -1,11 +1,10 @@
-#include "..\..\script_macros.hpp"
+#include "..\..\..\script_macros.hpp"
 /*
-    File: fn_virt_sell.sqf
-    Author: Bryan "Tonic" Boardwine
-
-    Description:
-    Sell a virtual item to the store / shop
+	## Nikko Renolds
+	## https://github.com/Ni1kko/FrameworkV2
+    ## fn_virt_sell.sqf
 */
+
 private ["_type","_index","_price","_amount","_name"];
 if ((lbCurSel 2402) isEqualTo -1) exitWith {};
 _type = lbData[2402,(lbCurSel 2402)];
@@ -16,8 +15,8 @@ _amount = ctrlText 2405;
 if (!([_amount] call MPServer_fnc_isNumber)) exitWith {hint localize "STR_Shop_Virt_NoNum";};
 _amount = parseNumber (_amount);
 if (_amount > (ITEM_VALUE(_type))) exitWith {hint localize "STR_Shop_Virt_NotEnough"};
-if ((time - life_action_delay) < 0.2) exitWith {hint localize "STR_NOTF_ActionDelay";};
-life_action_delay = time;
+if ((time - life_var_actionDelay) < 0.2) exitWith {hint localize "STR_NOTF_ActionDelay";};
+life_var_actionDelay = time;
 
 _price = (_price * _amount);
 _name = M_CONFIG(getText,"VirtualItems",_type,"displayName");

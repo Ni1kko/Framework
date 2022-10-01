@@ -1,14 +1,11 @@
-#include "..\..\script_macros.hpp"
-
+#include "..\..\..\script_macros.hpp"
 /*
-    File: fn_fuelStatOpen.sqf
-    Author : NiiRoZz
-
-    Description:
-    Open dialog Pump.
+	## Nikko Renolds
+	## https://github.com/Ni1kko/FrameworkV2
+    ## fn_fuelStatOpen.sqf
 */
 
-if (dialog || life_var_isBusy || life_is_processing) exitWith {};
+if (dialog || life_var_isBusy || life_var_processingResource) exitWith {};
 
 private _fuelStations = nearestObjects [player, ["Land_fs_feed_F", "Land_FuelStation_01_pump_F", "Land_FuelStation_02_pump_F"], 10];
 if (_fuelstations isEqualTo []) exitWith {};

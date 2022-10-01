@@ -50,7 +50,7 @@ if (count crew _vehicle isEqualTo 0) then {
     if (!(KINDOF_ARRAY(_vehicle,_filters))) exitWith {life_var_isBusy = false;};
     _type = FETCH_CONFIG2(getText,"CfgVehicles",(typeOf _vehicle),"displayName");
 
-    life_impound_inuse = true;
+    life_var_sessionGarageImpoundRequest = true;
 
     if (count extdb_var_database_headless_clients > 0) then {
         [_vehicle,true,player] remoteExec ["HC_fnc_vehicleStore",extdb_var_database_headless_client];
@@ -58,12 +58,12 @@ if (count crew _vehicle isEqualTo 0) then {
         [_vehicle,true,player] remoteExec ["MPServer_fnc_vehicleStore",RE_SERVER];
     };
 
-    waitUntil {!life_impound_inuse};
+    waitUntil {!life_var_sessionGarageImpoundRequest};
     if (playerSide isEqualTo west) then {
         _impoundMultiplier = LIFE_SETTINGS(getNumber,"vehicle_cop_impound_multiplier");
         _value = _price * _impoundMultiplier;
         [0,"STR_NOTF_HasImpounded",true,[profileName,((_vehicleData select 0) select 1),_vehicleName]] remoteExecCall ["MPClient_fnc_broadcast",RE_CLIENT];
-        if (_vehicle in life_vehicles) then {
+        if (_vehicle in life_var_vehicles) then {
             hint format [localize "STR_NOTF_OwnImpounded",[_value] call MPClient_fnc_numberText,_type];
             ["SUB","BANK",_value] call MPClient_fnc_handleMoney;
         } else {

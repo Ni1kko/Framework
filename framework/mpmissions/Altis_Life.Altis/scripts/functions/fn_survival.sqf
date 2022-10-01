@@ -18,7 +18,7 @@ _lastState = vehicle player;
 for "_i" from 0 to 1 step 0 do 
 {
    //--- THIRST
-    if ((time - _waterTime) > 900 && life_is_alive) then {
+    if ((time - _waterTime) > 900 && life_var_alive) then {
         if (life_var_thirst < 2) then {
             player setDamage 1; hint localize "STR_NOTF_DrinkMSG_Death";
         } else {
@@ -41,7 +41,7 @@ for "_i" from 0 to 1 step 0 do
     };
     
     //--- HUNGER
-    if ((time - _foodTime) > 1250 && life_is_alive) then {
+    if ((time - _foodTime) > 1250 && life_var_alive) then {
         if (life_var_hunger < 2) then {
             player setDamage 1; hint localize "STR_NOTF_EatMSG_Death";
         } else {
@@ -71,7 +71,7 @@ for "_i" from 0 to 1 step 0 do
     };
 
     //--- VIEW DISTANCE
-    if (!(vehicle player isEqualTo _lastState) || {!life_is_alive}) then {
+    if (!(vehicle player isEqualTo _lastState) || {!life_var_alive}) then {
         [] call MPClient_fnc_updateViewDistance;
         _lastState = vehicle player;
     };
@@ -88,7 +88,7 @@ for "_i" from 0 to 1 step 0 do
     };
 
     //--- WALKING 
-    if (!life_is_alive) then {_walkDis = 0;} else {
+    if (!life_var_alive) then {_walkDis = 0;} else {
         _curPos = visiblePosition player;
         _curPos = (_curPos select 0) + (_curPos select 1);
         if (!(_curPos isEqualTo _lastPos) && {(isNull objectParent player)}) then {
