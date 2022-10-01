@@ -25,7 +25,7 @@ life_shop_npc = _shopNPC;
 
 if (not(life_var_adminShop) AND !([_conditions] call MPClient_fnc_checkConditions)) exitWith {hint localize "STR_Shop_Veh_NotAllowed";};
 
-private _display = createDialog ["shops_menu",true];
+private _display = createDialog ["RscDisplayVirtualShop",true];
 
 [] call MPClient_fnc_virt_update;
 

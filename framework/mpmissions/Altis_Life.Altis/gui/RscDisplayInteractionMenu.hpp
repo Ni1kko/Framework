@@ -2,7 +2,7 @@
 #define BGY 0.2
 #define BGW 0.46
 
-class pInteraction_Menu {
+class RscDisplayInteractionMenu {
     idd = 37400;
     movingEnable = 0;
     enableSimulation = 1;

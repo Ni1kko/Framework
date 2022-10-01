@@ -21,8 +21,8 @@ life_var_isBusy = true; //Lockout the controls.
 
 _target setVariable ["Reviving", player, true];
 disableSerialization;
-"progressBar" cutRsc ["life_progress", "PLAIN"];
-private _ui = uiNamespace getVariable ["life_progress", displayNull];
+"progressBar" cutRsc ["RscDisplayProgressBar", "PLAIN"];
+private _ui = uiNamespace getVariable ["RscDisplayProgressBar", displayNull];
 private _progressBar = _ui displayCtrl 38201;
 private _titleText = _ui displayCtrl 38202;
 _titleText ctrlSetText format ["%2 (1%1)...", "%", _title];

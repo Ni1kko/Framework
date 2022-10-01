@@ -1,9 +1,10 @@
-class life_Rsc_DisplayLoading
+class RscDisplayLoadingScreen
 {
 	idd = 8000;
-	onLoad = "uiNamespace setVariable [ 'life_Rsc_DisplayLoading', _this select 0 ]; life_var_loadingScreenActive = true;";
-	onUnload = "uiNamespace setVariable [ 'life_Rsc_DisplayLoading', displayNull ]; life_var_loadingScreenActive = false;";
-
+	onLoad = "uiNamespace setVariable ['RscDisplayLoadingScreen', _this#0]; life_var_loadingScreenActive = true;";
+	onUnload = "uiNamespace setVariable ['RscDisplayLoadingScreen', displayNull]; life_var_loadingScreenActive = false;";
+    onDestroy="uiNamespace setVariable ['RscDisplayLoadingScreen', displayNull]; life_var_loadingScreenActive = false;";
+	
 	class Controls 
 	{
 		class Background: Life_RscText 

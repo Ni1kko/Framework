@@ -25,9 +25,9 @@ private _conditions = M_CONFIG(getText,"cfgVehicleTraders",_shop,"conditions");
 if (not(life_var_adminShop) AND !([_conditions] call MPClient_fnc_checkConditions)) exitWith {hint localize "STR_Shop_Veh_NotAllowed"};
 
 if (LIFE_SETTINGS(getNumber,"vehicleShop_3D") isEqualTo 1) then {
-  createDialog "Life_Vehicle_Shop_v2_3D";
+  createDialog "RscDisplayVehicleShop3D";
 } else {
-  createDialog "Life_Vehicle_Shop_v2";
+  createDialog "RscDisplayVehicleShop";
 };
 
 if(life_var_adminShop) then {

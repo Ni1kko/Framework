@@ -1,7 +1,11 @@
-class Chop_Shop {
+class RscDisplayChopShop 
+{
     idd = 39400;
     movingEnable = 0;
     enableSimulation = 1;
+    onLoad="uiNamespace setVariable ['RscDisplayChopShop', _this#0]";
+    onUnload="uiNamespace setVariable ['RscDisplayChopShop', displayNull]";
+    onDestroy="uiNamespace setVariable ['RscDisplayChopShop', displayNull]";
 
     class controlsBackground {
         class RscTitleBackground: Life_RscText {

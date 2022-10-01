@@ -1,10 +1,12 @@
 #define BaseIconID 78000
 
-class Life_HUD_nameTags {
+class RscDisplayPlayerTags 
+{
     idd = -1;
     duration = 1e+011;
-    name = "Life_HUD_nameTags";
-    onLoad = "uiNamespace setVariable ['Life_HUD_nameTags',_this select 0]";
+    onLoad = "uiNamespace setVariable ['RscDisplayPlayerTags',_this select 0]";
+    onUnload="uiNamespace setVariable ['RscDisplayPlayerTags', displayNull]";
+    onDestroy="uiNamespace setVariable ['RscDisplayPlayerTags', displayNull]";
     objects[] = {};
 
     class controls

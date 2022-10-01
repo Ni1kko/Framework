@@ -28,7 +28,7 @@ enableRadio false;
 endLoadingScreen;
 waitUntil{not(call BIS_fnc_isLoading)};
 uiSleep 0.2;
-startLoadingScreen ["","life_Rsc_DisplayLoading"];
+startLoadingScreen ["","RscDisplayLoadingScreen"];
 
 ["Setting up client", "Please Wait..."] call MPClient_fnc_setLoadingText; uiSleep(random[0.5,3,6]);
  
@@ -65,15 +65,6 @@ waitUntil {
 };
 
 ["Setting up player", "Please wait..."] call MPClient_fnc_setLoadingText; uiSleep(random[0.5,3,6]);
-{player setVariable _x} forEach [
-    ['restrained', false, true],
-    ['Escorting', false, true],
-    ['transporting', false, true],
-    ['playerSurrender', false, true],
-    ['realname', profileName, true],
-    ['lifeState','HEALTHY',true]
-];
-
 if (LIFE_SETTINGS(getNumber,"enable_fatigue") isEqualTo 0) then {
     player enableFatigue false;
     if (LIFE_SETTINGS(getNumber,"enable_autorun") isEqualTo 1) then {

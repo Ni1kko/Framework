@@ -23,8 +23,8 @@ _upp = format [localize "STR_ISTR_Jerry_Process",_displayName];
 
 //Setup our progress bar.
 disableSerialization;
-"progressBar" cutRsc ["life_progress","PLAIN"];
-_ui = uiNamespace getVariable "life_progress";
+"progressBar" cutRsc ["RscDisplayProgressBar","PLAIN"];
+_ui = uiNamespace getVariable "RscDisplayProgressBar";
 _progress = _ui displayCtrl 38201;
 _pgText = _ui displayCtrl 38202;
 _pgText ctrlSetText format ["%2 (1%1)...","%",_upp];
@@ -39,8 +39,8 @@ for "_i" from 0 to 1 step 0 do {
     };
     uiSleep 0.2;
     if (isNull _ui) then {
-        "progressBar" cutRsc ["life_progress","PLAIN"];
-        _ui = uiNamespace getVariable "life_progress";
+        "progressBar" cutRsc ["RscDisplayProgressBar","PLAIN"];
+        _ui = uiNamespace getVariable "RscDisplayProgressBar";
         _progressBar = _ui displayCtrl 38201;
         _titleText = _ui displayCtrl 38202;
     };

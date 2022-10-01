@@ -1,8 +1,11 @@
-class Life_ticket_give {
+class RscDisplayPoliceTicket 
+{
     idd = 2650;
-    name = "life_ticket_give";
     movingEnable = 0;
     enableSimulation = 1;
+    onLoad = "uiNamespace setVariable ['RscDisplayPoliceTicket',_this select 0]";
+    onUnload="uiNamespace setVariable ['RscDisplayPoliceTicket', displayNull]";
+    onDestroy="uiNamespace setVariable ['RscDisplayPoliceTicket', displayNull]";
 
     class controlsBackground {
         class Life_RscTitleBackground: Life_RscText {

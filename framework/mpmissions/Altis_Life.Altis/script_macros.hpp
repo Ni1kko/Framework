@@ -188,3 +188,8 @@
 #define AH_CHECK(var) (if (missionNamespace getVariable [var,false])exitWith{["Hack Detected", format["`%1` already set, Client looping or hacker detected",var], "Antihack"] call MPClient_fnc_endMission; false})
 #define AH_CHECK_FINAL(var) (if (isFinal var)exitWith{["Hack Detected", format["`%1` already final, Client looping or hacker detected",var], "Antihack"] call MPClient_fnc_endMission;false})
 #define AH_BAN_REMOTE_EXECUTED(var) (if(isRemoteExecuted AND (missionNamespace getVariable ["life_var_rcon_passwordOK",false]))exitwith{[remoteExecutedOwner,format["RemoteExecuted `%1`",var]] call MPServer_fnc_rcon_ban;})
+
+#define ALIVE_OBJECT(obj) ((obj getVariable ["lifeState","Unknown"]) isEqualTo "HEALTHY")
+#define ALIVE ALIVE_OBJECT(player)
+
+#define HAS_GANG (not(isNil {(group player getVariable "gang_id")}))

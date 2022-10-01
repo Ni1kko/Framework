@@ -1,8 +1,11 @@
-class Life_vehicle_shop {
-    idd = 2300;
-    name= "life_impound_menu";
+class RscDisplayInventoryKeyManagement 
+{
+    idd = 2700;
     movingEnable = 0;
     enableSimulation = 1;
+    onLoad="uiNamespace setVariable ['RscDisplayInventorySettings', _this#0];[] spawn MPClient_fnc_keyMenu;";
+    onUnload="uiNamespace setVariable ['RscDisplayInventorySettings', displayNull]";
+    onDestroy="uiNamespace setVariable ['RscDisplayInventorySettings', displayNull]";
 
     class controlsBackground {
         class Life_RscTitleBackground: Life_RscText {
@@ -10,7 +13,7 @@ class Life_vehicle_shop {
             idc = -1;
             x = 0.1;
             y = 0.2;
-            w = 0.8;
+            w = 0.6;
             h = (1 / 25);
         };
 
@@ -19,7 +22,7 @@ class Life_vehicle_shop {
             idc = -1;
             x = 0.1;
             y = 0.2 + (11 / 250);
-            w = 0.8;
+            w = 0.6;
             h = 0.6 - (22 / 250);
         };
     };
@@ -27,32 +30,22 @@ class Life_vehicle_shop {
     class controls {
         class Title: Life_RscTitle {
             colorBackground[] = {0, 0, 0, 0};
-            idc = 2301;
-            text = "";
+            idc = -1;
+            text = "$STR_Keys_Title";
             x = 0.1;
             y = 0.2;
-            w = 0.8;
+            w = 0.6;
             h = (1 / 25);
         };
 
-        class VehicleList: Life_RscListBox {
-            idc = 2302;
+        class KeyChainList: Life_RscListBox {
+            idc = 2701;
             text = "";
             sizeEx = 0.035;
-            colorBackground[] = {0,0,0,0};
-            onLBSelChanged = "[_this] call MPClient_fnc_vehicleColorList";
             x = 0.12;
             y = 0.26;
-            w = 0.76;
-            h = 0.4;
-        };
-
-        class ColorList: Life_RscCombo {
-            idc = 2303;
-            x = 0.42;
-            y = 0.68;
-            w = 0.275;
-            h = 0.03;
+            w = 0.56;
+            h = 0.370;
         };
 
         class CloseButtonKey: Life_RscButtonMenu {
@@ -65,25 +58,33 @@ class Life_vehicle_shop {
             h = (1 / 25);
         };
 
-        class GetCar: Life_RscButtonMenu {
+        class NearPlayers: Life_RscCombo {
+            idc = 2702;
+            x = 0.26;
+            y = 0.645;
+            w = 0.275;
+            h = 0.03;
+        };
+
+        class DropKey: Life_RscButtonMenu {
             idc = -1;
-            text = "$STR_Global_Buy";
-            onButtonClick = "[] spawn MPClient_fnc_vehicleShopBuy";
+            text = "$STR_Keys_DropKey";
+            onButtonClick = "[] call MPClient_fnc_keyDrop";
             x = 0.1 + (6.25 / 40) + (1 / 250 / (safezoneW / safezoneH));
             y = 0.8 - (1 / 25);
             w = (6.25 / 40);
             h = (1 / 25);
         };
 
-        class GetCarGarage: Life_RscButtonMenu {
-            idc = -1;
-            text = "$STR_Global_BuyPerm";
-            onButtonClick = "[] spawn MPClient_fnc_vehicleShopBuySave";
-            x = 0.26 + (6.25 / 40) + (1 / 250 / (safezoneW / safezoneH));
-            y = 0.8 - (1 / 25);
-            w = (10 / 40);
+        class GiveKey: Life_RscButtonMenu {
+            idc = 2703;
+            text = "$STR_Keys_GiveKey";
+            colorBackground[] = {"(profilenamespace getvariable ['GUI_BCG_RGB_R',0.3843])", "(profilenamespace getvariable ['GUI_BCG_RGB_G',0.7019])", "(profilenamespace getvariable ['GUI_BCG_RGB_B',0.8862])", 0.5};
+            onButtonClick = "[] call MPClient_fnc_keyGive";
+            x = 0.32;
+            y = 0.69;
+            w = (6.25 / 40);
             h = (1 / 25);
         };
-
     };
 };

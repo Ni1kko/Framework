@@ -40,7 +40,7 @@ for "_idd" from (_RscDisplayMissionIDD + 10000) to _RscDisplayMissionIDD step -1
             _display closeDisplay 1;
 
             //-- Start Outro Screen
-            startLoadingScreen ["","Life_Rsc_DisplayLoading"];
+            startLoadingScreen ["","RscDisplayLoadingScreen"];
             
             //-- Prevent HUD reloading after Escape Menu display close (This is not a bug HUD is designed to open and close automaticly when display(s) is opened and closed)
             [false] call MPClient_fnc_gui_hook_management;

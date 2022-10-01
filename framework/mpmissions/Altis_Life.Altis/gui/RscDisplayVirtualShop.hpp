@@ -1,138 +1,139 @@
-class TrunkMenu {
-    idd = 3500;
-    name = "TrunkMenu";
+class RscDisplayVirtualShop 
+{
+    idd = 2400;
     movingEnable = 0;
     enableSimulation = 1;
+    onLoad="uiNamespace setVariable ['RscDisplayVirtualShop', _this#0];";
+    onUnload="uiNamespace setVariable ['RscDisplayVirtualShop', displayNull]";
+    onDestroy="uiNamespace setVariable ['RscDisplayVirtualShop', displayNull]";
 
     class controlsBackground {
-        class RscTitleBackground: Life_RscText {
+        class Life_RscTitleBackground: Life_RscText {
             colorBackground[] = {"(profilenamespace getvariable ['GUI_BCG_RGB_R',0.3843])", "(profilenamespace getvariable ['GUI_BCG_RGB_G',0.7019])", "(profilenamespace getvariable ['GUI_BCG_RGB_B',0.8862])", "(profilenamespace getvariable ['GUI_BCG_RGB_A',0.7])"};
             idc = -1;
             x = 0.1;
             y = 0.2;
-            w = 0.7;
+            w = 0.8;
             h = (1 / 25);
         };
 
-        class RscBackground: Life_RscText {
+        class MainBackground: Life_RscText {
             colorBackground[] = {0, 0, 0, 0.7};
             idc = -1;
             x = 0.1;
             y = 0.2 + (11 / 250);
-            w = 0.7;
-            h = 0.7 - (22 / 250);
+            w = 0.8;
+            h = 0.6 - (22 / 250);
         };
 
-        class RscTitleText: Life_RscTitle {
-            colorBackground[] = {0, 0, 0, 0};
-            idc = 3501;
-            text = "";
-            x = 0.1;
-            y = 0.2;
-            w = 0.7;
-            h = (1 / 25);
-        };
-
-        class VehicleWeight : RscTitleText {
-            idc = 3504;
-            style = 1;
-            text = "";
-        };
-
-        class RscTrunkText: Life_RscText {
+        class vasText: Life_RscText {
             idc = -1;
             colorBackground[] = {"(profilenamespace getvariable ['GUI_BCG_RGB_R',0.3843])", "(profilenamespace getvariable ['GUI_BCG_RGB_G',0.7019])", "(profilenamespace getvariable ['GUI_BCG_RGB_B',0.8862])", 0.5};
-            text = "$STR_Trunk_TInventory";
+            text = "$STR_VS_SI";
             sizeEx = 0.04;
-            x = 0.11;
-            y = 0.25;
-            w = 0.3;
+            x = 0.12;
+            y = 0.27;
+            w = 0.350;
             h = 0.04;
         };
 
-        class RscPlayerText: Life_RscText {
+        class vasgText: Life_RscText {
             idc = -1;
             colorBackground[] = {"(profilenamespace getvariable ['GUI_BCG_RGB_R',0.3843])", "(profilenamespace getvariable ['GUI_BCG_RGB_G',0.7019])", "(profilenamespace getvariable ['GUI_BCG_RGB_B',0.8862])", 0.5};
-            text = "$STR_Trunk_PInventory";
+            text = "$STR_VS_PI";
             sizeEx = 0.04;
-            x = 0.49;
-            y = 0.25;
-            w = 0.3;
+            x = 0.53;
+            y = 0.27;
+            w = 0.350;
             h = 0.04;
         };
     };
 
-    class Controls {
-        class TrunkGear: Life_RscListBox {
-            idc = 3502;
+    class controls {
+        class itemList: Life_RscListBox {
+            idc = 2401;
             text = "";
             sizeEx = 0.030;
-            x = 0.11;
-            y = 0.29;
-            w = 0.3;
-            h = 0.42;
+            x = 0.12;
+            y = 0.31;
+            w = 0.350;
+            h = 0.340;
         };
 
-        class PlayerGear: Life_RscListBox {
-            idc = 3503;
+        class pItemlist: Life_RscListBox {
+            idc = 2402;
             text = "";
             sizeEx = 0.030;
-
-            x = 0.49;
-            y = 0.29;
-            w = 0.3;
-            h = 0.42;
+            x = 0.53;
+            y = 0.31;
+            w = 0.350;
+            h = 0.340;
         };
 
-        class TrunkEdit: Life_RscEdit {
-            idc = 3505;
+        class Title: Life_RscTitle {
+            colorBackground[] = {0, 0, 0, 0};
+            idc = 2403;
+            text = "";
+            x = 0.1;
+            y = 0.2;
+            w = 0.8;
+            h = (1 / 25);
+        };
+
+        class PlayersName: Title {
+            idc = 601;
+            style = 1;
+            text = "";
+        };
+
+        class buyEdit: Life_RscEdit {
+            idc = 2404;
             text = "1";
             sizeEx = 0.030;
-            x = 0.11;
-            y = 0.72;
-            w = 0.3;
+            x = 0.12;
+            y = 0.66;
+            w = 0.35;
             h = 0.03;
         };
 
-        class PlayerEdit: Life_RscEdit {
-            idc = 3506;
+        class sellEdit: Life_RscEdit {
+            idc = 2405;
             text = "1";
             sizeEx = 0.030;
-            x = 0.49;
-            y = 0.72;
-            w = 0.3;
+            x = 0.53;
+            y = 0.66;
+            w = 0.35;
             h = 0.03;
         };
 
-        class TakeItem: Life_RscButtonMenu {
+        class ButtonAddG: Life_RscButtonMenu {
             idc = -1;
-            text = "$STR_Trunk_Take";
+            text = "$STR_VS_BuyItem";
             colorBackground[] = {"(profilenamespace getvariable ['GUI_BCG_RGB_R',0.3843])", "(profilenamespace getvariable ['GUI_BCG_RGB_G',0.7019])", "(profilenamespace getvariable ['GUI_BCG_RGB_B',0.8862])", 0.5};
-            onButtonClick = "[] call MPClient_fnc_vehTakeItem;";
-            x = 0.19;
-            y = 0.78;
+            onButtonClick = "[] call MPClient_fnc_virt_buy;";
+            x = 0.12 + (0.35 / 2) - ((6.25 / 40) / 2);
+            y = 0.70;
             w = (6.25 / 40);
             h = (1 / 25);
         };
 
-        class StoreItem: Life_RscButtonMenu {
+        class ButtonRemoveG: Life_RscButtonMenu {
             idc = -1;
-            text = "$STR_Trunk_Store";
+            text = "$STR_VS_SellItem";
             colorBackground[] = {"(profilenamespace getvariable ['GUI_BCG_RGB_R',0.3843])", "(profilenamespace getvariable ['GUI_BCG_RGB_G',0.7019])", "(profilenamespace getvariable ['GUI_BCG_RGB_B',0.8862])", 0.5};
-            onButtonClick = "[] call MPClient_fnc_vehStoreItem;";
-            x = 0.57;
-            y = 0.78;
+            onButtonClick = "[] call MPClient_fnc_virt_sell";
+            x = 0.53 + (0.35 / 2) - ((6.25 / 40) / 2);
+            y = 0.70;
             w = (6.25 / 40);
             h = (1 / 25);
         };
 
         class ButtonClose: Life_RscButtonMenu {
             idc = -1;
-            //shortcuts[] = {0x00050000 + 2};
             text = "$STR_Global_Close";
             onButtonClick = "closeDialog 0;";
             x = 0.1;
-            y = 0.9 - (1 / 25);
+            y = 0.8 - (1 / 25);
             w = (6.25 / 40);
             h = (1 / 25);
         };

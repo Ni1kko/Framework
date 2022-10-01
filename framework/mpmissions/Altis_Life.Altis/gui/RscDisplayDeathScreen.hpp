@@ -5,7 +5,6 @@ class RscDisplayDeathScreen
   	fadein=0;
 	duration = 10e10;
   	fadeout=0;
-	name="RscDisplayDeathScreen";
 	onLoad = "uiNamespace setVariable ['RscDisplayDeathScreen',_this select 0]";
 	onUnload = "uiNamespace setVariable ['RscDisplayDeathScreen', objNull]";
 	onDestroy = "uiNamespace setVariable ['RscDisplayDeathScreen', objNull]";

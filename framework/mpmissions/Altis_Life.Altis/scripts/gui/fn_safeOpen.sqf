@@ -12,7 +12,7 @@ if (isNull life_safeObj) exitWith {};
 if !(playerSide isEqualTo civilian) exitWith {};
 if ((life_safeObj getVariable ["safe",-1]) < 1) exitWith {hint localize "STR_Civ_VaultEmpty";};
 if (life_safeObj getVariable ["inUse",false]) exitWith {hint localize "STR_Civ_VaultInUse"};
-if (!createDialog "Federal_Safe") exitWith {localize "STR_MISC_DialogError"};
+if (!createDialog "RscDisplayFederalBank") exitWith {localize "STR_MISC_DialogError"};
 
 disableSerialization;
 ctrlSetText[3501,(localize "STR_Civ_SafeInv")];

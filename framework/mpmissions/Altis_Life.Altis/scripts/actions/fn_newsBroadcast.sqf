@@ -11,7 +11,7 @@
 private ["_msgCost","_display","_confirmBtn","_msgCooldown","_broadcastDelay"];
 
 if (!dialog) then {
-    createDialog "life_news_broadcast";
+    createDialog "RscDisplayNewsBroadcast";
 };
 
 disableSerialization;

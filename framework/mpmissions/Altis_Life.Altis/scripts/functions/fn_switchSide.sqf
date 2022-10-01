@@ -40,7 +40,7 @@ if (_newside in [west,east,independent] AND life_blacklisted) exitWith {
 };
 
 // -- Start Loading Screen
-startLoadingScreen ["","life_Rsc_DisplayLoading"];
+startLoadingScreen ["","RscDisplayLoadingScreen"];
 
 //--
 ["Saving Current Data", "Please Wait..."] call MPClient_fnc_setLoadingText;

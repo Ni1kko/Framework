@@ -30,9 +30,9 @@ if (_action) then {
     _startPos = getPos player;
     //Setup our progress bar.
     disableSerialization;
-    "progressBar" cutRsc ["life_progress","PLAIN"];
+    "progressBar" cutRsc ["RscDisplayProgressBar","PLAIN"];
     _title = localize "STR_ISTR_Jerry_Refuel";
-    _ui = uiNamespace getVariable "life_progress";
+    _ui = uiNamespace getVariable "RscDisplayProgressBar";
     _progress = _ui displayCtrl 38201;
     _pgText = _ui displayCtrl 38202;
     _pgText ctrlSetText format ["%2 (1%1)...","%",_title];
@@ -47,8 +47,8 @@ if (_action) then {
         };
         uiSleep 0.2;
         if (isNull _ui) then {
-            "progressBar" cutRsc ["life_progress","PLAIN"];
-            _ui = uiNamespace getVariable "life_progress";
+            "progressBar" cutRsc ["RscDisplayProgressBar","PLAIN"];
+            _ui = uiNamespace getVariable "RscDisplayProgressBar";
             _progressBar = _ui displayCtrl 38201;
             _titleText = _ui displayCtrl 38202;
         };

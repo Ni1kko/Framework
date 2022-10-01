@@ -1,9 +1,11 @@
-class Life_My_Gang_Diag {
+class RscDisplayGang 
+{
     idd = 2620;
-    name= "life_my_gang_menu";
     movingEnable = 0;
     enableSimulation = 1;
-    onLoad = "";
+    onLoad="uiNamespace setVariable ['RscDisplayGang', _this#0];";
+    onUnload="uiNamespace setVariable ['RscDisplayGang', displayNull]";
+    onDestroy="uiNamespace setVariable ['RscDisplayGang', displayNull]";
 
     class controlsBackground {
         class Life_RscTitleBackground: Life_RscText {

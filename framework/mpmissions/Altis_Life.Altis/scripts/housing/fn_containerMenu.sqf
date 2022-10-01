@@ -22,7 +22,7 @@ _container = param [0,objNull,[objNull]];
 if (isNull _container) exitWith {}; //Bad target
 
 if (!dialog) then {
-    createDialog "pInteraction_Menu";
+    createDialog "RscDisplayInteractionMenu";
 };
 
 _Btn1 = CONTROL(37400,Btn1);

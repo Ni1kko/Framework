@@ -18,8 +18,8 @@ life_var_isBusy = true;
 disableSerialization;
 
 _title = localize "STR_ISTR_Defuse_Process";
-"progressBar" cutRsc ["life_progress","PLAIN"];
-_ui = uiNamespace getVariable "life_progress";
+"progressBar" cutRsc ["RscDisplayProgressBar","PLAIN"];
+_ui = uiNamespace getVariable "RscDisplayProgressBar";
 _progressBar = _ui displayCtrl 38201;
 _titleText = _ui displayCtrl 38202;
 _titleText ctrlSetText format ["%2 (1%1)...","%",_title];
@@ -34,8 +34,8 @@ for "_i" from 0 to 1 step 0 do {
     };
     uiSleep 0.26;
     if (isNull _ui) then {
-        "progressBar" cutRsc ["life_progress","PLAIN"];
-        _ui = uiNamespace getVariable "life_progress";
+        "progressBar" cutRsc ["RscDisplayProgressBar","PLAIN"];
+        _ui = uiNamespace getVariable "RscDisplayProgressBar";
         _progressBar = _ui displayCtrl 38201;
         _titleText = _ui displayCtrl 38202;
     };

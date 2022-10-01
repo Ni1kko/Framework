@@ -83,8 +83,8 @@ if (_exit) exitWith {hint localize "STR_Process_Weight"; life_var_processingReso
 
 //Setup our progress bar.
 disableSerialization;
-"progressBar" cutRsc ["life_progress","PLAIN"];
-_ui = uiNamespace getVariable "life_progress";
+"progressBar" cutRsc ["RscDisplayProgressBar","PLAIN"];
+_ui = uiNamespace getVariable "RscDisplayProgressBar";
 _progress = _ui displayCtrl 38201;
 _pgText = _ui displayCtrl 38202;
 _pgText ctrlSetText format ["%2 (1%1)...","%",_upp];

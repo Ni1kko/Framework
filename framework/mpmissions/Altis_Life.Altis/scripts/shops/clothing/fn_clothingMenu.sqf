@@ -41,7 +41,7 @@ life_oldGlasses = goggles player;
 life_oldHat = headgear player;
 
 /* Open up the menu */
-createDialog "Life_Clothing";
+createDialog "RscDisplayClothingShop";
 disableSerialization;
 
 ctrlSetText [3103,localize _shopTitle];

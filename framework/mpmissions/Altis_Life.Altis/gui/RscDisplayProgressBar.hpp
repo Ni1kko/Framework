@@ -1,11 +1,11 @@
-class life_progress {
-    name = "life_progress";
+class RscDisplayProgressBar 
+{ 
     idd = 38200;
     fadein=0;
     duration = 99999999999;
     fadeout=0;
     movingEnable = 0;
-    onLoad="uiNamespace setVariable ['life_progress',_this select 0]";
+    onLoad="uiNamespace setVariable ['RscDisplayProgressBar',_this select 0]";
     objects[]={};
 
     class controlsBackground {

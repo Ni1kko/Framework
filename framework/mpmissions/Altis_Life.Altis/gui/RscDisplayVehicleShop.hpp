@@ -1,9 +1,11 @@
-class Life_Vehicle_Shop_v2 {
+class RscDisplayVehicleShop 
+{
     idd = 2300;
-    name="life_vehicle_shop";
     movingEnabled = 0;
     enableSimulation = 1;
-    onLoad = "ctrlShow [2330,false];";
+    onLoad="uiNamespace setVariable ['RscDisplayVehicleShop', _this#0]; ctrlShow [2330,false];";
+    onUnload="uiNamespace setVariable ['RscDisplayVehicleShop', displayNull]";
+    onDestroy="uiNamespace setVariable ['RscDisplayVehicleShop', displayNull]";
 
     class controlsBackground {
         class Life_RscTitleBackground : Life_RscText {

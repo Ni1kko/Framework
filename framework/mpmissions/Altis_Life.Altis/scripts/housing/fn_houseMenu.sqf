@@ -24,7 +24,7 @@ _houseCfg = [(typeOf _curTarget)] call MPClient_fnc_houseConfig;
 if (count _houseCfg isEqualTo 0 && playerSide isEqualTo civilian) exitWith {};
 
 if (!dialog) then {
-    createDialog "pInteraction_Menu";
+    createDialog "RscDisplayInteractionMenu";
 };
 
 _Btn1 = CONTROL(37400,Btn1);

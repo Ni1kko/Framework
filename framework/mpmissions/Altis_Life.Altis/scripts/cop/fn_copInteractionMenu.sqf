@@ -29,7 +29,7 @@ if (player getVariable ["Escorting", false]) then {
 };
 
 if (!dialog) then {
-    createDialog "pInteraction_Menu";
+    createDialog "RscDisplayInteractionMenu";
 };
 
 _display = findDisplay 37400;

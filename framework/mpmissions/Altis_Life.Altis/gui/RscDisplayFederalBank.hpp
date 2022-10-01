@@ -1,6 +1,6 @@
-class Federal_Safe {
+class RscDisplayFederalBank {
     idd = 3500;
-    name = "Federal_Safe";
+    name = "RscDisplayFederalBank";
     movingEnable = 0;
     enableSimulation = 1;
 

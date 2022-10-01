@@ -13,7 +13,7 @@ if (_fuelstations isEqualTo []) exitWith {};
 private _vehicleList = nearestObjects [player, ["Car","Air"], 10];
 if (_vehicleList isEqualTo []) exitWith {hint localize "STR_NOTF_VehicleNear"};
 
-createDialog "Life_FuelStat";
+createDialog "RscDisplayFuelShop";
 life_var_isBusy = true;
 
 private _fuelCost = LIFE_SETTINGS(getNumber,"fuel_cost");

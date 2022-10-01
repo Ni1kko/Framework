@@ -15,10 +15,10 @@ if (visibleMap || {!alive player} || {dialog}) exitWith {
     500 cutText["","PLAIN"];
 };
 
-_ui = uiNamespace getVariable ["Life_HUD_nameTags",displayNull];
+_ui = uiNamespace getVariable ["RscDisplayPlayerTags",displayNull];
 if (isNull _ui) then {
-    500 cutRsc["Life_HUD_nameTags","PLAIN"];
-    _ui = uiNamespace getVariable ["Life_HUD_nameTags",displayNull];
+    500 cutRsc["RscDisplayPlayerTags","PLAIN"];
+    _ui = uiNamespace getVariable ["RscDisplayPlayerTags",displayNull];
 };
 
 _units = nearestObjects[(visiblePosition player),["CAManBase","Land_Pallet_MilBoxes_F","Land_Sink_F"],50];

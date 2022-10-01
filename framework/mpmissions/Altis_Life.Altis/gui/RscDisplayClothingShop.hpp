@@ -1,6 +1,6 @@
-class Life_Clothing {
-    idd = 3100;
-    name= "Life_Clothing";
+class RscDisplayClothingShop 
+{
+    idd = 3100; 
     movingEnable = 1;
     enableSimulation = 1;
 

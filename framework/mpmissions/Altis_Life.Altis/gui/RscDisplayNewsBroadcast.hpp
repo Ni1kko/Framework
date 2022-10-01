@@ -1,8 +1,11 @@
-class life_news_broadcast {
-    idd = 100100;
-    name= "life_news_broadcast";
+class RscDisplayNewsBroadcast 
+{
+    idd = 100100; 
     movingEnable = 0;
     enableSimulation = 1;
+    onLoad="uiNamespace setVariable ['RscDisplayNewsBroadcast', _this#0];";
+    onUnload="uiNamespace setVariable ['RscDisplayNewsBroadcast', displayNull]";
+    onDestroy="uiNamespace setVariable ['RscDisplayNewsBroadcast', displayNull]";
 
     class controlsBackground {
         class Life_RscTitleBackground: Life_RscText {

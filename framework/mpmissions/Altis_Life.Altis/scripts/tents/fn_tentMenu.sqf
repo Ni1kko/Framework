@@ -17,7 +17,7 @@ _config params [
 ];
 
 //--- Create UI
-private _display = createDialog ["pInteraction_Menu",true];
+private _display = createDialog ["RscDisplayInteractionMenu",true];
 private _title = _display displayCtrl 37401;
 private _btns = [37450,37451,37452,37453,37454,37455,37456,37457] apply {private _control = _display displayCtrl _x; _control ctrlShow false; _control};
 _btns params ["_btn1","_btn2","_btn3","_btn4","_btn5","_btn6","_btn7","_btn8"];

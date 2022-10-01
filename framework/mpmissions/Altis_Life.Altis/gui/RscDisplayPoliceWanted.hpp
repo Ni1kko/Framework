@@ -1,9 +1,11 @@
-class life_wanted_menu {
+class RscDisplayPoliceWanted 
+{
     idd = 2400;
-    name= "life_wanted_menu";
-    movingEnable = false;
-    enableSimulation = true;
-    //onLoad = "[] spawn MPClient_fnc_wantedadd2;";
+    movingEnable = 0;
+    enableSimulation = 1;
+    onLoad = "uiNamespace setVariable ['RscDisplayPoliceWanted',_this select 0]";
+    onUnload="uiNamespace setVariable ['RscDisplayPoliceWanted', displayNull]";
+    onDestroy="uiNamespace setVariable ['RscDisplayPoliceWanted', displayNull]";
 
     class controlsBackground {
         class Life_RscTitleBackground: Life_RscText {

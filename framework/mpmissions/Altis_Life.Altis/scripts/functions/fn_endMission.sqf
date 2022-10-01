@@ -30,7 +30,7 @@ switch (toLower _ending) do
 		if(count _title isEqualTo 0)then{_title = "STR_EndMission_Logoff_Title"};
 		if(count _text isEqualTo 0)then{_text = "STR_EndMission_Logoff_Desc"};
 		if(not(life_var_loadingScreenActive))then{
-			startLoadingScreen ["","Life_Rsc_DisplayLoading"]; 
+			startLoadingScreen ["","RscDisplayLoadingScreen"]; 
 			waitUntil{life_var_loadingScreenActive AND (call BIS_fnc_isLoading)};
 		};
 		playSound "byebye";

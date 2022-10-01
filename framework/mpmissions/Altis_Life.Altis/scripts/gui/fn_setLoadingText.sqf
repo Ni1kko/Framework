@@ -6,7 +6,7 @@
 */
 disableSerialization; 
 
-private _display = uiNamespace getVariable ["life_Rsc_DisplayLoading", displayNull];
+private _display = uiNamespace getVariable ["RscDisplayLoadingScreen", displayNull];
 private _controlText = _display displayCtrl 100;
 
 private _getcolorcode = {
@@ -31,7 +31,7 @@ private _structuredText = parseText([_HeaderString,_BodyString] joinString "<br/
 if(isNull _display OR not(life_var_loadingScreenActive))then
 {
 	FORCE_SUSPEND("MPClient_fnc_setLoadingText");
-	startLoadingScreen ["","Life_Rsc_DisplayLoading"];
+	startLoadingScreen ["","RscDisplayLoadingScreen"];
 	waitUntil{life_var_loadingScreenActive};
 	_controlText ctrlSetStructuredText _structuredText;
 }else{

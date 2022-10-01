@@ -35,8 +35,8 @@ if ((MONEY_CASH - (_fueltoput * _fuelCost)) > 0) then {
     life_var_processingResource = true;
     //Setup our progress bar.
     disableSerialization;
-    "progressBar" cutRsc ["life_progress","PLAIN"];
-    private _ui = uiNameSpace getVariable "life_progress";
+    "progressBar" cutRsc ["RscDisplayProgressBar","PLAIN"];
+    private _ui = uiNameSpace getVariable "RscDisplayProgressBar";
     private _progress = _ui displayCtrl 38201;
     private _pgText = _ui displayCtrl 38202;
     _pgText ctrlSetText format ["%2 (1%1)...","%","Refuel:"];

@@ -1,10 +1,11 @@
-class Life_impound_menu {
-    idd = 2800;
-    name="life_vehicle_shop";
-    movingEnable = 0;
+class RscDisplayFuelShop {
+    idd = 20300; 
+    movingEnabled = 0;
     enableSimulation = 1;
-    onLoad = "ctrlShow [2330,false];";
-
+    onLoad="uiNamespace setVariable ['RscDisplayFuelShop', _this#0];ctrlShow [2330,false];";
+    onUnload="uiNamespace setVariable ['RscDisplayFuelShop', displayNull];life_var_isBusy = false;";
+    onDestroy="uiNamespace setVariable ['RscDisplayFuelShop', displayNull];life_var_isBusy = false;";
+    
     class controlsBackground {
         class Life_RscTitleBackground: Life_RscText    {
             colorBackground[] = {"(profilenamespace getvariable ['GUI_BCG_RGB_R',0.3843])", "(profilenamespace getvariable ['GUI_BCG_RGB_G',0.7019])", "(profilenamespace getvariable ['GUI_BCG_RGB_B',0.8862])", "(profilenamespace getvariable ['GUI_BCG_RGB_A',0.7])"};
@@ -25,8 +26,8 @@ class Life_impound_menu {
         };
 
         class Title: Life_RscTitle {
-            idc = 2801;
-            text = "$STR_GUI_Garage";
+            idc = 20301;
+            text = "";
             x = 0.1;
             y = 0.2;
             w = 0.8;
@@ -35,48 +36,63 @@ class Life_impound_menu {
 
         class VehicleTitleBox: Life_RscText {
             idc = -1;
-            text = "$STR_GUI_YourVeh";
+            text = "$STR_GUI_ShopStock";
             colorBackground[] = {"(profilenamespace getvariable ['GUI_BCG_RGB_R',0.3843])", "(profilenamespace getvariable ['GUI_BCG_RGB_G',0.7019])", "(profilenamespace getvariable ['GUI_BCG_RGB_B',0.8862])", "(profilenamespace getvariable ['GUI_BCG_RGB_A',0.7])"};
             x = 0.11;
             y = 0.26;
-            w = 0.3;
+            w = 0.32;
             h = (1 / 25);
         };
 
         class VehicleInfoHeader: Life_RscText {
-            idc = 2830;
+            idc = 20330;
             text = "$STR_GUI_VehInfo";
             colorBackground[] = {"(profilenamespace getvariable ['GUI_BCG_RGB_R',0.3843])", "(profilenamespace getvariable ['GUI_BCG_RGB_G',0.7019])", "(profilenamespace getvariable ['GUI_BCG_RGB_B',0.8862])", "(profilenamespace getvariable ['GUI_BCG_RGB_A',0.7])"};
-            x = 0.42;
+            x = 0.46;
             y = 0.26;
-            w = 0.46;
+            w = 0.42;
             h = (1 / 25);
         };
 
+        class FuelPrice: Life_RscTitle {
+            idc = 20322;
+            text = "Price:";
+            x = 0.15;
+            y = 0.8;
+            w = 0.8;
+            h = (1 / 25);
+        };
+
+        class literfuel: Life_RscTitle {
+            idc = 20324;
+            text = "Fuel:";
+            x = 0.55;
+            y = 0.75;
+            w = 0.8;
+            h = (1 / 25);
+        };
+        class Totalfuel: Life_RscTitle {
+            idc = 20323;
+            text = "Total:";
+            x = 0.75;
+            y = 0.8;
+            w = 0.8;
+            h = (1 / 25);
+        };
         class CloseBtn: Life_RscButtonMenu {
             idc = -1;
             text = "$STR_Global_Close";
-            onButtonClick = "closeDialog 0;";
+            onButtonClick = "closeDialog 0; life_var_isBusy = false;";
             x = -0.06 + (6.25 / 40) + (1 / 250 / (safezoneW / safezoneH));
             y = 0.9 - (1 / 25);
             w = (6.25 / 40);
             h = (1 / 25);
         };
 
-        class RetrieveCar: Life_RscButtonMenu {
-            idc = -1;
-            text = "$STR_Global_Retrieve";
-            onButtonClick = "[] call MPClient_fnc_unimpound;";
-            x = 0.1 + (6.25 / 40) + (1 / 250 / (safezoneW / safezoneH));
-            y = 0.9 - (1 / 25);
-            w = (6.25 / 40);
-            h = (1 / 25);
-        };
-
-        class SellCar: Life_RscButtonMenu {
-            idc = -1;
-            text = "$STR_Global_Sell";
-            onButtonClick = "[] call MPClient_fnc_sellGarage; closeDialog 0;";
+        class refuelCar: Life_RscButtonMenu {
+            idc = 20309;
+            text = "Refuel";
+            onButtonClick = "[] spawn MPClient_fnc_fuelRefuelCar;";
             x = 0.26 + (6.25 / 40) + (1 / 250 / (safezoneW / safezoneH));
             y = 0.9 - (1 / 25);
             w = (6.25 / 40);
@@ -86,54 +102,37 @@ class Life_impound_menu {
 
     class controls {
         class VehicleList: Life_RscListBox {
-            idc = 2802;
+            idc = 20302;
             text = "";
             sizeEx = 0.04;
             colorBackground[] = {0.1,0.1,0.1,0.9};
-            onLBSelChanged = "_this call MPClient_fnc_garageLBChange;";
+            onLBSelChanged = "_this call MPClient_fnc_fuelLBChange";
             x = 0.11;
             y = 0.302;
-            w = 0.303;
+            w = 0.32;
             h = 0.49;
         };
 
-        class vehicleInfomationList: Life_RscStructuredText {
-            idc = 2803;
+        class fuelTank: life_RscXSliderH {
+            idc = 20901;
+            text = "";
+            onSliderPosChanged = "[3,_this select 1] call MPClient_fnc_s_onSliderChange;";
+            tooltip = "";
+            x = 0.47;
+            y = .80;
+            w = "9 *(((safezoneW / safezoneH) min 1.2) / 40)";
+            h = "1 *((((safezoneW / safezoneH) min 1.2) / 1.2) / 25)";
+        };
+
+        class vehicleInfomationList: Life_RscStructuredText
+        {
+            idc = 20303;
             text = "";
             sizeEx = 0.035;
-            x = 0.41;
+            x = 0.46;
             y = 0.3;
-            w = 0.5;
+            w = 0.42;
             h = 0.5;
-        };
-
-        class MainBackgroundHider: Life_RscText {
-            colorBackground[] = {0,0,0,1};
-            idc = 2810;
-            x = 0.1;
-            y = 0.2 + (11 / 250);
-            w = 0.8;
-            h = 0.7 - (22 / 250);
-        };
-
-        class MainHideText: Life_RscText {
-            idc = 2811;
-            text = "$STR_ANOTF_QueryGarage";
-            sizeEx = 0.06;
-            x = 0.24;
-            y = 0.5;
-            w = 0.6;
-            h = (1 / 15);
-        };
-
-        class Search_veh: Life_RscEdit {
-            idc = 2812;
-            text = "";
-            x = 0.11;
-            y = 0.8;
-            w = 0.3;
-            h = 0.04;
-            onKeyUp = "[(_this # 0), 2802, 2803] spawn MPClient_fnc_filterGarage";
         };
     };
 };

@@ -33,6 +33,6 @@ if (count extdb_var_database_headless_clients > 0) then {
     [getPlayerUID player,playerSide,_type,player] remoteExec ["MPServer_fnc_getVehicles",RE_SERVER];
 };
 
-createDialog "Life_impound_menu";
+createDialog "RscDisplayVehicleGarage";
 disableSerialization;
 ctrlSetText[2802,(localize "STR_ANOTF_QueryGarage")];

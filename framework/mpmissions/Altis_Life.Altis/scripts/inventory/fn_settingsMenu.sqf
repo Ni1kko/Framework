@@ -6,9 +6,8 @@
     Description:
     Setup the settings menu.
 */
-if (isNull (findDisplay 2900)) then {
-    if (!createDialog "SettingsMenu") exitWith {hint localize "STR_NOTF_menuWillNotOpen";};
-};
+
+private _display = createDialog ["RscDisplayInventorySettings",true];
 
 disableSerialization;
 

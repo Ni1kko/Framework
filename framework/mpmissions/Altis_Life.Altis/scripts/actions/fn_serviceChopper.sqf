@@ -18,8 +18,8 @@ if (count _search isEqualTo 0) exitWith {hint localize "STR_Service_Chopper_NoAi
 if (MONEY_CASH < _serviceCost) exitWith {hint localize "STR_Serive_Chopper_NotEnough"};
 
 life_var_isBusy = true;
-"progressBar" cutRsc ["life_progress","PLAIN"];
-_ui = uiNamespace getVariable "life_progress";
+"progressBar" cutRsc ["RscDisplayProgressBar","PLAIN"];
+_ui = uiNamespace getVariable "RscDisplayProgressBar";
 _progress = _ui displayCtrl 38201;
 _pgText = _ui displayCtrl 38202;
 _pgText ctrlSetText format [localize "STR_Service_Chopper_Servicing","waiting..."];

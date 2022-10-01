@@ -26,8 +26,8 @@ _vehicle remoteExec ["MPClient_fnc_soundDevice",-2];
 life_var_isBusy = false;
 
 disableSerialization;
-"progressBar" cutRsc ["life_progress","PLAIN"];
-private _ui = uiNamespace getVariable "life_progress";
+"progressBar" cutRsc ["RscDisplayProgressBar","PLAIN"];
+private _ui = uiNamespace getVariable "RscDisplayProgressBar";
 private _progress = _ui displayCtrl 38201;
 private _pgText = _ui displayCtrl 38202;
 _pgText ctrlSetText format ["Tank  %1 Ltr / %2 Ltr",_fuelState,_fuelSpace];
