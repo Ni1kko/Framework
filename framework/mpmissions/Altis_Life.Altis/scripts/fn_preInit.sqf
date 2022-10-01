@@ -11,7 +11,13 @@ AH_CHECK_FINAL("life_var_preInitTime");
 private _threadsToMonitor = [];
 private _variablesFlagged = [];
 private _playerVariables = [
-    [GET_CASH_VAR, 0,true]
+    [GET_CASH_VAR, 0,true],
+    ['restrained', false, true],
+    ['Escorting', false, true],
+    ['transporting', false, true],
+    ['playerSurrender', false, true],
+    ['realname', profileName, true],
+    ['lifeState','HEALTHY',true]
 ];
 private _missionVariables = [ 
     ["life_var_preInitTime", compileFinal str(diag_tickTime)],
@@ -158,7 +164,6 @@ private _profileVariables = [
 private _uiVariables = [
     
 ];
-
 
 //-- Setup VirtualItems
 _missionVariables append (([objNull,false] call MPClient_fnc_getGear)#1);

@@ -1,6 +1,6 @@
-class RscDisplayFederalBank {
-    idd = 3500;
-    name = "RscDisplayFederalBank";
+class RscDisplayFederalBank 
+{
+    idd = 3500; 
     movingEnable = 0;
     enableSimulation = 1;
 

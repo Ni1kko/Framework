@@ -6,6 +6,9 @@ class RscDisplayProgressBar
     fadeout=0;
     movingEnable = 0;
     onLoad="uiNamespace setVariable ['RscDisplayProgressBar',_this select 0]";
+    onUnload="uiNamespace setVariable ['RscDisplayProgressBar', displayNull]";
+    onDestroy="uiNamespace setVariable ['RscDisplayProgressBar', displayNull]";
+
     objects[]={};
 
     class controlsBackground {
