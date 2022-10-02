@@ -17,7 +17,7 @@ private _shopSideVar = M_CONFIG(getText,"LicensesShops",_shopClass,"side");
 private _playerSideVar = [playerSide,true] call MPServer_fnc_util_getSideString;
 
 if (count _shopClass > 0 AND {count _shopSideVar > 0 AND {_shopSideVar isNotEqualTo _playerSideVar}}) exitWith {
-	hint "Shop not available for your faction";
+	hint "Error: Shop not available for your faction";
 	false
 };
 

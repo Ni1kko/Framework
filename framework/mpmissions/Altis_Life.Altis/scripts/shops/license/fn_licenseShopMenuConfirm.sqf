@@ -20,6 +20,8 @@ if(count _selectedLicense > 0) then
 	["SUB","CASH",_price] call MPClient_fnc_handleMoney;
 	
 	[player, _selectedLicense, true, true] call MPClient_fnc_setLicense;
+}else{
+	hint "Error: No license selected";
 };
 
 //-- Refresh menu

@@ -33,33 +33,15 @@ class RscDisplayLicenseShop
 	};
 	class controls
 	{
-		class AvailableLicensesTitle : life_RscText 
-		{
-			idc = -1;
-			text = "Available Licenses";
-			x = 0.65;  
-			y = 0.24;  
-			w = 0.1375;  
-			h = 0.04;  
-		};
-		class AvailableLicenses: life_RscListBox 
-		{
-			idc = 55126; 
-			text = "";
-			sizeEx = 0.035;  
-			x = 0.1125;  
-			y = 0.3;  
-			w = 0.3125;  
-			h = 0.4;  
-		};
+		
 		class OwnedLicensesTitle : life_RscText 
 		{  
 			idc = -1;
 			text = "Owned Licenses";
-			x = 0.1875;  
+			x = 0.65;  
 			y = 0.24;  
 			w = 0.1375;  
-			h = 0.04;  
+			h = 0.04; 
 		};
 		class OwnedLicenses: life_RscStructuredText 
 		{
@@ -71,24 +53,43 @@ class RscDisplayLicenseShop
 			w = 0.3125;  
 			h = 0.4;  
 		};
+		class AvailableLicensesTitle : life_RscText 
+		{
+			idc = -1;
+			text = "Available Licenses"; 
+			x = 0.1875;
+			y = 0.24;
+			w = 0.1375;
+			h = 0.04;
+		};
+		class AvailableLicenses: life_RscListBox 
+		{
+			idc = 55126; 
+			text = "";
+			sizeEx = 0.035;  
+			x = 0.1125;  
+			y = 0.3;  
+			w = 0.3125;  
+			h = 0.4;  
+		};
 		class buybutton: life_RscButtonMenu 
 		{
 			idc = 55127;
 			text = "$STR_Global_Buy";
-			x = 0.4125;
+			x = 0.65;  
 			y = 0.72;
 			w = 0.15;
 			h = 0.04;
 			colorText[] = {1,1,1,1};
 			colorBackground[] = {0,0,0,0.8};
-			action = "_this spawn MPClient_fnc_licenseShopMenuConfirm;";
+			onButtonClick = "_this spawn MPClient_fnc_licenseShopMenuConfirm;";
 		};
 		class Closebutton: buybutton 
 		{
 			idc = -1;
 			text = "$STR_Global_Close";
-			y = 0.82;
-			action = "closeDialog 0;";
+			x = 0.1875;
+			onButtonClick = "closeDialog 0;";
 		};  
 	};  
 };  
