@@ -2,13 +2,13 @@
 /*
 	## Nikko Renolds
 	## https://github.com/Ni1kko/FrameworkV2
-    ## fn_insertPlayerInfo.sqf (Client)
+    ## fn_insertPlayerData.sqf (Client)
 */
 
-FORCE_SUSPEND("MPClient_fnc_insertPlayerInfo");
+FORCE_SUSPEND("MPClient_fnc_insertPlayerData");
 
 if (life_var_sessionDone) exitWith { 
-    ["`MPClient_fnc_insertPlayerInfo` => Session already completed"] call MPClient_fnc_log;
+    ["`MPClient_fnc_insertPlayerData` => Session already completed"] call MPClient_fnc_log;
     false
 };
 
@@ -18,4 +18,4 @@ if(life_var_loadingScreenActive)then{
 };
 
 ["Session sending request to server to create your profile!"] call MPClient_fnc_log;
-[player] remoteExecCall ["MPServer_fnc_insertRequest",2];
+[player] remoteExecCall ["MPServer_fnc_insertPlayerDataRequest",2];

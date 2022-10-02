@@ -1,7 +1,8 @@
+#include "\life_backend\script_macros.hpp"
 /*
 	## Nikko Renolds
 	## https://github.com/Ni1kko/FrameworkV2
-    ## fn_updateRequest.sqf (Server)
+    ## fn_updatePlayerDataRequest.sqf (Server)
 */
 
 params [
@@ -26,7 +27,7 @@ private _damage = damage _player;
 private _position = getPosATL _player;
 
  
-private _BEGuid = ('BEGuid' callExtension ("get:"+_uid));
+private _BEGuid = GET_BEGUID(_player);
 private _playtime = [];
 private _sideflag = [_side,true] call MPServer_fnc_util_getSideString;
 
@@ -40,18 +41,7 @@ _playtime set[(switch (_side) do {case west: {0};case independent: {1};case east
 //--- Damage
 _stats set [2, _damage];
 
-//--- 
-["UPDATE", "bankaccounts", [
-    [
-        ["funds",["DB","A2NET", _bank] call MPServer_fnc_database_parse],
-        ["debt",["DB","A2NET", _debt] call MPServer_fnc_database_parse]
-    ],
-    [
-        ["BEGuid",str _BEGuid]
-    ]
-]]call MPServer_fnc_database_request;
-
-//--- 
+//--- Players
 ["UPDATE", "players", [
     [
         ["name", 			                ["DB","STRING", _name] call MPServer_fnc_database_parse],
@@ -70,6 +60,11 @@ _stats set [2, _damage];
         ["pid",_uid]
     ]
 ]]call MPServer_fnc_database_request;
+
+//--- Bank
+if(not([_player] call MPServer_fnc_updateBankDataRequest))then{
+    [format ["Error updating bank: %1",_BEGuid]] call MPServer_fnc_log;
+};
 
 [missionNameSource,[_var,true]] remoteExec ["setVariable",owner _player];
 

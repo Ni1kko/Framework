@@ -1,3 +1,9 @@
+#include "\life_backend\script_macros.hpp"
+/*
+	## Ni1kko
+	## https://github.com/Ni1kko/FrameworkV2
+*/
+
 private ["_vehicle","_unit","_giver"];
 _vehicle = _this select 0;
 _unit = _this select 1;

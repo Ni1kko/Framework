@@ -1,3 +1,4 @@
+#include "\life_backend\script_macros.hpp"
 /*
 	## Nikko Renolds
 	## https://github.com/Ni1kko/FrameworkV2
@@ -11,7 +12,7 @@ params [
 
 private _SteamID = getPlayerUID _playerObject;
 private _oldside = side _playerObject;
-private _BEGuid = ('BEGuid' callExtension ("get:"+_SteamID));
+private _BEGuid = GET_BEGUID(_playerObject);
 private _position = getPosATL _playerObject;
 private _loadout = getUnitLoadout _playerObject;
 private _newgroup = createGroup [_newside,true];

@@ -39,7 +39,7 @@ missionNamespace setVariable [_licenseData get "Name",_licenseData get "State"];
 
 //-- Sync to database
 if _forceUpdate then{
-	[2] call MPClient_fnc_updatePartial;
+	[2] call MPClient_fnc_updatePlayerDataPartial;
 };
 
 //-- return

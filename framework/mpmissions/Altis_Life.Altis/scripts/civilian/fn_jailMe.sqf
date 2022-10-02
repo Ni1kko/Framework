@@ -78,7 +78,7 @@ switch (true) do {
             [getPlayerUID player] remoteExecCall ["MPServer_fnc_wantedRemove", RE_SERVER];
         };
 
-        [5] call MPClient_fnc_updatePartial;
+        [5] call MPClient_fnc_updatePlayerDataPartial;
     };
 
     case (_esc): {
@@ -92,7 +92,7 @@ switch (true) do {
             [getPlayerUID player, profileName, "901"] remoteExecCall ["MPServer_fnc_wantedAdd", RE_SERVER];
         };
 
-        [5] call MPClient_fnc_updatePartial;
+        [5] call MPClient_fnc_updatePlayerDataPartial;
     };
 
     case (alive player && {!_esc} && {!_bail}): {
@@ -106,7 +106,7 @@ switch (true) do {
         };
         player setVariable ["life_var_teleported",true,true];
         player setPos (getMarkerPos "jail_release");
-        [5] call MPClient_fnc_updatePartial;
+        [5] call MPClient_fnc_updatePlayerDataPartial;
     };
 };
 

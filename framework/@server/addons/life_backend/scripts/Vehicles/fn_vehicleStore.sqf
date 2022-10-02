@@ -125,7 +125,7 @@ if (["impounded",["DB","BOOL", true] call MPServer_fnc_database_parse] in _query
     ["CREATE", "impounded_vehicles", 
         [
             ["vehicle_id",				["DB","INT", _vehicleID] call MPServer_fnc_database_parse],
-            ["impound_by_guid", 		["DB","STRING", ('BEGuid' callExtension ("get:"+(getPlayerUID _unit)))] call MPServer_fnc_database_parse],
+            ["impound_by_guid", 		["DB","STRING", GET_BEGUID(_unit)] call MPServer_fnc_database_parse],
             ["impound_fee", 			["DB","INT", _impoundFee] call MPServer_fnc_database_parse]
         ]
     ] call MPServer_fnc_database_request;

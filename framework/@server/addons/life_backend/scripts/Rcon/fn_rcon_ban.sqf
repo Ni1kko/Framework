@@ -1,3 +1,4 @@
+#include "\life_backend\script_macros.hpp"
 /*
 	## Nikko Renolds
 	## https://github.com/Ni1kko/FrameworkV2
@@ -20,7 +21,7 @@ private _uid = getPlayerUID _player;
 if(isNull _player || _uid isEqualTo "" || _ownerID < 3)exitwith{false};
 
 //get targets beguid
-private _BEGuid = ('BEGuid' callExtension ("get:"+_uid));
+private _BEGuid = GET_BEGUID(_player);
 
 //ban target
 if(format["#beserver addban %1 %2 %3",_BEGuid, _mins, _msg] call MPServer_fnc_rcon_sendCommand)then{

@@ -1,3 +1,4 @@
+#include "\life_backend\script_macros.hpp"
 /*
     File: fn_database_rawasync_request.sqf
     Author: Torndeco, Tonic & Ni1kko

@@ -1,3 +1,4 @@
+#include "\life_backend\script_macros.hpp"
 /*
 	## Nikko Renolds
 	## https://github.com/Ni1kko/FrameworkV2
@@ -46,7 +47,7 @@ if(getNumber(_config >> "dblogs") isEqualTo 1)then{
 		
 		if !([toUpper _type,1] in getArray(_config >> "dblogtypes"))exitWith{};
 		
-		private _BEGuid = ('BEGuid' callExtension ("get:"+_SteamID));
+		private _BEGuid = GET_BEGUID_S64(_x);
 		["CREATE", "admin_logs",
 			[
 				["Type", 	["DB","STRING", toUpper _type] call MPServer_fnc_database_parse],

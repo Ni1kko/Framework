@@ -1,7 +1,8 @@
+#include "\life_backend\script_macros.hpp"
 /*
 	## Nikko Renolds
 	## https://github.com/Ni1kko/FrameworkV2
-    ## fn_loadServer.sqf (Server)
+    ## fn_fetchServerDataRequest.sqf (Server)
 */
 
 if(!isServer)exitwith{false};
@@ -64,7 +65,7 @@ if (count _serverQueryResult isEqualTo 0) then {
 
 //--- She fucked it
 if(_serverQueryTries >= _serverQueryMaxTries)exitwith{
-    ["database `servers` error. MPServer_fnc_loadServer"] call MPServer_fnc_log;
+    ["database `servers` error. MPServer_fnc_fetchServerDataRequest"] call MPServer_fnc_log;
     '#shutdown' call MPServer_fnc_rcon_sendCommand;
 };
 
@@ -81,7 +82,7 @@ _serverQueryResult params [
 
 //--- Bad return
 if(_serverID isEqualTo -1)exitwith{
-    ["database `servers` column `serverID` error. MPServer_fnc_loadServer"] call MPServer_fnc_log;
+    ["database `servers` column `serverID` error. MPServer_fnc_fetchServerDataRequest"] call MPServer_fnc_log;
     '#shutdown' call MPServer_fnc_rcon_sendCommand;
 };
 

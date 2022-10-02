@@ -1,3 +1,4 @@
+#include "\life_backend\script_macros.hpp"
 /*
 	## Nikko Renolds
 	## https://github.com/Ni1kko/FrameworkV2
@@ -35,7 +36,7 @@ while {count _queryTickets > 0} do {
 				private _name = (name _player);
 				private _steamID = (getPlayerUID _player);
 				private _ownerID = (owner _player);
-				private _BEGuid = ('BEGuid' callExtension ("get:"+_steamID));
+				private _BEGuid = GET_BEGUID(_player);
 	
 				if (_BEGuid isEqualTo _WinnerGuid) then 
 				{  

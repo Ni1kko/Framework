@@ -19,8 +19,7 @@ if (isNull _unit) exitWith {};
 if (isNil "HC_UID" || {!(_uid isEqualTo HC_UID)}) then {
     private _position = getPosATL _unit;
     if ((getMarkerPos "respawn_civilian" distance _position) > 300) then {
-        private _alive = alive _unit;
-        if (count extdb_var_database_headless_clients > 0) then {[_uid,civilian,_alive,4,_position] remoteExec ["HC_fnc_updatePartial",extdb_var_database_headless_client]} else {[_uid,civilian,_alive,4,_position] spawn MPServer_fnc_updatePartial};
+        [_uid,civilian,alive _unit,4,_position] spawn MPServer_fnc_updatePlayerDataRequestPartial;
     };
 };
 

@@ -2,13 +2,13 @@
 /*
 	## Nikko Renolds
 	## https://github.com/Ni1kko/FrameworkV2
-    ## fn_dataQuery.sqf (Client)
+    ## fn_fetchPlayerData.sqf (Client)
 */
 
-FORCE_SUSPEND("MPClient_fnc_dataQuery");
+FORCE_SUSPEND("MPClient_fnc_fetchPlayerData");
 
 if (life_var_sessionDone) exitWith {
-    ["`MPClient_fnc_dataQuery` => Session already completed"] call MPClient_fnc_log;
+    ["`MPClient_fnc_fetchPlayerData` => Session already completed"] call MPClient_fnc_log;
     false
 };
 
@@ -18,6 +18,6 @@ if(life_var_loadingScreenActive)then{
 };
 
 ["Session sending request to server for data!"] call MPClient_fnc_log;
-[player] remoteExec ["MPServer_fnc_queryRequest",2];
+[player] remoteExec ["MPServer_fnc_fetchPlayerDataRequest",2];
 
 true

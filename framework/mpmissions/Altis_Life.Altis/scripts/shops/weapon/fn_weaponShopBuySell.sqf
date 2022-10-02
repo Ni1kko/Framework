@@ -67,5 +67,5 @@ if ((uiNamespace getVariable ["Weapon_Shop_Filter",0]) isEqualTo 1) then {
         [_item,true] call MPClient_fnc_handleItem;
     };
 };
-[0] call MPClient_fnc_updatePartial;
-[3] call MPClient_fnc_updatePartial;
+[0] call MPClient_fnc_updatePlayerDataPartial;
+[3] call MPClient_fnc_updatePlayerDataPartial;

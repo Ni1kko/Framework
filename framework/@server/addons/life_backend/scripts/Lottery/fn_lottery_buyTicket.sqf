@@ -1,3 +1,4 @@
+#include "\life_backend\script_macros.hpp"
 /*
 	## Nikko Renolds
 	## https://github.com/Ni1kko/FrameworkV2
@@ -21,8 +22,7 @@ if(Life_var_lottoDrawLock)exitWith {
 	"_ticketBonusballPrice"
 ];
 
-private _steamID = (getPlayerUID _player);
-private _BEGuid = ('BEGuid' callExtension ("get:"+_steamID));
+private _BEGuid = GET_BEGUID(_player);
 
 //--- Error check / failsafe
 if(typeName _ticketNumbers isNotEqualTo "STRING") then {_ticketNumbers = ""};

@@ -44,7 +44,7 @@ startLoadingScreen ["","RscDisplayLoadingScreen"];
 
 //--
 ["Saving Current Data", "Please Wait..."] call MPClient_fnc_setLoadingText;
-private _sessionvar = [] call MPClient_fnc_updateRequest;
+private _sessionvar = [] call MPClient_fnc_updatePlayerData;
 waitUntil {missionNamespace getVariable [_sessionvar,false]};
 
 //-- Switch side

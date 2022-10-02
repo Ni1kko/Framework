@@ -72,3 +72,7 @@
 #define AH_CHECK(var) (if (missionNamespace getVariable [var,false])exitWith{false})
 #define AH_CHECK_FINAL(var) (if (isFinal var)exitWith{false})
 #define AH_BAN_REMOTE_EXECUTED(var) (if(isRemoteExecuted AND (missionNamespace getVariable ["life_var_rcon_passwordOK",false]))exitwith{[remoteExecutedOwner,format["RemoteExecuted `%1`",var]] call MPServer_fnc_rcon_ban; false})
+
+
+#define GET_BEGUID_S64(var) ('BEGuid' callExtension (["get", var] joinString ":"))
+#define GET_BEGUID(obj) GET_BEGUID_S64(getPlayerUID obj)

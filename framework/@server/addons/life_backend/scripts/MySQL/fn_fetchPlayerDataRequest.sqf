@@ -2,7 +2,7 @@
 /*
 	## Nikko Renolds
 	## https://github.com/Ni1kko/FrameworkV2
-    ## fn_queryRequest.sqf (Server)
+    ## fn_fetchPlayerDataRequest.sqf (Server)
 */
 
 params [
@@ -46,8 +46,8 @@ private _queryParams = [
 
 private _queryResult = ["READ", "players", [_queryParams,_queryClause],true]call MPServer_fnc_database_request;
 if (_queryResult isEqualTo ["DB:Read:Task-failure",false]) exitWith {[format ["Error reading player: %1",_playerData get "BEGuid"]] call MPServer_fnc_log};
-if (count _queryResult isEqualTo 0) exitWith {[] remoteExec ["MPClient_fnc_insertPlayerInfo",_playerData get "OwnerID"]};
-if (not([_player] call MPServer_fnc_queryBankAccount)) exitWith {[] remoteExec ["MPClient_fnc_insertPlayerInfo",_playerData get "OwnerID"]};
+if (count _queryResult isEqualTo 0) exitWith {[] remoteExec ["MPClient_fnc_insertPlayerData",_playerData get "OwnerID"]};
+if (not([_player] call MPServer_fnc_fetchBankDataRequest)) exitWith {[] remoteExec ["MPClient_fnc_insertPlayerData",_playerData get "OwnerID"]};
 
 //--- UserData (2)
 _playerData set ["UserData",        [_queryResult#0,_playerData get "BEGuid"]];
@@ -106,7 +106,7 @@ if (LIFE_SETTINGS(getNumber,"player_deathLog") isEqualTo 1) then {
 };
 
 //--- Send to client
-[_playerData] remoteExec ["MPClient_fnc_requestReceived",_playerData get "OwnerID"];
+[_playerData] remoteExec ["MPClient_fnc_receivePlayerData",_playerData get "OwnerID"];
 
 //--- Return 
 true

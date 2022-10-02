@@ -1,13 +1,13 @@
+#include "\life_backend\script_macros.hpp"
 /*
-        File : fn_getPlayTime.sqf
-        Author : NiiRoZz
+    File : fn_getPlayTime.sqf
+    Author : NiiRoZz
 
-        Description :
-        Gets playtime for player with UID
+    Description :
+    Gets playtime for player with UID
 
-        GATHERED - Loaded from DB and NOT changed
-        JOIN - Time, the player joined - the newly gathered playtime will be calculated using difference
-
+    GATHERED - Loaded from DB and NOT changed
+    JOIN - Time, the player joined - the newly gathered playtime will be calculated using difference
 */
 
 private ["_uid", "_time_gathered", "_time_join","_time"];

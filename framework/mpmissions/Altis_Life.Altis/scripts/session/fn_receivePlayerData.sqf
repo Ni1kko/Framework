@@ -2,17 +2,17 @@
 /*
 	## Nikko Renolds
 	## https://github.com/Ni1kko/FrameworkV2
-    ## fn_requestReceived.sqf (Client)
+    ## fn_receivePlayerData.sqf (Client)
 */
 
-FORCE_SUSPEND("MPClient_fnc_requestReceived");
+FORCE_SUSPEND("MPClient_fnc_receivePlayerData");
 
 params [
     ["_playerData",createHashMap,[createHashMap]]
 ];
 
 if (life_var_sessionDone) exitWith {
-    ["`MPClient_fnc_requestReceived` => Session already completed"] call MPClient_fnc_log;
+    ["`MPClient_fnc_receivePlayerData` => Session already completed"] call MPClient_fnc_log;
     false
 };
 
@@ -26,13 +26,13 @@ if (life_var_sessionAttempts > MAX_ATTEMPTS_TOO_QUERY_DATA) exitWith {
 };
  
 //--- Bad data
-if (count (_playerData getOrDefault ["UserData",[]]) isNotEqualTo 2) exitWith {[] call MPClient_fnc_insertPlayerInfo};
+if (count (_playerData getOrDefault ["UserData",[]]) isNotEqualTo 2) exitWith {[] call MPClient_fnc_insertPlayerData};
 
 //-- parse data
 (_playerData get "UserData") params [["_steamID","",[""]],["_BEGuid","",[""]]];
 
 //--- Wrong client
-if (getPlayerUID player isNotEqualTo _steamID) exitWith {[] call MPClient_fnc_dataQuery};
+if (getPlayerUID player isNotEqualTo _steamID) exitWith {[] call MPClient_fnc_fetchPlayerData};
 
 //--- Prevent BEGuid from being changed
 []spawn {

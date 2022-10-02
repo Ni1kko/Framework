@@ -1,3 +1,4 @@
+#include "\life_backend\script_macros.hpp"
 /*
     File: fn_entityRespawned.sqf
     Author: DomT602

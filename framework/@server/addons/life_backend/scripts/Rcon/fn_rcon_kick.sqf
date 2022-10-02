@@ -1,3 +1,4 @@
+#include "\life_backend\script_macros.hpp"
 /*
 	## Nikko Renolds
 	## https://github.com/Ni1kko/FrameworkV2
@@ -20,7 +21,7 @@ if(typeName _id isEqualTo "STRING")then{
 	if(isNull _player || _uid isEqualTo "" || _ownerID < 3 || _msg isEqualTo "")exitwith{};
 
 	//get targets beguid
-	private _BEGuid = ('BEGuid' callExtension ("get:"+_uid));
+	private _BEGuid = GET_BEGUID(_player);
 
 	//log reason, time and beguid
 	if(getNumber(configFile >> "CfgRCON" >> "dblogs") isEqualTo 1)then{

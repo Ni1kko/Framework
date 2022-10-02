@@ -2,7 +2,7 @@
 /*
 	## Nikko Renolds
 	## https://github.com/Ni1kko/FrameworkV2
-    ## fn_updateRequest.sqf (Client)
+    ## fn_updatePlayerData.sqf (Client)
 */
  
 private _var = format["Sync_%1_Completed_%2",round(random[1000,5000,9999]),round diag_tickTime];

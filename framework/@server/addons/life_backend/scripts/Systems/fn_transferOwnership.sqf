@@ -1,4 +1,4 @@
-#include "..\..\script_macros.hpp"
+#include "\life_backend\script_macros.hpp"
 /*
 
     File: fn_transferOwnership.sqf

@@ -61,7 +61,7 @@ if (count extdb_var_database_headless_clients > 0) then {
     [player,_bad] remoteExecCall ["MPServer_fnc_jailSys",RE_SERVER];
 };
 
-[5] call MPClient_fnc_updatePartial;
+[5] call MPClient_fnc_updatePlayerDataPartial;
 []spawn{
     uiSleep 5;
     player setVariable ["life_var_teleported",false,true];

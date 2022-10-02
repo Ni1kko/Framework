@@ -21,13 +21,14 @@ class CfgFunctions
         class MySQL_Functions
         {
             file = "\life_backend\scripts\MySQL";
-            class queryRequest{};
-            class insertRequest{};
-            class updateRequest{};
-            class loadServer {};
-            class insertVehicle {};
-            class updatePartial {};
-            class queryBankAccount {};
+            class fetchBankDataRequest {};
+            class fetchPlayerDataRequest{};
+            class fetchServerDataRequest {};
+            class insertPlayerDataRequest{};
+            class insertVehicleDataRequest {};
+            class updateBankDataRequest {};
+            class updatePlayerDataRequest {};
+            class updatePlayerDataRequestPartial {};
         };
     };
 };

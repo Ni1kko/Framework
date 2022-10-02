@@ -270,14 +270,28 @@ class CfgFunctions
         class Gui 
         {
             file = "scripts\gui";
-            class cameraZoomIn {};
+            class abort {};
             class bankDeposit {};
             class bankTransfer {};
             class bankWithdraw {};
+            class cameraZoomIn {};
+            class createRscLayer {};
+            class destroyRscLayer {};
             class displayHandler {};
+            class filterGarage {};
             class gangBankResponse {};
             class garageLBChange {};
             class garageMenu {};
+            class gui_hook_management {}; 
+            class gui_renderGrenadePanel {};
+            class gui_renderGroupPanel {};
+            class gui_renderNotifications {};
+            class gui_renderPartyESP {};
+            class gui_renderStatsPanel {};
+            class gui_renderVehiclePanel {};
+            class gui_renderWaypoints {};
+            class gui_renderWeaponPanel {};
+            class hasDisplay {};
             class progressBar {};
             class safeFix {};
             class safeInventory {};
@@ -289,25 +303,11 @@ class CfgFunctions
             class spawnMenu {};
             class spawnPointCfg {};
             class spawnPointSelected {};
+            class syncData {};
             class unimpound {};
             class useGangBank {};
             class vehicleGarage {};
-            class wireTransfer {};
-            class hasDisplay {};
-            class createRscLayer {};
-            class destroyRscLayer {};
-            class filterGarage {};
             class setLoadingText {};
-            class abort {};
-            class gui_hook_management {}; 
-            class gui_renderGrenadePanel {};
-            class gui_renderGroupPanel {};
-            class gui_renderNotifications {};
-            class gui_renderPartyESP {};
-            class gui_renderStatsPanel {};
-            class gui_renderVehiclePanel {};
-            class gui_renderWaypoints {};
-            class gui_renderWeaponPanel {};
         };
 
         class Housing 
@@ -507,12 +507,11 @@ class CfgFunctions
         class Session 
         {
             file = "scripts\session";
-            class dataQuery {};
-            class insertPlayerInfo {};
-            class requestReceived {};
-            class syncData {};
-            class updatePartial {};
-            class updateRequest {};
+            class fetchPlayerData {};
+            class insertPlayerData {};
+            class receivePlayerData {};
+            class updatePlayerData {};
+            class updatePlayerDataPartial {};
         };
 
         class Utils 
@@ -619,13 +618,12 @@ class CfgRemoteExec {
             F(MPClient_fnc_ticketPrompt,CLIENT)
             F(MPClient_fnc_vehicleAnimate,CLIENT)
             F(MPClient_fnc_wantedList,CLIENT)
-            F(MPClient_fnc_wireTransfer,CLIENT)
             F(MPClient_fnc_gangBankResponse,CLIENT)
             F(MPClient_fnc_chopShopSold,CLIENT)
-            F(MPClient_fnc_dataQuery,CLIENT)
-            F(MPClient_fnc_insertPlayerInfo,CLIENT)
-            F(MPClient_fnc_requestReceived,CLIENT)
-            F(MPClient_fnc_updateRequest,CLIENT)
+            F(MPClient_fnc_fetchPlayerData,CLIENT)
+            F(MPClient_fnc_insertPlayerData,CLIENT)
+            F(MPClient_fnc_receivePlayerData,CLIENT)
+            F(MPClient_fnc_updatePlayerData,CLIENT)
             F(MPServer_fnc_clientGangKick,CLIENT)
             F(MPServer_fnc_clientGangLeader,CLIENT)
             F(MPServer_fnc_clientGangLeft,CLIENT)
@@ -639,10 +637,10 @@ class CfgRemoteExec {
             F(MPServer_fnc_rcon_ban,SERVER)
             F(MPServer_fnc_rcon_kick,SERVER)
             F(MPServer_fnc_clientMessageRequest,SERVER)
-            F(MPServer_fnc_insertRequest,SERVER)
-            F(MPServer_fnc_queryRequest,SERVER)
-            F(MPServer_fnc_updatePartial,SERVER)
-            F(MPServer_fnc_updateRequest,SERVER)
+            F(MPServer_fnc_insertPlayerDataRequest,SERVER)
+            F(MPServer_fnc_fetchPlayerDataRequest,SERVER)
+            F(MPServer_fnc_updatePlayerDataRequest,SERVER)
+            F(MPServer_fnc_updatePlayerDataRequestPartial,SERVER)
             F(MPServer_fnc_jailSys,SERVER)
             F(MPServer_fnc_wantedAdd,SERVER)
             F(MPServer_fnc_wantedBounty,SERVER)
@@ -698,11 +696,11 @@ class CfgRemoteExec {
             F(HC_fnc_getVehicles,HC)
             F(HC_fnc_houseGarage,HC)
             F(HC_fnc_insertGang,HC)
-            F(HC_fnc_insertRequest,HC)
-            F(HC_fnc_insertVehicle,HC)
+            F(HC_fnc_insertPlayerDataRequest,HC)
+            F(HC_fnc_insertVehicleDataRequest,HC)
             F(HC_fnc_jailSys,HC)
             F(HC_fnc_keyManagement,HC)
-            F(HC_fnc_queryRequest,HC)
+            F(HC_fnc_fetchPlayerDataRequest,HC)
             F(HC_fnc_removeGang,HC)
             F(HC_fnc_sellHouse,HC)
             F(HC_fnc_sellHouseContainer,HC)
@@ -711,8 +709,7 @@ class CfgRemoteExec {
             F(HC_fnc_updateGang,HC)
             F(HC_fnc_updateHouseContainers,HC)
             F(HC_fnc_updateHouseTrunk,HC)
-            F(HC_fnc_updatePartial,HC)
-            F(HC_fnc_updateRequest,HC)
+            F(HC_fnc_updatePlayerDataRequest,HC)
             F(HC_fnc_vehicleCreate,HC)
             F(HC_fnc_vehicleDelete,HC)
             F(HC_fnc_vehicleStore,HC)

@@ -61,7 +61,7 @@ if ((MONEY_CASH - (_fueltoput * _fuelCost)) > 0) then {
     if (_car distance player > 10 || !(isNull objectParent player)) then {
         hint localize "STR_Distance_Vehicle_Pump";
     };
-    [0] call MPClient_fnc_updatePartial;
+    [0] call MPClient_fnc_updatePlayerDataPartial;
     life_var_processingResource = false;
 } else {
     hint localize "STR_NOTF_NotEnoughMoney";

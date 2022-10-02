@@ -47,7 +47,7 @@ _vehicle spawn {
     waitUntil {isNull (findDisplay 3500)};
     _this setVariable ["trunk_in_use",false,true];
     if ((_this isKindOf "Car") || (_this isKindOf "Air") || (_this isKindOf "Ship")) then {
-        [] call MPClient_fnc_updateRequest;
+        [] call MPClient_fnc_updatePlayerData;
 
         if (count extdb_var_database_headless_clients > 0) then {
             [_this,2] remoteExecCall ["HC_fnc_vehicleUpdate",extdb_var_database_headless_client];

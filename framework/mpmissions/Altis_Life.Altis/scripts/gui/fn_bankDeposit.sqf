@@ -20,7 +20,7 @@ if (_value > MONEY_CASH) exitWith {hint localize "STR_ATM_NotEnoughCash"};
 
 hint format [localize "STR_ATM_DepositSuccess",[_value] call MPClient_fnc_numberText];
 [] call MPClient_fnc_atmMenu;
-[6] call MPClient_fnc_updatePartial;
+[6] call MPClient_fnc_updatePlayerDataPartial;
 
 if (LIFE_SETTINGS(getNumber,"player_moneyLog") isEqualTo 1) then {
     if (LIFE_SETTINGS(getNumber,"battlEye_friendlyLogging") isEqualTo 1) then {

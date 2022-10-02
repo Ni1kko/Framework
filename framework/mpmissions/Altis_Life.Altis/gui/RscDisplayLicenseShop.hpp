@@ -29,8 +29,8 @@ class RscDisplayLicenseShop
 			w = 0.775;  
 			h = 0.52;  
 		};  
-		
 	};
+	
 	class controls
 	{
 		class OwnedLicensesTitle : life_RscText 

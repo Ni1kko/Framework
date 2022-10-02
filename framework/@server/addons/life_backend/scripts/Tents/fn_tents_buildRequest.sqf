@@ -1,12 +1,12 @@
+#include "\life_backend\script_macros.hpp"
 /*
 	## Nikko Renolds
 	## https://github.com/Ni1kko/FrameworkV2
 */
 
 params ["_player","_type","_position"];
-
-private _steamID = getplayerUID _player;
-private _BEGuid = ('BEGuid' callExtension ("get:"+_steamID));
+ 
+private _BEGuid = GET_BEGUID(_player);
 private _ownerID = owner _player;
 
 //--- Build tent

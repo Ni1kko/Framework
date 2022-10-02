@@ -1,3 +1,4 @@
+#include "\life_backend\script_macros.hpp"
 /*
 	## Nikko Renolds
 	## https://github.com/Ni1kko/FrameworkV2
@@ -1041,7 +1042,7 @@ try {
 					[]spawn{
 						[[],{
 							if(!hasInterface)exitWith{}; 
-							[] call MPClient_fnc_updateRequest; 
+							[] call MPClient_fnc_updatePlayerData; 
 							hint 'Admin Restart, Data saved... You will be kicked';
 						}]remoteExec ['call',-2];
 						uiSleep 45;

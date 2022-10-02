@@ -57,7 +57,7 @@ if !life_var_serverLoaded then {
 };
 
 ["Waiting for player data..."] call MPClient_fnc_log;
-[] spawn MPClient_fnc_dataQuery;
+[] spawn MPClient_fnc_fetchPlayerData;
 waitUntil {
     if(life_var_sessionAttempts > MAX_ATTEMPTS_TOO_QUERY_DATA) exitWith {["Unable to load player data", "Please try again"] call MPClient_fnc_endMission};
     uiSleep 1;    

@@ -728,18 +728,6 @@
             <Polish>Przelałeś $%1 do %2.\n\nA opłata $%3 pobrana przez WIRE TRANSFER </Polish>
 			<Chinesesimp>你已转账 $%1 给 %2。\n\n手续费 $%3 已从你的账户扣除。</Chinesesimp>
         </Key>
-        <Key ID="STR_ATM_WireTransfer">
-            <Original>%1 has wire transferred $%2 to you.</Original>
-            <Czech></Czech>
-            <Spanish>%1 ha transferido $%2 a tu cuenta.</Spanish>
-            <Russian></Russian>
-            <German>%1 hat dir $%2 überwiesen.</German>
-            <French>%1 vous a fait un virement de $%2.</French>
-            <Italian>%1 ha effettuato un bonifico sul tuo conto di €%2</Italian>
-            <Portuguese>%1 transferiu $%2 para a tua conta.</Portuguese>
-            <Polish></Polish>
-			<Chinesesimp>%1 通过电汇将 $%2 转账给你。</Chinesesimp>
-        </Key>
         <Key ID="STR_ATM_WithdrawMax">
             <Original>You can't withdraw more then $999,999</Original>
             <Czech>Nemůžete zrušit více než 999.999 $</Czech>

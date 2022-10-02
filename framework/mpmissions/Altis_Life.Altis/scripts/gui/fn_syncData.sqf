@@ -24,7 +24,7 @@ if (_syncNotReady AND not(_syncOverride)) exitWith {
 };
 
 //-- Sync data to the server
-[] call MPClient_fnc_updateRequest;
+[] call MPClient_fnc_updatePlayerData;
 
 //-- Saves the variables stored in profileNamespace to the persistent active user profile
 if _savePNS then {saveProfileNamespace};

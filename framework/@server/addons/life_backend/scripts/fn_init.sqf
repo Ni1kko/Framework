@@ -1,3 +1,4 @@
+#include "\life_backend\script_macros.hpp"
 /*
 	## Nikko Renolds
 	## https://github.com/Ni1kko/FrameworkV2
@@ -15,7 +16,7 @@ waitUntil {isFinal "extdb_var_database_key"};
 life_var_currentDay = [] call MPServer_fnc_util_getCurrentDay;
 
 //--- Server info
-private _serverDatabaseInit = [] spawn MPServer_fnc_loadServer;
+private _serverDatabaseInit = [] spawn MPServer_fnc_fetchServerDataRequest;
 waitUntil{scriptDone _serverDatabaseInit};
 
 //--- Mission Event handlers

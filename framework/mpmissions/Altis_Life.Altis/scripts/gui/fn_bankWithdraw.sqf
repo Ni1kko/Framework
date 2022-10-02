@@ -19,7 +19,7 @@ if (_value < 100 && MONEY_BANK > 20000000) exitWith {hint localize "STR_ATM_With
 
 hint format [localize "STR_ATM_WithdrawSuccess",[_value] call MPClient_fnc_numberText];
 [] call MPClient_fnc_atmMenu;
-[6] call MPClient_fnc_updatePartial;
+[6] call MPClient_fnc_updatePlayerDataPartial;
 
 if (LIFE_SETTINGS(getNumber,"player_moneyLog") isEqualTo 1) then {
     if (LIFE_SETTINGS(getNumber,"battlEye_friendlyLogging") isEqualTo 1) then {

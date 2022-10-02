@@ -1,3 +1,9 @@
+#include "\life_backend\script_macros.hpp"
+/*
+	## Ni1kko
+	## https://github.com/Ni1kko/FrameworkV2
+*/
+
 private ["_unit","_group"];
 _unit = _this select 0;
 _group = _this select 1;

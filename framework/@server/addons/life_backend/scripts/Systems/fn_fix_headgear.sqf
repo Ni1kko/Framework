@@ -1,3 +1,4 @@
+#include "\life_backend\script_macros.hpp"
 /*
     File: fix_headgear.sqf
     Author: pettka

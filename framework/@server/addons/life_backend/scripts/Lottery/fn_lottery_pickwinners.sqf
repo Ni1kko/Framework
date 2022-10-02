@@ -1,3 +1,4 @@
+#include "\life_backend\script_macros.hpp"
 /*
 	## Nikko Renolds
 	## https://github.com/Ni1kko/FrameworkV2
@@ -121,7 +122,7 @@ _vaultObject setVariable ["safe",0,true];
 			private _name = (name _player);
 			private _steamID = (getPlayerUID _player);
 			private _ownerID = (owner _player);
-			private _BEGuid = ('BEGuid' callExtension ("get:"+_steamID));
+			private _BEGuid = GET_BEGUID(_player);
 			private _payout = _jackpotSplit;
 			private _payoutBB = _bonusBallPayout;
 

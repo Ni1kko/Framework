@@ -91,7 +91,7 @@ switch (_mode) do {
             waitUntil {not(missionNamespace getVariable [_sessionvar,false]) OR isNull _group};
             if (isNull _group) exitWith {false};
             
-            [format ["UPDATE gangs SET bank='%1' WHERE id='%2'",(["DB","A2NET", _group getVariable [GET_GANG_MONEY_VAR,0]] call MPServer_fnc_database_parse),_groupID]] call MPServer_fnc_queryRequest;
+            [format ["UPDATE gangs SET bank='%1' WHERE id='%2'",(["DB","A2NET", _group getVariable [GET_GANG_MONEY_VAR,0]] call MPServer_fnc_database_parse),_groupID]] call MPServer_fnc_fetchPlayerDataRequest;
             true
         };
     };

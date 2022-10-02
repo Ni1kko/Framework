@@ -1,3 +1,4 @@
+#include "\life_backend\script_macros.hpp"
 /*
 	## Nikko Renolds
 	## https://github.com/Ni1kko/FrameworkV2
@@ -279,7 +280,7 @@ MPServer_fnc_vehicle_buyRequest = {
 			["SUB","CASH",_price] call MPClient_fnc_handleMoney;
 			
 			//-- Update cash in db
-			[0] call MPClient_fnc_updatePartial;
+			[0] call MPClient_fnc_updatePlayerDataPartial;
 			
 			//-- Let them know they bought or rented it.
 			hint format [localize(if(_purchased)then{"STR_Shop_Veh_Bought"}else{"STR_Shop_Veh_Rented"}),getText(configFile >> "CfgVehicles" >> _class >> "displayName"),[_price] call MPClient_fnc_numberText];

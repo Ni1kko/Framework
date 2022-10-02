@@ -173,7 +173,7 @@ if(_action isNotEqualTo "GIVE")then{
 };
 
 //-- Update database
-[6] call MPClient_fnc_updatePartial;
+[6] call MPClient_fnc_updatePlayerDataPartial;
 
 //-- Return
 life_var_lastBalance

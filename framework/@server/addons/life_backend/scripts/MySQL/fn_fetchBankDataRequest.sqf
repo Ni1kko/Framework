@@ -2,7 +2,7 @@
 /*
 	## Nikko Renolds
 	## https://github.com/Ni1kko/FrameworkV2
-    ## fn_queryBankAccount.sqf (Server)
+    ## fn_fetchBankDataRequest.sqf (Server)
 */
 
 params [
@@ -11,8 +11,7 @@ params [
 
 if (isNull _player) exitWith {false};
 
-private _uid = getPlayerUID _player;
-private _BEGuid = ('BEGuid' callExtension ("get:"+_uid));
+private _BEGuid = GET_BEGUID(_player);
 private _queryBankResult = ["READ", "bankaccounts", [["funds","debt"],[["BEGuid",str _BEGuid]]],true]call MPServer_fnc_database_request;
 
 if (_queryBankResult isEqualTo ["DB:Read:Task-failure",false]) exitWith {

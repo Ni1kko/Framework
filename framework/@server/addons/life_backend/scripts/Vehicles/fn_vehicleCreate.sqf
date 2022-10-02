@@ -1,3 +1,4 @@
+#include "\life_backend\script_macros.hpp"
 /*
     File: fn_vehicleCreate.sqf
     Author: Bryan "Tonic" Boardwine
@@ -22,6 +23,6 @@ if !(alive _vehicle) exitWith {};
 private _VIN = [_sideVar,_type] call MPServer_fnc_vehicle_generateVIN;
 private _plate = round(random(1000000));//To be replace with above function
 
-[_uid,_sideVar,_type,_classname,_color,_plate] call MPServer_fnc_insertVehicle;
+[_uid,_sideVar,_type,_classname,_color,_plate] call MPServer_fnc_insertVehicleDataRequest;
 _vehicle setVariable ["oUUID",_uid,true];
 _vehicle setVariable ["dbInfo",[_uid,_plate],true];

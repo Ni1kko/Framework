@@ -1,3 +1,4 @@
+#include "\life_backend\script_macros.hpp"
 /*
     File: fn_initHouses.sqf
     Description: Initalizes house setup when server starts

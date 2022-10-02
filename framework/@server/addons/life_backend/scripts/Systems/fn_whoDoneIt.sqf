@@ -1,3 +1,4 @@
+#include "\life_backend\script_macros.hpp"
 /*
     File: fn_whoDoneIt.sqf
     Description: Save log file of units killed.

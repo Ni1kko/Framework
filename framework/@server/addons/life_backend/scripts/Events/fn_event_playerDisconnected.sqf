@@ -1,3 +1,4 @@
+#include "\life_backend\script_macros.hpp"
 /*
 	## Nikko Renolds
 	## https://github.com/Ni1kko/Framework
@@ -14,7 +15,7 @@ params [
 ];
 
 //--- Get BEGuid
-private _BEGuid = ('BEGuid' callExtension ("get:"+_steamID));
+private _BEGuid = GET_BEGUID_S64(_steamID);
 if(_BEGuid isEqualTo "")exitWith{};
 
 //--- Update current players

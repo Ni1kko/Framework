@@ -42,6 +42,6 @@ uiSleep 3;
 systemChat format [localize "STR_Medic_RevivePay",_reviversName,[_reviveCost] call MPClient_fnc_numberText];
 
 //-- Database update
-[] call MPClient_fnc_updateRequest;
+[] call MPClient_fnc_updatePlayerData;
 
 true

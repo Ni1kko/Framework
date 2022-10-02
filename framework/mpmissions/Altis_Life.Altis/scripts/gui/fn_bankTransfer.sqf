@@ -23,7 +23,7 @@ if ((_value + _tax) > MONEY_BANK) exitWith {hint format [localize "STR_ATM_SentM
 ["GIVE","BANK",_value,_unit] call MPClient_fnc_handleMoney;
 
 [] call MPClient_fnc_atmMenu;
-[1] call MPClient_fnc_updatePartial;
+[1] call MPClient_fnc_updatePlayerDataPartial;
 hint format [localize "STR_ATM_SentMoneySuccess",[_value] call MPClient_fnc_numberText,_unit getVariable ["realname",name _unit],[_tax] call MPClient_fnc_numberText];
 
 

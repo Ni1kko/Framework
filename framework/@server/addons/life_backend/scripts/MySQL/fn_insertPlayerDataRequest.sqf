@@ -2,7 +2,7 @@
 /*
 	## Nikko Renolds
 	## https://github.com/Ni1kko/FrameworkV2
-    ## fn_insertRequest.sqf (Server)
+    ## fn_insertPlayerDataRequest.sqf (Server)
 */
 
 params [
@@ -13,7 +13,7 @@ params [
 private _uid = getPlayerUID _player;
 private _name = name _player;
 private _ownerID = owner _player;
-private _BEGuid = ('BEGuid' callExtension ("get:"+_uid));
+private _BEGuid = GET_BEGUID(_player);
 
 //--- Error checks
 if (isNull _player) exitWith {systemChat "ReturnToSender is Null!";};
@@ -27,14 +27,14 @@ private _queryResult = ["READ", "players", [["pid","serverID"], [["BEGuid",str _
 private _queryBankResult = ["READ", "bankaccounts", [["funds","debt"],[["BEGuid",str _BEGuid]]],true]call MPServer_fnc_database_request;
 
 //--- Bad.. fail safe
-if (typeName _queryResult isNotEqualTo "ARRAY" || typeName _queryBankResult isNotEqualTo "ARRAY") exitWith{[] remoteExecCall ["MPClient_fnc_dataQuery",_ownerID]};
+if (typeName _queryResult isNotEqualTo "ARRAY" || typeName _queryBankResult isNotEqualTo "ARRAY") exitWith{[] remoteExecCall ["MPClient_fnc_fetchPlayerData",_ownerID]};
 
 //--- Check for inserts
 private _insertBank = (count _queryBankResult isEqualTo 0);
 private _insertPlayer = (count _queryResult isEqualTo 0);
 
 //--- Double check to make sure the client isn't in the database... 
-if (!_insertBank AND !_insertPlayer) exitWith {[] remoteExecCall ["MPClient_fnc_dataQuery",_ownerID]};
+if (!_insertBank AND !_insertPlayer) exitWith {[] remoteExecCall ["MPClient_fnc_fetchPlayerData",_ownerID]};
 
 //--- Add new player to database
 if(_insertPlayer)then{ 
@@ -74,4 +74,4 @@ if(_insertBank)then{
 
 
 //--- Tell client to re query for new data
-[] remoteExec ["MPClient_fnc_dataQuery",_ownerID];
+[] remoteExec ["MPClient_fnc_fetchPlayerData",_ownerID];

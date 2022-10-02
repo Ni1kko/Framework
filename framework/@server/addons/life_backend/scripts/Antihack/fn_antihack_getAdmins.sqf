@@ -1,3 +1,4 @@
+#include "\life_backend\script_macros.hpp"
 /*
 	## Nikko Renolds
 	## https://github.com/Ni1kko/FrameworkV2
@@ -23,7 +24,7 @@ if(isClass _config)then{
 	//--- load developers from description.ext (database level takes priorty)
 	if(_use_debugconadmins)then{
 		{
-			private _BEGuid = ('BEGuid' callExtension ("get:"+_x));
+			private _BEGuid = GET_BEGUID_S64(_x);
 			if ((str _admins) find _BEGuid isEqualTo -1)then{
 				_admins pushBackUnique [99,_x,_BEGuid]; 
 			};

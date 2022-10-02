@@ -1,3 +1,4 @@
+#include "\life_backend\script_macros.hpp"
 /*
 	## Nikko Renolds
 	## https://github.com/Ni1kko/FrameworkV2
@@ -101,7 +102,7 @@ while {true} do
 				{
 					//--- Auto Lock
 					if (!life_var_rcon_serverLocked AND life_var_rcon_RestartMode == 0) then {
-						[] remoteExec ["MPClient_fnc_updateRequest",-2];
+						[] remoteExec ["MPClient_fnc_updatePlayerData",-2];
 						"#lock" call MPServer_fnc_rcon_sendCommand;
 						"Lock Event: Server locked for restart" call MPServer_fnc_rcon_systemlog;
 						"You will be kicked off the server due to a restart." remoteExec ["hint",-2]; 

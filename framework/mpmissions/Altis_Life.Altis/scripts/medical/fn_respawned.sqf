@@ -31,14 +31,14 @@ if (LIFE_SETTINGS(getNumber,"enable_fatigue") isEqualTo 0) then {player enableFa
 [player,life_var_enableSidechannel,playerSide] remoteExecCall ["MPServer_fnc_managesc",2];
 
 //--- Database sync
-[] call MPClient_fnc_updateRequest;
+[] call MPClient_fnc_updatePlayerData;
 
 //-- Died whilst jailed
 if (life_var_arrested) exitWith {
     hint localize "STR_Jail_Suicide";
     life_var_arrested = false;
     [player,true] spawn MPClient_fnc_jail;
-    [] call MPClient_fnc_updateRequest;
+    [] call MPClient_fnc_updatePlayerData;
 };
 
 //-- Johnny law got me but didn't let the EMS revive me, reward them half the bounty.

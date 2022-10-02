@@ -1,3 +1,4 @@
+#include "\life_backend\script_macros.hpp"
 /*
     Author: GetSomePanda / Panda
     SteamID: 76561198145366418

@@ -1,3 +1,4 @@
+#include "\life_backend\script_macros.hpp"
 /*
     File: fn_vehicleDelete.sqf
     Author: Bryan "Tonic" Boardwine

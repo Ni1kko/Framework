@@ -39,7 +39,7 @@ waitUntil{
 "#beserver players" call MPServer_fnc_rcon_sendCommand;
 
 //--- Get BEGuid
-private _BEGuid = ('BEGuid' callExtension ("get:"+_steamID));
+private _BEGuid = GET_BEGUID_S64(_steamID);
 if(_BEGuid isEqualTo "")exitWith{
 	[_ownerID,"Error calculating players BEGuid"] call MPServer_fnc_rcon_kick;
 };

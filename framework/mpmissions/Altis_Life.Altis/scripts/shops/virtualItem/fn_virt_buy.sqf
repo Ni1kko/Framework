@@ -60,5 +60,5 @@ if ([true,_type,_amount] call MPClient_fnc_handleInv) then {
     [] call MPClient_fnc_virt_update;
 };
 
-[0] call MPClient_fnc_updatePartial;
-[3] call MPClient_fnc_updatePartial;
+[0] call MPClient_fnc_updatePlayerDataPartial;
+[3] call MPClient_fnc_updatePlayerDataPartial;

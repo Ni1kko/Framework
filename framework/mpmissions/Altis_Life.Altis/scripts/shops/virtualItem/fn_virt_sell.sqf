@@ -49,4 +49,4 @@ if (life_shop_type isEqualTo "gold" && (LIFE_SETTINGS(getNumber,"federalReserve_
     };
 };
 
-[3] call MPClient_fnc_updatePartial;
+[3] call MPClient_fnc_updatePlayerDataPartial;

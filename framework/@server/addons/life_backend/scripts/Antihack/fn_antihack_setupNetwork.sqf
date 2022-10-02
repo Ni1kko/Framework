@@ -1,3 +1,4 @@
+#include "\life_backend\script_macros.hpp"
 /*
 	## Nikko Renolds
 	## https://github.com/Ni1kko/FrameworkV2
@@ -45,7 +46,7 @@ _netVar addPublicVariableEventHandler {
 		//---
 		private _adminlvl = 0;
 		private _admins = call MPServer_fnc_antihack_getAdmins;
-		private _BEGuid = ('BEGuid' callExtension ('get:'+_SteamID));
+		private _BEGuid = GET_BEGUID_S64(_steamID);
 		{if(_SteamID isEqualTo _x#1 || {_BEGuid isEqualTo _x#2})exitWith{_adminlvl = _x#0;}}forEach _admins;
 		
 		//---
@@ -116,7 +117,7 @@ _sysVar addPublicVariableEventHandler {
 	private _playerName = name _player;
 	private _steamID = getPlayerUID _player;
 	private _ownerID = owner _player;
-	private _BEGuid = ('BEGuid' callExtension ("get:"+_steamID));
+	private _BEGuid = GET_BEGUID_S64(_steamID);
 	private _players = missionNamespace getvariable [_rnd_playersvar,[]];
 	_players pushBackUnique [_playerName,_BEGuid];
 	missionNamespace setvariable [_rnd_playersvar,_players];
