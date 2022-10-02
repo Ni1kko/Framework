@@ -6,7 +6,7 @@
 	Github:		https://github.com/Ni1kko/FrameworkV2
 	
 */
- 
+
 disableSerialization;  
  
 private _escSync = {
@@ -91,10 +91,11 @@ for "_i" from 0 to 1 step 0 do {
     ((uiNamespace getVariable "RscDisplayMPInterrupt") displayCtrl 2) ctrlSetText "Resume";//Continue
 
     //Save Btn
+    ((uiNamespace getVariable "RscDisplayMPInterrupt") displayCtrl 103) ctrlRemoveAllEventHandlers "ButtonDown";
     ((uiNamespace getVariable "RscDisplayMPInterrupt") displayCtrl 103) ctrlEnable true;
     ((uiNamespace getVariable "RscDisplayMPInterrupt") displayCtrl 103) ctrlSetText "Sync Data";
     ((uiNamespace getVariable "RscDisplayMPInterrupt") displayCtrl 103) ctrlSetToolTip "Sync Player Data To Hive";
-    ((uiNamespace getVariable "RscDisplayMPInterrupt") displayCtrl 103) buttonSetAction "[] call MPClient_fnc_syncData";
+    ((uiNamespace getVariable "RscDisplayMPInterrupt") displayCtrl 103) ctrlAddEventHandler ["ButtonDown", "[] call MPClient_fnc_syncData"];
 
     //Respawn Btn
     ((uiNamespace getVariable "RscDisplayMPInterrupt") displayCtrl 1010) ctrlEnable false;
@@ -107,14 +108,16 @@ for "_i" from 0 to 1 step 0 do {
     ((uiNamespace getVariable "RscDisplayMPInterrupt") displayCtrl 101) ctrlSetToolTip "Configure Arma Options";
 
     //Field manual Btn
+    ((uiNamespace getVariable "RscDisplayMPInterrupt") displayCtrl 122) ctrlRemoveAllEventHandlers "ButtonDown";
     ((uiNamespace getVariable "RscDisplayMPInterrupt") displayCtrl 122) ctrlEnable false;
     ((uiNamespace getVariable "RscDisplayMPInterrupt") displayCtrl 122) ctrlSetText "Disabled"; 
     ((uiNamespace getVariable "RscDisplayMPInterrupt") displayCtrl 122) ctrlSetToolTip "";
     
     //Exit Btn
+    ((uiNamespace getVariable "RscDisplayMPInterrupt") displayCtrl 104) ctrlRemoveAllEventHandlers "ButtonDown";
     ((uiNamespace getVariable "RscDisplayMPInterrupt") displayCtrl 104) ctrlEnable false;
     ((uiNamespace getVariable "RscDisplayMPInterrupt") displayCtrl 104) ctrlSetText "Exit";
-    ((uiNamespace getVariable "RscDisplayMPInterrupt") displayCtrl 104) buttonSetAction "[] spawn MPClient_fnc_abort; true";
+    ((uiNamespace getVariable "RscDisplayMPInterrupt") displayCtrl 104) ctrlAddEventHandler ["ButtonDown", "_this spawn MPClient_fnc_abort"];
     ((uiNamespace getVariable "RscDisplayMPInterrupt") displayCtrl 104) ctrlSetToolTip "Abandon Server And Sync Data";
 
     

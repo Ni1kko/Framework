@@ -20,8 +20,6 @@ while {dialog} do {
 {
     private _layerID = [_x] call BIS_fnc_rscLayer;
     _layerID cutText ["","PLAIN"];
-    _layerID cutRsc ["RscTitleDisplayEmpty", "PLAIN"];
-    _layerID cutObj ["RscTitleDisplayEmpty", "PLAIN"];
     _layerID cutFadeOut 0;
 }forEach allCutLayers;
 
