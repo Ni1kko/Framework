@@ -33,7 +33,6 @@ class RscDisplayLicenseShop
 	};
 	class controls
 	{
-		
 		class OwnedLicensesTitle : life_RscText 
 		{  
 			idc = -1;
@@ -72,24 +71,24 @@ class RscDisplayLicenseShop
 			w = 0.3125;  
 			h = 0.4;  
 		};
-		class buybutton: life_RscButtonMenu 
+		class Closebutton: life_RscButtonMenu 
 		{
-			idc = 55127;
-			text = "$STR_Global_Buy";
+			idc = -1;
+			text = "$STR_Global_Close";
 			x = 0.65;  
 			y = 0.72;
 			w = 0.15;
 			h = 0.04;
 			colorText[] = {1,1,1,1};
 			colorBackground[] = {0,0,0,0.8};
-			onButtonClick = "_this spawn MPClient_fnc_licenseShopMenuConfirm;";
-		};
-		class Closebutton: buybutton 
-		{
-			idc = -1;
-			text = "$STR_Global_Close";
-			x = 0.1875;
 			onButtonClick = "closeDialog 0;";
+		};
+		class Purchasebutton: Closebutton 
+		{
+			idc = 55127;
+			text = "$STR_Global_Buy";
+			x = 0.1875;
+			onButtonClick = "_this spawn MPClient_fnc_licenseShopMenuConfirm;";
 		};  
 	};  
 };  
