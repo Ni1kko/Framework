@@ -62,9 +62,12 @@ if(vehicle player isNotEqualTo player)then{
 player setPosATL [INFINTE,INFINTE,INFINTE];
 
 //-- End mission
-[_ending,false,true] call BIS_fnc_endMission;
+[_ending,not(toLower _ending in ["error","fail","antihack"]),true,false,true] call BIS_fnc_endMission;
 
 //-- Allow input
 disableUserInput false;
+
+//-- 
+activateKey format ["BIS_%1.%2_done", missionName, worldName];
 
 true
