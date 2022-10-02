@@ -39,8 +39,14 @@ class RscDisplayLicenseShop
 			text = "Owned Licenses";
 			x = 0.65;  
 			y = 0.24;  
-			w = 0.1375;  
+			w = 0.25; 
 			h = 0.04; 
+		};
+		class AvailableLicensesTitle : OwnedLicensesTitle 
+		{
+			idc = -1;
+			text = "Available Licenses"; 
+			x = 0.1875;
 		};
 		class OwnedLicenses: life_RscStructuredText 
 		{
@@ -51,15 +57,6 @@ class RscDisplayLicenseShop
 			y = 0.3;  
 			w = 0.3125;  
 			h = 0.4;  
-		};
-		class AvailableLicensesTitle : life_RscText 
-		{
-			idc = -1;
-			text = "Available Licenses"; 
-			x = 0.1875;
-			y = 0.24;
-			w = 0.1375;
-			h = 0.04;
 		};
 		class AvailableLicenses: life_RscListBox 
 		{
