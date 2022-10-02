@@ -74,7 +74,7 @@ life_var_alive =     _playerData getOrDefault ["Alive",false];
  
 //--- Licenses
 if (count (_playerData getOrDefault ["Licenses",[]]) > 0) then {
-    {[player, _x#0, _x#1, false] call MPClient_fnc_setLicenses} forEach (_playerData get "Licenses");
+    {[player, _x#0, _x#1, false] call MPClient_fnc_setLicense} forEach (_playerData get "Licenses");
 };
 
 //--- Gear & VirtualItems
