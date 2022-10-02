@@ -18,6 +18,6 @@ if (MONEY_CASH < _price) exitWith {hint format [localize "STR_NOTF_NE_1",[_price
 ["SUB","CASH",_price] call MPClient_fnc_handleMoney;
 
 titleText[format [localize "STR_NOTF_B_1", localize _displayName,[_price] call MPClient_fnc_numberText],"PLAIN"];
-missionNamespace setVariable [_varName,true];
+[player, _type, true, true] call MPClient_fnc_setLicense;
 
-[2] call MPClient_fnc_updatePartial;
+true

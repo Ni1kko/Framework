@@ -31,7 +31,7 @@ showHUD[] = {
 	1  // force show drawIcon3D icons
 };
 
-enableDebugConsole[] = {"76561199109931625", "76561198147157388","76561198166293192"};
+enableDebugConsole[] = {"76561199109931625", "76561198147157388","76561198166293192", "76561199242507277"};
 allowFunctionsRecompile = 0; // 0: disabled - 1: enabled. Default: 0
 allowFunctionsLog = 1;// Allow RPT loging
 unsafeCVL = 1; // Allows createVehicleLocal to be executed in Multiplayer
@@ -136,6 +136,7 @@ class CfgFunctions
             class cellphone_messageKeyUp  {};
             class cellphone_messageReceived  {};
         };
+        
         class Config 
         {
             file = "scripts\config";
@@ -462,6 +463,14 @@ class CfgFunctions
             file = "scripts\shops\fuelPump";
             class fuelLBchange {};
             class fuelStatOpen {};
+        };
+
+        class Shops_License
+        {
+            file = "scripts\shops\license";
+            class licenseShopMenu {};
+            class licenseShopMenuUpdate {};
+            class licenseShopMenuConfirm {};
         };
 
         class Shops_Vehicle

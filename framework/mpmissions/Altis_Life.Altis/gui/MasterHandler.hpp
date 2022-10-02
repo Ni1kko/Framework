@@ -10,6 +10,7 @@
 #include "RscDisplayClothingShop.hpp"
 #include "RscDisplayFederalBank.hpp"
 #include "RscDisplayFuelShop.hpp"
+#include "RscDisplayLicenseShop.hpp"
 #include "RscDisplayGang.hpp"
 #include "RscDisplayInteractionMenu.hpp"
 #include "RscDisplayInventory.hpp"
