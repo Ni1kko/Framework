@@ -59,7 +59,7 @@ switch (_mode) do {
 				_val = if (typeName _val isEqualTo "ARRAY") then {_val} else {[]};
 				_val = if (count _val isEqualTo 3) then {_val} else {[0,0,0]};
 				_val = toArray str _val;
-        		_val = str(toString _val);
+        		_val = str(str(toString _val));
 			};
 			case "BOOL": //Bool => (MYSQL Tiny-int)
 			{
