@@ -18,8 +18,13 @@ if (count _licenses > 0) then
             ["_state",false,[false]]
         ];
 
-        [_player, _name, _state, _forceUpdate] call MPClient_fnc_setLicense;
+        [_player, _name, _state, false] call MPClient_fnc_setLicense;
     } forEach _licenses;
+};
+
+//-- Sync to database
+if _forceUpdate then{
+	[2] call MPClient_fnc_updatePlayerDataPartial;
 };
 
 life_var_licenses
