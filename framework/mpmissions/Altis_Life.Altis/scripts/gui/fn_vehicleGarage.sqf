@@ -8,31 +8,30 @@
     Vehicle Garage, why did I spawn this in an action its self?
 */
 params [
-    ["_garageObj",objNull,[objNull]],
-    ["_type","",[""]]
+    ["_building",objNull,[objNull]],
+    ["_vehicleType","",[""]]
 ];
 
-_className = typeOf _garageObj;
-private _houseConfig = missionConfigFile >> "Housing" >> worldName >> _className;
-private _garageConfig = missionConfigFile >> "Garages" >> worldName >> _className;
+disableSerialization;
 
-private _config = [_garageConfig,_houseConfig] select {isClass _x};
-
-if (_config isEqualTo []) exitWith {};
-
-_config = _config select 0;
-private _dir = getNumber(_config >> "garageSpawnDir");
-private _mTwPos = getArray(_config >> "garageSpawnPos");
-
-life_garage_sp = [(_garageObj modelToWorld _mTwPos),((getDir _garageObj) + _dir)];
-life_garage_type = _type;
-
-if (count extdb_var_database_headless_clients > 0) then {
-    [getPlayerUID player,playerSide,_type,player] remoteExec ["HC_fnc_getVehicles",extdb_var_database_headless_client];
-} else {
-    [getPlayerUID player,playerSide,_type,player] remoteExec ["MPServer_fnc_getVehicles",RE_SERVER];
+if(not((toUpper _vehicleType) in ["CAR","AIR","SHIP"])) exitWith {
+    diag_log format ["Invalid Vehicle Type: %2 | Trader GridPos: %1",mapGridPosition _building,_vehicleType];
+    false
 };
 
-createDialog "RscDisplayVehicleGarage";
-disableSerialization;
-ctrlSetText[2802,(localize "STR_ANOTF_QueryGarage")];
+private _className = typeOf _building;
+private _config = [missionConfigFile >> "Housing" >> worldName >> _className, missionConfigFile >> "Garages" >> worldName >> _className] select {isClass _x};
+
+if (count _config isEqualTo 0) exitWith {
+    diag_log format ["Garage Config Not Found For Classname: %2 | Trader GridPos: %1",mapGridPosition _building,_className];
+    false
+};
+
+_config = _config#0;
+private _dir = getNumber(_config >> "garageSpawnDir");
+private _mTwPos = getArray(_config >> "garageSpawnPos");
+private _sp = [(_building modelToWorld _mTwPos),((getDir _building) + _dir)];
+
+private _display = [objNull, nil, nil, [_vehicleType,_sp]] call MPClient_fnc_vehicleGarageOpen;
+
+true

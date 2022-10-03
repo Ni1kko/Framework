@@ -306,6 +306,7 @@ class CfgFunctions
             class syncData {};
             class unimpound {};
             class useGangBank {};
+            class vehicleGarageOpen {};
             class vehicleGarage {};
             class setLoadingText {};
         };
@@ -674,11 +675,11 @@ class CfgRemoteExec {
             F(MPServer_fnc_vehicleCreate,SERVER)
             F(MPServer_fnc_vehicleDelete,SERVER)
             F(MPServer_fnc_vehicleStore,SERVER)
-            F(MPServer_fnc_vehicleUpdate,SERVER)
             //////////////////////////////////////////
 
             //--- New functions
             F(MPServer_fnc_vehicle_buyRequest,SERVER)
+            F(MPServer_fnc_updateVehicleDataRequestPartial,SERVER)
             //////////////////////////////////////////
             
             F(MPServer_fnc_handleBlastingCharge,SERVER)
@@ -692,8 +693,7 @@ class CfgRemoteExec {
             F(HC_fnc_addContainer,HC)
             F(HC_fnc_addHouse,HC)
             F(HC_fnc_chopShopSell,HC)
-            F(HC_fnc_deleteDBContainer,HC)
-            F(HC_fnc_getVehicles,HC)
+            F(HC_fnc_deleteDBContainer,HC) 
             F(HC_fnc_houseGarage,HC)
             F(HC_fnc_insertGang,HC)
             F(HC_fnc_insertPlayerDataRequest,HC)
@@ -713,7 +713,6 @@ class CfgRemoteExec {
             F(HC_fnc_vehicleCreate,HC)
             F(HC_fnc_vehicleDelete,HC)
             F(HC_fnc_vehicleStore,HC)
-            F(HC_fnc_vehicleUpdate,HC)
             F(HC_fnc_wantedAdd,HC)
             F(HC_fnc_wantedBounty,HC)
             F(HC_fnc_wantedCrimes,HC)

@@ -48,11 +48,11 @@ _vehicle spawn {
     _this setVariable ["trunk_in_use",false,true];
     if ((_this isKindOf "Car") || (_this isKindOf "Air") || (_this isKindOf "Ship")) then {
         [] call MPClient_fnc_updatePlayerData;
+        
+        [createHashMapFromArray [
+            ["Mode",2],
+            ["NetID",NetID _this]
+        ]] remoteExecCall ["MPServer_fnc_updateVehicleDataRequestPartial", 2];
 
-        if (count extdb_var_database_headless_clients > 0) then {
-            [_this,2] remoteExecCall ["HC_fnc_vehicleUpdate",extdb_var_database_headless_client];
-        } else {
-            [_this,2] remoteExecCall ["MPServer_fnc_vehicleUpdate",2];
-        };
     };
 };

@@ -26,11 +26,11 @@ if ((typeOf _container) in ["Box_IND_Grenades_F", "B_supplyCrate_F"]) exitWith {
 };
  
 if (_container isKindOf "Car" || {_container isKindOf "Air"} || {_container isKindOf "Ship"}) exitWith {
-    if (count extdb_var_database_headless_clients > 0) then {
-        [_container, 1] remoteExecCall ["HC_fnc_vehicleUpdate", extdb_var_database_headless_client];
-    } else {
-        [_container, 1] remoteExecCall ["MPServer_fnc_vehicleUpdate", 2];
-    };
+    
+    [createHashMapFromArray [
+        ["Mode",1],
+        ["NetID",NetID _container]
+    ]] remoteExecCall ["MPServer_fnc_updateVehicleDataRequestPartial", 2];
 
     [3] call MPClient_fnc_updatePlayerDataPartial;
 };

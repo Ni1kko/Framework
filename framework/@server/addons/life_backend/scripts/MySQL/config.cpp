@@ -24,11 +24,14 @@ class CfgFunctions
             class fetchBankDataRequest {};
             class fetchPlayerDataRequest{};
             class fetchServerDataRequest {};
+            class fetchVehicleDataRequest {};
             class insertPlayerDataRequest{};
             class insertVehicleDataRequest {};
             class updateBankDataRequest {};
             class updatePlayerDataRequest {};
             class updatePlayerDataRequestPartial {};
+            class updateVehicleDataRequest {};
+            class updateVehicleDataRequestPartial {};
         };
     };
 };

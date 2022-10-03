@@ -28,7 +28,6 @@ class CfgFunctions
             class getVehicles {};
             class vehicleStore {};
             class vehicleDelete {};
-            class vehicleUpdate {};
             class vehicle_generateVIN {preInit = 1;};
         };
     };

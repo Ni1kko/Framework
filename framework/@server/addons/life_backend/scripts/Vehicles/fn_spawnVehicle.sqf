@@ -60,7 +60,6 @@ if (count _nearVehicles > 0) exitWith {
     [1,"STR_Garage_SpawnPointError",true] remoteExecCall ["MPClient_fnc_broadcast",_unit];
 };
 
-_query = format ["UPDATE vehicles SET active='1', damage='""[]""' WHERE pid='%1' AND id='%2'",_pid,_vid];
 
 private _trunk = ["GAME","ARRAY", _vInfo#9] call MPServer_fnc_database_parse; 
 private _gear = ["GAME","ARRAY", _vInfo#10] call MPServer_fnc_database_parse;
@@ -102,6 +101,12 @@ _vehicle disableTIEquipment true; //No Thermals.. They're cheap but addictive.
 
 _vehicle setVariable ["Trunk",_trunk,true];
 
+[createHashMapFromArray [
+    ["Mode",4],
+    ["NetID",NetID _vehicle],
+    ["Spawned", true]
+]] call MPServer_fnc_updateVehicleDataRequestPartial;
+
 if (_wasIllegal) then {
     private _refPoint = if (_sp isEqualType "") then {getMarkerPos _sp;} else {_sp;};
     
@@ -122,9 +127,12 @@ if (_wasIllegal) then {
 
     _location = text _location;
     [1,"STR_NOTF_BlackListedVehicle",true,[_location,_name]] remoteExecCall ["MPClient_fnc_broadcast",west];
-
-    _query = format ["UPDATE vehicles SET blacklist='0' WHERE id='%1' AND pid='%2'",_vid,_pid];
-    [_query,1] call MPServer_fnc_database_rawasync_request;
+  
+    [createHashMapFromArray [
+        ["Mode",3],
+        ["NetID",NetID _vehicle],
+        ["Blacklisted", false]
+    ]] call MPServer_fnc_updateVehicleDataRequestPartial;
 };
 
 _vehicle setFuel (_vInfo select 11);
