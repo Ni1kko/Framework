@@ -6,16 +6,20 @@
     Description:
     Main functionality for lock-picking.
 */
-private ["_curTarget","_distance","_isVehicle","_title","_progressBar","_cP","_titleText","_dice","_badDistance"];
-_curTarget = cursorObject;
-life_var_interrupted = false;
+
+disableSerialization;
+
+private _curTarget = cursorObject;
+private _chance = random(100);
+private _cP = 0.01;
 
 if (life_var_isBusy) exitWith {};
 if (isNull _curTarget) exitWith {}; //Bad type
-_distance = ((boundingBox _curTarget select 1) select 0) + 2;
+
+private _distance = ((boundingBox _curTarget select 1) select 0) + 2;
 if (player distance _curTarget > _distance) exitWith {}; //Too far
 
-_isVehicle = if ((_curTarget isKindOf "LandVehicle") || (_curTarget isKindOf "Ship") || (_curTarget isKindOf "Air")) then {true} else {false};
+private _isVehicle = if ((_curTarget isKindOf "LandVehicle") || (_curTarget isKindOf "Ship") || (_curTarget isKindOf "Air")) then {true} else {false};
 if (_isVehicle && _curTarget in life_var_vehicles) exitWith {hint localize "STR_ISTR_Lock_AlreadyHave"};
 
 //More error checks
@@ -23,20 +27,23 @@ if (!_isVehicle && !isPlayer _curTarget) exitWith {};
 if (!_isVehicle && !(_curTarget getVariable ["restrained",false])) exitWith {};
 if (_curTarget getVariable "NPC") exitWith {hint localize "STR_NPC_Protected"};
 
-_title = format [localize "STR_ISTR_Lock_Process",if (!_isVehicle) then {"Handcuffs"} else {getText(configFile >> "CfgVehicles" >> (typeOf _curTarget) >> "displayName")}];
+private _title = format [localize "STR_ISTR_Lock_Process",if (!_isVehicle) then {"Handcuffs"} else {getText(configFile >> "CfgVehicles" >> (typeOf _curTarget) >> "displayName")}];
 life_var_isBusy = true; //Lock out other actions
+life_var_interrupted = false;
 
 //Setup the progress bar
-disableSerialization;
 "progressBar" cutRsc ["RscDisplayProgressBar","PLAIN"];
-_ui = uiNamespace getVariable "RscDisplayProgressBar";
-_progressBar = _ui displayCtrl 38201;
-_titleText = _ui displayCtrl 38202;
+private _ui = uiNamespace getVariable "RscDisplayProgressBar";
+private _progressBar = _ui displayCtrl 38201;
+private _titleText = _ui displayCtrl 38202;
 _titleText ctrlSetText format ["%2 (1%1)...","%",_title];
 _progressBar progressSetPosition 0.01;
-_cP = 0.01;
 
-for "_i" from 0 to 1 step 0 do {
+//-- Activate alarm hazard lights (can be disable with keys by locking or unlocking)
+[_player, "alarm",_vehicle] remoteExec ["MPClient_fnc_enableIndicator",0];
+
+for "_i" from 0 to 1 step 0 do 
+{
     if (animationState player != "AinvPknlMstpSnonWnonDnon_medic_1") then {
         [player,"AinvPknlMstpSnonWnonDnon_medic_1",true] remoteExecCall ["MPClient_fnc_animSync",RE_CLIENT];
         player switchMove "AinvPknlMstpSnonWnonDnon_medic_1";
@@ -67,39 +74,42 @@ for "_i" from 0 to 1 step 0 do {
 "progressBar" cutText ["","PLAIN"];
 player playActionNow "stop";
 
-if (!alive player || life_var_tazed || life_var_unconscious) exitWith {life_var_isBusy = false;};
-if (player getVariable ["restrained",false]) exitWith {life_var_isBusy = false;};
-if (!isNil "_badDistance") exitWith {titleText[localize "STR_ISTR_Lock_TooFar","PLAIN"]; life_var_isBusy = false;};
-if (life_var_interrupted) exitWith {life_var_interrupted = false; titleText[localize "STR_NOTF_ActionCancel","PLAIN"]; life_var_isBusy = false;};
-if (!([false,"lockpick",1] call MPClient_fnc_handleInv)) exitWith {life_var_isBusy = false;};
-
 life_var_isBusy = false;
+
+if (!alive player || life_var_tazed || life_var_unconscious) exitWith {};
+if (player getVariable ["restrained",false]) exitWith {};
+if (!isNil "_badDistance") exitWith {titleText[localize "STR_ISTR_Lock_TooFar","PLAIN"]};
+if (life_var_interrupted) exitWith {titleText[localize "STR_NOTF_ActionCancel","PLAIN"]; life_var_interrupted = false;};
+if (!([false,"lockpick",1] call MPClient_fnc_handleInv)) exitWith {};
+
+private _nearByPlayers = [];
+
+{
+    if (isPlayer _x AND alive _x) then {
+        _nearByPlayers pushBackUnique _x;
+    };
+}forEach (player nearEntities ["Man", 250]);
 
 if (!_isVehicle) then {
     _curTarget setVariable ["restrained",false,true];
     _curTarget setVariable ["Escorting",false,true];
     _curTarget setVariable ["transporting",false,true];
 } else {
-    _dice = random(100);
-    if (_dice < 30) then {
+    if (_chance < 45) then 
+    {
         titleText[localize "STR_ISTR_Lock_Success","PLAIN"];
         life_var_vehicles pushBack _curTarget;
 
-        if (count extdb_var_database_headless_clients > 0) then {
-            [getPlayerUID player,profileName,"487"] remoteExecCall ["HC_fnc_wantedAdd",extdb_var_database_headless_client];
-        } else {
+        //-- Spotted by nearby players
+        if(count _nearByPlayers > 0) then {  
+            systemChat format["%1 you have been spotted by nearby players, Police have been alerted!",["Shit", "****"] select isStreamFriendlyUIEnabled];
             [getPlayerUID player,profileName,"487"] remoteExecCall ["MPServer_fnc_wantedAdd",RE_SERVER];
         };
-
     } else {
-
-        if (count extdb_var_database_headless_clients > 0) then {
-            [getPlayerUID player,profileName,"215"] remoteExecCall ["HC_fnc_wantedAdd",extdb_var_database_headless_client];
-        } else {
-            [getPlayerUID player,profileName,"215"] remoteExecCall ["MPServer_fnc_wantedAdd",RE_SERVER];
-        };
-
+        [getPlayerUID player,profileName,"215"] remoteExecCall ["MPServer_fnc_wantedAdd",RE_SERVER];
         [0,"STR_ISTR_Lock_FailedNOTF",true,[profileName]] remoteExecCall ["MPClient_fnc_broadcast",west];
         titleText[localize "STR_ISTR_Lock_Failed","PLAIN"];
     };
 };
+
+true

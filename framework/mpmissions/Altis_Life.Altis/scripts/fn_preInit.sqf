@@ -56,6 +56,8 @@ private _missionVariables = [
     ["life_var_autorun_inventoryOpened", false], 
     ["life_var_autorun_interrupt", false],
     ["life_var_lastSynced", time],
+    ["life_var_indicatorLasttick", -999999],
+    ["life_var_indicatorsThread", scriptNull],
     ["life_var_weaponHolders", []],
 
     //--- Session

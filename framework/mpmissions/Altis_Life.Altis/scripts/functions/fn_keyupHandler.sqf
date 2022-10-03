@@ -179,7 +179,14 @@ switch (_keyCode) do
 	case DIK_HOME: { };
 
 	//-- row 3 
-	case DIK_Q: { };
+	case DIK_Q:
+    {
+        private _vehicle = vehicle player;
+        if(_vehicle isNotEqualTo player AND {driver _vehicle isEqualTo player})then{
+            [player, "left"] remoteExec ["MPClient_fnc_enableIndicator"];
+            _stopPropagation = true;
+        };
+    };
 	case DIK_W:
 	{
 		if (life_var_autorun) then {
@@ -187,7 +194,14 @@ switch (_keyCode) do
 			_stopPropagation = true; 
 		};
 	};
-	case DIK_E: { };
+	case DIK_E: 
+    {
+        private _vehicle = vehicle player;
+        if(_vehicle isNotEqualTo player AND {driver _vehicle isEqualTo player})then{
+            [player, "right"] remoteExec ["MPClient_fnc_enableIndicator"];
+            _stopPropagation = true;
+        };
+    };
 	case DIK_R: 
 	{
         if (_shiftState && playerSide isEqualTo west && {!isNull cursorObject} && {cursorObject isKindOf "CAManBase"} && {(isPlayer cursorObject)} && {(side cursorObject in [civilian,independent])} && {alive cursorObject} && {cursorObject distance player < 3.5} && {!(cursorObject getVariable "Escorting")} && {!(cursorObject getVariable "restrained")} && {speed cursorObject < 1}) then {
@@ -366,7 +380,14 @@ switch (_keyCode) do
             };
         };
     };
-	case DIK_J: { };
+	case DIK_J: 
+    {
+        private _vehicle = vehicle player;
+        if(_vehicle isNotEqualTo player)then{
+            [player, "hazards"] remoteExec ["MPClient_fnc_enableIndicator"];
+            _stopPropagation = true;
+        };
+    };
 	case DIK_K: { };
 	case DIK_L: 
 	{

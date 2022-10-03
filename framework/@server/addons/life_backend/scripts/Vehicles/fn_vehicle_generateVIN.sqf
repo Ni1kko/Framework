@@ -344,6 +344,7 @@ MPServer_fnc_vehicle_lockingRequest = {
 	if _locked then {
 		_vehicle lock false;
 		[_vehicle,"unlockCarSound",50,1] remoteExec ["MPClient_fnc_say3D",0];
+		[_player, "unlock",_vehicle] remoteExec ["MPClient_fnc_enableIndicator",0];
 		if _animate then 
 		{ 
 			_vehicle animateDoor ["door_back_R",1];
@@ -372,6 +373,7 @@ MPServer_fnc_vehicle_lockingRequest = {
 	} else {
 		_vehicle lock true;
 		[_vehicle,"lockCarSound",50,1] remoteExec ["MPClient_fnc_say3D",0];
+		[_player, "lock",_vehicle] remoteExec ["MPClient_fnc_enableIndicator",0];
 		if _animate then 
 		{
 			_vehicle animateDoor ["door_back_R",0];
@@ -404,7 +406,7 @@ MPServer_fnc_vehicle_lockingRequest = {
 	{
 		
 	};
-                        
+		
 	//-- Return
 	["UNLOCKED","LOCKED"] select _locked
 };

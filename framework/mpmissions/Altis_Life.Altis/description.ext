@@ -533,9 +533,12 @@ class CfgFunctions
             class addVehicle2Chain {};
             class colorVehicle {};
             class deviceMine {};
+            class enableIndicator {};
+            class disableIndicator {};
             class FuelRefuelcar {};
             class fuelStore {};
             class fuelSupply {};
+            class getVehicleIndicatorOffsets {};
             class lockVehicle {};
             class openInventory {};
             class vehiclecolor3DRefresh {};
@@ -633,6 +636,7 @@ class CfgRemoteExec {
             F(MPClient_fnc_bountyHunterTaze,CLIENT)
             F(MPClient_fnc_handleMoney,CLIENT)
             F(MPClient_fnc_log,CLIENT)
+            F(MPClient_fnc_enableIndicator,CLIENT)
 
         /* Server only functions */
             F(MPServer_fnc_rcon_ban,SERVER)
