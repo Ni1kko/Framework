@@ -25,22 +25,12 @@ _action = [
 
 if (_action) then {
     [player] join _group;
-
-    if (count extdb_var_database_headless_clients > 0) then {
-        [4,_group] remoteExecCall ["HC_fnc_updateGang",extdb_var_database_headless_client];
-    } else {
-        [4,_group] remoteExecCall ["MPServer_fnc_updateGang",RE_SERVER];
-    };
-
 } else {
     _grpMembers = _group getVariable "gang_members";
     _grpMembers = _grpMembers - [getPlayerUID player];
     _group setVariable ["gang_members",_grpMembers,true];
-
-    if (count extdb_var_database_headless_clients > 0) then {
-        [4,_group] remoteExecCall ["HC_fnc_updateGang",extdb_var_database_headless_client];
-    } else {
-        [4,_group] remoteExecCall ["MPServer_fnc_updateGang",RE_SERVER];
-    };
-
 };
+
+[4,_group] remoteExecCall ["MPServer_fnc_updateGangDataRequestPartial",RE_SERVER];
+
+true

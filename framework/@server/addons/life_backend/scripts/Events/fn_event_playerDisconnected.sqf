@@ -22,16 +22,9 @@ if(_BEGuid isEqualTo "")exitWith{};
 private _playerData = [_name,_BEGuid];
 private _playerIndex = life_var_serverCurrentPlayers find _playerData;
 if(_playerIndex isNotEqualTo -1)then{ 
-   if((life_var_serverCurrentPlayers deleteAt _playerIndex) isEqualTo _playerData)then{
-        //--- Send query
-        ["UPDATE", "servers", [
-            [
-                ["currentplayers", ["DB","ARRAY",life_var_serverCurrentPlayers] call MPServer_fnc_database_parse]
-            ],
-            [
-                ["serverID", ["DB","INT", (call life_var_serverID)] call MPServer_fnc_database_parse]
-            ]
-        ]]call MPServer_fnc_database_request;
+   if((life_var_serverCurrentPlayers deleteAt _playerIndex) isEqualTo _playerData)then
+   {
+        [2] call MPServer_fnc_updateServerDataRequestPartial;
         [format ["[Player Logout]: `%1` - (%2) - (%3) ", _name, _BEGuid, _steamID]] call MPServer_fnc_log;
     };
 };

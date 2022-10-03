@@ -152,7 +152,8 @@ private _missionVariables = [
     [GET_BANK_VAR(player), 0],
     [GET_DEBT_VAR(player), 0],
 
-    //-- Setup Gang hideouts
+    //-- Setup Gangs
+    ["life_var_gangData", []],
     ["life_var_gangHideoutBuildings", (LIFE_SETTINGS(getArray,"gang_area")) apply {nearestBuilding(getMarkerPos _x)}]
 ];
 private _parserVariables = [

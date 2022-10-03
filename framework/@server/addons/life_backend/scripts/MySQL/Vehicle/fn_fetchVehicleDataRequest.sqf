@@ -1,4 +1,3 @@
-
 #include "\life_backend\script_macros.hpp"
 /*
 	## Nikko Renolds

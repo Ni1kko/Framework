@@ -30,12 +30,10 @@ if (_action) then {
     group player setVariable ["gang_maxMembers",_slotUpgrade,true];
     hint parseText format [localize "STR_GNOTF_UpgradeSuccess",_maxMembers,_slotUpgrade,[_upgradePrice] call MPClient_fnc_numberText];
 
-    if (count extdb_var_database_headless_clients > 0) then {
-        [2,group player] remoteExec ["HC_fnc_updateGang",extdb_var_database_headless_client];
-    } else {
-        [2,group player] remoteExec ["MPServer_fnc_updateGang",RE_SERVER];
-    };
+    [2,group player] remoteExec ["MPServer_fnc_updateGangDataRequestPartial",RE_SERVER];
 
 } else {
     hint localize "STR_GNOTF_UpgradeCancel";
 };
+
+true

@@ -17,13 +17,7 @@ _action = [
 
 if (_action) then {
     hint localize "STR_GNOTF_DisbandGangPro";
-
-    if (count extdb_var_database_headless_clients > 0) then {
-        [group player] remoteExec ["HC_fnc_removeGang",extdb_var_database_headless_client];
-    } else {
-        [group player] remoteExec ["MPServer_fnc_removeGang",RE_SERVER];
-    };
-
+    [5,group player] remoteExecCall ["MPServer_fnc_updateGangDataRequestPartial",RE_SERVER];
 } else {
     hint localize "STR_GNOTF_DisbandGangCanc";
 };

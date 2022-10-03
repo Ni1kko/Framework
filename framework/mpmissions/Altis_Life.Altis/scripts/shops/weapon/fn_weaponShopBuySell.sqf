@@ -44,16 +44,9 @@ if ((uiNamespace getVariable ["Weapon_Shop_Filter",0]) isEqualTo 1) then {
         ] call BIS_fnc_guiMessage;
         if (_action) then {
             hint parseText format [localize "STR_Shop_Weapon_BoughtGang",_itemInfo select 1,[_price] call MPClient_fnc_numberText];
-            ["SUB","GANG",_price] call MPClient_fnc_handleMoney;
+        
             [_item,true] call MPClient_fnc_handleItem;
-
-            if (count extdb_var_database_headless_clients > 0) then {
-                [1,group player] remoteExecCall ["HC_fnc_updateGang",extdb_var_database_headless_client];
-            } else {
-                [1,group player] remoteExecCall ["MPServer_fnc_updateGang",RE_SERVER];
-            };
-
-
+            [1,group player,false,_price,player,MONEY_CASH] remoteExecCall ["MPServer_fnc_updateGangDataRequestPartial",RE_SERVER];
         } else {
             if (_price > MONEY_CASH) exitWith {hint localize "STR_NOTF_NotEnoughMoney"};
             hint parseText format [localize "STR_Shop_Weapon_BoughtItem",_itemInfo select 1,[_price] call MPClient_fnc_numberText];

@@ -59,17 +59,8 @@ if(_playerIndex isEqualTo -1)then{
 	};
 };
  
-//--- Update max players
-private _totalPlayerCount = (count allPlayers);
-if(_totalPlayerCount > life_var_serverMaxPlayers)then{
-	life_var_serverMaxPlayers = _totalPlayerCount;
-	_serverQuery pushBack ["maxplayercount", ["DB","INT", life_var_serverMaxPlayers] call MPServer_fnc_database_parse];
-};
 
-//--- Send query
-if(count _serverQuery > 0)then{
-	["UPDATE", "servers", [_serverQuery,[["serverID", ["DB","INT", (call life_var_serverID)] call MPServer_fnc_database_parse]]]]call MPServer_fnc_database_request;
-};
+[2] call MPServer_fnc_updateServerDataRequestPartial;
 
 [format ["[Player Login]: `%1` - (%2) - (%3)", _name, _BEGuid, _steamID]] call MPServer_fnc_log;
 

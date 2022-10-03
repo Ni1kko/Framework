@@ -93,9 +93,7 @@ waitUntil {scriptDone _houseData};
 _playerData set ["HouseData", missionNamespace getVariable [format ["houses_%1",_playerData get "SteamID"],[]]];
         
 //--- Gang
-private _gangData = [_playerData get "SteamID"] spawn MPServer_fnc_queryPlayerGang;
-waitUntil{scriptDone _gangData};
-_playerData set ["GangData", missionNamespace getVariable [format ["gang_%1",_playerData get "SteamID"],[]]];
+_playerData set ["GangData", [_playerData get "SteamID"] call MPServer_fnc_fetchGangDataRequest];
          
 //--- Keychain
 _playerData set ["Keychain", missionNamespace getVariable [format ["%1_KEYS_%2",_playerData get "SteamID",_playerData get "Side"],[]]];

@@ -29,11 +29,7 @@ if (_action) then {
     group player selectLeader _unit;
     [_unit,group player] remoteExec ["MPServer_fnc_clientGangLeader",_unit]; //Boot that bitch!
 
-    if (count extdb_var_database_headless_clients > 0) then {
-        [3,group player] remoteExec ["HC_fnc_updateGang",extdb_var_database_headless_client]; //Update the database.
-    } else {
-        [3,group player] remoteExec ["MPServer_fnc_updateGang",RE_SERVER]; //Update the database.
-    };
+    [3,group player] remoteExec ["MPServer_fnc_updateGangDataRequestPartial",RE_SERVER]; 
 
 } else {
     hint localize "STR_GNOTF_TransferCancel";

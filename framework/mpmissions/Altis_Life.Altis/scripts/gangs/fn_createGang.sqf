@@ -19,11 +19,7 @@ _badChar = false;
 if (_badChar) exitWith {hint localize "STR_GNOTF_IncorrectChar";};
 if (MONEY_BANK < (LIFE_SETTINGS(getNumber,"gang_price"))) exitWith {hint format [localize "STR_GNOTF_NotEnoughMoney",[((LIFE_SETTINGS(getNumber,"gang_price")) - MONEY_BANK)] call MPClient_fnc_numberText];};
 
-if (count extdb_var_database_headless_clients > 0) then {
-    [player,getPlayerUID player,_gangName] remoteExec ["HC_fnc_insertGang",extdb_var_database_headless_client];
-} else {
-    [player,getPlayerUID player,_gangName] remoteExec ["MPServer_fnc_insertGang",RE_SERVER];
-};
+[player,_gangName] remoteExec ["MPServer_fnc_insertGangDataRequest",RE_SERVER];
 
 if (LIFE_SETTINGS(getNumber,"player_advancedLog") isEqualTo 1) then {
     if (LIFE_SETTINGS(getNumber,"battlEye_friendlyLogging") isEqualTo 1) then {

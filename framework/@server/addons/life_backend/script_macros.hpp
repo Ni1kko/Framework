@@ -66,6 +66,7 @@
 #define GET_MONEY_GANG(target) (group target) getVariable [GET_GANG_MONEY_VAR,0]
 
 #define FORCE_SUSPEND(fnc) if !canSuspend exitWith{_this spawn (missionNamespace getVariable [fnc,{}]); true}
+#define RUN_NO_REXEC if(isRemoteExecuted)exitwith{false}
 #define RUN_SERVER_ONLY (if (hasInterface OR not(isServer))exitWith{false})
 #define RUN_DEDI_SERVER_ONLY (if (hasInterface OR not(isServer) OR not(isDedicated))exitWith{false})
 #define RUN_CLIENT_ONLY (if not(hasInterface)exitWith{false})
@@ -73,6 +74,7 @@
 #define AH_CHECK_FINAL(var) (if (isFinal var)exitWith{false})
 #define AH_BAN_REMOTE_EXECUTED(var) (if(isRemoteExecuted AND (missionNamespace getVariable ["life_var_rcon_passwordOK",false]))exitwith{[remoteExecutedOwner,format["RemoteExecuted `%1`",var]] call MPServer_fnc_rcon_ban; false})
 
-
+#define GET_HWID ('BEGuid' callExtension "hwid")
 #define GET_BEGUID_S64(var) ('BEGuid' callExtension (["get", var] joinString ":"))
 #define GET_BEGUID(obj) GET_BEGUID_S64(getPlayerUID obj)
+

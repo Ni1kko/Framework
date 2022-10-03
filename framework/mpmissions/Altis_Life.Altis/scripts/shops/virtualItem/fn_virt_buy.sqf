@@ -38,15 +38,10 @@ if ([true,_type,_amount] call MPClient_fnc_handleInv) then {
         ] call BIS_fnc_guiMessage;
         if (_action) then {
             hint format [localize "STR_Shop_Virt_BoughtGang",_amount,TEXT_LOCALIZE(_name),[(_price * _amount)] call MPClient_fnc_numberText];
-            private _value = (_price * _amount);
-            ["SUB","GANG",_value] call MPClient_fnc_handleMoney;
+            private _value = (_price * _amount); 
 
-            if (count extdb_var_database_headless_clients > 0) then {
-                [1,group player] remoteExecCall ["HC_fnc_updateGang",extdb_var_database_headless_client];
-            } else {
-                [1,group player] remoteExecCall ["MPServer_fnc_updateGang",RE_SERVER];
-            };
-
+            [1,group player,false,_value,player,MONEY_CASH] remoteExecCall ["MPServer_fnc_updateGangDataRequestPartial",RE_SERVER];
+            
         } else {
             if ((_price * _amount) > MONEY_CASH) exitWith {[false,_type,_amount] call MPClient_fnc_handleInv; hint localize "STR_NOTF_NotEnoughMoney";};
             hint format [localize "STR_Shop_Virt_BoughtItem",_amount,TEXT_LOCALIZE(_name),[(_price * _amount)] call MPClient_fnc_numberText];

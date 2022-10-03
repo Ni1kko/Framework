@@ -109,8 +109,8 @@ life_houses = _playerData getOrDefault ["HouseData",[]];
 
 //--- Gang
 ["Loading gangs", "Please wait..."] call MPClient_fnc_setLoadingText; uiSleep(random[0.5,3,6]);
-life_gangData = _playerData getOrDefault ["GangData",[]];
-if (count life_gangData > 0) then {
+life_var_gangData = _playerData getOrDefault ["GangData",[]];
+if (count life_var_gangData > 0) then {
     [] spawn MPClient_fnc_initGang;
 };
 

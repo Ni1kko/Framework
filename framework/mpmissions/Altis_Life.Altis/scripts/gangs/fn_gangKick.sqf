@@ -25,10 +25,6 @@ group player setVariable ["gang_members",_members,true];
 
 [_unit,group player] remoteExec ["MPServer_fnc_clientGangKick",_unit]; //Boot that bitch!
 
-if (count extdb_var_database_headless_clients > 0) then {
-    [4,group player] remoteExec ["HC_fnc_updateGang",extdb_var_database_headless_client]; //Update the database.
-} else {
-    [4,group player] remoteExec ["MPServer_fnc_updateGang",RE_SERVER]; //Update the database.
-};
+[4,group player] remoteExec ["MPServer_fnc_updateGangDataRequestPartial",RE_SERVER];
 
 [] call MPClient_fnc_gangMenu;

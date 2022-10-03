@@ -158,7 +158,7 @@ class CfgAntiHack
 
     //---
 	headgearwhitelist[]= {
-
+        "H_Cap_headphones"
 	};
 
     //---

@@ -27,10 +27,6 @@ if (_deposit) then {
     [] call MPClient_fnc_atmMenu;
 };
 
-if (count extdb_var_database_headless_clients > 0) then {
-    [1,group player,_deposit,_value,player,MONEY_CASH] remoteExecCall ["HC_fnc_updateGang",extdb_var_database_headless_client]; //Update the database.
-} else {
-    [1,group player,_deposit,_value,player,MONEY_CASH] remoteExecCall ["MPServer_fnc_updateGang",RE_SERVER]; //Update the database.
-};
+[1,group player,_deposit,_value,player,MONEY_CASH] remoteExec ["MPServer_fnc_updateGangDataRequestPartial",RE_SERVER];
 
 life_var_actionDelay = time;
