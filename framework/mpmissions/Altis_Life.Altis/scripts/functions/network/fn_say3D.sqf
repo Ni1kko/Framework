@@ -12,9 +12,33 @@ params [
     ["_object",objNull,[objNull]],
     ["_sound","",[""]],
     ["_distance",100,[0]],
-    ["_pitch",1,[0]]
+    ["_pitch",1,[0]],
+    ["_time",0,[0]]
 ];
 
-if (isNull _object || {_sound isEqualTo ""}) exitWith {};
+if (isNull _object OR {_sound isEqualTo "" OR {not(isClass (missionConfigFile >> "CfgSounds" >> _sound))}}) exitWith {objNull}; 
 if (_distance < 0) then {_distance = 100};
-_object say3D [_sound,_distance,_pitch];
+
+private _soundObject = _object say3D [_sound,_distance,_pitch];
+
+if(_time > 0)then{
+    [_soundObject, _time] spawn {
+        params ["_soundObject","_time"];
+        uiSleep _time;
+        if(not(isNull _soundObject))then{
+            deleteVehicle _soundObject;
+        };
+    };
+};
+
+if(_object getVariable ["endSoundPending",false])then{
+    [_object,_soundObject, _time] spawn {
+        params ["_object","_soundObject"];
+        waitUntil {isNull _soundObject OR {not(_object getVariable ["endSoundPending",true])}};
+        if(not(isNull _soundObject))then{
+            deleteVehicle _soundObject;
+        };
+    };
+};
+
+_soundObject

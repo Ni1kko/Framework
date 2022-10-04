@@ -548,6 +548,8 @@ class CfgFunctions
             class vehStoreItem {};
             class vehTakeItem {};
             class vInteractionMenu {};
+            class triggerAlarm {};
+            class disableAlarm {};
         };
     };
 };
@@ -789,15 +791,15 @@ class CfgSounds {
         titles[] = {};
     };
 
-    class lockCarSound {
-        name = "lockCarSound";
-        sound[] = {"\sounds\carLock.ogg", 1.0, 1};
+    class car_alarm {
+        name = "car_alarm";
+        sound[] = {"\sounds\car_alarm.ogg", 1.0, 1};
         titles[] = {};
     };
 
-    class unlockCarSound {
-        name = "unlockCarSound";
-        sound[] = {"\sounds\carUnlock.ogg", 0.75, 1};
+    class car_lock {
+        name = "car_lock";
+        sound[] = {"\sounds\car_lock.ogg", 1.0, 1};
         titles[] = {};
     };
 

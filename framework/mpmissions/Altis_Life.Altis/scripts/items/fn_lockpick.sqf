@@ -40,7 +40,7 @@ _titleText ctrlSetText format ["%2 (1%1)...","%",_title];
 _progressBar progressSetPosition 0.01;
 
 //-- Activate alarm hazard lights (can be disable with keys by locking or unlocking)
-[_player, "alarm",_vehicle] remoteExec ["MPClient_fnc_enableIndicator",0];
+[_vehicle] call MPClient_fnc_triggerAlarm;
 
 for "_i" from 0 to 1 step 0 do 
 {

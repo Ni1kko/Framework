@@ -46,7 +46,7 @@ _offsets params [
 ];
 
 // Give vehicle var
-_vehicle setVariable ["indicator_mode",_type];
+_vehicle setVariable ["indicator_mode",_type,true];
 
 switch (true) do 
 {

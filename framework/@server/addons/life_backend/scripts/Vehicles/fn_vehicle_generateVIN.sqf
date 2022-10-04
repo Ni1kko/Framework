@@ -343,8 +343,7 @@ MPServer_fnc_vehicle_lockingRequest = {
 	//-- Toggle lcok system
 	if _locked then {
 		_vehicle lock false;
-		[_vehicle,"unlockCarSound",50,1] remoteExec ["MPClient_fnc_say3D",0];
-		[_player, "unlock",_vehicle] remoteExec ["MPClient_fnc_enableIndicator",0];
+		[_vehicle, "unlock", true] remoteExec ["MPClient_fnc_disableAlarm",owner _player];
 		if _animate then 
 		{ 
 			_vehicle animateDoor ["door_back_R",1];
@@ -372,8 +371,7 @@ MPServer_fnc_vehicle_lockingRequest = {
 		_locked = false;
 	} else {
 		_vehicle lock true;
-		[_vehicle,"lockCarSound",50,1] remoteExec ["MPClient_fnc_say3D",0];
-		[_player, "lock",_vehicle] remoteExec ["MPClient_fnc_enableIndicator",0];
+		[_vehicle, "lock", true] remoteExec ["MPClient_fnc_disableAlarm",owner _player];
 		if _animate then 
 		{
 			_vehicle animateDoor ["door_back_R",0];
