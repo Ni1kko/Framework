@@ -8,8 +8,6 @@ RUN_CLIENT_ONLY;
 FORCE_SUSPEND("MPClient_fnc_preInit");
 AH_CHECK_FINAL("life_var_preInitTime");
 
-private _threadsToMonitor = [];
-private _variablesFlagged = [];
 private _playerVariables = [
     [GET_CASH_VAR, 0,true],
     ['restrained', false, true],
@@ -164,6 +162,9 @@ private _parserVariables = [
 private _profileVariables = [
     
 ];
+private _localVariables = [
+    
+];
 private _uiVariables = [
     
 ];
@@ -176,6 +177,10 @@ _missionVariables append ([objNull,false,false,false,false] call MPClient_fnc_ge
 
 ["Loading client preInit"] call MPClient_fnc_log;
 ["Life_var_initBlackout"] call BIS_fnc_blackOut;//fail safe for loading screen
+
+
+private _threadsToMonitor = [/*DON'T EDIT*/];
+private _variablesFlagged = [/*DON'T EDIT*/];
 
 //-- init Variables
 {
@@ -202,6 +207,7 @@ _missionVariables append ([objNull,false,false,false,false] call MPClient_fnc_ge
     [uiNamespace,true,_uiVariables],
     [profileNamespace,false,_profileVariables],
     [parsingNamespace,true,_parserVariables],
+    [localNamespace,true,_localVariables],
     [player,true,_playerVariables]
 ];
 

@@ -20,6 +20,13 @@ if (isFinal "life_var_initTime")exitWith{
 
 waitUntil{uiSleep 0.2;(getClientState isEqualTo "BRIEFING READ") && !isNull findDisplay 46};
 
+private _name = profileName;
+private _side = side player;
+private _steamID = getPlayerUID player;
+private _cfgSpawnPoints = missionConfigFile >> "CfgSpawnPoints";
+private _spawnBuildings = getArray(_cfgSpawnPoints >> "spawnBuildings");
+private _factionsWithBuildingSpawns = getArray(_cfgSpawnPoints >> "factionsWithBuildingSpawns");
+
 // -- 
 enableSentences false;
 enableRadio false;
@@ -29,6 +36,7 @@ endLoadingScreen;
 waitUntil{not(call BIS_fnc_isLoading)};
 uiSleep 0.2;
 startLoadingScreen ["","RscDisplayLoadingScreen"];
+waitUntil {currentNamespace isEqualTo missionNamespace};
 
 ["Setting up client", "Please Wait..."] call MPClient_fnc_setLoadingText; uiSleep(random[0.5,3,6]);
  
@@ -56,6 +64,12 @@ if !life_var_serverLoaded then {
     }; 
 };
 
+// --
+["Waiting for the server to broadcast data..."] call MPClient_fnc_log;
+waitUntil {!isNil "MPServer_fnc_util_getSideString"};
+private _sideVar = [_side,true] call MPServer_fnc_util_getSideString;
+private _factionInit = format["MPClient_fnc_init%1",_sideVar];
+
 ["Waiting for player data..."] call MPClient_fnc_log;
 [] spawn MPClient_fnc_fetchPlayerData;
 waitUntil {
@@ -80,34 +94,37 @@ if (LIFE_SETTINGS(getNumber,"enable_fatigue") isEqualTo 0) then {
 [] spawn MPClient_fnc_initTents;
 
 //-- Setup spawn markers for every faction to force spawn inside nearest building
-private _cfgSpawnPoints = missionConfigFile >> "CfgSpawnPoints";
-private _spawnBuildings = getArray(_cfgSpawnPoints >> "spawnBuildings");
-private _factionsWithBuildingSpawns = getArray(_cfgSpawnPoints >> "factionsWithBuildingSpawns");
+if(count _factionsWithBuildingSpawns > 0)then
 {
-    private _spawnCfg = _cfgSpawnPoints >> _worldName >> _x;
-
-    for "_index" from 1 to (count(_spawnCfg)-1) do 
     {
-        private _zone = _spawnCfg select _index;
-        private _markerName = getText(_zone >> "spawnMarker"); 
-        private _markerPos = getMarkerPos _markerName;
+        private _spawnCfg = (_cfgSpawnPoints >> _worldName >> _x);
 
-        if(_markerPos isNotEqualTo [0,0,0]) then { 
-            missionNamespace setVariable [_markerName,nearestObjects[_markerPos, _spawnBuildings,350]];
+        for "_index" from 1 to (count(_spawnCfg)-1) do 
+        {
+            private _spawnZone = (_spawnCfg select _index);
+            private _markerName = getText(_spawnZone >> "spawnMarker"); 
+            private _markerPos = getMarkerPos _markerName;
+            if(_markerPos isNotEqualTo [0,0,0]) then { 
+                private _nearestBuildings = nearestObjects[_markerPos, _spawnBuildings,350];
+                if(count _nearestBuildings isEqualTo 0)then{ _nearestBuildings pushBack _markerPos};
+                currentNamespace setVariable [_markerName,selectRandom _nearestBuildings];
+            };
         };
-    }; 
-}forEach _factionsWithBuildingSpawns;
+    }forEach _factionsWithBuildingSpawns;
+};
 
-private _side = side player;
-private _sideVar = [_side,true] call MPServer_fnc_util_getSideString;
-private _sideCode = missionNamespace getVariable [format["MPClient_fnc_init%1",_sideVar],{}];
-[player] call _sideCode;
+//-- Init faction
+private _sideCode = currentNamespace getVariable [_factionInit,{}];
+if(_sideCode isNotEqualTo {})then{
+    ["Loading faction init!"] call MPClient_fnc_log;
+    [player] call _sideCode;
+};
 
 //-- Input handlers
 (findDisplay 46) displayAddEventHandler ["KeyDown", "_this call MPClient_fnc_keydownHandler"];
 (findDisplay 46) displayAddEventHandler ["KeyUp", "_this call MPClient_fnc_keyupHandler"];
 
-[("Welcome " + profilename),"Have Fun And Respect The Rules!..."] call MPClient_fnc_setLoadingText; uiSleep(5);
+[("Welcome " + _name),"Have Fun And Respect The Rules!..."] call MPClient_fnc_setLoadingText; uiSleep(5);
 ["Life_var_initBlackout"] call BIS_fnc_blackIn;//fail safe for loading screen
 private _spawnPlayerThread = [life_var_alive,life_var_position] spawn MPClient_fnc_spawnPlayer;
 ["Waiting for player to spawn!"] call MPClient_fnc_log;
@@ -118,10 +135,10 @@ enableRadio true;
 [_side] call MPClient_fnc_paychecks;
 
 //-- Update wanted profile
-[getPlayerUID player, profileName] remoteExec ["MPServer_fnc_wantedProfUpdate", 2];
+[_steamID, _name] remoteExec ["MPServer_fnc_wantedProfUpdate", 2];
 
 //--
-[player, life_var_enableSidechannel, playerSide] remoteExecCall ["MPServer_fnc_managesc", 2];
+[player, life_var_enableSidechannel, _side] remoteExecCall ["MPServer_fnc_managesc", 2];
 
 [] spawn MPClient_fnc_survival;
 [] spawn {
