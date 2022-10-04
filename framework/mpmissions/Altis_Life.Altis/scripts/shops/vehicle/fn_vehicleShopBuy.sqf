@@ -38,12 +38,12 @@ if (_purchasePrice < 0) exitWith {closeDialog 0;hint "Bad config: price error"};
 life_var_vehicleTraderData params [
     ["_shopConfigName","",[""]],
     ["_spawnMarkers",[],["",[]]],
-    ["_shopFlag","Undefined"],
+    ["_shopFlag",""],
     ["_disableBuy",false]
 ];
 
 //--- wrong faction
-if (_playerSideFlag isNotEqualTo toLower _shopFlag) exitWith {hint "Error: This vehicle belongs to another faction"; closeDialog 0;};
+if (count _shopFlag > 0 AND {_playerSideFlag isNotEqualTo toLower _shopFlag}) exitWith {hint "Error: This vehicle belongs to another faction"; closeDialog 0;};
 
 //--- Handle single spawn point
 if(typeName _spawnMarkers isEqualTo "STRING") then {_spawnMarkers = [_spawnMarkers]};

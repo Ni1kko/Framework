@@ -19,7 +19,7 @@ disableSerialization;
 //Long boring series of checks
 if (dialog) exitWith {};
 if (count _shop isEqualTo 0) exitWith {false};
-if (not(life_var_adminShop) AND _sideCheck isNotEqualTo sideUnknown AND {!(playerSide isNotEqualTo _sideCheck)}) exitWith {hint localize "STR_Shop_Veh_NotAllowed"};
+if (not(life_var_adminShop) AND _sideCheck isNotEqualTo sideUnknown AND {playerSide isNotEqualTo _sideCheck}) exitWith {hint localize "STR_Shop_Veh_NotAllowed"};
 
 private _conditions = M_CONFIG(getText,"cfgVehicleTraders",_shop,"conditions");
 if (not(life_var_adminShop) AND !([_conditions] call MPClient_fnc_checkConditions)) exitWith {hint localize "STR_Shop_Veh_NotAllowed"};

@@ -14,8 +14,8 @@ private _lights = [];
 // Ex
 if (isNull _caller OR _type == "") exitWith {false}; 
 if (_vehicle isEqualTo _caller) exitWith {false};
-if (diag_tickTime - life_var_typeicatorLasttick < 1 AND _type isNotEqualTo "lock") exitWith {false};
-life_var_typeicatorLasttick = diag_tickTime;
+if (diag_tickTime - life_var_indicatorLasttick < 1 AND _type isNotEqualTo "lock") exitWith {false};
+life_var_indicatorLasttick = diag_tickTime;
 
 //-- Acive alarm, exit
 if (_lastType isEqualTo "alarm" AND _type in ["lock","unlock"]) exitWith {
