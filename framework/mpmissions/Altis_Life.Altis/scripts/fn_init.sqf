@@ -89,7 +89,7 @@ private _factionsWithBuildingSpawns = getArray(_cfgSpawnPoints >> "factionsWithB
     for "_index" from 1 to (count(_spawnCfg)-1) do 
     {
         private _zone = _spawnCfg select _index;
-        private _markerName = getText(_cfgSpawnPoints >> (configName _zone) >> "spawnMarker"); 
+        private _markerName = getText(_zone >> "spawnMarker"); 
         private _markerPos = getMarkerPos _markerName;
 
         if(_markerPos isNotEqualTo [0,0,0]) then { 
