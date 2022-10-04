@@ -7,9 +7,6 @@
 private _reviversName = param [0,"Unknown Medic",[""]];
 private _reviveCost = LIFE_SETTINGS(getNumber,"revive_fee");
  
-//-- Stop bleeding
-["revived"] call MPClient_fnc_removeBuff;
- 
 //--
 {player setVariable _x} forEach [
 	['medicStatus',nil,true],
@@ -20,14 +17,7 @@ private _reviveCost = LIFE_SETTINGS(getNumber,"revive_fee");
 ];
 
 //-- remove death screen
-["RscDisplayDeathScreen"] call MPClient_fnc_destroyRscLayer;
-closeDialog 0;
- 
-//-- Bring back to life
-life_var_alive = true;
-player setUnconscious false;
-4 fadeSound 1;
-cutText ["You have came to your senses ...", "BLACK IN", 5];
+[_unit, true] spawn MPClient_fnc_deathScreen;
 
 //-- Reload there gear
 if(count life_var_gearWhenDied > 0)then{player setUnitLoadout life_var_gearWhenDied};

@@ -25,7 +25,7 @@ switch _code do {
 	{
 		_handled = true;
 		if (life_deathScreen_canRespawn) then {
-			player setDamage 1;
+			[player, true,true] spawn MPClient_fnc_deathScreen;
 		};
 	};
 	case DIK_H:

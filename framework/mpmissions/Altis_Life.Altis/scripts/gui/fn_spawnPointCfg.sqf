@@ -10,17 +10,10 @@
     [Spawn Marker,Spawn Name,Image Path]
 */
 
-params [["_side",civilian,[civilian]]];
-
-_side = switch (_side) do {
-    case west: {"Cop"};
-    case independent: {"Medic"};
-    default {"Civilian"};
-};
-
+private _sideString = [param [0 ,playerSide,[civilian]],true] call MPServer_fnc_util_getSideString;
 private _return = [];
 
-private _spawnCfg = missionConfigFile >> "CfgSpawnPoints" >> worldName >> _side;
+private _spawnCfg = missionConfigFile >> "CfgSpawnPoints" >> worldName >> _sideString;
 
 for "_i" from 0 to count(_spawnCfg)-1 do {
 
@@ -39,15 +32,15 @@ for "_i" from 0 to count(_spawnCfg)-1 do {
 };
 
 if (playerSide isEqualTo civilian) then {
-  if (count life_houses > 0) then {
-    {
-      _pos = call compile format ["%1",(_x select 0)];
-      _house = nearestObject [_pos, "House"];
-      _houseName = getText(configFile >> "CfgVehicles" >> (typeOf _house) >> "displayName");
-      _return pushBack [format ["house_%1",_house getVariable "uid"],_houseName,"\a3\ui_f\data\map\MapControl\lighthouse_ca.paa"];
-      
-      true
-    } count life_houses;
+    if (count life_houses > 0) then {
+      {
+        _pos = call compile format ["%1",(_x select 0)];
+        _house = nearestObject [_pos, "House"];
+        _houseName = getText(configFile >> "CfgVehicles" >> (typeOf _house) >> "displayName");
+        _return pushBack [format ["house_%1",_house getVariable "uid"],_houseName,"\a3\ui_f\data\map\MapControl\lighthouse_ca.paa"];
+        
+        true
+      } count life_houses;
   };
 };
 

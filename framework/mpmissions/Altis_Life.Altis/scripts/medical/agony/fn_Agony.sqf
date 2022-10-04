@@ -1,9 +1,7 @@
 /*
-
-	Function: 	MPClient_fnc_Agony
-	Project: 	AsYetUntitled
-	Author:     Merrick, Nikko, Affect & IceEagle132
-	
+	## Nikko Renolds
+	## https://github.com/Ni1kko/FrameworkV2
+	## fn_Agony.sqf
 */
 params [
 	["_unit",objNull,[objNull]],
@@ -11,6 +9,12 @@ params [
 	["_instigator",objNull,[objNull]],
 	["_projectile","",[""]]
 ];
+
+if((_unit getVariable ["lifeState","HEALTHY"]) isEqualTo "INCAPACITATED") exitWith {false};
+
 _unit setVariable ["medicStatus",-1,true];
 _unit setVariable ["lifeState","INCAPACITATED",true];
+
 [_unit] spawn MPClient_fnc_deathScreen;
+
+true

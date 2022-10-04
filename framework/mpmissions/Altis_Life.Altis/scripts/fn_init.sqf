@@ -79,19 +79,34 @@ if (LIFE_SETTINGS(getNumber,"enable_fatigue") isEqualTo 0) then {
 [] spawn MPClient_fnc_setupStationService;
 [] spawn MPClient_fnc_initTents;
 
-//-- Input handlers
-(findDisplay 46) displayAddEventHandler ["KeyDown", "_this call MPClient_fnc_keydownHandler"];
-(findDisplay 46) displayAddEventHandler ["KeyUp", "_this call MPClient_fnc_keyupHandler"];
+//-- Setup spawn markers for every faction to force spawn inside nearest building
+private _cfgSpawnPoints = missionConfigFile >> "CfgSpawnPoints";
+private _spawnBuildings = getArray(_cfgSpawnPoints >> "spawnBuildings");
+private _factionsWithBuildingSpawns = getArray(_cfgSpawnPoints >> "factionsWithBuildingSpawns");
+{
+    private _spawnCfg = _cfgSpawnPoints >> _worldName >> _x;
 
-//-- Update wanted prifle
-[getPlayerUID player, profileName] remoteExec ["MPServer_fnc_wantedProfUpdate", 2];
+    for "_index" from 1 to (count(_spawnCfg)-1) do 
+    {
+        private _zone = _spawnCfg select _index;
+        private _markerName = getText(_cfgSpawnPoints >> (configName _zone) >> "spawnMarker"); 
+        private _markerPos = getMarkerPos _markerName;
+
+        if(_markerPos isNotEqualTo [0,0,0]) then { 
+            missionNamespace setVariable [_markerName,nearestObjects[_markerPos, _spawnBuildings,350]];
+        };
+    }; 
+}forEach _factionsWithBuildingSpawns;
 
 private _side = side player;
 private _sideVar = [_side,true] call MPServer_fnc_util_getSideString;
 private _sideCode = missionNamespace getVariable [format["MPClient_fnc_init%1",_sideVar],{}];
- 
-//-- 
 [player] call _sideCode;
+
+//-- Input handlers
+(findDisplay 46) displayAddEventHandler ["KeyDown", "_this call MPClient_fnc_keydownHandler"];
+(findDisplay 46) displayAddEventHandler ["KeyUp", "_this call MPClient_fnc_keyupHandler"];
+
 [("Welcome " + profilename),"Have Fun And Respect The Rules!..."] call MPClient_fnc_setLoadingText; uiSleep(5);
 ["Life_var_initBlackout"] call BIS_fnc_blackIn;//fail safe for loading screen
 private _spawnPlayerThread = [life_var_alive,life_var_position] spawn MPClient_fnc_spawnPlayer;
@@ -101,6 +116,9 @@ enableRadio true;
 
 //-- Paychecks
 [_side] call MPClient_fnc_paychecks;
+
+//-- Update wanted profile
+[getPlayerUID player, profileName] remoteExec ["MPServer_fnc_wantedProfUpdate", 2];
 
 //--
 [player, life_var_enableSidechannel, playerSide] remoteExecCall ["MPServer_fnc_managesc", 2];

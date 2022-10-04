@@ -6,22 +6,32 @@
 disableSerialization;
 
 private _entity = param [0,objNull,[objNull]];
+private _display = uiNamespace getVariable ["RscDisplayDeathScreen",displayNull];
 
 life_var_medicstatus = -1;
 life_var_medicstatusby = "";
 
-if(param [1,false])exitWith{ 
-	["all"] call MPClient_fnc_removeBuff;
-	["RscDisplayDeathScreen"] call MPClient_fnc_destroyRscLayer;
-	player setDamage 0;
+if(param [1,false])exitWith
+{  
+	if(not(isNull _display))then {
+		["RscDisplayDeathScreen"] call MPClient_fnc_destroyRscLayer;
+	};
+	
+	4 fadeSound 1;
+	player setUnconscious false;
+
 	if(param [2,true])then{
-		closeDialog 0;
+		["all"] call MPClient_fnc_removeBuff;
 		[] call MPClient_fnc_respawned;
 		titleCut ["", "BLACK IN", 1];
 	}else{
+		["revived"] call MPClient_fnc_removeBuff;
+		cutText ["You have came to your senses ...", "BLACK IN", 5];
 		player setVariable ["lifeState","HEALTHY",true];
 		life_var_alive = true;
 	};
+
+	player setDamage 0;
 };
 
 //-- register our layer
@@ -29,7 +39,6 @@ if(param [1,false])exitWith{
 
 
 //-- get our layers controls
-private _display = uiNamespace getVariable ["RscDisplayDeathScreen",displayNull];
 private _txtTopLeft = _display displayCtrl 66601;
 private _txtTopRight = _display displayCtrl 66602;
 private _txtBottomLeft = _display displayCtrl 66603;
