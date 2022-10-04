@@ -23,7 +23,7 @@ _packetData set ["Plate", _vehicleInfo param [1, ""]];
 if(count(_packetData get "SteamID") isNotEqualTo 17 OR count(_packetData get "Plate") isEqualTo 0) exitWith {false};
  
 private _whereClause = [
-    ["pid",_packetData get "SteamID"]
+    ["pid",_packetData get "SteamID"],
     ["plate",_packetData get "Plate"]
 ];
 

@@ -17,7 +17,7 @@ if (typeName _currentItem isEqualTo "STRING")then{
 		_cfgItem = _cfgVirtualItems >> _currentItem;
 	};
 }else{
-	if(_cfgItem >= 0)then{
+	if(_currentItem >= 0)then{
 		_cfgItem = _cfgVirtualItems select _currentItem;
 	};
 };

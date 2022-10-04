@@ -260,7 +260,7 @@ MPServer_fnc_vehicle_buyRequest = {
 			params [
 				["_vehicle",objNull,[objNull]],
 				["_price",0,[0]],
-				["_purchased",false,[false]],
+				["_purchased",false,[false]]
 			];
 
 			private _class = typeOf _vehicle;
