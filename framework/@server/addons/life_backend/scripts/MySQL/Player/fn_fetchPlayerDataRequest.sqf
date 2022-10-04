@@ -80,7 +80,7 @@ _playerData set ["PlayTime",        ["GAME","ARRAY", _queryResult#17] call MPSer
 ];
 
 //         
-[_playerData get "SteamID", _playerData get "PlayTime"] call MPServer_fnc_registerPlayTime;
+[_player, _playerData] call MPServer_fnc_registerPlayTime;
 
 //--- Tents
 //private _tentsData = [_playerData get "SteamID"] spawn MPServer_fnc_fetchPlayerTents;

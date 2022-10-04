@@ -4,10 +4,15 @@
 	## https://github.com/Ni1kko/FrameworkV2
 */
 
-params ["_uid", "_playtimenew"];
+params [
+    ["_player", objNull, [objNull]],
+    ["_playerData",createHashMap, [createHashMap]]
+];
 
-//--- Playtime
+private _uid  = _playerData getOrDefault ["SteamID",getPlayerUID _player];
+private _playtimenew = _playerData getOrDefault ["PlayTime",0];
 private _playtimeindex = life_var_playtimeValuesRequest find [_uid, _playtimenew];
+private _side = _playerData getOrDefault ["Side",side _player];
 
 if (_playtimeindex != -1) then {
     life_var_playtimeValuesRequest set[_playtimeindex,-1];

@@ -4,6 +4,8 @@
 	## https://github.com/Ni1kko/FrameworkV2
 */
 
+private _lifeConfig = missionConfigFile >> "Life_Settings";
+
 [
     getNumber(_lifeConfig >> "federalReserve_resetAfterRestart") isEqualTo 1,
     getNumber(_lifeConfig >> "federalReserve_startGold"),
@@ -29,7 +31,6 @@ private _vaultHouse = [[["Altis", "Land_Research_house_V1_F"], ["Tanoa", "Land_M
 private _pos = [[["Altis", [16019.5,16952.9,0]], ["Tanoa", [11074.2,11501.5,0.00137329]]]] call MPServer_fnc_terrainSort;
 private _dome = nearestObject [_pos,"Land_Dome_Big_F"];
 private _rsb = nearestObject [_pos,_vaultHouse];
-private _lifeConfig = missionConfigFile >> "Life_Settings";
 private _allBanks = [
 	["RBA International Reserve", [15288.7,17472.8,-0.224236], "Land_MilOffices_V1_F"],
 	["AR Weapon Cache", [3268.73,12470.8,-0.043025], "Land_i_Barracks_V2_F"]

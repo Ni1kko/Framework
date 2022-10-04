@@ -6,17 +6,33 @@
 
 if(!isFinal "life_var_banksReady")exitWith{false};
 
+private _lifeConfig = missionConfigFile >> "Life_Settings";
+
 switch (param [0,""]) do 
 {
     case "vault": 
     {
+        
+        [
+            getNumber(_lifeConfig >> "federalReserve_MaxGold"),
+            getNumber(_lifeConfig >> "federalReserve_AddMin"),
+            getNumber(_lifeConfig >> "federalReserve_AddMid"),
+            getNumber(_lifeConfig >> "federalReserve_AddMax")
+        ] params [
+            ["_maxGold",0],
+            ["_addMin",0],
+            ["_addMid",0],
+            ["_addMax",0]
+        ];
+
+
         private _vaultObject = missionNamespace getVariable ["fed_bank",objNull]; 
 
         //-- Get current gold
         private _currentfunds = _vaultObject getVariable ["safe",0];
 
         //-- Add more gold
-        private _newfunds = _currentfunds + round(random ["_addMin","_addMid","_addMax"]);
+        private _newfunds = _currentfunds + round(random [_addMin,_addMid,_addMax]);
 
         //-- Limit reached.... hmmm just half the amount of gold we have?
         if(_newfunds > _maxGold)then{

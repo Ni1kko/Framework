@@ -10,14 +10,20 @@ private _unitsNear = false;
 private _animalsActive = false;
 
 { 
-    private _radius = (getMarkerSize _x#0)#0;
-    private _zone = getMarkerPos (_x#0);
+    _x params [
+        "_markerName",
+        "_animalCount"
+    ];
+
+    private _markerSize = getMarkerSize _markerName;
+    private _radius = _markerSize param [0, 0];
+    private _zone = getMarkerPos _markerName;
     
     {if ((_x distance _zone) < (_radius + 100)) exitWith {_unitsNear = true;}; _unitsNear = false;} forEach playableUnits;
 
     if (_unitsNear && !_animalsActive) then {
         _animalsActive = true;
-        for "_i" from 1 to (_x#1) do 
+        for "_i" from 1 to _animalCount do 
         {
             private _animal = createAgent [
                 selectRandom ["Sheep_random_F","Goat_random_F","Hen_random_F","Cock_random_F"],
@@ -39,3 +45,5 @@ private _animalsActive = false;
 }forEach [
     ["hunting_zone",30]
 ];
+
+true

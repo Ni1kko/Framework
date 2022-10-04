@@ -17,6 +17,8 @@
     Nothing
 */
 
+params ["_unit"];
+
 private _headgear = [
     "H_Cap_tan","H_Cap_blk","H_Cap_blk_CMMG","H_Cap_brn_SPECOPS",  
     "H_Cap_tan_specops_US","H_Cap_khaki_specops_UK","H_Cap_red","H_Cap_grn",
@@ -31,18 +33,18 @@ BIS_randomSeed2 = [];
 _rnd1 = floor random 3;
 
 //Hotfix patch, We don't want players getting a 'random' hat, just our NPC's
-_this setVariable ["BIS_randomSeed1",3,true];
+_unit setVariable ["BIS_randomSeed1",3,true];
 _rnd2 = floor random (count _headgear);
-_this setVariable ["BIS_randomSeed2", _rnd2, true];
+_unit setVariable ["BIS_randomSeed2", _rnd2, true];
 
-waitUntil {!(isNil {_this getVariable "BIS_randomSeed1"})};
-waitUntil {!(isNil {_this getVariable "BIS_randomSeed2"})};
+waitUntil {!(isNil {_unit getVariable "BIS_randomSeed1"})};
+waitUntil {!(isNil {_unit getVariable "BIS_randomSeed2"})};
 
-private _randomSeed1 = _this getVariable "BIS_randomSeed1";
-private _randomSeed2 = _this getVariable "BIS_randomSeed2";
+private _randomSeed1 = _unit getVariable "BIS_randomSeed1";
+private _randomSeed2 = _unit getVariable "BIS_randomSeed2";
 
 if (_randomSeed1 < 2) then {
-    _this addHeadgear (_headgear select _randomSeed2); //HEY BIS, THIS IS CARRYING A GLOBAL EFFECT, Y U DO THAT?
+    _unit addHeadgear (_headgear select _randomSeed2); //HEY BIS, THIS IS CARRYING A GLOBAL EFFECT, Y U DO THAT?
 };
 
 true

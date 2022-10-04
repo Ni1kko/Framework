@@ -5,7 +5,7 @@
     ## fn_event_initPlayerObject.sqf
 */
 
-param [
+params [
     ["_unit", objNull, [objNull]]
 ];
  
