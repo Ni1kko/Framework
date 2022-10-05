@@ -6,14 +6,14 @@
     Description:
     Loads a custom loadout on player when he got a new life
 */
-private _pUniform = M_CONFIG(getArray,"Loadouts",str(playerSide),"uniform");
-private _pHeadgear = M_CONFIG(getArray,"Loadouts",str(playerSide),"headgear");
-private _pVest = M_CONFIG(getArray,"Loadouts",str(playerSide),"vest");
-private _pBackpack = M_CONFIG(getArray,"Loadouts",str(playerSide),"backpack");
-private _pWeapon = M_CONFIG(getArray,"Loadouts",str(playerSide),"weapon");
-private _pMagazines = M_CONFIG(getArray,"Loadouts",str(playerSide),"mags");
-private _pItems = M_CONFIG(getArray,"Loadouts",str(playerSide),"items");
-private _linkedItems = M_CONFIG(getArray,"Loadouts",str(playerSide),"linkedItems");
+private _pUniform = M_CONFIG(getArray,"cfgDefaultLoadouts",str(playerSide),"uniform");
+private _pHeadgear = M_CONFIG(getArray,"cfgDefaultLoadouts",str(playerSide),"headgear");
+private _pVest = M_CONFIG(getArray,"cfgDefaultLoadouts",str(playerSide),"vest");
+private _pBackpack = M_CONFIG(getArray,"cfgDefaultLoadouts",str(playerSide),"backpack");
+private _pWeapon = M_CONFIG(getArray,"cfgDefaultLoadouts",str(playerSide),"weapon");
+private _pMagazines = M_CONFIG(getArray,"cfgDefaultLoadouts",str(playerSide),"mags");
+private _pItems = M_CONFIG(getArray,"cfgDefaultLoadouts",str(playerSide),"items");
+private _linkedItems = M_CONFIG(getArray,"cfgDefaultLoadouts",str(playerSide),"linkedItems");
 
 // Removing every default items before adding the custom ones
 [player,false] call MPClient_fnc_stripDownPlayer;

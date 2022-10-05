@@ -15,7 +15,7 @@ if (life_var_isBusy) exitWith {};
 if !(isNull objectParent player) exitWith {};
 if (player getVariable "restrained") exitWith {hint localize "STR_NOTF_isrestrained";};
 if (player getVariable "playerSurrender") exitWith {hint localize "STR_NOTF_surrender";};
-_fuelCost = LIFE_SETTINGS(getNumber,"fuelCan_refuel");
+_fuelCost = CFG_MASTER(getNumber,"fuelCan_refuel");
 
 life_var_isBusy = true;
 _action = [

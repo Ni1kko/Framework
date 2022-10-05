@@ -25,20 +25,20 @@ if (!isClass (missionConfigFile >> "cfgVehicleArsenal" >> _vehicleLife)) then {
 _price = M_CONFIG(getNumber,"cfgVehicleArsenal",_vehicleLife,"price");
 switch (playerSide) do {
     case civilian: {
-        _multiplier = LIFE_SETTINGS(getNumber,"vehicle_sell_multiplier_CIVILIAN");
-        _purchasePrice = _price * LIFE_SETTINGS(getNumber,"vehicle_purchase_multiplier_CIVILIAN");
+        _multiplier = CFG_MASTER(getNumber,"vehicle_sell_multiplier_CIVILIAN");
+        _purchasePrice = _price * CFG_MASTER(getNumber,"vehicle_purchase_multiplier_CIVILIAN");
     };
     case west: {
-        _multiplier = LIFE_SETTINGS(getNumber,"vehicle_sell_multiplier_COP");
-        _purchasePrice = _price * LIFE_SETTINGS(getNumber,"vehicle_purchase_multiplier_COP");
+        _multiplier = CFG_MASTER(getNumber,"vehicle_sell_multiplier_COP");
+        _purchasePrice = _price * CFG_MASTER(getNumber,"vehicle_purchase_multiplier_COP");
     };
     case independent: {
-        _multiplier = LIFE_SETTINGS(getNumber,"vehicle_sell_multiplier_MEDIC");
-        _purchasePrice = _price * LIFE_SETTINGS(getNumber,"vehicle_purchase_multiplier_MEDIC");
+        _multiplier = CFG_MASTER(getNumber,"vehicle_sell_multiplier_MEDIC");
+        _purchasePrice = _price * CFG_MASTER(getNumber,"vehicle_purchase_multiplier_MEDIC");
     };
     case east: {
-        _multiplier = LIFE_SETTINGS(getNumber,"vehicle_sell_multiplier_OPFOR");
-        _purchasePrice = _price * LIFE_SETTINGS(getNumber,"vehicle_purchase_multiplier_OPFOR");
+        _multiplier = CFG_MASTER(getNumber,"vehicle_sell_multiplier_OPFOR");
+        _purchasePrice = _price * CFG_MASTER(getNumber,"vehicle_purchase_multiplier_OPFOR");
     };
 };
 
@@ -55,8 +55,8 @@ if (count extdb_var_database_headless_clients > 0) then {
 hint format [localize "STR_Garage_SoldCar",[_sellPrice] call MPClient_fnc_numberText];
 ["ADD","BANK",_sellPrice] call MPClient_fnc_handleMoney;
 
-if (LIFE_SETTINGS(getNumber,"player_advancedLog") isEqualTo 1) then {
-    if (LIFE_SETTINGS(getNumber,"battlEye_friendlyLogging") isEqualTo 1) then {
+if (CFG_MASTER(getNumber,"player_advancedLog") isEqualTo 1) then {
+    if (CFG_MASTER(getNumber,"battlEye_friendlyLogging") isEqualTo 1) then {
         advanced_log = format [localize "STR_DL_AL_soldVehicle_BEF",_vehicleLife,[_sellPrice] call MPClient_fnc_numberText,[MONEY_BANK] call MPClient_fnc_numberText,[MONEY_CASH] call MPClient_fnc_numberText];
     } else {
         advanced_log = format [localize "STR_DL_AL_soldVehicle",profileName,(getPlayerUID player),_vehicleLife,[_sellPrice] call MPClient_fnc_numberText,[MONEY_BANK] call MPClient_fnc_numberText,[MONEY_CASH] call MPClient_fnc_numberText];

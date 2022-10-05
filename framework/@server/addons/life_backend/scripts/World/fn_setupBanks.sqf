@@ -4,7 +4,7 @@
 	## https://github.com/Ni1kko/FrameworkV2
 */
 
-private _lifeConfig = missionConfigFile >> "Life_Settings";
+private _lifeConfig = missionConfigFile >> "cfgMaster";
 
 [
     getNumber(_lifeConfig >> "federalReserve_resetAfterRestart") isEqualTo 1,

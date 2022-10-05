@@ -16,7 +16,7 @@ if !(_house getVariable ["garageBought",false]) exitWith {hint localize "STR_Gar
 if ((_house getVariable "house_owner") select 0 != getPlayerUID player) exitWith {hint localize "STR_Garage_NotOwner";};
 closeDialog 0;
 
-private _sellPrice = LIFE_SETTINGS(getNumber,"houseGarage_sellPrice");
+private _sellPrice = CFG_MASTER(getNumber,"houseGarage_sellPrice");
 
 _action = [
     format [localize "STR_House_SellGarageMSG",

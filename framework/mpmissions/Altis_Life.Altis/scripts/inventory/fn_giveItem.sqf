@@ -44,7 +44,7 @@ if !([false,_item, parseNumber _value] call MPClient_fnc_handleInv) exitWith {
 };
 
 [_unit, _value, _item, player] remoteExecCall ["MPClient_fnc_receiveItem", _unit];
-private _type = M_CONFIG(getText,"VirtualItems",_item,"displayName");
+private _type = M_CONFIG(getText,"cfgVirtualItems",_item,"displayName");
 hint format [localize "STR_NOTF_youGaveItem", _unit getVariable ["realname", name _unit], _value, TEXT_LOCALIZE(_type)];
 
 [] call MPClient_fnc_updateInventoryMenu;

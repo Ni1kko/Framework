@@ -28,11 +28,11 @@ for "_i" from 0 to 1 step 0 do
                 case 30: {hint localize "STR_NOTF_DrinkMSG_1";};
                 case 20: {
                     hint localize "STR_NOTF_DrinkMSG_2";
-                    if (LIFE_SETTINGS(getNumber,"enable_fatigue") isEqualTo 1) then {player setFatigue 1;};
+                    if (CFG_MASTER(getNumber,"enable_fatigue") isEqualTo 1) then {player setFatigue 1;};
                 };
                 case 10: {
                     hint localize "STR_NOTF_DrinkMSG_3";
-                    if (LIFE_SETTINGS(getNumber,"enable_fatigue") isEqualTo 1) then {player setFatigue 1;};
+                    if (CFG_MASTER(getNumber,"enable_fatigue") isEqualTo 1) then {player setFatigue 1;};
                 };
             };
         }; 
@@ -52,7 +52,7 @@ for "_i" from 0 to 1 step 0 do
                 case 20: {hint localize "STR_NOTF_EatMSG_2";};
                 case 10: {
                     hint localize "STR_NOTF_EatMSG_3";
-                    if (LIFE_SETTINGS(getNumber,"enable_fatigue") isEqualTo 1) then {player setFatigue 1;};
+                    if (CFG_MASTER(getNumber,"enable_fatigue") isEqualTo 1) then {player setFatigue 1;};
                 };
             };
         };
@@ -61,12 +61,12 @@ for "_i" from 0 to 1 step 0 do
 
     //--- BACKPACK
     if (backpack player isEqualTo "") then {
-        life_maxWeight = LIFE_SETTINGS(getNumber,"total_maxWeight");
+        life_maxWeight = CFG_MASTER(getNumber,"total_maxWeight");
         _bp = backpack player;
     } else {
         if (!(backpack player isEqualTo "") && {!(backpack player isEqualTo _bp)}) then {
             _bp = backpack player;
-            life_maxWeight = LIFE_SETTINGS(getNumber,"total_maxWeight") + round(FETCH_CONFIG2(getNumber,"CfgVehicles",_bp,"maximumload") / 4);
+            life_maxWeight = CFG_MASTER(getNumber,"total_maxWeight") + round(FETCH_CONFIG2(getNumber,"CfgVehicles",_bp,"maximumload") / 4);
         };
     };
 
@@ -79,7 +79,7 @@ for "_i" from 0 to 1 step 0 do
     //--- CARRY WEIGHT
     if (life_var_carryWeight > life_maxWeight && {!isForcedWalk player}) then {
         player forceWalk true;
-        if (LIFE_SETTINGS(getNumber,"enable_fatigue") isEqualTo 1) then {player setFatigue 1;};
+        if (CFG_MASTER(getNumber,"enable_fatigue") isEqualTo 1) then {player setFatigue 1;};
         hint localize "STR_NOTF_MaxWeight";
     } else {
         if (isForcedWalk player) then {

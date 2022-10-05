@@ -15,7 +15,7 @@ _messages params [
     ["_onFailure", localize "STR_Session_SyncdAlready"]
 ]; 
 
-private _syncNotReady = (time - life_var_lastSynced) < (getNumber(missionConfigFile >> "life_session" >> "manualSaveInterval") * 60);
+private _syncNotReady = (time - life_var_lastSynced) < (getNumber(missionConfigFile >> "cfgSession" >> "manualSaveInterval") * 60);
 private _syncOverride = _force OR (player call life_isdev);
 
 if (_syncNotReady AND not(_syncOverride)) exitWith {

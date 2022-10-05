@@ -239,9 +239,9 @@ try {
 
 			lbClear (_display displayctrl 101);	
 			{ 
-				(_display displayctrl 101) lbAdd format ['[%1] %2', getText(missionConfigFile >> 'WeaponShops' >> _x >> 'side'), getText(missionConfigFile >> 'WeaponShops' >> _x >> 'name')]; 
+				(_display displayctrl 101) lbAdd format ['[%1] %2', getText(missionConfigFile >> 'cfgWeaponShops' >> _x >> 'side'), getText(missionConfigFile >> 'cfgWeaponShops' >> _x >> 'name')]; 
 				(_display displayctrl 101) lbSetData [_ForEachIndex, _x];
-			} forEach (('true' configClasses (missionConfigFile >> 'WeaponShops')) apply {configName _x});
+			} forEach (('true' configClasses (missionConfigFile >> 'cfgWeaponShops')) apply {configName _x});
 			
 			(_display displayctrl 101) ctrlAddEventHandler ['LbSelChanged',{disableSerialization; MPClient_var_SelectedAdminWeaponShop = lbData[101,_this#1]}];
 			(_display displayctrl 101) ctrlCommit 0;
@@ -260,9 +260,9 @@ try {
 
 			lbClear (_display displayctrl 101);	
 			{ 
-				(_display displayctrl 101) lbAdd format ['[%1] %2', getText(missionConfigFile >> 'VirtualShops' >> _x >> 'side'),localize getText(missionConfigFile >> 'VirtualShops' >> _x >> 'name')]; 
+				(_display displayctrl 101) lbAdd format ['[%1] %2', getText(missionConfigFile >> 'cfgVirtualShops' >> _x >> 'side'),localize getText(missionConfigFile >> 'cfgVirtualShops' >> _x >> 'name')]; 
 				(_display displayctrl 101) lbSetData [_ForEachIndex, _x];
-			} forEach (('true' configClasses (missionConfigFile >> 'VirtualShops')) apply {configName _x});
+			} forEach (('true' configClasses (missionConfigFile >> 'cfgVirtualShops')) apply {configName _x});
 			
 			(_display displayctrl 101) ctrlAddEventHandler ['LbSelChanged',{disableSerialization; MPClient_var_SelectedAdminMarketShop = lbData[101,_this#1]}];
 			(_display displayctrl 101) ctrlCommit 0;
@@ -282,9 +282,9 @@ try {
 
 			lbClear (_display displayctrl 101);	
 			{ 
-				(_display displayctrl 101) lbAdd format ['[%1] %2', getText(missionConfigFile >> 'Clothing' >> _x >> 'side'), localize getText(missionConfigFile >> 'Clothing' >> _x >> 'title')]; 
+				(_display displayctrl 101) lbAdd format ['[%1] %2', getText(missionConfigFile >> 'cfgClothing' >> _x >> 'side'), localize getText(missionConfigFile >> 'cfgClothing' >> _x >> 'title')]; 
 				(_display displayctrl 101) lbSetData [_ForEachIndex, _x];
-			} forEach (('true' configClasses (missionConfigFile >> 'Clothing')) apply {configName _x});
+			} forEach (('true' configClasses (missionConfigFile >> 'cfgClothing')) apply {configName _x});
 			
 			(_display displayctrl 101) ctrlAddEventHandler ['LbSelChanged',{disableSerialization; MPClient_var_SelectedAdminClothingShop = lbData[101,_this#1]}];
 			(_display displayctrl 101) ctrlCommit 0;
@@ -1220,7 +1220,7 @@ try {
 
 					 
 					{ 
-						private _var = format ['life_inv_%1',[missionConfigFile >> 'VirtualItems' >> _x#0 >> 'variable'] call BIS_fnc_returnConfigEntry];
+						private _var = format ['life_inv_%1',[missionConfigFile >> 'cfgVirtualItems' >> _x#0 >> 'variable'] call BIS_fnc_returnConfigEntry];
 						private _ci = _crate getVariable [_var,0];
 						if(_ci > 0)then{
 							_x set[1, _ci];

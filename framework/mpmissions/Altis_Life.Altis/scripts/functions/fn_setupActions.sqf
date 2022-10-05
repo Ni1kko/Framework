@@ -3,7 +3,7 @@
 	## https://github.com/Ni1kko/FrameworkV2
 */
 
-private _lifeConfig = missionConfigFile >> "Life_Settings";
+private _lifeConfig = missionConfigFile >> "cfgMaster";
 private _spitConfig = _lifeConfig >> "spitting";
 private _side = [player] call MPServer_fnc_util_getSideString;
 

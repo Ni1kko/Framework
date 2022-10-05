@@ -1,17 +1,12 @@
 /*
-*    Format:
-*        3: STRING (Conditions) - Must return boolean :
-*            String can contain any amount of conditions, aslong as the entire
-*            string returns a boolean. This allows you to check any levels, licenses etc,
-*            in any combination. For example:
-*                "call life_coplevel && license_civ_someLicense"
-*            This will also let you call any other function.
-*
+	## Nikko Renolds
+	## https://github.com/Ni1kko/FrameworkV2
+    ## CfgSpawnPoints.hpp
 */
 
-class CfgSpawnPoints {
-
-    factionsWithBuildingSpawns[] = {"Civ", "Cop", "Med", "Reb"};//List of factions that have building spawns
+class CfgSpawnPoints 
+{
+    factionsWithBuildingSpawns[] = {"Civ", "Reb"};//List of factions that have building spawns
     spawnBuildings[] = {
         "Land_i_Shop_01_V1_F",
         "Land_i_Shop_01_V2_F",

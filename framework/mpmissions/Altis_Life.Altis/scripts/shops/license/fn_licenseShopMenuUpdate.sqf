@@ -17,8 +17,8 @@ private _getAllLicenses = count _shopClass isEqualTo 0;
 //Purge list
 lbClear _shopLicenseList;
 
-private _shopName = [M_CONFIG(getText,"LicensesShops",_shopClass,"name"), "License Trader"] select _getAllLicenses;
-private _shopLicenses = [M_CONFIG(getArray,"LicensesShops",_shopClass,"items"), [objNull,false,false,true] call MPClient_fnc_getLicenses] select _getAllLicenses;
+private _shopName = [M_CONFIG(getText,"cfgLicenseShops",_shopClass,"name"), "License Trader"] select _getAllLicenses;
+private _shopLicenses = [M_CONFIG(getArray,"cfgLicenseShops",_shopClass,"items"), [objNull,false,false,true] call MPClient_fnc_getLicenses] select _getAllLicenses;
 private _ownedLicenseDisplayNames = ([player,true,true,false] call MPClient_fnc_getLicenses);
 
 //-- Set title

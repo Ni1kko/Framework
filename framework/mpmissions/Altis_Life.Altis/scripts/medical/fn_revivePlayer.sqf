@@ -8,7 +8,7 @@
 */
 if !(params[["_target", objNull, [objNull]]]) exitWith {};
 
-private _reviveCost = LIFE_SETTINGS(getNumber, "revive_fee");
+private _reviveCost = CFG_MASTER(getNumber, "revive_fee");
 private _revivable = _target getVariable ["Revive", false];
 
 if (_revivable) exitWith {};

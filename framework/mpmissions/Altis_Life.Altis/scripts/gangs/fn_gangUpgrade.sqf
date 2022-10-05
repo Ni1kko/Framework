@@ -9,7 +9,7 @@
 private ["_maxMembers","_slotUpgrade","_upgradePrice"];
 _maxMembers = group player getVariable ["gang_maxMembers",8];
 _slotUpgrade = _maxMembers + 4;
-_upgradePrice = round(_slotUpgrade * ((LIFE_SETTINGS(getNumber,"gang_upgradeBase"))) / ((LIFE_SETTINGS(getNumber,"gang_upgradeMultiplier"))));
+_upgradePrice = round(_slotUpgrade * ((CFG_MASTER(getNumber,"gang_upgradeBase"))) / ((CFG_MASTER(getNumber,"gang_upgradeMultiplier"))));
 
 _action = [
     format [(localize "STR_GNOTF_MaxMemberMSG")+ "<br/><br/>" +(localize "STR_GNOTF_CurrentMax")+ "<br/>" +(localize "STR_GNOTF_UpgradeMax")+ "<br/>" +(localize "STR_GNOTF_Price")+ " <t color='#8cff9b'>$%3</t>",_maxMembers,_slotUpgrade,[_upgradePrice] call MPClient_fnc_numberText],

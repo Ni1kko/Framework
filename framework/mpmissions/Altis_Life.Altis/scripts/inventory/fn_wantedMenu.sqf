@@ -28,7 +28,7 @@ lbClear _players;
 private _list2 = CONTROL(2400,2407);
 lbClear _list2; //Purge the list
 
-private _crimes = LIFE_SETTINGS(getArray,"crimes");
+private _crimes = CFG_MASTER(getArray,"crimes");
 {
   if (isLocalized (_x select 0)) then {
     _list2 lbAdd format ["%1 - $%2 (%3)",localize (_x select 0),(_x select 1),(_x select 2)];

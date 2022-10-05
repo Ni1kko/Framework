@@ -10,7 +10,7 @@ private ["_sellers","_crimes","_names"];
 _sellers = (_this select 0) getVariable ["sellers",[]];
 if (count _sellers isEqualTo 0) exitWith {hint localize "STR_Cop_DealerQuestion"}; //No data.
 life_var_isBusy = true;
-_crimes = LIFE_SETTINGS(getArray,"crimes");
+_crimes = CFG_MASTER(getArray,"crimes");
 
 _names = "";
 {

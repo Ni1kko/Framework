@@ -15,7 +15,7 @@ if (!(_house isKindOf "House_F")) exitWith {};
 if (_house getVariable ["house_owned",false]) exitWith {hint localize "STR_House_alreadyOwned";};
 if (!isNil {(_house getVariable "house_sold")}) exitWith {hint localize "STR_House_Sell_Process"};
 if (!license_civ_home) exitWith {hint localize "STR_House_License"};
-if (count life_houses >= (LIFE_SETTINGS(getNumber,"house_limit"))) exitWith {hint format [localize "STR_House_Max_House",LIFE_SETTINGS(getNumber,"house_limit")]};
+if (count life_houses >= (CFG_MASTER(getNumber,"house_limit"))) exitWith {hint format [localize "STR_House_Max_House",CFG_MASTER(getNumber,"house_limit")]};
 closeDialog 0;
  
 private _houseCfg = [(typeOf _house)] call MPClient_fnc_houseConfig;
@@ -39,8 +39,8 @@ if (_action) then {
         [_uid,_house] remoteExec ["MPServer_fnc_addHouse",RE_SERVER];
     };
 
-    if (LIFE_SETTINGS(getNumber,"player_advancedLog") isEqualTo 1) then {
-        if (LIFE_SETTINGS(getNumber,"battlEye_friendlyLogging") isEqualTo 1) then {
+    if (CFG_MASTER(getNumber,"player_advancedLog") isEqualTo 1) then {
+        if (CFG_MASTER(getNumber,"battlEye_friendlyLogging") isEqualTo 1) then {
             advanced_log = format [localize "STR_DL_AL_boughtHouse_BEF",[_cost] call MPClient_fnc_numberText, MONEY_BANK_FORMATTED, MONEY_CASH_FORMATTED];
         } else {
             advanced_log = format [localize "STR_DL_AL_boughtHouse",profileName,(getPlayerUID player),[_cost] call MPClient_fnc_numberText, MONEY_BANK_FORMATTED, MONEY_CASH_FORMATTED];

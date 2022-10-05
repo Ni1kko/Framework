@@ -16,7 +16,7 @@ private _altState = _this select 4;
 private _stopPropagation = false;
 
 // -- Disable commander/tactical view
-if (LIFE_SETTINGS(getNumber,"disableCommanderView") isEqualTo 1) then { 
+if (CFG_MASTER(getNumber,"disableCommanderView") isEqualTo 1) then { 
 	if (_keyCode in actionKeys "tacticalView") then {
 		hint localize "STR_NOTF_CommanderView";
 		_stopPropagation = true;

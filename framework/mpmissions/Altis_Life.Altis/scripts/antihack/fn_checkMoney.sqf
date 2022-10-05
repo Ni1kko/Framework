@@ -21,12 +21,18 @@ private _moneyIndex = switch (toUpper _moneyvar) do {
 	default {-1};
 };
 
+//-- Hang scripts
+if(_moneyIndex isEqualTo -1) exitWith {
+	waitUntil {false};
+};
+
 private _actualPlayerBalance = life_var_lastBalance select _moneyIndex;
 
 while {true} do {
 	
 	//-- Wait for a change to the player money
 	waitUntil {
+		uiSleep 1.2;
 		_actualPlayerBalance = life_var_lastBalance select _moneyIndex; 
 		_actualPlayerBalance != _playerBalance
 	};

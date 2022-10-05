@@ -10,7 +10,7 @@ life_var_marketConfig = createHashMap;
 ["[Life Market] Loading..."] call MPServer_fnc_log;
  
 //-- Get market values or create them
-for "_currentIndex" from 0 to (count(missionConfigFile >> "VirtualItems") - 1) do {
+for "_currentIndex" from 0 to (count(missionConfigFile >> "cfgVirtualItems") - 1) do {
 	[_currentIndex,true] call MPServer_fnc_getMarketDataValue;
 	uiSleep 0.2;
 };
@@ -18,16 +18,16 @@ for "_currentIndex" from 0 to (count(missionConfigFile >> "VirtualItems") - 1) d
 //-- Update market prices
 {  
 	private _item = life_var_marketConfig getOrDefault [_x,createHashMap];
-	private _buyPrice = _item getOrDefault ["buyPrice",getNumber(missionConfigFile >> "VirtualItems" >> _x >> "buyPrice")];
-	private _sellPrice = _item getOrDefault ["sellPrice",getNumber(missionConfigFile >> "VirtualItems" >> _x >> "sellPrice")];
-	private _illegal = _item getOrDefault ["illegal",getNumber(missionConfigFile >> "VirtualItems" >> _x >> "illegal") isEqualTo 1];
-	private _stock = _item getOrDefault ["stock",getNumber(missionConfigFile >> "VirtualItems" >> _x >> "stock")];
+	private _buyPrice = _item getOrDefault ["buyPrice",getNumber(missionConfigFile >> "cfgVirtualItems" >> _x >> "buyPrice")];
+	private _sellPrice = _item getOrDefault ["sellPrice",getNumber(missionConfigFile >> "cfgVirtualItems" >> _x >> "sellPrice")];
+	private _illegal = _item getOrDefault ["illegal",getNumber(missionConfigFile >> "cfgVirtualItems" >> _x >> "illegal") isEqualTo 1];
+	private _stock = _item getOrDefault ["stock",getNumber(missionConfigFile >> "cfgVirtualItems" >> _x >> "stock")];
 
 	
 	//TODO: SOME CALCULATIONS AND ALTER BUY & SELL PRICES 
 	if(_x in ["goldbar"])then{
-		_buyPrice = getNumber(missionConfigFile >> "VirtualItems" >> _x >> "buyPrice");
-		_sellPrice = getNumber(missionConfigFile >> "VirtualItems" >> _x >> "sellPrice");
+		_buyPrice = getNumber(missionConfigFile >> "cfgVirtualItems" >> _x >> "buyPrice");
+		_sellPrice = getNumber(missionConfigFile >> "cfgVirtualItems" >> _x >> "sellPrice");
 		_stock = -1;
 		_needsUpdate = true;
 	}else{

@@ -53,7 +53,7 @@ if(count _ownedVirtualItemConfigNames > 0)then{
     { 
         _controlListbox_VirtualItems lbAdd format ["%2 [x%1]",ITEM_VALUE(_x),localize (getText(_x >> "displayName"))];
         _controlListbox_VirtualItems lbSetData [(lbSize _controlListbox_VirtualItems)-1,_x];
-        private _icon = M_CONFIG(getText,"VirtualItems",_x,"icon");
+        private _icon = M_CONFIG(getText,"cfgVirtualItems",_x,"icon");
         if (count _icon > 0) then {
             _controlListbox_VirtualItems lbSetPicture [(lbSize _controlListbox_VirtualItems)-1,_icon];
         };

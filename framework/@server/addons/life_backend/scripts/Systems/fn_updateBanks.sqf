@@ -6,7 +6,7 @@
 
 if(!isFinal "life_var_banksReady")exitWith{false};
 
-private _lifeConfig = missionConfigFile >> "Life_Settings";
+private _lifeConfig = missionConfigFile >> "cfgMaster";
 
 switch (param [0,""]) do 
 {

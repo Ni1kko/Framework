@@ -29,24 +29,24 @@ _vehicleInfo = [_className] call MPClient_fnc_fetchVehInfo;
 _trunkSpace = [_className] call MPClient_fnc_vehicleWeightCfg;
 
 _price = M_CONFIG(getNumber,"cfgVehicleArsenal",_classNameLife,"price");
-_storageFee = LIFE_SETTINGS(getNumber,"vehicle_storage_fee_multiplier");
+_storageFee = CFG_MASTER(getNumber,"vehicle_storage_fee_multiplier");
 
 switch (playerSide) do {
     case civilian: {
-        _purchasePrice = _price * LIFE_SETTINGS(getNumber,"vehicle_purchase_multiplier_CIVILIAN");
-        _sellMultiplier = LIFE_SETTINGS(getNumber,"vehicle_sell_multiplier_CIVILIAN");
+        _purchasePrice = _price * CFG_MASTER(getNumber,"vehicle_purchase_multiplier_CIVILIAN");
+        _sellMultiplier = CFG_MASTER(getNumber,"vehicle_sell_multiplier_CIVILIAN");
     };
     case west: {
-        _purchasePrice = _price * LIFE_SETTINGS(getNumber,"vehicle_purchase_multiplier_COP");
-        _sellMultiplier = LIFE_SETTINGS(getNumber,"vehicle_sell_multiplier_COP");
+        _purchasePrice = _price * CFG_MASTER(getNumber,"vehicle_purchase_multiplier_COP");
+        _sellMultiplier = CFG_MASTER(getNumber,"vehicle_sell_multiplier_COP");
     };
     case independent: {
-        _purchasePrice = _price * LIFE_SETTINGS(getNumber,"vehicle_purchase_multiplier_MEDIC");
-        _sellMultiplier = LIFE_SETTINGS(getNumber,"vehicle_sell_multiplier_MEDIC");
+        _purchasePrice = _price * CFG_MASTER(getNumber,"vehicle_purchase_multiplier_MEDIC");
+        _sellMultiplier = CFG_MASTER(getNumber,"vehicle_sell_multiplier_MEDIC");
     };
     case east: {
-        _purchasePrice = _price * LIFE_SETTINGS(getNumber,"vehicle_purchase_multiplier_OPFOR");
-        _sellMultiplier = LIFE_SETTINGS(getNumber,"vehicle_sell_multiplier_OPFOR");
+        _purchasePrice = _price * CFG_MASTER(getNumber,"vehicle_purchase_multiplier_OPFOR");
+        _sellMultiplier = CFG_MASTER(getNumber,"vehicle_sell_multiplier_OPFOR");
     };
 };
 _retrievePrice = _purchasePrice * _storageFee;

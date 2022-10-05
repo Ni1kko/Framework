@@ -44,7 +44,7 @@ if(!isFinal CACHE_VAR)then
         "CAManBase"
     ];
 
-    {_cache pushBackUnique _x}forEach (("true" configClasses (missionConfigFile >> "VirtualItems")) apply {ITEM_OBJECT(configName _x)});
+    {_cache pushBackUnique _x}forEach (("true" configClasses (missionConfigFile >> "cfgVirtualItems")) apply {ITEM_OBJECT(configName _x)});
 
     missionNamespace setVariable [CACHE_VAR, compileFinal str _cache];
 };

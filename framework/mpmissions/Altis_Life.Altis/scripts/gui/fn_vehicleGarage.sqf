@@ -20,7 +20,7 @@ if(not((toUpper _vehicleType) in ["CAR","AIR","SHIP"])) exitWith {
 };
 
 private _className = typeOf _building;
-private _config = [missionConfigFile >> "Housing" >> worldName >> _className, missionConfigFile >> "Garages" >> worldName >> _className] select {isClass _x};
+private _config = [missionConfigFile >> "cfgHouses" >> worldName >> _className, missionConfigFile >> "cfgGarages" >> worldName >> _className] select {isClass _x};
 
 if (count _config isEqualTo 0) exitWith {
     diag_log format ["Garage Config Not Found For Classname: %2 | Trader GridPos: %1",mapGridPosition _building,_className];

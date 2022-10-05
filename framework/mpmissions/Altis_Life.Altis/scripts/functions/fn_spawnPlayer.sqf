@@ -32,7 +32,7 @@ if(playerSide in [civilian,east]) then
 		case (life_var_firstSpawn AND not(life_var_alive) AND not(life_var_arrested)): 
 		{
             //-- Comabt logged
-			if (LIFE_SETTINGS(getNumber,"save_civilian_positionStrict") isEqualTo 1) then {
+			if (CFG_MASTER(getNumber,"save_civilian_positionStrict") isEqualTo 1) then {
 				if(life_var_loadingScreenActive) then {
 					["Combat logged detected!","Your gear and cash have been reset"] call MPClient_fnc_setLoadingText; 
 					uiSleep(2);

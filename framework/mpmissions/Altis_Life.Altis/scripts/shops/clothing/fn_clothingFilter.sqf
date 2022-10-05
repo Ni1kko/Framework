@@ -46,11 +46,11 @@ private _list = CONTROL(3100,3101);
 lbClear _list;
 
 private _configArray = switch (_selection) do {
-    case 0: {M_CONFIG(getArray,"Clothing",life_clothing_store,"uniforms");};
-    case 1: {M_CONFIG(getArray,"Clothing",life_clothing_store,"headgear");};
-    case 2: {M_CONFIG(getArray,"Clothing",life_clothing_store,"goggles");};
-    case 3: {M_CONFIG(getArray,"Clothing",life_clothing_store,"vests");};
-    case 4: {M_CONFIG(getArray,"Clothing",life_clothing_store,"backpacks");};
+    case 0: {M_CONFIG(getArray,cfgClothing,life_clothing_store,"uniforms");};
+    case 1: {M_CONFIG(getArray,cfgClothing,life_clothing_store,"headgear");};
+    case 2: {M_CONFIG(getArray,cfgClothing,life_clothing_store,"goggles");};
+    case 3: {M_CONFIG(getArray,cfgClothing,life_clothing_store,"vests");};
+    case 4: {M_CONFIG(getArray,cfgClothing,life_clothing_store,"backpacks");};
 };
 
 private "_pic";

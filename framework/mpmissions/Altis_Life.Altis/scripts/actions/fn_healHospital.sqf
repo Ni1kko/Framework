@@ -12,7 +12,7 @@
 private ["_healCost","_action"];
 if (life_var_isBusy) exitWith {};
 if ((damage player) < 0.01) exitWith {hint localize "STR_NOTF_HS_FullHealth"};
-_healCost = LIFE_SETTINGS(getNumber,"hospital_heal_fee");
+_healCost = CFG_MASTER(getNumber,"hospital_heal_fee");
 if (MONEY_CASH < _healCost) exitWith {hint format [localize "STR_NOTF_HS_NoCash",[_healCost] call MPClient_fnc_numberText];};
 
 life_var_isBusy = true;

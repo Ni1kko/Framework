@@ -46,6 +46,7 @@ private _missionVariables = [
     ["life_var_markers", false],
     ["life_var_markers_active", false],
     ["life_var_canAffordBail", true],
+    ["life_var_syncThread", scriptNull],
     ["life_var_storagePlacing", scriptNull],
     ["life_var_firstSpawn", true],
     ["life_var_newlife", false],
@@ -59,7 +60,9 @@ private _missionVariables = [
     ["life_var_indicatorLasttick", -999999],
     ["life_var_indicatorsThread", scriptNull],
     ["life_var_weaponHolders", []],
-
+    ["life_var_syncScript",  compileFinal "[] call MPClient_fnc_syncData"],
+    ["life_var_abortScript", compileFinal "_this spawn MPClient_fnc_abort"],
+    
     //--- Session
     ["life_var_sessionAttempts", 0],
     ["life_var_sessionDone", false],
@@ -115,7 +118,7 @@ private _missionVariables = [
     ["life_var_viewDistanceAir", profileNamespace getVariable ["life_var_viewDistanceAir", 1250]],
     
     //--- Weight Variables
-    ["life_var_maxCarryWeight", LIFE_SETTINGS(getNumber, "total_maxWeight")],
+    ["life_var_maxCarryWeight", CFG_MASTER(getNumber, "total_maxWeight")],
     ["life_var_carryWeight", 0], //Represents the players current inventory weight (MUST START AT 0).
 
     //--- Life Variables
@@ -156,7 +159,33 @@ private _missionVariables = [
 
     //-- Setup Gangs
     ["life_var_gangData", []],
-    ["life_var_gangHideoutBuildings", (LIFE_SETTINGS(getArray,"gang_area")) apply {nearestBuilding(getMarkerPos _x)}]
+    ["life_var_gangHideoutBuildings", (CFG_MASTER(getArray,"gang_area")) apply {nearestBuilding(getMarkerPos _x)}],
+
+    ["life_var_isDormant", compileFinal '
+        (
+            player call {
+                alive _this 
+            AND {
+                (missionNamespace getVariable ["life_var_alive",false]) 
+            AND {
+                not(_this getVariable ["restrained",false])
+            AND {
+                not(_this getVariable ["Escorting",false])
+            AND {
+                not(_this getVariable ["playerSurrender",false])
+            AND {
+                not(_this getVariable ["transporting",false])
+            AND {
+                not(missionNamespace getVariable ["life_var_arrested",false])
+            AND {
+                not(missionNamespace getVariable ["life_var_tazed",false])
+            AND {
+                not(missionNamespace getVariable ["life_var_unconscious",false])
+            AND {
+                (missionNamespace getVariable ["life_var_sessionDone",false])
+            }}}}}}}}}}
+        )
+    ']
 ];
 //-- parsingNamespace
 private _parserVariables = [
@@ -164,6 +193,10 @@ private _parserVariables = [
 ];
 //-- profileNamespace
 private _profileVariables = [
+    
+];
+//-- missionProfileNamespace
+private _missionProfileVariables = [
     
 ];
 //-- localNamespace
@@ -220,41 +253,60 @@ private _variablesFlagged = [/*DON'T EDIT*/];
 
 //-- init Variables
 {
-    _x params ["_namespace", "_verifyIsNil", "_varlist"];
+    _x params ["_namespace", "_varlist"];
     
-    private _broadcast = switch (true) do {
-        case (typeName _namespace isEqualTo "OBJECT"): {true};
-        case (typeName _namespace isEqualTo "NAMESPACE" AND _namespace isEqualTo missionNamespace): {true};
-        default {false};
-    };
-
+    if(count _varlist > 0)then 
     {
-        private _varName = _x param [0, ""];
-        private _varValue =  _namespace getVariable [_varName,nil];
-        private _varPublic =  _x param [2, false];
-        private _data = [_varName,_varValue];
+        private _broadcast = false;
+        private _checkNil = false;
+        
+        switch (true) do
+        {
+            //--- Object 
+            case (typeName _namespace isEqualTo "OBJECT"):
+            {
+                _broadcast = true;
+                _checkNil = true;
+            };
+            //--- Namespace 
+            case (typeName _namespace isEqualTo "NAMESPACE"):
+            {
+                _broadcast = _namespace isEqualTo missionNamespace;
+                _checkNil = not(_namespace in [profileNamespace, missionProfileNamespace, uiNamespace]);
+            };
+            //--- Invalid namespace 
+            default {_varlist resize 0};
+        };
+    
+        {
+            private _varName = _x param [0, ""];
 
-        //-- if namespace can broadcast add public var
-        if _broadcast then {_data pushBack _varPublic};
+            if(count _varName > 0)then
+            {
+                private _varValue =  _namespace getVariable [_varName,nil];
+                private _data = [_varName, _x param [1, nil], _x param [2, false]];
 
-        if(isNil {_varValue} OR not(_verifyIsNil))then{
-            _varValue =  _x param [1, nil];
-            if(!isNil {_varValue})then{
-                _namespace setVariable _data;
-            }else{
+                //-- Flag variable
+                if(not(isNil {_varValue}) AND _checkNil)then{ 
+                    _variablesFlagged pushBackUnique [_varName,_varValue];
+                };
+
+                //-- can namespace can broadcast
+                if !_broadcast then {_data resize 2};
+
+                //-- Set variable
                 _namespace setVariable _data;
             };
-        }else{
-            _variablesFlagged pushBackUnique [_varName,_varValue];
-        };
-    }forEach _varlist;
+        }forEach _varlist;
+    };
 } forEach [
-    [missionNamespace,true,_missionVariables],
-    [uiNamespace,false,_uiVariables],
-    [profileNamespace,false,_profileVariables],
-    [parsingNamespace,true,_parserVariables],
-    [localNamespace,true,_localVariables],
-    [player,true,_playerVariables]
+    [missionNamespace,_missionVariables],
+    [uiNamespace,_uiVariables],
+    [profileNamespace,_profileVariables],
+    [missionProfileNamespace,_missionProfileVariables],
+    [parsingNamespace,_parserVariables],
+    [localNamespace,_localVariables],
+    [player,_playerVariables]
 ];
 
 //-- flagged variable found. TODO: handle this through anticheat on server once detected
@@ -270,16 +322,37 @@ if(count _profileVariables > 0)then{
     saveProfileNamespace;
 };
 
+//-- save mission proflie vars
+if(count _missionProfileVariables > 0)then{
+    saveMissionProfileNamespace;
+};
+
 //-- Thread set 1 Monitor money vars TODO: handle this through anticheat 
 _threadsToMonitor pushBackUnique (["bank"] spawn MPClient_fnc_checkMoney);
 _threadsToMonitor pushBackUnique (["cash"] spawn MPClient_fnc_checkMoney);
 _threadsToMonitor pushBackUnique (["gang"] spawn MPClient_fnc_checkMoney);
 _threadsToMonitor pushBackUnique (["debt"] spawn MPClient_fnc_checkMoney);
 
-//-- Double check function is final to be safe
-if(not(isFinal "BIS_fnc_endMission"))then{
-	missionNamespace setVariable ["BIS_fnc_endMission",compileScript ["\a3\functions_f\Misc\fn_endMission.sqf", true]];
-};
+private _fnc_null = compileFinal "";
+
+//-- Exploit patch - Revert to engine comamand if filePatching is enabled
+private _fnc_endMission = ([
+    compileScript ["\a3\functions_f\Misc\fn_endMission.sqf",true], 
+    compileFinal "endMission (_this#0); true"
+] select isFilePatchingEnabled);
+
+//-- Exploit patch - Ensure that bis function are final and null routed OR default code
+{
+    if(not(isFinal (missionNamespace getVariable [_x#0,{}])))then{
+        missionNamespace setVariable _x;
+    };
+}forEach [
+    ["BIS_fnc_MP",_fnc_null],
+    ["BIS_fnc_endMission", _fnc_endMission]
+];
+
+//-- Exploit patch - Ensure that "BIS_fnc_MP" requests are null routed.
+"BIS_fnc_MP_packet" addPublicVariableEventHandler _fnc_null;
 
 //-- Load main init
 [serverName,missionName,worldName,worldSize] spawn MPClient_fnc_init;
@@ -306,12 +379,38 @@ _threadsToMonitor spawn {uiSleep floor(random 30); {_x spawn {waitUntil {uiSleep
         private _functionClassList = (_cfgFunctions select _currentIndex);
         private _groupName = configName _functionClassList;
         private _functionGroupIndex = _functionGroups pushBackUnique [_groupName, []];
+        private _filePath = getText (_functionClassList >> "file");
+        private _classesData = createHashMap;
 
         for "_currentInnerIndex" from 0 to (count(_functionClassList) - 1) do 
         {
             private _currentInnerItem = (_functionClassList select _currentInnerIndex);
-            private _fileName = configName _currentInnerItem;
-            private _functionName = format ["%1_fnc_%2",_functionsTag,_fileName];
+
+            if(isClass _currentInnerItem)then { 
+                private _classes = _classesData getOrDefault ["Functions", []];
+                _classes pushBackUnique _currentInnerItem;
+                _classesData set ["Functions", _classes];
+            }else{
+                switch (toLower(configName _currentInnerItem)) do {
+                    case "tag": {
+                        private _tag = getText(_currentInnerItem);
+                        
+                        if(count _tag > 0 AND toLower _tag isNotEqualTo toLower _functionsTag)then{
+                            _classesData set ["Tag", _tag];
+                        };
+                    };
+                    case "file": {_classesData set ["Path", getText(_currentInnerItem)]};
+                };
+            };
+        };
+
+        {
+            private _fileName = configName _x;
+            private _fileTag = _classesData getOrDefault ["Tag",_functionsTag];
+            private _filePath = _classesData getOrDefault ["Path",""];
+            private _filePreInit = getNumber(_x >> "preInit") isEqualTo 1;
+            private _filePostInit = getNumber(_x >> "postInit") isEqualTo 1;
+            private _functionName = format ["%1_fnc_%2",_fileTag,_fileName];
             _functions pushBackUnique _functionName;
 
             if(_functionGroupIndex isNotEqualTo -1)then{
@@ -322,7 +421,8 @@ _threadsToMonitor spawn {uiSleep floor(random 30); {_x spawn {waitUntil {uiSleep
                     _functionGroups set [_functionGroupIndex, [_groupName, _fileList]];
                 };
             };
-        };
+        }forEach (_classesData getOrDefault ["Functions",[]]);
+
     };
 
     private _nonFinalFunctions = [];

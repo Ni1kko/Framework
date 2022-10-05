@@ -25,7 +25,7 @@ if ((uiNamespace getVariable ["Weapon_Magazine",0]) isEqualTo 1 || {(uiNamespace
 
     if ((uiNamespace getVariable ["Weapon_Magazine",0]) isEqualTo 1) then {
     
-        _config = M_CONFIG(getArray,"WeaponShops",_shop,"mags");
+        _config = M_CONFIG(getArray,"cfgWeaponShops",_shop,"mags");
         {
             _bool = [_x] call MPClient_fnc_checkConditions;
             if (_bool) then {
@@ -49,7 +49,7 @@ if ((uiNamespace getVariable ["Weapon_Magazine",0]) isEqualTo 1 || {(uiNamespace
         
     } else {
     
-        _config = M_CONFIG(getArray,"WeaponShops",_shop,"accs");
+        _config = M_CONFIG(getArray,"cfgWeaponShops",_shop,"accs");
         {
             _bool = [_x] call MPClient_fnc_checkConditions;
             if (_bool) then {
@@ -80,7 +80,7 @@ if ((uiNamespace getVariable ["Weapon_Magazine",0]) isEqualTo 1 || {(uiNamespace
     switch (_index) do {
 
         case 0: {
-            _config = M_CONFIG(getArray,"WeaponShops",_shop,"items");
+            _config = M_CONFIG(getArray,"cfgWeaponShops",_shop,"items");
             {
                 _bool = [_x] call MPClient_fnc_checkConditions;
                 if (_bool) then {
@@ -123,9 +123,9 @@ if ((uiNamespace getVariable ["Weapon_Magazine",0]) isEqualTo 1 || {(uiNamespace
             ctrlShow [38407,false];
 
             private _itemArray = [];
-            _itemArray pushBack M_CONFIG(getArray,"WeaponShops",_shop,"items");
-            _itemArray pushBack M_CONFIG(getArray,"WeaponShops",_shop,"mags");
-            _itemArray pushBack M_CONFIG(getArray,"WeaponShops",_shop,"accs");
+            _itemArray pushBack M_CONFIG(getArray,"cfgWeaponShops",_shop,"items");
+            _itemArray pushBack M_CONFIG(getArray,"cfgWeaponShops",_shop,"mags");
+            _itemArray pushBack M_CONFIG(getArray,"cfgWeaponShops",_shop,"accs");
             {
                 _y = _x;
                 {

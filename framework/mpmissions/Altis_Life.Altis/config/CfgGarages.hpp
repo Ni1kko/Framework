@@ -1,17 +1,23 @@
 /*
-    Anything defined in Config_Garages is strictly just a garage, it will not act like a house.
-
-    price - Cost of the garage
-    garageSpawnPos[] - worldToModel position to spawn vehicles
-    garageSpawnDir - Offset to garage direction to spawn at (+-90 etc). It will be used in the manner: getDir _garage + spawnDir
-    garageBlacklists[] - List of blacklisted houses for buying garages
-        default: {}
+	## Nikko Renolds
+	## https://github.com/Ni1kko/FrameworkV2
+    ## CfgGarages.hpp
 */
 
-class Garages {
+class cfgGarages 
+{
+    /*
+        Anything defined in Config_Garages is strictly just a garage, it will not act like a house.
 
-    class Altis {
+        price - Cost of the garage
+        garageSpawnPos[] - worldToModel position to spawn vehicles
+        garageSpawnDir - Offset to garage direction to spawn at (+-90 etc). It will be used in the manner: getDir _garage + spawnDir
+        garageBlacklists[] - List of blacklisted houses for buying garages
+            default: {}
+    */
 
+    class Altis 
+    {
         class Land_i_Garage_V1_F {
             price = 500000;
             garageSpawnPos[] = {-11.5,0,0};
@@ -20,10 +26,6 @@ class Garages {
         };
 
         class Land_i_Garage_V2_F : Land_i_Garage_V1_F{};
-
-    };
-
-    class Tanoa {
 
         class Land_SM_01_shed_F {
             price = 140000;
@@ -58,5 +60,4 @@ class Garages {
         };
 
     };
-
 };

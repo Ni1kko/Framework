@@ -20,7 +20,7 @@ private ["_display","_curTarget","_seizeRank","_Btn1","_Btn2","_Btn3","_Btn4","_
 
 disableSerialization;
 _curTarget = param [0,objNull,[objNull]];
-_seizeRank = LIFE_SETTINGS(getNumber,"seize_minimum_rank");
+_seizeRank = CFG_MASTER(getNumber,"seize_minimum_rank");
 
 if (player getVariable ["Escorting", false]) then {
     if (isNull _curTarget) exitWith {closeDialog 0;}; //Bad target
@@ -87,4 +87,4 @@ if ((call life_coplevel) < _seizeRank) then {_Btn8 ctrlEnable false;};
 
 {
     if ((player distance (getMarkerPos _x) <30)) exitWith { _Btn6 ctrlEnable true;};
-} forEach LIFE_SETTINGS(getArray,"sendtoJail_locations");
+} forEach CFG_MASTER(getArray,"sendtoJail_locations");

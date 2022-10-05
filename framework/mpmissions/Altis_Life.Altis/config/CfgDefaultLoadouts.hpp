@@ -1,18 +1,14 @@
 /*
-    class PLAYERSIDE { // PLAYERSIDE can be: WEST (for cops), CIV (for civ/reb), GUER (for medics), EAST (for opfor)
-        // NOTES:
-        //     empty array means that nothing will be add on players
-        //     if you put more than a uniform on the CIV's class, they will be selected randonly,
-        //         otherwise, for the other teams, player will get the uniform related to his level
-
-        itemType[] = { // itemType can be: uniform, headgear, vest, backpack, weapon, items or linkedItems
-            { "classname", "conditions" }
-        };
-    };
+	## Nikko Renolds
+	## https://github.com/Ni1kko/FrameworkV2
+    ## CfgDefaultLoadouts.hpp
 */
-class Loadouts {
+
+class CfgDefaultLoadouts 
+{
     // COP
-    class WEST {
+    class WEST 
+    {
         uniform[] = {
             {"U_Rangemaster", "call life_copLevel >= 0"}
         };
@@ -38,7 +34,8 @@ class Loadouts {
     };
 
     // CIV
-    class CIV {
+    class CIV 
+    {
         uniform[] = {
             {"U_C_Poloshirt_blue", "!life_var_arrested"},
             {"U_C_Poloshirt_burgundy", "!life_var_arrested"},
@@ -61,8 +58,12 @@ class Loadouts {
         };
     };
 
+    // REB (Temp use civ for rebel)
+    class EAST : CIV {};
+
     // MED
-    class GUER {
+    class GUER 
+    {
         uniform[] = {
             {"U_Rangemaster", "call life_medLevel >= 1"}
         };

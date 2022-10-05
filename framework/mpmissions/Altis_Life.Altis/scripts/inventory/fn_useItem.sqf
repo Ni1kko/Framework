@@ -15,8 +15,8 @@ if ((lbCurSel 109) isEqualTo -1) exitWith {
 };
 
 private _item = CONTROL_DATA(109);
-private _edible = M_CONFIG(getNumber, "VirtualItems", _item, "edible");
-private _drinkable = M_CONFIG(getNumber, "VirtualItems", _item, "drinkable");
+private _edible = M_CONFIG(getNumber, "cfgVirtualItems", _item, "edible");
+private _drinkable = M_CONFIG(getNumber, "cfgVirtualItems", _item, "drinkable");
 
 if (_edible > -1 || _drinkable > -1) exitWith {
     if ([false, _item, 1] call MPClient_fnc_handleInv) then {
@@ -30,10 +30,10 @@ if (_edible > -1 || _drinkable > -1) exitWith {
 
             life_var_thirst = (_sum max 5) min 100; // never below 5 or above 100
 
-            if (LIFE_SETTINGS(getNumber, "enable_fatigue") isEqualTo 1) then {
+            if (CFG_MASTER(getNumber, "enable_fatigue") isEqualTo 1) then {
                 player setFatigue 0;
             };
-            if (_item isEqualTo "redgull" && {LIFE_SETTINGS(getNumber, "enable_fatigue") isEqualTo 1}) then {
+            if (_item isEqualTo "redgull" && {CFG_MASTER(getNumber, "enable_fatigue") isEqualTo 1}) then {
                 [] spawn {
                     life_var_effectEnergyDrink = time;
                     titleText [localize "STR_ISTR_RedGullEffect", "PLAIN"];

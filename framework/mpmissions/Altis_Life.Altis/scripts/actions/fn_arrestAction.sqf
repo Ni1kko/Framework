@@ -26,8 +26,8 @@ detach _unit;
 [_unit,false] remoteExecCall ["MPClient_fnc_jail",_unit];
 [0,"STR_NOTF_Arrested_1",true, [_unit getVariable ["realname",name _unit], profileName]] remoteExecCall ["MPClient_fnc_broadcast",RE_CLIENT];
 
-if (LIFE_SETTINGS(getNumber,"player_advancedLog") isEqualTo 1) then {
-    if (LIFE_SETTINGS(getNumber,"battlEye_friendlyLogging") isEqualTo 1) then {
+if (CFG_MASTER(getNumber,"player_advancedLog") isEqualTo 1) then {
+    if (CFG_MASTER(getNumber,"battlEye_friendlyLogging") isEqualTo 1) then {
         advanced_log = format [localize "STR_DL_AL_Arrested_BEF",_unit getVariable ["realname",name _unit]];
     } else {
         advanced_log = format [localize "STR_DL_AL_Arrested",profileName,(getPlayerUID player),_unit getVariable ["realname",name _unit]];

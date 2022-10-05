@@ -19,7 +19,7 @@ params [
 if (_uid isEqualTo "" || {_type isEqualTo ""} || {_name isEqualTo ""}) exitWith {}; //Bad data passed.
 
 //What is the crime?
-private _crimesConfig = getArray(missionConfigFile >> "Life_Settings" >> "crimes");
+private _crimesConfig = getArray(missionConfigFile >> "cfgMaster" >> "crimes");
 private _index = [_type,_crimesConfig] call MPServer_fnc_index;
 
 if (_index isEqualTo -1) exitWith {};

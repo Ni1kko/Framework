@@ -13,7 +13,7 @@ waitUntil {isFinal "extdb_var_database_key"};
 
 life_var_tent_config = compileFinal str [
 	getNumber(configFile >> "CfgTents" >> "oneTimeUse") isEqualTo 1,
-	getNumber(configFile >> "CfgTents" >> "garages") isEqualTo 1
+	getNumber(configFile >> "CfgTents" >> "cfgGarages") isEqualTo 1
 ];
 
 publicVariable "life_var_tent_config";

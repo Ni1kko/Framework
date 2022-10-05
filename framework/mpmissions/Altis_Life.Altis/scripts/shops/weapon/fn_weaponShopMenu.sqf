@@ -6,15 +6,15 @@
 */
 
 private _shop = param [3,""];
-private _shopTitle = M_CONFIG(getText,"WeaponShops",_shop,"name");
-private _shopSide = M_CONFIG(getText,"WeaponShops",_shop,"side");
-private _conditions = M_CONFIG(getText,"WeaponShops",_shop,"conditions");
+private _shopTitle = M_CONFIG(getText,"cfgWeaponShops",_shop,"name");
+private _shopSide = M_CONFIG(getText,"cfgWeaponShops",_shop,"side");
+private _conditions = M_CONFIG(getText,"cfgWeaponShops",_shop,"conditions");
 private _playerSide = [playerSide,true] call MPServer_fnc_util_getSideString;
  
 if (not(life_var_adminShop) AND count _shopSide > 0 AND  {_playerSide isNotEqualTo _shopSide}) exitWith {false};
 if (not(life_var_adminShop) AND count _conditions > 0 AND {not([_conditions] call MPClient_fnc_checkConditions)}) exitWith {hint localize "STR_Shop_Veh_NotAllowed";false};
 
-if (!isClass(missionConfigFile >> "WeaponShops" >> _shop)) exitWith {false}; //Bad config entry.
+if (!isClass(missionConfigFile >> "cfgWeaponShops" >> _shop)) exitWith {false}; //Bad config entry.
 if (!isClass(missionConfigFile >> "RscDisplayWeaponShop")) exitWith {false}; //Missing class `RscDisplayWeaponShop`
 
 private _display = createDialog ["RscDisplayWeaponShop",true];

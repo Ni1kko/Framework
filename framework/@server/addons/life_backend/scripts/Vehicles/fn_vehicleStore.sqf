@@ -77,7 +77,7 @@ private _cargo = [
 
 //--- vItems
 private _items = (_trunk#0) apply {
-    private _isIllegal = (M_CONFIG(getNumber,"VirtualItems",(_x#0),"illegal")) isEqualTo 1;
+    private _isIllegal = (M_CONFIG(getNumber,"cfgVirtualItems",(_x#0),"illegal")) isEqualTo 1;
     private _weight = (ITEM_WEIGHT(_x#0)) * (_x#1);
     _totalweight = _weight + _totalweight;
     if _isIllegal then {_blacklist = true};

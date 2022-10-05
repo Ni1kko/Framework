@@ -12,8 +12,8 @@ if (isNull _shopNPC || {_shopType isEqualTo ""}) exitWith {
     displayNull
 };
 
-private _conditions = M_CONFIG(getText,"VirtualShops",_shopType,"conditions");
-private _shopSide = M_CONFIG(getText,"VirtualShops",_shopType,"side"); 
+private _conditions = M_CONFIG(getText,"cfgVirtualShops",_shopType,"conditions");
+private _shopSide = M_CONFIG(getText,"cfgVirtualShops",_shopType,"side"); 
 private _playerSide = [playerSide,true] call MPServer_fnc_util_getSideString;
  
 if (not(life_var_adminShop) AND count _shopSide > 0 AND count _playerSide > 0 AND {_playerSide isNotEqualTo _shopSide}) exitWith {

@@ -11,7 +11,7 @@ disableSerialization;
 private ["_search","_ui","_progress","_cP","_pgText"];
 if (life_var_isBusy) exitWith {hint localize "STR_NOTF_Action"};
 
-_serviceCost = LIFE_SETTINGS(getNumber,"service_chopper");
+_serviceCost = CFG_MASTER(getNumber,"service_chopper");
 _search = nearestObjects[getPos air_sp, ["Air"],10];
 
 if (count _search isEqualTo 0) exitWith {hint localize "STR_Service_Chopper_NoAir"};

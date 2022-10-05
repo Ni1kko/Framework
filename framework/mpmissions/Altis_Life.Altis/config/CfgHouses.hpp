@@ -1,25 +1,27 @@
-#define true 1
-#define false 0
-
 /*
-    price - Cost of the building
-    numberCrates - Allowed number of crates
-    restrictedPos[] - Same as the old fn_getBuildingPositions. A list of restricted building positions (i.e, to stop spawning outside, or by windows etc)
-        default: {}
-    canGarage - True if the building can be used as a garage (need to buy ontop)
-        default: false
-    garageSpawnPos[] - worldToModel position to spawn vehicles, leave {} if canGarage is false.
-        default: {}
-    garageSpawnDir - Offset to garage direction to spawn at (+-90 etc). It will be used in the manner: getDir _garage + spawnDir
-        default: 0
-    garageBlacklists[] - List of blacklisted houses for buying garages
-        default: {}
+	## Nikko Renolds
+	## https://github.com/Ni1kko/FrameworkV2
+    ## CfgHouses.hpp
 */
 
-class Housing {
-  
-    class Altis {
-
+class cfgHouses
+{
+    /*
+        price - Cost of the building
+        numberCrates - Allowed number of crates
+        restrictedPos[] - Same as the old fn_getBuildingPositions. A list of restricted building positions (i.e, to stop spawning outside, or by windows etc)
+            default: {}
+        canGarage - True if the building can be used as a garage (need to buy ontop)
+            default: false
+        garageSpawnPos[] - worldToModel position to spawn vehicles, leave {} if canGarage is false.
+            default: {}
+        garageSpawnDir - Offset to garage direction to spawn at (+-90 etc). It will be used in the manner: getDir _garage + spawnDir
+            default: 0
+        garageBlacklists[] - List of blacklisted houses for buying garages
+            default: {}
+    */
+    class DefaultBase 
+    {
         class Land_i_House_Big_02_V1_F {
             price = 1550000;
             numberCrates = 3;
@@ -103,10 +105,7 @@ class Housing {
         class Land_i_Stone_HouseSmall_V2_F : Land_i_Stone_HouseSmall_V1_F{};
         class Land_i_Stone_HouseSmall_V3_F : Land_i_Stone_HouseSmall_V1_F{};
 
-    };
-
-    class Tanoa {
-
+  
         // Houses with Garages
         class Land_Hotel_01_F {
             price = 960000;
@@ -284,7 +283,9 @@ class Housing {
             garageBlacklists[] = {};
             lightPos[] = {1.2,0.2,2.5};
         };
-
     };
-
+    
+    class Altis : DefaultBase {};
+    class Tanoa : DefaultBase {};
+    class Malden : DefaultBase {};
 };

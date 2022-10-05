@@ -28,7 +28,7 @@ try {
 	private _sqlcustomfile = getText(_config >> "sqlcustomfile");
 	private _procedures =  getArray(_config >> "startup_procedures");
 	private _headless =  getNumber(_config >> "headlessclient") isEqualTo 1;
-	private _resetplayer = getNumber(missionConfigFile >> "Life_Settings" >> "save_civilian_position_restart") isEqualTo 1;
+	private _resetplayer = getNumber(missionConfigFile >> "cfgMaster" >> "save_civilian_position_restart") isEqualTo 1;
 	private _databasekey = round(random 99999);
 
 	//--- Version

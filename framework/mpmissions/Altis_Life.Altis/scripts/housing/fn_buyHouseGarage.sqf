@@ -15,7 +15,7 @@ if ((_house getVariable "house_owner") select 0 != getPlayerUID player) exitWith
 if (_house getVariable ["blacklistedGarage",false]) exitWith {};
 closeDialog 0;
 
-private _price = LIFE_SETTINGS(getNumber,"houseGarage_buyPrice");
+private _price = CFG_MASTER(getNumber,"houseGarage_buyPrice");
 
 _action = [
     format [localize "STR_Garage_HouseBuyMSG",

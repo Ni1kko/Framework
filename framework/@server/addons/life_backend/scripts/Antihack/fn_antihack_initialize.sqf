@@ -119,7 +119,7 @@ try {
 
 	//--- Setup allowed weapons
 	if(_checkweapon)then{
-		private _configWeaponShops = missionConfigFile >> "WeaponShops";
+		private _configWeaponShops = missionConfigFile >> "cfgWeaponShops";
 		if(isClass _configWeaponShops) then{
 			for "_i" from 0 to ((count _configWeaponShops) -1) do{
 				{
@@ -141,7 +141,7 @@ try {
 			_checkweapon = false;
 		};
 
-		private _configLoadouts = missionConfigFile >> "Loadouts";
+		private _configLoadouts = missionConfigFile >> "cfgDefaultLoadouts";
 		if(isClass _configLoadouts) then{
 			for "_i" from 0 to ((count _configLoadouts) -1) do{
 				{
@@ -155,7 +155,7 @@ try {
 
 	//--- Setup allowed gear
 	if(_checkgear)then{
-		private _configClothing = missionConfigFile >> "Clothing";
+		private _configClothing = missionConfigFile >> cfgClothing;
 		if(isClass _configClothing) then{
 			//--- Allowed uniforms
 			if(_checkuniform)then{
@@ -206,7 +206,7 @@ try {
 			_checkgear = false;
 		};
 
-		private _configLoadouts = missionConfigFile >> "Loadouts";
+		private _configLoadouts = missionConfigFile >> "cfgDefaultLoadouts";
 		if(isClass _configLoadouts) then{
 			//--- Allowed uniforms
 			if(_checkuniform)then{

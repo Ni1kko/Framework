@@ -51,8 +51,8 @@ if (!(_diff isEqualTo (_itemInfo select 1))) then {
     };
 };
 
-if (LIFE_SETTINGS(getNumber,"player_advancedLog") isEqualTo 1) then {
-    if (LIFE_SETTINGS(getNumber,"battlEye_friendlyLogging") isEqualTo 1) then {
+if (CFG_MASTER(getNumber,"player_advancedLog") isEqualTo 1) then {
+    if (CFG_MASTER(getNumber,"battlEye_friendlyLogging") isEqualTo 1) then {
         advanced_log = format [localize "STR_DL_AL_pickedUp_BEF",_diff,_itemName];
     } else {
         advanced_log = format [localize "STR_DL_AL_pickedUp",profileName,(getPlayerUID player),_diff,_itemName];

@@ -219,7 +219,7 @@ MPServer_fnc_vehicle_buyRequest = {
 	private _vin = "";
 	private _steamID = getPlayerUID _player;
 	private _vehicle = [_class,_pos,random 360,_useATL] call MPServer_fnc_vehicle_create;
-	private _rentals = getArray(missionConfigFile >> "Life_Settings" >> "vehicleShop_rentalOnly");
+	private _rentals = getArray(missionConfigFile >> "cfgMaster" >> "vehicleShop_rentalOnly");
 
 	if(isNull _vehicle) exitWith {
 		"ERROR: Vehicle could not be created" remoteExec ["systemChat",owner _player];

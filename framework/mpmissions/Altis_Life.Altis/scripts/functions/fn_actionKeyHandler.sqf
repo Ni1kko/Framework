@@ -24,14 +24,14 @@ if ((call MPClient_fnc_nearATM) && {!dialog}) exitWith {
 
 if (isNull _curObject) exitWith {
     if (_isWater) then {
-        _fish = (nearestObjects[player,(LIFE_SETTINGS(getArray,"animaltypes_fish")),3]) select 0;
+        _fish = (nearestObjects[player,(CFG_MASTER(getArray,"animaltypes_fish")),3]) select 0;
         if (!isNil "_fish") then {
             if (!alive _fish) then {
                 [_fish] call MPClient_fnc_catchFish;
             };
         };
     } else {
-        _animal = (nearestObjects[player,(LIFE_SETTINGS(getArray,"animaltypes_hunting")),3]) select 0;
+        _animal = (nearestObjects[player,(CFG_MASTER(getArray,"animaltypes_hunting")),3]) select 0;
         if (!isNil "_animal") then {
             if (!alive _animal) then {
                 [_animal] call MPClient_fnc_gutAnimal;
@@ -87,7 +87,7 @@ life_var_isBusy = true;
 //Check if it's a dead body.
 if (_curObject isKindOf "CAManBase" && {!alive _curObject}) exitWith {
     //Hotfix code by ins0
-    if ((playerSide isEqualTo west && {(LIFE_SETTINGS(getNumber,"revive_cops") isEqualTo 1)}) || {(playerSide isEqualTo civilian && {(LIFE_SETTINGS(getNumber,"revive_civ") isEqualTo 1)})} || {(playerSide isEqualTo east && {(LIFE_SETTINGS(getNumber,"revive_east") isEqualTo 1)})} || {playerSide isEqualTo independent}) then {
+    if ((playerSide isEqualTo west && {(CFG_MASTER(getNumber,"revive_cops") isEqualTo 1)}) || {(playerSide isEqualTo civilian && {(CFG_MASTER(getNumber,"revive_civ") isEqualTo 1)})} || {(playerSide isEqualTo east && {(CFG_MASTER(getNumber,"revive_east") isEqualTo 1)})} || {playerSide isEqualTo independent}) then {
         if (life_inv_defibrillator > 0) then {
             [_curObject] call MPClient_fnc_revivePlayer;
         };

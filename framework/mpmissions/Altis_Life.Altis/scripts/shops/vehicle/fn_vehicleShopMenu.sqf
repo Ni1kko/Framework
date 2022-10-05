@@ -24,7 +24,7 @@ if (not(life_var_adminShop) AND _sideCheck isNotEqualTo sideUnknown AND {playerS
 private _conditions = M_CONFIG(getText,"cfgVehicleTraders",_shop,"conditions");
 if (not(life_var_adminShop) AND !([_conditions] call MPClient_fnc_checkConditions)) exitWith {hint localize "STR_Shop_Veh_NotAllowed"};
 
-if (LIFE_SETTINGS(getNumber,"vehicleShop_3D") isEqualTo 1) then {
+if (CFG_MASTER(getNumber,"vehicleShop_3D") isEqualTo 1) then {
   createDialog "RscDisplayVehicleShop3D";
 } else {
   createDialog "RscDisplayVehicleShop";
@@ -32,7 +32,7 @@ if (LIFE_SETTINGS(getNumber,"vehicleShop_3D") isEqualTo 1) then {
 
 if(life_var_adminShop) then {
     _shopTitle = format["Admin %1 Shop",_shop];
-    _shopFlag = M_CONFIG(getText,"WeaponShops",_shop,"side");
+    _shopFlag = M_CONFIG(getText,"cfgWeaponShops",_shop,"side");
     
     if(count (missionNamespace getVariable ["life_var_adminShopSpawnMarker",""]) > 0) then {
        deleteMarkerLocal life_var_adminShopSpawnMarker;

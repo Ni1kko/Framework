@@ -25,7 +25,7 @@ player playMove "AmovPercMstpSnonWnonDnon";
 ];
 
 //-- Fatigue
-if (LIFE_SETTINGS(getNumber,"enable_fatigue") isEqualTo 0) then {player enableFatigue false;};
+if (CFG_MASTER(getNumber,"enable_fatigue") isEqualTo 0) then {player enableFatigue false;};
  
 //-- Handle side chat
 [player,life_var_enableSidechannel,playerSide] remoteExecCall ["MPServer_fnc_managesc",2];

@@ -40,7 +40,7 @@ The full changelog can be found on the AsYetUntitled/Framework repository on Git
 v%1<br/>
 By: AsYetUntitled<br/>
 Date: 25. December 2019<br/><br/>
-                ",getText(missionConfigFile >> "Life_Settings" >> "framework_version")]
+                ",getText(missionConfigFile >> "cfgMaster" >> "framework_version")]
         ]
     ];
 

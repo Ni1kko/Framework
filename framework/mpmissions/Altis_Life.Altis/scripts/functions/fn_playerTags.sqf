@@ -24,7 +24,7 @@ if (isNull _ui) then {
 _units = nearestObjects[(visiblePosition player),["CAManBase","Land_Pallet_MilBoxes_F","Land_Sink_F"],50];
 _units = _units - [player];
 
-_masks = LIFE_SETTINGS(getArray,"clothing_masks");
+_masks = CFG_MASTER(getArray,"clothing_masks");
 
 private _index = -1;
 {

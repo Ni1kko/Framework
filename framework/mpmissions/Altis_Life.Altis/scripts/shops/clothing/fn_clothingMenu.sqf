@@ -12,11 +12,11 @@ if !(isNull objectParent player) exitWith {titleText[localize "STR_NOTF_ActionIn
 player setVariable ["life_var_teleported",true,true];
 
 /* License check & config validation */
-if !(isClass(missionConfigFile >> "Clothing" >> _shop)) exitWith {}; //Bad config entry.
+if !(isClass(missionConfigFile >> cfgClothing >> _shop)) exitWith {}; //Bad config entry.
 
-private _shopTitle = M_CONFIG(getText,"Clothing",_shop,"title");
-private _shopSide = M_CONFIG(getText,"Clothing",_shop,"side");
-private _conditions = M_CONFIG(getText,"Clothing",_shop,"conditions");
+private _shopTitle = M_CONFIG(getText,cfgClothing,_shop,"title");
+private _shopSide = M_CONFIG(getText,cfgClothing,_shop,"side");
+private _conditions = M_CONFIG(getText,cfgClothing,_shop,"conditions");
 
 private _exit = false;
  
@@ -60,10 +60,10 @@ if (_shop == "dive" && {!license_civ_dive}) exitWith {hint localize "STR_Shop_No
 private ["_pos","_oldPos","_oldDir","_oldBev","_testLogic","_nearVeh","_light"];
 private ["_ut1","_ut2","_ut3","_ut4","_ut5"];
 
-if (LIFE_SETTINGS(getNumber,"clothing_noTP") isEqualTo 1) then {
+if (CFG_MASTER(getNumber,"clothing_noTP") isEqualTo 1) then {
     _pos = getPosATL player;
 } else {
-    if (LIFE_SETTINGS(getNumber,"clothing_box") isEqualTo 1) then {
+    if (CFG_MASTER(getNumber,"clothing_box") isEqualTo 1) then {
         _pos = [1000,1000,10000];
     } else {
         _pos = switch _shop do {
@@ -83,7 +83,7 @@ if (LIFE_SETTINGS(getNumber,"clothing_noTP") isEqualTo 1) then {
 
     _nearVeh = _testLogic nearEntities ["AllVehicles", 20];
 
-    if (LIFE_SETTINGS(getNumber,"clothing_box") isEqualTo 1) then {
+    if (CFG_MASTER(getNumber,"clothing_box") isEqualTo 1) then {
         _ut1 = "UserTexture10m_F" createVehicleLocal (_testLogic modelToWorld [0,5,10]);
         _ut1 attachTo [_testLogic,[0,5,5]];
         _ut1 setDir 0;
@@ -114,14 +114,14 @@ if (LIFE_SETTINGS(getNumber,"clothing_noTP") isEqualTo 1) then {
         true
     } count playableUnits;
     
-    if (LIFE_SETTINGS(getNumber,"clothing_box") isEqualTo 0) then {
+    if (CFG_MASTER(getNumber,"clothing_box") isEqualTo 0) then {
         {
             if (_x != player && _x != _light) then {_x hideObject true;};
             true
         } count _nearVeh;
     };
 
-    if (LIFE_SETTINGS(getNumber,"clothing_box") isEqualTo 1) then {
+    if (CFG_MASTER(getNumber,"clothing_box") isEqualTo 1) then {
         {
             _x setObjectTexture [0,"#(argb,8,8,3)color(0,0,0,1)"];
             true
@@ -177,12 +177,12 @@ _filter lbAdd localize "STR_Shop_UI_Backpack";
 _filter lbSetCurSel 0;
 
 waitUntil {isNull (findDisplay 3100)};
-if (LIFE_SETTINGS(getNumber,"clothing_noTP") isEqualTo 0) then {
+if (CFG_MASTER(getNumber,"clothing_noTP") isEqualTo 0) then {
     {
         if (_x != player) then {_x hideObject false;};
         true
     } count playableUnits;
-    if (LIFE_SETTINGS(getNumber,"clothing_box") isEqualTo 0) then {
+    if (CFG_MASTER(getNumber,"clothing_box") isEqualTo 0) then {
         {
             if (_x != player && _x != _light) then {_x hideObject false;};
             true
@@ -192,7 +192,7 @@ if (LIFE_SETTINGS(getNumber,"clothing_noTP") isEqualTo 0) then {
     player setBehaviour _oldBev;
     player setPosASL _oldPos;
     player setDir _oldDir;
-    if (LIFE_SETTINGS(getNumber,"clothing_box") isEqualTo 1) then {
+    if (CFG_MASTER(getNumber,"clothing_box") isEqualTo 1) then {
         {
             deleteVehicle _x;
         } count [_testLogic,_ut1,_ut2,_ut3,_ut4,_ut5,_light];

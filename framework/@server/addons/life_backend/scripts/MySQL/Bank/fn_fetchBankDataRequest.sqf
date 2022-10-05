@@ -20,7 +20,7 @@ if (_queryBankResult isEqualTo ["DB:Read:Task-failure",false]) exitWith {
 };
 
 if (count _queryBankResult isEqualTo 0) then {
-	private _funds = getNumber(missionConfigFile >> "Life_Settings" >> "startingFunds");
+	private _funds = getNumber(missionConfigFile >> "cfgMaster" >> "startingFunds");
     ["CREATE", "bankaccounts", 
         [
             ["BEGuid", 			["DB","STRING", _BEGuid] call MPServer_fnc_database_parse],

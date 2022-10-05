@@ -160,7 +160,7 @@ for "_i" from 0 to 1 step 0 do {
         _vehicle setVariable ["mining",nil,true];
     };
 
-    _itemName = M_CONFIG(getText,"VirtualItems",_resource,"displayName");
+    _itemName = M_CONFIG(getText,"cfgVirtualItems",_resource,"displayName");
     titleText[format [localize "STR_NOTF_DeviceMined",_sum,TEXT_LOCALIZE(_itemName)],"PLAIN"];
     _itemWeight = ([_resource] call MPClient_fnc_itemWeight) * _sum;
     _vehicle setVariable ["Trunk",[_inv,_space + _itemWeight],true];

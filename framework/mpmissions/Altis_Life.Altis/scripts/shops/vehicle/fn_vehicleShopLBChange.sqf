@@ -17,20 +17,20 @@ _initalPrice = M_CONFIG(getNumber,"cfgVehicleArsenal",_classNameLife,"price");
 
 switch (playerSide) do {
     case civilian: {
-        _buyMultiplier = LIFE_SETTINGS(getNumber,"vehicle_purchase_multiplier_CIVILIAN");
-        _rentMultiplier = LIFE_SETTINGS(getNumber,"vehicle_rental_multiplier_CIVILIAN");
+        _buyMultiplier = CFG_MASTER(getNumber,"vehicle_purchase_multiplier_CIVILIAN");
+        _rentMultiplier = CFG_MASTER(getNumber,"vehicle_rental_multiplier_CIVILIAN");
     };
     case west: {
-        _buyMultiplier = LIFE_SETTINGS(getNumber,"vehicle_purchase_multiplier_COP");
-        _rentMultiplier = LIFE_SETTINGS(getNumber,"vehicle_rental_multiplier_COP");
+        _buyMultiplier = CFG_MASTER(getNumber,"vehicle_purchase_multiplier_COP");
+        _rentMultiplier = CFG_MASTER(getNumber,"vehicle_rental_multiplier_COP");
     };
     case independent: {
-        _buyMultiplier = LIFE_SETTINGS(getNumber,"vehicle_purchase_multiplier_MEDIC");
-        _rentMultiplier = LIFE_SETTINGS(getNumber,"vehicle_rental_multiplier_MEDIC");
+        _buyMultiplier = CFG_MASTER(getNumber,"vehicle_purchase_multiplier_MEDIC");
+        _rentMultiplier = CFG_MASTER(getNumber,"vehicle_rental_multiplier_MEDIC");
     };
     case east: {
-        _buyMultiplier = LIFE_SETTINGS(getNumber,"vehicle_purchase_multiplier_OPFOR");
-        _rentMultiplier = LIFE_SETTINGS(getNumber,"vehicle_rental_multiplier_OPFOR");
+        _buyMultiplier = CFG_MASTER(getNumber,"vehicle_purchase_multiplier_OPFOR");
+        _rentMultiplier = CFG_MASTER(getNumber,"vehicle_rental_multiplier_OPFOR");
     };
 };
 
@@ -92,7 +92,7 @@ for "_i" from 0 to (count(_colorArray) - 1) do {
 _indexrandom = _numberindexcolorarray call BIS_fnc_selectRandom;
 _ctrl lbSetCurSel _indexrandom;
 
-if (_className in (LIFE_SETTINGS(getArray,"vehicleShop_rentalOnly"))) then {
+if (_className in (CFG_MASTER(getArray,"vehicleShop_rentalOnly"))) then {
     ctrlEnable [2309,false];
 } else {
     if (!(life_var_vehicleTraderData select 3)) then {

@@ -89,6 +89,6 @@ if (count _magazines > 0) then {{_player removeMagazines _x} forEach _magazines}
 if (count _assignedItems > 0) then {{_player unassignItem _x; _player removeItem _x} forEach _assignedItems};
 
 //--- Reset Carry Weight
-life_maxWeight =  getNumber(missionConfigFile >> "Life_Settings" >> "total_maxWeight");
+life_maxWeight =  getNumber(missionConfigFile >> "cfgMaster" >> "total_maxWeight");
 
 true

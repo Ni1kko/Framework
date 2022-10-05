@@ -5,7 +5,7 @@
 */
 
 private _reviversName = param [0,"Unknown Medic",[""]];
-private _reviveCost = LIFE_SETTINGS(getNumber,"revive_fee");
+private _reviveCost = CFG_MASTER(getNumber,"revive_fee");
  
 //--
 {player setVariable _x} forEach [

@@ -7,10 +7,10 @@
     Removes the players weapons client side
 */
 private ["_exempt","_uniform","_vest","_headgear"];
-_exempt = LIFE_SETTINGS(getArray,"seize_exempt");
-_headgear = LIFE_SETTINGS(getArray,"seize_headgear");
-_vest = LIFE_SETTINGS(getArray,"seize_vest");
-_uniform = LIFE_SETTINGS(getArray,"seize_uniform");
+_exempt = CFG_MASTER(getArray,"seize_exempt");
+_headgear = CFG_MASTER(getArray,"seize_headgear");
+_vest = CFG_MASTER(getArray,"seize_vest");
+_uniform = CFG_MASTER(getArray,"seize_uniform");
 
 {
     if (!(_x in _exempt)) then {

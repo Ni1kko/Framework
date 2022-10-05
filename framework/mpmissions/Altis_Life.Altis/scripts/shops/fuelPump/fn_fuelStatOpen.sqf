@@ -16,7 +16,7 @@ if (_vehicleList isEqualTo []) exitWith {hint localize "STR_NOTF_VehicleNear"};
 createDialog "RscDisplayFuelShop";
 life_var_isBusy = true;
 
-private _fuelCost = LIFE_SETTINGS(getNumber,"fuel_cost");
+private _fuelCost = CFG_MASTER(getNumber,"fuel_cost");
 uiNamespace setVariable ["fuel_cost",_fuelCost];
 ctrlSetText [20301,"Fuel Station"];
 

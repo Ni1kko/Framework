@@ -99,7 +99,7 @@ _playerData set ["GangData", [_playerData get "SteamID"] call MPServer_fnc_fetch
 _playerData set ["Keychain", missionNamespace getVariable [format ["%1_KEYS_%2",_playerData get "SteamID",_playerData get "Side"],[]]];
     
 //--- EventHandler for logging
-if (LIFE_SETTINGS(getNumber,"player_deathLog") isEqualTo 1) then {
+if (CFG_MASTER(getNumber,"player_deathLog") isEqualTo 1) then {
     _player setVariable ["MPKilledIndex",_player addMPEventHandler ["MPKilled", {_this call MPServer_fnc_whoDoneIt}],true];
 };
 

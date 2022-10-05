@@ -14,7 +14,6 @@ life_var_postInitTime = compileFinal str(diag_tickTime);
  
 ["Loading client postInit"] call MPClient_fnc_log;
 
-
 //-- Radio channels patch
 {
     _x params [
@@ -28,6 +27,15 @@ life_var_postInitTime = compileFinal str(diag_tickTime);
 		not([false,true] select ((["false","true"] find toLower _noVoice) max 0))
 	];
 } forEach getArray (missionConfigFile >> "disableChannels");
+
+//--- Disable saving.
+enableSaving [false, false];
+
+//--- Disable some features of the ArmA engine.
+enableRadio false; //--- Radio messages
+enableSentences false; //--- Radio messages
+enableEnvironment false; //--- Environment
+disableRemoteSensors true; //--- Raycasting
 
 //-- Exploit patch
 [] spawn {

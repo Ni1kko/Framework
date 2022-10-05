@@ -5,12 +5,12 @@
 */
 
 private _allHouses = nearestobjects [[worldSize/2, worldSize/2],["house"],worldsize];
-private _blacklistedHouses = ("count (getArray (_x >> 'garageBlacklists')) > 0" configClasses (missionconfigFile >> "Housing" >> worldName)) apply {configName _x};
-private _blacklistedGarages = ("count (getArray (_x >> 'garageBlacklists')) > 0" configClasses (missionconfigFile >> "Garages" >> worldName)) apply {configName _x};
+private _blacklistedHouses = ("count (getArray (_x >> 'garageBlacklists')) > 0" configClasses (missionconfigFile >> "cfgHouses" >> worldName)) apply {configName _x};
+private _blacklistedGarages = ("count (getArray (_x >> 'garageBlacklists')) > 0" configClasses (missionconfigFile >> "cfgGarages" >> worldName)) apply {configName _x};
 
 //---  Lock All Houses That Can Be Owned
 {
-    if (isClass (missionConfigFile >> "Housing" >> worldname >> (typeOf _x))) then {
+    if (isClass (missionConfigFile >> "cfgHouses" >> worldname >> (typeOf _x))) then {
         _x setVariable ["locked",true,true];
 
         for "_i" from 1 to (getNumber(configFile >> "CfgVehicles" >> (typeOf _x) >> "numberOfDoors")) do {
@@ -43,7 +43,7 @@ for [{_x=0},{_x<=((["SELECT COUNT(*) FROM houses WHERE owned='1'",2] call MPServ
 //--- Blacklisted Houses
 for "_i" from 0 to count(_blacklistedHouses)-1 do {
     _className = _blacklistedHouses select _i;
-    _positions = getArray(missionConfigFile >> "Housing" >> worldName >> _className >> "garageBlacklists");
+    _positions = getArray(missionConfigFile >> "cfgHouses" >> worldName >> _className >> "garageBlacklists");
     {
         _obj = nearestObject [_x,_className];
         if (isNull _obj) then {
@@ -55,7 +55,7 @@ for "_i" from 0 to count(_blacklistedHouses)-1 do {
 //--- Blacklisted Garages
 for "_i" from 0 to count(_blacklistedGarages)-1 do {
     _className = _blacklistedGarages select _i;
-    _positions = getArray(missionConfigFile >> "Garages" >> worldName >> _className >> "garageBlacklists");
+    _positions = getArray(missionConfigFile >> "cfgGarages" >> worldName >> _className >> "garageBlacklists");
     {
         _obj = nearestObject [_x,_className];
         if (isNull _obj) then {

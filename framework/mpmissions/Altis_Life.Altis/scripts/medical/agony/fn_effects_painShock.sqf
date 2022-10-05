@@ -19,7 +19,7 @@ while {life_var_painShock && alive(player)} do {
 	};
 };
 
-if (getNumber(missionConfigFile >> "Life_Settings" >> "enable_fatigue") isEqualTo 0) then {player enableFatigue false};
+if (getNumber(missionConfigFile >> "cfgMaster" >> "enable_fatigue") isEqualTo 0) then {player enableFatigue false};
 
 life_var_painShockRunning = false;
 

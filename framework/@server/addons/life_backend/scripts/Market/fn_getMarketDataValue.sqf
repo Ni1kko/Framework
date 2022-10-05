@@ -11,7 +11,7 @@ params [
 ];
 
 private _cfgItem = configNull;
-private _cfgVirtualItems = missionConfigFile >> "VirtualItems";
+private _cfgVirtualItems = missionConfigFile >> "cfgVirtualItems";
 if (typeName _currentItem isEqualTo "STRING")then{
 	if(_cfgItem isNotEqualTo "")then{
 		_cfgItem = _cfgVirtualItems >> _currentItem;

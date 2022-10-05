@@ -8,7 +8,7 @@
 disableSerialization;
 
 if (!life_var_ATMEnabled) exitWith {
-    hint format [localize "STR_Shop_ATMRobbed",(LIFE_SETTINGS(getNumber,"federalReserve_atmRestrictionTimer"))];
+    hint format [localize "STR_Shop_ATMRobbed",(CFG_MASTER(getNumber,"federalReserve_atmRestrictionTimer"))];
     false
 };
 

@@ -80,8 +80,7 @@ for "_i" from 0 to 1 step 0 do {
 //Kill the UI display and check for various states
 "progressBar" cutText ["","PLAIN"];
 player playActionNow "stop";
-if (!alive player || life_var_tazed || life_var_unconscious) exitWith {life_var_isBusy = false;};
-if (player getVariable ["restrained",false]) exitWith {life_var_isBusy = false;};
+if (not(call life_var_isDormant)) exitWith {life_var_isBusy = false;};
 if (life_var_interrupted) exitWith {life_var_interrupted = false; titleText[localize "STR_NOTF_ActionCancel","PLAIN"]; life_var_isBusy = false;};
 life_boltcutter_uses = life_boltcutter_uses + 1;
 life_var_isBusy = false;

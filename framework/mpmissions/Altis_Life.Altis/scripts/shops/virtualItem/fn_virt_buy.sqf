@@ -23,7 +23,7 @@ if ((_price * _amount) > MONEY_CASH && {!isNil "_hideout" && {(MONEY_GANG) <= _p
 if ((time - life_var_actionDelay) < 0.2) exitWith {hint localize "STR_NOTF_ActionDelay";};
 life_var_actionDelay = time;
 
-_name = M_CONFIG(getText,"VirtualItems",_type,"displayName");
+_name = M_CONFIG(getText,"cfgVirtualItems",_type,"displayName");
 
 if ([true,_type,_amount] call MPClient_fnc_handleInv) then {
     if (!isNil "_hideout" && {MONEY_GANG >= _price}) then {

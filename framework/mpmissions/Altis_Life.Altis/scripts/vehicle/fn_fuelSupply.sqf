@@ -65,7 +65,7 @@ private _shortest = 100000;
 } forEach ["fuel_storage_1","fuel_storage_2"];
 if (_shortest < 1000) exitWith {titleText [localize "STR_FuelTank_PipeLine","PLAIN"]; life_var_isBusy = false;};
 
-private _pricem = getNumber(missionConfigFile >> "Life_Settings" >> "fuelTank_winMultiplier");
+private _pricem = getNumber(missionConfigFile >> "cfgMaster" >> "fuelTank_winMultiplier");
 private _price = floor((((floor(_shortest / 100) * 100) / 1337) * _pricem) * 100) / 100;
 private _win = 0;
 

@@ -12,12 +12,12 @@ params [
 ];
 
 private _vitems = [];
-private _cfgVitems = missionConfigFile >> "VirtualItems";
+private _cfgVitems = missionConfigFile >> "cfgVirtualItems";
 
 for "_currentIndex" from 0 to (count(_cfgVitems) - 1) do {
 	private _currentItem = _cfgVitems select _currentIndex;
 	private _currentItemName = configName _currentItem;
-	private _item = format ["life_inv_%1",getText(missionConfigFile >> "VirtualItems" >> _currentItemName >> "variable")];
+	private _item = format ["life_inv_%1",getText(missionConfigFile >> "cfgVirtualItems" >> _currentItemName >> "variable")];
     private _count = missionNamespace getVariable [_item,0];
 	if _owned then {
 		if (_count > 0) then {

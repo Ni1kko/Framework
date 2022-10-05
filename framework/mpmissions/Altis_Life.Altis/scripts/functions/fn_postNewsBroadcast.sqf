@@ -13,7 +13,7 @@ _broadcastMessage = ctrlText (CONTROL(100100,100102));
 _length = count (toArray (_broadcastHeader));
 _characterByte = toArray (_broadcastHeader);
 _allowed = toArray("ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789_ ");
-_allowedLength = LIFE_SETTINGS(getNumber,"news_broadcast_header_length");
+_allowedLength = CFG_MASTER(getNumber,"news_broadcast_header_length");
 _badCharacter = false;
 
 if (_length > _allowedLength) exitWith {hint format [localize "STR_News_HeaderLength",_allowedLength];};
@@ -26,7 +26,7 @@ if (_badCharacter) exitWith {hint localize "STR_News_UnsupportedCharacter"};
 
 [_broadcastHeader,_broadcastMessage,profileName] remoteExec ['MPClient_fnc_AAN',-2];
 
-["SUB","CASH",LIFE_SETTINGS(getNumber,"news_broadcast_cost")] call MPClient_fnc_handleMoney;
+["SUB","CASH",CFG_MASTER(getNumber,"news_broadcast_cost")] call MPClient_fnc_handleMoney;
 
 life_broadcastTimer = time;
 publicVariable "life_broadcastTimer";

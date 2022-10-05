@@ -68,7 +68,7 @@ for "_i" from 0 to 4 do {
 };
 
 if ([true,_resource,_diff] call MPClient_fnc_handleInv) then {
-    _itemName = M_CONFIG(getText,"VirtualItems",_resource,"displayName");
+    _itemName = M_CONFIG(getText,"cfgVirtualItems",_resource,"displayName");
     titleText[format [localize "STR_NOTF_Gather_Success",TEXT_LOCALIZE(_itemName),_diff],"PLAIN"];
 };
 

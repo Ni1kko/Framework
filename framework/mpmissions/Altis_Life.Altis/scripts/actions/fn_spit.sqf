@@ -20,7 +20,7 @@ private _targetID = owner _target;
 if(_targetID < 4)exitWith {hint 'cant spit on this sorry no way'};
 
 //get  config
-private _spitConfig = missionConfigFile >> "Life_Settings" >> "spitting";  
+private _spitConfig = missionConfigFile >> "cfgMaster" >> "spitting";  
 private _spitDistance = [_spitConfig, "distance", 10]call BIS_fnc_returnConfigEntry;
 
 //check target distance

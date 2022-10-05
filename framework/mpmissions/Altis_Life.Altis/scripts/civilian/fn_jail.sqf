@@ -15,7 +15,7 @@ params [
 if (isNull _unit) exitWith {}; //Dafuq?
 if !(_unit isEqualTo player) exitWith {}; //Dafuq?
 if (life_var_arrested) exitWith {}; //Dafuq i'm already arrested
-_illegalItems = LIFE_SETTINGS(getArray,"jail_seize_vItems");
+_illegalItems = CFG_MASTER(getArray,"jail_seize_vItems");
 
 player setVariable ["restrained",false,true];
 player setVariable ["Escorting",false,true];
@@ -48,7 +48,7 @@ if (player distance (getMarkerPos "jail_marker") > 40) then {
 
 life_var_arrested = true;
 
-if (LIFE_SETTINGS(getNumber,"jail_seize_inventory") isEqualTo 1) then {
+if (CFG_MASTER(getNumber,"jail_seize_inventory") isEqualTo 1) then {
     [] spawn MPClient_fnc_seizeClient;
 } else {
     removeAllWeapons player;

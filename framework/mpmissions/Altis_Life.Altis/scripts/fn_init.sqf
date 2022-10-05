@@ -27,10 +27,6 @@ private _cfgSpawnPoints = missionConfigFile >> "CfgSpawnPoints";
 private _spawnBuildings = getArray(_cfgSpawnPoints >> "spawnBuildings");
 private _factionsWithBuildingSpawns = getArray(_cfgSpawnPoints >> "factionsWithBuildingSpawns");
 
-// -- 
-enableSentences false;
-enableRadio false;
-
 // -- Start Loading Screen (Arma likes to be a prick and sometimes it fails to load, this is a workaround for it)
 endLoadingScreen;
 waitUntil{not(call BIS_fnc_isLoading)};
@@ -79,9 +75,9 @@ waitUntil {
 };
 
 ["Setting up player", "Please wait..."] call MPClient_fnc_setLoadingText; uiSleep(random[0.5,3,6]);
-if (LIFE_SETTINGS(getNumber,"enable_fatigue") isEqualTo 0) then {
+if (CFG_MASTER(getNumber,"enable_fatigue") isEqualTo 0) then {
     player enableFatigue false;
-    if (LIFE_SETTINGS(getNumber,"enable_autorun") isEqualTo 1) then {
+    if (CFG_MASTER(getNumber,"enable_autorun") isEqualTo 1) then {
         [] spawn MPClient_fnc_autoruninit;
     }; 
 };
@@ -142,13 +138,13 @@ enableRadio true;
 
 [] spawn MPClient_fnc_survival;
 [] spawn {
-    if(getNumber(missionConfigFile >> "life_session" >> "autoSave") isNotEqualTo 1)exitWith{false};
+    if(getNumber(missionConfigFile >> "cfgSession" >> "autoSave") isNotEqualTo 1)exitWith{false};
 
     while {true} do {
 
         waitUntil{  
             uiSleep 30;
-            ((time - life_var_lastSynced) > (getNumber(missionConfigFile >> "life_session" >> "autoSaveInterval") * 60))
+            ((time - life_var_lastSynced) > (getNumber(missionConfigFile >> "cfgSession" >> "autoSaveInterval") * 60))
         };
 
         [true,false,["Auto Syncing player information to Hive."]] call MPClient_fnc_syncData;

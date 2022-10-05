@@ -53,7 +53,7 @@ switch (_packetData getOrDefault ["Mode", -1]) do
     case 2: 
     {
         /*
-            private _resourceItems = LIFE_SETTINGS(getArray,"save_vehicle_items");
+            private _resourceItems = CFG_MASTER(getArray,"save_vehicle_items");
             private _totalweight = 0;
             private _items = [];
             {

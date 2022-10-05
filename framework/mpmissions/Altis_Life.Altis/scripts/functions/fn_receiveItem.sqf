@@ -24,7 +24,7 @@ if (!(_diff isEqualTo (parseNumber _val))) then {
     };
 } else {
     if ([true,_item,(parseNumber _val)] call MPClient_fnc_handleInv) then {
-        private _type = M_CONFIG(getText,"VirtualItems",_item,"displayName");
+        private _type = M_CONFIG(getText,"cfgVirtualItems",_item,"displayName");
         hint format [localize "STR_NOTF_GivenItem",_from getVariable ["realname",name _from],_val,TEXT_LOCALIZE(_type)];
     } else {
         [_from,_item,_val,_unit,false] remoteExecCall ["MPClient_fnc_giveDiff",_from];

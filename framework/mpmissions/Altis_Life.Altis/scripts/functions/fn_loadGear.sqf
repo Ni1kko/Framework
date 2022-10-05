@@ -26,7 +26,7 @@ if(count _loadout > 0)then{
 };
 
 //--- Carry Weight
-life_maxWeight = if (backpack _player isEqualTo "") then {LIFE_SETTINGS(getNumber,"total_maxWeight")} else {LIFE_SETTINGS(getNumber,"total_maxWeight") + round(FETCH_CONFIG2(getNumber,"CfgVehicles",(backpack _player),"maximumload") / 4)};
+life_maxWeight = if (backpack _player isEqualTo "") then {CFG_MASTER(getNumber,"total_maxWeight")} else {CFG_MASTER(getNumber,"total_maxWeight") + round(FETCH_CONFIG2(getNumber,"CfgVehicles",(backpack _player),"maximumload") / 4)};
 
 //--- VirtualItems
 if(count _vitems > 0)then{

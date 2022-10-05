@@ -19,8 +19,8 @@ _display = findDisplay 100100;
 _confirmBtn = _display displayCtrl Confirm;
 _confirmBtn ctrlEnable false;
 
-_msgCooldown = (60 * LIFE_SETTINGS(getNumber,"news_broadcast_cooldown"));
-_msgCost = LIFE_SETTINGS(getNumber,"news_broadcast_cost");
+_msgCooldown = (60 * CFG_MASTER(getNumber,"news_broadcast_cooldown"));
+_msgCost = CFG_MASTER(getNumber,"news_broadcast_cost");
 
 if (MONEY_CASH < _msgCost) then {
     hint format [localize "STR_News_NotEnough",[_msgCost] call MPClient_fnc_numberText];

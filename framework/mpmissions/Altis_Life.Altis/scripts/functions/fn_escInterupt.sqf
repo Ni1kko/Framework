@@ -1,134 +1,158 @@
+#include "..\..\script_macros.hpp"
 /*
+	## Nikko Renolds
+	## https://github.com/Ni1kko/FrameworkV2
+    ## fn_escInterupt.sqf 
 
-	Function: 	MPClient_fnc_escInterupt
-	Project: 	AsYetUntitled
-	Author:     Tonic, Nikko, IceEagle132
-	Github:		https://github.com/Ni1kko/FrameworkV2
-	
+    ## The script executes in its own namespace. 
+        In order to get/set external global variable you need to explicitly use mission namespace.
+            (waitUntil is forced into its own namespace, even using `with missionNamespace do {};` still executes in its own namespace)
 */
 
-disableSerialization;  
- 
-private _escSync = {
-    disableSerialization;
+disableSerialization;
 
-    //Timer Finished Disapy Exit Button
-    if(_this)then{
-        private _thread = [] spawn {
-            disableSerialization;
-            private _timeStamp = time + 10;
-            waitUntil {
-                ((uiNamespace getVariable "RscDisplayMPInterrupt") displayCtrl 104) ctrlSetText format[localize "STR_NOTF_AbortESC",[(_timeStamp - time),"SS.MS"] call BIS_fnc_secondsToString];
-                ((uiNamespace getVariable "RscDisplayMPInterrupt") displayCtrl 104) ctrlCommit 0;
-                round(_timeStamp - time) <= 0 || isNull (uiNamespace getVariable "RscDisplayMPInterrupt")
-            };
-            ((uiNamespace getVariable "RscDisplayMPInterrupt") displayCtrl 104) ctrlSetText "Exit";
-            ((uiNamespace getVariable "RscDisplayMPInterrupt") displayCtrl 104) ctrlCommit 0;
-        };
-        waitUntil{scriptDone _thread || isNull (uiNamespace getVariable "RscDisplayMPInterrupt")};
-        ((uiNamespace getVariable "RscDisplayMPInterrupt") displayCtrl 104) ctrlEnable true; //Enable Exit Button
-    };
-};
+params [
+    ["_display", displayNull, [displayNull]]
+];
 
-private _SaveSync = {
-    disableSerialization;
-
-    //Timer Finished Disapy save Button
-    if((life_var_lastSynced + (5 * 60)) < time)then{
-        private _thread = [] spawn {
-            disableSerialization;
-            private _timeStamp = life_var_lastSynced + (5 * 60);
-            waitUntil {
-                ((uiNamespace getVariable ["RscDisplayMPInterrupt",displayNull]) displayCtrl 103) ctrlSetText format["SyncData Blocked For %1",[(_timeStamp - time),"SS.MS"] call BIS_fnc_secondsToString];
-                ((uiNamespace getVariable ["RscDisplayMPInterrupt",displayNull]) displayCtrl 103) ctrlCommit 0;
-                round(_timeStamp - time) <= 0 || isNull (uiNamespace getVariable ["RscDisplayMPInterrupt",displayNull])
-            }; 
-            ((uiNamespace getVariable ["RscDisplayMPInterrupt",displayNull])displayCtrl 103) ctrlSetText "Sync Data";
-            ((uiNamespace getVariable ["RscDisplayMPInterrupt",displayNull]) displayCtrl 103) ctrlCommit 0;
-        };
-        waitUntil{scriptDone _thread || isNull (uiNamespace getVariable ["RscDisplayMPInterrupt",displayNull])};
-        ((uiNamespace getVariable ["RscDisplayMPInterrupt",displayNull]) displayCtrl 103) ctrlEnable true; //Enable Save Btn
-    };
-};
-
-private _canUseControls = {
-    (playerSide isEqualTo west) || {!((player getVariable ["restrained",false]) || {player getVariable ["Escorting",false]} || {player getVariable ["transporting",false]} || {life_var_arrested} || {life_var_tazed} || {life_var_unconscious})}
-};
-
-//Handle Esacpe Menu > Configure Btn
-[]spawn{
-    for "_i" from 0 to 1 step 0 do {
-        //Esc > Game
-        waitUntil{!isNull (uiNamespace getVariable ["RscDisplayGameOptions",displayNull])};
-        //Difficulty
-        ((uiNamespace getVariable "RscDisplayGameOptions") displayCtrl 304) ctrlEnable false;
-        ((uiNamespace getVariable "RscDisplayGameOptions") displayCtrl 304) ctrlSetText "Disabled"; 
-        //Colors
-        ((uiNamespace getVariable "RscDisplayGameOptions") displayCtrl 2404) ctrlEnable true;
-        ((uiNamespace getVariable "RscDisplayGameOptions") displayCtrl 2404) ctrlSetText "Game Colors";
-        //Layout
-        ((uiNamespace getVariable "RscDisplayGameOptions") displayCtrl 2405) ctrlEnable false;
-        ((uiNamespace getVariable "RscDisplayGameOptions") displayCtrl 2405) ctrlSetText "AntiCheat Patch";
-        
-        waitUntil{isNull (uiNamespace getVariable ["RscDisplayGameOptions",displayNull])};
-    };
-};
-
-//Handle Esacpe Menu
-for "_i" from 0 to 1 step 0 do {
-    waitUntil{!isNull (uiNamespace getVariable ["RscDisplayMPInterrupt",displayNull])};
+private _buttonControlEvents = [
+    "ButtonClick",
+    "ButtonDblClick",
+    "ButtonDown",
+    "ButtonUp",
+    "MouseButtonDown",
+    "MouseButtonUp",
+    "MouseButtonClick",
+    "MouseButtonDblClick"
+];
     
+//--- Stop endmission cheat
+_display displayAddEventHandler ["KeyDown", { 
+    params ["_display","_key","_shift"];
+    if (_key isEqualTo 74 && {_shift}) exitWith {
+        disableUserInput true;
+        [] spawn {
+            uiSleep 0.5;
+            disableUserInput false;
+        };
+        true
+    };
+}];
+
+with missionNamespace do
+{
     //Name
-    ((uiNamespace getVariable "RscDisplayMPInterrupt") displayCtrl 523) ctrlSetText profileName;
-    ((uiNamespace getVariable "RscDisplayMPInterrupt") displayCtrl 523) ctrlSetToolTip "Your Arma3 Profile Name";
+    (_display displayCtrl 523) ctrlSetText profileName;
+    (_display displayCtrl 523) ctrlSetToolTip "Your Arma3 Profile Name";
 
     //SteamID (Short)
-    ((uiNamespace getVariable "RscDisplayMPInterrupt") displayCtrl 109) ctrlSetText format["%1|%2",(profileNameSteam),([(getPlayerUID player), 12, 17] call BIS_fnc_trimString)];
-    ((uiNamespace getVariable "RscDisplayMPInterrupt") displayCtrl 109) ctrlSetToolTip "SteamName & Last 5 Number Of Your SteamID";
-
-    //Continue Btn
-    ((uiNamespace getVariable "RscDisplayMPInterrupt") displayCtrl 2) ctrlEnable true; //Continue
-    ((uiNamespace getVariable "RscDisplayMPInterrupt") displayCtrl 2) ctrlSetText "Resume";//Continue
-
+    (_display displayCtrl 109) ctrlSetText format["%1|%2",(profileNameSteam),([(getPlayerUID player), 12, 17] call BIS_fnc_trimString)];
+    (_display displayCtrl 109) ctrlSetToolTip "SteamName & Last 5 Number Of Your SteamID";
+    
     //Save Btn
-    ((uiNamespace getVariable "RscDisplayMPInterrupt") displayCtrl 103) ctrlRemoveAllEventHandlers "ButtonDown";
-    ((uiNamespace getVariable "RscDisplayMPInterrupt") displayCtrl 103) ctrlEnable true;
-    ((uiNamespace getVariable "RscDisplayMPInterrupt") displayCtrl 103) ctrlSetText "Sync Data";
-    ((uiNamespace getVariable "RscDisplayMPInterrupt") displayCtrl 103) ctrlSetToolTip "Sync Player Data To Hive";
-    ((uiNamespace getVariable "RscDisplayMPInterrupt") displayCtrl 103) ctrlAddEventHandler ["ButtonDown", "[] call MPClient_fnc_syncData"];
+    {(_display displayCtrl 104) ctrlRemoveAllEventHandlers _x}forEach _buttonControlEvents;
+    (_display displayCtrl 103) ctrlSetEventHandler ["MouseButtonDown", "_this call life_var_syncScript; true"]; //Must return turn or default arma code is ran
 
-    //Respawn Btn
-    ((uiNamespace getVariable "RscDisplayMPInterrupt") displayCtrl 1010) ctrlEnable false;
-    ((uiNamespace getVariable "RscDisplayMPInterrupt") displayCtrl 1010) ctrlSetText "Respawn";
-    ((uiNamespace getVariable "RscDisplayMPInterrupt") displayCtrl 1010) ctrlSetToolTip "Kills You And Gives You A New Life & Choice Of Spawn Locations";
-
-    //Configure Btn
-    ((uiNamespace getVariable "RscDisplayMPInterrupt") displayCtrl 101) ctrlSetText "Game Options";
-    ((uiNamespace getVariable "RscDisplayMPInterrupt") displayCtrl 101) ctrlEnable true;
-    ((uiNamespace getVariable "RscDisplayMPInterrupt") displayCtrl 101) ctrlSetToolTip "Configure Arma Options";
-
-    //Field manual Btn
-    ((uiNamespace getVariable "RscDisplayMPInterrupt") displayCtrl 122) ctrlRemoveAllEventHandlers "ButtonDown";
-    ((uiNamespace getVariable "RscDisplayMPInterrupt") displayCtrl 122) ctrlEnable false;
-    ((uiNamespace getVariable "RscDisplayMPInterrupt") displayCtrl 122) ctrlSetText "Disabled"; 
-    ((uiNamespace getVariable "RscDisplayMPInterrupt") displayCtrl 122) ctrlSetToolTip "";
-    
     //Exit Btn
-    ((uiNamespace getVariable "RscDisplayMPInterrupt") displayCtrl 104) ctrlRemoveAllEventHandlers "ButtonDown";
-    ((uiNamespace getVariable "RscDisplayMPInterrupt") displayCtrl 104) ctrlEnable false;
-    ((uiNamespace getVariable "RscDisplayMPInterrupt") displayCtrl 104) ctrlSetText "Exit";
-    ((uiNamespace getVariable "RscDisplayMPInterrupt") displayCtrl 104) ctrlAddEventHandler ["ButtonDown", "_this spawn MPClient_fnc_abort"];
-    ((uiNamespace getVariable "RscDisplayMPInterrupt") displayCtrl 104) ctrlSetToolTip "Abandon Server And Sync Data";
+    {(_display displayCtrl 104) ctrlRemoveAllEventHandlers _x}forEach _buttonControlEvents;
+    (_display displayCtrl 104) ctrlSetEventHandler ["MouseButtonUp", "_this call life_var_abortScript; true"];//Must return turn or default arma code is ran
+     
+    while {not(isNull _display)} do 
+    { 
+        //Continue Btn
+        (_display displayCtrl 2) ctrlEnable true; //Continue
+        (_display displayCtrl 2) ctrlSetText "Resume";//Continue
+        (_display displayCtrl 2) ctrlSetTooltip format["Resume %1 Life", worldname];
 
-    
-    //Enable Contols
-    _usebleCtrl = call _canUseControls; 
-    _usebleCtrl spawn _escSync;
-    if(_usebleCtrl)then{
-        //Respawn Btn.
-        ((uiNamespace getVariable "RscDisplayMPInterrupt") displayCtrl 1010) ctrlEnable true;
-        //SaveBtn
-        []spawn _SaveSync;
+        //Save Btn
+        (_display displayCtrl 103) ctrlEnable false;
+        (_display displayCtrl 103) ctrlSetText "Sync Data";
+        (_display displayCtrl 103) ctrlSetToolTip "Sync Player Data To Hive";
+        
+        //Respawn Btn
+        (_display displayCtrl 1010) ctrlEnable false;
+        (_display displayCtrl 1010) ctrlSetText "Respawn";
+        (_display displayCtrl 1010) ctrlSetToolTip "Kills You And Gives You A New Life & Choice Of Spawn Locations";
+
+        //Configure Btn
+        (_display displayCtrl 101) ctrlSetText "Game Options";
+        (_display displayCtrl 101) ctrlEnable true;
+        (_display displayCtrl 101) ctrlSetToolTip "Configure Arma Options";
+
+        //Field manual Btn 
+        (_display displayCtrl 122) ctrlEnable false;
+        (_display displayCtrl 122) ctrlSetText "Disabled"; 
+        (_display displayCtrl 122) ctrlSetToolTip "Anticheat Patch";
+        
+        //Exit Btn
+        (_display displayCtrl 104) ctrlEnable false;
+        (_display displayCtrl 104) ctrlSetText "Exit";
+        (_display displayCtrl 104) ctrlSetToolTip format["Leave %1 Life", worldname];
+
+        //Enable Contols  
+        if (call (missionNamespace getVariable ["life_var_isDormant",{false}])) then
+        {
+            //Respawn Btn
+            (_display displayCtrl 1010) ctrlEnable true;
+
+            if(not(isNil "life_var_syncThread") AND {typeName life_var_syncThread isEqualTo "SCRIPT" AND not(isNull life_var_syncThread)})then{
+                terminate life_var_syncThread;
+            };
+            private _cfgTimers = missionConfigFile >> "cfgTimers";
+            private _timeStampAbort = time + getNumber(_cfgTimers >> "abort");
+            private _timeStampSync = getNumber(_cfgTimers >> "sync");
+            
+            waitUntil {
+                private _remainingAbortTime = (_timeStampAbort - time);
+                private _remainingSyncTime = ((life_var_lastSynced + _timeStampSync) - time);
+
+                if(_remainingAbortTime > 0)then{
+                    (_display displayCtrl 104) ctrlSetText format[localize "STR_NOTF_AbortESC",[_remainingAbortTime,"SS.MS"] call BIS_fnc_secondsToString];
+                    (_display displayCtrl 104) ctrlCommit 0;
+                };
+
+                if(_remainingSyncTime > 0)then{
+                    (_display displayCtrl 103) ctrlSetText format["Sync Blocked For %1",(switch (true) do {
+                        case (_remainingSyncTime >= 3600): {[_remainingSyncTime,"HH:MM:SS"] call BIS_fnc_secondsToString}; 
+                        case (_remainingSyncTime >= 60 AND _remainingSyncTime < 3600): {[_remainingSyncTime,"MM.SS"] call BIS_fnc_secondsToString};
+                        default {[_remainingSyncTime,"SS.MS"] call BIS_fnc_secondsToString};
+                    })];
+                    (_display displayCtrl 103) ctrlCommit 0;
+                };
+
+                private _abortReady = round(_remainingAbortTime) <= 0;
+                private _syncReady = round(_remainingSyncTime) <= 0;
+
+                if(_syncReady AND not(ctrlEnabled(_display displayCtrl 103)))then{
+                    (_display displayCtrl 103) ctrlEnable true;
+                    (_display displayCtrl 103) ctrlSetText "Sync Data";
+                    (_display displayCtrl 103) ctrlSetToolTip format["Leave %1 Life", worldname];
+                };
+
+                if(_abortReady AND not(ctrlEnabled(_display displayCtrl 104)))then{
+                    (_display displayCtrl 104) ctrlEnable true;
+                    (_display displayCtrl 104) ctrlSetText "Exit";
+                    (_display displayCtrl 104) ctrlSetToolTip format["Leave %1 Life", worldname];
+                };
+
+                (_abortReady AND _syncReady) OR (isNull _display)
+            };
+            waitUntil {not(call (missionNamespace getVariable ["life_var_isDormant",{false}])) OR (isNull _display)};
+        }else{
+            (_display displayCtrl 103) ctrlSetToolTip "DataSync Not Available";
+            (_display displayCtrl 103) ctrlEnable false; 
+            (_display displayCtrl 1010) ctrlSetToolTip "Respawn Not Available";
+            (_display displayCtrl 1010) ctrlEnable false;
+            if (missionNamespace getVariable ["life_var_sessionDone",false]) then {
+                (_display displayCtrl 104) ctrlSetToolTip "Abort Not Available";
+                (_display displayCtrl 104) ctrlEnable false;
+            }else{
+                (_display displayCtrl 104) ctrlSetToolTip format["Leave %1 Life", worldname];
+                (_display displayCtrl 104) ctrlEnable true;
+            };
+            waitUntil {(call (missionNamespace getVariable ["life_var_isDormant",{false}])) OR (isNull _display)};
+        };
     };
-    waitUntil{isNull (uiNamespace getVariable ["RscDisplayMPInterrupt",displayNull])};
 };
+
+true

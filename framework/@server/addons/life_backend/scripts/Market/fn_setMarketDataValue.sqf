@@ -11,7 +11,7 @@ params [
 	["_forceBroadcast",false,[false]]
 ];
 
-private _cfgVirtualItems = missionConfigFile >> "VirtualItems";
+private _cfgVirtualItems = missionConfigFile >> "cfgVirtualItems";
 private _cfgItem = _cfgVirtualItems >> _item;
 
 if(not(isClass _cfgItem))exitWith {createHashMap};

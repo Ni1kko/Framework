@@ -60,7 +60,7 @@ if (count crew _vehicle isEqualTo 0) then {
 
     waitUntil {!life_var_sessionGarageImpoundRequest};
     if (playerSide isEqualTo west) then {
-        _impoundMultiplier = LIFE_SETTINGS(getNumber,"vehicle_cop_impound_multiplier");
+        _impoundMultiplier = CFG_MASTER(getNumber,"vehicle_cop_impound_multiplier");
         _value = _price * _impoundMultiplier;
         [0,"STR_NOTF_HasImpounded",true,[profileName,((_vehicleData select 0) select 1),_vehicleName]] remoteExecCall ["MPClient_fnc_broadcast",RE_CLIENT];
         if (_vehicle in life_var_vehicles) then {

@@ -13,12 +13,12 @@ params [
 if (isNull _target) exitWith {};
 
 private "_dp";
-if (str(_target) in LIFE_SETTINGS(getArray,"delivery_points")) then {
-    private _point = LIFE_SETTINGS(getArray,"delivery_points");
+if (str(_target) in CFG_MASTER(getArray,"delivery_points")) then {
+    private _point = CFG_MASTER(getArray,"delivery_points");
     _point deleteAt (_point find (str(_target)));
     _dp = selectRandom _point;
 } else {
-    _dp = selectRandom (LIFE_SETTINGS(getArray,"delivery_points"));
+    _dp = selectRandom (CFG_MASTER(getArray,"delivery_points"));
 };
 
 life_dp_start = _target;

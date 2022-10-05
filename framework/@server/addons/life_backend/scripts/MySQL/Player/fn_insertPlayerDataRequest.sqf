@@ -63,7 +63,7 @@ if(_insertPlayer)then{
 
 //--- Add new player bankaccount to database
 if(_insertBank)then{
-    private _funds = getNumber(missionConfigFile >> "Life_Settings" >> "startingFunds");
+    private _funds = getNumber(missionConfigFile >> "cfgMaster" >> "startingFunds");
     ["CREATE", "bankaccounts", 
         [
             ["BEGuid", 			["DB","STRING", _BEGuid] call MPServer_fnc_database_parse],

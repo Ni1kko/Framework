@@ -10,7 +10,7 @@ if !(playerSide isEqualTo civilian) exitWith {hint localize "STR_NOTF_notAllowed
 
 disableSerialization;
 
-private _chopable = LIFE_SETTINGS(getArray,"chopShop_vehicles");
+private _chopable = CFG_MASTER(getArray,"chopShop_vehicles");
 private _nearVehicles = nearestObjects [getMarkerPos (_this select 3),_chopable,25];
 private _nearUnits = (nearestObjects[player,["CAManBase"],5]) arrayIntersect playableUnits;
 if (count _nearUnits > 1) exitWith {hint localize "STR_NOTF_PlayerNear"};
@@ -38,7 +38,7 @@ private "_chopMultiplier";
         };
 
         _price = M_CONFIG(getNumber,"cfgVehicleArsenal",_className,"price");
-        _chopMultiplier = LIFE_SETTINGS(getNumber,"vehicle_chopShop_multiplier");
+        _chopMultiplier = CFG_MASTER(getNumber,"vehicle_chopShop_multiplier");
 
         _price = _price * _chopMultiplier;
         if (!isNil "_price" && count crew _x isEqualTo 0) then {

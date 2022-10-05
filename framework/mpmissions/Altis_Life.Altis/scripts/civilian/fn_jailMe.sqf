@@ -14,7 +14,7 @@ params [
 
 private _esc = false;
 private _bail = false;
-private _time = time + (LIFE_SETTINGS(getNumber,"jail_timeMultiplier") * 60);
+private _time = time + (CFG_MASTER(getNumber,"jail_timeMultiplier") * 60);
 
 if (_bad) then {
     _time = _time + 900;
@@ -43,7 +43,7 @@ for "_i" from 0 to 1 step 0 do {
         hintSilent parseText format [(localize "STR_Jail_Time") + "<br/> <t size='2'><t color='#FF0000'>%1</t></t><br/><br/>" + (localize "STR_Jail_Pay") + " %3<br/>" + (localize "STR_Jail_Price") + " $%2", _countDown, [life_bail_amount] call MPClient_fnc_numberText, if (life_var_canAffordBail) then {"Yes"} else {"No"}];
     };
 
-    if (LIFE_SETTINGS(getNumber,"jail_forceWalk") isEqualTo 1) then {
+    if (CFG_MASTER(getNumber,"jail_forceWalk") isEqualTo 1) then {
         player forceWalk true;
     };
 

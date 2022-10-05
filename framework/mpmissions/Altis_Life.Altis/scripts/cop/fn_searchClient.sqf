@@ -23,7 +23,7 @@ _robber = false;
         _inv pushBack [_var,_val];
         [false,_var,_val] call MPClient_fnc_handleInv;
     };
-} forEach ("getNumber(_x >> 'illegal') isEqualTo 1" configClasses (missionConfigFile >> "VirtualItems"));
+} forEach ("getNumber(_x >> 'illegal') isEqualTo 1" configClasses (missionConfigFile >> "cfgVirtualItems"));
 
 if (!life_var_ATMEnabled) then  {
 	["ZERO","CASH"] call MPClient_fnc_handleMoney;
