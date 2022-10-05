@@ -294,7 +294,7 @@ _threadsToMonitor spawn {uiSleep floor(random 30); {_x spawn {waitUntil {uiSleep
     for "_currentIndex" from 0 to (count(_cfgFunctions) - 1) do 
     {
         private _functionClassList = (_cfgFunctions select _currentIndex);
-        private _groupName = configName _currentIndex;
+        private _groupName = configName _functionClassList;
         private _functionGroupIndex = _functionGroups pushBackUnique [_groupName, []];
 
         for "_currentInnerIndex" from 0 to (count(_functionClassList) - 1) do 
