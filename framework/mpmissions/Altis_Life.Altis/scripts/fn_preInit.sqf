@@ -221,18 +221,28 @@ private _variablesFlagged = [/*DON'T EDIT*/];
 //-- init Variables
 {
     _x params ["_namespace", "_verifyIsNil", "_varlist"];
+    
+    private _broadcast = switch (true) do {
+        case (typeName _namespace isEqualTo "OBJECT"): {true};
+        case (typeName _namespace isEqualTo "NAMESPACE" AND _namespace isEqualTo missionNamespace): {true};
+        default {false};
+    };
 
     {
         private _varName = _x param [0, ""];
         private _varValue =  _namespace getVariable [_varName,nil];
         private _varPublic =  _x param [2, false];
+        private _data = [_varName,_varValue];
+
+        //-- if namespace can broadcast add public var
+        if _broadcast then {_data pushBack _varPublic};
 
         if(isNil {_varValue} OR not(_verifyIsNil))then{
             _varValue =  _x param [1, nil];
             if(!isNil {_varValue})then{
-                _namespace setVariable [_varName,_varValue,_varPublic];
+                _namespace setVariable _data;
             }else{
-                _namespace setVariable [_varName,nil,_varPublic];
+                _namespace setVariable _data;
             };
         }else{
             _variablesFlagged pushBackUnique [_varName,_varValue];
