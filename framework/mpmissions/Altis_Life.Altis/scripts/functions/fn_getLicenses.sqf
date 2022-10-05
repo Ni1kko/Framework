@@ -13,12 +13,12 @@ params [
 ];
 
 private _cfgLicenses = missionConfigFile >> "CfgLicenses";
-private _sideflagActual = [side _player,true] call (missionNamespace getvariable ["MPServer_fnc_util_getSideString",{"Undefined"}]);
+private _sideflagActual = [side _player,true] call (missionNamespace getvariable ["MPServer_fnc_util_getSideString",{""}]);
 private _alliLcenses = missionNamespace getVariable ["life_var_licenses",createHashMap];
 private _licenses = [];
 
 //-- preInit loads before server is ready, so we force get all sides
-if (_sideflagActual isEqualTo "Undefined")then{
+if (count _sideflagActual isEqualTo 0)then{
 	_sideOnly = false;
 };
 

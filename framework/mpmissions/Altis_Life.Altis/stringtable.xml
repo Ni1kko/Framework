@@ -5833,16 +5833,7 @@
 			<Chinesesimp>你的声音被设置为静音模式！</Chinesesimp>
         </Key>
         <Key ID="STR_MISC_overviewText">
-            <Original>An RPG game mode developed by Tonic.</Original>
-            <Czech>Mód RPG hra vyvinutá Tonic.</Czech>
-            <French>Un mode de jeu de RPG développé par Tonic.</French>
-            <Spanish>Un modo de juego de rol desarrollado por Tonic.</Spanish>
-            <Italian>Una modalità di gioco RPG sviluppato da Tonic.</Italian>
-            <Polish>Tryb gry RPG stworzona przez Tonic.</Polish>
-            <Portuguese>Um modo de jogo RPG desenvolvido pela Tonic.</Portuguese>
-            <Russian>Режим RPG игра, разработанная компанией Tonic.</Russian>
-            <German>Ein RPG-Modus entwickelt von Tonic.</German>
-			<Chinesesimp>由Tonic开发的RPG游戏模式。</Chinesesimp>
+            <Original>https://github.com/Ni1kko/FrameworkV2</Original>
         </Key>
     </Package>
     <Package name="Housing_Strings">

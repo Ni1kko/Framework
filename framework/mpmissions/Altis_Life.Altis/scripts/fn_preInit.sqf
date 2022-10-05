@@ -8,6 +8,7 @@ RUN_CLIENT_ONLY;
 FORCE_SUSPEND("MPClient_fnc_preInit");
 AH_CHECK_FINAL("life_var_preInitTime");
 
+//-- player object Namespace
 private _playerVariables = [
     [GET_CASH_VAR, 0,true],
     ['restrained', false, true],
@@ -17,6 +18,7 @@ private _playerVariables = [
     ['realname', profileName, true],
     ['lifeState','HEALTHY',true]
 ];
+//-- missionNamespace
 private _missionVariables = [ 
     ["life_var_preInitTime", compileFinal str(diag_tickTime)],
     ["life_var_postInitTime", compile str(-1)],
@@ -156,18 +158,53 @@ private _missionVariables = [
     ["life_var_gangData", []],
     ["life_var_gangHideoutBuildings", (LIFE_SETTINGS(getArray,"gang_area")) apply {nearestBuilding(getMarkerPos _x)}]
 ];
+//-- parsingNamespace
 private _parserVariables = [
     
 ];
+//-- profileNamespace
 private _profileVariables = [
     
 ];
+//-- localNamespace
 private _localVariables = [
-    
+    ["MPClient_FunctionGroups", []]
 ];
+//-- uiNamespace
 private _uiVariables = [
+    //--- RscDisplays
+    ["RscDisplayATM", displayNull],
+    ["RscDisplayAdminMenu", displayNull],
+    ["RscDisplayCellPhone", displayNull],
+    ["RscDisplayChopShop", displayNull],
+    ["RscDisplayClothingShop", displayNull],
+    ["RscDisplayFederalBank", displayNull],
+    ["RscDisplayFuelShop", displayNull],
+    ["RscDisplayLicenseShop", displayNull],
+    ["RscDisplayGang", displayNull],
+    ["RscDisplayInteractionMenu", displayNull],
+    ["RscDisplayInventory", displayNull],
+    ["RscDisplayInventoryKeyManagement", displayNull],
+    ["RscDisplayInventorySettings", displayNull],
+    ["RscDisplayLoadingScreen", displayNull],
+    ["RscDisplayNewsBroadcast", displayNull],
+    ["RscDisplayPoliceTicket", displayNull],
+    ["RscDisplayPoliceWanted", displayNull],
+    ["RscDisplaySpawnSelection", displayNull],
+    ["RscDisplayVehicleGarage", displayNull],
+    ["RscDisplayVirtualShop", displayNull],
+    ["RscDisplayVehicleShop", displayNull],
+    ["RscDisplayVehicleShop3D", displayNull],
+    ["RscDisplayVehicleTrunk", displayNull],
+    ["RscDisplayWeaponShop", displayNull],
     
-];
+    //--- RscTiltes
+    ["RscDisplayPlayerTags", displayNull],
+    ["RscDisplayDeathScreen", displayNull],
+    ["RscDisplayPlayerHUD", displayNull],
+    ["RscDisplayProgressBar", displayNull],
+    ["RscDisplaySpitScreen", displayNull]
+]; 
 
 //-- Setup VirtualItems
 _missionVariables append (([objNull,false] call MPClient_fnc_getGear)#1);
@@ -177,7 +214,6 @@ _missionVariables append ([objNull,false,false,false,false] call MPClient_fnc_ge
 
 ["Loading client preInit"] call MPClient_fnc_log;
 ["Life_var_initBlackout"] call BIS_fnc_blackOut;//fail safe for loading screen
-
 
 private _threadsToMonitor = [/*DON'T EDIT*/];
 private _variablesFlagged = [/*DON'T EDIT*/];
@@ -204,7 +240,7 @@ private _variablesFlagged = [/*DON'T EDIT*/];
     }forEach _varlist;
 } forEach [
     [missionNamespace,true,_missionVariables],
-    [uiNamespace,true,_uiVariables],
+    [uiNamespace,false,_uiVariables],
     [profileNamespace,false,_profileVariables],
     [parsingNamespace,true,_parserVariables],
     [localNamespace,true,_localVariables],
@@ -230,6 +266,11 @@ _threadsToMonitor pushBackUnique (["cash"] spawn MPClient_fnc_checkMoney);
 _threadsToMonitor pushBackUnique (["gang"] spawn MPClient_fnc_checkMoney);
 _threadsToMonitor pushBackUnique (["debt"] spawn MPClient_fnc_checkMoney);
 
+//-- Double check function is final to be safe
+if(not(isFinal "BIS_fnc_endMission"))then{
+	missionNamespace setVariable ["BIS_fnc_endMission",compileScript ["\a3\functions_f\Misc\fn_endMission.sqf", true]];
+};
+
 //-- Load main init
 [serverName,missionName,worldName,worldSize] spawn MPClient_fnc_init;
 
@@ -241,27 +282,55 @@ _threadsToMonitor spawn {uiSleep floor(random 30); {_x spawn {waitUntil {uiSleep
 
 //-- Check Client function are final
 {
-    private _cfgClientFunctions = missionConfigFile >> "cfgFunctions" >> _x;
-    private _clientFunctions = [];
-    for "_currentIndex" from 0 to (count(_cfgClientFunctions) - 1) do 
+    _x params [
+        ["_functionsTag", "", [""]], 
+        ["_config",configNull, [configNull]]
+    ];
+
+    private _functions = [];
+    private _functionGroups = [];
+    private _cfgFunctions = _config >> "cfgFunctions" >> _functionsTag;
+    
+    for "_currentIndex" from 0 to (count(_cfgFunctions) - 1) do 
     {
-        private _functionClassList = (_cfgClientFunctions >> configName (_cfgClientFunctions select _currentIndex));
+        private _functionClassList = (_cfgFunctions select _currentIndex);
+        private _groupName = configName _currentIndex;
+        private _functionGroupIndex = _functionGroups pushBackUnique [_groupName, []];
+
         for "_currentInnerIndex" from 0 to (count(_functionClassList) - 1) do 
         {
-            private _currentInnerItem = _functionClassList select _currentInnerIndex;
-            _clientFunctions pushBackUnique (format ["%1_fnc_%2",_x,configName _currentInnerItem]);
+            private _currentInnerItem = (_functionClassList select _currentInnerIndex);
+            private _fileName = configName _currentInnerItem;
+            private _functionName = format ["%1_fnc_%2",_functionsTag,_fileName];
+            _functions pushBackUnique _functionName;
+
+            if(_functionGroupIndex isNotEqualTo -1)then{
+                (_functionGroups#_functionGroupIndex) params ["_groupName", "_fileList"];
+                private _fileNameIndex = _fileList pushBackUnique _fileName;
+
+                if(_fileNameIndex isNotEqualTo -1)then{
+                    _functionGroups set [_functionGroupIndex, [_groupName, _fileList]];
+                };
+            };
         };
     };
 
+    private _nonFinalFunctions = [];
+    private _totalFunctions = count _functions;
+    private _totalFinalFunctions = {if(isFinal (format["%1",_x]))then{true}else{_nonFinalFunctions pushBackUnique _x;false}} count _functions;
+    private _totalNonFinalFunctions = count _nonFinalFunctions;
+
+    localNamespace setVariable [format["%1_FunctionGroups",_functionsTag], _functionGroups];
+
     //-- Check all client function are final
-    if ({isFinal (missionNamespace getVariable [_x, {}])} count _clientFunctions isNotEqualTo count _clientFunctions)then{
-        for "_i" from 0 to 10 do{
+    if (_totalFunctions isNotEqualTo _totalFinalFunctions AND _totalNonFinalFunctions > 0)then{
+        {
             uiSleep 0.2;
-            ["Warning Client Functions Not Final, Major Security Risk!",false,true] call MPClient_fnc_log;
-        };
+            [format["Warning Client Function (%1) Is Not Final, Major Security Risk!",_x],false,true] call MPClient_fnc_log;
+        }forEach _nonFinalFunctions;
     };
 }forEach [
-    "MPClient"
+    ["MPClient", missionConfigFile]
 ];
 
 //--
