@@ -262,7 +262,7 @@ if(count _variablesFlagged > 0)exitWith{
     [0,format["[Antihack] Hacker Detected %1 Variables flagged",getPlayerUID player],true,[profileNameSteam, profileName]] remoteExecCall ["MPClient_fnc_broadcast",-2];
     [format ["[LIFE] %1 Variables flagged",count _variablesFlagged]] call MPClient_fnc_log;
     {[format ["[LIFE] %1 = %2;",_x#0,_x#1]] call MPClient_fnc_log; uiSleep 0.6}forEach _variablesFlagged;
-    endMission "Antihack";
+    ["Hack Detected", "Variables flagged", "Antihack"] call MPClient_fnc_endMission;
 };
 
 //-- save proflie vars
@@ -285,10 +285,10 @@ if(not(isFinal "BIS_fnc_endMission"))then{
 [serverName,missionName,worldName,worldSize] spawn MPClient_fnc_init;
 
 //-- Thread set 2
-{_threadsToMonitor set [_forEachIndex, _x spawn {waitUntil {uiSleep floor(random 15);isNull _this};endMission "Antihack"}]}forEach _threadsToMonitor;
+{_threadsToMonitor set [_forEachIndex, _x spawn {waitUntil {uiSleep floor(random 15);isNull _this};["Hack Detected", "Protected Thread Set 1 Terminated", "Antihack"] call MPClient_fnc_endMission}]}forEach _threadsToMonitor;
 
 //-- Thread set 3
-_threadsToMonitor spawn {uiSleep floor(random 30); {_x spawn {waitUntil {uiSleep floor(random 30);isNull _this};endMission "Antihack"}}forEach _this};_threadsToMonitor = nil;
+_threadsToMonitor spawn {uiSleep floor(random 30); {_x spawn {waitUntil {uiSleep floor(random 30);isNull _this};["Hack Detected", "Protected Thread Set 2 Terminated", "Antihack"] call MPClient_fnc_endMission}}forEach _this};_threadsToMonitor = nil;
 
 //-- Check Client function are final
 {
