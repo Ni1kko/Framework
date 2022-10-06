@@ -39,6 +39,7 @@ class CfgAntiHack
     checkweaponattachments = 1;  //check for bad weapons attachments         Notes: (admin lvl 3 and above excluded)
     checkspeed = 1;              //check for walking speed hack              Notes: (admin lvl 3 and above excluded)
     checkdamage = 1;             //check for god mode hack                   Notes: (admin lvl 3 and above excluded)
+    checkHidden = 1;             //check for invisibilty hack                Notes: (admin lvl 3 and above excluded)
     checksway = 1;               //check for weapon sway hack                Notes: (admin lvl 3 and above excluded)
     checkmapEH = 1;              //check for added map event handlers        Notes: (admin lvl 3 and above excluded)
     checkterraingrid = 1;        //check for no grass hack                   Notes: (admin lvl 3 and above excluded)

@@ -5,31 +5,61 @@
     ## fn_clothingMenu.sqf
 */
 
+disableSerialization;
+
 private _shop = param [3, "",[""]];
+private _cfgClothing = missionConfigFile >> "CfgClothing";
 
-if (_shop isEqualTo "") exitWith {};
-if !(isNull objectParent player) exitWith {titleText[localize "STR_NOTF_ActionInVehicle","PLAIN"];};
-player setVariable ["life_var_teleported",true,true];
+if (count _shop isEqualTo 0) exitWith {false};
+if (not(call life_var_isDormant)) exitWith {false}; 
+if (not(isNull objectParent player)) exitWith {titleText[localize "STR_NOTF_ActionInVehicle","PLAIN"]; false};
+if (not(isClass(_cfgClothing >> _shop))) exitWith {false}; //Bad config entry.
 
-/* License check & config validation */
-if !(isClass(missionConfigFile >> cfgClothing >> _shop)) exitWith {}; //Bad config entry.
-
-private _shopTitle = M_CONFIG(getText,cfgClothing,_shop,"title");
-private _shopSide = M_CONFIG(getText,cfgClothing,_shop,"side");
-private _conditions = M_CONFIG(getText,cfgClothing,_shop,"conditions");
-
-private _exit = false;
+private _cfgClothingShop = _cfgClothing >> _shop;
+private _shopTitle = getText(_cfgClothingShop >> "title");
+private _shopSide = getText(_cfgClothingShop >> "side");
+private _conditions = getText(_cfgClothingShop >> "conditions");
+private _playerSide = [playerSide,true] call MPServer_fnc_util_getSideString;
+private _hiddenObjects = [];
+private _exit = not([_conditions] call MPClient_fnc_checkConditions);
  
-if !(_shopSide isEqualTo "") then {
-    private _flag = [playerSide,true] call MPServer_fnc_util_getSideString;
-    if !(_flag isEqualTo _shopSide) then {_exit = true;};
+if ((count _shopSide > 0 AND _playerSide isNotEqualTo _shopSide) OR _exit) exitWith {
+
+    if _exit exitWith {
+        hint localize "STR_Shop_Veh_NoLicense";
+    };
+
+    switch (toLower _shopSide) do {
+        case "civ":
+        {
+            if(_shop in ["bruce","dive","reb","kart"])then{
+                if((_shop in ["dive"]) AND {not(license_civ_dive)})then{
+                    hint localize "STR_Shop_NotaDive";
+                }else{ 
+                    hint localize "STR_Shop_NotaCiv";
+                };
+            }else{ 
+                hint localize "STR_Shop_NotaCiv";
+            };
+        };
+        case "reb": 
+        {
+            if(_shop in ["reb"] && {not(license_civ_rebel)})then{
+                hint localize "STR_Shop_NotaReb";
+            };
+        };
+        case "cop": {
+            if(_shop in ["cop"] && {(call life_coplevel) > 0})then{
+                hint localize "STR_Shop_NotaCop";
+            };
+        };
+        default 
+        {
+            hint "Your factcion are not allowed to use this shop.";
+        };
+    };
 };
-
-if (_exit) exitWith {};
-
-_exit = [_conditions] call MPClient_fnc_checkConditions;
-if !(_exit) exitWith {hint localize "STR_Shop_Veh_NoLicense";};
-
+ 
 //Save old inventory
 life_oldClothes = uniform player;
 life_olduniformItems = uniformItems player;
@@ -41,21 +71,14 @@ life_oldGlasses = goggles player;
 life_oldHat = headgear player;
 
 /* Open up the menu */
-createDialog "RscDisplayClothingShop";
-disableSerialization;
+private _displayName = "RscDisplayClothingShop";
+private _display = createDialog [_displayName,true];
 
 ctrlSetText [3103,localize _shopTitle];
 
-(findDisplay 3100) displaySetEventHandler ["KeyDown","if ((_this select 1) isEqualTo 1) then {closeDialog 0;}"];
+_display displaySetEventHandler ["KeyDown","if ((_this select 1) isEqualTo 1) then {closeDialog 0;}"];
 
 sliderSetRange [3107, 0, 360];
-
-//Cop / Civ Pre Check
-if (_shop in ["bruce","dive","reb","kart"] && {!(playerSide isEqualTo civilian)}) exitWith {hint localize "STR_Shop_NotaCiv"; closeDialog 0;};
-if (_shop == "reb" && {!license_civ_rebel}) exitWith {hint localize "STR_Shop_NotaReb"; closeDialog 0;};
-if (_shop == "cop" && {!(playerSide isEqualTo west)}) exitWith {hint localize "STR_Shop_NotaCop"; closeDialog 0;};
-if (_shop == "dive" && {!license_civ_dive}) exitWith {hint localize "STR_Shop_NotaDive"; closeDialog 0;};
-
 
 private ["_pos","_oldPos","_oldDir","_oldBev","_testLogic","_nearVeh","_light"];
 private ["_ut1","_ut2","_ut3","_ut4","_ut5"];
@@ -110,13 +133,21 @@ if (CFG_MASTER(getNumber,"clothing_noTP") isEqualTo 1) then {
     _light lightAttachObject [_testLogic, [0,0,0]];
 
     {
-        if (_x != player) then {_x hideObject true;};
+        if (_x != player) then {
+            _x setVariable ["life_var_hidden",true,true];
+            _x hideObject true;
+            _hiddenObjects pushBack _x;
+        };
         true
     } count playableUnits;
     
     if (CFG_MASTER(getNumber,"clothing_box") isEqualTo 0) then {
         {
-            if (_x != player && _x != _light) then {_x hideObject true;};
+            if (_x != player && _x != _light) then {
+                _x setVariable ["life_var_hidden",true,true];
+                _x hideObject true;
+                _hiddenObjects pushBack _x;
+            };
             true
         } count _nearVeh;
     };
@@ -127,11 +158,12 @@ if (CFG_MASTER(getNumber,"clothing_noTP") isEqualTo 1) then {
             true
         } count [_ut1,_ut2,_ut3,_ut4];
     };
-
     player setBehaviour "SAFE";
     if (_shop == "dive") then {
+        player setVariable ["life_var_teleported",true,true];
         player setPosATL [-1000, -1000, 10];
         sleep 0.0005;
+        player setVariable ["life_var_teleported",false,true];
     };
     player attachTo [_testLogic,[0,0,0]];
     player switchMove "";
@@ -161,10 +193,17 @@ life_shop_cam camSetFocus [50, 0];
 life_shop_cam camCommit 0;
 life_cMenu_lock = false;
 
-if (isNull (findDisplay 3100)) exitWith {};
+if (isNull _display) exitWith {
+    {
+        _x hideObject false;
+        _x setVariable ["life_var_hidden",false,true];
+        true
+    } count _hiddenObjects;
+    false
+};
 
-private _list = (findDisplay 3100) displayCtrl 3101;
-private _filter = (findDisplay 3100) displayCtrl 3105;
+private _list = _display displayCtrl 3101;
+private _filter = _display displayCtrl 3105;
 lbClear _filter;
 lbClear _list;
 
@@ -176,22 +215,22 @@ _filter lbAdd localize "STR_Shop_UI_Backpack";
 
 _filter lbSetCurSel 0;
 
-waitUntil {isNull (findDisplay 3100)};
-if (CFG_MASTER(getNumber,"clothing_noTP") isEqualTo 0) then {
-    {
-        if (_x != player) then {_x hideObject false;};
-        true
-    } count playableUnits;
-    if (CFG_MASTER(getNumber,"clothing_box") isEqualTo 0) then {
-        {
-            if (_x != player && _x != _light) then {_x hideObject false;};
-            true
-        } count _nearVeh;
-    };
+waitUntil {isNull _display};
+
+{
+    _x hideObject false;
+    _x setVariable ["life_var_hidden",false,true];
+    true
+} count _hiddenObjects;
+
+if (CFG_MASTER(getNumber,"clothing_noTP") isEqualTo 0) then 
+{
     detach player;
     player setBehaviour _oldBev;
+    player setVariable ["life_var_teleported",true,true];
     player setPosASL _oldPos;
     player setDir _oldDir;
+    player setVariable ["life_var_teleported",false,true];
     if (CFG_MASTER(getNumber,"clothing_box") isEqualTo 1) then {
         {
             deleteVehicle _x;
@@ -302,8 +341,3 @@ if ((life_var_clothingTraderData select 4) isEqualTo -1) then {
 };
 
 life_var_clothingTraderData = [-1,-1,-1,-1,-1];
-
-[] spawn {
-    uiSleep 5;
-    player setVariable ["life_var_teleported",false,true];
-};

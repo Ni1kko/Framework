@@ -44,6 +44,7 @@ try {
 	private _checkrecoil = getNumber(_config >> "checkrecoil") isEqualTo 1;
 	private _checkspeed = getNumber(_config >> "checkspeed") isEqualTo 1;
 	private _checkdamage = getNumber(_config >> "checkdamage") isEqualTo 1;
+	private _checkHidden = getNumber(_config >> "checkHidden") isEqualTo 1;
 	private _checksway = getNumber(_config >> "checksway") isEqualTo 1;
 	private _checkmapEH = getNumber(_config >> "checkmapEH") isEqualTo 1;
 	private _checkteleport = getNumber(_config >> "checkteleport") isEqualTo 1;
@@ -155,7 +156,7 @@ try {
 
 	//--- Setup allowed gear
 	if(_checkgear)then{
-		private _configClothing = missionConfigFile >> cfgClothing;
+		private _configClothing = missionConfigFile >> "cfgClothing";
 		if(isClass _configClothing) then{
 			//--- Allowed uniforms
 			if(_checkuniform)then{
@@ -463,6 +464,27 @@ try {
 							private _log = format['Invincibility! AllowDamage set to %1',isDamageAllowed player]; 
 							_log call "+_rnd_banme+";
 							['HACK',_log] call "+_rnd_logme+";
+						}else{
+							if((vehicle player) isNotEqualTo player AND {(driver (vehicle player)) isEqualTo player AND {not(isDamageAllowed (vehicle player))}}) then { 
+								private _log = format['Vehicle Invincibility! AllowDamage set to %1',isDamageAllowed player]; 
+								_log call "+_rnd_banme+";
+								['HACK',_log] call "+_rnd_logme+";
+							};
+						};
+					";
+				}; 
+				if(_checkHidden)then{ 
+					_antihackclient = _antihackclient + "
+						if(isObjectHidden player AND not(player getVariable ['life_var_hidden',false])) then { 
+							private _log = format['Invisibility! hideObject set to %1',isObjectHidden player]; 
+							_log call "+_rnd_banme+";
+							['HACK',_log] call "+_rnd_logme+";
+						}else{
+							if((vehicle player) isNotEqualTo player AND {isObjectHidden (vehicle player) AND not((vehicle player) getVariable ['life_var_hidden',false])}) then { 
+								private _log = format['Vehicle Invisibility! hideObject set to %1',isObjectHidden player]; 
+								_log call "+_rnd_banme+";
+								['HACK',_log] call "+_rnd_logme+";
+							};
 						};
 					";
 				}; 

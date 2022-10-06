@@ -86,8 +86,11 @@ if (_newside in [east,west,independent] AND _rank <= 0)exitWith {
 		//-- Disable input
 		disableUserInput true;
 		
-		//-- Hide both old and new objects
+		//-- Hide both old and new objects 
+		_playerObject setVariable ["life_var_hidden",true,true];
 		_playerObject hideObjectGlobal true;
+
+		_newplayerObject setVariable ["life_var_hidden",true,true];
 		_newplayerObject hideObjectGlobal true;
 
 		//-- Switch unit
@@ -108,6 +111,7 @@ if (_newside in [east,west,independent] AND _rank <= 0)exitWith {
 
 		//-- Show new player object
 		_newplayerObject hideObjectGlobal false;
+		_newplayerObject setVariable ["life_var_hidden",false,true];
 
 		//-- Add licenses
 		if (count _licenses > 0) then {

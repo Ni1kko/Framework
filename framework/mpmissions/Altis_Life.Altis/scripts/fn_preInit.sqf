@@ -16,7 +16,9 @@ private _playerVariables = [
     ['transporting', false, true],
     ['playerSurrender', false, true],
     ['realname', profileName, true],
-    ['lifeState','HEALTHY',true]
+    ['lifeState','HEALTHY',true],
+    ['life_var_hidden',false,true],
+    ['life_var_teleported',false,true]
 ];
 //-- missionNamespace
 private _missionVariables = [ 

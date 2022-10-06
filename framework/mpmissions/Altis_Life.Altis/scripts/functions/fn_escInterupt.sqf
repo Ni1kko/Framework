@@ -51,12 +51,14 @@ with missionNamespace do
     
     //Save Btn
     {(_display displayCtrl 104) ctrlRemoveAllEventHandlers _x}forEach _buttonControlEvents;
-    (_display displayCtrl 103) ctrlSetEventHandler ["MouseButtonDown", "_this call life_var_syncScript; true"]; //Must return turn or default arma code is ran
+    (_display displayCtrl 103) ctrlSetEventHandler ["ButtonClick", "_this call life_var_syncScript; true"]; //Must return turn or default arma code is ran
 
     //Exit Btn
     {(_display displayCtrl 104) ctrlRemoveAllEventHandlers _x}forEach _buttonControlEvents;
-    (_display displayCtrl 104) ctrlSetEventHandler ["MouseButtonUp", "_this call life_var_abortScript; true"];//Must return turn or default arma code is ran
-     
+    (_display displayCtrl 104) ctrlSetEventHandler ["ButtonClick", "_this call life_var_abortScript; true"];//Must return turn or default arma code is ran
+    
+    private _esacpeTimeDone = false;
+    
     while {not(isNull _display)} do 
     { 
         //Continue Btn
@@ -94,34 +96,47 @@ with missionNamespace do
         {
             //Respawn Btn
             (_display displayCtrl 1010) ctrlEnable true;
+            //Configure Btn
+            (_display displayCtrl 101) ctrlEnable true;
 
-            if(not(isNil "life_var_syncThread") AND {typeName life_var_syncThread isEqualTo "SCRIPT" AND not(isNull life_var_syncThread)})then{
-                terminate life_var_syncThread;
-            };
             private _cfgTimers = missionConfigFile >> "cfgTimers";
             private _timeStampAbort = time + getNumber(_cfgTimers >> "abort");
             private _timeStampSync = getNumber(_cfgTimers >> "sync");
-            
+            private _fnc_secondsToString = missionNamespace getVariable ["BIS_fnc_secondsToString", compileScript ["A3\functions_f\Strings\fn_secondsToString.sqf"]];
+    
+            //-- Hang here whilst doing timer shit
             waitUntil {
                 private _remainingAbortTime = (_timeStampAbort - time);
-                private _remainingSyncTime = ((life_var_lastSynced + _timeStampSync) - time);
-
-                if(_remainingAbortTime > 0)then{
-                    (_display displayCtrl 104) ctrlSetText format[localize "STR_NOTF_AbortESC",[_remainingAbortTime,"SS.MS"] call BIS_fnc_secondsToString];
-                    (_display displayCtrl 104) ctrlCommit 0;
-                };
-
+                private _remainingSyncTime = (((missionNamespace getVariable ["life_var_lastSynced",time]) + _timeStampSync) - time);
+                
+                //-- Sync Button
                 if(_remainingSyncTime > 0)then{
-                    (_display displayCtrl 103) ctrlSetText format["Sync Blocked For %1",(switch (true) do {
-                        case (_remainingSyncTime >= 3600): {[_remainingSyncTime,"HH:MM:SS"] call BIS_fnc_secondsToString}; 
-                        case (_remainingSyncTime >= 60 AND _remainingSyncTime < 3600): {[_remainingSyncTime,"MM.SS"] call BIS_fnc_secondsToString};
-                        default {[_remainingSyncTime,"SS.MS"] call BIS_fnc_secondsToString};
-                    })];
+                    private _timeRemainingString = switch (true) do {
+                        case (_remainingSyncTime >= 3600): {[_remainingSyncTime,"HH:MM:SS"] call _fnc_secondsToString}; 
+                        case (_remainingSyncTime >= 60 AND _remainingSyncTime < 3600): {[_remainingSyncTime,"MM:SS"] call _fnc_secondsToString};
+                        default {[_remainingSyncTime,"SS.MS"] call _fnc_secondsToString};
+                    };
+
+                    (_display displayCtrl 103) ctrlSetText format["Sync available in %1",_timeRemainingString];
+                    (_display displayCtrl 103) ctrlEnable false;
                     (_display displayCtrl 103) ctrlCommit 0;
                 };
 
-                private _abortReady = round(_remainingAbortTime) <= 0;
+                //-- Abort Button
+                if(_remainingAbortTime > 0 AND not(_esacpeTimeDone))then{
+                    private _timeRemainingString = switch (true) do {
+                        case (_remainingAbortTime >= 3600): {[_remainingAbortTime,"HH:MM:SS"] call _fnc_secondsToString}; 
+                        case (_remainingAbortTime >= 60 AND _remainingAbortTime < 3600): {[_remainingAbortTime,"MM:SS"] call _fnc_secondsToString};
+                        default {[_remainingAbortTime,"SS.MS"] call _fnc_secondsToString};
+                    };
+
+                    (_display displayCtrl 104) ctrlSetText format[localize "STR_NOTF_AbortESC",_timeRemainingString];
+                    (_display displayCtrl 104) ctrlEnable false;
+                    (_display displayCtrl 104) ctrlCommit 0;
+                };
+
                 private _syncReady = round(_remainingSyncTime) <= 0;
+                private _abortReady = _esacpeTimeDone OR round(_remainingAbortTime) <= 0;
 
                 if(_syncReady AND not(ctrlEnabled(_display displayCtrl 103)))then{
                     (_display displayCtrl 103) ctrlEnable true;
@@ -133,24 +148,56 @@ with missionNamespace do
                     (_display displayCtrl 104) ctrlEnable true;
                     (_display displayCtrl 104) ctrlSetText "Exit";
                     (_display displayCtrl 104) ctrlSetToolTip format["Leave %1 Life", worldname];
+                    _esacpeTimeDone = true;
                 };
 
-                (_abortReady AND _syncReady) OR (isNull _display)
+                if(isNil "_display" OR {isNull _display})then{
+                    _display = uiNamespace getVariable ["RscDisplayMPInterrupt",displayNull];
+                };
+
+                if(((_abortReady AND _syncReady) OR {isNull _display OR {not(call (missionNamespace getVariable ["life_var_isDormant",{false}]))}}))exitWith{
+                    true
+                };
+
+                false
             };
-            waitUntil {not(call (missionNamespace getVariable ["life_var_isDormant",{false}])) OR (isNull _display)};
+
+            private _lastSyncTime = (missionNamespace getVariable ["life_var_lastSynced",time]);
+
+            //-- Hang here whilst Dormant
+            waitUntil {
+                if((missionNamespace getVariable ["life_var_lastSynced",_lastSyncTime]) isNotEqualTo _lastSyncTime)exitWith{
+                    true
+                };
+
+                if(not(call (missionNamespace getVariable ["life_var_isDormant",{false}])) OR {isNull (uiNamespace getVariable ["RscDisplayMPInterrupt",displayNull])})exitWith{
+                    true
+                };
+                false
+            };
         }else{
-            (_display displayCtrl 103) ctrlSetToolTip "DataSync Not Available";
-            (_display displayCtrl 103) ctrlEnable false; 
-            (_display displayCtrl 1010) ctrlSetToolTip "Respawn Not Available";
-            (_display displayCtrl 1010) ctrlEnable false;
-            if (missionNamespace getVariable ["life_var_sessionDone",false]) then {
-                (_display displayCtrl 104) ctrlSetToolTip "Abort Not Available";
-                (_display displayCtrl 104) ctrlEnable false;
-            }else{
-                (_display displayCtrl 104) ctrlSetToolTip format["Leave %1 Life", worldname];
-                (_display displayCtrl 104) ctrlEnable true;
+            //-- Hang here whilst not Dormant
+            waitUntil {
+                (_display displayCtrl 103) ctrlSetToolTip "DataSync Not Available";
+                (_display displayCtrl 103) ctrlEnable false;
+                (_display displayCtrl 1010) ctrlSetToolTip "Respawn Not Available";
+                (_display displayCtrl 1010) ctrlEnable false;
+                (_display displayCtrl 101) ctrlSetToolTip "Options Not Available";
+                (_display displayCtrl 101) ctrlEnable false;
+                if (missionNamespace getVariable ["life_var_sessionDone",false]) then {
+                    (_display displayCtrl 104) ctrlSetToolTip "Abort Not Available";
+                    (_display displayCtrl 104) ctrlEnable false;
+                }else{
+                    (_display displayCtrl 104) ctrlSetToolTip format["Leave %1 Life", worldname];
+                    (_display displayCtrl 104) ctrlEnable true;
+                };
+
+                if((call (missionNamespace getVariable ["life_var_isDormant",{false}])) OR {isNull (uiNamespace getVariable ["RscDisplayMPInterrupt",displayNull])})exitWith{
+                    true
+                };
+
+                false
             };
-            waitUntil {(call (missionNamespace getVariable ["life_var_isDormant",{false}])) OR (isNull _display)};
         };
     };
 };
