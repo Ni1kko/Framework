@@ -1,4 +1,4 @@
-#include "\life_backend\script_macros.hpp"
+#include "\life_backend\serverDefines.hpp"
 /*
 	## Tonic & Ni1kko
 	## https://github.com/Ni1kko/FrameworkV2

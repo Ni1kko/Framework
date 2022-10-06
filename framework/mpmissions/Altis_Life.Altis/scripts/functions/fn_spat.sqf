@@ -13,13 +13,13 @@ params [
 ];
 
 //no dupilcates
-if (!isNull (uiNamespace getVariable ["RscDisplaySpitScreen", displayNull])) then {
-	("RscDisplaySpitScreen" call BIS_fnc_rscLayer) cutText ["","PLAIN"];
+if (!isNull (uiNamespace getVariable ["RscTitleSpitScreen", displayNull])) then {
+	("RscTitleSpitScreen" call BIS_fnc_rscLayer) cutText ["","PLAIN"];
 };
 
 //new effect
 hint format["Eww Gross\n%1 spat on you", name _shooter];
-("RscDisplaySpitScreen" call BIS_fnc_rscLayer) cutRsc [_resource,"PLAIN",0,false];
+("RscTitleSpitScreen" call BIS_fnc_rscLayer) cutRsc [_resource,"PLAIN",0,false];
 
 //remove effect
 [7] spawn {
@@ -38,5 +38,5 @@ hint format["Eww Gross\n%1 spat on you", name _shooter];
 		time > _timestamp
 	};
 
-	("RscDisplaySpitScreen" call BIS_fnc_rscLayer) cutText ["","PLAIN"];
+	("RscTitleSpitScreen" call BIS_fnc_rscLayer) cutText ["","PLAIN"];
 };

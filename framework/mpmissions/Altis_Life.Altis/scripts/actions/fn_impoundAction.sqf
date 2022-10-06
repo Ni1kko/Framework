@@ -1,4 +1,4 @@
-#include "..\..\script_macros.hpp"
+#include "..\..\clientDefines.hpp"
 /*
     File: fn_impoundAction.sqf
     Author: Bryan "Tonic" Boardwine
@@ -23,8 +23,8 @@ life_var_isBusy = true;
 _upp = localize "STR_NOTF_Impounding";
 //Setup our progress bar.
 disableSerialization;
-"progressBar" cutRsc ["RscDisplayProgressBar","PLAIN"];
-_ui = uiNamespace getVariable "RscDisplayProgressBar";
+"progressBar" cutRsc ["RscTitleProgressBar","PLAIN"];
+_ui = uiNamespace getVariable "RscTitleProgressBar";
 _progress = _ui displayCtrl 38201;
 _pgText = _ui displayCtrl 38202;
 _pgText ctrlSetText format ["%2 (1%1)...","%",_upp];

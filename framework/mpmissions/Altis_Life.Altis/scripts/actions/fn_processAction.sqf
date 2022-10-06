@@ -1,4 +1,4 @@
-#include "..\..\script_macros.hpp"
+#include "..\..\clientDefines.hpp"
 /*
 	## Nikko Renolds
 	## https://github.com/Ni1kko/FrameworkV2
@@ -98,8 +98,8 @@ if _exit exitWith {
 
 //Setup our progress bar.
 disableSerialization;
-"progressBar" cutRsc ["RscDisplayProgressBar","PLAIN"];
-_ui = uiNamespace getVariable "RscDisplayProgressBar";
+"progressBar" cutRsc ["RscTitleProgressBar","PLAIN"];
+_ui = uiNamespace getVariable "RscTitleProgressBar";
 _progress = _ui displayCtrl 38201;
 _pgText = _ui displayCtrl 38202;
 _pgText ctrlSetText format ["%2 (1%1)...","%",_upp];

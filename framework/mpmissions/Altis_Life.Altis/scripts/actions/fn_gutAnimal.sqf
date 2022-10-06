@@ -1,4 +1,4 @@
-#include "..\..\script_macros.hpp"
+#include "..\..\clientDefines.hpp"
 /*
     File: fn_gutAnimal.sqf
     Author: Bryan "Tonic" Boardwine
@@ -28,8 +28,8 @@ if (_displayName isEqualTo "") exitWith {life_var_isBusy = false;};
 _upp = format [localize "STR_NOTF_Gutting",_displayName];
 //Setup our progress bar.
 disableSerialization;
-"progressBar" cutRsc ["RscDisplayProgressBar","PLAIN"];
-_ui = uiNamespace getVariable "RscDisplayProgressBar";
+"progressBar" cutRsc ["RscTitleProgressBar","PLAIN"];
+_ui = uiNamespace getVariable "RscTitleProgressBar";
 _progress = _ui displayCtrl 38201;
 _pgText = _ui displayCtrl 38202;
 _pgText ctrlSetText format ["%2 (1%1)...","%",_upp];

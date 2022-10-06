@@ -6,7 +6,7 @@
 disableSerialization;
 if (diag_tickTime - life_var_hud_lastvehrendered_at >= 0.1) then{
 	life_var_hud_lastvehrendered_at = diag_tickTime;
-	private _display = uiNamespace getVariable "RscDisplayPlayerHUD";
+	private _display = uiNamespace getVariable "RscTitleHUD";
 	private _vehiclePanelControl = _display displayCtrl 1200;
 	private _vehicle = vehicle player;
 	private _showVehiclePanel = false;

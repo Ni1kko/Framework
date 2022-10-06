@@ -1,4 +1,4 @@
-#include "..\..\script_macros.hpp"
+#include "..\..\clientDefines.hpp"
 #define INUSE(ENTITY) ENTITY setVariable ["inUse",false,true]
 /*
     File: fn_pickupItem.sqf

@@ -6,7 +6,7 @@
 disableSerialization;
 if (diag_tickTime - life_var_hud_laststatsrendered_at >= 0.25) then {
 	life_var_hud_laststatsrendered_at = diag_tickTime;
-	private _display1 = uiNamespace getVariable ["RscDisplayPlayerHUD",displayNull];
+	private _display1 = uiNamespace getVariable ["RscTitleHUD",displayNull];
 
 	//-- Player Events
 	(_display1 displayCtrl 1007) ctrlShow (life_var_thirst < 15); 	//-- Thrist Logo

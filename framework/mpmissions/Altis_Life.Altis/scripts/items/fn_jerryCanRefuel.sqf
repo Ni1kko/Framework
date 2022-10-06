@@ -1,4 +1,4 @@
-#include "..\..\script_macros.hpp"
+#include "..\..\clientDefines.hpp"
 /*
     File: fn_jerryCanRefuel.sqf
     Author: Bryan "Tonic" Boardwine
@@ -30,9 +30,9 @@ if (_action) then {
     _startPos = getPos player;
     //Setup our progress bar.
     disableSerialization;
-    "progressBar" cutRsc ["RscDisplayProgressBar","PLAIN"];
+    "progressBar" cutRsc ["RscTitleProgressBar","PLAIN"];
     _title = localize "STR_ISTR_Jerry_Refuel";
-    _ui = uiNamespace getVariable "RscDisplayProgressBar";
+    _ui = uiNamespace getVariable "RscTitleProgressBar";
     _progress = _ui displayCtrl 38201;
     _pgText = _ui displayCtrl 38202;
     _pgText ctrlSetText format ["%2 (1%1)...","%",_title];
@@ -47,8 +47,8 @@ if (_action) then {
         };
         uiSleep 0.2;
         if (isNull _ui) then {
-            "progressBar" cutRsc ["RscDisplayProgressBar","PLAIN"];
-            _ui = uiNamespace getVariable "RscDisplayProgressBar";
+            "progressBar" cutRsc ["RscTitleProgressBar","PLAIN"];
+            _ui = uiNamespace getVariable "RscTitleProgressBar";
             _progressBar = _ui displayCtrl 38201;
             _titleText = _ui displayCtrl 38202;
         };

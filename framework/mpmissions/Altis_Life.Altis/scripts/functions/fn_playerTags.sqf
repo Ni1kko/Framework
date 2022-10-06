@@ -1,4 +1,4 @@
-#include "..\..\script_macros.hpp"
+#include "..\..\clientDefines.hpp"
 /*
     File: fn_playerTags.sqf
     Author: Bryan "Tonic" Boardwine
@@ -15,10 +15,10 @@ if (visibleMap || {!alive player} || {dialog}) exitWith {
     500 cutText["","PLAIN"];
 };
 
-_ui = uiNamespace getVariable ["RscDisplayPlayerTags",displayNull];
+_ui = uiNamespace getVariable ["RscTitleNameTags",displayNull];
 if (isNull _ui) then {
-    500 cutRsc["RscDisplayPlayerTags","PLAIN"];
-    _ui = uiNamespace getVariable ["RscDisplayPlayerTags",displayNull];
+    500 cutRsc["RscTitleNameTags","PLAIN"];
+    _ui = uiNamespace getVariable ["RscTitleNameTags",displayNull];
 };
 
 _units = nearestObjects[(visiblePosition player),["CAManBase","Land_Pallet_MilBoxes_F","Land_Sink_F"],50];

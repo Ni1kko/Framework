@@ -1,4 +1,4 @@
-#include "..\..\script_macros.hpp"
+#include "..\..\clientDefines.hpp"
 #define ctrlSelData(ctrl) (lbData[##ctrl,(lbCurSel ##ctrl)])
 /*
     File: fn_vehStoreItem.sqf

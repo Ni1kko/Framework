@@ -1,4 +1,4 @@
-#include "..\..\script_macros.hpp"
+#include "..\..\clientDefines.hpp"
 /*
     File: fn_deviceMine.sqf
     Author: Bryan "Tonic" Boardwine

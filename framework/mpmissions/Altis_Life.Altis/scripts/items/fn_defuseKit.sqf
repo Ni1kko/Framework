@@ -1,4 +1,4 @@
-#include "..\..\script_macros.hpp"
+#include "..\..\clientDefines.hpp"
 /*
     File: fn_defuseKit.sqf
     Author: Bryan "Tonic" Boardwine
@@ -18,8 +18,8 @@ life_var_isBusy = true;
 disableSerialization;
 
 _title = localize "STR_ISTR_Defuse_Process";
-"progressBar" cutRsc ["RscDisplayProgressBar","PLAIN"];
-_ui = uiNamespace getVariable "RscDisplayProgressBar";
+"progressBar" cutRsc ["RscTitleProgressBar","PLAIN"];
+_ui = uiNamespace getVariable "RscTitleProgressBar";
 _progressBar = _ui displayCtrl 38201;
 _titleText = _ui displayCtrl 38202;
 _titleText ctrlSetText format ["%2 (1%1)...","%",_title];
@@ -34,8 +34,8 @@ for "_i" from 0 to 1 step 0 do {
     };
     uiSleep 0.26;
     if (isNull _ui) then {
-        "progressBar" cutRsc ["RscDisplayProgressBar","PLAIN"];
-        _ui = uiNamespace getVariable "RscDisplayProgressBar";
+        "progressBar" cutRsc ["RscTitleProgressBar","PLAIN"];
+        _ui = uiNamespace getVariable "RscTitleProgressBar";
         _progressBar = _ui displayCtrl 38201;
         _titleText = _ui displayCtrl 38202;
     };

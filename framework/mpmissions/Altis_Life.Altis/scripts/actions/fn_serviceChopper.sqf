@@ -1,4 +1,4 @@
-#include "..\..\script_macros.hpp"
+#include "..\..\clientDefines.hpp"
 /*
     File: fn_serviceChopper.sqf
     Author: Bryan "Tonic" Boardwine
@@ -18,8 +18,8 @@ if (count _search isEqualTo 0) exitWith {hint localize "STR_Service_Chopper_NoAi
 if (MONEY_CASH < _serviceCost) exitWith {hint localize "STR_Serive_Chopper_NotEnough"};
 
 life_var_isBusy = true;
-"progressBar" cutRsc ["RscDisplayProgressBar","PLAIN"];
-_ui = uiNamespace getVariable "RscDisplayProgressBar";
+"progressBar" cutRsc ["RscTitleProgressBar","PLAIN"];
+_ui = uiNamespace getVariable "RscTitleProgressBar";
 _progress = _ui displayCtrl 38201;
 _pgText = _ui displayCtrl 38202;
 _pgText ctrlSetText format [localize "STR_Service_Chopper_Servicing","waiting..."];

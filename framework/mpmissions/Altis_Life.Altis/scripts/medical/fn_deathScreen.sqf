@@ -6,7 +6,7 @@
 disableSerialization;
 
 private _entity = param [0,objNull,[objNull]];
-private _display = uiNamespace getVariable ["RscDisplayDeathScreen",displayNull];
+private _display = uiNamespace getVariable ["RscTitleDeathScreen",displayNull];
 
 life_var_medicstatus = -1;
 life_var_medicstatusby = "";
@@ -14,7 +14,7 @@ life_var_medicstatusby = "";
 if(param [1,false])exitWith
 {  
 	if(not(isNull _display))then {
-		["RscDisplayDeathScreen"] call MPClient_fnc_destroyRscLayer;
+		["RscTitleDeathScreen"] call MPClient_fnc_destroyRscLayer;
 	};
 	
 	4 fadeSound 1;
@@ -35,7 +35,7 @@ if(param [1,false])exitWith
 };
 
 //-- register our layer
-["RscDisplayDeathScreen","PLAIN"] call MPClient_fnc_createRscLayer;
+["RscTitleDeathScreen","PLAIN"] call MPClient_fnc_createRscLayer;
 
 
 //-- get our layers controls
@@ -72,7 +72,7 @@ _txtBottomLeft spawn {
 	life_deathScreen_canRespawn = false;
 	waitUntil {		
 		_this ctrlSetStructuredText parseText format ["<t size='1.15' align='center' valign='middle'><br/>You Will Bleedout in <t color='#f30404'>%1</t> seconds</t>", [(_maxTime - time),"MM:SS.MS"] call BIS_fnc_secondsToString];
-		(_maxTime - time) <= 0 OR (isNull (uiNamespace getVariable ["RscDisplayDeathScreen",displayNull]))
+		(_maxTime - time) <= 0 OR (isNull (uiNamespace getVariable ["RscTitleDeathScreen",displayNull]))
 	};
 	life_deathScreen_canRespawn = true;
 	_this ctrlSetStructuredText parseText format ["<t size='1.15' align='center' valign='middle'><br/>Click <t color='#f30404'>R</t> too respawn...</t>"];
@@ -93,7 +93,7 @@ waitUntil {
 	private _medicsOnlineTxt = format[localize "STR_Medic_Online",playersNumber east];
 	_txtBottomRight ctrlSetStructuredText parseText format ["<t size='0.8' align='center' valign='middle'>%1<br/><br/><br/>%2</t>",_medicsOnlineTxt,_statusText];
 	uiSleep 3;
-	isNull (uiNamespace getVariable ["RscDisplayDeathScreen",displayNull])
+	isNull (uiNamespace getVariable ["RscTitleDeathScreen",displayNull])
 };
 
 //-- show chat

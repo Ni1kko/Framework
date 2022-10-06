@@ -1,4 +1,4 @@
-#include "..\..\script_macros.hpp"
+#include "..\..\clientDefines.hpp"
 /*
     @version: 1.7
     @file_name: fn_fetchCfgDetails.sqf

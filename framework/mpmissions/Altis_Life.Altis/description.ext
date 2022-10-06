@@ -5,7 +5,7 @@
 */
 
 #define CONFIG_INCLUDES 1
-#include "script_macros.hpp"
+#include "clientDefines.hpp"
 
 overviewText = "$STR_MISC_overviewText";// Text to be displayed below the overviewPicture on the mission selection screen when the mission is available to play.
 OnLoadIntroTime = false;                // Disable the time and date displayed while the intro loads. 
@@ -53,4 +53,4 @@ enableDebugConsole[] =
 };
 
 #include "gui\Includes.hpp"
-#include "config\Includes.hpp"
+#include "configs\Includes.hpp"

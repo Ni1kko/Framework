@@ -1,4 +1,4 @@
-#include "..\..\script_macros.hpp"
+#include "..\..\clientDefines.hpp"
 /*
     File: fn_onPlayerKilled.sqf
     Author: Bryan "Tonic" Boardwine
@@ -93,7 +93,7 @@ if (!isNull _killer) then
 player setDamage 0;
 
 //-- remove death screen
-["RscDisplayDeathScreen"] call MPClient_fnc_destroyRscLayer;
+["RscTitleDeathScreen"] call MPClient_fnc_destroyRscLayer;
 closeDialog 0;		
 titleCut ["", "BLACK IN", 1];
 

@@ -1,4 +1,4 @@
-#include "\life_backend\script_macros.hpp"
+#include "\life_backend\serverDefines.hpp"
 /*
 	## Nikko Renolds
 	## https://github.com/Ni1kko/Framework

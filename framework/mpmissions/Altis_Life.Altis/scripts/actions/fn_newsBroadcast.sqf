@@ -1,4 +1,4 @@
-#include "..\..\script_macros.hpp"
+#include "..\..\clientDefines.hpp"
 /*
     File: fn_newsBroadcast.sqf
     Author: Jesse "tkcjesse" Schultz

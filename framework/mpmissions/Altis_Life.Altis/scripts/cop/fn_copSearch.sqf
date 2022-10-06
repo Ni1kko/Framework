@@ -1,4 +1,4 @@
-#include "..\..\script_macros.hpp"
+#include "..\..\clientDefines.hpp"
 /*
     File: fn_copSearch.sqf
     Author: Bryan "Tonic" Boardwine

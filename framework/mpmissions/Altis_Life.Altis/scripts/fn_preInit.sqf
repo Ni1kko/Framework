@@ -1,4 +1,4 @@
-#include "..\script_macros.hpp"
+#include "..\clientDefines.hpp"
 /*
 	## Nikko Renolds
 	## https://github.com/Ni1kko/FrameworkV2
@@ -236,11 +236,11 @@ private _uiVariables = [
     ["RscDisplayWeaponShop", displayNull],
     
     //--- RscTiltes
-    ["RscDisplayPlayerTags", displayNull],
-    ["RscDisplayDeathScreen", displayNull],
-    ["RscDisplayPlayerHUD", displayNull],
-    ["RscDisplayProgressBar", displayNull],
-    ["RscDisplaySpitScreen", displayNull]
+    ["RscTitleNameTags", displayNull],
+    ["RscTitleDeathScreen", displayNull],
+    ["RscTitleHUD", displayNull],
+    ["RscTitleProgressBar", displayNull],
+    ["RscTitleSpitScreen", displayNull]
 ]; 
 
 //-- Setup VirtualItems

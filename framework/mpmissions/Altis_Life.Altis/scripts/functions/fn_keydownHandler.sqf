@@ -3,7 +3,7 @@
 	## https://github.com/Ni1kko/FrameworkV2
 */
 
-#include "..\..\script_macros.hpp"
+#include "..\..\clientDefines.hpp"
 #include "\a3\ui_f\hpp\definedikcodes.inc"
 
 disableSerialization;

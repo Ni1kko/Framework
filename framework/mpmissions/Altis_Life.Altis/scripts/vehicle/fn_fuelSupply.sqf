@@ -1,4 +1,4 @@
-#include "..\..\script_macros.hpp"
+#include "..\..\clientDefines.hpp"
 /*
     File: fn_fuelSupply.sqf
     Author: Ulrich "Zero" Werren
@@ -74,8 +74,8 @@ _vehicle remoteExec ["MPClient_fnc_soundDevice",-2];
 life_var_isBusy = false;
 
 disableSerialization;
-"progressBar" cutRsc ["RscDisplayProgressBar","PLAIN"];
-private _ui = uiNamespace getVariable "RscDisplayProgressBar";
+"progressBar" cutRsc ["RscTitleProgressBar","PLAIN"];
+private _ui = uiNamespace getVariable "RscTitleProgressBar";
 private _progress = _ui displayCtrl 38201;
 private _pgText = _ui displayCtrl 38202;
 _pgText ctrlSetText format ["Tank  %1 Ltr / %2 Ltr",_fuelState,_fuelSpace];

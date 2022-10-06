@@ -1,4 +1,4 @@
-#include "..\script_macros.hpp"
+#include "..\clientDefines.hpp"
 /*
 	## Nikko Renolds
 	## https://github.com/Ni1kko/FrameworkV2
@@ -36,16 +36,6 @@ enableRadio false; //--- Radio messages
 enableSentences false; //--- Radio messages
 enableEnvironment false; //--- Environment
 disableRemoteSensors true; //--- Raycasting
-
-//-- Exploit patch
-[] spawn {
-    for "_i" from 0 to 1 step 0 do 
-	{
-        waitUntil {(!isNull (findDisplay 49)) && {(!isNull (findDisplay 602))}}; // Check if Inventory and ESC dialogs are open
-        (findDisplay 49) closeDisplay 2; // Close ESC dialog
-        (findDisplay 602) closeDisplay 2; // Close Inventory dialog
-    };
-};
 
 //-- Texture patch
 [] spawn MPClient_fnc_playerTextures;

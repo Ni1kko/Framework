@@ -1,4 +1,4 @@
-#include "..\..\script_macros.hpp"
+#include "..\..\clientDefines.hpp"
 /*
     File: fn_captureHideout.sqf
     Author: Bryan "Tonic" Boardwine
@@ -40,8 +40,8 @@ life_var_isBusy = true;
 //Setup the progress bar
 disableSerialization;
 private _title = localize "STR_GNOTF_Capturing";
-"progressBar" cutRsc ["RscDisplayProgressBar","PLAIN"];
-private _ui = uiNamespace getVariable "RscDisplayProgressBar";
+"progressBar" cutRsc ["RscTitleProgressBar","PLAIN"];
+private _ui = uiNamespace getVariable "RscTitleProgressBar";
 private _progressBar = _ui displayCtrl 38201;
 private _titleText = _ui displayCtrl 38202;
 _titleText ctrlSetText format ["%2 (1%1)...","%",_title];
@@ -56,8 +56,8 @@ for "_i" from 0 to 1 step 0 do {
     };
     uiSleep 0.26;
     if (isNull _ui) then {
-        "progressBar" cutRsc ["RscDisplayProgressBar","PLAIN"];
-        _ui = uiNamespace getVariable "RscDisplayProgressBar";
+        "progressBar" cutRsc ["RscTitleProgressBar","PLAIN"];
+        _ui = uiNamespace getVariable "RscTitleProgressBar";
         _progressBar = _ui displayCtrl 38201;
         _titleText = _ui displayCtrl 38202;
     };

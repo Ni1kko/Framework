@@ -1,4 +1,4 @@
-#include "..\..\script_macros.hpp"
+#include "..\..\clientDefines.hpp"
 /*
     File: fn_fuelRefuelCar.sqf
     Author: NiiRoZz
@@ -35,8 +35,8 @@ if ((MONEY_CASH - (_fueltoput * _fuelCost)) > 0) then {
     life_var_processingResource = true;
     //Setup our progress bar.
     disableSerialization;
-    "progressBar" cutRsc ["RscDisplayProgressBar","PLAIN"];
-    private _ui = uiNameSpace getVariable "RscDisplayProgressBar";
+    "progressBar" cutRsc ["RscTitleProgressBar","PLAIN"];
+    private _ui = uiNameSpace getVariable "RscTitleProgressBar";
     private _progress = _ui displayCtrl 38201;
     private _pgText = _ui displayCtrl 38202;
     _pgText ctrlSetText format ["%2 (1%1)...","%","Refuel:"];

@@ -7,8 +7,8 @@
 */
 disableSerialization;
 private ["_ui","_progress"];
-"progressBar" cutRsc ["RscDisplayProgressBar","PLAIN"];
-_ui = uiNameSpace getVariable "RscDisplayProgressBar";
+"progressBar" cutRsc ["RscTitleProgressBar","PLAIN"];
+_ui = uiNameSpace getVariable "RscTitleProgressBar";
 _progress = _ui displayCtrl 38201;
 
 _progress progressSetPosition 0.5;

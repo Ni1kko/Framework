@@ -9,7 +9,7 @@ params [
     ["_show",true]//note hide before changing layer or will bug 
 ];
 
-private _layer1 = "RscDisplayPlayerHUD"; 
+private _layer1 = "RscTitleHUD"; 
 private _layer1_id = (_layer1 call BIS_fnc_rscLayer); 
 private _display1 = uiNamespace getVariable [_layer1,displayNull]; 
 
@@ -28,7 +28,7 @@ life_var_hud_layer_autohide_displays = [//displays where auto hide hooks are hid
 	12,	 //12 = map visible 
 	49,  //49 = escape menu 
 	602, //602 = inventory menu
-	"RscDisplayDeathScreen"
+	"RscTitleDeathScreen"
 ];
 
 if(_show)then{

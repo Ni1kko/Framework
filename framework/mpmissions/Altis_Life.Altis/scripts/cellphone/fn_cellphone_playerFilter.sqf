@@ -1,4 +1,4 @@
-#include "..\..\script_macros.hpp"
+#include "..\..\clientDefines.hpp"
 /*
     ## Nikko Renolds
     ## https://github.com/Ni1kko/FrameworkV2

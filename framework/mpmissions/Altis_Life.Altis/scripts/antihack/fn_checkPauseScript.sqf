@@ -1,4 +1,4 @@
-#include "..\..\script_macros.hpp"
+#include "..\..\clientDefines.hpp"
 /*
 	## Nikko Renolds
 	## https://github.com/Ni1kko/FrameworkV2
@@ -14,28 +14,57 @@ params [
     ["_display", displayNull, [displayNull]]
 ];
 
-waitUntil{
-	(isNull _display) OR not(isNull(uiNamespace getVariable ["RscDisplayGameOptions",displayNull]))
-};
+private _display = uiNamespace getVariable ["RscDisplayMPInterrupt",param [0,findDisplay 49,[displayNull]]];
+private _displayParent = uiNamespace getVariable ["RscDisplayMission",displayParent _display];
+private _displayChild = uiNamespace getVariable ["RscDisplayGameOptions",findDisplay 151];
+private _displayInventory = uiNamespace getVariable ["RscDisplayInventory",findDisplay 602];
 
-private _displayChild = uiNamespace getVariable ["RscDisplayGameOptions",displayNull];
-
+//-- while esacpe or options are open
 while {not(isNull _display) OR not(isNull _displayChild)} do 
 {
+	//-- Wait for options to open
 	waitUntil {
-		_displayChild = uiNamespace getVariable ["RscDisplayGameOptions",displayNull];
+		_displayChild = uiNamespace getVariable ["RscDisplayGameOptions",findDisplay 151];
+		_displayInventory = uiNamespace getVariable ["RscDisplayInventory",findDisplay 602];
+
+		if(not(isNull _displayInventory)) exitWith {
+			{_x closeDisplay 2}forEach[
+				_displayInventory,
+				_displayChild,
+				_display
+			];
+			true
+		};
+
 		not(isNull _displayChild)
 	};
 
-	//Difficulty
-	(_displayChild displayCtrl 304) ctrlEnable false;
-	(_displayChild displayCtrl 304) ctrlSetText "Disabled";
+	//-- Wait for options to close
+	waitUntil{
+		_displayChild = uiNamespace getVariable ["RscDisplayGameOptions",findDisplay 151];
+		_displayInventory = uiNamespace getVariable ["RscDisplayInventory",findDisplay 602];
+	
+		if(not(isNull _displayInventory)) exitWith {
+			{_x closeDisplay 2}forEach[
+				_displayInventory,
+				_displayChild,
+				_display
+			];
+			true
+		};
 
-	//Layout
-	(_displayChild displayCtrl 2405) ctrlEnable false;
-	(_displayChild displayCtrl 2405) ctrlSetText "AntiCheat Patch";
+		if(not(isNull _displayChild)) then {
+			//Difficulty
+			(_displayChild displayCtrl 304) ctrlEnable false;
+			(_displayChild displayCtrl 304) ctrlSetText "Disabled";
 
-	waitUntil{isNull _displayChild};
+			//Layout
+			(_displayChild displayCtrl 2405) ctrlEnable false;
+			(_displayChild displayCtrl 2405) ctrlSetText "AntiCheat Patch";
+		};
+
+		isNull _displayChild
+	};
 };
 
 true

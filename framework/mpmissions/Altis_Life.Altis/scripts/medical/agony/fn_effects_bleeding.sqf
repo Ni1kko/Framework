@@ -1,4 +1,4 @@
-#include "..\..\..\script_macros.hpp"
+#include "..\..\..\clientDefines.hpp"
 /*
 
 	Function: 	MPClient_fnc_effects_bleeding
