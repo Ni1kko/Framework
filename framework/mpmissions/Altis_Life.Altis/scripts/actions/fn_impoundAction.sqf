@@ -9,7 +9,7 @@
 private ["_vehicle","_type","_time","_value","_vehicleData","_upp","_ui","_progress","_pgText","_cP","_filters","_impoundValue","_price","_impoundMultiplier"];
 _vehicle = param [0,objNull,[objNull]];
 _filters = ["Car","Air","Ship"];
-if (!((KINDOF_ARRAY(_vehicle,_filters)))) exitWith {};
+if (!((KIND_OF_ARRAY(_vehicle,_filters)))) exitWith {};
 if (player distance cursorObject > 10) exitWith {};
 if (_vehicle getVariable "NPC") exitWith {hint localize "STR_NPC_Protected"};
 
@@ -47,7 +47,7 @@ if (player distance _vehicle > 10) exitWith {hint localize "STR_NOTF_ImpoundingC
 if (!alive player) exitWith {life_var_isBusy = false;};
 
 if (count crew _vehicle isEqualTo 0) then {
-    if (!(KINDOF_ARRAY(_vehicle,_filters))) exitWith {life_var_isBusy = false;};
+    if (!(KIND_OF_ARRAY(_vehicle,_filters))) exitWith {life_var_isBusy = false;};
     _type = FETCH_CONFIG2(getText,"CfgVehicles",(typeOf _vehicle),"displayName");
 
     life_var_sessionGarageImpoundRequest = true;

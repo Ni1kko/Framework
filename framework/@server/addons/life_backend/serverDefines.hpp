@@ -26,10 +26,7 @@
 #define ITEM_NAME(varName) M_CONFIG(getText,"cfgVirtualItems",varName,"displayName")
 #define ITEM_WEIGHT(varName) M_CONFIG(getNumber,"cfgVirtualItems",varName,"weight")
 #define TEXT_LOCALIZE(textStr) if(isLocalized textStr)then{localize textStr}else{textStr}
-
-//Condition Macros
-#define KINDOF_ARRAY(a,b) [##a,##b] call {_veh = _this select 0;_types = _this select 1;_res = false; {if (_veh isKindOf _x) exitWith { _res = true };} forEach _types;_res}
-
+ 
 //Config Macros
 #define FETCH_CONFIG(TYPE,CFG,SECTION,CLASS,ENTRY) TYPE(configFile >> CFG >> SECTION >> CLASS >> ENTRY)
 #define FETCH_CONFIG2(TYPE,CFG,CLASS,ENTRY) TYPE(configFile >> CFG >> CLASS >> ENTRY)
@@ -73,6 +70,7 @@
 #define AH_CHECK(var) (if (missionNamespace getVariable [var,false])exitWith{false})
 #define AH_CHECK_FINAL(var) (if (isFinal var)exitWith{false})
 #define AH_BAN_REMOTE_EXECUTED(var) (if(isRemoteExecuted AND (missionNamespace getVariable ["life_var_rcon_passwordOK",false]))exitwith{[remoteExecutedOwner,format["RemoteExecuted `%1`",var]] call MPServer_fnc_rcon_ban; false})
+#define KIND_OF_ARRAY(a,b) ([##a,##b] call {params ["_veh","_types"];{_veh isKindOf _x} count _types > 0})
 
 #define GET_HWID ('BEGuid' callExtension "hwid")
 #define GET_BEGUID_S64(var) ('BEGuid' callExtension (["get", var] joinString ":"))

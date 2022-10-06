@@ -33,7 +33,7 @@ private _list = ["LandVehicle", "Ship", "Air"];
         };
     };
 
-    if (KINDOF_ARRAY(_x, _list)) exitWith {
+    if (KIND_OF_ARRAY(_x, _list)) exitWith {
         if (!(_x in life_var_vehicles) && {locked _x isEqualTo 2}) exitWith {
             hint localize "STR_MISC_VehInventory";
             true breakOut "main";

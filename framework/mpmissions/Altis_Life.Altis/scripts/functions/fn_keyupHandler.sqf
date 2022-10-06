@@ -231,7 +231,7 @@ switch (_keyCode) do
                     };
                 } else {
                     _list = ["landVehicle","Air","Ship"];
-                    if (KINDOF_ARRAY(cursorObject,_list) && {player distance cursorObject < 7} && {isNull objectParent player} && {alive cursorObject} && {!life_var_isBusy}) then {
+                    if (KIND_OF_ARRAY(cursorObject,_list) && {player distance cursorObject < 7} && {isNull objectParent player} && {alive cursorObject} && {!life_var_isBusy}) then {
                         if (cursorObject in life_var_vehicles || {locked cursorObject isEqualTo 0}) then {
                             [cursorObject] spawn MPClient_fnc_openInventory;
                         };
