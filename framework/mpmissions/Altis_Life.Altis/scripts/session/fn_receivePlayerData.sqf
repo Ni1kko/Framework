@@ -65,9 +65,10 @@ life_joblevel =     compileFinal str(_playerData getOrDefault ["JobRank",-1]);
 life_reblevel =     compileFinal str(_playerData getOrDefault ["RebelRank",-1]);
 life_medLevel =     compileFinal str(_playerData getOrDefault ["MedicRank",-1]);
 life_coplevel =     compileFinal str(_playerData getOrDefault ["PoliceRank",-1]);
-life_var_arrested =  _playerData getOrDefault ["Arrested",false];
 life_blacklisted =  _playerData getOrDefault ["Blacklist",false];
 life_var_alive =     _playerData getOrDefault ["Alive",false];
+
+player setVariable ["arrested",_playerData getOrDefault ["Arrested",false],true];
 
 //--- Cash
 ["SET","CASH",_playerData getOrDefault ["Cash",0]] call MPClient_fnc_handleMoney;

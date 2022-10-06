@@ -12,24 +12,24 @@ params [
 private _openSpawnMenu = false;
 private _spawnAtPosition = false;
 
-player setVariable ["life_var_teleported",true,true];
+player setVariable ["teleported",true,true];
 
 if(playerSide in [civilian,east]) then 
 {
 	switch (true) do 
 	{
 		//-- Put them back in jail as they logged off in jail.
-		case (life_var_arrested): 
+		case (player getVariable ["arrested",false]): 
 		{
 			if(life_var_loadingScreenActive) then {
 				["Prisioner detected!","You logged off in prision, you will be returned back to jail!"] call MPClient_fnc_setLoadingText; 
 				uiSleep(2);
 			};  
-			life_var_arrested = false;
+			player setVariable ["arrested",false,true];
 			[player,true] spawn MPClient_fnc_jail;
         };
 		//-- Reset loadout logged off during combat (combat logged).
-		case (life_var_firstSpawn AND not(life_var_alive) AND not(life_var_arrested)): 
+		case (life_var_firstSpawn AND not(life_var_alive) AND not(player getVariable ["arrested",false])): 
 		{
             //-- Comabt logged
 			if (CFG_MASTER(getNumber,"save_civilian_positionStrict") isEqualTo 1) then {
@@ -101,7 +101,7 @@ if (life_var_firstSpawn) then {
 life_var_alive = true;
 disableUserInput false; // Let the user have input 
 player allowDamage true; // Let the player take damage
-5 spawn{uiSleep _this; player setVariable ["life_var_teleported",false,true]};
+5 spawn{uiSleep _this; player setVariable ["teleported",false,true]};
 
 //-- Side chat
 [player,life_var_enableSidechannel,playerSide] remoteExecCall ["MPServer_fnc_managesc",RE_SERVER];

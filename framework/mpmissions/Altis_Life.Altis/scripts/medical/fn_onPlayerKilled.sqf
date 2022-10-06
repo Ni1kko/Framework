@@ -22,6 +22,8 @@ if  !((vehicle _unit) isEqualTo _unit) then {
     _unit setPosATL [(getPosATL _unit select 0) + 3, (getPosATL _unit select 1) + 1, 0];
 };
 
+private _arrested = (_unit getVariable ["arrested",false]);
+
 //Set some vars
 {_unit setVariable _x} forEach [
     ["Revive",true,true],
@@ -99,6 +101,6 @@ titleCut ["", "BLACK IN", 1];
 [_unit,false,side _unit] remoteExecCall ["MPServer_fnc_managesc",2];
 
 //--
-[] spawn MPClient_fnc_respawned;
+[_unit, _arrested] spawn MPClient_fnc_respawned;
 
 true

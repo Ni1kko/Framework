@@ -17,8 +17,9 @@ private _playerVariables = [
     ['playerSurrender', false, true],
     ['realname', profileName, true],
     ['lifeState','HEALTHY',true],
+    ["arrested", false,true],
     ['life_var_hidden',false,true],
-    ['life_var_teleported',false,true]
+    ['teleported',false,true]
 ];
 //-- missionNamespace
 private _missionVariables = [ 
@@ -126,7 +127,6 @@ private _missionVariables = [
     //--- Life Variables
     ["life_var_fishingNetOut", false],
     ["life_var_ATMEnabled", true],
-    ["life_var_arrested", false],
     ["life_var_alive", false],
     ["life_var_deliveringPackage", false],
     ["life_var_tazed", false],
@@ -166,9 +166,11 @@ private _missionVariables = [
     ["life_var_isDormant", compileFinal '
         (
             player call {
-                alive _this 
+                alive _this
             AND {
                 (missionNamespace getVariable ["life_var_alive",false]) 
+            AND {
+                not((_this getVariable ["lifeState",false]) isEqualTo "HEALTHY")
             AND {
                 not(_this getVariable ["restrained",false])
             AND {
@@ -178,14 +180,14 @@ private _missionVariables = [
             AND {
                 not(_this getVariable ["transporting",false])
             AND {
-                not(missionNamespace getVariable ["life_var_arrested",false])
+                not(_this getVariable ["arrested",false])
             AND {
                 not(missionNamespace getVariable ["life_var_tazed",false])
             AND {
                 not(missionNamespace getVariable ["life_var_unconscious",false])
             AND {
                 (missionNamespace getVariable ["life_var_sessionDone",false])
-            }}}}}}}}}}
+            }}}}}}}}}}}
         )
     ']
 ];
@@ -330,10 +332,10 @@ if(count _missionProfileVariables > 0)then{
 };
 
 //-- Thread set 1 Monitor money vars TODO: handle this through anticheat 
-_threadsToMonitor pushBackUnique (["bank"] spawn MPClient_fnc_checkMoney);
-_threadsToMonitor pushBackUnique (["cash"] spawn MPClient_fnc_checkMoney);
-_threadsToMonitor pushBackUnique (["gang"] spawn MPClient_fnc_checkMoney);
-_threadsToMonitor pushBackUnique (["debt"] spawn MPClient_fnc_checkMoney);
+_threadsToMonitor pushBackUnique (["bank"] spawn MPClient_fnc_checkMoneyScript);
+_threadsToMonitor pushBackUnique (["cash"] spawn MPClient_fnc_checkMoneyScript);
+_threadsToMonitor pushBackUnique (["gang"] spawn MPClient_fnc_checkMoneyScript);
+_threadsToMonitor pushBackUnique (["debt"] spawn MPClient_fnc_checkMoneyScript);
 
 private _fnc_null = compileFinal "";
 

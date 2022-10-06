@@ -775,7 +775,7 @@ try {
 								private _distance = _oldPos distance _newPos;
 
 								if((_distance > _maxSpeed * _checkTime) && life_var_alive && (player == (driver _newVehicle)) && local _newVehicle) then {
-									if!(player getVariable ['life_var_teleported',false]) then {
+									if!(player getVariable ['teleported',false]) then {
 										private _log = format['Player teleported: moved %1 meters, in %2 seconds! (Max Allowed Speed: %3)',_distance,_checkTime,_maxSpeed]; 
 										_log call "+_rnd_banme+";
 										['HACK',_log] call "+_rnd_logme+";

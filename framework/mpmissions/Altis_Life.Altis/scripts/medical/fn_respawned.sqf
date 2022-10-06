@@ -3,6 +3,12 @@
 	## Nikko Renolds
 	## https://github.com/Ni1kko/FrameworkV2
 */
+params [
+    ["_unit",objNull,[objNull]],
+    ["_arrested",false,[false]]
+];
+
+waitUntil {sleep 0.1; _unit isNotEqualTo player};
 
 //--- Reset our player vars
 life_var_ATMEnabled = true;
@@ -21,7 +27,8 @@ player playMove "AmovPercMstpSnonWnonDnon";
     ['playerSurrender',false,true],
     ['steam64id',getPlayerUID player,true],
     ['realname',profileName,true],
-    ["lifeState","HEALTHY",true]
+    ["lifeState","HEALTHY",true],
+    ["arrested",_arrested,true]
 ];
 
 //-- Fatigue
@@ -34,9 +41,9 @@ if (CFG_MASTER(getNumber,"enable_fatigue") isEqualTo 0) then {player enableFatig
 [] call MPClient_fnc_updatePlayerData;
 
 //-- Died whilst jailed
-if (life_var_arrested) exitWith {
+if (player getVariable ["arrested",false]) exitWith {
     hint localize "STR_Jail_Suicide";
-    life_var_arrested = false;
+    player setVariable ["arrested",false,true];
     [player,true] spawn MPClient_fnc_jail;
     [] call MPClient_fnc_updatePlayerData;
 };

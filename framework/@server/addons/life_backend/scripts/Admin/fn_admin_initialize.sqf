@@ -975,7 +975,7 @@ try {
 			private _tphere = {
 				private _target = call "+_rnd_adminmenu_getselectedtarget+";
 				if(isNull _target) exitWith {}; 
-				_target setVariable ['life_var_teleported',true,true];
+				_target setVariable ['teleported',true,true];
 				private _oldPos = (getPosATL _target);
 				private _newpos = (getPosATL player);
 				if((vehicle player) != player) then {
@@ -995,13 +995,13 @@ try {
 				['INFO',format ['Teleported %1 %2Meters to there location',getPlayerUID _target,_oldPos distance2D _newpos]] call "+_rnd_log+";
 				_target spawn { 
 					uiSleep 5;
-					_this setVariable ['life_var_teleported',false,true];
+					_this setVariable ['teleported',false,true];
 				};
 			};
 			private _tpto = {
 				private _target = call "+_rnd_adminmenu_getselectedtarget+";
 				if(isNull _target) exitWith {};
-				player setVariable ['life_var_teleported',true,true];
+				player setVariable ['teleported',true,true];
 				private _oldPos = (getPosATL player);
 				private _newpos = (getPosATL _target);
 				if((vehicle _target) != _target) then {
@@ -1019,7 +1019,7 @@ try {
 				['INFO',format ['Teleported %1Meters to %2 location',_oldPos distance2D _newpos,getPlayerUID _target]] call "+_rnd_log+";
 				player spawn { 
 					uiSleep 5;
-					_this setVariable ['life_var_teleported',false,true];
+					_this setVariable ['teleported',false,true];
 				};
 			};
 			private _lockserv = {

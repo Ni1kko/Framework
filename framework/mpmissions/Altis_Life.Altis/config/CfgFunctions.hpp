@@ -4,18 +4,28 @@
     ## CfgFunctions.hpp
 */
 
-onPauseScript[] = {MPClient_fnc_escInterupt, MPClient_fnc_checkPauseScript};
+onCheat = "_this spawn MPClient_fnc_checkCheatScript";
+onPauseScript[] = {
+	MPClient_fnc_escInterupt, 
+	MPClient_fnc_checkPauseScript
+};
 
-class CfgFunctions 
+class CfgFsms 
+{ 
+	class MPClient
+    { 
+		class FiniteStateMachine
+		{
+			file="scripts\fsm"; 
+			class timeModule {ext=".fsm";};
+		};
+	};
+};
+
+class CfgFunctions : CfgFsms
 {
     class MPClient
-    {
-        class FiniteStateMachine
-        {
-            file="scripts\fsm"; 
-            class timeModule {ext=".fsm";};
-        };
-
+    { 
         class Root
         {
             file = "scripts";
@@ -28,7 +38,8 @@ class CfgFunctions
         {
             file="scripts\antihack"; 
             class clientCrash {};
-            class checkMoney {};
+            class checkMoneyScript {};
+            class checkCheatScript {};
             class checkPauseScript {};
         };
 

@@ -160,10 +160,10 @@ if (CFG_MASTER(getNumber,"clothing_noTP") isEqualTo 1) then {
     };
     player setBehaviour "SAFE";
     if (_shop == "dive") then {
-        player setVariable ["life_var_teleported",true,true];
+        player setVariable ["teleported",true,true];
         player setPosATL [-1000, -1000, 10];
         sleep 0.0005;
-        player setVariable ["life_var_teleported",false,true];
+        player setVariable ["teleported",false,true];
     };
     player attachTo [_testLogic,[0,0,0]];
     player switchMove "";
@@ -227,10 +227,10 @@ if (CFG_MASTER(getNumber,"clothing_noTP") isEqualTo 0) then
 {
     detach player;
     player setBehaviour _oldBev;
-    player setVariable ["life_var_teleported",true,true];
+    player setVariable ["teleported",true,true];
     player setPosASL _oldPos;
     player setDir _oldDir;
-    player setVariable ["life_var_teleported",false,true];
+    player setVariable ["teleported",false,true];
     if (CFG_MASTER(getNumber,"clothing_box") isEqualTo 1) then {
         {
             deleteVehicle _x;

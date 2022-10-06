@@ -462,7 +462,7 @@ switch (_keyCode) do
             ["abort"] call MPClient_fnc_autoruntoggle;
         };
         if (isNil "jumpActionTime") then {jumpActionTime = 0;};
-        if (_shiftState && {!(animationState player isEqualTo "AovrPercMrunSrasWrflDf")} && {isTouchingGround player} && {stance player isEqualTo "STAND"} && {speed player > 2} && {!life_var_arrested} && {((velocity player) select 2) < 2.5} && {time - jumpActionTime > 1.5}) then {
+        if (_shiftState && {!(animationState player isEqualTo "AovrPercMrunSrasWrflDf")} && {isTouchingGround player} && {stance player isEqualTo "STAND"} && {speed player > 2} && {not((player getVariable ["arrested",false]))} && {((velocity player) select 2) < 2.5} && {time - jumpActionTime > 1.5}) then {
             jumpActionTime = time; //Update the time.
             [player] remoteExec ["MPClient_fnc_jumpFnc",RE_GLOBAL]; //Global execution
             _stopPropagation = true;

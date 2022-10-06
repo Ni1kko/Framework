@@ -22,7 +22,7 @@ if(param [1,false])exitWith
 
 	if(param [2,true])then{
 		["all"] call MPClient_fnc_removeBuff;
-		[] call MPClient_fnc_respawned;
+		[_entity, param [3,true]] call MPClient_fnc_respawned;
 		titleCut ["", "BLACK IN", 1];
 	}else{
 		["revived"] call MPClient_fnc_removeBuff;

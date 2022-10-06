@@ -18,7 +18,7 @@ switch (_packetData get "Mode") do
     //-- Gear
     case 3: {_packetData set ["Gear",[player] call MPClient_fnc_getGear]};
     //-- Arrested
-    case 5: {_packetData set["Arrested",life_var_arrested]};
+    case 5: {_packetData set["Arrested",(player getVariable ["arrested",false])]};
     //-- Keychain
     case 7: {_packetData set ["LocalKeys",(life_Var_vehicles apply {netID _x})]};
 };

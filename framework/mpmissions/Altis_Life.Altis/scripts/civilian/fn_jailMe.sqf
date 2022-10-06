@@ -65,11 +65,11 @@ for "_i" from 0 to 1 step 0 do {
 
 switch (true) do {
     case (_bail): {
-        life_var_arrested = false;
+        player setVariable ["arrested",false,true];
         life_var_bailPaid = false;
 
         hint localize "STR_Jail_Paid";
-        player setVariable ["life_var_teleported",true,true];
+        player setVariable ["teleported",true,true];
         player setPos (getMarkerPos "jail_release");
 
         if (count extdb_var_database_headless_clients > 0) then {
@@ -82,7 +82,7 @@ switch (true) do {
     };
 
     case (_esc): {
-        life_var_arrested = false;
+        player setVariable ["arrested",false,true];
         hint localize "STR_Jail_EscapeSelf";
         [0, "STR_Jail_EscapeNOTF", true, [profileName]] remoteExecCall ["MPClient_fnc_broadcast", RE_CLIENT];
 
@@ -96,7 +96,7 @@ switch (true) do {
     };
 
     case (alive player && {!_esc} && {!_bail}): {
-        life_var_arrested = false;
+        player setVariable ["arrested",false,true];
         hint localize "STR_Jail_Released";
 
         if (count extdb_var_database_headless_clients > 0) then {
@@ -104,7 +104,7 @@ switch (true) do {
         } else {
             [getPlayerUID player] remoteExecCall ["MPServer_fnc_wantedRemove", RE_SERVER];
         };
-        player setVariable ["life_var_teleported",true,true];
+        player setVariable ["teleported",true,true];
         player setPos (getMarkerPos "jail_release");
         [5] call MPClient_fnc_updatePlayerDataPartial;
     };
@@ -113,5 +113,5 @@ switch (true) do {
 player forceWalk false; // Enable running & jumping
 []spawn{
     uiSleep 5;
-    player setVariable ["life_var_teleported",false,true];
+    player setVariable ["teleported",false,true];
 };

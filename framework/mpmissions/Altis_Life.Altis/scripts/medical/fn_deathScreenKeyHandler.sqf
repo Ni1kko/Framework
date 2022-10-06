@@ -13,26 +13,30 @@ params ["_ctrl","_code","_shift","_ctrlKey","_alt"];
 
 private _handled = false;
 private _medicReqKey = (actionKeys "ShowMap") select 0;
-
+private _arrested = (player getVariable ["arrested",false]);
 
 switch _code do {
 	case _medicReqKey:
 	{
 		_handled = true;
-		[player] call MPClient_fnc_requestMedic;
+		if _arrested then { 
+			//[player] call MPClient_fnc_requestJailMedic;
+		}else{
+			[player] call MPClient_fnc_requestMedic;
+		};
 	};
 	case DIK_R:
 	{
 		_handled = true;
 		if (life_deathScreen_canRespawn) then {
-			[player, true,true] spawn MPClient_fnc_deathScreen;
+			[player, true, true, _arrested] spawn MPClient_fnc_deathScreen;
 		};
 	};
 	case DIK_H:
 	{
 		if (call life_adminlevel > 0) then {
 			_handled = true;
-			[] spawn MPClient_fnc_revived;
+			[player, player, _arrested] spawn MPClient_fnc_revived;
 		};
 	};
 	case DIK_MINUS:

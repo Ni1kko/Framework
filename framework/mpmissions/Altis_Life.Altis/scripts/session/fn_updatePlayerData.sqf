@@ -16,7 +16,7 @@ private _var = format["Sync_%1_Completed_%2",round(random[1000,5000,9999]),round
     ([player] call MPClient_fnc_getLicenses),
     ([player] call MPClient_fnc_getGear),
     [life_var_hunger,life_var_thirst],
-    life_var_arrested,
+    (player getVariable ["arrested",false]),
     life_var_alive
 ] remoteExecCall ["MPServer_fnc_updateRequest",2];
 

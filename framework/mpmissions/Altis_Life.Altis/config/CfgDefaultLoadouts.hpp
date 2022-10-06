@@ -37,13 +37,13 @@ class CfgDefaultLoadouts
     class CIV 
     {
         uniform[] = {
-            {"U_C_Poloshirt_blue", "!life_var_arrested"},
-            {"U_C_Poloshirt_burgundy", "!life_var_arrested"},
-            {"U_C_Poloshirt_stripped", "!life_var_arrested"},
-            {"U_C_Poloshirt_tricolour", "!life_var_arrested"},
-            {"U_C_Poloshirt_salmon", "!life_var_arrested"},
-            {"U_C_Poloshirt_redwhite", "!life_var_arrested"},
-            {"U_C_Commoner1_1", "!life_var_arrested"}
+            {"U_C_Poloshirt_blue", "not(player getVariable ['arrested',false])"},
+            {"U_C_Poloshirt_burgundy", "not(player getVariable ['arrested',false])"},
+            {"U_C_Poloshirt_stripped", "not(player getVariable ['arrested',false])"},
+            {"U_C_Poloshirt_tricolour", "not(player getVariable ['arrested',false])"},
+            {"U_C_Poloshirt_salmon", "not(player getVariable ['arrested',false])"},
+            {"U_C_Poloshirt_redwhite", "not(player getVariable ['arrested',false])"},
+            {"U_C_Commoner1_1", "not(player getVariable ['arrested',false])"}
         };
         headgear[] = {};
         vest[] = {};

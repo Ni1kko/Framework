@@ -13,14 +13,14 @@ params [
 ];
 
 if (isNull _unit) exitWith {}; //Dafuq?
-if !(_unit isEqualTo player) exitWith {}; //Dafuq?
-if (life_var_arrested) exitWith {}; //Dafuq i'm already arrested
+if (_unit isNotEqualTo player) exitWith {}; //Dafuq?
+if (player getVariable ["arrested",false]) exitWith {}; //Dafuq i'm already arrested
 _illegalItems = CFG_MASTER(getArray,"jail_seize_vItems");
 
 player setVariable ["restrained",false,true];
 player setVariable ["Escorting",false,true];
 player setVariable ["transporting",false,true];
-player setVariable ["life_var_teleported",true,true];
+player setVariable ["teleported",true,true];
 
 
 titleText[localize "STR_Jail_Warn","PLAIN"];
@@ -46,7 +46,7 @@ if (player distance (getMarkerPos "jail_marker") > 40) then {
     };
 } forEach _illegalItems;
 
-life_var_arrested = true;
+player setVariable ["arrested",true,true];
 
 if (CFG_MASTER(getNumber,"jail_seize_inventory") isEqualTo 1) then {
     [] spawn MPClient_fnc_seizeClient;
@@ -64,5 +64,5 @@ if (count extdb_var_database_headless_clients > 0) then {
 [5] call MPClient_fnc_updatePlayerDataPartial;
 []spawn{
     uiSleep 5;
-    player setVariable ["life_var_teleported",false,true];
+    player setVariable ["teleported",false,true];
 };

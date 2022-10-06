@@ -12,10 +12,10 @@ private _reviveCost = CFG_MASTER(getNumber, "revive_fee");
 private _revivable = _target getVariable ["Revive", false];
 
 if (_revivable) exitWith {};
-if (_target getVariable ["Reviving", objNull] isEqualTo player) exitWith {hint localize "STR_Medic_AlreadyReviving";};
+if ((_target getVariable ["Reviving", objNull]) isEqualTo player) exitWith {hint localize "STR_Medic_AlreadyReviving";};
 if (player distance _target > 5) exitWith {};
 
-private _targetName = _target getVariable ["realname", "Unknown"];
+private _targetName = _target getVariable ["realname", name _target];
 private _title = format [localize "STR_Medic_Progress", _targetName];
 life_var_isBusy = true; //Lockout the controls.
 
@@ -63,7 +63,7 @@ if (life_var_interrupted) exitWith {life_var_interrupted = false; titleText[loca
 
 life_var_isBusy = false;
 _target setVariable ["Revive", true, true];
-[profileName] remoteExecCall ["MPClient_fnc_revived", _target];
+[player, _target, _target getVariable ["arrested",false]] remoteExecCall ["MPClient_fnc_revived", _target];
 
 if (playerSide isEqualTo independent) then {
     titleText[format [localize "STR_Medic_RevivePayReceive", _targetName,[_reviveCost] call MPClient_fnc_numberText], "PLAIN"];
