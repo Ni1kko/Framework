@@ -1,92 +1,88 @@
 #include "..\..\clientDefines.hpp"
 /*
-    File: fn_startLoadout.sqf
-    Author: Casperento
-
-    Description:
-    Loads a custom loadout on player when he got a new life
+	## Nikko Renolds
+	## https://github.com/Ni1kko/FrameworkV2
+    ## fn_startLoadout.sqf
 */
-private _pUniform = M_CONFIG(getArray,"cfgDefaultLoadouts",str(playerSide),"uniform");
-private _pHeadgear = M_CONFIG(getArray,"cfgDefaultLoadouts",str(playerSide),"headgear");
-private _pVest = M_CONFIG(getArray,"cfgDefaultLoadouts",str(playerSide),"vest");
-private _pBackpack = M_CONFIG(getArray,"cfgDefaultLoadouts",str(playerSide),"backpack");
-private _pWeapon = M_CONFIG(getArray,"cfgDefaultLoadouts",str(playerSide),"weapon");
-private _pMagazines = M_CONFIG(getArray,"cfgDefaultLoadouts",str(playerSide),"mags");
-private _pItems = M_CONFIG(getArray,"cfgDefaultLoadouts",str(playerSide),"items");
-private _linkedItems = M_CONFIG(getArray,"cfgDefaultLoadouts",str(playerSide),"linkedItems");
 
-// Removing every default items before adding the custom ones
+private _uniforms = M_CONFIG(getArray,"cfgDefaultLoadouts",str(playerSide),"uniform");
+private _vitems = M_CONFIG(getArray,"cfgDefaultLoadouts",str(playerSide),"vitems");
+
+//-- Removing every default items before adding the custom ones
 [player,false] call MPClient_fnc_stripDownPlayer;
 
-if !(_pUniform isEqualTo []) then {
-    if (playerSide isEqualTo civilian) then {
-        _pUniform = selectRandom _pUniform;
-        if (!(_pUniform isEqualTo []) && {!((_pUniform select 0) isEqualTo "") && {([(_pUniform select 1)] call MPClient_fnc_checkConditions)}}) then {
-            player forceAddUniform (_pUniform select 0);
-        };
-    } else {
-        _pUniform apply {
-            if (!(_x isEqualTo []) && {!((_x select 0) isEqualTo "") && {([(_x select 1)] call MPClient_fnc_checkConditions)}}) then {
-                player forceAddUniform (_x select 0);
+//-- Pick random uniform
+if (count _uniforms > 0) then {
+    if (playerSide in [civilian,east]) then {
+        _uniforms = [selectRandom _uniforms];
+    };
+};
+
+//-- Item Array (item, condition)
+{
+    private _array = _x;
+    if (count _array > 0) then {
+        {
+            _x params [
+                ["_item","",[""]],
+                ["_condition","",[""]]
+            ];
+            
+            if(count _condition isEqualTo 0)then{_condition = "true"};
+            if (count _item > 0 AND {[_condition] call MPClient_fnc_checkConditions}) then {
+                [_item,true] call MPClient_fnc_handleItem
+            };
+        } forEach _array;
+    };
+} forEach [
+    _uniforms,
+    M_CONFIG(getArray,"cfgDefaultLoadouts",str(playerSide),"headgear"),
+    M_CONFIG(getArray,"cfgDefaultLoadouts",str(playerSide),"vest"),
+    M_CONFIG(getArray,"cfgDefaultLoadouts",str(playerSide),"backpack"),
+    M_CONFIG(getArray,"cfgDefaultLoadouts",str(playerSide),"weapon"),
+    M_CONFIG(getArray,"cfgDefaultLoadouts",str(playerSide),"linkedItems")
+];
+
+//-- Item Array (item, amount condition)
+{
+    private _array = _x;
+    if (count _array > 0) then {
+        {
+            _x params [
+                ["_item","",[""]],
+                ["_amount",0,[0]],
+                ["_condition","",[""]]
+            ];
+            if(count _item > 0)then{
+                if(_amount isEqualTo 0)then{_amount = 1};
+                if(count _condition isEqualTo 0)then{_condition = "true"};
+                if([_condition] call MPClient_fnc_checkConditions)then{
+                    for "_i" from 1 to _amount step 1 do {[_item,true] call MPClient_fnc_handleItem};
+                };
+            };
+        }forEach _array;
+    };
+} forEach [
+    M_CONFIG(getArray,"cfgDefaultLoadouts",str(playerSide),"mags"),
+    M_CONFIG(getArray,"cfgDefaultLoadouts",str(playerSide),"items")
+];
+
+//-- Vitem Array (item, amount condition)
+if(count _vitems > 0)then{
+    {
+        _x params [
+            ["_item","",[""]],
+            ["_amount",0,[0]],
+            ["_condition","",[""]]
+        ];
+        if(count _item > 0)then{
+            if(_amount isEqualTo 0)then{_amount = 1};
+            if(count _condition isEqualTo 0)then{_condition = "true"};
+            if([_condition] call MPClient_fnc_checkConditions)then{
+                [true,_item,_amount] call MPClient_fnc_handleInv;
             };
         };
-    };
-};
-
-if !(_pHeadgear isEqualTo []) then {
-    _pHeadgear apply {
-        if (!(_x isEqualTo []) && {!((_x select 0) isEqualTo "") && {([(_x select 1)] call MPClient_fnc_checkConditions)}}) then {
-            player addHeadgear (_x select 0);
-        };
-    };
-};
-
-if !(_pVest isEqualTo []) then {
-    _pVest apply {
-        if (!(_x isEqualTo []) && {!((_x select 0) isEqualTo "") && {([(_x select 1)] call MPClient_fnc_checkConditions)}}) then {
-            player addVest (_x select 0);
-        };
-    };
-};
-
-if !(_pBackpack isEqualTo []) then {
-    _pBackpack apply {
-        if (!(_x isEqualTo []) && {!((_x select 0) isEqualTo "") && {([(_x select 1)] call MPClient_fnc_checkConditions)}}) then {
-            player addBackpack (_x select 0);
-        };
-    };
-};
-
-if !(_pWeapon isEqualTo []) then {
-    _pWeapon apply {
-        if (!(_x isEqualTo []) && {!((_x select 0) isEqualTo "") && {([(_x select 1)] call MPClient_fnc_checkConditions)}}) then {
-            player addWeapon (_x select 0);
-        };
-    };
-};
-
-if !(_pMagazines isEqualTo []) then {
-    _pMagazines apply {
-        if (!(_x isEqualTo []) && {!((_x select 0) isEqualTo "") && {((_x select 1) > 0) && {([(_x select 2)] call MPClient_fnc_checkConditions)}}}) then {
-            player addMagazines [(_x select 0),(_x select 1)];
-        };
-    };
-};
-
-if !(_pItems isEqualTo []) then {
-    _pItems apply {
-        if (!(_x isEqualTo []) && {!((_x select 0) isEqualTo "") && {((_x select 1) > 0) && {([(_x select 2)] call MPClient_fnc_checkConditions)}}}) then {
-            for "_i" from 1 to (_x select 1) step 1 do {player addItem (_x select 0)};
-        };
-    };
-};
-
-if !(_linkedItems isEqualTo []) then {
-    _linkedItems apply {
-        if (!(_x isEqualTo []) && {!((_x select 0) isEqualTo "") && {([(_x select 1)] call MPClient_fnc_checkConditions)}}) then {
-            player linkItem (_x select 0);
-        };
-    };
+    }forEach _vitems;
 };
 
 true

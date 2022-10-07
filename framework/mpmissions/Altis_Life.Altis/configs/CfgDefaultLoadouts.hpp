@@ -10,27 +10,31 @@ class CfgDefaultLoadouts
     class WEST 
     {
         uniform[] = {
-            {"U_Rangemaster", "call life_copLevel >= 0"}
+            {"U_Rangemaster", "call life_copLevel >= 1"}
         };
         headgear[] = {
-            {"H_Cap_blk", "call life_copLevel >= 0"}
+            {"H_Cap_blk", "call life_copLevel >= 1"}
         };
         vest[] = {
-            {"V_Rangemaster_belt", "call life_copLevel >= 0"}
+            {"V_Rangemaster_belt", "call life_copLevel >= 1"}
         };
         backpack[] = {};
         weapon[] = {
-            {"hgun_P07_snds_F", "call life_copLevel >= 0"}
+            {"hgun_P07_snds_F", "call life_copLevel >= 1"}
         };
         mags[] = {
-            {"16Rnd_9x21_Mag", 6, "call life_copLevel >= 0"}
+            {"16Rnd_9x21_Mag", 6, "call life_copLevel >= 1"}
         };
         items[] = {};
         linkedItems[] = {
-            {"ItemMap", "call life_copLevel >= 0"},
-            {"ItemCompass", "call life_copLevel >= 0"},
-            {"ItemWatch", "call life_copLevel >= 0"}
+            {"ItemMap", "call life_copLevel >= 1"},
+            {"ItemCompass", "call life_copLevel >= 1"}
         };
+        vitems[] = {
+            {"waterBottle", 2, "call life_copLevel >= 1"},
+            {"apple", 2, "call life_copLevel >= 1"},
+            {"peach", 1, "call life_copLevel >= 1"}
+        }; 
     };
 
     // CIV
@@ -53,9 +57,13 @@ class CfgDefaultLoadouts
         items[] = {};
         linkedItems[] = {
             {"ItemMap", ""},
-            {"ItemCompass", ""},
-            {"ItemWatch", ""}
+            {"ItemCompass", ""}
         };
+        vitems[] = {
+            {"waterBottle", 2, "not(player getVariable ['arrested',false])"},
+            {"apple", 2, "not(player getVariable ['arrested',false])"},
+            {"peach", 1, "not(player getVariable ['arrested',false])"}
+        }; 
     };
 
     // REB (Temp use civ for rebel)
@@ -80,7 +88,11 @@ class CfgDefaultLoadouts
         linkedItems[] = {
             {"ItemMap", "call life_medLevel >= 1"},
             {"ItemCompass", "call life_medLevel >= 1"},
-            {"ItemWatch", "call life_medLevel >= 1"}
         };
+        vitems[] = {
+            {"waterBottle", 2, "call life_medLevel >= 1"},
+            {"apple", 2, "call life_medLevel >= 1"},
+            {"peach", 1, "call life_medLevel >= 1"}
+        }; 
     };
 };
