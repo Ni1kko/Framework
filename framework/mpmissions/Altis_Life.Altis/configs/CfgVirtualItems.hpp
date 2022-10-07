@@ -478,6 +478,15 @@ class cfgVirtualItems
         object = "Land_Suitcase_F";
     };
 
+    class medical_marijuana : marijuana {
+        variable = VITEM_DRUG_CANNABIS_MEDICAL;
+        displayName = "Medical Marijuana";
+        buyPrice = 1000;;
+        sellPrice = -1;
+        illegal = false;
+        icon = "textures\icons\ico_marijuana.paa";//TODO: change icon
+    };
+
     class cocaine_unprocessed {
         variable = VITEM_DRUG_COCA_LEAFS;
         displayName = "STR_Item_CocaineU";

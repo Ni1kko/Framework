@@ -31,7 +31,17 @@ class CfgDefaultLoadouts
             {"ItemCompass", "call life_copLevel >= 1"}
         };
         vitems[] = {
-            {"waterBottle", 2, "call life_copLevel >= 1"},
+            {"spikeStrip", 2, "call life_copLevel >= 10"},
+            {"defibrillator", 2, "call life_copLevel >= 3"}
+        };
+        vitemsDrinks[] = {
+            {"coffee", 1, "call life_copLevel >= 1"},
+            {"waterBottle", 1, "call life_copLevel >= 1"},
+            {"redgull", 2, "call life_copLevel >= 6"}
+        }; 
+        vitemFoods[] = {
+            {"donuts", 6, "call life_copLevel >= 3"},
+            {"rabbit", 2, "call life_copLevel >= 3"},
             {"apple", 2, "call life_copLevel >= 1"},
             {"peach", 1, "call life_copLevel >= 1"}
         }; 
@@ -59,11 +69,14 @@ class CfgDefaultLoadouts
             {"ItemMap", ""},
             {"ItemCompass", ""}
         };
-        vitems[] = {
-            {"waterBottle", 2, "not(player getVariable ['arrested',false])"},
-            {"apple", 2, "not(player getVariable ['arrested',false])"},
-            {"peach", 1, "not(player getVariable ['arrested',false])"}
+        vitems[] = {};
+        vitemsDrinks[] = {
+            {"waterBottle", 2, "not(player getVariable ['arrested',false])"}
         }; 
+        vitemFoods[] = {
+            {"apple", 1, "not(player getVariable ['arrested',false])"},
+            {"peach", 1, "not(player getVariable ['arrested',false])"}
+        };
     };
 
     // REB (Temp use civ for rebel)
@@ -90,9 +103,17 @@ class CfgDefaultLoadouts
             {"ItemCompass", "call life_medLevel >= 1"},
         };
         vitems[] = {
-            {"waterBottle", 2, "call life_medLevel >= 1"},
-            {"apple", 2, "call life_medLevel >= 1"},
-            {"peach", 1, "call life_medLevel >= 1"}
+            {"codeine", 6, "call life_medLevel >= 1"}, 
+            {"morphine", 2, "call life_medLevel >= 4"}, 
+            {"defibrillator", 2, "call life_medLevel >= 2"}
+        };
+        vitemsDrinks[] = {
+            {"coffee", 1, "call life_medLevel >= 2"},
+            {"waterBottle", 6, "call life_medLevel >= 1"}
         }; 
+        vitemFoods[] = {
+            {"apple", 4, "call life_copLevel >= 1"},
+            {"peach", 4, "call life_copLevel >= 2"}
+        };
     };
 };

@@ -184,6 +184,7 @@
 #define VITEM_MINED_CEMENT "cement"
 #define VITEM_DRUG_OPIUM_POPPY "opiumpoppy"
 #define VITEM_DRUG_HEROIN "heroinProcessed"
+#define VITEM_DRUG_CANNABIS_MEDICAL "marijuanaMedical"
 #define VITEM_DRUG_CANNABIS_WET "marijuanaWet"
 #define VITEM_DRUG_CANNABIS "marijuana"
 #define VITEM_DRUG_COCA_LEAFS "cocaineUnprocessed"

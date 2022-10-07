@@ -5,11 +5,10 @@
     ## fn_startLoadout.sqf
 */
 
-private _uniforms = M_CONFIG(getArray,"cfgDefaultLoadouts",str(playerSide),"uniform");
-private _vitems = M_CONFIG(getArray,"cfgDefaultLoadouts",str(playerSide),"vitems");
-
 //-- Removing every default items before adding the custom ones
 [player,false] call MPClient_fnc_stripDownPlayer;
+
+private _uniforms = M_CONFIG(getArray,"cfgDefaultLoadouts",str(playerSide),"uniform"); 
 
 //-- Pick random uniform
 if (count _uniforms > 0) then {
@@ -68,21 +67,28 @@ if (count _uniforms > 0) then {
 ];
 
 //-- Vitem Array (item, amount condition)
-if(count _vitems > 0)then{
-    {
-        _x params [
-            ["_item","",[""]],
-            ["_amount",0,[0]],
-            ["_condition","",[""]]
-        ];
-        if(count _item > 0)then{
-            if(_amount isEqualTo 0)then{_amount = 1};
-            if(count _condition isEqualTo 0)then{_condition = "true"};
-            if([_condition] call MPClient_fnc_checkConditions)then{
-                [true,_item,_amount] call MPClient_fnc_handleInv;
+{
+    private _array = _x;
+    if (count _array > 0) then {
+        {
+            _x params [
+                ["_item","",[""]],
+                ["_amount",0,[0]],
+                ["_condition","",[""]]
+            ];
+            if(count _item > 0)then{
+                if(_amount isEqualTo 0)then{_amount = 1};
+                if(count _condition isEqualTo 0)then{_condition = "true"};
+                if([_condition] call MPClient_fnc_checkConditions)then{
+                    [true,_item,_amount] call MPClient_fnc_handleInv;
+                };
             };
-        };
-    }forEach _vitems;
-};
+        }forEach _array;
+    };
+} forEach [
+    M_CONFIG(getArray,"cfgDefaultLoadouts",str(playerSide),"vitems"),
+    M_CONFIG(getArray,"cfgDefaultLoadouts",str(playerSide),"vitemFoods"),
+    M_CONFIG(getArray,"cfgDefaultLoadouts",str(playerSide),"vitemsDrinks")
+];
 
 true
