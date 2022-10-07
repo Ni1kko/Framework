@@ -40,6 +40,9 @@ disableRemoteSensors true; //--- Raycasting
 //-- Texture patch
 [] spawn MPClient_fnc_playerTextures;
 
+//-- Wildlife patch to delete un-needed animals
+[] spawn MPClient_fnc_deleteWildlife;
+
 [format["Client preInit completed! Took %1 seconds",diag_tickTime - (call life_var_postInitTime)]] call MPClient_fnc_log;
 
 true

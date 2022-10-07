@@ -146,6 +146,13 @@ class CfgFunctions : CfgFsms
             class wantedGrab {};
         };
 
+        class Enviroment
+        {
+            file="scripts\enviroment";
+            class getWildlife {};
+            class deleteWildlife {};
+        };
+
         class Functions 
         {
             file = "scripts\functions";
