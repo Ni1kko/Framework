@@ -48,6 +48,6 @@ disableRemoteSensors true; //--- Raycasting
 "ColorCorrections" ppEffectAdjust [0.88, 0.88, 0, [0.2, 0.29, 0.4, -0.22], [1, 1, 1, 1.3], [0.15, 0.09, 0.09, 0.0]]; 
 "ColorCorrections" ppEffectCommit 0;
 
-[format["Client preInit completed! Took %1 seconds",diag_tickTime - (call life_var_postInitTime)]] call MPClient_fnc_log;
+[format["Client postInit completed! Took %1 seconds",diag_tickTime - (call life_var_postInitTime)]] call MPClient_fnc_log;
 
 true
