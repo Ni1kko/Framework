@@ -51,9 +51,9 @@ if(count _nearByPlayers > 0)then{
 //--- Virtual items
 if(count _ownedVirtualItemConfigNames > 0)then{
     { 
-        _controlListbox_VirtualItems lbAdd format ["%2 [x%1]",ITEM_VALUE(_x),localize (getText(_x >> "displayName"))];
+        _controlListbox_VirtualItems lbAdd format ["%1 [x%2]",ITEM_DISPLAYNAME(_x), ITEM_VALUE(_x)];
         _controlListbox_VirtualItems lbSetData [(lbSize _controlListbox_VirtualItems)-1,_x];
-        private _icon = M_CONFIG(getText,"cfgVirtualItems",_x,"icon");
+        private _icon = ITEM_ICON(_x);
         if (count _icon > 0) then {
             _controlListbox_VirtualItems lbSetPicture [(lbSize _controlListbox_VirtualItems)-1,_icon];
         };

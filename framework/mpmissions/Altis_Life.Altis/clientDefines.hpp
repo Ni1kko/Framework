@@ -57,6 +57,8 @@
 	#define LICENSE_SIDE(varName) M_CONFIG(getText,"cfgLicenses",varName,"side")
 	#define LICENSE_ICON(varName) M_CONFIG(getText,"cfgLicenses",varName,"icon")
 	#define ITEM_VARNAME(varName) format ["life_inv_%1",M_CONFIG(getText,"cfgVirtualItems",varName,"variable")]
+	#define ITEM_DISPLAYNAME(varName) (M_CONFIG(getText,"cfgVirtualItems",varName,"displayName")) call bis_fnc_localize
+	#define ITEM_ICON(varName) M_CONFIG(getText,"cfgVirtualItems",varName,"icon")
 	#define ITEM_VALUE(varName) missionNamespace getVariable [ITEM_VARNAME(varName),0]
 	#define ITEM_ILLEGAL(varName) M_CONFIG(getNumber,"cfgVirtualItems",varName,"illegal")
 	#define ITEM_SELLPRICE(varName) M_CONFIG(getNumber,"cfgVirtualItems",varName,"sellPrice")
