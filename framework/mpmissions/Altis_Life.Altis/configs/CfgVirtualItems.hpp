@@ -481,7 +481,7 @@ class cfgVirtualItems
     class medical_marijuana : marijuana {
         variable = VITEM_DRUG_CANNABIS_MEDICAL;
         displayName = "Medical Marijuana";
-        buyPrice = 1000;;
+        buyPrice = 1000;
         sellPrice = -1;
         illegal = false;
         icon = "textures\icons\ico_marijuana.paa";//TODO: change icon
