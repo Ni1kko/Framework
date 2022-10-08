@@ -37,7 +37,8 @@ private _severSchedulerStartUpQueue = [
 	//--- Every 5 seconds
  	[5 , 	  "MPServer_fnc_rcon_queuedMessages"],
 	//--- Every 10 seconds
-	[10, 	  "MPServer_fnc_updateHuntingZone"],
+	[10, 	  "MPServer_fnc_initWildlife"],
+	[10, 	  "MPServer_fnc_cleanUpWildlife"],
 	//--- Every 3 minutes
 	[3 * 60,  "MPServer_fnc_cleanup", ["items"]],
 	//--- Every 5 minutes

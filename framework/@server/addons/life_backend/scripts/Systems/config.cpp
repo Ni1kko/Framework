@@ -23,7 +23,6 @@ class CfgFunctions
             file = "\life_backend\scripts\Systems";
             class managesc {};
             class cleanup {};
-            class updateHuntingZone {};
             class spikeStrip {};
             class transferOwnership {};
             class updateBanks {};

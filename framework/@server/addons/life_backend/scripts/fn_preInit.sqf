@@ -10,8 +10,8 @@ AH_CHECK_FINAL("life_var_preInitTime");
 
 ["Loading server preInit"] call MPServer_fnc_log;
 
-private _variablesFlagged = [];
-private _variableTooSet = [
+//-- missionNamespace
+private _missionVariables = [
     ["life_var_preInitTime", compileFinal str(diag_tickTime)],
     ["life_var_postInitTime", compile str(-1)],
     ["life_var_initTime", compile str(-1)],
@@ -32,27 +32,118 @@ private _variableTooSet = [
 	["life_var_handleDisconnectEVH", -1],
 	["life_var_entityRespawnedEVH", -1]
 ];
+//-- parsingNamespace
+private _parserVariables = [
+    
+];
+//-- profileNamespace
+private _profileVariables = [
+    
+];
+//-- missionProfileNamespace
+private _missionProfileVariables = [
+    
+];
+//-- localNamespace
+private _localVariables = [
+    ["MPServer_var_animalTypes",[
+        "Snake_random_F",
+        "Sheep_random_F", 
+        "Goat_random_F", 
+        "Hen_random_F", 
+        "Cock_random_F", 
+        "Rabbit_F",
+        "Salema_F", 
+        "Ornate_random_F", 
+        "Mackerel_F", 
+        "Tuna_F", 
+        "Mullet_F", 
+        "CatShark_F", 
+        "Turtle_F"
+    ]]
+];
+//-- uiNamespace
+private _uiVariables = [
+
+];
+//-- serverNamespace
+private _serverVariables = [
+
+];
+//-- Bank Object vars
+private _bankVariables = [
+	["TrustedTraders",[], true]
+];
+
+private _bankObject = missionNamespace getVariable ["bank_obj",objNull];
+private _variablesFlagged = [/*DON'T EDIT*/];
 
 //-- init Variables
 {
-    private _varName = _x param [0, ""];
-    private _varValue =  missionNamespace getVariable [_varName,nil];
-
-    if(isNil {_varValue})then{
-        _varValue =  _x param [1, nil];
-        if(!isNil {_varValue})then{
-            missionNamespace setVariable [_varName,_varValue];
+    _x params ["_namespace", "_varlist"];
+    
+    if(count _varlist > 0)then 
+    {
+        private _broadcast = false;
+        private _checkNil = false;
+        
+        switch (true) do
+        {
+            //--- Object 
+            case (typeName _namespace isEqualTo "OBJECT"):
+            {
+                _broadcast = true;
+                _checkNil = true;
+            };
+            //--- Namespace 
+            case (typeName _namespace isEqualTo "NAMESPACE"):
+            {
+                _broadcast = _namespace isEqualTo missionNamespace;
+                _checkNil = not(_namespace in [profileNamespace, missionProfileNamespace, uiNamespace]);
+            };
+            //--- Invalid namespace 
+            default {_varlist resize 0};
         };
-    }else{
-        _variablesFlagged pushBackUnique [_varName,_varValue];
+    
+        {
+            private _varName = _x param [0, ""];
+
+            if(count _varName > 0)then
+            {
+                private _varValue =  _namespace getVariable [_varName,nil];
+                private _data = [_varName, _x param [1, nil], _x param [2, false]];
+
+                //-- Flag variable
+                if(not(isNil {_varValue}) AND _checkNil)then{ 
+                    _variablesFlagged pushBackUnique [_varName,_varValue];
+                };
+
+                //-- can namespace can broadcast
+                if !_broadcast then {_data resize 2};
+
+                //-- Set variable
+                _namespace setVariable _data;
+            };
+        }forEach _varlist;
     };
-} forEach _variableTooSet;
- 
+} forEach [
+    [missionNamespace,_missionVariables],
+    [uiNamespace,_uiVariables],
+    [profileNamespace,_profileVariables],
+    [missionProfileNamespace,_missionProfileVariables],
+    [parsingNamespace,_parserVariables],
+    [localNamespace,_localVariables],
+    [serverNamespace,_serverVariables],
+	[_bankObject, _bankVariables]
+];
+
 //-- flagged variable found. TODO: handle this through anticheat on server once detected
 if(count _variablesFlagged > 0)exitWith{ 
    [format ["[LIFE] %1 Variables flagged during preInit",count _variablesFlagged]] call MPServer_fnc_log;
     {[format ["[LIFE] %1 = %2;",_x#0,_x#1]] call MPServer_fnc_log; uiSleep 0.6}forEach _variablesFlagged;
-    endMission "END1";
+	life_var_endMissionServerJIP = ["","","Antihack"] remoteExec ["MPClient_fnc_endMission", -2, true];
+	life_var_endMissionClientJIP = ["Antihack"] remoteExec ["BIS_fnc_endMissionServer", 2, true];
+	false
 };
 
 private _initThread = [serverName,missionName,worldName,worldSize] spawn MPServer_fnc_init;
