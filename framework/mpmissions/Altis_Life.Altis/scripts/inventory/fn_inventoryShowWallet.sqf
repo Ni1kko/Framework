@@ -49,18 +49,22 @@ _ctrlIDClist pushBackUnique _ctrlIDC;
             { 
                 _x params [
                     "_displayname",
-                    "_displayValue",
+                    "_balance",
                     "_icon"
                 ]; 
-                _control lbAdd _displayname;
-                _control lbSetTextRight [_forEachIndex, format ["$%1",_displayValue]];
-                _control lbSetData [_forEachIndex,_x];
-                if (count _icon > 0) then {
-                    _control lbSetPicture [_forEachIndex,_icon];
-                };
+                _control lbAdd _displayname; 
+                _control lbSetPicture [_forEachIndex,_icon];
+                _control lbSetValue [_forEachIndex, _balance];
+                _control lbSetData [_forEachIndex, _displayname];
+                _control lbSetTextRight [_forEachIndex, format ["$%1",[_balance] call MPClient_fnc_numberText]];    
+                _control lbSetColorRight [_forEachIndex, (switch (true) do {
+                    case (_balance >= 1000000): {[0,0.8,0,1]};//Green
+                    case (_balance >= 500000 AND _balance < 1000000): {[1,0.63,0,1]};//Orange
+                    default { [0.8,0,0,1]};//Red
+                })];
             } forEach [
-                ["Bank", MONEY_BANK_FORMATTED,"textures\icons\ico_bank.paa"],
-                ["Cash", MONEY_CASH_FORMATTED, "textures\icons\ico_money.paa"]
+                ["Bank", MONEY_BANK,"textures\icons\ico_bank.paa"],
+                ["Cash", MONEY_CASH, "textures\icons\ico_money.paa"]
             ];
         }; 
         case 77708: 
