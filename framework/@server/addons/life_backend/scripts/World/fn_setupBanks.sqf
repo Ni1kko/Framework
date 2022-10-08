@@ -40,6 +40,7 @@ private _allATMs = [
 ];
 
 //-- Setup banks
+_bankObject setvariable ["TrustedTraders",_masterGroup, true];
 _masterGroup attachTo[_bankObject,[0,0,0]];
 {
 	private _name = _x select 0;
