@@ -7,7 +7,7 @@
 
 disableSerialization;
 
-private _displayName = "RscDisplayInventory";
+private _displayName = "RscDisplayPlayerInventory";
 private _display = param [0, uiNamespace getVariable [_displayName, GETDisplay(_displayName)], [displayNull]];
 private _side = [playerSide,true] call MPServer_fnc_util_getSideString;
 private _nearByPlayers = (playableUnits apply {if (alive _x AND player distance _x < 10 AND _x isNotEqualTo player) then {_x}else{""}}) - [""];

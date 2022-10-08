@@ -40,8 +40,17 @@ disableRemoteSensors true; //--- Raycasting
 //-- Texture patch
 [] spawn MPClient_fnc_playerTextures;
 
-//-- Wildlife patch to delete un-needed animals
-[] spawn MPClient_fnc_deleteWildlife;
+
+[]spawn {
+    while {true} do {
+        waitUntil {count agents > 0}; 
+        waitUntil {
+            player setVariable ["agents", agents, true];
+            uiSleep 3;
+            count agents == 0
+        };
+    };
+};
 
 //--
 "ColorCorrections" ppEffectEnable true;  

@@ -145,14 +145,7 @@ class CfgFunctions : CfgFsms
             class vehInvSearch {};
             class wantedGrab {};
         };
-
-        class Enviroment
-        {
-            file="scripts\enviroment";
-            class getWildlife {};
-            class deleteWildlife {};
-        };
-
+        
         class Functions 
         {
             file = "scripts\functions";
@@ -384,6 +377,24 @@ class CfgFunctions : CfgFsms
         class Inventory
         {
             file = "scripts\inventory";
+            class inventoryCreateMenu {}; 
+            class inventoryShow {};
+            class inventoryRefresh {};
+            class inventoryShowKeys {};
+            class inventoryKeysGive {};
+            class inventoryKeysDrop {};
+            class inventoryShowVirtual {};
+            class inventoryVirtualUseItem {};
+            class inventoryVirtualDropItem {};
+            class inventoryVirtualGiveItem {};
+            class inventoryShowWallet {};
+            class inventoryWalletDropCash {};
+            class inventoryWalletGiveCash {};
+        };
+
+        class Y_Menu
+        {
+            file = "scripts\y_menu";
             class giveItem {};
             class giveMoney {};
             class keyDrop {};

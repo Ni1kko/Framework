@@ -7,7 +7,7 @@
     Setup the settings menu.
 */
 
-private _display = createDialog ["RscDisplayInventorySettings",true];
+private _display = createDialog ["RscDisplayPlayerInventorySettings",true];
 
 disableSerialization;
 

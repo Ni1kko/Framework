@@ -180,12 +180,29 @@ class RscDefineText
     font = "RobotoCondensed";
     SizeEx = "(((((safezoneW / safezoneH) min 1.2) / 1.2) / 25) * 1)";
     text = "";
-    colorText[] = {1, 1, 1, 1.0};
+    colorText[] = {1, 1, 1, 1};
     colorBackground[] = {0, 0, 0, 0};
     linespacing = 1;
     tooltipColorText[] = {1,1,1,1};
     tooltipColorBox[] = {1,1,1,1};
     tooltipColorShade[] = {0,0,0,0.65};
+};
+
+
+class RscDefineInventoryText : RscDefineText
+{
+	deletable = 1;
+};
+
+class RscDefineTextBold: RscDefineText
+{
+	font = "LauHoWi_a_bold";
+	colorText[] = {0,0,0,1};
+};
+
+class RscDefineTitleText: RscDefineTextBold
+{
+	style = 2;
 };
 
 class RscDefineLine: RscDefineText 
@@ -242,6 +259,29 @@ class RscDefinePicture
     tooltipColorShade[] = {0,0,0,0.65};
 };
 
+class RscDefineFrame
+{
+    type = 0;
+    idc = -1;
+    style = 64;
+    shadow = 2;
+    colorBackground[] = {0,0,0,0};
+    colorText[] = {1,1,1,1};
+    shadowColor[] = {0.19,0.23,0.24,1};
+    //font = "RobotoCondensed";
+    font = "PuristaMedium";
+    sizeEx = 0.02;
+    text = "";
+};
+
+class RscDefinePictureButton: RscDefinePicture
+{
+	color[] = {0,0,0,1};
+	colorActive[] = {0,0,0,1};
+	shadow = 0;
+	colorDisabled[] = {0,0,0,1};
+};
+
 class RscDefineTextMulti: RscDefineText
 {
     linespacing = 1;
@@ -251,6 +291,18 @@ class RscDefineTextMulti: RscDefineText
 class RscDefinePictureKeepAspect : RscDefinePicture
 {
     style = 0x30 + 0x800;
+};
+
+class RscDefineToolboxSlot: RscDefinePicture
+{
+	soundDoubleClick[] = {"",0.1,1};
+	style = "0x30 + 0x800";
+	color[] = {1,1,1,1};
+	colorBackground[] = {1,1,1,0.5};
+	colorBackgroundSelected[] = {1,1,1,0.5};
+	colorFocused[] = {0,0,0,0};
+	canDrag = 1;
+	colorText[] = {0,0,0,0.5};
 };
 
 class RscDefineStructuredText 
@@ -301,6 +353,20 @@ class RscDefineButton
     soundPush[] = {"\A3\ui_f\data\sound\RscButton\soundPush",0.09,1};
     soundClick[] = {"\A3\ui_f\data\sound\RscButton\soundClick",0.09,1};
     soundEscape[] = {"\A3\ui_f\data\sound\RscButton\soundEscape",0.09,1};
+};
+
+class RscDefineInvisibleButton: RscDefineButton
+{
+	text = "";
+	colorBackground[] = {0,0,0,0};
+	colorBackgroundActive[] = {0,0,0,0};
+	colorBackgroundDisabled[] = {0,0,0,0};
+	colorBorder[] = {0,0,0,0};
+	colorDisabled[] = {0,0,0,0};
+	colorFocused[] = {0,0,0,0};
+	colorShadow[] = {0,0,0,0};
+	colorText[] = {0,0,0,0};
+	tooltip = "";
 };
 
 class RscDefineButtonTextOnly : RscDefineButton 
@@ -383,6 +449,89 @@ class RscDefineShortcutButton
     };
 };
 
+class RscDefineInventoryButton : RscDefineShortcutButton {
+	idc = -1;
+	type = 16;
+	style = "0x02 + 0xC0";
+	default = 0;
+	deletable = 1;
+	shadow = 0;
+	x = 0;
+	y = 0;
+	w = 0.095589;
+	h = 0.039216;
+	animTextureNormal = "#(argb,8,8,3)color(1,1,1,1)";
+	animTextureDisabled = "#(argb,8,8,3)color(1,1,1,1)";
+	animTextureOver = "#(argb,8,8,3)color(1,1,1,1)";
+	animTextureFocused = "#(argb,8,8,3)color(1,1,1,1)";
+	animTexturePressed = "#(argb,8,8,3)color(1,1,1,1)";
+	animTextureDefault = "#(argb,8,8,3)color(1,1,1,1)";
+	colorBackground[] = {0,0,0,0.8};
+	colorBackgroundFocused[] = {1,1,1,1};
+	colorBackground2[] = {0.75,0.75,0.75,1};
+	color[] = {1,1,1,1};
+	colorFocused[] = {0,0,0,1};
+	color2[] = {0,0,0,1};
+	colorText[] = {1,1,1,1};
+	colorDisabled[] = {1,1,1,0.25};
+	period = 1.2;
+	periodFocus = 1.2;
+	periodOver = 1.2;
+	size = "(			(			(			((safezoneW / safezoneH) min 1.2) / 1.2) / 25) * 1)";
+	sizeEx = "(			(			(			((safezoneW / safezoneH) min 1.2) / 1.2) / 25) * 1)";
+	tooltipColorText[] = {1,1,1,1};
+	tooltipColorBox[] = {1,1,1,1};
+	tooltipColorShade[] = {0,0,0,0.65};
+	class TextPos
+	{
+		left = "0.25 * 			(			((safezoneW / safezoneH) min 1.2) / 40)";
+		top = "(			(			(			((safezoneW / safezoneH) min 1.2) / 1.2) / 25) - 		(			(			(			((safezoneW / safezoneH) min 1.2) / 1.2) / 25) * 1)) / 2";
+		right = 0.005;
+		bottom = 0.0;
+	};
+	class Attributes
+	{
+		font = "PuristaLight";
+		color = "#E5E5E5";
+		align = "left";
+		shadow = "false";
+	};
+	class ShortcutPos
+	{
+		left = "(6.25 * 			(			((safezoneW / safezoneH) min 1.2) / 40)) - 0.0225 - 0.005";
+		top = 0.005;
+		w = 0.0225;
+		h = 0.03;
+	};
+	soundEnter[] = {"\A3\ui_f\data\sound\RscButtonMenu\soundEnter",0.09,1};
+	soundPush[] = {"\A3\ui_f\data\sound\RscButtonMenu\soundPush",0.09,1};
+	soundClick[] = {"\A3\ui_f\data\sound\RscButtonMenu\soundClick",0.09,1};
+	soundEscape[] = {"\A3\ui_f\data\sound\RscButtonMenu\soundEscape",0.09,1};
+	textureNoShortcut = "";
+};
+
+class RscDefineGUIBack
+{
+	type=0;
+	idc=124;
+	style=128;
+	text="";
+	colorText[]={0,0,0,0.7};
+	colorBackground[] = {0, 0, 0, 0.7};
+	font="RobotoCondensed";
+	sizeEx=0;
+	shadow=0;
+	x=0.1;
+	y=0.1;
+	w=0.1;
+	h=0.1;
+};
+
+class RscDefineInventoryGUIBack : RscDefineGUIBack 
+{
+	deletable = 1;
+};
+
 class RscDefineButtonMenu : RscDefineShortcutButton 
 {
     idc = -1;
@@ -442,6 +591,11 @@ class RscDefineButtonMenu : RscDefineShortcutButton
     soundClick[] = {"\A3\ui_f\data\sound\RscButtonMenu\soundClick",0.09,1};
     soundEscape[] = {"\A3\ui_f\data\sound\RscButtonMenu\soundEscape",0.09,1};
     textureNoShortcut = "";
+};
+
+class RscDefineInventoryButtonMenu : RscDefineButtonMenu 
+{
+	deletable = 1;
 };
 
 class RscDefineShortcutButtonMain : RscDefineShortcutButton 
@@ -525,6 +679,8 @@ class RscDefineListBox
     style = 16;
     idc = -1;
     type = 5;
+    x = 0;
+    y = 0;
     w = 0.275;
     h = 0.04;
     font = "RobotoCondensed";
@@ -563,11 +719,21 @@ class RscDefineListBox
     };
 };
 
+class RscDefineInventoryListBox : RscDefineListBox 
+{
+	deletable = 1;
+};
+
 class RscDefineTextEdit 
 {
     type = 2;
+    x = 0;
+    y = 0;
+    w = 0;
+    h = 0;
     style = 0x00 + 0x40;
     font = "RobotoCondensed";
+    text = "";
     shadow = 2;
     sizeEx = "(((((safezoneW / safezoneH) min 1.2) / 1.2) / 25) * 1)";
     colorBackground[] = {0, 0, 0, 1};
@@ -578,6 +744,11 @@ class RscDefineTextEdit
     autocomplete = false;
     colorSelection[] = {"(profilenamespace getvariable ['GUI_BCG_RGB_R',0.3843])", "(profilenamespace getvariable ['GUI_BCG_RGB_G',0.7019])", "(profilenamespace getvariable ['GUI_BCG_RGB_B',0.8862])", 1};
     canModify = 1;
+};
+
+class RscDefineInventoryTextEdit : RscDefineTextEdit 
+{
+	deletable = 1;
 };
 
 class RscDefineSlider 
@@ -609,19 +780,6 @@ class RscDefineXSliderH
     arrowFull = "\A3\ui_f\data\gui\cfg\slider\arrowFull_ca.paa";
     border = "\A3\ui_f\data\gui\cfg\slider\border_ca.paa";
     thumb = "\A3\ui_f\data\gui\cfg\slider\thumb_ca.paa";
-};
-
-class RscDefineFrame 
-{
-    type = 0;
-    idc = -1;
-    style = 64;
-    shadow = 2;
-    colorBackground[] = {0, 0, 0, 0};
-    colorText[] = {1, 1, 1, 1};
-    font = "RobotoCondensed";
-    sizeEx = 0.02;
-    text = "";
 };
 
 class RscDefineBackground: RscDefineText 
@@ -1129,6 +1287,11 @@ class RscDefineCombo
     sizeEx = "(((((safezoneW / safezoneH) min 1.2) / 1.2) / 25) * 1)";
 
     class ComboScrollBar : RscDefineScrollBar {};
+};
+
+class RscDefineInventoryCombo : RscDefineCombo 
+{
+	deletable = 1;
 };
 
 class RscDefineToolbox 

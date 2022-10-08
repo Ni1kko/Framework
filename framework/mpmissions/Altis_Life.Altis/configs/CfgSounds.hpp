@@ -7,6 +7,13 @@
 class CfgSounds 
 {
     sounds[] = {};
+    class bagopen
+	{
+		name = "bagopen";
+		sound[] = {"\sounds\bagopen.ogg", 1.0, 1};
+		titles[] = {};		
+	};
+    
     class sirenLong {
         name = "sirenLong";
         sound[] = {"\sounds\sirenLong.ogg", 1.0, 1};

@@ -1,11 +1,11 @@
-class RscDisplayInventorySettings 
+class RscDisplayPlayerInventorySettings 
 {
     idd = 2900; 
     movingEnable = 0;
     enableSimulation = 1;
-    onLoad="uiNamespace setVariable ['RscDisplayInventorySettings', _this#0];";
-    onUnload="uiNamespace setVariable ['RscDisplayInventorySettings', displayNull]";
-    onDestroy="uiNamespace setVariable ['RscDisplayInventorySettings', displayNull]";
+    onLoad="uiNamespace setVariable ['RscDisplayPlayerInventorySettings', _this#0];";
+    onUnload="uiNamespace setVariable ['RscDisplayPlayerInventorySettings', displayNull]";
+    onDestroy="uiNamespace setVariable ['RscDisplayPlayerInventorySettings', displayNull]";
 
     class controlsBackground 
     {

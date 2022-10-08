@@ -7,13 +7,14 @@
 */
 disableSerialization;
 
-private _dialog = findDisplay 2700;
-private _list = _dialog displayCtrl 2701;
+private _display = findDisplay 2700;
+private _list = _display displayCtrl 4;
 private _sel = lbCurSel _list;
 
 if (_sel isEqualTo -1) exitWith {
     hint localize "STR_NOTF_noDataSelected"
 };
+
 
 if (_list lbData _sel isEqualTo "") exitWith {
     hint localize "STR_NOTF_didNotSelectVehicle"
@@ -41,4 +42,4 @@ _owners deleteAt _index;
 _vehicle setVariable ["vehicle_info_owners", _owners, true];
 
 // Reload
-call MPClient_fnc_keyMenu
+[_display] call MPClient_fnc_keyMenu;

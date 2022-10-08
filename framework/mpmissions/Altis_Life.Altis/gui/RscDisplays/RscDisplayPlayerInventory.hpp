@@ -1,11 +1,11 @@
-class RscDisplayInventory 
+class RscDisplayPlayerInventory 
 {
     idd = 2001;
     movingEnable = 0;
     enableSimulation = 1;
-    onLoad="uiNamespace setVariable ['RscDisplayInventory', _this#0];";
-    onUnload="uiNamespace setVariable ['RscDisplayInventory', displayNull]";
-    onDestroy="uiNamespace setVariable ['RscDisplayInventory', displayNull]";
+    onLoad="uiNamespace setVariable ['RscDisplayPlayerInventory', _this#0];";
+    onUnload="uiNamespace setVariable ['RscDisplayPlayerInventory', displayNull]";
+    onDestroy="uiNamespace setVariable ['RscDisplayPlayerInventory', displayNull]";
 
     class controlsBackground 
     {
@@ -272,7 +272,7 @@ class RscDisplayInventory
         {
             idc = 126;
             text = "$STR_PM_KeyChain";
-            onButtonClick = "createDialog ""RscDisplayInventoryKeyManagement"";";
+            onButtonClick = "createDialog ""RscDisplayPlayerInventoryKeyManagement"";";
             x = 0.26 + (6.25 / 19.8) + (1 / 250 / (safezoneW / safezoneH));
             y = 0.8 - (1 / 25);
             w = (6.25 / 40);

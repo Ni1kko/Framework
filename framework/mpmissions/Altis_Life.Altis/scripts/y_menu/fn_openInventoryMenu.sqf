@@ -7,7 +7,7 @@
 
 disableSerialization;
 
-private _displayName = "RscDisplayInventory";
+private _displayName = "RscDisplayPlayerInventory";
 private _display = uiNamespace getVariable [_displayName, displayNull];
 
 //--- If the display is already open, close it (Allows user to toggle inventory)

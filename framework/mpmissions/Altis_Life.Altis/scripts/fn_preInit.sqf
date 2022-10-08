@@ -205,22 +205,7 @@ private _missionProfileVariables = [
 ];
 //-- localNamespace
 private _localVariables = [
-    ["MPClient_FunctionGroups", []],
-    ["MPClient_var_animalTypes",[
-        "Snake_random_F",
-        "Sheep_random_F", 
-        "Goat_random_F", 
-        "Hen_random_F", 
-        "Cock_random_F", 
-        "Rabbit_F",
-        "Salema_F", 
-        "Ornate_random_F", 
-        "Mackerel_F", 
-        "Tuna_F", 
-        "Mullet_F", 
-        "CatShark_F", 
-        "Turtle_F"
-    ]]
+    ["MPClient_FunctionGroups", []]
 ];
 //-- uiNamespace
 private _uiVariables = [
@@ -235,9 +220,9 @@ private _uiVariables = [
     ["RscDisplayLicenseShop", displayNull],
     ["RscDisplayGang", displayNull],
     ["RscDisplayInteractionMenu", displayNull],
-    ["RscDisplayInventory", displayNull],
-    ["RscDisplayInventoryKeyManagement", displayNull],
-    ["RscDisplayInventorySettings", displayNull],
+    ["RscDisplayPlayerInventory", displayNull],
+    ["RscDisplayPlayerInventoryKeyManagement", displayNull],
+    ["RscDisplayPlayerInventorySettings", displayNull],
     ["RscDisplayLoadingScreen", displayNull],
     ["RscDisplayNewsBroadcast", displayNull],
     ["RscDisplayPoliceTicket", displayNull],
