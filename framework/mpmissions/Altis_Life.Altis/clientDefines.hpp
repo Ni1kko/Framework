@@ -121,7 +121,6 @@
 	#define RUN_DEDI_SERVER_ONLY (if (hasInterface OR not(isServer) OR not(isDedicated))exitWith{false})
 	#define RUN_CLIENT_ONLY (if not(hasInterface)exitWith{false})
 	#define KIND_OF_ARRAY(a,b) ([##a,##b] call {params ["_veh","_types"];{_veh isKindOf _x} count _types > 0})
-	#define IS_VEHICLE(a) (KIND_OF_ARRAY(a,["Car","Air","Ship","Tank"]))
 	#define IS_CAR(a) (a isKindOf "Car")
 	#define IS_AIR(a) (a isKindOf "Air")
 	#define IS_SHIP(a) (a isKindOf "Ship")
