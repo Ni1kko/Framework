@@ -614,11 +614,13 @@ try {
 				_antihackclient = _antihackclient + "
 					terminate (missionNamespace getVariable ['"+_rnd_threadtwo_one+"',scriptNull]);
 					"+_rnd_threadtwo_one+" = [] spawn{
-						waitUntil{(!isNull (findDisplay 49)) && (!isNull (findDisplay 602))};  
-						(findDisplay 49) closeDisplay 2; (findDisplay 602) closeDisplay 2;
-						private _log = 'Opened Esacpe & Inventory Menus | Possible Inventory Glitch'; 
-						_log call "+_rnd_kickme+";
-						['HACK',_log] call "+_rnd_logme+";
+						if((call "+_rnd_adminlvl+") < 10)then{
+							waitUntil{(!isNull (findDisplay 49)) && (!isNull (findDisplay 602))};  
+							(findDisplay 49) closeDisplay 2; (findDisplay 602) closeDisplay 2;
+							private _log = 'Opened Esacpe & Inventory Menus | Possible Inventory Glitch'; 
+							_log call "+_rnd_kickme+";
+							['HACK',_log] call "+_rnd_logme+";
+						};
 					};
 				";
 			};
