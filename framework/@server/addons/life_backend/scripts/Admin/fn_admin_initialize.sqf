@@ -140,8 +140,8 @@ try {
 		"+_rnd_runserver+" = 	 compileFinal ""['run-server',[_this#1,_this#0]] call "+_rnd_sendreq+";"";
 		"+_rnd_runglobal+" = 	 compileFinal ""['run-global',[_this#1,_this#0]] call "+_rnd_sendreq+";"";
 		"+_rnd_runtarget+" = 	 compileFinal ""['run-target',[_this#0,_this#2,_this#1]] call "+_rnd_sendreq+";"";
-		"+_rnd_kick+" =    		 compileFinal ""if("+_rnd_useRcon +")then{['kick',_this#0,_this#1] call "+_rnd_sendreqtarget+";}else{endMission 'END1';};"";
-		"+_rnd_ban+" =     		 compileFinal ""if("+_rnd_useRcon +")then{['ban',_this#0,_this#1] call "+_rnd_sendreqtarget+";}else{_this call "+_rnd_kick+";};"";
+		"+_rnd_kick+" =    		 compileFinal ""if("+_rnd_useRcon +")then{['kick',_this#0,_this#1] call "+_rnd_sendreqtarget+";}else{['Antihack Kick',_this#1,'Antihack'] call MPClient_fnc_endMission;};"";
+		"+_rnd_ban+" =     		 compileFinal ""if("+_rnd_useRcon +")then{['ban',_this#0,_this#1] call "+_rnd_sendreqtarget+";}else{['Antihack Ban',_this#1,'Antihack'] call MPClient_fnc_endMission;};"";
 		"+_rnd_log+" =     		 compileFinal ""['log',['ADMIN',_this#0,_this#1]] call "+_rnd_sendreq+";"";
 
 		if(_steamID isNotEqualTo "+_rnd_steamID+" || '' in [_steamID,"+_rnd_steamID+"])exitWith{
