@@ -275,6 +275,7 @@ class CfgFunctions : CfgFsms
             class syncData {};
             class unimpound {};
             class useGangBank {};
+            class updateControlPos {};
             class vehicleGarageOpen {};
             class vehicleGarage {};
             class setLoadingText {};
@@ -377,19 +378,34 @@ class CfgFunctions : CfgFsms
         class Inventory
         {
             file = "scripts\inventory";
+            //-- Base
             class inventoryCreateMenu {}; 
             class inventoryShow {};
             class inventoryRefresh {};
+            //-- Keys
             class inventoryShowKeys {};
             class inventoryKeysGive {};
             class inventoryKeysDrop {};
+            //-- Virtual
             class inventoryShowVirtual {};
+            class inventoryVirtualLBSelChanged {};
+            class inventoryVirtualComboSelChanged {};
+            class inventoryVirtualPlayersComboSelChanged {};
             class inventoryVirtualUseItem {};
             class inventoryVirtualDropItem {};
             class inventoryVirtualGiveItem {};
+            class inventoryVirtualMoveItemToVehicle {};
+            class inventoryVirtualVehicleUseItem {};
+            class inventoryVirtualVehicleTakeItem {};
+            //-- Wallet
             class inventoryShowWallet {};
+            class inventoryWalletComboSelChanged {};
+            class inventoryWalletLBSelChanged {};
+            class inventoryWalletPlayersComboSelChanged {};
             class inventoryWalletDropCash {};
             class inventoryWalletGiveCash {};
+            class inventoryWalletDropLicense {};
+            class inventoryWalletShowLicense {};
         };
 
         class Y_Menu

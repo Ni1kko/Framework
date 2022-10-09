@@ -41,18 +41,11 @@ if(isNull _controlGroup)then{
 };
 
 //-- Set position of the control group
-_controlGroup ctrlSetPosition [-0.070, _controlOffsetY, _controlOffsetW, _controlOffsetH];
+_controlGroup ctrlSetPosition [-0.070, 0, 1, 1];
 _controlGroup ctrlCommit 0;
 
 //-- Update control group var
 _ctrlParent setVariable ["RscDisplayInventory_Control77600", _controlGroup];
-
-//-- Update ofsets for buttons
-_controlOffsetX = (_controlOffsetX + 0.350);
-_controlOffsetY = (_controlOffsetY + 0.04);
-_controlOffsetW = (_controlOffsetW + -0.83);
-_controlOffsetH = (_controlOffsetH + -0.96);
-_controlOffsetGap = (_controlOffsetGap + 0.170);
 
 //-- Create controls
 {
@@ -72,24 +65,12 @@ _controlOffsetGap = (_controlOffsetGap + 0.170);
     
     switch _idc do 
     {
-        case 77700: 
-        {
-            //-- Menu button (Wallet)
-            _controlOffsetX = (_controlOffsetX + _controlOffsetGap);
-            _control ctrlSetPosition [_controlOffsetX, _controlOffsetY, _controlOffsetW, _controlOffsetH];
-        };
-        case 77701:
-        { 
-            //-- Menu button (Virtual Items)
-            _controlOffsetX = (_controlOffsetX + _controlOffsetGap);
-            _control ctrlSetPosition [_controlOffsetX, _controlOffsetY, _controlOffsetW, _controlOffsetH];
-        };
-        case 77702: 
-        { 
-            //-- Menu button (Keys)
-            _controlOffsetX = (_controlOffsetX + _controlOffsetGap);
-            _control ctrlSetPosition [_controlOffsetX, _controlOffsetY, (_controlOffsetW - 0.06), _controlOffsetH];
-        };
+        //-- Menu button (Wallet) 
+        case 77700: {_control ctrlSetPosition [0.609,0.04,0.10,0.04]};
+        //-- Menu button (Virtual Items) 
+        case 77701: {_control ctrlSetPosition [0.714,0.04,0.15,0.04]};
+        //-- Menu button (Keys) 
+        case 77702: {_control ctrlSetPosition [0.869,0.04,0.10,0.04]};
 		//-- Menu Header
         case 77703: {_control ctrlSetPosition [-0.06175, -0.0132, 0.420, 0.05]};
         //-- Menu Title
@@ -97,17 +78,21 @@ _controlOffsetGap = (_controlOffsetGap + 0.170);
 		//-- Menu SubTitle
         case 77705: {_control ctrlSetPosition [0.225, -0.005, 0.422, 0.04]};
         //-- Menu listbox
-        case 77706: {_control ctrlSetPosition [0, 0.05, 0.3587, 0.6];lbClear _control};
+        case 77706: {_control ctrlSetPosition [0, 0.085, 0.359, 0.54];lbClear _control};
         //-- Menu button (Use)
         case 77707: {_control ctrlSetPosition [0, 0.7, 0.178, 0.04]};
 		//-- Menu button (Drop)
         case 77708: {_control ctrlSetPosition [0.182, 0.7, 0.178, 0.04]};
 		//-- Amount edit box
-        case 77709: {_control ctrlSetPosition [0, 0.64, 0.358,0.04]};
+        case 77709: {_control ctrlSetPosition [0, 0.64, 0.359,0.04]};
 		//-- Menu combo
-        case 77710: {_control ctrlSetPosition [0, 0.814, 0.358, 0.04];lbClear _control};
+        case 77710: {_control ctrlSetPosition [0, 0.814, 0.361, 0.04];lbClear _control};
         //-- Menu button (Give)
         case 77711: {_control ctrlSetPosition [0, 0.85, 0.358, 0.04]};
+		//-- Menu combo
+        case 77712: {_control ctrlSetPosition [0, 0.04, 0.361, 0.04];lbClear _control};
+		//-- Menu button (Store)
+        case 77713: {_control ctrlSetPosition [0, 0.90, 0.358, 0.04]};
     };
 
     _control ctrlCommit 0;
@@ -123,7 +108,9 @@ _controlOffsetGap = (_controlOffsetGap + 0.170);
     "RscDefineInventoryButtonMenu",     //-- 77708
     "RscDefineInventoryTextEdit",       //-- 77709
     "RscDefineInventoryCombo",          //-- 77710
-    "RscDefineInventoryButtonMenu"      //-- 77711
+    "RscDefineInventoryButtonMenu",     //-- 77711
+    "RscDefineInventoryCombo",          //-- 77712
+	"RscDefineInventoryButtonMenu"      //-- 77713
 ];
 
 //-- 
