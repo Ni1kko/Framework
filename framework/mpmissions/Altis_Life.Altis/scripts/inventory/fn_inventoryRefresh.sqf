@@ -16,15 +16,8 @@ private _ctrlIDCBIlist = [632,640,1240,6321,6401,6554,6307];
 {
     private _idc = _x;
     private _control = (_ctrlParent displayCtrl _idc);
-    private _controlVar = format ["RscDisplayInventory_Control%1", _idc];
-    private _controlShow = (_idc in [77700,77701,77702]);
-
-    _ctrlParent setVariable [_controlVar, _control];
-    
-    //-- Hide every control but buttons to activate menu
-    _control ctrlShow _controlShow;
-    _control ctrlEnable _controlShow;
-    
+    _ctrlParent setVariable [format ["RscDisplayInventory_Control%1", _idc], _control];
+     
     switch _idc do 
     {
         case 77700: 
@@ -32,24 +25,44 @@ private _ctrlIDCBIlist = [632,640,1240,6321,6401,6554,6307];
             private _text = "Wallet";
             _control ctrlSetStructuredText parseText format["<t align='center'>%1</t>",_text];
             _control ctrlSetToolTip format["View your %1", toLower _text];
-            _control ctrlRemoveAllEventHandlers "ButtonClick";
-            _control ctrlAddEventHandler ["ButtonClick", "[_this#0,0] call MPClient_fnc_inventoryShowWallet"];
+            _control ctrlRemoveAllEventHandlers "MouseButtonUp";
+            _control ctrlAddEventHandler ["MouseButtonUp", "[_this#0,0] spawn MPClient_fnc_inventoryShowWallet"];
+            _control ctrlEnable true;
+            _control ctrlShow true;
         };
         case 77701:
         { 
             private _text = "Virtual Items";
             _control ctrlSetStructuredText parseText format["<t align='center'>%1</t>",_text];
             _control ctrlSetToolTip format["View your %1", toLower _text];
-            _control ctrlRemoveAllEventHandlers "ButtonClick";
-            _control ctrlAddEventHandler ["ButtonClick", "[_this#0,0] call MPClient_fnc_inventoryShowVirtual"];
+            _control ctrlRemoveAllEventHandlers "MouseButtonUp";
+            _control ctrlAddEventHandler ["MouseButtonUp", "[_this#0,0] spawn MPClient_fnc_inventoryShowVirtual"];
+            _control ctrlEnable true;
+            _control ctrlShow true;
         };
         case 77702: 
         { 
             private _text = "Keys";
             _control ctrlSetStructuredText parseText format["<t align='center'>%1</t>",_text];
             _control ctrlSetToolTip format["View your %1", toLower _text];
-            _control ctrlRemoveAllEventHandlers "ButtonClick";
-            _control ctrlAddEventHandler ["ButtonClick", "_this call MPClient_fnc_inventoryShowKeys"];
+            _control ctrlRemoveAllEventHandlers "MouseButtonUp";
+            _control ctrlAddEventHandler ["MouseButtonUp", "_this spawn MPClient_fnc_inventoryShowKeys"];
+            _control ctrlEnable true;
+            _control ctrlShow true;
+        };
+        default 
+        {
+            //-- Clear combo and listbox controls
+            if(_idc in [77706,77710,77712])then{
+                lbClear _control;
+                _control ctrlRemoveAllEventHandlers "LBSelChanged";
+            }else{
+                _control ctrlRemoveAllEventHandlers "MouseButtonUp";
+            };
+            
+            //-- Disable and hide control
+            _control ctrlEnable false;
+            _control ctrlShow false;
         };
     };
 

@@ -15,7 +15,7 @@ if(isNull _player) exitWith {life_var_licenses};
 
 //-- Get all licenses avalible to player (Used for developers to give all faction licenses)
 if (count _licenses isEqualTo 0) then {
-    _licenses = [_player,false,false,false,true] call MPClient_fnc_getLicenses;
+    _licenses = ([_player,false,false,false,true] call MPClient_fnc_getLicenses) apply {[_x#0,true]};
 };
 
 //-- Set licenses

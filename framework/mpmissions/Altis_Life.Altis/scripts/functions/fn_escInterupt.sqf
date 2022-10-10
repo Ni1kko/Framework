@@ -92,7 +92,7 @@ with missionNamespace do
         (_display displayCtrl 104) ctrlSetToolTip format["Leave %1 Life", worldname];
 
         //Enable Contols  
-        if (call (missionNamespace getVariable ["life_var_isDormant",{false}])) then
+        if (call (missionNamespace getVariable ["life_fnc_isDormant",{false}])) then
         {
             //Respawn Btn
             (_display displayCtrl 1010) ctrlEnable true;
@@ -155,7 +155,7 @@ with missionNamespace do
                     _display = uiNamespace getVariable ["RscDisplayMPInterrupt",displayNull];
                 };
 
-                if(((_abortReady AND _syncReady) OR {isNull _display OR {not(call (missionNamespace getVariable ["life_var_isDormant",{false}]))}}))exitWith{
+                if(((_abortReady AND _syncReady) OR {isNull _display OR {not(call (missionNamespace getVariable ["life_fnc_isDormant",{false}]))}}))exitWith{
                     true
                 };
 
@@ -170,7 +170,7 @@ with missionNamespace do
                     true
                 };
 
-                if(not(call (missionNamespace getVariable ["life_var_isDormant",{false}])) OR {isNull (uiNamespace getVariable ["RscDisplayMPInterrupt",displayNull])})exitWith{
+                if(not(call (missionNamespace getVariable ["life_fnc_isDormant",{false}])) OR {isNull (uiNamespace getVariable ["RscDisplayMPInterrupt",displayNull])})exitWith{
                     true
                 };
                 false
@@ -192,7 +192,7 @@ with missionNamespace do
                     (_display displayCtrl 104) ctrlEnable true;
                 };
 
-                if((call (missionNamespace getVariable ["life_var_isDormant",{false}])) OR {isNull (uiNamespace getVariable ["RscDisplayMPInterrupt",displayNull])})exitWith{
+                if((call (missionNamespace getVariable ["life_fnc_isDormant",{false}])) OR {isNull (uiNamespace getVariable ["RscDisplayMPInterrupt",displayNull])})exitWith{
                     true
                 };
 

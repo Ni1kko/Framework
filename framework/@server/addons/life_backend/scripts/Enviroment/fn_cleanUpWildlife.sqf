@@ -8,18 +8,21 @@
 private _wildlife = [false] call MPServer_fnc_getWildlife;
 if(count _wildlife > 0)then{
 	
-	//-- Remove animals that under 350m away from a player only
+	//-- Remove animals that over 350m away from a player only
 	{
 		private _pos = getPos _x;
-		if(({(_x distance2D _pos) > 350} count playableUnits) > 0)then{
+		if(({(_x distance2D _pos) < 350} count playableUnits) > 0)then{
 			_wildlife deleteAt _forEachIndex;
 		}else{
-			private _agents = _x getVariable ["agents", []];
-			if(count _agents > 0)	then{
-				{
-					_wildlife pushBackUnique _x;
-				}forEach _agents;
-			};
+			/*Disabled, Handled client side due to Transfer of AI structures is not supported
+				
+				private _agents = _x getVariable ["agents", []];
+				if(count _agents > 0)	then{
+					{
+						_wildlife pushBackUnique _x;
+					}forEach _agents;
+				};
+			*/
 		}
 	}forEach playableUnits;
 

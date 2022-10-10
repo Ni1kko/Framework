@@ -20,11 +20,13 @@ params [
 //get current damage data
 private _currentDmg = [_unit getHitIndex _hitPointIndex, damage _unit] select (_hitPointIndex < 0);
 
+//-- block shit put them in comabt for 5 seconds
+[_unit, 5] call life_fnc_enterCombat;
+
 // damage not important to us
 if (_selection == "hands") exitWith {_unit getHit "hands"};
 if (_selection == "legs") exitWith {_unit getHit "legs"};
 if (_selection == "arms") exitWith {_unit getHit "arms"};
-
 
 // bug with cartridge definition
 if (_projectile isEqualType objNull) then {
@@ -78,14 +80,19 @@ if (alive _unit && _damage > 0) then {
                     switch (true) do {
                         case (_damage > 0.1 && _damage <= 0.3) : {
                             ["life_var_bleeding","debuff",300] spawn MPClient_fnc_addBuff;
+                            [_unit, 20] call life_fnc_enterCombat;
                         };
                         case (_damage > 0.3 && _damage <= 0.45) : {
                             ["life_var_painShock","debuff"] spawn MPClient_fnc_addBuff;
+                           [_unit, 30] call life_fnc_enterCombat;
                         };
                         case (_damage > 0.45 && _damage <= 0.9) : {
                            ["life_var_critHit","debuff"] spawn MPClient_fnc_addBuff;
+                           [_unit, 45] call life_fnc_enterCombat;
                         };
-                        default {}; 
+                        default {
+                            [_unit, 10] call life_fnc_enterCombat;
+                        }; 
                     };
                 };
             };

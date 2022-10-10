@@ -15,6 +15,9 @@ if((_unit getVariable ["lifeState","HEALTHY"]) isEqualTo "INCAPACITATED") exitWi
 _unit setVariable ["medicStatus",-1,true];
 _unit setVariable ["lifeState","INCAPACITATED",true];
 
+[_unit] call life_fnc_enterCombat;
+
 [_unit] spawn MPClient_fnc_deathScreen;
+
 
 true

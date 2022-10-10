@@ -30,7 +30,23 @@ private _missionVariables = [
 	["life_var_clientConnected", -1],
 	["life_var_clientDisconnected", -1],
 	["life_var_handleDisconnectEVH", -1],
-	["life_var_entityRespawnedEVH", -1]
+	["life_var_entityRespawnedEVH", -1],
+    ["life_var_animalTypes",[
+        "Snake_random_F",
+        "Sheep_random_F", 
+        "Goat_random_F", 
+        "Hen_random_F", 
+        "Cock_random_F", 
+        "Rabbit_F",
+        "Salema_F", 
+        "Ornate_random_F", 
+        "Mackerel_F", 
+        "Tuna_F", 
+        "Mullet_F", 
+        "CatShark_F", 
+        "Turtle_F"
+    ]],
+    ["life_var_animalTypesRestricted", []]
 ];
 //-- parsingNamespace
 private _parserVariables = [
@@ -46,21 +62,7 @@ private _missionProfileVariables = [
 ];
 //-- localNamespace
 private _localVariables = [
-    ["MPServer_var_animalTypes",[
-        "Snake_random_F",
-        "Sheep_random_F", 
-        "Goat_random_F", 
-        "Hen_random_F", 
-        "Cock_random_F", 
-        "Rabbit_F",
-        "Salema_F", 
-        "Ornate_random_F", 
-        "Mackerel_F", 
-        "Tuna_F", 
-        "Mullet_F", 
-        "CatShark_F", 
-        "Turtle_F"
-    ]]
+
 ];
 //-- uiNamespace
 private _uiVariables = [
@@ -73,6 +75,13 @@ private _serverVariables = [
 //-- Bank Object vars
 private _bankVariables = [
 	["TrustedTraders",[], true]
+];
+
+//-- Setup Restricted animals
+{{life_var_animalTypesRestricted pushBackUnique toLower _x}forEach (getArray _x)}ForEach [
+    missionConfigFile >> "cfgMaster" >> "animaltypes_fish",
+    missionConfigFile >> "cfgMaster" >> "animaltypes_hunting",
+    configFile >> "CfgEnviroment" >> "wildLife"
 ];
 
 private _bankObject = missionNamespace getVariable ["bank_obj",objNull];
@@ -144,6 +153,16 @@ if(count _variablesFlagged > 0)exitWith{
 	life_var_endMissionServerJIP = ["","","Antihack"] remoteExec ["MPClient_fnc_endMission", -2, true];
 	life_var_endMissionClientJIP = ["Antihack"] remoteExec ["BIS_fnc_endMissionServer", 2, true];
 	false
+};
+
+//-- save proflie vars
+if(count _profileVariables > 0)then{
+    saveProfileNamespace;
+};
+
+//-- save mission proflie vars
+if(count _missionProfileVariables > 0)then{
+    saveMissionProfileNamespace;
 };
 
 private _initThread = [serverName,missionName,worldName,worldSize] spawn MPServer_fnc_init;

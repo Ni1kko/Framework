@@ -26,4 +26,40 @@ waitUntil { _ctrlParent = uiNamespace getVariable ["RscDisplayInventory",findDis
 //-- Handle our controls
 [_ctrlParent,true] call MPClient_fnc_inventoryRefresh;
 
+//-- Handle player closing inventory
+[_ctrlParent]spawn {
+	params ["_ctrlParent"];
+
+	//-- Once is enough
+	if(_ctrlParent setVariable ["storageUserClearPending",false])exitWith{false};
+
+	//-- Wait for the user to close the inventory
+	waitUntil {isNull _ctrlParent};
+	_ctrlParent setVariable ["storageUserClearPending",true,true];
+
+	//-- Clear the storage user
+	if((vehicle player) isNotEqualTo player)then{
+		if(((vehicle player) getVariable ["storageUser",objNull]) isEqualTo player)then{ 
+			(vehicle player) setVariable ["storageUser",objNull,true];
+		};
+	}else{
+		if(not(isNull cursorObject))then{ 
+			if((cursorObject getVariable ["storageUser",objNull]) isEqualTo player)then{ 
+				cursorObject setVariable ["storageUser",objNull,true];
+			};
+		}else{
+			private _otherTarget = player getVariable ["storageUserTarget",objNull];
+			if(not(isNull _otherTarget))then{
+				if((_otherTarget getVariable ["storageUser",objNull]) isEqualTo player)then{ 
+					_otherTarget setVariable ["storageUser",objNull,true];
+					player setVariable ["storageUserTarget",objNull,true];
+				};
+			};
+		};
+	};
+
+	true
+};
+
+
 true

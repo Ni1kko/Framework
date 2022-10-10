@@ -153,7 +153,7 @@ class CfgAntiHack
 
     //---
     uniformwhitelist[]= {
-
+        "U_O_CombatUniform_ocamo"
 	};
 
     //---

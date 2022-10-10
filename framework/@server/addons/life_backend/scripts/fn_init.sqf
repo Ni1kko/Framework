@@ -90,7 +90,9 @@ life_var_serverLoaded = true;
     "MPServer_fnc_util_getSideString",
 	"MPServer_fnc_util_getTypeString",
     "MPServer_fnc_util_getPlayerObject",
-	"life_var_currentDay"
+	"life_var_currentDay",
+	"life_var_animalTypes",
+	"life_var_animalTypesRestricted"
 ];
 
 [format["Server init completed! Took %1 seconds",diag_tickTime - (call life_var_initTime)]] call MPServer_fnc_log;

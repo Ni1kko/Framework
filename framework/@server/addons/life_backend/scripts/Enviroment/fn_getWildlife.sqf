@@ -9,22 +9,17 @@ params [
 ];
 
 private _animals = []; 
-private _animalTypes = localNamespace getVariable ["MPServer_var_animalTypes",[]];
+private _animalTypes = missionNamespace getVariable ["life_var_animalTypes",[]];
 
 //-- No animal types found, exit
 if(count _animalTypes isEqualTo 0) exitWith {_animals};
 
 //-- Make sure animal is not used by another system
-if (not(_getAllDefined)) then {
-	{
-		private _animaltypes_fishing = (CFG_MASTER(getArray,"animaltypes_fish")) apply {toLower _x};
-		private _animaltypes_hunting = (CFG_MASTER(getArray,"animaltypes_hunting")) apply {toLower _x};
-		private _animaltypes_ambient = (getArray(configFile >> "CfgEnviroment" >> "wildLife")) apply {toLower _x};
-
-		if(_x in _animaltypes_fishing OR _x in _animaltypes_hunting OR _x in _animaltypes_ambient)then{
-			_animalTypes deleteAt _forEachIndex;
-		};
-	}ForEach (_animalTypes apply {toLower _x});
+if not(_getAllDefined) then { 
+	if not(isNil "life_var_animalTypesRestricted")then{
+		private _animalTypesRestricted = life_var_animalTypesRestricted  apply {toLower _x};
+		{if(toLower _x in _animalTypesRestricted)then{_animalTypes deleteAt _forEachIndex}}ForEach _animalTypes;
+	};
 };
 
 //-- Get all animal mathing given type(s)

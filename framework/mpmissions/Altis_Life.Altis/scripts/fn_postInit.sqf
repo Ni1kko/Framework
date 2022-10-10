@@ -40,12 +40,25 @@ disableRemoteSensors true; //--- Raycasting
 //-- Texture patch
 [] spawn MPClient_fnc_playerTextures;
 
-
+//-- Wildlife client patch
 []spawn {
-    while {true} do {
+    waitUntil {not(isNil "life_var_animalTypesRestricted")}; 
+    while {not(isNull(uiNamespace getVariable ["RscDisplayMission",findDisplay 46]))} do
+    {
         waitUntil {count agents > 0}; 
         waitUntil {
-            player setVariable ["agents", agents, true];
+            //player setVariable ["agents", agents, true]; // Transfer of AI structures is not supported.. FIND A NEW WAY
+            {
+                private _agent = agent _x;
+                private _agentType = toLower(typeOf _agent);
+                //-- Right this mofo is fucking spawned client side and is not synced to the server.
+                if(local _agent)then{
+                    //-- Not Restricted fuck it delete it CBA anymore
+                    if not(_agentType in life_var_animalTypesRestricted)then{
+                        deleteVehicle _agent;
+                    };
+                };
+            }forEach agents;
             uiSleep 3;
             count agents == 0
         };

@@ -1,6 +1,8 @@
+#include "..\..\clientDefines.hpp"
 /*
 	## Nikko Renolds
 	## https://github.com/Ni1kko/FrameworkV2
+    ## fn_playerTextures.sqf
 */
 
 //-- Wait for ranks to be set

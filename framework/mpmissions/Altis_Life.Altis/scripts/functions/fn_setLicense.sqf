@@ -22,14 +22,14 @@ private _licenseData = life_var_licenses getOrDefault [_licenseName,createHashMa
 {
 	private _classname = configName _x;
 	private _sideflag = getText(_cfgLicenses >> _classname >> "side");
+	private	_licenseVarName = LICENSE_VARNAME(_classname,_sideflag);
 	
-	if(_licenseName isEqualTo _classname)exitWith{
-		_licenseName = LICENSE_VARNAME(_classname,_sideflag);
-		_licenseData = life_var_licenses getOrDefault [_licenseName,createHashMapFromArray [
-			["Name", _licenseName],
+	if(toLower _licenseName in [toLower _classname,toLower _licenseVarName])exitWith{
+		_licenseData = life_var_licenses getOrDefault [_licenseVarName,createHashMapFromArray [
+			["Name", _licenseVarName],
 			["State", _licenseState]
 		]];
-	}; 
+	};
 }forEach ("true" configClasses _cfgLicenses);
 
 //-- Update hashMap

@@ -8,6 +8,33 @@
 disableSerialization;
 
 private _displayName = "RscDisplayPlayerInventory";
+
+//-- Temp disable parts of old menu that are used in new menu
+{
+    _x ctrlShow false;
+    _x ctrlEnable false;
+}forEach [
+    GETControlGroup(_displayName, "Licenses_Group", "Life_Licenses"),
+    GETControl(_displayName, "licenseHeader"),
+    GETControl(_displayName, "RemoveButton"),
+    GETControl(_displayName, "UseButton"),
+    GETControl(_displayName, "DropButton"),
+    GETControl(_displayName, "itemEdit"),
+    GETControl(_displayName, "itemHeader"),
+    GETControl(_displayName, "moneyDrop"),
+    GETControl(_displayName, "moneyEdit"),
+    GETControl(_displayName, "moneySHeader"),
+    GETControl(_displayName, "ButtonKeys"),
+    GETControl(_displayName, "NearPlayersListbox1"),
+    GETControl(_displayName, "NearPlayersListbox2"),
+    GETControl(_displayName, "itemListBox"),
+    GETControl(_displayName, "moneyStatusInfo"),
+    GETControl(_displayName, "Weight")
+];
+
+GETControl(_displayName, "ButtonAdminMenu") ctrlEnable (call life_adminLevel) > 0;
+
+/*
 private _display = param [0, uiNamespace getVariable [_displayName, GETDisplay(_displayName)], [displayNull]];
 private _side = [playerSide,true] call MPServer_fnc_util_getSideString;
 private _nearByPlayers = (playableUnits apply {if (alive _x AND player distance _x < 10 AND _x isNotEqualTo player) then {_x}else{""}}) - [""];
@@ -63,7 +90,10 @@ if(count _ownedVirtualItemConfigNames > 0)then{
 //-- Display licenses
 GETControlGroup(_displayName, "Licenses_Group", "Life_Licenses") ctrlSetStructuredText parseText (if(count _ownedLicenseDisplayNames > 0)then{format ["<t size='0.8px'>%1</t>",_ownedLicenseDisplayNames joinString "<br/>"]}else{"No Licenses"});
 
+
 //Carry weight
 GETControl(_displayName, "Weight") ctrlSetText format ["Weight: %1 / %2", life_var_carryWeight, life_var_maxCarryWeight];
+
+*/
 
 true

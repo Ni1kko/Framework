@@ -28,7 +28,6 @@ if(param [1,false])exitWith
 		["revived"] call MPClient_fnc_removeBuff;
 		cutText ["You have came to your senses ...", "BLACK IN", 5];
 		player setVariable ["lifeState","HEALTHY",true];
-		life_var_alive = true;
 	};
 
 	player setDamage 0;

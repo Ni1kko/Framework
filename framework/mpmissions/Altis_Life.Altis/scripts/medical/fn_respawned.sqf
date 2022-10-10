@@ -59,6 +59,10 @@ if (life_var_removeWanted) then {
     [getPlayerUID player] remoteExecCall ["MPServer_fnc_wantedRemove",2];
 };
 
+//--
+[player] call life_fnc_leaveCombat;
+[player] call life_fnc_leaveNewLife;
+
 //--- Give them a default loadout
 [] call MPClient_fnc_startLoadout;
 

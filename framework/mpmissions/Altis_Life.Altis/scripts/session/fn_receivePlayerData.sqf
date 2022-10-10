@@ -66,8 +66,8 @@ life_reblevel =     compileFinal str(_playerData getOrDefault ["RebelRank",-1]);
 life_medLevel =     compileFinal str(_playerData getOrDefault ["MedicRank",-1]);
 life_coplevel =     compileFinal str(_playerData getOrDefault ["PoliceRank",-1]);
 life_blacklisted =  _playerData getOrDefault ["Blacklist",false];
-life_var_alive =     _playerData getOrDefault ["Alive",false];
 
+player setVariable ["lifeState",["DEAD","HEALTHY"] select (_playerData getOrDefault ["Alive",false]),true];
 player setVariable ["arrested",_playerData getOrDefault ["Arrested",false],true];
 
 //--- Cash
@@ -91,12 +91,15 @@ player setDamage (_playerData getOrDefault ["Damage",0]);
 
 //--- Position
 life_var_position = _playerData getOrDefault ["Position",[]];
-if (life_var_alive) then {
+if ((player getVariable ["lifeState",""]) isNotEqualTo "HEALTHY") then {
     if !(count life_var_position isEqualTo 3) then { 
         [format ["[Bad position received. Data: %1",life_var_position],true,true] call MPClient_fnc_log;
         life_var_position = getMarkerPos "respawn_civilian";
     };
-    if (life_var_position distance (getMarkerPos "respawn_civilian") < 700) then {life_var_alive = false;life_var_position = [];};
+    if (life_var_position distance (getMarkerPos "respawn_civilian") < 700) then {
+        player setVariable ["lifeState","DEAD",true];
+        life_var_position = [];
+    };
 };
 
 //--- Houses

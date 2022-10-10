@@ -150,6 +150,7 @@ class CfgFunctions : CfgFsms
         {
             file = "scripts\functions";
             class AAN {};
+            class addTimer {};
             class accType {};
             class actionKeyHandler {};
             class animSync {};
@@ -162,6 +163,7 @@ class CfgFunctions : CfgFsms
             class canspit {};
             class dropItem {};
             class dropItems {};
+            class endTimer {};
             class escInterupt {};
             class fetchCfgDetails {};
             class fetchVehInfo {};
@@ -171,6 +173,8 @@ class CfgFunctions : CfgFsms
             class handleInv {};
             class handleItem {};
             class hideObj {};
+            class isDormant {};
+            class isTimerFinished {};
             class inventoryClosed {};
             class inventoryOpened {};
             class isUIDActive {};

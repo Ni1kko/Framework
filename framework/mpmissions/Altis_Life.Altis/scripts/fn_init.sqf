@@ -122,7 +122,8 @@ if(_sideCode isNotEqualTo {})then{
 
 [("Welcome " + _name),"Have Fun And Respect The Rules!..."] call MPClient_fnc_setLoadingText; uiSleep(5);
 ["Life_var_initBlackout"] call BIS_fnc_blackIn;//fail safe for loading screen
-private _spawnPlayerThread = [life_var_alive,life_var_position] spawn MPClient_fnc_spawnPlayer;
+private _alive = ((player getVariable ['lifeState','DEAD']) isEqualTo 'HEALTHY');
+private _spawnPlayerThread = [_alive,life_var_position] spawn MPClient_fnc_spawnPlayer;
 ["Waiting for player to spawn!"] call MPClient_fnc_log;
 waitUntil{scriptDone _spawnPlayerThread};
 enableRadio true;

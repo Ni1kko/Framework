@@ -1,15 +1,8 @@
 #include "..\..\clientDefines.hpp"
 
-/*
-    File: fn_giveItem.sqf
-    Author: Bryan "Tonic" Boardwine
+//-- To be deleted
 
-    Description:
-    Gives the selected item & amount to the selected player and
-    removes the item & amount of it from the players virtual
-    inventory.
-*/
-
+/* 
 ctrlShow [112,false];
 
 private _value = ctrlText 110;
@@ -51,3 +44,5 @@ hint format [localize "STR_NOTF_youGaveItem", _unit getVariable ["realname", nam
 
 
 ctrlShow[112,true];
+
+*/

@@ -35,7 +35,11 @@ private _arrested = (_unit getVariable ["arrested",false]);
     ['realname',profileName,true]
 ];
 
-life_var_alive = false;
+//--
+[_unit] call life_fnc_leaveCombat;
+[_unit] call life_fnc_leaveNewLife;
+
+player setVariable ["lifeState","DEAD",true];
 life_var_isBusy = false;
 life_var_hunger = 0;
 life_var_thirst = 0;

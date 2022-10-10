@@ -29,7 +29,7 @@ if(playerSide in [civilian,east]) then
 			[player,true] spawn MPClient_fnc_jail;
         };
 		//-- Reset loadout logged off during combat (combat logged).
-		case (life_var_firstSpawn AND not(life_var_alive) AND not(player getVariable ["arrested",false])): 
+		case (life_var_firstSpawn AND ((player getVariable ["lifeState",""]) isEqualTo "DEAD") AND not(player getVariable ["arrested",false])): 
 		{
             //-- Comabt logged
 			if (CFG_MASTER(getNumber,"save_civilian_positionStrict") isEqualTo 1) then {
@@ -89,16 +89,19 @@ if (life_var_firstSpawn) then {
 	
 	//-- Play intro sound
 	playsound "intro"; 
-
-	//-- Camera effect
-	private _time = [6, 12] select _openSpawnMenu;
-	private _dist = [500, 350] select _openSpawnMenu;
-    [player,_time,_dist] spawn MPClient_fnc_cameraZoomIn;
+	
+	if _openSpawnMenu then {
+		[player,12,500] spawn MPClient_fnc_cameraZoomIn;
+		[player] call life_fnc_enterNewLife;
+	}else{
+		[player,5,250] spawn MPClient_fnc_cameraZoomIn;
+	};
 }else{
 	[player,5,250] spawn MPClient_fnc_cameraZoomIn;
+	[player] call life_fnc_enterNewLife;
 };
 
-life_var_alive = true;
+player setVariable ['lifeState','HEALTHY',true];
 disableUserInput false; // Let the user have input 
 player allowDamage true; // Let the player take damage
 5 spawn{uiSleep _this; player setVariable ["teleported",false,true]};

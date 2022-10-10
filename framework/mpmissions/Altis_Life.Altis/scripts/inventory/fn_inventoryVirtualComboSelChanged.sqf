@@ -9,31 +9,48 @@ disableSerialization;
 
 params [
 	["_control", controlNull, [controlNull]],
-	["_selectedIndex", -1, [0]]
+	["_selectedIndex", -1, [0]],
+	["_selectedIndexs", [], [[]]]
 ];
 
 hint format ["fn_inventoryVirtualComboSelChanged\n%1", str _this];
 
-if(isNull _control OR _selectedIndex < 0) exitWith {false};
-private _ctrlParent = ctrlParent _control;
-
-if(isNull _ctrlParent) exitWith {false};
-private _returnControl = _ctrlParent getVariable ["RscDisplayInventory_ReturnControl", controlNull];
-
-if(isNull _returnControl) exitWith {
-	_ctrlParent closeDisplay 2;
+if(isNull _ctrlParent OR isNull _control) exitWith {
 	false
 };
 
-private _modes = _ctrlParent getVariable ["ComboModes", []];
-if(count _modes isEqualTo 0 OR _selectedIndex > count _modes)exitWith{false};
-private _mode = (_modes#_selectedIndex);
+private _ctrlParent = ctrlParent _control;
+private _itemListBox = _ctrlParent displayCtrl 77706;
+private _dropButton = _ctrlParent displayCtrl 77708;
+private _amountEditbox = _ctrlParent displayCtrl 77709;
+private _playerListCombo = _ctrlParent displayCtrl 77710;
+private _giveButton = _ctrlParent displayCtrl 77711;
+private _returnControl = _ctrlParent getVariable ["RscDisplayInventory_ReturnControl", controlNull];
+private _lastPage = _ctrlParent getVariable ["RscDisplayInventory_CurrentPage", ["", -1]];
+private _nearPlayerList = _ctrlParent getVariable ["RscDisplayInventory_NearPlayerList", []];
 
-_ctrlParent setVariable ["RscDisplayInventory_WalletMode", [_mode, _selectedIndex]];
+//-- Check selected index against list to make sure we don't hit out of bounds exception
+if(_selectedIndex < 0 OR _selectedIndex > ((lbSize _control)-1))exitWith{
+	hint format["Error: invalid index(%1) out of bounds! expected between (0 AND %2) ",_selectedIndex,(lbSize _control)-1];
+	false
+};
 
-switch _mode do {
-	case "Player": {_vehicle getVariable ["storageUser",objNull,true]};
-	case "Vehicle": {_vehicle getVariable ["storageUser",player,true]}; 
+private _selectedPage = lbCurSel _selectedIndex;
+private _currentPage = [_selectedPage, _selectedIndex];
+
+//-- No fucking refresh it breaks arma now there a fucking suprise. whole game crashes coz this crap
+if(_lastPage isEqualTo _currentPage) exitWith {false};
+_ctrlParent setVariable ["RscDisplayInventory_CurrentPage",_currentPage];
+
+//-- Handle blocking accses whilst being used by a player
+if(_selectedPage in ["Vehicle", "House", "Tent"]) then {
+	if(isNull (_vehicle getVariable ["storageUser",objNull]))then{
+		_vehicle setVariable ["storageUser",player,true];
+	};
+} else {
+	if((_vehicle getVariable ["storageUser",objNull]) isEqualTo player)then{ 
+		_vehicle setVariable ["storageUser",objNull,true];
+	};
 };
 
 [_returnControl,_selectedIndex] call MPClient_fnc_inventoryShowVirtual;

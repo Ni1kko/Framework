@@ -30,15 +30,15 @@ _backButton ctrlSetEventHandler ["MouseButtonUp", "_this spawn MPClient_fnc_inve
 _backButton ctrlCommit 0;
 
 private _dropButton = GETControl(_displayName, "ButtonDrop");
-_backButton ctrlSetText "Drop";
-_backButton ctrlSetToolTip "Drop selected key";
+_dropButton ctrlSetText "Drop";
+_dropButton ctrlSetToolTip "Drop selected key";
 _dropButton ctrlRemoveAllEventHandlers "MouseButtonUp";
 _dropButton ctrlAddEventHandler ["MouseButtonUp", "_this call MPClient_fnc_inventoryKeysDrop"];
 _dropButton ctrlCommit 0;
 
 private _giveButton = GETControl(_displayName, "ButtonGive");
-_backButton ctrlSetText "Give";
-_backButton ctrlSetToolTip "Give selected key to selected person";
+_giveButton ctrlSetText "Give";
+_giveButton ctrlSetToolTip "Give selected key to selected person";
 _giveButton ctrlRemoveAllEventHandlers "MouseButtonUp";
 _giveButton ctrlAddEventHandler ["MouseButtonUp", "_this call MPClient_fnc_inventoryKeysGive"];
 _giveButton ctrlCommit 0;

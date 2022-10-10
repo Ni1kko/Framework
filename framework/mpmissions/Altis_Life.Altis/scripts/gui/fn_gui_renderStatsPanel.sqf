@@ -9,12 +9,12 @@ if (diag_tickTime - life_var_hud_laststatsrendered_at >= 0.25) then {
 	private _display1 = uiNamespace getVariable ["RscTitleHUD",displayNull];
 
 	//-- Player Events
-	(_display1 displayCtrl 1007) ctrlShow (life_var_thirst < 15); 	//-- Thrist Logo
-	(_display1 displayCtrl 1002) ctrlShow (life_var_hunger < 15);	//-- Hunger Logo
-	(_display1 displayCtrl 1003) ctrlShow life_var_newlife;		//-- Newlife Logo
-	(_display1 displayCtrl 1004) ctrlShow life_var_earplugs;	//-- EarPlugs Logo
-	(_display1 displayCtrl 1006) ctrlShow life_var_autorun;		//-- Autorun Logo
-	(_display1 displayCtrl 1008) ctrlShow life_var_combat;		//-- Combat Logo
+	(_display1 displayCtrl 1007) ctrlShow (life_var_thirst < 15); 			//-- Thrist Logo
+	(_display1 displayCtrl 1002) ctrlShow (life_var_hunger < 15);			//-- Hunger Logo
+	(_display1 displayCtrl 1003) ctrlShow (player call life_fnc_inNewLife);	//-- Newlife Logo
+	(_display1 displayCtrl 1004) ctrlShow life_var_earplugs;				//-- EarPlugs Logo
+	(_display1 displayCtrl 1006) ctrlShow life_var_autorun;					//-- Autorun Logo
+	(_display1 displayCtrl 1008) ctrlShow (player call life_fnc_inCombat);	//-- Combat Logo
 	
 	//-- Player Stats
 	switch (life_var_hud_layer1mode) do {

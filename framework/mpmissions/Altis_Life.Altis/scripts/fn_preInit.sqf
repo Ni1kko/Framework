@@ -16,10 +16,12 @@ private _playerVariables = [
     ['transporting', false, true],
     ['playerSurrender', false, true],
     ['realname', profileName, true],
-    ['lifeState','HEALTHY',true],
+    ['lifeState','SLEEPING',true],
     ["arrested", false,true],
     ['life_var_hidden',false,true],
-    ['teleported',false,true]
+    ['teleported',false,true],
+    ["combatTime", diag_tickTime,true],
+    ["newLifeTime", diag_tickTime,true]
 ];
 //-- missionNamespace
 private _missionVariables = [ 
@@ -52,10 +54,8 @@ private _missionVariables = [
     ["life_var_syncThread", scriptNull],
     ["life_var_storagePlacing", scriptNull],
     ["life_var_firstSpawn", true],
-    ["life_var_newlife", false],
     ["life_var_earplugs", false],
     ["life_var_autorun", false],
-    ["life_var_combat", false],
     ["life_var_autorun_thread", scriptNull],
     ["life_var_autorun_inventoryOpened", false], 
     ["life_var_autorun_interrupt", false],
@@ -127,7 +127,6 @@ private _missionVariables = [
     //--- Life Variables
     ["life_var_fishingNetOut", false],
     ["life_var_ATMEnabled", true],
-    ["life_var_alive", false],
     ["life_var_deliveringPackage", false],
     ["life_var_tazed", false],
     ["life_var_unconscious", false],
@@ -162,34 +161,14 @@ private _missionVariables = [
     //-- Setup Gangs
     ["life_var_gangData", []],
     ["life_var_gangHideoutBuildings", (CFG_MASTER(getArray,"gang_area")) apply {nearestBuilding(getMarkerPos _x)}],
+    
+    ["life_fnc_enterCombat", compileFinal '["combatTime", 20, param [0, player], true] call MPClient_fnc_addTimer'],
+    ["life_fnc_leaveCombat", compileFinal '["combatTime", param [0, player]] call MPClient_fnc_endTimer'],
+    ["life_fnc_inCombat", compileFinal '["combatTime", param [0, player]] call MPClient_fnc_isTimerFinished'],
 
-    ["life_var_isDormant", compileFinal '
-        (
-            player call {
-                alive _this
-            AND {
-                (missionNamespace getVariable ["life_var_alive",false]) 
-            AND {
-                not((_this getVariable ["lifeState",false]) isEqualTo "HEALTHY")
-            AND {
-                not(_this getVariable ["restrained",false])
-            AND {
-                not(_this getVariable ["Escorting",false])
-            AND {
-                not(_this getVariable ["playerSurrender",false])
-            AND {
-                not(_this getVariable ["transporting",false])
-            AND {
-                not(_this getVariable ["arrested",false])
-            AND {
-                not(missionNamespace getVariable ["life_var_tazed",false])
-            AND {
-                not(missionNamespace getVariable ["life_var_unconscious",false])
-            AND {
-                (missionNamespace getVariable ["life_var_sessionDone",false])
-            }}}}}}}}}}}
-        )
-    ']
+    ["life_fnc_enterNewLife", compileFinal '["newLifeTime", (20 * 60), param [0, player], true] call MPClient_fnc_addTimer'],
+    ["life_fnc_leaveNewLife", compileFinal '["newLifeTime", param [0, player]] call MPClient_fnc_endTimer'],
+    ["life_fnc_inNewLife", compileFinal '["newLifeTime", param [0, player]] call MPClient_fnc_isTimerFinished']
 ];
 //-- parsingNamespace
 private _parserVariables = [
@@ -197,8 +176,13 @@ private _parserVariables = [
 ];
 //-- profileNamespace
 private _profileVariables = [
-    
+    //--- Menu Title Background Colour
+    ['GUI_BCG_RGB_R', 0.1],
+    ['GUI_BCG_RGB_G', 0.1],
+    ['GUI_BCG_RGB_B', 0.1],
+    ['GUI_BCG_RGB_A', 0.9]
 ];
+
 //-- missionProfileNamespace
 private _missionProfileVariables = [
     

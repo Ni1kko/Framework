@@ -13,7 +13,7 @@ if(isNull _reviver OR isNull _player)exitWith{false};
 if(_player isNotEqualTo player)exitWith{false};
 
 //--
-{player setVariable _x} forEach [
+{_player setVariable _x} forEach [
 	['medicStatus',nil,true],
 	['Revive',nil,true],
 	['name',nil,true],
@@ -22,7 +22,10 @@ if(_player isNotEqualTo player)exitWith{false};
 ];
 
 //-- remove death screen
-[_unit, true] spawn MPClient_fnc_deathScreen;
+[_player, true] spawn MPClient_fnc_deathScreen;
+
+//--
+[_player] call life_fnc_leaveCombat;
 
 //-- Reload there gear
 if(count life_var_gearWhenDied > 0)then{player setUnitLoadout life_var_gearWhenDied};

@@ -8,7 +8,7 @@
 private _packetData = createHashMapFromArray [
     ["Mode",param [0,-1]],
     ["NetID",netID player],
-    ["Alive",life_var_alive]
+    ["Alive",((player getVariable ["lifeState",""]) isEqualTo "HEALTHY")]
 ];
 
 switch (_packetData get "Mode") do 
