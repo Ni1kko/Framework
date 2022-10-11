@@ -60,7 +60,7 @@ if (isNull _animalCorpse) exitWith {life_var_isBusy = false;};
 if (life_var_interrupted) exitWith {life_var_interrupted = false; titleText[localize "STR_NOTF_ActionCancel","PLAIN"]; life_var_isBusy = false;};
 if !(isNull objectParent player) exitWith {titleText[localize "STR_NOTF_ActionInVehicle","PLAIN"];};
 
-if ([true,_item,1] call MPClient_fnc_handleInv) then {
+if (["ADD",_item,1] call MPClient_fnc_handleVitrualItem) then {
     deleteVehicle _animalCorpse;
     titleText[format [(localize "STR_NOTF_Guttingfinish"),_displayName],"PLAIN"];
 } else {

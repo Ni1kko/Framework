@@ -54,9 +54,8 @@ if(_selectedAmount < 1)exitWith{
 private _returnControl = _ctrlParent getVariable ["RscDisplayInventory_ReturnControl", controlNull];
 private _mainPageIndex = _ctrlParent getVariable ["RscDisplayInventory_mainPageIndex", 0];
 private _selectedItemName = ITEM_DISPLAYNAME(_selectedItem);
-private _didRemove = [false, _selectedItem, _selectedAmount] call MPClient_fnc_handleInv;
 
-if (not(_didRemove)) exitWith {
+if not(["TAKE", _selectedItem, _selectedAmount] call MPClient_fnc_handleVitrualItem) exitWith {
     hint format["You do not have enough %1 to move",toLower _selectedItemName];
 	false
 };

@@ -25,8 +25,9 @@ if (_num > _safeInfo) exitWith {hint format [localize "STR_Civ_IsntEnoughGold",_
 _num = [_ctrl,_num,life_var_carryWeight,life_maxWeight] call MPClient_fnc_calWeightDiff;
 if (_num isEqualTo 0) exitWith {hint localize "STR_NOTF_InvFull"};
 
+//Give item to player
+if not(["ADD",_ctrl,_num] call MPClient_fnc_handleVitrualItem) exitWith {hint localize "STR_NOTF_CouldntAdd";};
 
-//Take it
-if (!([true,_ctrl,_num] call MPClient_fnc_handleInv)) exitWith {hint localize "STR_NOTF_CouldntAdd";};
+//Remove item from safe
 life_safeObj setVariable ["safe",_safeInfo - _num,true];
 [life_safeObj] call MPClient_fnc_safeInventory;

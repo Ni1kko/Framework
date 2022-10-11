@@ -69,9 +69,8 @@ if not(isNull objectParent player) exitWith {
 };
 
 private _selectedItemName = ITEM_DISPLAYNAME(_selectedItem);
-private _didDrop = [player,_selectedItem,_selectedAmount] call MPClient_fnc_dropItem;
 
-if (not(_didDrop)) exitWith {
+if not([player,_selectedItem,_selectedAmount] call MPClient_fnc_dropItem) exitWith {
     hint format["You do not have enough %1 to drop",toLower _selectedItemName];
 	false
 };

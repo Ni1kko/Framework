@@ -120,8 +120,8 @@ if _hasLicense then
     };
     if (player distance _vendor > 10) exitWith {hint localize "STR_Process_Stay"; "progressBar" cutText ["","PLAIN"]; life_var_processingResource = false; life_var_isBusy = false;};
 
-    {[false,_x#0,((_x#1)*(_minimumConversions))] call MPClient_fnc_handleInv} count _oldItem;
-    {[true, _x#0,((_x#1)*(_minimumConversions))] call MPClient_fnc_handleInv} count _newItem;
+    {["TAKE",_x#0,((_x#1)*(_minimumConversions))] call MPClient_fnc_handleVitrualItem} count _oldItem;
+    {["ADD", _x#0,((_x#1)*(_minimumConversions))] call MPClient_fnc_handleVitrualItem} count _newItem;
 
     "progressBar" cutText ["","PLAIN"];
     if (_minimumConversions isEqualTo (_totalConversions call BIS_fnc_lowestNum)) then {
@@ -151,8 +151,8 @@ if _hasLicense then
         hint format [localize "STR_Process_License",[_cost] call MPClient_fnc_numberText]; 
     };
 
-    {[false,_x#0,((_x#1)*(_minimumConversions))] call MPClient_fnc_handleInv} count _oldItem;
-    {[true,_x#0,((_x#1)*(_minimumConversions))] call MPClient_fnc_handleInv} count _newItem;
+    {["TAKE",_x#0,((_x#1)*(_minimumConversions))] call MPClient_fnc_handleVitrualItem} count _oldItem;
+    {["ADD",_x#0,((_x#1)*(_minimumConversions))] call MPClient_fnc_handleVitrualItem} count _newItem;
 
     private _notification = "STR_NOTF_ItemProcess";
     private _currentConversions = _totalConversions call BIS_fnc_lowestNum;

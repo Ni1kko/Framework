@@ -15,9 +15,11 @@ private _nearPlayerList = _ctrlParent getVariable ["RscDisplayInventory_NearPlay
 private _itemListBox = _ctrlParent displayCtrl 77706;
 private _amountEditbox = _ctrlParent displayCtrl 77709;
 private _playerListCombo = _ctrlParent displayCtrl 77710;
+private _pageCombo = _ctrlParent displayCtrl 77712;
 private _selectedAmountText = ctrlText _amountEditbox;
 private _selectedPlayerIndex = lbCurSel _playerListCombo;
 private _selectedItemIndex = lbCurSel _itemListBox;
+private _selectedPageIndex = lbCurSel _pageCombo;
 
 if(count _selectedAmountText isEqualTo 0 OR _selectedPlayerIndex < 0 OR _selectedItemIndex < 0)exitWith{
 	hint "Please select an item, player and amount";
@@ -39,6 +41,11 @@ if(_selectedItemIndex < 0 OR _selectedItemIndex > ((lbSize _itemListBox)-1))exit
 	false
 };
 
+if(_selectedPageIndex < 0 OR _selectedPageIndex > ((lbSize _pageCombo)-1))exitWith{
+	//hint "Error: invalid page index";
+	false
+};
+
 //-- Amount to give not a number
 if (not([_selectedAmountText] call MPServer_fnc_isNumber)) exitWith {
     hint "Error: Please enter a valid number";
@@ -49,6 +56,7 @@ if (not([_selectedAmountText] call MPServer_fnc_isNumber)) exitWith {
 private _selectedAmount = parseNumber _selectedAmountText;
 private _selectedPlayer = _nearPlayerList param [_selectedPlayerIndex,objNull,[objNull]];
 private _selectedItem = _itemListBox lbData _selectedItemIndex;
+private _selectedPage = _pageCombo lbdata _selectedPageIndex;
 
 //-- Player valid
 if(isNull _selectedPlayer OR not(alive _selectedPlayer))exitWith{
@@ -88,21 +96,13 @@ if (ITEM_ILLEGAL(_selectedItem) isEqualTo 1 AND ([west,visiblePosition player,10
 	false
 };
 
-private _didRemove = [false,_selectedItem, _selectedAmount] call MPClient_fnc_handleInv;
-
-if (not(_didRemove)) exitWith {
+if not(["GIVE",_selectedItem, _selectedAmount, _selectedPage, _selectedPlayer] call MPClient_fnc_handleVitrualItem) exitWith {
     hint "You do not have enough of this item to give";
 	false
 };
 
-private _selectedPlayerName = _selectedPlayer getVariable ["realname", name _selectedPlayer];
 private _selectedItemName = ITEM_DISPLAYNAME(_selectedItem);
-[
-	_selectedPlayer, 
-	_selectedAmount, 
-	_selectedItem, 
-	player
-] remoteExecCall ["MPClient_fnc_receiveItem", owner _selectedPlayer];
+private _selectedPlayerName = _selectedPlayer getVariable ["realname", name _selectedPlayer];
 
 if(_selectedAmount isEqualTo 1)then{
 	hint format["You gave %1 to %2",_selectedItemName,_selectedPlayerName];

@@ -30,7 +30,7 @@ life_maxWeight = if (backpack _player isEqualTo "") then {CFG_MASTER(getNumber,"
 
 //--- VirtualItems
 if(count _vitems > 0)then{
-    {[true,_x#0,_x#1] call MPClient_fnc_handleInv} forEach _vitems;
+    {["ADD",_x#0,_x#1] call MPClient_fnc_handleVitrualItem} forEach _vitems;
 };
 
 true

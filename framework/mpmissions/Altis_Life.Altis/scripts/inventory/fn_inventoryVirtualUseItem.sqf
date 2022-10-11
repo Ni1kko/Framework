@@ -67,7 +67,7 @@ private _itemUsed = false;
 if (_edible > -1 OR _drinkable > -1) then 
 {
 	_itemUsed = true;
-	_itemRemoved = [false, _selectedItem, _selectedAmount] call MPClient_fnc_handleInv;
+	_itemRemoved = ["TAKE", _selectedItem, _selectedAmount] call MPClient_fnc_handleVitrualItem;
 	if _itemRemoved then 
 	{
 		switch (true) do
@@ -134,7 +134,7 @@ switch (_selectedItem) do
     case "spikeStrip":
 	{
         if not(isNull life_var_vehicleStinger) exitWith {hint localize "STR_ISTR_SpikesDeployment"; closeDialog 0};
-        if ([false, _selectedItem, 1] call MPClient_fnc_handleInv) then 
+        if (["TAKE", _selectedItem, 1] call MPClient_fnc_handleVitrualItem) then 
 		{
 			_itemUsed = true;
             [] spawn MPClient_fnc_spikeStrip;

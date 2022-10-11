@@ -42,7 +42,7 @@ if (player distance (getMarkerPos "jail_marker") > 40) then {
 {
     _amount = ITEM_VALUE(_x);
     if (_amount > 0) then {
-        [false,_x,_amount] call MPClient_fnc_handleInv;
+        ["TAKE",_x,_amount] call MPClient_fnc_handleVitrualItem;
     };
 } forEach _illegalItems;
 

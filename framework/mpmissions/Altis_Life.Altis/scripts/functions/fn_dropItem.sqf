@@ -34,7 +34,7 @@ if (_itemValue > 0 AND _itemValue >= _count) then {
 	[_obj] remoteExecCall ["MPClient_fnc_simDisable",RE_GLOBAL];
 	_obj setPos _itemObjectPos;
 	_obj setVariable ["item",[_item,_itemValue],true];
-	[false,_itemName,(_itemValue - _count)] call MPClient_fnc_handleInv;
+	["TAKE",_itemName,(_itemValue - _count)] call MPClient_fnc_handleVitrualItem;
 	_didDrop = true;
 };
 

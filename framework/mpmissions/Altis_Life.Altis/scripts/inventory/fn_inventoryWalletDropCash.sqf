@@ -17,4 +17,4 @@ if(not(isNull _ctrlParent))then{
 hint "Drop Cash";
 
 
-//private _didDrop = [player,"Money",_selectedAmount] call MPClient_fnc_dropItem;
+// if not([player,"Money",_selectedAmount] call MPClient_fnc_dropItem)exitWith{};

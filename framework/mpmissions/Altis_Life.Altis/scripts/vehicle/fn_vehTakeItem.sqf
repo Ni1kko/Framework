@@ -41,7 +41,7 @@ if (_ctrl == "money") then {
     life_var_vehicleTrunk setVariable ["Trunk",[_data,(_old select 1) - _weight],true];
     [life_var_vehicleTrunk] call MPClient_fnc_vehInventory;
 } else {
-    if ([true,_ctrl,_num] call MPClient_fnc_handleInv) then {
+    if (["ADD",_ctrl,_num] call MPClient_fnc_handleVitrualItem) then {
         if (_num == _value) then {
             _data deleteAt _index;
         } else {

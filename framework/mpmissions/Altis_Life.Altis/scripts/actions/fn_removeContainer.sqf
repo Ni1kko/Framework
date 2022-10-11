@@ -44,5 +44,5 @@ if (_action) then {
     } forEach _containers;
     _house setVariable ["containers",_containers,true];
 
-    [true,_box,1] call MPClient_fnc_handleInv;
+    ["ADD",_box,1] call MPClient_fnc_handleVitrualItem;
 };

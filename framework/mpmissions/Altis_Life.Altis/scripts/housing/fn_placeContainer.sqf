@@ -56,7 +56,7 @@ if (!isNull _house) then {
 if (_isPlaced) exitWith {};
 
 deleteVehicle _container;
-[true,_type,1] call MPClient_fnc_handleInv;
+["ADD",_type,1] call MPClient_fnc_handleVitrualItem;
 
 if (_message isEqualTo 0 || _message isEqualTo 1) then {
     hint localize "STR_House_Container_House_Near";

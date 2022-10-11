@@ -27,7 +27,7 @@ if (_fish isEqualTo []) exitWith {titleText[localize "STR_NOTF_NetDropFail","PLA
  
         sleep 3;
 
-        if ([true,_type,1] call MPClient_fnc_handleInv) then {
+        if (["ADD",_type,1] call MPClient_fnc_handleVitrualItem) then {
             deleteVehicle _x;
             titleText[format [(localize "STR_NOTF_Fishing"),_typeName],"PLAIN"];
         };

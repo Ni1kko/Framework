@@ -86,7 +86,7 @@ life_boltcutter_uses = life_boltcutter_uses + 1;
 life_var_isBusy = false;
 
 if (life_boltcutter_uses >= 5) then {
-    [false,"boltcutter",1] call MPClient_fnc_handleInv;
+    ["TAKE","boltcutter",1] call MPClient_fnc_handleVitrualItem;
     life_boltcutter_uses = 0;
 };
 

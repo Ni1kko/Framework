@@ -170,7 +170,7 @@ class CfgFunctions : CfgFsms
             class isDamaged {};
             class giveDiff {};
             class handleDamage {};
-            class handleInv {};
+            class handleVitrualItem {};
             class handleItem {};
             class hideObj {};
             class isDormant {};

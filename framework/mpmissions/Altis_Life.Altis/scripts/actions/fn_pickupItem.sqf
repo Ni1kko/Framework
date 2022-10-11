@@ -30,7 +30,7 @@ _diff = [(_itemInfo select 0),(_itemInfo select 1),life_var_carryWeight,life_max
 if (_diff <= 0) exitWith {hint localize "STR_NOTF_InvFull"; INUSE(_this);};
 
 if (!(_diff isEqualTo (_itemInfo select 1))) then {
-    if ([true,(_itemInfo select 0),_diff] call MPClient_fnc_handleInv) then {
+    if (["ADD",(_itemInfo select 0),_diff] call MPClient_fnc_handleVitrualItem) then {
         player playMove "AinvPknlMstpSlayWrflDnon";
 
         _this setVariable ["item",[(_itemInfo select 0),(_itemInfo select 1) - _diff],true];
@@ -40,7 +40,7 @@ if (!(_diff isEqualTo (_itemInfo select 1))) then {
         INUSE(_this);
     };
 } else {
-    if ([true,(_itemInfo select 0),(_itemInfo select 1)] call MPClient_fnc_handleInv) then {
+    if (["ADD",(_itemInfo select 0),(_itemInfo select 1)] call MPClient_fnc_handleVitrualItem) then {
         deleteVehicle _this;
         //waitUntil{isNull _this};
         player playMove "AinvPknlMstpSlayWrflDnon";

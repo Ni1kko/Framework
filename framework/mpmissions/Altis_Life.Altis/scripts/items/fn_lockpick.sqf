@@ -80,7 +80,7 @@ if (!alive player || life_var_tazed || life_var_unconscious) exitWith {};
 if (player getVariable ["restrained",false]) exitWith {};
 if (!isNil "_badDistance") exitWith {titleText[localize "STR_ISTR_Lock_TooFar","PLAIN"]};
 if (life_var_interrupted) exitWith {titleText[localize "STR_NOTF_ActionCancel","PLAIN"]; life_var_interrupted = false;};
-if (!([false,"lockpick",1] call MPClient_fnc_handleInv)) exitWith {};
+if not(["TAKE","lockpick",1] call MPClient_fnc_handleVitrualItem) exitWith {};
 
 private _nearByPlayers = [];
 
