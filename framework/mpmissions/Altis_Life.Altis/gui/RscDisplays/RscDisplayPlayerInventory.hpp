@@ -86,7 +86,7 @@ class RscDisplayPlayerInventory
             idc = 106;
             text = "$STR_Global_Give";
             colorBackground[] = {"(profilenamespace getvariable ['GUI_BCG_RGB_R',0.3843])", "(profilenamespace getvariable ['GUI_BCG_RGB_G',0.7019])", "(profilenamespace getvariable ['GUI_BCG_RGB_B',0.8862])", 0.5};
-            onButtonClick = "[] call MPClient_fnc_giveMoney";
+            onButtonClick = "";
             sizeEx = 0.025;
             x = 0.135;
             y = 0.50;
@@ -151,7 +151,7 @@ class RscDisplayPlayerInventory
             idc = 112;
             text = "$STR_Global_Give";
             colorBackground[] = {"(profilenamespace getvariable ['GUI_BCG_RGB_R',0.3843])", "(profilenamespace getvariable ['GUI_BCG_RGB_G',0.7019])", "(profilenamespace getvariable ['GUI_BCG_RGB_B',0.8862])", 0.5};
-            onButtonClick = "[] call MPClient_fnc_giveItem;";
+            onButtonClick = "";
             x = 0.765;
             y = 0.70;
             w = (5.25 / 40);
@@ -163,7 +163,7 @@ class RscDisplayPlayerInventory
             idc = 113;
             text = "$STR_Global_Use";
             colorBackground[] = {"(profilenamespace getvariable ['GUI_BCG_RGB_R',0.3843])", "(profilenamespace getvariable ['GUI_BCG_RGB_G',0.7019])", "(profilenamespace getvariable ['GUI_BCG_RGB_B',0.8862])", 0.5};
-            onButtonClick = "[] call MPClient_fnc_useItem;";
+            onButtonClick = "";
             x = 0.62;
             y = 0.70;
             w = (5.25 / 40);
@@ -175,7 +175,7 @@ class RscDisplayPlayerInventory
             idc = 114;
             text = "$STR_Global_Remove";
             colorBackground[] = {"(profilenamespace getvariable ['GUI_BCG_RGB_R',0.3843])", "(profilenamespace getvariable ['GUI_BCG_RGB_G',0.7019])", "(profilenamespace getvariable ['GUI_BCG_RGB_B',0.8862])", 0.5};
-            onButtonClick = "[] call MPClient_fnc_removeItem;";
+            onButtonClick = "";
             x = 0.475;
             y = 0.70;
             w = (5.25 / 40);

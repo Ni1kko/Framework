@@ -37,6 +37,14 @@ if(_selectedItemIndex < 0 OR _selectedItemIndex > ((lbSize _itemListBox)-1))exit
 	false
 };
 
+
+//-- Amount to give not a number
+if (not([_selectedAmountText] call MPServer_fnc_isNumber)) exitWith {
+    hint "Please enter a valid number";
+	_ctrlParent closeDisplay 1;
+	false
+};
+
 private _selectedAmount = parseNumber _selectedAmountText;
 private _selectedPlayer = _nearPlayerList param [_selectedPlayerIndex,objNull,[objNull]];
 private _selectedItem = call compile ([_itemListBox lbData _selectedItemIndex] param [0,str('')]);
@@ -62,18 +70,19 @@ if(count _selectedItem isEqualTo 0)exitWith{
 	false
 };
 
-//-- Amount to give not a number
-if (not([_selectedAmount] call MPServer_fnc_isNumber)) exitWith {
-    hint "Please enter a valid number";
-	_ctrlParent closeDisplay 1;
-	false
-};
-
 //-- Amount to give sanity check
 if(_selectedAmount < 1 OR  _selectedAmount > 10)exitWith{
 	hint "Please select an amount between 1 and 10";
 	//_ctrlParent closeDisplay 1;
 	false
+};
+
+if (not(isNull objectParent player) AND not(_selectedPlayer in crew (vehicle player))) exitWith {
+	titleText["You cannot give an item when you are in a vehicle, to someone outside vehicle!","PLAIN"]
+};
+
+if (ITEM_ILLEGAL(_selectedItem) isEqualTo 1 AND ([west,visiblePosition player,100] call MPClient_fnc_nearUnits)) exitWith {
+	titleText["This is an illegal item and cops are near by. You cannot dispose of the evidence.", "PLAIN"]
 };
 
 private _didRemove = [false,_selectedItem, _selectedAmount] call MPClient_fnc_handleInv;
@@ -99,5 +108,10 @@ if(_selectedAmount isEqualTo 1)then{
 
 //-- Close display of the control that was clicked
 //_ctrlParent closeDisplay 1;
+
+private _returnControl = _ctrlParent getVariable ["RscDisplayInventory_ReturnControl", controlNull];
+private _mainPageIndex = _ctrlParent getVariable ["RscDisplayInventory_mainPageIndex", 0];
+
+[_returnControl,_mainPageIndex] spawn MPClient_fnc_inventoryShowVirtual;
 
 true

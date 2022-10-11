@@ -52,7 +52,7 @@ class RscDisplayGang
         class CloseLoadMenu: RscDefineButtonMenu {
             idc = -1;
             text = "$STR_Global_Close";
-            onButtonClick = "closeDialog 0;[] call MPClient_fnc_updateInventoryMenu";
+            onButtonClick = "closeDialog 0;[] call MPClient_fnc_updateYMenu";
             x = -0.06 + (6.25 / 40) + (1 / 250 / (safezoneW / safezoneH));
             y = 0.8 - (1 / 25);
             w = (6.25 / 40);
@@ -186,7 +186,7 @@ class Life_Create_Gang_Diag {
         class CloseLoadMenu: RscDefineButtonMenu {
             idc = -1;
             text = "$STR_Global_Close";
-            onButtonClick = "closeDialog 0;[] call MPClient_fnc_updateInventoryMenu;";
+            onButtonClick = "closeDialog 0;[] call MPClient_fnc_updateYMenu;";
             x = -0.06 + (6.25 / 40) + (1 / 250 / (safezoneW / safezoneH));
             y = 0.5 - (1 / 25);
             w = (6.25 / 40);

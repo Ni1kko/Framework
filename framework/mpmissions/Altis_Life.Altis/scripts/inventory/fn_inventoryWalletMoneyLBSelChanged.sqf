@@ -2,7 +2,7 @@
 /*
 	## Nikko Renolds
 	## https://github.com/Ni1kko/FrameworkV2
-	## fn_inventoryWalletLBSelChanged.sqf
+	## fn_inventoryWalletMoneyLBSelChanged.sqf
 */
 
 disableSerialization;
@@ -12,8 +12,6 @@ params [
 	["_selectedIndex", -1, [0]],
 	["_selectedIndexs", [], [[]]]
 ];
-
-hint format ["fn_inventoryWalletLBSelChanged\n%1", str _this];
 
 private _ctrlParent = ctrlParent _control;
 private _dropButton = _ctrlParent displayCtrl 77708;

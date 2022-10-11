@@ -2,7 +2,7 @@
 /*
 	## Nikko Renolds
 	## https://github.com/Ni1kko/FrameworkV2
-    ## fn_openInventoryMenu.sqf
+    ## fn_showYMenu.sqf
 */
 
 disableSerialization;
@@ -89,7 +89,7 @@ _controlBTN_Admin ctrlShow not(isNil 'MPClient_fnc_admin_showmenu');
 _controlBTN_Admin ctrlEnable ((call life_adminlevel) > 0);
 
 //-- Update menu
-[_display] call MPClient_fnc_updateInventoryMenu;
+[_display] call MPClient_fnc_updateYMenu;
 
 // Return display
 _display

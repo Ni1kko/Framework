@@ -224,7 +224,7 @@ class life_bounty_menu {
 		class PardonButtonKey : RscDefineButtonMenu {
 			idc = 2405;
 			text = "$STR_Bounty_Select";
-			onButtonClick = "[] call MPClient_fnc_bountySelect; closeDialog 0; [] call MPClient_fnc_updateInventoryMenu;";
+			onButtonClick = "[] call MPClient_fnc_bountySelect; closeDialog 0; [] call MPClient_fnc_updateYMenu;";
 			x = 0.1 + (6.25 / 40) + (1 / 250 / (safezoneW / safezoneH));
 			y = 0.8 - (1 / 25);
 			w = (6.25 / 40);

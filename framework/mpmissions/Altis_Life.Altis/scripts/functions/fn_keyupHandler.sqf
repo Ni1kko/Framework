@@ -243,7 +243,7 @@ switch (_keyCode) do
 	case DIK_Y: 
 	{
         if (!_altState && !_controlState) then {
-            [] call MPClient_fnc_openInventoryMenu;
+            [] call MPClient_fnc_showYMenu;
         };
     };
 	case DIK_U: 

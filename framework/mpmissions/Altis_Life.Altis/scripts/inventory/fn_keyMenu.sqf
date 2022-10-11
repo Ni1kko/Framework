@@ -28,11 +28,13 @@ if(count life_var_vehicles > 0)then{
         if (_text in ["()","(any)"]) then {_text = ""};
         
         _vehiclesListbox lbAdd format ["%1 %3 - [Distance: %2m]",_name,round(player distance _x),_text];
+
         if (_pic != "pictureStaticObject") then {
             _vehiclesListbox lbSetPicture [_forEachIndex,_pic];
         };
 
-        _vehiclesListbox lbSetData [_forEachIndex,str(_forEachIndex)];
+        _vehiclesListbox lbSetData [_forEachIndex, str(_x)];
+        _vehiclesListbox lbSetValue [_forEachIndex, _forEachIndex];
     }forEach life_var_vehicles;     
 }else{
     _vehiclesListbox lbAdd localize "STR_NOTF_noVehOwned";

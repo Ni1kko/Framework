@@ -7,21 +7,22 @@
 
 disableSerialization;
 private _control = param [0, controlNull, [controlNull]];
-private _mode = param [1, -1, [0]];
+private _selectedPage = param [1, -1, [0]];
 private _ctrlParent = ctrlParent _control;
 private _ctrlIDC = ctrlIDC _control;
-private _ctrlIDClist = [77700,77701,77702,77703,77704,77705,77706,77707,77708,77709,77710,77711,77712];
-private _modes = [
+private _ctrlIDClist = _ctrlParent getVariable ["RscDisplayInventory_RscControls", []];
+private _pages = [
     "Money",
     "Licenses"
 ];
 
-if(_mode < 0 OR {_mode > ((count _modes) -1)})exitWith{false};
+if(_selectedPage < 0 OR {_selectedPage > ((count _pages) -1)})exitWith{false};
+
+private _currentPage = _pages param [_selectedPage, ""];
+
+_ctrlParent setVariable ["RscDisplayInventory_mainPageIndex", _selectedPage];
 
 _ctrlIDClist pushBackUnique _ctrlIDC;
-
-//--
-_ctrlParent setVariable ["ComboModes", _modes];
 
 //-- 
 [_ctrlParent,false] call MPClient_fnc_inventoryRefresh;
@@ -31,7 +32,7 @@ _ctrlParent setVariable ["ComboModes", _modes];
     private _idc = _x;
     private _control = (_ctrlParent displayCtrl _idc);
     private _controlVar = format ["RscDisplayInventory_Control%1", _idc];
-    private _controlToHide = ([[77705,77707,77713], [77705,77707,77709,77713]] select _mode);
+    private _controlToHide = ([[77705,77707,77713], [77705,77707,77709,77713]] select _selectedPage);
     private _controlShow = not(_idc in _controlToHide);
     
     _ctrlParent setVariable [_controlVar, _control];
@@ -69,15 +70,15 @@ _ctrlParent setVariable ["ComboModes", _modes];
             //-- Menu combo
             if (_idc isEqualTo 77712) then {
                 lbClear _control;
-                {_control lbAdd _x} forEach _modes;
-                _control lbSetCurSel _mode;
+                {_control lbAdd _x} forEach _pages;
+                _control lbSetCurSel _selectedPage;
                 _control ctrlRemoveAllEventHandlers "LBSelChanged";
                 _control ctrlAddEventHandler ["LBSelChanged", "_this call MPClient_fnc_inventoryWalletComboSelChanged"];
             }else{
                 if (_idc isEqualTo 77704) then {
                     _control ctrlSetText "Wallet";
                 }else{
-                    switch (_modes#_mode) do 
+                    switch _currentPage do 
                     {
                         case "Money": 
                         {
@@ -123,7 +124,7 @@ _ctrlParent setVariable ["ComboModes", _modes];
                                             })];
                                         };
                                     } forEach _moneyData;
-                                    _control ctrlAddEventHandler ["LBSelChanged", "_this call MPClient_fnc_fn_inventoryWalletLBSelChanged"];
+                                    _control ctrlAddEventHandler ["LBSelChanged", "_this call MPClient_fnc_fn_inventoryWalletMoneyLBSelChanged"];
                                     _control lbSetCurSel 0;
                                 }; 
                                 case 77708: 
@@ -133,6 +134,7 @@ _ctrlParent setVariable ["ComboModes", _modes];
                                     _control ctrlSetToolTip format["%1 selected amount of money", toLower _text];
                                     _control ctrlRemoveAllEventHandlers "MouseButtonUp";
                                     _control ctrlAddEventHandler ["MouseButtonUp", "_this call MPClient_fnc_inventoryWalletDropCash"];
+                                    _control ctrlEnable (lbSize (_ctrlParent displayCtrl 77706) > 0);
                                 };
                                 case 77709: 
                                 {
@@ -145,8 +147,14 @@ _ctrlParent setVariable ["ComboModes", _modes];
                                     _control ctrlSetToolTip format["%1 selected amount of money to selected person", toLower _text];
                                     _control ctrlRemoveAllEventHandlers "MouseButtonUp";
                                     _control ctrlAddEventHandler ["MouseButtonUp", "_this call MPClient_fnc_inventoryWalletGiveCash"];
+                                    _control ctrlEnable (lbSize (_ctrlParent displayCtrl 77706) > 0 AND lbSize (_ctrlParent displayCtrl 77710) > 0);
                                 };
                             };
+
+                            {
+                                private _xControl = (_ctrlParent displayCtrl _x);
+                                _xControl ctrlEnable (ctrlEnabled _xControl AND lbSize (_ctrlParent displayCtrl 77710) > 0);
+                            }forEach [77708,77711];
                         };
                         case "Licenses":
                         { 
@@ -155,7 +163,9 @@ _ctrlParent setVariable ["ComboModes", _modes];
                                 case 77706: 
                                 { 
                                     //-- Menu list
+                                    _control ctrlRemoveAllEventHandlers "LBSelChanged";
                                     lbClear _control;
+                                    private _filterSide = false;
                                     {  
                                         private _displayName = LICENSE_DISPLAYNAME(_x);
                                         private _side = LICENSE_SIDE(_x);
@@ -174,7 +184,8 @@ _ctrlParent setVariable ["ComboModes", _modes];
                                             case "civ": {civilian};
                                             default {sideUnknown};
                                         })] call BIS_fnc_sideColor];
-                                    } forEach ([player,true,true,false,false] call MPClient_fnc_getLicenses);
+                                    } forEach ([player,true,false,true,_filterSide] call MPClient_fnc_getLicenses);
+                                    _control ctrlAddEventHandler ["LBSelChanged", "_this call MPClient_fnc_fn_inventoryWalletLicenseLBSelChanged"];
                                     _control lbSetCurSel 0;
                                 }; 
                                 case 77708: 
@@ -193,7 +204,7 @@ _ctrlParent setVariable ["ComboModes", _modes];
                                     _control ctrlSetToolTip format["%1 selected license to selected person", toLower _text];
                                     _control ctrlRemoveAllEventHandlers "MouseButtonUp";
                                     _control ctrlAddEventHandler ["MouseButtonUp", "_this call MPClient_fnc_inventoryWalletShowLicense"];
-                                    _control ctrlEnable (lbSize (_ctrlParent displayCtrl 77706) > 0);
+                                    _control ctrlEnable (lbSize (_ctrlParent displayCtrl 77706) > 0 AND lbSize (_ctrlParent displayCtrl 77710) > 0);
                                 };
                             };
                         };

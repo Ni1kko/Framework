@@ -65,7 +65,7 @@ class RscDisplayPlayerInventoryKeyManagement
         {
             idc = 6;
             text = "$STR_Keys_DropKey";
-            onMouseButtonUp = "[] call MPClient_fnc_keyDrop";
+            onMouseButtonUp = "";
             x = 0.1 + (6.25 / 40) + (1 / 250 / (safezoneW / safezoneH));
             y = 0.8 - (1 / 25);
             w = (6.25 / 40);
@@ -76,7 +76,7 @@ class RscDisplayPlayerInventoryKeyManagement
         {
             idc = 7;
             text = "$STR_Keys_GiveKey";
-            onMouseButtonUp = "[] call MPClient_fnc_keyGive";
+            onMouseButtonUp = "";
             x = 0.32;
             y = 0.69; 
         };

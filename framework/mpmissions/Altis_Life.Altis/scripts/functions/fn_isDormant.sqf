@@ -17,7 +17,7 @@ try {
 	if (player getVariable ["Escorting",false]) throw false;
 	if (player getVariable ["restrained",false]) throw false;
 	if ((player getVariable ["lifeState",""]) isNotEqualTo "HEALTHY") throw false;
-	if (player call life_fnc_inCombat) throw false;
+	if not(player call life_fnc_inCombat) throw false;
 } catch {
 	_isDormant = _exception;
 };

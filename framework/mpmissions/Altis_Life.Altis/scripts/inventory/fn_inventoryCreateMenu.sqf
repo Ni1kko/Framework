@@ -47,6 +47,8 @@ _controlGroup ctrlCommit 0;
 //-- Update control group var
 _ctrlParent setVariable ["RscDisplayInventory_Control77600", _controlGroup];
 
+private _ctrlIDClist = [];
+
 //-- Create controls
 {
     private _idc = (77700 + _forEachIndex);
@@ -58,7 +60,7 @@ _ctrlParent setVariable ["RscDisplayInventory_Control77600", _controlGroup];
     };
 
     _ctrlParent setVariable [_controlVar, _control];
-    
+
     //-- Hide every control but buttons to activate menu
     _control ctrlShow false;
     _control ctrlEnable false;
@@ -95,6 +97,14 @@ _ctrlParent setVariable ["RscDisplayInventory_Control77600", _controlGroup];
         case 77713: {_control ctrlSetPosition [0, 0.90, 0.358, 0.04]};
     };
 
+    if(_ctrlIDClist pushBackUnique _idc isEqualTo -1)then{
+        if not(ctrlDelete _control)then{
+            _control ctrlShow false;
+            _control ctrlEnable false;
+            _control ctrlSetPosition [-1,-1,-1,-1];
+        };
+    };
+    
     _control ctrlCommit 0;
 }forEach [
     "RscDefineInventoryButton",         //-- 77700
@@ -112,6 +122,9 @@ _ctrlParent setVariable ["RscDisplayInventory_Control77600", _controlGroup];
     "RscDefineInventoryCombo",          //-- 77712
 	"RscDefineInventoryButtonMenu"      //-- 77713
 ];
+
+_ctrlParent setVariable ["RscDisplayInventory_RscControls", _ctrlIDClist];
+_ctrlParent setVariable ["RscDisplayInventory_DefaultRscControls", [632,640,1240,6321,6401,6554,6307]];
 
 //-- 
 [_ctrlParent,true] call MPClient_fnc_inventoryRefresh;

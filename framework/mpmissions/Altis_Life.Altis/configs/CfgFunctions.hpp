@@ -390,6 +390,7 @@ class CfgFunctions : CfgFsms
             class inventoryShowKeys {};
             class inventoryKeysGive {};
             class inventoryKeysDrop {};
+            class keyMenu {};//--to be removed
             //-- Virtual
             class inventoryShowVirtual {};
             class inventoryVirtualLBSelChanged {};
@@ -404,10 +405,11 @@ class CfgFunctions : CfgFsms
             //-- Wallet
             class inventoryShowWallet {};
             class inventoryWalletComboSelChanged {};
-            class inventoryWalletLBSelChanged {};
+            class inventoryWalletMoneyLBSelChanged {};
             class inventoryWalletPlayersComboSelChanged {};
             class inventoryWalletDropCash {};
             class inventoryWalletGiveCash {};
+            class inventoryWalletLicenseLBSelChanged {};
             class inventoryWalletDropLicense {};
             class inventoryWalletShowLicense {};
         };
@@ -415,21 +417,14 @@ class CfgFunctions : CfgFsms
         class Y_Menu
         {
             file = "scripts\y_menu";
-            class giveItem {};
-            class giveMoney {};
-            class keyDrop {};
-            class keyGive {};
-            class keyMenu {};
-            class openInventoryMenu {};
-            class updateInventoryMenu {};
-            class pardon {};
-            class removeItem {};
+            class showYMenu {};
+            class updateYMenu {};
+            class pardon {}; 
             class s_onChar {};
             class s_onCheckedChange {};
             class s_onSliderChange {};
             class settingsMenu {};
-            class updateViewDistance {};
-            class useItem {};
+            class updateViewDistance {}; 
             class wantedAddP {};
             class wantedInfo {};
             class wantedList {};

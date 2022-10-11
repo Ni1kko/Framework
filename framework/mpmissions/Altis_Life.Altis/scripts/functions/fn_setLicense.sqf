@@ -21,11 +21,11 @@ private _licenseData = life_var_licenses getOrDefault [_licenseName,createHashMa
 //-- is class name? if so convert to mission var
 {
 	private _classname = configName _x;
-	private _sideflag = getText(_cfgLicenses >> _classname >> "side");
+	private _sideflag = getText(_x >> "side");
 	private	_licenseVarName = LICENSE_VARNAME(_classname,_sideflag);
 	
 	if(toLower _licenseName in [toLower _classname,toLower _licenseVarName])exitWith{
-		_licenseData = life_var_licenses getOrDefault [_licenseVarName,createHashMapFromArray [
+		_licenseData = life_var_licenses getOrDefault [_classname,createHashMapFromArray [
 			["Name", _licenseVarName],
 			["State", _licenseState]
 		]];
@@ -33,7 +33,7 @@ private _licenseData = life_var_licenses getOrDefault [_licenseName,createHashMa
 }forEach ("true" configClasses _cfgLicenses);
 
 //-- Update hashMap
-life_var_licenses set [_licenseData get "Name",_licenseData];
+life_var_licenses = _licenseData;
 
 //-- TEMP (OLD system method)
 missionNamespace setVariable [_licenseData get "Name",_licenseData get "State"];

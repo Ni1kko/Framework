@@ -18,9 +18,8 @@ private _itemObjectPos = [_pos#0,_pos#1,0];
 private _didDrop = false;
 
 //Handle droping cash.
-if(_item isEqualTo VITEM_MISC_MONEY)then{
-	_itemName = _cashvar;
-	 
+if(_item isEqualTo VITEM_MISC_MONEY)then
+{
 	//-- Remove that cash
 	if(_count > 0 AND MONEY_CASH > 0 AND MONEY_CASH >= _count)then{
 		["SUB","CASH", _count] call MPClient_fnc_handleMoney;

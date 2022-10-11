@@ -7,7 +7,8 @@
 
 params[
 	["_timerName","undefined",[""]],
-	["_timerNamespace",missionNamespace,[objnull, missionNamespace]]
+	["_timerNamespace",missionNamespace,[objnull, missionNamespace]],
+	["_timerPublic",false,[false]]
 ];
 
 if(_timerName isEqualTo "undefined") exitWith {false};

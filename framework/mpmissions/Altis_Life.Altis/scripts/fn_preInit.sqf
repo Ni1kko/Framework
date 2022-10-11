@@ -163,11 +163,11 @@ private _missionVariables = [
     ["life_var_gangHideoutBuildings", (CFG_MASTER(getArray,"gang_area")) apply {nearestBuilding(getMarkerPos _x)}],
     
     ["life_fnc_enterCombat", compileFinal '["combatTime", 20, param [0, player], true] call MPClient_fnc_addTimer'],
-    ["life_fnc_leaveCombat", compileFinal '["combatTime", param [0, player]] call MPClient_fnc_endTimer'],
+    ["life_fnc_leaveCombat", compileFinal '["combatTime", param [0, player], true] call MPClient_fnc_endTimer'],
     ["life_fnc_inCombat", compileFinal '["combatTime", param [0, player]] call MPClient_fnc_isTimerFinished'],
 
     ["life_fnc_enterNewLife", compileFinal '["newLifeTime", (20 * 60), param [0, player], true] call MPClient_fnc_addTimer'],
-    ["life_fnc_leaveNewLife", compileFinal '["newLifeTime", param [0, player]] call MPClient_fnc_endTimer'],
+    ["life_fnc_leaveNewLife", compileFinal '["newLifeTime", param [0, player], true] call MPClient_fnc_endTimer'],
     ["life_fnc_inNewLife", compileFinal '["newLifeTime", param [0, player]] call MPClient_fnc_isTimerFinished']
 ];
 //-- parsingNamespace

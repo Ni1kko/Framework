@@ -14,7 +14,7 @@ params [
 
 private _cfgLicenses = missionConfigFile >> "CfgLicenses";
 private _sideflagActual = [side _player,true] call (missionNamespace getvariable ["MPServer_fnc_util_getSideString",{""}]);
-private _alliLcenses = missionNamespace getVariable ["life_var_licenses",createHashMap];
+private _allLicenses = missionNamespace getVariable ["life_var_licenses",createHashMap];
 private _licenses = [];
 
 //-- preInit loads before server is ready, so we force get all sides
@@ -27,7 +27,7 @@ if (count _sideflagActual isEqualTo 0)then{
 	private _sideflag = [getText(_cfgLicenses >> _classname >> "side"),_sideflagActual]select _sideOnly;
 	private _varname = LICENSE_VARNAME(_classname,_sideflag);
 
-	private _licenseData = _alliLcenses getOrDefault [_varname,createHashMapFromArray [
+	private _licenseData = _allLicenses getOrDefault [_classname,createHashMapFromArray [
 		["Name", _varname],
 		["State", false]
 	]];
@@ -39,8 +39,12 @@ if (count _sideflagActual isEqualTo 0)then{
 	};
 	
 	if _ownedOnly then {
-		if((_licenseData getOrDefault ["State", false]) OR LICENSE_VALUE(_classname,_sideflag))then{
-			_licenses pushBackUnique ([[_licenseData get "Name" ,true], _altName] select (_useDisplayNames OR _useConfigNames));
+		private _name = _licenseData getOrDefault ["Name",_varname];
+		private _state =_licenseData getOrDefault ["State", false];
+		private _stateOLD = missionNamespace getVariable [_varname,false];
+
+		if(_state OR _stateOLD)then{
+			_licenses pushBackUnique ([[_name ,true], _altName] select (_useDisplayNames OR _useConfigNames));
 		};
 	}else{
 		_licenses pushBackUnique ([[_licenseData get "Name",false], _altName] select (_useDisplayNames OR _useConfigNames));

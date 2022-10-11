@@ -2,7 +2,7 @@
 /*
 	## Nikko Renolds
 	## https://github.com/Ni1kko/FrameworkV2
-    ## fn_updateInventoryMenu.sqf
+    ## fn_updateYMenu.sqf
 */
 
 disableSerialization;
@@ -32,7 +32,7 @@ private _displayName = "RscDisplayPlayerInventory";
     GETControl(_displayName, "Weight")
 ];
 
-GETControl(_displayName, "ButtonAdminMenu") ctrlEnable (call life_adminLevel) > 0;
+GETControl(_displayName, "ButtonAdminMenu") ctrlEnable ((call life_adminLevel) > 0);
 
 /*
 private _display = param [0, uiNamespace getVariable [_displayName, GETDisplay(_displayName)], [displayNull]];

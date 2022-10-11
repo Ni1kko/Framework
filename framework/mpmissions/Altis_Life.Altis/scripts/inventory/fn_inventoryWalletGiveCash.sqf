@@ -15,3 +15,8 @@ if(not(isNull _ctrlParent))then{
 };
 
 hint "Give Cash";
+
+//if (!([_amount] call MPServer_fnc_isNumber)) exitWith {hint localize "STR_NOTF_notNumberFormat";ctrlShow[106,true];};
+//hint format [localize "STR_NOTF_youGaveMoney",[(parseNumber(_amount))] call MPClient_fnc_numberText,_unit getVariable ["realname",name _unit]];
+//["SUB","CASH",parseNumber _amount] call MPClient_fnc_handleMoney;
+//[_unit,_amount,player] remoteExecCall ["MPClient_fnc_receiveMoney",_unit];
