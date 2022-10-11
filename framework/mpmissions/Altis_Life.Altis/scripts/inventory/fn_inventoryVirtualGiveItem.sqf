@@ -27,20 +27,22 @@ if(count _selectedAmountText isEqualTo 0 OR _selectedPlayerIndex < 0 OR _selecte
 
 //-- Check selected index against list to make sure we don't hit out of bounds exception
 if(_selectedPlayerIndex < 0 OR _selectedPlayerIndex > ((count _nearPlayerList)-1))exitWith{
-	hint format["Error: invalid index(%1) out of bounds! expected between (0 AND %2) ",_selectedPlayerIndex,(count _nearPlayerList)-1];
+	//hint format["Error: invalid index(%1) out of bounds! expected between (0 AND %2) ",_selectedPlayerIndex,(count _nearPlayerList)-1];
+	hint "Error: please select a valid target";
 	false
 };
 
 //-- Check selected index against list to make sure we don't hit out of bounds exception
 if(_selectedItemIndex < 0 OR _selectedItemIndex > ((lbSize _itemListBox)-1))exitWith{
-	hint format["Error: invalid index(%1) out of bounds! expected between (0 AND %2) ",_selectedItemIndex,(count _itemListBox)-1];
+	//hint format["Error: invalid index(%1) out of bounds! expected between (0 AND %2) ",_selectedItemIndex,(count _itemListBox)-1];
+	hint "Error: please select a valid item";
 	false
 };
 
 
 //-- Amount to give not a number
 if (not([_selectedAmountText] call MPServer_fnc_isNumber)) exitWith {
-    hint "Please enter a valid number";
+    hint "Error: Please enter a valid number";
 	_ctrlParent closeDisplay 1;
 	false
 };
@@ -51,7 +53,7 @@ private _selectedItem = call compile ([_itemListBox lbData _selectedItemIndex] p
 
 //-- Player valid
 if(isNull _selectedPlayer OR not(alive _selectedPlayer))exitWith{
-	hint "Please select a valid player";
+	hint "Error: Please select an alive player";
 	//_ctrlParent closeDisplay 1;
 	false
 };

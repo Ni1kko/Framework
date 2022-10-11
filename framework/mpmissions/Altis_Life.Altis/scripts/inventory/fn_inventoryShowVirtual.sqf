@@ -75,10 +75,10 @@ _ctrlIDClist pushBackUnique _ctrlIDC;
     }else{
         if (_idc isEqualTo 77712) then
         { 
+            _control ctrlRemoveAllEventHandlers "LBSelChanged";
             lbClear _control;
             {_control lbAdd _x} forEach _pages;
-            _control lbSetCurSel _selectedPage;
-            _control ctrlRemoveAllEventHandlers "LBSelChanged";
+            _control lbSetCurSel _selectedPage;//select page before we add the event handler
             _control ctrlAddEventHandler ["LBSelChanged", "_this call MPClient_fnc_inventoryVirtualComboSelChanged"];
         }else{
             //-- Menu Title
@@ -121,6 +121,7 @@ _ctrlIDClist pushBackUnique _ctrlIDC;
                                 case 77706:
                                 { 
                                     //-- Menu list
+                                    _control ctrlRemoveAllEventHandlers "LBSelChanged";
                                     lbClear _control;
                                     if(count [] > 0)then{
                                         { 
@@ -132,8 +133,8 @@ _ctrlIDClist pushBackUnique _ctrlIDC;
                                             };
                                         } forEach _vehicleVirtualItems;
                                     };
-                                    _control ctrlRemoveAllEventHandlers "LBSelChanged";
-                                    _control ctrlAddEventHandler ["LBSelChanged", "_this call MPClient_fnc_inventoryVirtualLBSelChanged"]; 
+                                    _control ctrlAddEventHandler ["LBSelChanged", "_this call MPClient_fnc_inventoryVirtualLBSelChanged"];
+                                    _control lbSetCurSel 0;
                                 };
                                 case 77707: 
                                 { 
@@ -173,6 +174,7 @@ _ctrlIDClist pushBackUnique _ctrlIDC;
                                         case 77706: 
                                         { 
                                             //-- Menu list
+                                            _control ctrlRemoveAllEventHandlers "LBSelChanged";
                                             lbClear _control;
                                             private _ownedVirtualItemConfigNames = ([player,true,false,true] call MPClient_fnc_getGear)#1;
                                             if(count _ownedVirtualItemConfigNames > 0)then{
@@ -187,8 +189,8 @@ _ctrlIDClist pushBackUnique _ctrlIDC;
                                                     };
                                                 } forEach _ownedVirtualItemConfigNames;
                                             };
-                                            _control ctrlRemoveAllEventHandlers "LBSelChanged";
                                             _control ctrlAddEventHandler ["LBSelChanged", "_this call MPClient_fnc_inventoryVirtualLBSelChanged"]; 
+                                            _control lbSetCurSel 0;
                                         };
                                         case 77707: 
                                         { 
@@ -241,6 +243,7 @@ _ctrlIDClist pushBackUnique _ctrlIDC;
                                         //-- Menu list (droped items)
                                         case 77706:
                                         { 
+                                            _control ctrlRemoveAllEventHandlers "LBSelChanged";
                                             lbClear _control;
                                             if(count [] > 0)then{
                                                 { 
@@ -252,8 +255,8 @@ _ctrlIDClist pushBackUnique _ctrlIDC;
                                                     };
                                                 } forEach [];
                                             };
-                                            _control ctrlRemoveAllEventHandlers "LBSelChanged";
-                                            //_control ctrlAddEventHandler ["LBSelChanged", "_this call MPClient_fnc_inventoryVirtualLBSelChanged"]; 
+                                            _control ctrlAddEventHandler ["LBSelChanged", "_this call MPClient_fnc_inventoryVirtualLBSelChanged"];  
+                                            _control lbSetCurSel 0;
                                         };
                                         //-- Use (droped item from ground)
                                         case 77707: 

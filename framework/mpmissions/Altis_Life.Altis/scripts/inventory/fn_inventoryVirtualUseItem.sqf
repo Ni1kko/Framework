@@ -19,49 +19,24 @@ private _selectedAmountText = ctrlText _amountEditbox;
 private _selectedPlayerIndex = lbCurSel _playerListCombo;
 private _selectedItemIndex = lbCurSel _itemListBox;
 
-if(count _selectedAmountText isEqualTo 0 OR _selectedPlayerIndex < 0 OR _selectedItemIndex < 0)exitWith{
-	hint "Please select an item, player and amount";
+//-- Check selected index against list to make sure we don't hit out of bounds exception
+if(count _selectedAmountText isEqualTo 0 OR _selectedItemIndex < 0 OR _selectedItemIndex > ((lbSize _itemListBox)-1))exitWith{
+	//hint format["Error: invalid index(%1) out of bounds! expected between (0 AND %2) ",_selectedItemIndex,(count _itemListBox)-1];
+	hint "Please select an item and amount";
 	_ctrlParent closeDisplay 1;
 	false
 };
 
-//-- Check selected index against list to make sure we don't hit out of bounds exception
-if(_selectedPlayerIndex < 0 OR _selectedPlayerIndex > ((count _nearPlayerList)-1))exitWith{
-	hint format["Error: invalid index(%1) out of bounds! expected between (0 AND %2) ",_selectedPlayerIndex,(count _nearPlayerList)-1];
-	false
-};
-
-//-- Check selected index against list to make sure we don't hit out of bounds exception
-if(_selectedItemIndex < 0 OR _selectedItemIndex > ((lbSize _itemListBox)-1))exitWith{
-	hint format["Error: invalid index(%1) out of bounds! expected between (0 AND %2) ",_selectedItemIndex,(count _itemListBox)-1];
-	false
-};
-
-
 //-- Amount to give not a number
 if (not([_selectedAmountText] call MPServer_fnc_isNumber)) exitWith {
-    hint "Please enter a valid number";
+    hint "Error: Please enter a valid number";
 	_ctrlParent closeDisplay 1;
 	false
 };
 
 private _selectedAmount = parseNumber _selectedAmountText;
-private _selectedPlayer = _nearPlayerList param [_selectedPlayerIndex,objNull,[objNull]];
-private _selectedItem = call compile ([_itemListBox lbData _selectedItemIndex] param [0,str('')]);
+private _selectedItem = _itemListBox lbData _selectedItemIndex;
 
-//-- Player valid
-if(isNull _selectedPlayer OR not(alive _selectedPlayer))exitWith{
-	hint "Please select a valid player";
-	//_ctrlParent closeDisplay 1;
-	false
-};
-
-//-- Item is string empty
-if(count _selectedItem isEqualTo 0)exitWith{
-	hint "Error: no item selected!";
-	//_ctrlParent closeDisplay 1;
-	false
-};
 
 //-- Item is string empty
 if(count _selectedItem isEqualTo 0)exitWith{
@@ -72,7 +47,7 @@ if(count _selectedItem isEqualTo 0)exitWith{
 
 //-- Amount to give sanity check
 if(_selectedAmount < 1 OR  _selectedAmount > 10)exitWith{
-	hint "Please select an amount between 1 and 10";
+	hint "Error: Please select an amount between 1 and 10";
 	//_ctrlParent closeDisplay 1;
 	false
 };

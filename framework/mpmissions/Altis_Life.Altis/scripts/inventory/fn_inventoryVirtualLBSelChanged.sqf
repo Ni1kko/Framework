@@ -45,9 +45,13 @@ switch _selectedItem do
 };
 
 private _selectedPage = _pageCombo lbdata _selectedPageIndex;
-switch _selectedItem do 
+switch _selectedPage do 
 {
-	case "Peach": { };
+	case "Ground": { };
+	case "Player": { };
+	case "Vehicle": { };
+	case "House": { };
+	case "Tent": { };
 };
 
 _playerListCombo ctrlEnable (count _nearPlayerList > 0);

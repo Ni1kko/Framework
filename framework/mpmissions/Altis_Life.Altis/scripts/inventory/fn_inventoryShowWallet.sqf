@@ -51,6 +51,7 @@ _ctrlIDClist pushBackUnique _ctrlIDC;
     }else{
         //-- Menu combo (near players)
         if (_idc isEqualTo 77710) then {
+            _control ctrlRemoveAllEventHandlers "LBSelChanged";
             lbClear _control;
             private _nearByPlayers = (playableUnits apply {if (alive _x AND player distance _x < 10 AND _x isNotEqualTo player) then {_x}else{""}}) - [""];
             if(count _nearByPlayers > 0)then{
@@ -62,17 +63,16 @@ _ctrlIDClist pushBackUnique _ctrlIDC;
                 _control lbAdd "No players nearby";
                 _control ctrlEnable false;
             };
-            _control lbSetCurSel 0;
             _ctrlParent setVariable ["RscDisplayInventory_NearPlayerList", _nearByPlayers];
-            _control ctrlRemoveAllEventHandlers "LBSelChanged";
             _control ctrlAddEventHandler ["LBSelChanged", "_this call MPClient_fnc_inventoryWalletPlayersComboSelChanged"];
+            _control lbSetCurSel 0;
         }else{
             //-- Menu combo
             if (_idc isEqualTo 77712) then {
+                _control ctrlRemoveAllEventHandlers "LBSelChanged";
                 lbClear _control;
                 {_control lbAdd _x} forEach _pages;
-                _control lbSetCurSel _selectedPage;
-                _control ctrlRemoveAllEventHandlers "LBSelChanged";
+                _control lbSetCurSel _selectedPage;//selected page before adding EVH
                 _control ctrlAddEventHandler ["LBSelChanged", "_this call MPClient_fnc_inventoryWalletComboSelChanged"];
             }else{
                 if (_idc isEqualTo 77704) then {
@@ -87,8 +87,6 @@ _ctrlIDClist pushBackUnique _ctrlIDC;
                                 case 77706: 
                                 { 
                                     //-- Menu list
-                                    lbClear _control; 
-                                    _control ctrlRemoveAllEventHandlers "LBSelChanged";
                                     private _moneyData = [
                                         ["Bank", MONEY_BANK,"textures\icons\ico_bank.paa"],
                                         ["Cash", MONEY_CASH, "textures\icons\ico_money.paa"]
@@ -101,7 +99,9 @@ _ctrlIDClist pushBackUnique _ctrlIDC;
                                     if(MONEY_DEBT > 0)then{
                                         _moneyData pushBack ["Debt", MONEY_DEBT, "textures\icons\ico_money.paa"];
                                     };
-
+                                    
+                                    _control ctrlRemoveAllEventHandlers "LBSelChanged";
+                                    lbClear _control; 
                                     { 
                                         _x params [
                                             ["_displayname", "", [""]],
@@ -124,7 +124,7 @@ _ctrlIDClist pushBackUnique _ctrlIDC;
                                             })];
                                         };
                                     } forEach _moneyData;
-                                    _control ctrlAddEventHandler ["LBSelChanged", "_this call MPClient_fnc_fn_inventoryWalletMoneyLBSelChanged"];
+                                    _control ctrlAddEventHandler ["LBSelChanged", "_this call MPClient_fnc_inventoryWalletMoneyLBSelChanged"];
                                     _control lbSetCurSel 0;
                                 }; 
                                 case 77708: 
@@ -185,7 +185,7 @@ _ctrlIDClist pushBackUnique _ctrlIDC;
                                             default {sideUnknown};
                                         })] call BIS_fnc_sideColor];
                                     } forEach ([player,true,false,true,_filterSide] call MPClient_fnc_getLicenses);
-                                    _control ctrlAddEventHandler ["LBSelChanged", "_this call MPClient_fnc_fn_inventoryWalletLicenseLBSelChanged"];
+                                    _control ctrlAddEventHandler ["LBSelChanged", "_this call MPClient_fnc_inventoryWalletLicenseLBSelChanged"];
                                     _control lbSetCurSel 0;
                                 }; 
                                 case 77708: 

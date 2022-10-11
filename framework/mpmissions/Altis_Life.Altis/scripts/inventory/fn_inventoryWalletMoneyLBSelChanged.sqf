@@ -42,8 +42,8 @@ switch _selectedItem do
 	case "Cash": 
 	{ 
 		_amountEditbox ctrlEnable (MONEY_CASH > 0);
-		_dropButton ctrlEnable (ctrlEnable _amountEditbox);
-		_giveButton ctrlEnable (ctrlEnable _amountEditbox AND ctrlEnable _playerListCombo);
+		_dropButton ctrlEnable (ctrlEnabled _amountEditbox);
+		_giveButton ctrlEnable (ctrlEnabled _amountEditbox AND ctrlEnabled _playerListCombo);
 	};
 	//case "Bank": { };
 	//case "Gang": { };
