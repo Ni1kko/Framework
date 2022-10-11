@@ -11,7 +11,7 @@ private _shop = param [3, "",[""]];
 private _cfgClothing = missionConfigFile >> "CfgClothing";
 
 if (count _shop isEqualTo 0) exitWith {false};
-if (not(call life_fnc_isDormant)) exitWith {false}; 
+if (not(call MPClient_fnc_isDormant)) exitWith {false}; 
 if (not(isNull objectParent player)) exitWith {titleText[localize "STR_NOTF_ActionInVehicle","PLAIN"]; false};
 if (not(isClass(_cfgClothing >> _shop))) exitWith {false}; //Bad config entry.
 

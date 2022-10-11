@@ -20,7 +20,7 @@ if(not(isClass _cfgProcessor) OR count _type isEqualTo 0) exitWith {
 };
 
 //-- Bad parmas or user not dormant
-if (isNull _vendor OR not(call life_fnc_isDormant)) exitWith {false};
+if (isNull _vendor OR not(call MPClient_fnc_isDormant)) exitWith {false};
 
 //-- Too far away
 if (player distance _vendor > 10) exitWith {
