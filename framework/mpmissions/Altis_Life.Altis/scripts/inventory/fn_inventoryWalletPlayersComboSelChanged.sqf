@@ -13,7 +13,7 @@ params [
 	["_selectedIndexs", [], [[]]]
 ];
 
-//hint format ["fn_inventoryWalletPlayersComboSelChanged\n%1", str _this];
+hint format ["fn_inventoryWalletPlayersComboSelChanged\n%1", str _this];
 
 private _ctrlParent = ctrlParent _control;
 private _confirmButton = _ctrlParent displayCtrl 77711;

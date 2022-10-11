@@ -13,6 +13,8 @@ params [
 	["_selectedIndexs", [], [[]]]
 ];
 
+hint format ["fn_inventoryVirtualPlayersComboSelChanged\n%1", str _this];
+
 private _ctrlParent = ctrlParent _control;
 private _confirmButton = _ctrlParent displayCtrl 77711;
 private _nearPlayerList = _ctrlParent getVariable ["RscDisplayInventory_NearPlayerList", []];

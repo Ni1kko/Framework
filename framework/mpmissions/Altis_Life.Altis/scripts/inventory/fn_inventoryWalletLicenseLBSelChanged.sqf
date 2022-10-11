@@ -13,6 +13,8 @@ params [
 	["_selectedIndexs", [], [[]]]
 ];
 
+hint format ["fn_inventoryWalletLicenseLBSelChanged\n%1", str _this];
+
 private _ctrlParent = ctrlParent _control;
 private _dropButton = _ctrlParent displayCtrl 77708; 
 private _playerListCombo = _ctrlParent displayCtrl 77710;
