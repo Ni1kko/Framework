@@ -134,7 +134,7 @@ _ctrlIDClist pushBackUnique _ctrlIDC;
                                     _control ctrlSetToolTip format["%1 selected amount of money", toLower _text];
                                     _control ctrlRemoveAllEventHandlers "MouseButtonUp";
                                     _control ctrlAddEventHandler ["MouseButtonUp", "_this call MPClient_fnc_inventoryWalletDropCash"];
-                                    _control ctrlEnable (lbSize (_ctrlParent displayCtrl 77706) > 0);
+                                    _control ctrlEnable false;
                                 };
                                 case 77709: 
                                 {
@@ -147,14 +147,9 @@ _ctrlIDClist pushBackUnique _ctrlIDC;
                                     _control ctrlSetToolTip format["%1 selected amount of money to selected person", toLower _text];
                                     _control ctrlRemoveAllEventHandlers "MouseButtonUp";
                                     _control ctrlAddEventHandler ["MouseButtonUp", "_this call MPClient_fnc_inventoryWalletGiveCash"];
-                                    _control ctrlEnable (lbSize (_ctrlParent displayCtrl 77706) > 0 AND lbSize (_ctrlParent displayCtrl 77710) > 0);
+                                    _control ctrlEnable false;
                                 };
                             };
-
-                            {
-                                private _xControl = (_ctrlParent displayCtrl _x);
-                                _xControl ctrlEnable (ctrlEnabled _xControl AND lbSize (_ctrlParent displayCtrl 77710) > 0);
-                            }forEach [77708,77711];
                         };
                         case "Licenses":
                         { 

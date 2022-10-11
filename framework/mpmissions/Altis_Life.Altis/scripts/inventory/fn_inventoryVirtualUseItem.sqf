@@ -16,7 +16,6 @@ private _itemListBox = _ctrlParent displayCtrl 77706;
 private _amountEditbox = _ctrlParent displayCtrl 77709;
 private _playerListCombo = _ctrlParent displayCtrl 77710;
 private _selectedAmountText = ctrlText _amountEditbox;
-private _selectedPlayerIndex = lbCurSel _playerListCombo;
 private _selectedItemIndex = lbCurSel _itemListBox;
 
 //-- Check selected index against list to make sure we don't hit out of bounds exception
@@ -62,36 +61,35 @@ if (ITEM_ILLEGAL(_selectedItem) isEqualTo 1 AND ([west,visiblePosition player,10
 	systemChat format["%1 is an illegal item and cops are near by, risky...", _selectedItemName];
 };
 
-if (_edible > -1 || _drinkable > -1) exitWith {
-	for "_i" from 1 to _selectedAmount do {
-		if ([false, _selectedItem, 1] call MPClient_fnc_handleInv) then {
-			if (_edible > -1) then {
-				private _sum = life_var_hunger + _edible;
-				life_var_hunger = (_sum max 5) min 100; // never below 5 or above 100
+if (_edible > -1 || _drinkable > -1) exitWith { 
+	if ([false, _selectedItem, _selectedAmount] call MPClient_fnc_handleInv) then {
+		if (_edible > -1) then {
+			private _sum = life_var_hunger + _edible;
+			life_var_hunger = (_sum max 5) min 100; // never below 5 or above 100
+		};
+
+		if (_drinkable > -1) then {
+			private _sum = life_var_thirst + _drinkable;
+
+			life_var_thirst = (_sum max 5) min 100; // never below 5 or above 100
+
+			if (CFG_MASTER(getNumber, "enable_fatigue") isEqualTo 1) then {
+				player setFatigue 0;
 			};
-
-			if (_drinkable > -1) then {
-				private _sum = life_var_thirst + _drinkable;
-
-				life_var_thirst = (_sum max 5) min 100; // never below 5 or above 100
-
-				if (CFG_MASTER(getNumber, "enable_fatigue") isEqualTo 1) then {
-					player setFatigue 0;
-				};
-				if (_selectedItem isEqualTo "redgull" && {CFG_MASTER(getNumber, "enable_fatigue") isEqualTo 1}) then {
-					[] spawn {
-						life_var_effectEnergyDrink = time;
-						titleText [localize "STR_ISTR_RedGullEffect", "PLAIN"];
-						player enableFatigue false;
-						waitUntil {!alive player || ((time - life_var_effectEnergyDrink) > (3 * 60))};
-						player enableFatigue true;
-					};
+			if (_selectedItem isEqualTo "redgull" && {CFG_MASTER(getNumber, "enable_fatigue") isEqualTo 1}) then {
+				[] spawn {
+					life_var_effectEnergyDrink = time;
+					titleText [localize "STR_ISTR_RedGullEffect", "PLAIN"];
+					player enableFatigue false;
+					waitUntil {!alive player || ((time - life_var_effectEnergyDrink) > (3 * 60))};
+					player enableFatigue true;
 				};
 			};
 		};
-
-    	[_returnControl,_mainPageIndex] spawn MPClient_fnc_inventoryShowVirtual;
 	};
+
+	lbClear _control;
+	[_returnControl,_mainPageIndex] spawn MPClient_fnc_inventoryShowVirtual;
 };
 
 switch (_selectedItem) do 
@@ -190,7 +188,5 @@ switch (_selectedItem) do
 
 //-- Close display of the control that was clicked
 _ctrlParent closeDisplay 1;
-
-[_returnControl,_mainPageIndex] spawn MPClient_fnc_inventoryShowVirtual;
 
 true

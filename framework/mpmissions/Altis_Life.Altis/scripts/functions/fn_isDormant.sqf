@@ -3,6 +3,9 @@
 	## Nikko Renolds
 	## https://github.com/Ni1kko/FrameworkV2
     ## fn_isDormant.sqf
+
+	cause this is called in escInterupt
+		you must use namespace you desire as stupid shit executes in its own namespace
 */
 
 private _isDormant = true;
@@ -17,7 +20,7 @@ try {
 	if (player getVariable ["Escorting",false]) throw false;
 	if (player getVariable ["restrained",false]) throw false;
 	if ((player getVariable ["lifeState",""]) isNotEqualTo "HEALTHY") throw false;
-	if (player call life_fnc_inCombat) throw false;
+	if (player call (missionNamespace getVariable ["life_fnc_inCombat",{false}])) throw false;
 } catch {
 	_isDormant = _exception;
 };

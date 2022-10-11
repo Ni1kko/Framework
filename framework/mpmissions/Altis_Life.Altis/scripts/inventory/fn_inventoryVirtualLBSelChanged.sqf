@@ -34,12 +34,13 @@ if(isNull _ctrlParent OR isNull _control) exitWith {false};
 _playerListCombo ctrlEnable (count _nearPlayerList > 0);
 
 if(_selectedIndex < 0 OR _selectedIndex > ((lbSize _control)-1))exitWith{
-	hint "Error: invalid item index";
+	//hint "Error: invalid item index";
+	{_x ctrlEnable false}forEach _lockoutControls;
 	false
 };
 
 if(_selectedPageIndex < 0 OR _selectedPageIndex > ((lbSize _pageCombo)-1))exitWith{
-	hint "Error: invalid item index";
+	//hint "Error: invalid page index";
 	{_x ctrlEnable false}forEach _lockoutControls;
 	false
 };

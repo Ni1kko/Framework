@@ -16,18 +16,11 @@ private _itemListBox = _ctrlParent displayCtrl 77706;
 private _amountEditbox = _ctrlParent displayCtrl 77709;
 private _playerListCombo = _ctrlParent displayCtrl 77710;
 private _selectedAmountText = ctrlText _amountEditbox;
-private _selectedPlayerIndex = lbCurSel _playerListCombo;
 private _selectedItemIndex = lbCurSel _itemListBox;
 
-if(count _selectedAmountText isEqualTo 0 OR _selectedPlayerIndex < 0 OR _selectedItemIndex < 0)exitWith{
+if(count _selectedAmountText isEqualTo 0 OR _selectedItemIndex < 0)exitWith{
 	hint "Please select an item, player and amount";
 	_ctrlParent closeDisplay 1;
-	false
-};
-
-//-- Check selected index against list to make sure we don't hit out of bounds exception
-if(_selectedPlayerIndex < 0 OR _selectedPlayerIndex > ((count _nearPlayerList)-1))exitWith{
-	hint format["Error: invalid index(%1) out of bounds! expected between (0 AND %2) ",_selectedPlayerIndex,(count _nearPlayerList)-1];
 	false
 };
 
@@ -45,16 +38,9 @@ if (not([_selectedAmountText] call MPServer_fnc_isNumber)) exitWith {
 	false
 };
 
-private _selectedAmount = parseNumber _selectedAmountText;
-private _selectedPlayer = _nearPlayerList param [_selectedPlayerIndex,objNull,[objNull]];
+private _selectedAmount = parseNumber _selectedAmountText; 
 private _selectedItem = _itemListBox lbData _selectedItemIndex;
-
-//-- Player valid
-if(isNull _selectedPlayer OR not(alive _selectedPlayer))exitWith{
-	hint "Please select a valid player";
-	//_ctrlParent closeDisplay 1;
-	false
-};
+ 
 
 //-- Item is string empty
 if(count _selectedItem isEqualTo 0)exitWith{
