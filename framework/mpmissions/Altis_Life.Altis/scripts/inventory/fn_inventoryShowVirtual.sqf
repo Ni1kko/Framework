@@ -125,8 +125,10 @@ _ctrlIDClist pushBackUnique _ctrlIDC;
                                     lbClear _control;
                                     if(count [] > 0)then{
                                         { 
-                                            _control lbAdd format ["%1 [x%2]",ITEM_DISPLAYNAME(_x), ITEM_VALUE(_x)];
+                                            private _amountOwned = ITEM_VALUE(_x);
+                                            _control lbAdd format ["%1 [x%2]",ITEM_DISPLAYNAME(_x), _amountOwned];
                                             _control lbSetData [_forEachIndex,_x];
+                                            _control lbSetValue [_forEachIndex, _amountOwned];
                                             private _icon = ITEM_ICON(_x);
                                             if (count _icon > 0) then {
                                                 _control lbSetPicture [_forEachIndex,_icon];
@@ -247,8 +249,10 @@ _ctrlIDClist pushBackUnique _ctrlIDC;
                                             lbClear _control;
                                             if(count [] > 0)then{
                                                 { 
-                                                    _control lbAdd format ["%1 [x%2]",ITEM_DISPLAYNAME(_x), ITEM_VALUE(_x)];
+                                                    private _amountOwned = ITEM_VALUE(_x);
+                                                    _control lbAdd format ["%1 [x%2]",ITEM_DISPLAYNAME(_x), _amountOwned];
                                                     _control lbSetData [_forEachIndex,_x];
+                                                    _control lbSetValue [_forEachIndex, _amountOwned];
                                                     private _icon = ITEM_ICON(_x);
                                                     if (count _icon > 0) then {
                                                         _control lbSetPicture [_forEachIndex,_icon];

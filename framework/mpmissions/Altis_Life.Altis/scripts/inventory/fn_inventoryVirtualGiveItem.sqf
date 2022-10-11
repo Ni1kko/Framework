@@ -39,7 +39,6 @@ if(_selectedItemIndex < 0 OR _selectedItemIndex > ((lbSize _itemListBox)-1))exit
 	false
 };
 
-
 //-- Amount to give not a number
 if (not([_selectedAmountText] call MPServer_fnc_isNumber)) exitWith {
     hint "Error: Please enter a valid number";
@@ -49,7 +48,7 @@ if (not([_selectedAmountText] call MPServer_fnc_isNumber)) exitWith {
 
 private _selectedAmount = parseNumber _selectedAmountText;
 private _selectedPlayer = _nearPlayerList param [_selectedPlayerIndex,objNull,[objNull]];
-private _selectedItem = call compile ([_itemListBox lbData _selectedItemIndex] param [0,str('')]);
+private _selectedItem = _itemListBox lbData _selectedItemIndex;
 
 //-- Player valid
 if(isNull _selectedPlayer OR not(alive _selectedPlayer))exitWith{
@@ -80,17 +79,20 @@ if(_selectedAmount < 1 OR  _selectedAmount > 10)exitWith{
 };
 
 if (not(isNull objectParent player) AND not(_selectedPlayer in crew (vehicle player))) exitWith {
-	titleText["You cannot give an item when you are in a vehicle, to someone outside vehicle!","PLAIN"]
+	titleText["You cannot give an item when you are in a vehicle, to someone outside vehicle!","PLAIN"];
+	false
 };
 
 if (ITEM_ILLEGAL(_selectedItem) isEqualTo 1 AND ([west,visiblePosition player,100] call MPClient_fnc_nearUnits)) exitWith {
-	titleText["This is an illegal item and cops are near by. You cannot dispose of the evidence.", "PLAIN"]
+	titleText["This is an illegal item and cops are near by. You cannot dispose of the evidence.", "PLAIN"];
+	false
 };
 
 private _didRemove = [false,_selectedItem, _selectedAmount] call MPClient_fnc_handleInv;
 
 if (not(_didRemove)) exitWith {
     hint "You do not have enough of this item to give";
+	false
 };
 
 private _selectedPlayerName = _selectedPlayer getVariable ["realname", name _selectedPlayer];

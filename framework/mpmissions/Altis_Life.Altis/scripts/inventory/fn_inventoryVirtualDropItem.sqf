@@ -47,7 +47,7 @@ if (not([_selectedAmountText] call MPServer_fnc_isNumber)) exitWith {
 
 private _selectedAmount = parseNumber _selectedAmountText;
 private _selectedPlayer = _nearPlayerList param [_selectedPlayerIndex,objNull,[objNull]];
-private _selectedItem = call compile ([_itemListBox lbData _selectedItemIndex] param [0,str('')]);
+private _selectedItem = _itemListBox lbData _selectedItemIndex;
 
 //-- Player valid
 if(isNull _selectedPlayer OR not(alive _selectedPlayer))exitWith{
@@ -78,7 +78,8 @@ if(_selectedAmount < 1 OR  _selectedAmount > 10)exitWith{
 };
 
 if not(isNull objectParent player) exitWith {
-	titleText[localize "STR_NOTF_cannotRemoveInVeh","PLAIN"]
+	titleText[localize "STR_NOTF_cannotRemoveInVeh","PLAIN"];
+	false
 };
 
 private _selectedItemName = ITEM_DISPLAYNAME(_selectedItem);
@@ -86,6 +87,7 @@ private _didDrop = [player,_selectedItem,_selectedAmount] call MPClient_fnc_drop
 
 if (not(_didDrop)) exitWith {
     hint format["You do not have enough %1 to drop",toLower _selectedItemName];
+	false
 };
 
 if(_selectedAmount isEqualTo 1)then{
