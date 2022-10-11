@@ -14,7 +14,8 @@ params [
 
 //-- Check valid input
 if (count _selectedItem isEqualTo 0 OR _selectedAmount isEqualTo 0) exitWith {false};
-if (not(isClass(missionConfigFile >> "cfgVirtualItems" >> _selectedItem))) exitWith {false};
+if not(isClass(missionConfigFile >> "cfgVirtualItems" >> _selectedItem)) exitWith {false};
+if not(_mode in ["ADD","TAKE","GIVE"]) exitWith {false};
 
 private _itemVarName = ITEM_VARNAME(_selectedItem);
 private _itemWeight = ([_selectedItem] call MPClient_fnc_itemWeight) * _selectedAmount;
@@ -29,12 +30,20 @@ if (_mode isEqualTo "ADD") then {
 //--
 if (_selectedAmount < 1) exitWith {_return};
 
-if(_inventoryType in ["House","Vehicle","Tent"])then{
-    switch _mode do 
+//-- Handle muliple inventory types
+if(_inventoryType in ["House","Vehicle","Tent"])then
+{
+    private _selectedObject = param [4,objNull,[objNull]];
+    
+    if not(isNull _selectedObject)then
     {
-        case "ADD": {};
-        case "TAKE": {};
-        case "GIVE": {};
+        private _inventory = _selectedObject getVariable ["virtualInventory",[]];
+        switch _mode do
+        {
+            case "ADD": {};
+            case "TAKE": {};
+            case "GIVE": {};
+        };
     };
 }else{
     switch _inventoryType do 
@@ -58,6 +67,9 @@ if(_inventoryType in ["House","Vehicle","Tent"])then{
                         if (_adjustment > _currentValue) then {
                             life_var_carryWeight = _adjustmentWeight;
                             _currentValue = _adjustment;
+                            if (_selectedItem == VITEM_MISC_MONEY) then { 
+                                ["ADD","CASH",_selectedAmount] call MPClient_fnc_handleMoney;
+                            };
                             _return = true;
                         };
                     };
@@ -71,6 +83,9 @@ if(_inventoryType in ["House","Vehicle","Tent"])then{
                         if (_adjustment < _currentValue) then {
                             life_var_carryWeight = SUB(life_var_carryWeight, _itemWeight);
                             _currentValue = _adjustment;
+                            if (_selectedItem == VITEM_MISC_MONEY) then { 
+                                ["SUB","CASH",_selectedAmount] call MPClient_fnc_handleMoney;
+                            };
                             _return = true;
                         };
                     };
@@ -84,6 +99,9 @@ if(_inventoryType in ["House","Vehicle","Tent"])then{
                         missionNamespace setVariable [_itemVarName,_adjustment];
                         if (_adjustment < _currentValue) then {
                             life_var_carryWeight = SUB(life_var_carryWeight, _itemWeight);
+                            if (_selectedItem == VITEM_MISC_MONEY) then { 
+                                ["SUB","CASH",_selectedAmount] call MPClient_fnc_handleMoney;
+                            };
                             [_selectedPlayer, _selectedAmount, _selectedItem,  player] remoteExecCall ["MPClient_fnc_receiveItem", owner _selectedPlayer];
                             _currentValue = _adjustment;
                             _return = true;
@@ -94,12 +112,17 @@ if(_inventoryType in ["House","Vehicle","Tent"])then{
         };
         case "Ground": 
         { 
-            switch _mode do 
+            private _selectedContainer = param [4,objNull,[objNull]];
+
+            if not(isNull _selectedContainer)then
             {
-                case "ADD": {};
-                case "TAKE": {};
-                case "GIVE": {};
-            }; 
+                switch _mode do 
+                {
+                    case "ADD": {};
+                    case "TAKE": {};
+                    case "GIVE": {};
+                };
+            };
         };
     };
 };

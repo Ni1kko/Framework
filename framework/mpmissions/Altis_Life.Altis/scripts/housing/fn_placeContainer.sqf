@@ -42,7 +42,7 @@ if (!isNull _house) then {
                     } else {
                         [_uid,_container] remoteExec ["MPServer_fnc_addContainer",RE_SERVER];
                     };
-                    _container setVariable ["Trunk",[[],0],true];
+                    _container setVariable ["virtualInventory",[[],0],true];
                     _container setVariable ["container_owner",[_uid],true];
                     _containers pushBack _container;
                     _house setVariable ["containers",_containers,true];

@@ -11,7 +11,7 @@ private ["_container","_containerInfo","_value"];
 _container = [_this,0,objNull,[objNull]] call BIS_fnc_param;
 if (isNull _container) exitWith {};
 
-_containerInfo = _container getVariable ["Trunk",[]];
+_containerInfo = _container getVariable ["virtualInventory",[]];
 if (count _containerInfo isEqualTo 0) exitWith {hint localize "STR_Cop_ContainerEmpty"};
 
 _value = 0;
@@ -36,7 +36,7 @@ _value = _illegalValue;
 if (_value > 0) then {
     [0,"STR_NOTF_ContainerContraband",true,[[_value] call MPClient_fnc_numberText]] remoteExecCall ["MPClient_fnc_broadcast",RE_CLIENT];
     ["ADD","BANK",_value] call MPClient_fnc_handleMoney;
-    _container setVariable ["Trunk",[[],0],true];
+    _container setVariable ["virtualInventory",[[],0],true];
     [_container] remoteExecCall ["MPServer_fnc_updateHouseTrunk",2];
 } else {
     hint localize "STR_Cop_NoIllegalContainer";

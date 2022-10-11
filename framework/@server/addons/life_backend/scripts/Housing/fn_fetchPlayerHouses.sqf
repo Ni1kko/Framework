@@ -44,7 +44,7 @@ _containerss = [];
     _fixZ = (_currentPos select 2) - _posZ;
     _container setPosATL [(_posX - _fixX), (_posY - _fixY), (_posZ - _fixZ)];
     _container setVectorDirAndUp _direction;
-    _container setVariable ["Trunk",_trunk,true];
+    _container setVariable ["virtualInventory",_trunk,true];
     _container setVariable ["container_owner",[_x select 0],true];
     _container setVariable ["container_id",_x select 6,true];
     clearWeaponCargoGlobal _container;

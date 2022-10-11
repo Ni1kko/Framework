@@ -15,7 +15,7 @@ private _vehicle = objectFromNetId (_packetData getOrDefault ["NetID", ""]);
 if(isNull _vehicle) exitWith {false};
 
 private _vehicleInfo = _vehicle getVariable ["dbInfo",[]];
-private _vehicleTrunk = _vehicle getVariable ["Trunk",[[],0]];
+private _vehicleTrunk = _vehicle getVariable ["virtualInventory",[[],0]];
 
 _packetData set ["SteamID", _vehicleInfo param [0, ""]];
 _packetData set ["Plate", _vehicleInfo param [1, ""]];

@@ -69,7 +69,7 @@ if (_action) then {
     _containers = _house getVariable ["containers",[]];
     if (count _containers > 0) then {
         {
-            _x setVariable ["Trunk",nil,true];
+            _x setVariable ["virtualInventory",nil,true];
 
             if (count extdb_var_database_headless_clients > 0) then {
                 [_x] remoteExecCall ["HC_fnc_sellHouseContainer",extdb_var_database_headless_client];

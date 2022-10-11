@@ -123,7 +123,7 @@ for "_i" from 0 to 1 step 0 do {
         titleText[localize "STR_NOTF_MiningStopped","PLAIN"];
     };
 
-    _vehicle_data = _vehicle getVariable ["Trunk",[[],0]];
+    _vehicle_data = _vehicle getVariable ["virtualInventory",[[],0]];
     _inv = +(_vehicle_data select 0);
     _space = (_vehicle_data select 1);
     _itemIndex = [_resource,_inv] call MPServer_fnc_index;
@@ -163,7 +163,7 @@ for "_i" from 0 to 1 step 0 do {
     _itemName = M_CONFIG(getText,"cfgVirtualItems",_resource,"displayName");
     titleText[format [localize "STR_NOTF_DeviceMined",_sum,TEXT_LOCALIZE(_itemName)],"PLAIN"];
     _itemWeight = ([_resource] call MPClient_fnc_itemWeight) * _sum;
-    _vehicle setVariable ["Trunk",[_inv,_space + _itemWeight],true];
+    _vehicle setVariable ["virtualInventory",[_inv,_space + _itemWeight],true];
     _weight = [_vehicle] call MPClient_fnc_vehicleWeight;
     _sum = [_resource,_random,(_weight select 1),(_weight select 0)] call MPClient_fnc_calWeightDiff; //Get a sum base of the remaining weight..
 

@@ -99,7 +99,7 @@ _vehicle setVariable ["oUUID",_pid,true];
 _vehicle disableTIEquipment true; //No Thermals.. They're cheap but addictive.
 [_vehicle] call MPClient_fnc_clearVehicleAmmo;
 
-_vehicle setVariable ["Trunk",_trunk,true];
+_vehicle setVariable ["virtualInventory",_trunk,true];
 
 [createHashMapFromArray [
     ["Mode",4],

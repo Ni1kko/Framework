@@ -21,9 +21,9 @@ if (!([_num] call MPServer_fnc_isNumber)) exitWith {hint localize "STR_MISC_Wron
 _num = parseNumber(_num);
 if (_num < 1) exitWith {hint localize "STR_MISC_Under1";};
 
-_index = [_ctrl,((life_var_vehicleTrunk getVariable "Trunk") select 0)] call MPServer_fnc_index;
-_data = (life_var_vehicleTrunk getVariable "Trunk") select 0;
-_old = life_var_vehicleTrunk getVariable "Trunk";
+_index = [_ctrl,((life_var_vehicleTrunk getVariable "virtualInventory") select 0)] call MPServer_fnc_index;
+_data = (life_var_vehicleTrunk getVariable "virtualInventory") select 0;
+_old = life_var_vehicleTrunk getVariable "virtualInventory";
 if (_index isEqualTo -1) exitWith {};
 _value = _data select _index select 1;
 if (_num > _value) exitWith {hint localize "STR_MISC_NotEnough"};
@@ -38,7 +38,7 @@ if (_ctrl == "money") then {
     };
 
     ["ADD","CASH",_num] call MPClient_fnc_handleMoney;
-    life_var_vehicleTrunk setVariable ["Trunk",[_data,(_old select 1) - _weight],true];
+    life_var_vehicleTrunk setVariable ["virtualInventory",[_data,(_old select 1) - _weight],true];
     [life_var_vehicleTrunk] call MPClient_fnc_vehInventory;
 } else {
     if (["ADD",_ctrl,_num] call MPClient_fnc_handleVitrualItem) then {
@@ -47,7 +47,7 @@ if (_ctrl == "money") then {
         } else {
             _data set[_index,[_ctrl,(_value - _num)]];
         };
-        life_var_vehicleTrunk setVariable ["Trunk",[_data,(_old select 1) - _weight],true];
+        life_var_vehicleTrunk setVariable ["virtualInventory",[_data,(_old select 1) - _weight],true];
         [life_var_vehicleTrunk] call MPClient_fnc_vehInventory;
     } else {
         hint localize "STR_NOTF_InvFull";

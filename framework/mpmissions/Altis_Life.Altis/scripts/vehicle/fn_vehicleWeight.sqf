@@ -10,7 +10,7 @@ _vehicle = [_this,0,objNull,[objNull]] call BIS_fnc_param;
 if (isNull _vehicle) exitWith {};
 
 _weight = -1;
-_used = (_vehicle getVariable "Trunk") select 1;
+_used = (_vehicle getVariable "virtualInventory") select 1;
 _weight = [(typeOf _vehicle)] call MPClient_fnc_vehicleWeightCfg;
 
 if (isNil "_used") then {_used = 0};

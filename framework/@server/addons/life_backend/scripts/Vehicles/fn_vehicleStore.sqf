@@ -27,7 +27,7 @@ if (isNull _vehicle || isNull _unit) exitWith
 
 private _vehicleID = _vehicle getVariable ["vehicle_id",-1];
 private _vInfo = _vehicle getVariable ["dbInfo",[]];
-private _trunk = _vehicle getVariable ["Trunk", [[], 0]];
+private _trunk = _vehicle getVariable ["virtualInventory", [[], 0]];
 private _impoundFee = getNumber(configFile >> "cfgVehicles" >> "impoundFee");
 private _blacklist = false;  
 private _totalweight = 0;

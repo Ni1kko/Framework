@@ -11,7 +11,7 @@ _vehicle = cursorObject;
 _list = ["Air","Ship","LandVehicle"];
 if (isNull _vehicle || {!(KIND_OF_ARRAY(_vehicle,_list))}) exitWith {};
 
-_vehicleInfo = _vehicle getVariable ["Trunk",[]];
+_vehicleInfo = _vehicle getVariable ["virtualInventory",[]];
 if (count _vehicleInfo isEqualTo 0) exitWith {hint localize "STR_Cop_VehEmpty"};
 
 _value = 0;
@@ -36,7 +36,7 @@ _value = _illegalValue;
 if (_value > 0) then {
     [0,"STR_NOTF_VehContraband",true,[[_value] call MPClient_fnc_numberText]] remoteExecCall ["MPClient_fnc_broadcast",RE_CLIENT];
     ["ADD","BANK",_value] call MPClient_fnc_handleMoney;
-    _vehicle setVariable ["Trunk",[[],0],true];
+    _vehicle setVariable ["virtualInventory",[[],0],true];
 } else {
     hint localize "STR_Cop_NoIllegalVeh";
 };

@@ -16,7 +16,7 @@ _uid = ((_house getVariable "house_owner") select 0);
 
 if (!([_uid] call MPClient_fnc_isUIDActive)) exitWith {hint localize "STR_House_Raid_OwnerOff"};
 
-_houseInv = _house getVariable ["Trunk",[[],0]];
+_houseInv = _house getVariable ["virtualInventory",[[],0]];
 if (_houseInv isEqualTo [[],0]) exitWith {hint localize "STR_House_Raid_Nothing"};
 life_var_isBusy = true;
 
@@ -72,7 +72,7 @@ if (_value > 0) then {
     
     ["ADD","BANK",round(_value / 2)] call MPClient_fnc_handleMoney;
 
-    _house setVariable ["Trunk",[_houseInvData,_houseInvVal],true];
+    _house setVariable ["virtualInventory",[_houseInvData,_houseInvVal],true];
 
     if (count extdb_var_database_headless_clients > 0) then {
         [_house] remoteExecCall ["HC_fnc_updateHouseTrunk",extdb_var_database_headless_client];
