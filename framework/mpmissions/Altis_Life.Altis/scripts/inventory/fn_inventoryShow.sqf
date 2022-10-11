@@ -23,6 +23,8 @@ createGearDialog [player,'RscDisplayInventory'];
 //--
 waitUntil { _ctrlParent = uiNamespace getVariable ["RscDisplayInventory",findDisplay 602]; not(isNull _ctrlParent)};
 
+[player,"bagopen",20] remoteExec ["MPClient_fnc_say3D",-2];
+
 //-- Handle our controls
 [_ctrlParent,true] call MPClient_fnc_inventoryRefresh;
 

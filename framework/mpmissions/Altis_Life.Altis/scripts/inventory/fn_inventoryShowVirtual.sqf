@@ -112,6 +112,19 @@ _ctrlIDClist pushBackUnique _ctrlIDC;
                     }else{
                         if (_currentPage in ["Vehicle","House","Tent"])then
                         {
+                            switch _currentPage do 
+                            {
+                                case "Vehicle":  
+                                {
+                                    if _inVehicle then{
+                                        [player,"gloveboxopen",20] remoteExec ["MPClient_fnc_say3D",-2];
+                                    }else{
+                                        [player,"trunkopen",20] remoteExec ["MPClient_fnc_say3D",-2];
+                                    };
+                                };
+                                case "House": {[player,"boxopen",20] remoteExec ["MPClient_fnc_say3D",-2]};
+                                case "Tent": {[player,"bagopen",20] remoteExec ["MPClient_fnc_say3D",-2]};
+                            };
                             switch _idc do
                             {
                                 case 77705: 
@@ -166,6 +179,7 @@ _ctrlIDClist pushBackUnique _ctrlIDC;
                             {
                                 case "Player": 
                                 { 
+                                    [player,"bagopen",20] remoteExec ["MPClient_fnc_say3D",-2];
                                     switch _idc do
                                     {
                                         case 77705: 

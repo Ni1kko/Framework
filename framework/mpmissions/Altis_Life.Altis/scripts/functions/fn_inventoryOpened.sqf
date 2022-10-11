@@ -84,17 +84,4 @@ if (({
 //-- exteneted inventory
 [] spawn MPClient_fnc_inventoryCreateMenu;
 
-//-- sounds
-if(count _types > 0)then{
-    {
-        switch _x do
-        {
-            //case "dead_player": {[_unit,"",20] remoteExec ["MPClient_fnc_say3D",-2]};
-            case "storage_player": {[_unit,"bagopen",20] remoteExec ["MPClient_fnc_say3D",-2]};
-            //case "storage_house": {[_unit,"",20] remoteExec ["MPClient_fnc_say3D",-2]};
-            //case "storage_vehicle": {[_unit,"",20] remoteExec ["MPClient_fnc_say3D",-2]};
-        };
-    }forEach _types;
-};
-
 false
