@@ -92,6 +92,7 @@ if (CFG_MASTER(getNumber,"enable_fatigue") isEqualTo 0) then {
 //-- Setup spawn markers for every faction to force spawn inside nearest building
 if(count _factionsWithBuildingSpawns > 0)then
 {
+    /*
     {
         private _spawnCfg = (_cfgSpawnPoints >> _worldName >> _x);
 
@@ -106,7 +107,7 @@ if(count _factionsWithBuildingSpawns > 0)then
                 currentNamespace setVariable [_markerName,selectRandom _nearestBuildings];
             };
         };
-    }forEach _factionsWithBuildingSpawns;
+    }forEach _factionsWithBuildingSpawns;*/
 };
 
 //-- Init faction

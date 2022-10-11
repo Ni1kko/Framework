@@ -16,7 +16,7 @@ private _playerVariables = [
     ['transporting', false, true],
     ['playerSurrender', false, true],
     ['realname', profileName, true],
-    ['lifeState','SLEEPING',true],
+    ['lifeState','HEALTHY',true],
     ["arrested", false,true],
     ['life_var_hidden',false,true],
     ['teleported',false,true],
