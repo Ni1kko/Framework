@@ -4,6 +4,8 @@
     ## clientDefines.hpp
 */
 
+#define DEBUG 1
+
 //-- Basic math
 #define INFINTE 1e+011
 #define SUB(val1,val2) (val1 - val2)
@@ -14,6 +16,12 @@
 #define RE_SERVER 2 //Only server
 #define RE_CLIENT -2 //Except server
 #define RE_GLOBAL 0 //Global
+#define RE_HEADLESS extdb_var_database_headless_client
+
+#ifdef DEBUG
+	#undef RE_CLIENT
+	#define RE_CLIENT 0
+#endif
 
 #ifdef CONFIG_INCLUDES
 	#define true 1

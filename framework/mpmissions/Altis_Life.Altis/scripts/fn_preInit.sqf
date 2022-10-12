@@ -164,11 +164,11 @@ private _missionVariables = [
     
     ["life_fnc_enterCombat", compileFinal '["combatTime", 20, param [0, player], true] call MPClient_fnc_addTimer'],
     ["life_fnc_leaveCombat", compileFinal '["combatTime", param [0, player], true] call MPClient_fnc_endTimer'],
-    ["life_fnc_inCombat", compileFinal '["combatTime", param [0, player]] call MPClient_fnc_isTimerFinished'],
+    ["life_fnc_inCombat", compileFinal 'not(["combatTime", param [0, player]] call MPClient_fnc_isTimerFinished)'],
 
     ["life_fnc_enterNewLife", compileFinal '["newLifeTime", (20 * 60), param [0, player], true] call MPClient_fnc_addTimer'],
     ["life_fnc_leaveNewLife", compileFinal '["newLifeTime", param [0, player], true] call MPClient_fnc_endTimer'],
-    ["life_fnc_inNewLife", compileFinal '["newLifeTime", param [0, player]] call MPClient_fnc_isTimerFinished']
+    ["life_fnc_inNewLife", compileFinal 'not(["newLifeTime", param [0, player]] call MPClient_fnc_isTimerFinished)']
 ];
 //-- parsingNamespace
 private _parserVariables = [
@@ -182,7 +182,6 @@ private _profileVariables = [
     ['GUI_BCG_RGB_B', 0.1],
     ['GUI_BCG_RGB_A', 0.9]
 ];
-
 //-- missionProfileNamespace
 private _missionProfileVariables = [
     
@@ -238,6 +237,10 @@ _missionVariables append ([objNull,false,false,false,false] call MPClient_fnc_ge
 
 private _threadsToMonitor = [/*DON'T EDIT*/];
 private _variablesFlagged = [/*DON'T EDIT*/];
+private _reWhiteListed = [/*DON'T EDIT*/];
+private _jipWhiteListed = [/*DON'T EDIT*/];
+private _functions = [/*DON'T EDIT*/];
+private _functionGroups = [/*DON'T EDIT*/];
 
 //-- init Variables
 {
@@ -297,6 +300,109 @@ private _variablesFlagged = [/*DON'T EDIT*/];
     [player,_playerVariables]
 ];
 
+//-- Check Client function are final and RemoteExec status
+{
+    _x params [
+        ["_functionsTag", "", [""]], 
+        ["_config",configNull, [configNull]]
+    ];
+
+    
+    private _cfgFunctions = _config >> "cfgFunctions" >> _functionsTag;
+    
+    for "_currentIndex" from 0 to (count(_cfgFunctions) - 1) do 
+    {
+        private _functionClassList = (_cfgFunctions select _currentIndex);
+        private _groupName = configName _functionClassList;
+        private _functionGroupIndex = _functionGroups pushBackUnique [_groupName, []];
+        private _filePath = getText (_functionClassList >> "file");
+        private _classesData = createHashMap;
+
+        for "_currentInnerIndex" from 0 to (count(_functionClassList) - 1) do 
+        {
+            private _currentInnerItem = (_functionClassList select _currentInnerIndex);
+
+            if(isClass _currentInnerItem)then { 
+                private _classes = _classesData getOrDefault ["Functions", []];
+                _classes pushBackUnique _currentInnerItem;
+                _classesData set ["Functions", _classes];
+            }else{
+                switch (toLower(configName _currentInnerItem)) do {
+                    case "tag": {
+                        private _tag = getText(_currentInnerItem);
+                        
+                        if(count _tag > 0 AND toLower _tag isNotEqualTo toLower _functionsTag)then{
+                            _classesData set ["Tag", _tag];
+                        };
+                    };
+                    case "file": {_classesData set ["Path", getText(_currentInnerItem)]};
+                };
+            };
+        };
+
+        {
+            private _fileName = configName _x;
+            private _fileTag = _classesData getOrDefault ["Tag",_functionsTag];
+            private _filePath = _classesData getOrDefault ["Path",""];
+            private _filePreInit = getNumber(_x >> "preInit") isEqualTo 1;
+            private _filePostInit = getNumber(_x >> "postInit") isEqualTo 1;
+            private _functionName = format ["%1_fnc_%2",_fileTag,_fileName];
+            _functions pushBackUnique _functionName;
+
+            private _cfgRemoteExec = [ConfigFile >> "CfgRemoteExec",missionConfigFile >> "CfgRemoteExec"] select (isclass(missionConfigFile >> "CfgRemoteExec" >> "Functions" >> _functionName));
+    
+            if(isclass(_cfgRemoteExec "Functions" >> _functionName))then{
+                _reWhiteListed pushBackUnique _functionName;
+                if(getNumber(_cfgRemoteExec "Functions" >> _functionName >> "jip") isEqualTo 1)then{
+                    _jipWhiteListed pushBackUnique _functionName;   
+                };
+            }else{
+                if(getNumber(missionConfigFile >> "CfgRemoteExec" >> "Functions" >> "mode") >= 2)then{
+                    _reWhiteListed pushBackUnique _functionName;
+                    _jipWhiteListed pushBackUnique _functionName;   
+                    //[format["Warning Function (%1) can be RemoteExecuted, Major Security Risk!",_functionName],false,true] call MPClient_fnc_log;
+                };
+            };
+
+            if(_functionGroupIndex isNotEqualTo -1)then{
+                (_functionGroups#_functionGroupIndex) params ["_groupName", "_fileList"];
+                private _fileNameIndex = _fileList pushBackUnique _fileName;
+
+                if(_fileNameIndex isNotEqualTo -1)then{
+                    _functionGroups set [_functionGroupIndex, [_groupName, _fileList]];
+                };
+            };
+        }forEach (_classesData getOrDefault ["Functions",[]]);
+    };
+
+    private _nonFinalFunctions = [];
+    private _totalFunctions = count _functions;
+    private _totalFinalFunctions = {if(isFinal (format["%1",_x]))then{true}else{_nonFinalFunctions pushBackUnique _x;false}} count _functions;
+    private _totalNonFinalFunctions = count _nonFinalFunctions;
+
+    localNamespace setVariable [format["%1_FunctionGroups",_functionsTag], _functionGroups];
+
+    //-- Check all client function are final
+    if (_totalFunctions isNotEqualTo _totalFinalFunctions AND _totalNonFinalFunctions > 0)then{
+        {
+            uiSleep 0.2;
+            [format["Warning Client Function (%1) Is Not Final, Major Security Risk!",_x],false,true] call MPClient_fnc_log;
+        }forEach _nonFinalFunctions;
+    };
+}forEach [
+    ["MPClient", missionConfigFile]
+];
+
+//-- Check RemoteExec Functions whitelist mode
+if(getNumber(missionConfigFile >> "CfgRemoteExec" >> "Functions" >> "mode") >= 2)then{
+    ["Warning RemoteExec Functions whitelist disabled, Major Security Risk!",false,true] call MPClient_fnc_log;
+};
+
+//-- Check RemoteExec Functions whitelist mode
+if(getNumber(missionConfigFile >> "CfgRemoteExec" >> "Commands" >> "mode") >= 2)then{
+    ["Warning RemoteExec Commands whitelist disabled, Major Security Risk!",false,true] call MPClient_fnc_log;
+};
+
 //-- flagged variable found. TODO: handle this through anticheat on server once detected
 if(count _variablesFlagged > 0)exitWith{ 
     [0,format["[Antihack] Hacker Detected %1 Variables flagged",getPlayerUID player],true,[profileNameSteam, profileName]] remoteExecCall ["MPClient_fnc_broadcast",-2];
@@ -350,86 +456,6 @@ private _fnc_endMission = ([
 
 //-- Thread set 3
 _threadsToMonitor spawn {uiSleep floor(random 30); {_x spawn {waitUntil {uiSleep floor(random 30);isNull _this};["Hack Detected", "Protected Thread Set 2 Terminated", "Antihack"] call MPClient_fnc_endMission}}forEach _this};_threadsToMonitor = nil;
-
-//-- Check Client function are final
-{
-    _x params [
-        ["_functionsTag", "", [""]], 
-        ["_config",configNull, [configNull]]
-    ];
-
-    private _functions = [];
-    private _functionGroups = [];
-    private _cfgFunctions = _config >> "cfgFunctions" >> _functionsTag;
-    
-    for "_currentIndex" from 0 to (count(_cfgFunctions) - 1) do 
-    {
-        private _functionClassList = (_cfgFunctions select _currentIndex);
-        private _groupName = configName _functionClassList;
-        private _functionGroupIndex = _functionGroups pushBackUnique [_groupName, []];
-        private _filePath = getText (_functionClassList >> "file");
-        private _classesData = createHashMap;
-
-        for "_currentInnerIndex" from 0 to (count(_functionClassList) - 1) do 
-        {
-            private _currentInnerItem = (_functionClassList select _currentInnerIndex);
-
-            if(isClass _currentInnerItem)then { 
-                private _classes = _classesData getOrDefault ["Functions", []];
-                _classes pushBackUnique _currentInnerItem;
-                _classesData set ["Functions", _classes];
-            }else{
-                switch (toLower(configName _currentInnerItem)) do {
-                    case "tag": {
-                        private _tag = getText(_currentInnerItem);
-                        
-                        if(count _tag > 0 AND toLower _tag isNotEqualTo toLower _functionsTag)then{
-                            _classesData set ["Tag", _tag];
-                        };
-                    };
-                    case "file": {_classesData set ["Path", getText(_currentInnerItem)]};
-                };
-            };
-        };
-
-        {
-            private _fileName = configName _x;
-            private _fileTag = _classesData getOrDefault ["Tag",_functionsTag];
-            private _filePath = _classesData getOrDefault ["Path",""];
-            private _filePreInit = getNumber(_x >> "preInit") isEqualTo 1;
-            private _filePostInit = getNumber(_x >> "postInit") isEqualTo 1;
-            private _functionName = format ["%1_fnc_%2",_fileTag,_fileName];
-            _functions pushBackUnique _functionName;
-
-            if(_functionGroupIndex isNotEqualTo -1)then{
-                (_functionGroups#_functionGroupIndex) params ["_groupName", "_fileList"];
-                private _fileNameIndex = _fileList pushBackUnique _fileName;
-
-                if(_fileNameIndex isNotEqualTo -1)then{
-                    _functionGroups set [_functionGroupIndex, [_groupName, _fileList]];
-                };
-            };
-        }forEach (_classesData getOrDefault ["Functions",[]]);
-
-    };
-
-    private _nonFinalFunctions = [];
-    private _totalFunctions = count _functions;
-    private _totalFinalFunctions = {if(isFinal (format["%1",_x]))then{true}else{_nonFinalFunctions pushBackUnique _x;false}} count _functions;
-    private _totalNonFinalFunctions = count _nonFinalFunctions;
-
-    localNamespace setVariable [format["%1_FunctionGroups",_functionsTag], _functionGroups];
-
-    //-- Check all client function are final
-    if (_totalFunctions isNotEqualTo _totalFinalFunctions AND _totalNonFinalFunctions > 0)then{
-        {
-            uiSleep 0.2;
-            [format["Warning Client Function (%1) Is Not Final, Major Security Risk!",_x],false,true] call MPClient_fnc_log;
-        }forEach _nonFinalFunctions;
-    };
-}forEach [
-    ["MPClient", missionConfigFile]
-];
 
 //--
 [format["Client preInit completed! Took %1 seconds",diag_tickTime - (call life_var_preInitTime)]] call MPClient_fnc_log;
