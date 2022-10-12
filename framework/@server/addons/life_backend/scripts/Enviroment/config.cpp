@@ -11,11 +11,14 @@ class CfgPatches
 
 class CfgEnviroment
 { 
-    wildLife[]= {
-        {"Sheep_random_F", "hunting_pos",250},
-        {"Goat_random_F", "hunting_pos",120},
-        {"Cock_random_F", "hunting_pos",60},
-        {"Hen_random_F", "hunting_pos",30}
+    class wildLife 
+    {
+        animaltypes[]= {
+            {"Sheep_random_F", "hunting_pos",250},
+            {"Goat_random_F", "hunting_pos",120},
+            {"Cock_random_F", "hunting_pos",60},
+            {"Hen_random_F", "hunting_pos",30}
+        };
     };
 };
 

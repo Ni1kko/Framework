@@ -33,7 +33,7 @@ for "_currentIndex" from 0 to (count(missionConfigFile >> "cfgVirtualItems") - 1
 	}else{
 
 		if(_buyPrice isNotEqualTo -1)then{
-			_buyPrice = ceil (_amount * (_x select 1));
+			_buyPrice = ceil (_stock * _buyPrice);
 			if(_buyPrice < 0) then {
 				_buyPrice = -(_buyPrice);
 			};

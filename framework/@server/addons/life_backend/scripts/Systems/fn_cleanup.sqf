@@ -2,6 +2,7 @@
 /*
 	## Tonic & Ni1kko
 	## https://github.com/Ni1kko/FrameworkV2
+    ## fn_cleanup.sqf
 */
 
 switch (param [0,""]) do 
@@ -14,6 +15,7 @@ switch (param [0,""]) do
             private _vehicleClass = getText(configFile >> "CfgVehicles" >> (typeOf _veh) >> "vehicleClass");
             
             if (_veh getVariable ["NPC",false]) then {_protect = true;};
+            if (_veh getVariable ["vitem",false]) then {_protect = true;};
 
             if ((_vehicleClass in ["Car","Air","Ship","Armored","Submarine"]) && {!(_protect)}) then 
             {

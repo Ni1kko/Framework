@@ -28,6 +28,7 @@ private _missionVariables = [
     ["life_var_preInitTime", compileFinal str(diag_tickTime)],
     ["life_var_postInitTime", compile str(-1)],
     ["life_var_initTime", compile str(-1)],
+    ["life_var_clientTimeout", 0],
     ["life_var_serverTimeout", 0],
     ["life_var_loadingScreenActive", false],
     ["life_var_actionDelay", time],
@@ -148,7 +149,6 @@ private _missionVariables = [
     ["life_var_clothingTraderData", [-1, -1, -1, -1, -1]],
     ["life_var_clothingTraderFilter", 0],
     ["life_var_vehicleTraderData",["",[],"Undefined",true]],
-    ["life_var_marketConfig",createHashMap],
     ["life_var_adminShop",false],
 
     //

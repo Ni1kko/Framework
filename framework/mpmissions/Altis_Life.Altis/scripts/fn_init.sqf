@@ -18,7 +18,12 @@ if (isFinal "life_var_initTime")exitWith{
     false;
 };
 
-waitUntil{uiSleep 0.2;(getClientState isEqualTo "BRIEFING READ") && !isNull findDisplay 46};
+// -- terminate any running loadingScreens
+1 call bis_fnc_progressloadingscreen;
+endLoadingScreen;
+
+// -- Arma likes to be a prick and sometimes, this is a workaround for it
+waitUntil{uiSleep 0.2;not(call BIS_fnc_isLoading) AND (getClientState isEqualTo "BRIEFING READ") AND not(isNull findDisplay 46)};
 
 private _name = profileName;
 private _side = side player;
@@ -27,24 +32,34 @@ private _cfgSpawnPoints = missionConfigFile >> "CfgSpawnPoints";
 private _spawnBuildings = getArray(_cfgSpawnPoints >> "spawnBuildings");
 private _factionsWithBuildingSpawns = getArray(_cfgSpawnPoints >> "factionsWithBuildingSpawns");
 
-// -- Start Loading Screen (Arma likes to be a prick and sometimes it fails to load, this is a workaround for it)
-endLoadingScreen;
-waitUntil{not(call BIS_fnc_isLoading)};
-uiSleep 0.2;
+// -- Start Loading Screen
 startLoadingScreen ["","RscDisplayLoadingScreen"];
 waitUntil {currentNamespace isEqualTo missionNamespace};
-
-["Setting up client", "Please Wait..."] call MPClient_fnc_setLoadingText; uiSleep(random[0.5,3,6]);
  
 life_var_initTime = compileFinal str(diag_tickTime);
 
 ["Loading client init"] call MPClient_fnc_log;
 
 // --
-["Waiting for the server to be ready..."] call MPClient_fnc_log;
-waitUntil {!isNil "life_var_serverLoaded" && {!isNil "extdb_var_database_error"}};
+if(isNil "life_var_serverLoaded" OR isNil "extdb_var_database_error")then{
+    waitUntil {
+        if(life_var_clientTimeout > MAX_SECS_TOO_WAIT_FOR_SERVER) exitWith {["Server failed to load", "Please try again"] call MPClient_fnc_endMission};
+        ["Setting up client", "Please wait"] call MPClient_fnc_setLoadingText; 
+        uiSleep 0.2;
+        ["Setting up client", "Please wait."] call MPClient_fnc_setLoadingText; 
+        uiSleep 0.2;
+        ["Setting up client", "Please wait.."] call MPClient_fnc_setLoadingText;  
+        uiSleep 0.2;
+        ["Setting up client", "Please wait..."] call MPClient_fnc_setLoadingText;
+        uiSleep 0.4;
+        life_var_clientTimeout = life_var_clientTimeout + 1;
+        ({isNil {missionNamespace getVariable _x}} count ["life_var_serverLoaded", "extdb_var_database_error"]) isEqualTo 0
+    };
+};
+    
+
 if (extdb_var_database_error) exitWith {["Database failed to load", "Please contact an administrator"] call MPClient_fnc_endMission};
-if !life_var_serverLoaded then { 
+if !life_var_serverLoaded then {
     waitUntil {
         if(life_var_serverTimeout > MAX_SECS_TOO_WAIT_FOR_SERVER) exitWith {["Server failed to load", "Please try again"] call MPClient_fnc_endMission};
         ["Waiting for the server to be ready", "Please wait"] call MPClient_fnc_setLoadingText; 
@@ -61,7 +76,7 @@ if !life_var_serverLoaded then {
 };
 
 // --
-["Waiting for the server to broadcast data..."] call MPClient_fnc_log;
+["Waiting for the server to broadcast data...", "Please wait..."] call MPClient_fnc_setLoadingText;
 waitUntil {!isNil "MPServer_fnc_util_getSideString"};
 private _sideVar = [_side,true] call MPServer_fnc_util_getSideString;
 private _factionInit = format["MPClient_fnc_init%1",_sideVar];
@@ -74,7 +89,8 @@ waitUntil {
     life_var_sessionDone
 };
 
-["Setting up player", "Please wait..."] call MPClient_fnc_setLoadingText; uiSleep(random[0.5,3,6]);
+["Setting up player", "Please wait..."] call MPClient_fnc_setLoadingText;
+waituntil{!isnull cameraon};
 if (CFG_MASTER(getNumber,"enable_fatigue") isEqualTo 0) then {
     player enableFatigue false;
     if (CFG_MASTER(getNumber,"enable_autorun") isEqualTo 1) then {
@@ -111,6 +127,7 @@ if(count _factionsWithBuildingSpawns > 0)then
 };
 
 //-- Init faction
+["Setting up factions", "Please wait..."] call MPClient_fnc_setLoadingText; uiSleep(random[0.5,3,6]);
 private _sideCode = currentNamespace getVariable [_factionInit,{}];
 if(_sideCode isNotEqualTo {})then{
     ["Loading faction init!"] call MPClient_fnc_log;
@@ -118,6 +135,7 @@ if(_sideCode isNotEqualTo {})then{
 };
 
 //-- Input handlers
+["Setting up inputhandlers", "Please wait..."] call MPClient_fnc_setLoadingText; uiSleep(random[0.5,3,6]);
 (findDisplay 46) displayAddEventHandler ["KeyDown", "_this call MPClient_fnc_keydownHandler"];
 (findDisplay 46) displayAddEventHandler ["KeyUp", "_this call MPClient_fnc_keyupHandler"];
 

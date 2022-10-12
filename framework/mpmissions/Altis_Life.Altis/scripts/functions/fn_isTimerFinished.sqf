@@ -12,4 +12,4 @@ params[
 
 if(_timerName isEqualTo "undefined") exitWith {true};
 
-(_timerNamespace getVariable[_timerName,diag_tickTime]) >= diag_tickTime
+diag_tickTime >= (_timerNamespace getVariable[_timerName,diag_tickTime])

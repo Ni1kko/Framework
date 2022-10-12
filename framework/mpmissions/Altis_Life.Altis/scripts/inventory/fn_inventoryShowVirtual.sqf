@@ -49,6 +49,13 @@ private _currentPage = _pages param [_selectedPage, ""];
 
 _ctrlIDClist pushBackUnique _ctrlIDC;
 
+
+private _allvitems = virtualNamespace getVariable ["allvitems",[]];
+private _nearVitems = (_allvitems select {((objectFromNetId _x) distance2D player) <= 15});
+
+//-- 
+_ctrlParent setVariable ["RscDisplayInventory_nearVitems", _nearVitems];
+
 //-- 
 [_ctrlParent,false] call MPClient_fnc_inventoryRefresh;
 
@@ -249,12 +256,27 @@ _ctrlIDClist pushBackUnique _ctrlIDC;
                                 };
                                 case "Ground": 
                                 {
+                                    private _totalWeight = 0;
+                                    private _maxWeight = virtualNamespace getVariable ["maxspace",0];
+
+                                    {
+                                        private _itemData = (objectFromNetId _x) getVariable ["item",[]];
+                                        _itemData params [
+                                            ["_configName",""],
+                                            ["_amount",0]
+                                        ];
+
+                                        _totalWeight =  _totalWeight + (([_configName] call MPClient_fnc_itemWeight) * _amount);
+                                        _nearVitems set[_forEachIndex, _configName];
+                                    }forEach _nearVitems;
+
                                     switch _idc do
                                     {
                                         //-- Weight (droped items / max weight)
                                         case 77705: 
                                         { 
-                                            _control ctrlSetText format ["Weight: %1 / %2", 0, 0];
+                                            if(_totalWeight > 999)then{_totalWeight = 999};
+                                            _control ctrlSetText format ["Weight: %1 / %2", _totalWeight, _maxWeight];
                                         };
                                         //-- Menu list (droped items)
                                         case 77706:
@@ -271,7 +293,7 @@ _ctrlIDClist pushBackUnique _ctrlIDC;
                                                     if (count _icon > 0) then {
                                                         _control lbSetPicture [_forEachIndex,_icon];
                                                     };
-                                                } forEach [];
+                                                } forEach _nearVitems;
                                             };
                                             _control ctrlAddEventHandler ["LBSelChanged", "_this call MPClient_fnc_inventoryVirtualLBSelChanged"];  
                                             _control lbSetCurSel 0;

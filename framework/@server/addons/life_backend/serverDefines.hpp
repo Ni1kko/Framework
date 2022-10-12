@@ -23,7 +23,6 @@
 #define ITEM_ILLEGAL(varName) M_CONFIG(getNumber,"cfgVirtualItems",ITEM_VARNAME(varName),"illegal")
 #define ITEM_SELLPRICE(varName) M_CONFIG(getNumber,"cfgVirtualItems",ITEM_VARNAME(varName),"sellPrice")
 #define ITEM_BUYPRICE(varName) M_CONFIG(getNumber,"cfgVirtualItems",ITEM_VARNAME(varName),"buyPrice")
-#define ITEM_NAME(varName) M_CONFIG(getText,"cfgVirtualItems",varName,"displayName")
 #define ITEM_WEIGHT(varName) M_CONFIG(getNumber,"cfgVirtualItems",varName,"weight")
 #define TEXT_LOCALIZE(textStr) if(isLocalized textStr)then{localize textStr}else{textStr}
  

@@ -48,7 +48,7 @@ if(isLocalized _title)then{_title = _title call BIS_fnc_localize};
 if(isLocalized _text)then{_text = _text call BIS_fnc_localize};
 
 //-- Update loading screen if active
-if(life_var_loadingScreenActive)then{
+if(life_var_loadingScreenActive OR (call BIS_fnc_isLoading))then{
     [_title,_text,_color] call MPClient_fnc_setLoadingText;
     uiSleep 5;
 	endLoadingScreen;

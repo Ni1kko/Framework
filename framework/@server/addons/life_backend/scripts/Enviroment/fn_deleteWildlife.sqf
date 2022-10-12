@@ -11,7 +11,7 @@ params [
 
 private _singleReturn = false;
 
-if(typeName _animal isEqualTo "OBJECT")then{
+if(typeName _wildlife isEqualTo "OBJECT")then{
 	_singleReturn = true;
 	_wildlife = [_wildlife];
 };

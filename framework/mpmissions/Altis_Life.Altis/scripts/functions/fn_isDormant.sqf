@@ -12,15 +12,24 @@
 private _isDormant = true;
 
 with missionNamespace try {
-	if not(life_var_sessionDone) throw false;
-	if (life_var_unconscious) throw false;
-	if (life_var_tazed) throw false;
-	//if (player call life_fnc_inCombat) throw false;
-	if (player getVariable ["arrested",false]) throw false;
-	if (player getVariable ["transporting",false]) throw false;
-	if (player getVariable ["playerSurrender",false]) throw false;
-	if (player getVariable ["Escorting",false]) throw false;
-	if (player getVariable ["restrained",false]) throw false;
+	with missionNamespace do 
+	{
+		if not(life_var_sessionDone) throw false;
+		if (life_var_unconscious) throw false;
+		if (life_var_tazed) throw false;
+		if (player call life_fnc_inCombat) throw false;
+	};
+	
+	{
+		if (player getVariable ["arrested",false]) throw false;
+	}forEach [
+		"arrested",
+		"transporting",
+		"playerSurrender",
+		"Escorting",
+		"restrained"
+	];
+
 	if ((player getVariable ["lifeState",""]) isNotEqualTo "HEALTHY") throw false;
 } catch {
 	_isDormant = _exception;

@@ -21,7 +21,7 @@ private _oldData = life_var_marketConfig getOrDefault [_item,createHashMap];
 _newData set ["buyPrice", 	_newData getOrDefault ["buyPrice", _oldData getOrDefault ["buyPrice",getNumber(_cfgItem >> "buyPrice")]]];
 _newData set ["sellPrice",	_newData getOrDefault ["sellPrice", _oldData getOrDefault ["sellPrice", getNumber(_cfgItem >> "sellPrice")]]];
 _newData set ["illegal", 	_newData getOrDefault ["illegal", _oldData getOrDefault ["illegal", getNumber(_cfgItem >> "illegal") isEqualTo 1]]];
-_newData set ["stock",		_newData getOrDefault ["stock", _oldData getOrDefault ["stock", getNumber(_cfgItem >> "stock")]];
+_newData set ["stock",		_newData getOrDefault ["stock", _oldData getOrDefault ["stock", getNumber(_cfgItem >> "stock")]]];
 
 if _forceDatabaseUpdate then{
 	["UPDATE", "market", [

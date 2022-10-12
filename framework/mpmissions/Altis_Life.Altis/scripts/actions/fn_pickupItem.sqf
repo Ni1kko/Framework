@@ -7,13 +7,51 @@
     Description:
     Master handling for picking up an item.
 */
-private ["_itemInfo","_itemName","_illegal","_diff"];
-if ((time - life_var_actionDelay) < 2) exitWith {hint localize "STR_NOTF_ActionDelay"; INUSE(_this);};
-if (isNull _this || {player distance _this > 3}) exitWith {INUSE(_this);};
 
-_itemInfo = _this getVariable ["item",[]]; if (count _itemInfo isEqualTo 0) exitWith {deleteVehicle _this;};
-_illegal = ITEM_ILLEGAL(_itemInfo select 0);
-_itemName = ITEM_NAME(_itemInfo select 0);
+params [
+    ["_itemObject", objNull, [objNull]]
+];
+
+if ((time - life_var_actionDelay) < 2) exitWith {hint localize "STR_NOTF_ActionDelay"; INUSE(_itemObject)};
+if (isNull _itemObject || {player distance _itemObject > 3}) exitWith {INUSE(_itemObject)};
+
+private _fnc_deleteItem = {
+    params [
+        ["_object", objNull, [objNull]]
+    ];
+
+    if (isNull _object) exitWith {};
+
+    private _allvitems = virtualNamespace getVariable ["allvitems",[]];
+    private _vitemIndex = _allvitems find (netID _object);
+
+    //-- Remove the item from the virtual items array
+    if(_vitemIndex isNotEqualTo -1) then { 
+        _allvitems deleteAt _vitemIndex; 
+        virtualNamespace setvariable ["allvitems",_allvitems,true];
+    };
+
+    //-- Delete the vitrual data
+    _object setVariable ["item",nil];
+    
+    //-- Delete the object
+    deleteVehicle _object;
+     
+    //-- Return called
+    if not(canSuspend)exitWith{ 
+        isNull _object
+    };
+
+    waitUntil{isNull _itemObject};
+    
+    //-- Return spawned
+    true
+};
+
+private _itemInfo = _itemObject getVariable ["item",[]]; if (count _itemInfo isEqualTo 0) exitWith {[_itemObject] call _fnc_deleteItem};
+private _illegal = ITEM_ILLEGAL(_itemInfo select 0);
+private _itemName = ITEM_DISPLAYNAME(_itemInfo select 0);
+
 if (isLocalized _itemName) then {
     _itemName = (localize _itemName);
 };
@@ -21,33 +59,32 @@ if (isLocalized _itemName) then {
 if (playerSide isEqualTo west && _illegal isEqualTo 1) exitWith {
     titleText[format [localize "STR_NOTF_PickedEvidence",_itemName,[round(ITEM_SELLPRICE(_itemInfo select 0) / 2)] call MPClient_fnc_numberText],"PLAIN"];
     ["ADD","BANK",round(ITEM_SELLPRICE(_itemInfo select 0) / 2)] call MPClient_fnc_handleMoney;
-    deleteVehicle _this; 
+    [_itemObject] call _fnc_deleteItem;
     life_var_actionDelay = time;
 };
 
 life_var_actionDelay = time;
 _diff = [(_itemInfo select 0),(_itemInfo select 1),life_var_carryWeight,life_maxWeight] call MPClient_fnc_calWeightDiff;
-if (_diff <= 0) exitWith {hint localize "STR_NOTF_InvFull"; INUSE(_this);};
+if (_diff <= 0) exitWith {hint localize "STR_NOTF_InvFull"; INUSE(_itemObject);};
 
 if (!(_diff isEqualTo (_itemInfo select 1))) then {
     if (["ADD",(_itemInfo select 0),_diff] call MPClient_fnc_handleVitrualItem) then {
         player playMove "AinvPknlMstpSlayWrflDnon";
 
-        _this setVariable ["item",[(_itemInfo select 0),(_itemInfo select 1) - _diff],true];
+        _itemObject setVariable ["item",[(_itemInfo select 0),(_itemInfo select 1) - _diff],true];
         titleText[format [localize "STR_NOTF_Picked",_diff,_itemName],"PLAIN"];
-        INUSE(_this);
+        INUSE(_itemObject);
     } else {
-        INUSE(_this);
+        INUSE(_itemObject);
     };
 } else {
     if (["ADD",(_itemInfo select 0),(_itemInfo select 1)] call MPClient_fnc_handleVitrualItem) then {
-        deleteVehicle _this;
-        //waitUntil{isNull _this};
+        [_itemObject] call _fnc_deleteItem;
         player playMove "AinvPknlMstpSlayWrflDnon";
 
         titleText[format [localize "STR_NOTF_Picked",_diff,_itemName],"PLAIN"];
     } else {
-        INUSE(_this);
+        INUSE(_itemObject);
     };
 };
 

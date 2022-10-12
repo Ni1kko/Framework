@@ -63,10 +63,10 @@ if (ITEM_ILLEGAL(_selectedItem) isEqualTo 1 AND ([west,visiblePosition player,10
 
 private _itemRemoved = false;
 private _itemUsed = false;
+private _itemConsumed = "NONE";
 
 if (_edible > -1 OR _drinkable > -1) then 
 {
-	_itemUsed = true;
 	_itemRemoved = ["TAKE", _selectedItem, _selectedAmount] call MPClient_fnc_handleVitrualItem;
 	if _itemRemoved then 
 	{
@@ -76,11 +76,13 @@ if (_edible > -1 OR _drinkable > -1) then
 			{
 				private _sum = life_var_hunger + _edible;
 				life_var_hunger = (_sum max 5) min 100; // never below 5 or above 100
+				_itemConsumed = "FOOD";
 			};
 			case (_drinkable >= 1): 
 			{
 				private _sum = life_var_thirst + _drinkable;
 				life_var_thirst = (_sum max 5) min 100; // never below 5 or above 100
+				_itemConsumed = "DRINK";
 				//-- remove any fatiuge
 				if (CFG_MASTER(getNumber, "enable_fatigue") isEqualTo 1) then {player setFatigue 0};
 			};
@@ -88,7 +90,8 @@ if (_edible > -1 OR _drinkable > -1) then
 	};
 };
 
-switch (_selectedItem) do 
+
+switch _selectedItem do 
 {
 	//-- Items
 	case "money": {};
@@ -182,7 +185,7 @@ switch (_selectedItem) do
 	case "redgull": 
 	{
 		//-- Disable fatiuge system for few mins to simulate effects of engery juice
-		if (_itemRemoved AND CFG_MASTER(getNumber, "enable_fatigue") isEqualTo 1) then {{
+		if (_itemRemoved AND CFG_MASTER(getNumber, "enable_fatigue") isEqualTo 1) then {
 			_itemUsed = true;
 			[] spawn {
 				life_var_effectEnergyDrink = time;
@@ -233,10 +236,26 @@ if not(_itemRemoved OR _itemUsed) exitWith {
 	false
 };
 
-//-- Close display of the control that was clicked
+//-- Close display of the control that was clicked if item is usable
 if _itemUsed exitWith {
 	_ctrlParent closeDisplay 1;
 	true
+};
+
+if(_selectedAmount > 1)then{
+	switch _itemConsumed do {
+		case "FOOD": {hint format["You ate %1 %2s",_selectedAmount, _selectedItem]};
+		case "DRINK": {hint format["You drank %1 %2s",_selectedAmount, _selectedItem]};
+		case "DRUG": {hint format["You used %1 %2s",_selectedAmount, _selectedItem]};
+		case "ALCOHOL": {hint format["You drank %1 %2s",_selectedAmount, _selectedItem]};
+	};
+}else{
+	switch _itemConsumed do {
+		case "FOOD": {hint format["You ate a %1",_selectedAmount, _selectedItem]};
+		case "DRINK": {hint format["You drank a %1",_selectedAmount, _selectedItem]};
+		case "DRUG": {hint format["You used %1",_selectedAmount, _selectedItem]};
+		case "ALCOHOL": {hint format["You drank a %1",_selectedAmount, _selectedItem]};
+	};
 };
 
 //-- 

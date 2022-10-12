@@ -6,13 +6,51 @@
     Description:
     Picks up money
 */
-private "_value";
-if ((time - life_var_actionDelay) < 1.5) exitWith {hint localize "STR_NOTF_ActionDelay"; _this setVariable ["inUse",false,true];};
-if (isNull _this || {player distance _this > 3}) exitWith {_this setVariable ["inUse",false,true];};
 
-_value = ((_this getVariable "item") select 1);
+params [
+    ["_itemObject", objNull, [objNull]]
+];
+
+if ((time - life_var_actionDelay) < 1.5) exitWith {hint localize "STR_NOTF_ActionDelay"; _itemObject setVariable ["inUse",false,true];};
+if (isNull _itemObject || {player distance _itemObject > 3}) exitWith {_itemObject setVariable ["inUse",false,true];};
+
+private _value = ((_itemObject getVariable "item") select 1);
+
+private _fnc_deleteItem = {
+    params [
+        ["_object", objNull, [objNull]]
+    ];
+
+    if (isNull _object) exitWith {};
+
+    private _allvitems = virtualNamespace getVariable ["allvitems",[]];
+    private _vitemIndex = _allvitems find (netID _object);
+
+    //-- Remove the item from the virtual items array
+    if(_vitemIndex isNotEqualTo -1) then { 
+        _allvitems deleteAt _vitemIndex; 
+        virtualNamespace setvariable ["allvitems",_allvitems,true];
+    };
+
+    //-- Delete the vitrual data
+    _object setVariable ["item",nil];
+    
+    //-- Delete the object
+    deleteVehicle _object;
+     
+    //-- Return called
+    if not(canSuspend)exitWith{ 
+        isNull _object
+    };
+    
+    waitUntil{isNull _itemObject};
+    
+    //-- Return spawned
+    true
+};
+
 if (!isNil "_value") exitWith {
-    deleteVehicle _this;
+    [_itemObject] call _fnc_deleteItem;
 
     switch (true) do {
         case (_value > 20000000) : {_value = 100000;}; //VAL>20mil->100k
@@ -31,6 +69,6 @@ if (!isNil "_value") exitWith {
         } else {
             money_log = format [localize "STR_DL_ML_pickedUpMoney",profileName,(getPlayerUID player),[_value] call MPClient_fnc_numberText,[MONEY_BANK] call MPClient_fnc_numberText,[MONEY_CASH] call MPClient_fnc_numberText];
         };
-    publicVariableServer "money_log";
+        publicVariableServer "money_log";
     };
 };

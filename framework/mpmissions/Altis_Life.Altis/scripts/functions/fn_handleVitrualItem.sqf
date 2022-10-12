@@ -15,7 +15,7 @@ params [
 //-- Check valid input
 if (count _selectedItem isEqualTo 0 OR _selectedAmount isEqualTo 0) exitWith {false};
 if not(isClass(missionConfigFile >> "cfgVirtualItems" >> _selectedItem)) exitWith {false};
-if not(_mode in ["ADD","TAKE","GIVE"]) exitWith {false};
+if not(_mode in ["ADD","TAKE","GIVE","PUT","DROP"]) exitWith {false};
 
 private _itemVarName = ITEM_VARNAME(_selectedItem);
 private _itemWeight = ([_selectedItem] call MPClient_fnc_itemWeight) * _selectedAmount;
@@ -31,97 +31,170 @@ if (_mode isEqualTo "ADD") then {
 if (_selectedAmount < 1) exitWith {_return};
 
 //-- Handle muliple inventory types
-if(_inventoryType in ["House","Vehicle","Tent"])then
+if(_inventoryType isEqualTo "Player")then
 {
+    switch _mode do 
+    {
+        //-- Put item into player virtualItems
+        case "ADD": 
+        {
+            if(toLower _selectedItem in [VITEM_DRUG_MORPHINE] AND (_currentValue + 1) > 3 AND {(call life_copLevel) < 10 AND {(call life_medLevel) < 4 AND {(call life_rebLevel) < 1 AND {not(license_civ_rebel)}}}})exitWith{
+                systemChat format["You are not a skilled enough to carry this quantity of %1",ITEM_DISPLAYNAME(_selectedItem)];
+            }; 
+            
+            private _adjustment = ADD(_currentValue, _selectedAmount);
+            private _adjustmentWeight = ADD(life_var_carryWeight, _itemWeight);
+
+            if (_adjustmentWeight <= life_maxWeight) then 
+            {
+                missionNamespace setVariable [_itemVarName,_adjustment];
+                if (_adjustment > _currentValue) then {
+                    life_var_carryWeight = _adjustmentWeight;
+                    _currentValue = _adjustment;
+                    if (_selectedItem == VITEM_MISC_MONEY) then { 
+                        ["ADD","CASH",_selectedAmount] call MPClient_fnc_handleMoney;
+                    };
+                    _return = true;
+                };
+            };
+        };
+        //-- Take item from player virtualItems (gets deleted)
+        case "TAKE":
+        {
+            private _adjustment = SUB(_currentValue, _selectedAmount);
+            if (_adjustment >= 0) then 
+            {
+                missionNamespace setVariable [_itemVarName,_adjustment];
+                if (_adjustment < _currentValue) then {
+                    life_var_carryWeight = SUB(life_var_carryWeight, _itemWeight);
+                    _currentValue = _adjustment;
+                    if (_selectedItem == VITEM_MISC_MONEY) then { 
+                        ["SUB","CASH",_selectedAmount] call MPClient_fnc_handleMoney;
+                    };
+                    _return = true;
+                };
+            };
+        };
+        //-- Give item from player virtualItems to given target virtualItems
+        case "GIVE":
+        {
+            private _selectedPlayer = param [4,objNull,[objNull]];
+            private _adjustment = SUB(_currentValue, _selectedAmount);
+            if (_adjustment >= 0 AND not(isNull(_selectedPlayer)) AND {_selectedPlayer isNotEqualTo player}) then 
+            {
+                missionNamespace setVariable [_itemVarName,_adjustment];
+                if (_adjustment < _currentValue) then {
+                    life_var_carryWeight = SUB(life_var_carryWeight, _itemWeight);
+                    if (_selectedItem == VITEM_MISC_MONEY) then { 
+                        ["SUB","CASH",_selectedAmount] call MPClient_fnc_handleMoney;
+                    };
+                    [_selectedPlayer, _selectedAmount, _selectedItem,  player] remoteExecCall ["MPClient_fnc_receiveItem", owner _selectedPlayer];
+                    _currentValue = _adjustment;
+                    _return = true;
+                };
+            };
+        };
+        //-- Drop item from player virtualItems to ground
+        case "DROP":
+        { 
+            private _adjustment = SUB(_currentValue, _selectedAmount);
+            if (_adjustment >= 0) then 
+            {
+                missionNamespace setVariable [_itemVarName,_adjustment];
+                if (_adjustment < _currentValue) then {
+                    life_var_carryWeight = SUB(life_var_carryWeight, _itemWeight);
+                    _currentValue = _adjustment;
+                    
+                    if([player,_selectedItem,_selectedAmount] call MPClient_fnc_dropItem)then{
+                        _return = true;
+                    };
+                };
+            };
+        };
+    };
+}else{
     private _selectedObject = param [4,objNull,[objNull]];
     
     if not(isNull _selectedObject)then
     {
-        private _inventory = _selectedObject getVariable ["virtualInventory",[]];
+        (_selectedObject getVariable ["virtualInventory",[]]) params [
+            ["_invArray",[],[[]]],
+            ["_invWeight",0,[0]]
+        ];
+
+        ([_selectedObject] call MPClient_fnc_vehicleWeight) params [
+            ["_actualWeight",-1,[0]],
+            ["_maxWeight",0,[0]]
+        ];
+
+        //-- Dafuq happened? item added manual and weight not tracked...
+        if(_invWeight isNotEqualTo _actualWeight)then {
+            _invWeight = _actualWeight;
+        };
+
         switch _mode do
         {
-            case "ADD": {};
-            case "TAKE": {};
-            case "GIVE": {};
-        };
-    };
-}else{
-    switch _inventoryType do 
-    {
-        case "Player": 
-        { 
-            switch _mode do 
+            //-- Put item from player virtualItems to (vehicle\house\ground\tent) virtualItems
+            case "PUT": 
             {
-                case "ADD": 
+                private _arrayIndex = _invArray find _selectedItem;
+                private _selectedArray = [_invArray param [_arrayIndex,["",-1]], ["",-1]] select (_arrayIndex isEqualTo -1);
+                private _currentValue = _selectedArray param [1,0];
+                private _adjustment = SUB(_currentValue, _selectedAmount);
+                private _adjustmentWeight = ADD(_invWeight, _itemWeight);
+
+                if (_adjustmentWeight <= _maxWeight  AND _adjustment > _currentValue) then 
                 {
-                    if(toLower _selectedItem in [VITEM_DRUG_MORPHINE] AND (_currentValue + 1) > 3 AND {(call life_copLevel) < 10 AND {(call life_medLevel) < 4 AND {(call life_rebLevel) < 1 AND {not(license_civ_rebel)}}}})exitWith{
-                        systemChat format["You are not a skilled enough to carry this quantity of %1",ITEM_DISPLAYNAME(_selectedItem)];
-                    }; 
+                    missionNamespace setVariable [_itemVarName,_adjustment];
+                    if (_adjustment < _currentValue) then {
+                        life_var_carryWeight = SUB(life_var_carryWeight, _itemWeight);
+                        _invWeight = ADD(_invWeight, _itemWeight); 
+
+                        if (_selectedItem == VITEM_MISC_MONEY) then { 
+                            ["SUB","CASH",_selectedAmount] call MPClient_fnc_handleMoney;
+                        };
+
+                        if(_arrayIndex isEqualTo -1)then {
+                            // Item not found in array, add it
+                            _arrayIndex = _invArray pushBackUnique [_selectedItem,_selectedAmount];
+                        }else{
+                            // Item found in array, update amount
+                            _invArray set [_arrayIndex,[_selectedItem,_selectedAmount]];
+                        };
+
+                        _selectedObject setVariable ["virtualInventory",[_invArray,_invWeight],true];
+
+                        _return = true;
+                    };
+                };
+            };
+            //-- Take item from (vehicle\house\ground\tent) virtualItems to player virtualItems
+            case "TAKE": 
+            {
+                private _arrayIndex = _invArray find _selectedItem;
+                private _selectedArray = [_invArray param [_arrayIndex,["",-1]], ["",-1]] select (_arrayIndex isEqualTo -1);
+                private _currentValue = _selectedArray param [1,0];
+                private _adjustment = ADD(_currentValue, _selectedAmount);
+                private _adjustmentWeight = ADD(life_var_carryWeight, _itemWeight);
+
+                if (_adjustmentWeight <= life_maxWeight AND _adjustment > _currentValue AND _arrayIndex isNotEqualTo -1) then 
+                {
+                    missionNamespace setVariable [_itemVarName,_adjustment];
                     
-                    private _adjustment = ADD(_currentValue, _selectedAmount);
-                    private _adjustmentWeight = ADD(life_var_carryWeight, _itemWeight);
+                    life_var_carryWeight = _adjustmentWeight;
+                    _invWeight = SUB(_invWeight, _itemWeight); 
 
-                    if (_adjustmentWeight <= life_maxWeight) then 
-                    {
-                        missionNamespace setVariable [_itemVarName,_adjustment];
-                        if (_adjustment > _currentValue) then {
-                            life_var_carryWeight = _adjustmentWeight;
-                            _currentValue = _adjustment;
-                            if (_selectedItem == VITEM_MISC_MONEY) then { 
-                                ["ADD","CASH",_selectedAmount] call MPClient_fnc_handleMoney;
-                            };
-                            _return = true;
-                        };
+                    if (_selectedItem == VITEM_MISC_MONEY) then { 
+                        ["ADD","CASH",_selectedAmount] call MPClient_fnc_handleMoney;
                     };
-                };
-                case "TAKE":
-                {
-                    private _adjustment = SUB(_currentValue, _selectedAmount);
-                    if (_adjustment >= 0) then 
-                    {
-                        missionNamespace setVariable [_itemVarName,_adjustment];
-                        if (_adjustment < _currentValue) then {
-                            life_var_carryWeight = SUB(life_var_carryWeight, _itemWeight);
-                            _currentValue = _adjustment;
-                            if (_selectedItem == VITEM_MISC_MONEY) then { 
-                                ["SUB","CASH",_selectedAmount] call MPClient_fnc_handleMoney;
-                            };
-                            _return = true;
-                        };
-                    };
-                };
-                case "GIVE":
-                {
-                    private _selectedPlayer = param [4,objNull,[objNull]];
-                    private _adjustment = SUB(_currentValue, _selectedAmount);
-                    if (_adjustment >= 0 AND not(isNull(_selectedPlayer)) AND {_selectedPlayer isNotEqualTo player}) then 
-                    {
-                        missionNamespace setVariable [_itemVarName,_adjustment];
-                        if (_adjustment < _currentValue) then {
-                            life_var_carryWeight = SUB(life_var_carryWeight, _itemWeight);
-                            if (_selectedItem == VITEM_MISC_MONEY) then { 
-                                ["SUB","CASH",_selectedAmount] call MPClient_fnc_handleMoney;
-                            };
-                            [_selectedPlayer, _selectedAmount, _selectedItem,  player] remoteExecCall ["MPClient_fnc_receiveItem", owner _selectedPlayer];
-                            _currentValue = _adjustment;
-                            _return = true;
-                        };
-                    };
-                };
-            }; 
-        };
-        case "Ground": 
-        { 
-            private _selectedContainer = param [4,objNull,[objNull]];
+ 
+                    _invArray deleteAt _arrayIndex;
 
-            if not(isNull _selectedContainer)then
-            {
-                switch _mode do 
-                {
-                    case "ADD": {};
-                    case "TAKE": {};
-                    case "GIVE": {};
-                };
+                    _selectedObject setVariable ["virtualInventory",[_invArray,_invWeight],true];
+
+                    _return = true;
+                
+                }; 
             };
         };
     };

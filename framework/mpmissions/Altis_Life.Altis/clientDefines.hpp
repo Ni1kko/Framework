@@ -6,9 +6,9 @@
 
 //-- Basic math
 #define INFINTE 1e+011
-#define SUB(val1,val2) val1 = val1 - val2
-#define ADD(val1,val2) val1 = val1 + val2
-#define EQUAL(condition1,condition2) condition1 isEqualTo condition2
+#define SUB(val1,val2) (val1 - val2)
+#define ADD(val1,val2) (val1 + val2)
+#define EQUAL(condition1,condition2) (condition1 isEqualTo condition2)
 
 //--RemoteExec
 #define RE_SERVER 2 //Only server
@@ -63,7 +63,6 @@
 	#define ITEM_ILLEGAL(varName) M_CONFIG(getNumber,"cfgVirtualItems",varName,"illegal")
 	#define ITEM_SELLPRICE(varName) M_CONFIG(getNumber,"cfgVirtualItems",varName,"sellPrice")
 	#define ITEM_BUYPRICE(varName) M_CONFIG(getNumber,"cfgVirtualItems",varName,"buyPrice")
-	#define ITEM_NAME(varName) M_CONFIG(getText,"cfgVirtualItems",varName,"displayName")
 	#define ITEM_OBJECT(varName) M_CONFIG(getText,"cfgVirtualItems",varName,"object")
 	#define TEXT_LOCALIZE(textStr) (textStr call bis_fnc_localize)
 	

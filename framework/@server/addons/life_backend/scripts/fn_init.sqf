@@ -33,18 +33,22 @@ life_var_entityRespawnedEVH =   addMissionEventHandler ["EntityRespawned",      
 [8,true,12] call MPServerFSM_fnc_timeModule;
 cleanupFSM = [] call MPServerFSM_fnc_cleanup;
 
+life_var_animalTypesRestricted append (getArray(missionConfigFile >> "cfgMaster" >> "animaltypes_fish") select {not(_x in life_var_animalTypesRestricted)});
+life_var_animalTypesRestricted append (getArray(missionConfigFile >> "cfgMaster" >> "animaltypes_hunting") select {not(_x in life_var_animalTypesRestricted)});
+life_var_animalTypesRestricted append ((getArray(configFile >> "CfgEnviroment" >> "wildLife" >> "animaltypes")#0) select {not(_x in life_var_animalTypesRestricted)});
+
 private _severSchedulerStartUpQueue = [ 
 	//--- Every 5 seconds
  	[5 , 	  "MPServer_fnc_rcon_queuedMessages"],
 	//--- Every 10 seconds
 	[10, 	  "MPServer_fnc_initWildlife"],
 	[10, 	  "MPServer_fnc_cleanUpWildlife"],
-	//--- Every 3 minutes
-	[3 * 60,  "MPServer_fnc_cleanup", ["items"]],
 	//--- Every 5 minutes
-	[5 * 60,  "MPServer_fnc_cleanup", ["weapons"]],
+	[3 * 60,  "MPServer_fnc_cleanup", ["items"]],
 	//--- Every 10 minutes
 	[10 * 60, "MPServer_fnc_updateBanks", ["vault"]],
+	//--- Every 15 minutes
+	[15 * 60,  "MPServer_fnc_cleanup", ["weapons"]],
 	//--- Every 20 minutes
 	[20 * 60, "MPServer_fnc_updateBanks", ["bank"]],
 	//--- Every 30 minutes

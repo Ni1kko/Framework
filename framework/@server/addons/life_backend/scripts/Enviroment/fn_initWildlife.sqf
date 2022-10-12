@@ -6,7 +6,7 @@
 */
 
 private _maxDistance = param [0, 75]; // Max distance from the radius of marker to delete spawned animals
-private _wildLifeArray = getArray(configFile >> "CfgEnviroment" >> "wildLife");
+private _wildLifeArray = getArray(configFile >> "CfgEnviroment" >> "wildLife" >> "animaltypes");
 
 if(count _wildLifeArray isEqualTo 0)exitWith{false};
 
@@ -38,6 +38,6 @@ if(_maxDistance < 5) then {
     private _animal = _x;
     if(typeName _animal isNotEqualTo "OBJECT")then{_animal = agent _animal};
     if(isNull _animal) then {life_var_spawndAnimals deleteAt _forEachIndex};
-} forEach life_var_spawndAnimals
+} forEach life_var_spawndAnimals;
 
 true

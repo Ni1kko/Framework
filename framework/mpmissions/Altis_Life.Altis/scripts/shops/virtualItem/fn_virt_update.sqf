@@ -7,69 +7,88 @@
 
 disableSerialization;
 
-//Setup control vars.
+//-- Make sure the entry exists..
+if not(isClass(missionConfigFile >> "cfgVirtualShops" >> life_shop_type)) exitWith {
+    hint localize "STR_NOTF_ConfigDoesNotExist";
+    closeDialog 0; 
+    false
+};
+
+//-- Setup control vars.
 private _item_list = CONTROL(2400,2401);
 private _gear_list = CONTROL(2400,2402);
+private _title = CONTROL(2400,2403);
 
-//Purge list
+//-- Purge lists
 lbClear _item_list;
 lbClear _gear_list;
 
-if (!isClass(missionConfigFile >> "cfgVirtualShops" >> life_shop_type)) exitWith {closeDialog 0; hint localize "STR_NOTF_ConfigDoesNotExist";}; //Make sure the entry exists..
-ctrlSetText[2403,localize (M_CONFIG(getText,"cfgVirtualShops",life_shop_type,"name"))];
+//-- Setup shop title
+_title ctrlSetText (localize (M_CONFIG(getText,"cfgVirtualShops",life_shop_type,"name")));
 
+//-- 
 for "_i" from 1 to 2 do {
     {
-        private _displayName = M_CONFIG(getText,"cfgVirtualItems",_x,"displayName");
-        private _buyprice = M_CONFIG(getNumber,"cfgVirtualItems",_x,"buyPrice");
-        private _sellprice = M_CONFIG(getNumber,"cfgVirtualItems",_x,"sellPrice");
-        private _quantity = -1;
-
+        private _marketData = life_var_marketConfig getOrDefault [_x,[]];
+        private _displayName = ITEM_DISPLAYNAME(_x);
+        private _buyprice = _marketData getOrDefault ["buyPrice",ITEM_SELLPRICE(_x)];
+        private _sellprice = _marketData getOrDefault ["sellPrice",ITEM_BUYPRICE(_x)];
+        private _illegal =_marketData getOrDefault ["illegal",ITEM_ILLEGAL(_x)];
+        private _stock = _marketData getOrDefault ["stock",-1];
+ 
         switch _i do {
             case 1:
             {   //--- SHOP GEAR
-                _quantity = 99;//temp (0 = no stock)
-                if (_buyprice isNotEqualTo -1) then {
+                if (_stock > 0 AND _buyprice >= 0) then {
 
-                    private _itemName = format ["%1 - ($%2)",TEXT_LOCALIZE(_displayName),[_buyprice] call MPClient_fnc_numberText];
-                       
-                    if(_quantity < 1)then{
-                        _itemName = format ["%1 - (OUT OF STOCK)",TEXT_LOCALIZE(_displayName)];
-                        _buyprice = -1;
+                    private _itemName = format (if (_buyprice isEqualTo 0) then {
+                        ["%1 - (FREE)",_displayName]
                     }else{
-                        _itemName = format (if (_buyprice isEqualTo 0) then {
-                            ["%1 - (FREE)",TEXT_LOCALIZE(_displayName)]
-                        }else{
-                            ["%1 - ($%2)",TEXT_LOCALIZE(_displayName),[_buyprice] call MPClient_fnc_numberText]
-                        });
-                    };
+                        ["%1 - ($%2)",_displayName,[_buyprice] call MPClient_fnc_numberText]
+                    });
 
                     _item_list lbAdd _itemName;
+                       
+                    if(_stock < 1)then{
+                        _item_list lbSetTextRight format["(OUT OF STOCK)",_stock];
+                        _item_list lbSetColorRight [1,0,0,1];
+                        _buyprice = -1;//STOP Puchasing item
+                    }else{
+                        _item_list lbSetTextRight format["(%1 IN STOCK)",_stock];
+                        _item_list lbSetColorRight [0,1,0,1];
+                    };
+
                     _item_list lbSetData [(lbSize _item_list)-1,_x];
                     _item_list lbSetValue [(lbSize _item_list)-1,_buyprice];
-                    _icon = M_CONFIG(getText,"cfgVirtualItems",_x,"icon");
+                    _icon = ITEM_ICON(_x);
                     if (_icon isNotEqualTo "") then {
                         _item_list lbSetPicture [(lbSize _item_list)-1,_icon];
                     };
-                };
-                
+                }; 
             };
             case 2: 
             {   //--- PLAYER GEAR
-                _quantity = ITEM_VALUE(_x);
-                if (_quantity > 0) then {
-                    _gear_list lbAdd format (if(_sellprice isNotEqualTo -1)then{ 
-                        ["%2 - (x%1)",_quantity,TEXT_LOCALIZE(_displayName)];
+                _stock = ITEM_VALUE(_x);
+                if (_stock > 0) then {
+                    _gear_list lbAdd format ["%1",_displayName];
+
+                    if(_sellprice isEqualTo -1)then{ 
+                        _item_list lbSetTextRight format["[Non Sellable] - (%1 STOCK)",_stock];
+                        _item_list lbSetColorRight [1,0,0,1];
                     }else{
-                        ["%2 - (x%1) [Non Sellable]",_quantity,TEXT_LOCALIZE(_displayName)]; 
-                    });
+                        _item_list lbSetTextRight format["(%1 STOCK)",_stock];
+                        _item_list lbSetColorRight [0,1,0,1];
+                    };
+
                     _gear_list lbSetData [(lbSize _gear_list)-1,_x]; 
-                    _icon = M_CONFIG(getText,"cfgVirtualItems",_x,"icon");
+                    _icon = ITEM_ICON(_x);
                     if (_icon isNotEqualTo "") then {
                         _gear_list lbSetPicture [(lbSize _gear_list)-1,_icon];
                     };
                 };
             };
         };
-    } forEach M_CONFIG(getArray,"cfgVirtualShops",life_shop_type,"items");
+    } forEach (keys life_var_marketConfig);
 };
+
+true

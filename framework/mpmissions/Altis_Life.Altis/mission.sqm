@@ -25814,7 +25814,7 @@ class Mission
 						skill=0.60000002;
 						rank="COLONEL";
 						init="this enableSimulation false; this allowDamage false; this hideObject true;";
-						name="master_group";
+						name="mastergroup";
 						description="Master Group for NPC's";
 						disableSimulation=1;
 					};
@@ -51913,7 +51913,8 @@ class Mission
 			};
 			side="Empty";
 			class Attributes
-			{
+			{ 
+				name="serverProtectionZone";
 			};
 			id=2189;
 			type="ProtectionZone_F";
@@ -51931,7 +51932,6 @@ class Mission
 			flags=4;
 			class Attributes
 			{
-				name="bank_obj";
 				dynamicSimulation=1;
 			};
 			id=2190;

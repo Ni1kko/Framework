@@ -82,6 +82,8 @@ if (({
 };
 
 //-- exteneted inventory
-[] spawn MPClient_fnc_inventoryCreateMenu;
+if not(isNil "virtualNamespace") then {
+   [] spawn MPClient_fnc_inventoryCreateMenu;
+};
 
 false

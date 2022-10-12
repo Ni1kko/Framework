@@ -8,7 +8,7 @@
 params [
     ["_selectedPlayer", objNull, [objNull]],
     ["_selectedItem", "", [""]],
-    ["_selectedAmount", 0, [0]],
+    ["_selectedAmount", 0, ["",0]],
     ["_senderObject", objNull, [objNull]],
     ["_selectedType", "", [""]]
 ];

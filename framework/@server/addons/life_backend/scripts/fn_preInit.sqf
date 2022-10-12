@@ -74,17 +74,72 @@ private _serverVariables = [
 ];
 //-- Bank Object vars
 private _bankVariables = [
-	["TrustedTraders",[], true]
+    
 ];
 
-//-- Setup Restricted animals
-{{life_var_animalTypesRestricted pushBackUnique toLower _x}forEach (getArray _x)}ForEach [
-    missionConfigFile >> "cfgMaster" >> "animaltypes_fish",
-    missionConfigFile >> "cfgMaster" >> "animaltypes_hunting",
-    configFile >> "CfgEnviroment" >> "wildLife"
+//-- setup sides
+serverSide = createcenter sidelogic;
+clientSide = sideEmpty;
+AISide = createcenter resistance;
+wildLifeSide = sideAmbientLife;
+
+//-- setup groups
+serverGroup = creategroup [serverSide,false];
+clientGroup = creategroup [clientSide,false];
+bankGroup = creategroup [serverSide,false];
+AIGroup = creategroup [AISide,false];
+wildLifeGroup = creategroup [wildLifeSide,false];
+
+//-- Setup GroupIDs
+serverGroup setgroupid ["Server", "GroupColor2"];
+clientGroup setgroupid ["Client", "GroupColor2"];
+wildLifeGroup setgroupid ["wildLife", "GroupColor3"];
+AIGroup setgroupid ["Traders", "GroupColor3"];
+bankGroup setgroupid ["Bank", "GroupColor4"];
+
+//-- setup logic
+serverLogicNameSpace =  serverGroup createunit ["Logic",[0,0,0],[],0,"none"];
+clientLogicNameSpace =  clientGroup createunit ["Logic",[1,1,1],[],0,"none"];
+bankNameSpace =         bankGroup createunit ["Logic",[2,2,2],[],0,"none"];
+AINameSpace =           AIGroup createunit ["Logic",[3,3,3],[],0,"none"];
+wildlifeNameSpace =     wildLifeGroup createunit ["Logic",[3,3,3],[],0,"none"];
+virtualNamespace =      serverGroup createunit ["Logic",[4,4,4],[],0,"none"];
+
+//-- Attach groups to protection zone
+serverLogicNameSpace attachTo[serverProtectionZone,[0,0,0]];
+clientLogicNameSpace attachTo[serverLogicNameSpace,[0,0,0]];
+bankNameSpace attachTo[serverLogicNameSpace,[0,0,0]];
+AINameSpace attachTo[serverLogicNameSpace,[0,0,0]];
+wildlifeNameSpace attachTo[serverLogicNameSpace,[0,0,0]];
+virtualNamespace attachTo[serverLogicNameSpace,[0,0,0]];
+
+//-- Transfer NPC group
+private _masterGroup = group(missionNamespace getVariable ["mastergroup",objNull]);
+if not(isNull _masterGroup) then {
+    (units _masterGroup) joinSilent AIGroup;
+    deleteGroup _masterGroup;
+    mastergroup = objNull;
+    publicVariable "mastergroup";
+};
+
+//-- Make all sides netural against NPCs and NPCs netural against all sides
+{
+    _x setFriend [AISide,1];
+    AISide setFriend [_x,1];
+}forEach [
+    civilian,
+    independent,
+    west,
+    east
 ];
 
-private _bankObject = missionNamespace getVariable ["bank_obj",objNull];
+//-- Save NPCs that were created/loaded at game start
+serverLogicNameSpace setvariable ["TrustedTraders",units serverGroup, true];
+
+//-- Setup vitual inventory
+virtualNamespace setvariable ["allvitems",[],true];
+virtualNamespace setvariable ["maxspace",1000,true];
+
 private _variablesFlagged = [/*DON'T EDIT*/];
 
 //-- init Variables
@@ -132,6 +187,7 @@ private _variablesFlagged = [/*DON'T EDIT*/];
 
                 //-- Set variable
                 _namespace setVariable _data;
+                serverLogicNameSpace setvariable [_varName,_x param [1, nil],true];
             };
         }forEach _varlist;
     };
@@ -143,7 +199,7 @@ private _variablesFlagged = [/*DON'T EDIT*/];
     [parsingNamespace,_parserVariables],
     [localNamespace,_localVariables],
     [serverNamespace,_serverVariables],
-	[_bankObject, _bankVariables]
+	[bankNameSpace, _bankVariables]
 ];
 
 //-- flagged variable found. TODO: handle this through anticheat on server once detected
@@ -154,6 +210,13 @@ if(count _variablesFlagged > 0)exitWith{
 	life_var_endMissionClientJIP = ["Antihack"] remoteExec ["BIS_fnc_endMissionServer", 2, true];
 	false
 };
+
+//-- Send clients from setting up client to waiting for server
+waitUntil {not(isNil "life_var_serverLoaded")};
+publicVariable "life_var_serverLoaded";
+
+//-- setup logic across all servers, clients 
+{publicVariable _x} forEach ["serverLogicNameSpace","clientLogicNameSpace","bankNameSpace","wildlifeNameSpace","virtualNamespace"];
 
 //-- save proflie vars
 if(count _profileVariables > 0)then{

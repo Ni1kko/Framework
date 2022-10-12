@@ -15,12 +15,19 @@ private _nearPlayerList = _ctrlParent getVariable ["RscDisplayInventory_NearPlay
 private _itemListBox = _ctrlParent displayCtrl 77706;
 private _amountEditbox = _ctrlParent displayCtrl 77709;
 private _playerListCombo = _ctrlParent displayCtrl 77710;
+private _pageCombo = _ctrlParent displayCtrl 77712;
 private _selectedAmountText = ctrlText _amountEditbox;
 private _selectedItemIndex = lbCurSel _itemListBox;
+private _selectedPageIndex = lbCurSel _pageCombo;
 
 if(count _selectedAmountText isEqualTo 0 OR _selectedItemIndex < 0)exitWith{
 	hint "Please select an item, player and amount";
 	_ctrlParent closeDisplay 1;
+	false
+};
+
+if(_selectedPageIndex < 0 OR _selectedPageIndex > ((lbSize _pageCombo)-1))exitWith{
+	//hint "Error: invalid page index";
 	false
 };
 
@@ -40,7 +47,8 @@ if (not([_selectedAmountText] call MPServer_fnc_isNumber)) exitWith {
 
 private _selectedAmount = parseNumber _selectedAmountText; 
 private _selectedItem = _itemListBox lbData _selectedItemIndex;
- 
+private _selectedPage = _pageCombo lbdata _selectedPageIndex;
+
 
 //-- Item is string empty
 if(count _selectedItem isEqualTo 0)exitWith{
@@ -70,8 +78,8 @@ if not(isNull objectParent player) exitWith {
 
 private _selectedItemName = ITEM_DISPLAYNAME(_selectedItem);
 
-if not([player,_selectedItem,_selectedAmount] call MPClient_fnc_dropItem) exitWith {
-    hint format["You do not have enough %1 to drop",toLower _selectedItemName];
+if not(["DROP",_selectedItem, _selectedAmount, _selectedPage] call MPClient_fnc_handleVitrualItem) exitWith {
+   	hint format["You do not have enough %1 to drop",toLower _selectedItemName];
 	false
 };
 

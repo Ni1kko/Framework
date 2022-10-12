@@ -24,8 +24,6 @@ private _lifeConfig = missionConfigFile >> "cfgMaster";
     ["_addMax",0]
 ];
 
-private _masterGroup = missionNamespace getVariable ["master_group",objNull];
-private _bankObject = missionNamespace getVariable ["bank_obj",objNull];
 private _vaultObject = missionNamespace getVariable ["fed_bank",objNull];
 private _vaultHouse = [[["Altis", "Land_Research_house_V1_F"], ["Tanoa", "Land_Medevac_house_V1_F"]]] call MPServer_fnc_terrainSort;
 private _pos = [[["Altis", [16019.5,16952.9,0]], ["Tanoa", [11074.2,11501.5,0.00137329]]]] call MPServer_fnc_terrainSort;
@@ -40,8 +38,6 @@ private _allATMs = [
 ];
 
 //-- Setup banks
-_bankObject setvariable ["TrustedTraders",_masterGroup, true];
-_masterGroup attachTo[_bankObject,[0,0,0]];
 {
 	private _name = _x select 0;
 	private _pos = _x select 1;
