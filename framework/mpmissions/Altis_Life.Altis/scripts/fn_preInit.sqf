@@ -351,13 +351,13 @@ private _functionGroups = [/*DON'T EDIT*/];
 
             private _cfgRemoteExec = [ConfigFile >> "CfgRemoteExec",missionConfigFile >> "CfgRemoteExec"] select (isclass(missionConfigFile >> "CfgRemoteExec" >> "Functions" >> _functionName));
     
-            if(isclass(_cfgRemoteExec "Functions" >> _functionName))then{
+            if(isclass(_cfgRemoteExec >> "Functions" >> _functionName))then{
                 _reWhiteListed pushBackUnique _functionName;
-                if(getNumber(_cfgRemoteExec "Functions" >> _functionName >> "jip") isEqualTo 1)then{
+                if(getNumber(_cfgRemoteExec >> "Functions" >> _functionName >> "jip") isEqualTo 1)then{
                     _jipWhiteListed pushBackUnique _functionName;   
                 };
             }else{
-                if(getNumber(missionConfigFile >> "CfgRemoteExec" >> "Functions" >> "mode") >= 2)then{
+                if(getNumber(_cfgRemoteExec >> "Functions" >> "mode") >= 2)then{
                     _reWhiteListed pushBackUnique _functionName;
                     _jipWhiteListed pushBackUnique _functionName;   
                     //[format["Warning Function (%1) can be RemoteExecuted, Major Security Risk!",_functionName],false,true] call MPClient_fnc_log;
