@@ -54,26 +54,30 @@ _ctrlIDClist pushBackUnique _ctrlIDC;
             _control ctrlRemoveAllEventHandlers "LBSelChanged";
             lbClear _control;
             private _nearByPlayers = (playableUnits apply {if (alive _x AND player distance _x < 10 AND _x isNotEqualTo player) then {_x}else{""}}) - [""];
+
+            _ctrlParent setVariable ["RscDisplayInventory_NearPlayerList", _nearByPlayers];
+
             if(count _nearByPlayers > 0)then{
                 {
                     _control lbAdd format ["[%2] %1", _x getVariable ["realname",name _x], [side _x,true] call MPServer_fnc_util_getSideString];
                     _control lbSetData [_forEachIndex, str(_x)];
                 } forEach _nearByPlayers;
+                _control ctrlAddEventHandler ["LBSelChanged", "_this call MPClient_fnc_inventoryWalletPlayersComboSelChanged"];
+                _control lbSetCurSel 0;
             }else{
                 _control lbAdd "No players nearby";
                 _control ctrlEnable false;
+                _control lbSetCurSel 0;
+                _control ctrlAddEventHandler ["LBSelChanged", "_this call MPClient_fnc_inventoryWalletPlayersComboSelChanged"];
             };
-            _ctrlParent setVariable ["RscDisplayInventory_NearPlayerList", _nearByPlayers];
-            _control ctrlAddEventHandler ["LBSelChanged", "_this call MPClient_fnc_inventoryWalletPlayersComboSelChanged"];
-            _control lbSetCurSel 0;
         }else{
             //-- Menu combo
             if (_idc isEqualTo INVENTORY_IDC_COMBOPAGE) then {
                 _control ctrlRemoveAllEventHandlers "LBSelChanged";
                 lbClear _control;
                 {_control lbAdd _x} forEach _pages;
-                _control lbSetCurSel _selectedPage;//selected page before adding EVH
                 _control ctrlAddEventHandler ["LBSelChanged", "_this call MPClient_fnc_inventoryWalletComboSelChanged"];
+                _control lbSetCurSel _selectedPage;
             }else{
                 if (_idc isEqualTo INVENTORY_IDC_TITLE) then {
                     _control ctrlSetText "Wallet";

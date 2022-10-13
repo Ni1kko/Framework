@@ -68,7 +68,7 @@ if (_action) then {
     if (player getVariable ["restrained",false]) exitWith {life_var_isBusy = false;};
     if (!isNil "_badDistance") exitWith {titleText[localize "STR_ISTR_Lock_TooFar","PLAIN"]; life_var_isBusy = false;};
     if (life_var_interrupted) exitWith {life_var_interrupted = false; titleText[localize "STR_NOTF_ActionCancel","PLAIN"]; life_var_isBusy = false;};
-    if not(["TAKE","fuelEmpty",1] call MPClient_fnc_handleVitrualItem) exitWith {life_var_isBusy = false;};
+    if not(["USE","fuelEmpty",1] call MPClient_fnc_handleVitrualItem) exitWith {life_var_isBusy = false;};
     life_var_isBusy = false;
     ["SUB","CASH",_fuelCost] call MPClient_fnc_handleMoney;
     ["ADD","fuelFull",1] call MPClient_fnc_handleVitrualItem;

@@ -84,8 +84,8 @@ if not(typeOf _targetObject in _allowedTypes)exitWith {
 	false
 };
 
-if not(["PUT", _selectedItem, _selectedAmount] call MPClient_fnc_handleVitrualItem) exitWith {
-    hint format["You do not have enough %1 to move",toLower _selectedItemName];
+if not(["PUT", _selectedItem, _selectedAmount,_targetObject] call MPClient_fnc_handleVitrualItem) exitWith {
+    hint "Error: Failed to store item!";
 	false
 };
 

@@ -86,8 +86,8 @@ _ctrlParent setVariable ["RscDisplayInventory_nearVitems", _nearVitems];
             _control ctrlRemoveAllEventHandlers "LBSelChanged";
             lbClear _control;
             {_control lbAdd _x} forEach _pages;
-            _control lbSetCurSel _selectedPage;//select page before we add the event handler
             _control ctrlAddEventHandler ["LBSelChanged", "_this call MPClient_fnc_inventoryVirtualComboSelChanged"];
+            _control lbSetCurSel _selectedPage;
         }else{
             //-- Menu Title
             if (_idc isEqualTo INVENTORY_IDC_TITLE) then
@@ -102,21 +102,24 @@ _ctrlParent setVariable ["RscDisplayInventory_nearVitems", _nearVitems];
                     //-- Near players combo
                     if (_idc isEqualTo INVENTORY_IDC_COMBOPLAYERS) then
                     {
+                        _control ctrlRemoveAllEventHandlers "LBSelChanged"; 
                         lbClear _control;
                         private _nearByPlayers = (playableUnits apply {if (alive _x AND player distance _x < 10 AND _x isNotEqualTo player) then {_x}else{""}}) - [""];
+                        
+                        _ctrlParent setVariable ["RscDisplayInventory_NearPlayerList", _nearByPlayers];
+
                         if(count _nearByPlayers > 0)then{
                             {
                                 _control lbAdd format ["[%2] %1", _x getVariable ["realname",name _x], [side _x,true] call MPServer_fnc_util_getSideString];
                                 _control lbSetData [_forEachIndex, str(_x)];
                             } forEach _nearByPlayers;
+                            _control ctrlAddEventHandler ["LBSelChanged", "_this call MPClient_fnc_inventoryVirtualPlayersComboSelChanged"]; 
+                            _control lbSetCurSel 0;
                         }else{
                             _control lbAdd "No players nearby";
                             _control ctrlEnable false;
+                            _control lbSetCurSel 0;
                         };
-                        _ctrlParent setVariable ["RscDisplayInventory_NearPlayerList", _nearByPlayers];
-                        _control lbSetCurSel 0;
-                        _control ctrlRemoveAllEventHandlers "LBSelChanged";
-                        _control ctrlAddEventHandler ["LBSelChanged", "_this call MPClient_fnc_inventoryVirtualPlayersComboSelChanged"]; 
                     }else{
                         if (_currentPage in ["Vehicle","House","Tent"])then
                         {
@@ -172,7 +175,7 @@ _ctrlParent setVariable ["RscDisplayInventory_nearVitems", _nearVitems];
                                 };
                                 case INVENTORY_IDC_DROP: 
                                 {
-                                    private _text = "Take";
+                                    private _text = "USE";
                                     _control ctrlSetStructuredText parseText format["<t align='center'>%1</t>",_text];
                                     _control ctrlSetToolTip format["%1 selected item from vehicle", toLower _text];
                                     _control ctrlRemoveAllEventHandlers "MouseButtonUp";
@@ -314,7 +317,7 @@ _ctrlParent setVariable ["RscDisplayInventory_nearVitems", _nearVitems];
                                         //-- Take (droped item from ground)
                                         case INVENTORY_IDC_DROP: 
                                         {
-                                            private _text = "Take";
+                                            private _text = "USE";
                                             _control ctrlSetStructuredText parseText format["<t align='center'>%1</t>",_text];
                                             _control ctrlSetToolTip format["%1 selected item from ground", toLower _text];
                                             _control ctrlRemoveAllEventHandlers "MouseButtonUp";

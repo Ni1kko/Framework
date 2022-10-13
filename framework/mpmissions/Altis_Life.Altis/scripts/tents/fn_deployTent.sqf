@@ -12,7 +12,7 @@ private _result = ["Are you sure you wish too deploy tent here?", "Deploy Tent",
 
 if (_result) then {
 	//-- Remove tentkit from player vinventory
-	["TAKE","tentKit",1] call MPClient_fnc_handleVitrualItem;
+	["USE","tentKit",1] call MPClient_fnc_handleVitrualItem;
 	//--
 	[player,_type,_position] remoteExec ["MPServer_fnc_tents_buildRequest",2];
 } else {

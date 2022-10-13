@@ -80,7 +80,7 @@ if (count _uniforms > 0) then {
                 if(_amount isEqualTo 0)then{_amount = 1};
                 if(count _condition isEqualTo 0)then{_condition = "true"};
                 if([_condition] call MPClient_fnc_checkConditions)then{
-                    ["ADD",_item,_amount] call MPClient_fnc_handleVitrualItem;
+                    ["ADD","_item",_amount] call MPClient_fnc_handleVitrualItem;
                 };
             };
         }forEach _array;

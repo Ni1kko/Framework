@@ -21,7 +21,7 @@ _robber = false;
     _val = ITEM_VALUE(_var);
     if (_val > 0) then {
         _inv pushBack [_var,_val];
-        ["TAKE",_var,_val] call MPClient_fnc_handleVitrualItem;
+        ["USE",_var,_val] call MPClient_fnc_handleVitrualItem;
     };
 } forEach ("getNumber(_x >> 'illegal') isEqualTo 1" configClasses (missionConfigFile >> "cfgVirtualItems"));
 

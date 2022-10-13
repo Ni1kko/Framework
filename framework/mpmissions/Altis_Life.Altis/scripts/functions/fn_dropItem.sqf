@@ -36,23 +36,24 @@ if (_amountOwned > 0 AND _amountOwned >= _selectedAmount) then
 	private _allvitems = virtualNamespace getVariable ["allvitems",[]];
 	private _vitemIndex = _allvitems find (netID _object);
 	
-	if(["TAKE",_selectedItem,_selectedAmount] call MPClient_fnc_handleVitrualItem)then
+	if(["USE",_selectedItem,_selectedAmount] call MPClient_fnc_handleVitrualItem)then
 	{
+		//["DROP"] remoteExecCall ["MPServer_fnc_handleVirtualItemRequest",2];// TodDo create server function to handle this serverside
 		//-- Create object
-		if(_vitemIndex isEqualTo -1 AND count _itemClass > 0)then{
-			//["DROP"] remoteExecCall ["MPServer_fnc_handleVirtualItemRequest",2];// TodDo create server function to handle this serverside
-			_allvitems pushBackUnique netID(_itemClass createVehicle _itemPos);
-			_itemObject enableDynamicSimulation true;
-			_itemObject enableSimulationGlobal true;
+		if(_vitemIndex isEqualTo -1 AND count _itemClass > 0)then{ 
+			_vitemIndex = _allvitems pushBackUnique netID(_itemClass createVehicle _itemPos);
 		};
 		
 		//-- Get object
 		private _itemObject = objectFromNetId(_allvitems param [_vitemIndex,""]);
-		
+
 		//-- do we have an object?
 		if not(isNull _itemObject)then
 		{ 
-			[_itemObject] remoteExecCall ["MPClient_fnc_simDisable",RE_GLOBAL];
+			if (SimulationEnabled _itemObject)then{
+				[_itemObject] remoteExecCall ["MPClient_fnc_simDisable",RE_GLOBAL];
+			};
+	
 			_itemObject setPos _itemPos;
 
 			(_itemObject getVariable ["item",[]]) params [
@@ -60,7 +61,7 @@ if (_amountOwned > 0 AND _amountOwned >= _selectedAmount) then
 				["_amount",0]
 			];
 			
-			if(_item isEqualTo _selectedItem)then{
+			if(toLower _item isEqualTo toLower _selectedItem)then{
 				//-- Update it 
 				_itemObject setVariable ["item",[_selectedItem,(_amount + _selectedAmount)],true];
 			}else{
@@ -68,9 +69,7 @@ if (_amountOwned > 0 AND _amountOwned >= _selectedAmount) then
 				_itemObject setVariable ["item",[_selectedItem,_selectedAmount],true];
 			};
 			
-			//-- Add object to array
-			private _allvitems = virtualNamespace getVariable ["allvitems",[]];
-			_allvitems pushBackUnique netID _itemObject;
+			//-- Add object to array 
 			virtualNamespace setvariable ["allvitems",_allvitems,true];
 		};
 	};

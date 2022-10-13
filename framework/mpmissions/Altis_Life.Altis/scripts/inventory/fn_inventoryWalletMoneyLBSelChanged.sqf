@@ -13,8 +13,6 @@ params [
 	["_selectedIndexs", [], [[]]]
 ];
 
-hint format ["fn_inventoryWalletMoneyLBSelChanged\n%1", str _this];
-
 private _ctrlParent = ctrlParent _control;
 private _dropButton = _ctrlParent displayCtrl INVENTORY_IDC_DROP;
 private _amountEditbox = _ctrlParent displayCtrl INVENTORY_IDC_EDIT;

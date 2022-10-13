@@ -20,7 +20,7 @@ life_var_actionDelay = time;
 
 _price = (_price * _amount);
 _name = M_CONFIG(getText,"cfgVirtualItems",_type,"displayName");
-if (["TAKE",_type,_amount] call MPClient_fnc_handleVitrualItem) then {
+if (["USE",_type,_amount] call MPClient_fnc_handleVitrualItem) then {
     hint format [localize "STR_Shop_Virt_SellItem",_amount,TEXT_LOCALIZE(_name),[_price] call MPClient_fnc_numberText];
     ["ADD","CASH",_price] call MPClient_fnc_handleMoney;
     [] call MPClient_fnc_virt_update;

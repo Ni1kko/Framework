@@ -22,9 +22,9 @@ _container allowDamage false;
 _container enableRopeAttach false;
 
 if ((typeOf _container) == "B_supplyCrate_F") then {
-    ["TAKE","storagebig",1] call MPClient_fnc_handleVitrualItem;
+    ["USE","storagebig",1] call MPClient_fnc_handleVitrualItem;
 } else {
-    ["TAKE","storagesmall",1] call MPClient_fnc_handleVitrualItem;
+    ["USE","storagesmall",1] call MPClient_fnc_handleVitrualItem;
 };
 
 [_container, _isFloating] call MPClient_fnc_placeContainer;

@@ -13,8 +13,6 @@ params [
 	["_selectedIndexs", [], [[]]]
 ];
 
-hint format ["fn_inventoryWalletComboSelChanged\n%1", str _this];
-
 if(isNull _ctrlParent OR isNull _control) exitWith {
 	false
 };

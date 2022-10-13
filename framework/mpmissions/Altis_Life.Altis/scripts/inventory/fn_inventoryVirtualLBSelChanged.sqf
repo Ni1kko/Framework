@@ -13,8 +13,6 @@ params [
 	["_selectedIndexs", [], [[]]]
 ];
 
-hint format ["fn_inventoryVirtualLBSelChanged\n%1", str _this];
-
 private _ctrlParent = ctrlParent _control;
 private _useButton = _ctrlParent displayCtrl INVENTORY_IDC_USE;
 private _dropButton = _ctrlParent displayCtrl INVENTORY_IDC_DROP;

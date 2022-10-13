@@ -43,7 +43,7 @@ if (_ctrl == "money") then {
 } else {
     if (((_totalWeight select 1) + _itemWeight) > (_totalWeight select 0)) exitWith {hint localize "STR_NOTF_VehicleFullOrInsufCap";};
 
-    if not(["TAKE",_ctrl,_num] call MPClient_fnc_handleVitrualItem) exitWith {hint localize "STR_CouldNotRemoveItemsToPutInVeh";};
+    if not(["USE",_ctrl,_num] call MPClient_fnc_handleVitrualItem) exitWith {hint localize "STR_CouldNotRemoveItemsToPutInVeh";};
     _index = [_ctrl,_inv] call MPServer_fnc_index;
     if (_index isEqualTo -1) then {
         _inv pushBack [_ctrl,_num];

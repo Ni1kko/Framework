@@ -6,7 +6,7 @@
 */
 
 params [
-    ["_mode","TAKE",[""]],
+    ["_mode","USE",[""]],
     ["_selectedItem","",[""]],
     ["_selectedAmount",0,[0]],
     ["_inventoryType","Player",[""]]
@@ -15,7 +15,7 @@ params [
 //-- Check valid input
 if (count _selectedItem isEqualTo 0 OR _selectedAmount isEqualTo 0) exitWith {false};
 if not(isClass(missionConfigFile >> "cfgVirtualItems" >> _selectedItem)) exitWith {false};
-if not(_mode in ["ADD","TAKE","GIVE","PUT","DROP"]) exitWith {false};
+if not(_mode in ["ADD","USE","GIVE","PUT","DROP"]) exitWith {false};
 
 private _itemVarName = ITEM_VARNAME(_selectedItem);
 private _itemWeight = ([_selectedItem] call MPClient_fnc_itemWeight) * _selectedAmount;
@@ -35,7 +35,7 @@ if(_inventoryType isEqualTo "Player")then
 {
     switch _mode do 
     {
-        //-- Put item into player virtualItems
+        //-- Put item into (player) virtualItems
         case "ADD": 
         {
             if(toLower _selectedItem in [VITEM_DRUG_MORPHINE] AND (_currentValue + 1) > 3 AND {(call life_copLevel) < 10 AND {(call life_medLevel) < 4 AND {(call life_rebLevel) < 1 AND {not(license_civ_rebel)}}}})exitWith{
@@ -58,8 +58,8 @@ if(_inventoryType isEqualTo "Player")then
                 };
             };
         };
-        //-- Take item from player virtualItems (gets deleted)
-        case "TAKE":
+        //-- Take item from (player) virtualItems (gets deleted)
+        case "USE":
         {
             private _adjustment = SUB(_currentValue, _selectedAmount);
             if (_adjustment >= 0) then 
@@ -75,7 +75,7 @@ if(_inventoryType isEqualTo "Player")then
                 };
             };
         };
-        //-- Give item from player virtualItems to given target virtualItems
+        //-- Give item from (player) virtualItems to (x target) virtualItems
         case "GIVE":
         {
             private _selectedPlayer = param [4,objNull,[objNull]];
@@ -94,24 +94,14 @@ if(_inventoryType isEqualTo "Player")then
                 };
             };
         };
-        //-- Drop item from player virtualItems to ground
+        //-- Drop item from (player) virtualItems to (ground)
         case "DROP":
         { 
-            private _adjustment = SUB(_currentValue, _selectedAmount);
-            if (_adjustment >= 0) then 
-            {
-                missionNamespace setVariable [_itemVarName,_adjustment];
-                if (_adjustment < _currentValue) then {
-                    life_var_carryWeight = SUB(life_var_carryWeight, _itemWeight);
-                    _currentValue = _adjustment;
-                    
-                    if([player,_selectedItem,_selectedAmount] call MPClient_fnc_dropItem)then{
-                        _return = true;
-                    };
-                };
+           if([player,_selectedItem,_selectedAmount] call MPClient_fnc_dropItem)then{
+                _return = true;
             };
         };
-        //-- Put item from player virtualItems to (vehicle\house\ground\tent) virtualItems
+        //-- Put item from (player) virtualItems to (vehicle\house\ground\tent) virtualItems
         case "PUT": 
         {
             private _selectedObject = param [4,objNull,[objNull]];
@@ -163,7 +153,7 @@ if(_inventoryType isEqualTo "Player")then
                     };
                 };
             };
-        }; 
+        };
     };
 }else{
     private _selectedObject = param [4,objNull,[objNull]];
@@ -187,8 +177,8 @@ if(_inventoryType isEqualTo "Player")then
 
         switch _mode do
         {
-            //-- Take item from (vehicle\house\ground\tent) virtualItems to player virtualItems
-            case "TAKE": 
+            //-- Take item from (vehicle\house\ground\tent) virtualItems to (player) virtualItems
+            case "USE":
             {
                 private _arrayIndex = _invArray find _selectedItem;
                 private _selectedArray = [_invArray param [_arrayIndex,["",-1]], ["",-1]] select (_arrayIndex isEqualTo -1);
@@ -214,6 +204,10 @@ if(_inventoryType isEqualTo "Player")then
                     _return = true;
                 
                 }; 
+            };
+            case "USE":
+            {
+
             };
         };
     };

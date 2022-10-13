@@ -120,7 +120,7 @@ if _hasLicense then
     };
     if (player distance _vendor > 10) exitWith {hint localize "STR_Process_Stay"; "progressBar" cutText ["","PLAIN"]; life_var_processingResource = false; life_var_isBusy = false;};
 
-    {["TAKE",_x#0,((_x#1)*(_minimumConversions))] call MPClient_fnc_handleVitrualItem} count _oldItem;
+    {["USE",_x#0,((_x#1)*(_minimumConversions))] call MPClient_fnc_handleVitrualItem} count _oldItem;
     {["ADD", _x#0,((_x#1)*(_minimumConversions))] call MPClient_fnc_handleVitrualItem} count _newItem;
 
     "progressBar" cutText ["","PLAIN"];
@@ -151,7 +151,7 @@ if _hasLicense then
         hint format [localize "STR_Process_License",[_cost] call MPClient_fnc_numberText]; 
     };
 
-    {["TAKE",_x#0,((_x#1)*(_minimumConversions))] call MPClient_fnc_handleVitrualItem} count _oldItem;
+    {["USE",_x#0,((_x#1)*(_minimumConversions))] call MPClient_fnc_handleVitrualItem} count _oldItem;
     {["ADD",_x#0,((_x#1)*(_minimumConversions))] call MPClient_fnc_handleVitrualItem} count _newItem;
 
     private _notification = "STR_NOTF_ItemProcess";

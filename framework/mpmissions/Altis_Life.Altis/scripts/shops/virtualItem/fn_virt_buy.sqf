@@ -43,12 +43,12 @@ if (["ADD",_type,_amount] call MPClient_fnc_handleVitrualItem) then {
             [1,group player,false,_value,player,MONEY_CASH] remoteExecCall ["MPServer_fnc_updateGangDataRequestPartial",RE_SERVER];
             
         } else {
-            if ((_price * _amount) > MONEY_CASH) exitWith {["TAKE",_type,_amount] call MPClient_fnc_handleVitrualItem; hint localize "STR_NOTF_NotEnoughMoney";};
+            if ((_price * _amount) > MONEY_CASH) exitWith {["USE",_type,_amount] call MPClient_fnc_handleVitrualItem; hint localize "STR_NOTF_NotEnoughMoney";};
             hint format [localize "STR_Shop_Virt_BoughtItem",_amount,TEXT_LOCALIZE(_name),[(_price * _amount)] call MPClient_fnc_numberText];
             ["SUB","CASH",_price * _amount] call MPClient_fnc_handleMoney;
         };
     } else {
-        if ((_price * _amount) > MONEY_CASH) exitWith {hint localize "STR_NOTF_NotEnoughMoney"; ["TAKE",_type,_amount] call MPClient_fnc_handleVitrualItem;};
+        if ((_price * _amount) > MONEY_CASH) exitWith {hint localize "STR_NOTF_NotEnoughMoney"; ["USE",_type,_amount] call MPClient_fnc_handleVitrualItem;};
         hint format [localize "STR_Shop_Virt_BoughtItem",_amount,TEXT_LOCALIZE(_name),[(_price * _amount)] call MPClient_fnc_numberText];
         ["SUB","CASH",_price * _amount] call MPClient_fnc_handleMoney;
     };

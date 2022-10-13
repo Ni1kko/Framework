@@ -53,16 +53,16 @@ if ((_veh isKindOf "Car") || (_veh isKindOf "Ship") || (_veh isKindOf "Air")) th
 
         //Check if playerSide has infinite repair enabled
         if (playerSide isEqualTo civilian && (_sideRepairArray select 0) isEqualTo 0) then {
-            ["TAKE","toolkit",1] call MPClient_fnc_handleVitrualItem;
+            ["USE","toolkit",1] call MPClient_fnc_handleVitrualItem;
         };
         if (playerSide isEqualTo west && (_sideRepairArray select 1) isEqualTo 0) then {
-            ["TAKE","toolkit",1] call MPClient_fnc_handleVitrualItem;
+            ["USE","toolkit",1] call MPClient_fnc_handleVitrualItem;
         };
         if (playerSide isEqualTo independent && (_sideRepairArray select 2) isEqualTo 0) then {
-            ["TAKE","toolkit",1] call MPClient_fnc_handleVitrualItem;
+            ["USE","toolkit",1] call MPClient_fnc_handleVitrualItem;
         };
         if (playerSide isEqualTo east && (_sideRepairArray select 3) isEqualTo 0) then {
-            ["TAKE","toolkit",1] call MPClient_fnc_handleVitrualItem;
+            ["USE","toolkit",1] call MPClient_fnc_handleVitrualItem;
         };
 
         _veh setDamage 0;
