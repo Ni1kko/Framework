@@ -32,7 +32,7 @@ _ctrlIDClist pushBackUnique _ctrlIDC;
     private _idc = _x;
     private _control = (_ctrlParent displayCtrl _idc);
     private _controlVar = format ["RscDisplayInventory_Control%1", _idc];
-    private _controlToHide = ([[77705,77707,77713], [77705,77707,77709,77713]] select _selectedPage);
+    private _controlToHide = ([[INVENTORY_IDC_WEIGHT,INVENTORY_IDC_USE,INVENTORY_IDC_STORE], [INVENTORY_IDC_WEIGHT,INVENTORY_IDC_USE,INVENTORY_IDC_EDIT,INVENTORY_IDC_STORE]] select _selectedPage);
     private _controlShow = not(_idc in _controlToHide);
     
     _ctrlParent setVariable [_controlVar, _control];
@@ -50,7 +50,7 @@ _ctrlIDClist pushBackUnique _ctrlIDC;
         ctrlSetFocus _control;  
     }else{
         //-- Menu combo (near players)
-        if (_idc isEqualTo 77710) then {
+        if (_idc isEqualTo INVENTORY_IDC_COMBOPLAYERS) then {
             _control ctrlRemoveAllEventHandlers "LBSelChanged";
             lbClear _control;
             private _nearByPlayers = (playableUnits apply {if (alive _x AND player distance _x < 10 AND _x isNotEqualTo player) then {_x}else{""}}) - [""];
@@ -68,14 +68,14 @@ _ctrlIDClist pushBackUnique _ctrlIDC;
             _control lbSetCurSel 0;
         }else{
             //-- Menu combo
-            if (_idc isEqualTo 77712) then {
+            if (_idc isEqualTo INVENTORY_IDC_COMBOPAGE) then {
                 _control ctrlRemoveAllEventHandlers "LBSelChanged";
                 lbClear _control;
                 {_control lbAdd _x} forEach _pages;
                 _control lbSetCurSel _selectedPage;//selected page before adding EVH
                 _control ctrlAddEventHandler ["LBSelChanged", "_this call MPClient_fnc_inventoryWalletComboSelChanged"];
             }else{
-                if (_idc isEqualTo 77704) then {
+                if (_idc isEqualTo INVENTORY_IDC_TITLE) then {
                     _control ctrlSetText "Wallet";
                 }else{
                     switch _currentPage do 
@@ -84,7 +84,7 @@ _ctrlIDClist pushBackUnique _ctrlIDC;
                         {
                             switch _idc do
                             {
-                                case 77706: 
+                                case INVENTORY_IDC_LIST: 
                                 { 
                                     //-- Menu list
                                     private _moneyData = [
@@ -127,7 +127,7 @@ _ctrlIDClist pushBackUnique _ctrlIDC;
                                     _control ctrlAddEventHandler ["LBSelChanged", "_this call MPClient_fnc_inventoryWalletMoneyLBSelChanged"];
                                     _control lbSetCurSel 0;
                                 }; 
-                                case 77708: 
+                                case INVENTORY_IDC_DROP: 
                                 {
                                     private _text = "Drop";
                                     _control ctrlSetStructuredText parseText format["<t align='center'>%1</t>",_text];
@@ -136,11 +136,11 @@ _ctrlIDClist pushBackUnique _ctrlIDC;
                                     _control ctrlAddEventHandler ["MouseButtonUp", "_this call MPClient_fnc_inventoryWalletDropCash"];
                                     _control ctrlEnable false;
                                 };
-                                case 77709: 
+                                case INVENTORY_IDC_EDIT: 
                                 {
                                     _control ctrlSetText "1";
                                 };
-                                case 77711: 
+                                case INVENTORY_IDC_GIVE: 
                                 {
                                     private _text = "Give";
                                     _control ctrlSetStructuredText parseText format["<t align='center'>%1</t>",_text];
@@ -155,7 +155,7 @@ _ctrlIDClist pushBackUnique _ctrlIDC;
                         { 
                             switch _idc do
                             {
-                                case 77706: 
+                                case INVENTORY_IDC_LIST: 
                                 { 
                                     //-- Menu list
                                     _control ctrlRemoveAllEventHandlers "LBSelChanged";
@@ -183,23 +183,23 @@ _ctrlIDClist pushBackUnique _ctrlIDC;
                                     _control ctrlAddEventHandler ["LBSelChanged", "_this call MPClient_fnc_inventoryWalletLicenseLBSelChanged"];
                                     _control lbSetCurSel 0;
                                 }; 
-                                case 77708: 
+                                case INVENTORY_IDC_DROP: 
                                 {
                                     private _text = "Drop";
                                     _control ctrlSetStructuredText parseText format["<t align='center'>%1</t>",_text];
                                     _control ctrlSetToolTip format["%1 selected license", toLower _text];
                                     _control ctrlRemoveAllEventHandlers "MouseButtonUp";
                                     _control ctrlAddEventHandler ["MouseButtonUp", "_this call MPClient_fnc_inventoryWalletDropLicense"];
-                                    _control ctrlEnable (lbSize (_ctrlParent displayCtrl 77706) > 0);
+                                    _control ctrlEnable (lbSize (_ctrlParent displayCtrl INVENTORY_IDC_LIST) > 0);
                                 };
-                                case 77711: 
+                                case INVENTORY_IDC_GIVE: 
                                 {
                                     private _text = "Show";
                                     _control ctrlSetStructuredText parseText format["<t align='center'>%1</t>",_text];
                                     _control ctrlSetToolTip format["%1 selected license to selected person", toLower _text];
                                     _control ctrlRemoveAllEventHandlers "MouseButtonUp";
                                     _control ctrlAddEventHandler ["MouseButtonUp", "_this call MPClient_fnc_inventoryWalletShowLicense"];
-                                    _control ctrlEnable (lbSize (_ctrlParent displayCtrl 77706) > 0 AND lbSize (_ctrlParent displayCtrl 77710) > 0);
+                                    _control ctrlEnable (lbSize (_ctrlParent displayCtrl INVENTORY_IDC_LIST) > 0 AND lbSize (_ctrlParent displayCtrl INVENTORY_IDC_COMBOPLAYERS) > 0);
                                 };
                             };
                         };

@@ -31,6 +31,7 @@ private _missionVariables = [
     ["life_var_clientTimeout", 0],
     ["life_var_serverTimeout", 0],
     ["life_var_loadingScreenActive", false],
+    ["life_var_inventoryLoading", false],
     ["life_var_actionDelay", time],
     ["life_var_vehicleTrunk", objNull],
     ["life_var_sirenActive", false],

@@ -16,7 +16,7 @@ params [
 hint format ["fn_inventoryVirtualPlayersComboSelChanged\n%1", str _this];
 
 private _ctrlParent = ctrlParent _control;
-private _confirmButton = _ctrlParent displayCtrl 77711;
+private _confirmButton = _ctrlParent displayCtrl INVENTORY_IDC_GIVE;
 private _nearPlayerList = _ctrlParent getVariable ["RscDisplayInventory_NearPlayerList", []];
 
 //-- Disable button till we check selection

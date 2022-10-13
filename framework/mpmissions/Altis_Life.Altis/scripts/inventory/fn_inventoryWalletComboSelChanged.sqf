@@ -20,11 +20,11 @@ if(isNull _ctrlParent OR isNull _control) exitWith {
 };
 
 private _ctrlParent = ctrlParent _control;
-private _itemListBox = _ctrlParent displayCtrl 77706;
-private _dropButton = _ctrlParent displayCtrl 77708;
-private _amountEditbox = _ctrlParent displayCtrl 77709;
-private _playerListCombo = _ctrlParent displayCtrl 77710;
-private _giveButton = _ctrlParent displayCtrl 77711;
+private _itemListBox = _ctrlParent displayCtrl INVENTORY_IDC_LIST;
+private _dropButton = _ctrlParent displayCtrl INVENTORY_IDC_DROP;
+private _amountEditbox = _ctrlParent displayCtrl INVENTORY_IDC_EDIT;
+private _playerListCombo = _ctrlParent displayCtrl INVENTORY_IDC_COMBOPLAYERS;
+private _giveButton = _ctrlParent displayCtrl INVENTORY_IDC_GIVE;
 private _returnControl = _ctrlParent getVariable ["RscDisplayInventory_ReturnControl", controlNull];
 private _lastPage = _ctrlParent getVariable ["RscDisplayInventory_CurrentPage", ["", -1]];
 private _nearPlayerList = _ctrlParent getVariable ["RscDisplayInventory_NearPlayerList", []];

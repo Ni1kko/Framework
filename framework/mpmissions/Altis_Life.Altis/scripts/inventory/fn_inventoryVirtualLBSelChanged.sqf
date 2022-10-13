@@ -16,13 +16,13 @@ params [
 hint format ["fn_inventoryVirtualLBSelChanged\n%1", str _this];
 
 private _ctrlParent = ctrlParent _control;
-private _useButton = _ctrlParent displayCtrl 77707;
-private _dropButton = _ctrlParent displayCtrl 77708;
-private _amountEditbox = _ctrlParent displayCtrl 77709;
-private _playerListCombo = _ctrlParent displayCtrl 77710;
-private _giveButton = _ctrlParent displayCtrl 77711;
-private _pageCombo = _ctrlParent displayCtrl 77712;
-private _putButton = _ctrlParent displayCtrl 77713;
+private _useButton = _ctrlParent displayCtrl INVENTORY_IDC_USE;
+private _dropButton = _ctrlParent displayCtrl INVENTORY_IDC_DROP;
+private _amountEditbox = _ctrlParent displayCtrl INVENTORY_IDC_EDIT;
+private _playerListCombo = _ctrlParent displayCtrl INVENTORY_IDC_COMBOPLAYERS;
+private _giveButton = _ctrlParent displayCtrl INVENTORY_IDC_GIVE;
+private _pageCombo = _ctrlParent displayCtrl INVENTORY_IDC_COMBOPAGE;
+private _putButton = _ctrlParent displayCtrl INVENTORY_IDC_STORE;
 private _nearPlayerList = _ctrlParent getVariable ["RscDisplayInventory_NearPlayerList", []];
 private _selectedPageIndex = lbCurSel _pageCombo;
 private _selectedAmountText = ctrlText _amountEditbox;
@@ -160,7 +160,7 @@ switch (_selectedItem) do
 //-- All seems good enable buttons again
 {
 	_x ctrlEnable (switch (ctrlIDC _x) do {
-		case "77711": {ctrlEnabled _playerListCombo};
+		case INVENTORY_IDC_GIVE: {ctrlEnabled _playerListCombo};
 		default {true};
 	});
 }forEach _lockoutControls;

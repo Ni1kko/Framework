@@ -20,7 +20,7 @@ private _ctrlIDCBIlist = _ctrlParent getVariable ["RscDisplayInventory_DefaultRs
      
     switch _idc do 
     {
-        case 77700: 
+        case INVENTORY_IDC_WALLET: 
         {
             private _text = "Wallet";
             _control ctrlSetStructuredText parseText format["<t align='center'>%1</t>",_text];
@@ -30,7 +30,7 @@ private _ctrlIDCBIlist = _ctrlParent getVariable ["RscDisplayInventory_DefaultRs
             _control ctrlEnable true;
             _control ctrlShow true;
         };
-        case 77701:
+        case INVENTORY_IDC_VIRTUALITEMS:
         { 
             private _text = "Virtual Items";
             _control ctrlSetStructuredText parseText format["<t align='center'>%1</t>",_text];
@@ -40,7 +40,7 @@ private _ctrlIDCBIlist = _ctrlParent getVariable ["RscDisplayInventory_DefaultRs
             _control ctrlEnable true;
             _control ctrlShow true;
         };
-        case 77702: 
+        case INVENTORY_IDC_KEYS: 
         { 
             private _text = "Keys";
             _control ctrlSetStructuredText parseText format["<t align='center'>%1</t>",_text];
@@ -53,7 +53,7 @@ private _ctrlIDCBIlist = _ctrlParent getVariable ["RscDisplayInventory_DefaultRs
         default 
         {
             //-- Clear combo and listbox controls
-            if(_idc in [77706,77710,77712])then{
+            if(_idc in [INVENTORY_IDC_LIST,INVENTORY_IDC_COMBOPLAYERS,INVENTORY_IDC_COMBOPAGE])then{
                 lbClear _control;
                 _control ctrlRemoveAllEventHandlers "LBSelChanged";
             }else{

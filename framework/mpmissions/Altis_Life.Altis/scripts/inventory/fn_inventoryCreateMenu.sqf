@@ -51,7 +51,7 @@ private _ctrlIDClist = [];
 
 //-- Create controls
 {
-    private _idc = (77700 + _forEachIndex);
+    private _idc = (INVENTORY_IDC_WALLET + _forEachIndex);
     private _control = (_ctrlParent displayCtrl _idc);
     private _controlVar = format ["RscDisplayInventory_Control%1", _idc];
 
@@ -68,36 +68,38 @@ private _ctrlIDClist = [];
     switch _idc do 
     {
         //-- Menu button (Wallet) 
-        case 77700: {_control ctrlSetPosition [0.609,0.04,0.10,0.04]};
+        case INVENTORY_IDC_WALLET:          {_control ctrlSetPosition [0.609,0.04,0.10,0.04]};
         //-- Menu button (Virtual Items) 
-        case 77701: {_control ctrlSetPosition [0.714,0.04,0.15,0.04]};
+        case INVENTORY_IDC_VIRTUALITEMS:    {_control ctrlSetPosition [0.714,0.04,0.15,0.04]};
         //-- Menu button (Keys) 
-        case 77702: {_control ctrlSetPosition [0.869,0.04,0.10,0.04]};
+        case INVENTORY_IDC_KEYS:            {_control ctrlSetPosition [0.869,0.04,0.10,0.04]};
 		//-- Menu Header
-        case 77703: {_control ctrlSetPosition [-0.06175, -0.0132, 0.420, 0.05]};
+        case INVENTORY_IDC_BACKGROUND:      {_control ctrlSetPosition [-0.06175, -0.0132, 0.420, 0.05]};
         //-- Menu Title
-        case 77704: {_control ctrlSetPosition [0, -0.005, 0.422, 0.04]};
+        case INVENTORY_IDC_TITLE:           {_control ctrlSetPosition [0, -0.005, 0.422, 0.04]};
 		//-- Menu SubTitle
-        case 77705: {_control ctrlSetPosition [0.225, -0.005, 0.422, 0.04]};
+        case INVENTORY_IDC_WEIGHT:          {_control ctrlSetPosition [0.225, -0.005, 0.422, 0.04]};
         //-- Menu listbox
-        case 77706: {_control ctrlSetPosition [0, 0.085, 0.359, 0.54];lbClear _control};
+        case INVENTORY_IDC_LIST:            {_control ctrlSetPosition [0, 0.085, 0.359, 0.54];lbClear _control};
         //-- Menu button (Use)
-        case 77707: {_control ctrlSetPosition [0, 0.7, 0.178, 0.04]};
+        case INVENTORY_IDC_USE:             {_control ctrlSetPosition [0, 0.7, 0.178, 0.04]};
 		//-- Menu button (Drop)
-        case 77708: {_control ctrlSetPosition [0.182, 0.7, 0.178, 0.04]};
+        case INVENTORY_IDC_DROP:            {_control ctrlSetPosition [0.182, 0.7, 0.178, 0.04]};
 		//-- Amount edit box
-        case 77709: {_control ctrlSetPosition [0, 0.64, 0.359,0.04]};
+        case INVENTORY_IDC_EDIT:            {_control ctrlSetPosition [0, 0.64, 0.359,0.04]};
 		//-- Menu combo
-        case 77710: {_control ctrlSetPosition [0, 0.814, 0.361, 0.04];lbClear _control};
+        case INVENTORY_IDC_COMBOPLAYERS:    {_control ctrlSetPosition [0, 0.814, 0.361, 0.04];lbClear _control};
         //-- Menu button (Give)
-        case 77711: {_control ctrlSetPosition [0, 0.85, 0.358, 0.04]};
+        case INVENTORY_IDC_GIVE:            {_control ctrlSetPosition [0, 0.85, 0.358, 0.04]};
 		//-- Menu combo
-        case 77712: {_control ctrlSetPosition [0, 0.04, 0.361, 0.04];lbClear _control};
+        case INVENTORY_IDC_COMBOPAGE:       {_control ctrlSetPosition [0, 0.04, 0.361, 0.04];lbClear _control};
 		//-- Menu button (Store)
-        case 77713: {_control ctrlSetPosition [0, 0.90, 0.358, 0.04]};
+        case INVENTORY_IDC_STORE:           {_control ctrlSetPosition [0, 0.90, 0.358, 0.04]};
     };
 
+    //-- Handle error creating
     if(_ctrlIDClist pushBackUnique _idc isEqualTo -1)then{
+        //-- Handle error deleting
         if not(ctrlDelete _control)then{
             _control ctrlShow false;
             _control ctrlEnable false;
@@ -107,20 +109,20 @@ private _ctrlIDClist = [];
     
     _control ctrlCommit 0;
 }forEach [
-    "RscDefineInventoryButton",         //-- 77700
-    "RscDefineInventoryButton",         //-- 77701
-    "RscDefineInventoryButton",         //-- 77702
-    "RscDefineInventoryGUIBack",        //-- 77703
-    "RscDefineInventoryText",           //-- 77704
-    "RscDefineInventoryText",           //-- 77705
-    "RscDefineInventoryListBox",        //-- 77706
-    "RscDefineInventoryButtonMenu",     //-- 77707
-    "RscDefineInventoryButtonMenu",     //-- 77708
-    "RscDefineInventoryTextEdit",       //-- 77709
-    "RscDefineInventoryCombo",          //-- 77710
-    "RscDefineInventoryButtonMenu",     //-- 77711
-    "RscDefineInventoryCombo",          //-- 77712
-	"RscDefineInventoryButtonMenu"      //-- 77713
+    "RscDefineInventoryButton",         //-- INVENTORY_IDC_WALLET
+    "RscDefineInventoryButton",         //-- INVENTORY_IDC_VIRTUALITEMS
+    "RscDefineInventoryButton",         //-- INVENTORY_IDC_KEYS
+    "RscDefineInventoryGUIBack",        //-- INVENTORY_IDC_BACKGROUND
+    "RscDefineInventoryText",           //-- INVENTORY_IDC_TITLE
+    "RscDefineInventoryText",           //-- INVENTORY_IDC_WEIGHT
+    "RscDefineInventoryListBox",        //-- INVENTORY_IDC_LIST
+    "RscDefineInventoryButtonMenu",     //-- INVENTORY_IDC_USE
+    "RscDefineInventoryButtonMenu",     //-- INVENTORY_IDC_DROP
+    "RscDefineInventoryTextEdit",       //-- INVENTORY_IDC_EDIT
+    "RscDefineInventoryCombo",          //-- INVENTORY_IDC_COMBOPLAYERS
+    "RscDefineInventoryButtonMenu",     //-- INVENTORY_IDC_GIVE
+    "RscDefineInventoryCombo",          //-- INVENTORY_IDC_COMBOPAGE
+	"RscDefineInventoryButtonMenu"      //-- INVENTORY_IDC_STORE
 ];
 
 _ctrlParent setVariable ["RscDisplayInventory_RscControls", _ctrlIDClist];

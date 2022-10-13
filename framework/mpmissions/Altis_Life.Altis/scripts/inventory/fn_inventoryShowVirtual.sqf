@@ -80,7 +80,7 @@ _ctrlParent setVariable ["RscDisplayInventory_nearVitems", _nearVitems];
         _control ctrlAddEventHandler ["MouseButtonUp", "_this spawn MPClient_fnc_inventoryShow"]; 
         ctrlSetFocus _control;
     }else{
-        if (_idc isEqualTo 77712) then
+        if (_idc isEqualTo INVENTORY_IDC_COMBOPAGE) then
         { 
             _control ctrlRemoveAllEventHandlers "LBSelChanged";
             lbClear _control;
@@ -89,17 +89,17 @@ _ctrlParent setVariable ["RscDisplayInventory_nearVitems", _nearVitems];
             _control ctrlAddEventHandler ["LBSelChanged", "_this call MPClient_fnc_inventoryVirtualComboSelChanged"];
         }else{
             //-- Menu Title
-            if (_idc isEqualTo 77704) then
+            if (_idc isEqualTo INVENTORY_IDC_TITLE) then
             { 
                 _control ctrlSetText "Virtual Inventory";
             }else{
                 //-- Amount edit box
-                if (_idc isEqualTo 77709) then
+                if (_idc isEqualTo INVENTORY_IDC_EDIT) then
                 { 
                     _control ctrlSetText "1";
                 }else{
                     //-- Near players combo
-                    if (_idc isEqualTo 77710) then
+                    if (_idc isEqualTo INVENTORY_IDC_COMBOPLAYERS) then
                     {
                         lbClear _control;
                         private _nearByPlayers = (playableUnits apply {if (alive _x AND player distance _x < 10 AND _x isNotEqualTo player) then {_x}else{""}}) - [""];
@@ -134,11 +134,11 @@ _ctrlParent setVariable ["RscDisplayInventory_nearVitems", _nearVitems];
                             };
                             switch _idc do
                             {
-                                case 77705: 
+                                case INVENTORY_IDC_WEIGHT: 
                                 { 
                                     _control ctrlSetText format ["Weight: %1 / %2", _objectWeight, _objectMaxWeight];
                                 };
-                                case 77706:
+                                case INVENTORY_IDC_LIST:
                                 { 
                                     //-- Menu list
                                     _control ctrlRemoveAllEventHandlers "LBSelChanged";
@@ -158,28 +158,28 @@ _ctrlParent setVariable ["RscDisplayInventory_nearVitems", _nearVitems];
                                     _control ctrlAddEventHandler ["LBSelChanged", "_this call MPClient_fnc_inventoryVirtualLBSelChanged"];
                                     _control lbSetCurSel 0;
                                 };
-                                case 77707: 
+                                case INVENTORY_IDC_USE: 
                                 { 
                                     private _text = "Use";
                                     _control ctrlSetStructuredText parseText format["<t align='center'>%1</t>",_text];
                                     _control ctrlSetToolTip format["%1 selected item", toLower _text];
                                     _control ctrlRemoveAllEventHandlers "MouseButtonUp";
                                     _control ctrlAddEventHandler ["MouseButtonUp", "_this call MPClient_fnc_inventoryVirtualVehicleUseItem"];
-                                    _control ctrlEnable (lbSize (_ctrlParent displayCtrl 77706) > 0 AND _isNotBeingUsed AND _isKindOfVehicle AND (_inVehicle OR _isCloseEnough));
+                                    _control ctrlEnable (lbSize (_ctrlParent displayCtrl INVENTORY_IDC_LIST) > 0 AND _isNotBeingUsed AND _isKindOfVehicle AND (_inVehicle OR _isCloseEnough));
                                     _control ctrlShow true;
                                 };
-                                case 77708: 
+                                case INVENTORY_IDC_DROP: 
                                 {
                                     private _text = "Take";
                                     _control ctrlSetStructuredText parseText format["<t align='center'>%1</t>",_text];
                                     _control ctrlSetToolTip format["%1 selected item from vehicle", toLower _text];
                                     _control ctrlRemoveAllEventHandlers "MouseButtonUp";
                                     _control ctrlAddEventHandler ["MouseButtonUp", "_this call MPClient_fnc_inventoryVirtualVehicleTakeItem"];
-                                    _control ctrlEnable (lbSize (_ctrlParent displayCtrl 77706) > 0 AND _isNotBeingUsed AND _isKindOfVehicle AND (_inVehicle OR _isCloseEnough));
+                                    _control ctrlEnable (lbSize (_ctrlParent displayCtrl INVENTORY_IDC_LIST) > 0 AND _isNotBeingUsed AND _isKindOfVehicle AND (_inVehicle OR _isCloseEnough));
                                     _control ctrlShow true;
                                 };
-                                case 77711: {_control ctrlshow false};
-                                case 77713: {_control ctrlshow false};
+                                case INVENTORY_IDC_GIVE: {_control ctrlshow false};
+                                case INVENTORY_IDC_STORE: {_control ctrlshow false};
                             };
                         }else{
                             switch _currentPage do 
@@ -189,12 +189,12 @@ _ctrlParent setVariable ["RscDisplayInventory_nearVitems", _nearVitems];
                                     [player,"bagopen",20] remoteExec ["MPClient_fnc_say3D",-2];
                                     switch _idc do
                                     {
-                                        case 77705: 
+                                        case INVENTORY_IDC_WEIGHT: 
                                         { 
                                             //-- Carry weight
                                             _control ctrlSetText format ["Weight: %1 / %2", life_var_carryWeight, life_var_maxCarryWeight];
                                         };
-                                        case 77706: 
+                                        case INVENTORY_IDC_LIST: 
                                         { 
                                             //-- Menu list
                                             _control ctrlRemoveAllEventHandlers "LBSelChanged";
@@ -215,41 +215,41 @@ _ctrlParent setVariable ["RscDisplayInventory_nearVitems", _nearVitems];
                                             _control ctrlAddEventHandler ["LBSelChanged", "_this call MPClient_fnc_inventoryVirtualLBSelChanged"]; 
                                             _control lbSetCurSel 0;
                                         };
-                                        case 77707: 
+                                        case INVENTORY_IDC_USE: 
                                         { 
                                             private _text = "Use";
                                             _control ctrlSetStructuredText parseText format["<t align='center'>%1</t>",_text];
                                             _control ctrlSetToolTip format["%1 selected item", toLower _text];
                                             _control ctrlRemoveAllEventHandlers "MouseButtonUp";
                                             _control ctrlAddEventHandler ["MouseButtonUp", "_this call MPClient_fnc_inventoryVirtualUseItem"];
-                                            _control ctrlEnable (lbSize (_ctrlParent displayCtrl 77706) > 0);
+                                            _control ctrlEnable (lbSize (_ctrlParent displayCtrl INVENTORY_IDC_LIST) > 0);
                                         };
-                                        case 77708: 
+                                        case INVENTORY_IDC_DROP: 
                                         {
                                             private _text = "Drop";
                                             _control ctrlSetStructuredText parseText format["<t align='center'>%1</t>",_text];
                                             _control ctrlSetToolTip format["%1 selected item", toLower _text];
                                             _control ctrlRemoveAllEventHandlers "MouseButtonUp";
                                             _control ctrlAddEventHandler ["MouseButtonUp", "_this call MPClient_fnc_inventoryVirtualDropItem"];
-                                            _control ctrlEnable (lbSize (_ctrlParent displayCtrl 77706) > 0);
+                                            _control ctrlEnable (lbSize (_ctrlParent displayCtrl INVENTORY_IDC_LIST) > 0);
                                         };
-                                        case 77711: 
+                                        case INVENTORY_IDC_GIVE: 
                                         {
                                             private _text = "Give";
                                             _control ctrlSetStructuredText parseText format["<t align='center'>%1</t>",_text];
                                             _control ctrlSetToolTip format["%1 selected item to selected person", toLower _text];
                                             _control ctrlRemoveAllEventHandlers "MouseButtonUp";
                                             _control ctrlAddEventHandler ["MouseButtonUp", "_this call MPClient_fnc_inventoryVirtualGiveItem"];
-                                            _control ctrlEnable (lbSize (_ctrlParent displayCtrl 77706) > 0);
+                                            _control ctrlEnable (lbSize (_ctrlParent displayCtrl INVENTORY_IDC_LIST) > 0);
                                         };
-                                        case 77713: 
+                                        case INVENTORY_IDC_STORE: 
                                         {
                                             private _text = "Store";
                                             _control ctrlSetStructuredText parseText format["<t align='center'>%1</t>",_text];
                                             _control ctrlSetToolTip format["%1 selected item in vehicle", toLower _text];
                                             _control ctrlRemoveAllEventHandlers "MouseButtonUp";
                                             _control ctrlAddEventHandler ["MouseButtonUp", "_this call MPClient_fnc_inventoryVirtualMoveItemToVehicle"];
-                                            _control ctrlEnable (lbSize (_ctrlParent displayCtrl 77706) > 0 AND _isKindOfVehicle AND (_inVehicle OR _isCloseEnough));
+                                            _control ctrlEnable (lbSize (_ctrlParent displayCtrl INVENTORY_IDC_LIST) > 0 AND _isKindOfVehicle AND (_inVehicle OR _isCloseEnough));
                                             _control ctrlShow true;
                                         };
                                     };
@@ -273,13 +273,13 @@ _ctrlParent setVariable ["RscDisplayInventory_nearVitems", _nearVitems];
                                     switch _idc do
                                     {
                                         //-- Weight (droped items / max weight)
-                                        case 77705: 
+                                        case INVENTORY_IDC_WEIGHT: 
                                         { 
                                             if(_totalWeight > 999)then{_totalWeight = 999};
                                             _control ctrlSetText format ["Weight: %1 / %2", _totalWeight, _maxWeight];
                                         };
                                         //-- Menu list (droped items)
-                                        case 77706:
+                                        case INVENTORY_IDC_LIST:
                                         { 
                                             _control ctrlRemoveAllEventHandlers "LBSelChanged";
                                             lbClear _control;
@@ -299,28 +299,28 @@ _ctrlParent setVariable ["RscDisplayInventory_nearVitems", _nearVitems];
                                             _control lbSetCurSel 0;
                                         };
                                         //-- Use (droped item from ground)
-                                        case 77707: 
+                                        case INVENTORY_IDC_USE: 
                                         { 
                                             private _text = "Use";
                                             _control ctrlSetStructuredText parseText format["<t align='center'>%1</t>",_text];
                                             _control ctrlSetToolTip format["%1 selected item", toLower _text];
                                             _control ctrlRemoveAllEventHandlers "MouseButtonUp";
                                             //_control ctrlAddEventHandler ["MouseButtonUp", "_this call MPClient_fnc_inventoryVirtualVehicleUseItem"];
-                                            _control ctrlEnable (lbSize (_ctrlParent displayCtrl 77706) > 0 AND _isNotBeingUsed AND _isKindOfVehicle AND (_inVehicle OR _isCloseEnough));
+                                            _control ctrlEnable (lbSize (_ctrlParent displayCtrl INVENTORY_IDC_LIST) > 0 AND _isNotBeingUsed AND _isKindOfVehicle AND (_inVehicle OR _isCloseEnough));
                                             _control ctrlShow true;
                                         };
                                         //-- Take (droped item from ground)
-                                        case 77708: 
+                                        case INVENTORY_IDC_DROP: 
                                         {
                                             private _text = "Take";
                                             _control ctrlSetStructuredText parseText format["<t align='center'>%1</t>",_text];
                                             _control ctrlSetToolTip format["%1 selected item from ground", toLower _text];
                                             _control ctrlRemoveAllEventHandlers "MouseButtonUp";
                                             //_control ctrlAddEventHandler ["MouseButtonUp", "_this call MPClient_fnc_inventoryVirtualVehicleTakeItem"];
-                                            _control ctrlEnable (lbSize (_ctrlParent displayCtrl 77706) > 0 AND _isNotBeingUsed AND _isKindOfVehicle AND (_inVehicle OR _isCloseEnough));
+                                            _control ctrlEnable (lbSize (_ctrlParent displayCtrl INVENTORY_IDC_LIST) > 0 AND _isNotBeingUsed AND _isKindOfVehicle AND (_inVehicle OR _isCloseEnough));
                                             _control ctrlShow true;
                                         };
-                                        case 77711: {_control ctrlshow false};
+                                        case INVENTORY_IDC_GIVES: {_control ctrlshow false};
                                     };
                                 };
                             };

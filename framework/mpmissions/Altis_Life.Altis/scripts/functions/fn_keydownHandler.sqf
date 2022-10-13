@@ -2,9 +2,8 @@
 	## Nikko Renolds
 	## https://github.com/Ni1kko/FrameworkV2
 */
-
+#define DIK_INCLUDES 1
 #include "..\..\clientDefines.hpp"
-#include "\a3\ui_f\hpp\definedikcodes.inc"
 
 disableSerialization;
 
@@ -20,56 +19,34 @@ if (_keyCode in (actionKeys "TacticalView")) exitWith {true};
 
 //Open Inventory
 if(_keyCode isEqualTo DIK_I) exitWith 
-{
-	private _params = [77701, 0];
+{  
+	private _controlParent = findDisplay INVENTORY_IDD;
 
-	if(life_var_autorun)then
-	{
-		_params spawn { 
-			params ["_idc", "_pageIndex"]; 
-			private _control = ((findDisplay 602) displayCtrl _idc); 
-			private _controlParent = ctrlParent _control;
-			if(missionNamespace getvariable ["life_var_inventoryLoading",false])exitwith{
-				_controlParent closeDisplay 2;
-				false
-			};
+	if not(isNull(_controlParent))then{
+		_controlParent closeDisplay 2; 
+	}else{
+		[
+			INVENTORY_IDC_VIRTUALITEMS, 
+			INVENTORY_INDEX_VIRTUALITEMS_PLAYER, 
+			life_var_autorun
+		] spawn {//-- Bit messy but it works
+			params ["_idc", "_pageIndex", "_autorun"];
+			private _control = {((findDisplay INVENTORY_IDD) displayCtrl _idc)}; 
+			private _controlParent = {ctrlParent (call _control)};
+			if life_var_inventoryLoading exitwith{false};life_var_inventoryLoading = true;
+			if _autorun then {["interrupt"] call MPClient_fnc_autoruntoggle};
+			private _inventoryShowThread = [(call _control)] spawn MPClient_fnc_inventoryShow;
+			waitUntil {scriptDone _inventoryShowThread};
+			private _inventoryShowVirtualTabThread = [(call _control),_pageIndex] spawn MPClient_fnc_inventoryShowVirtual;
+			waitUntil {scriptDone _inventoryShowVirtualTabThread AND {not(life_var_inventoryLoading AND _autorun) OR isNull(call _controlParent)}};
 			life_var_inventoryLoading = true;
-			["interrupt"] call MPClient_fnc_autoruntoggle;
-			if not(isNull _controlParent)then{
-				_controlParent closeDisplay 2;
-				waitUntil {isNull _controlParent};
-			};
-			[_control] spawn MPClient_fnc_inventoryShow; 
-			waitUntil {_control = ((findDisplay 602) displayCtrl _idc); not(isNull _control)}; 
-			[_control,_pageIndex] spawn MPClient_fnc_inventoryShowVirtual;
-			waitUntil {isNull (ctrlParent _control)};
-			life_var_inventoryLoading = false;
-			["continue"] call MPClient_fnc_autoruntoggle;
-			true
-		};
-	}else{ 
-		_params spawn {
-			params ["_idc", "_pageIndex"]; 
-			private _control = ((findDisplay 602) displayCtrl _idc); 
-			private _controlParent = ctrlParent _control;
-			if(missionNamespace getvariable ["life_var_inventoryLoading",false])exitwith{
-				_controlParent closeDisplay 2;
-				false
-			};
-			life_var_inventoryLoading = true;
-			if not(isNull _controlParent)then{
-				_controlParent closeDisplay 2;
-				waitUntil {isNull _controlParent};
-			};
-			[_control] spawn MPClient_fnc_inventoryShow; 
-			waitUntil {_control = ((findDisplay 602) displayCtrl _idc); not(isNull _control)}; 
-			[_control,_pageIndex] spawn MPClient_fnc_inventoryShowVirtual;
+			if _autorun then {["continue"] call MPClient_fnc_autoruntoggle};
 			uisleep 1;
 			life_var_inventoryLoading = false;
 			true
 		};
 	};
-	
+
 	true
 };
  

@@ -16,9 +16,9 @@ params [
 hint format ["fn_inventoryWalletLicenseLBSelChanged\n%1", str _this];
 
 private _ctrlParent = ctrlParent _control;
-private _dropButton = _ctrlParent displayCtrl 77708; 
-private _playerListCombo = _ctrlParent displayCtrl 77710;
-private _giveButton = _ctrlParent displayCtrl 77711;
+private _dropButton = _ctrlParent displayCtrl INVENTORY_IDC_DROP; 
+private _playerListCombo = _ctrlParent displayCtrl INVENTORY_IDC_COMBOPLAYERS;
+private _giveButton = _ctrlParent displayCtrl INVENTORY_IDC_GIVE;
 private _nearPlayerList = _ctrlParent setVariable ["RscDisplayInventory_NearPlayerList", []];
 
 //-- 

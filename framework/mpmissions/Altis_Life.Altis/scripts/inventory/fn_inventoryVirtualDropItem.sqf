@@ -12,10 +12,10 @@ private _ctrlParent = ctrlParent _control;
 if(isNull _ctrlParent OR isNull _control) exitWith {false};
 
 private _nearPlayerList = _ctrlParent getVariable ["RscDisplayInventory_NearPlayerList", []];
-private _itemListBox = _ctrlParent displayCtrl 77706;
-private _amountEditbox = _ctrlParent displayCtrl 77709;
-private _playerListCombo = _ctrlParent displayCtrl 77710;
-private _pageCombo = _ctrlParent displayCtrl 77712;
+private _itemListBox = _ctrlParent displayCtrl INVENTORY_IDC_LIST;
+private _amountEditbox = _ctrlParent displayCtrl INVENTORY_IDC_EDIT;
+private _playerListCombo = _ctrlParent displayCtrl INVENTORY_IDC_COMBOPLAYERS;
+private _pageCombo = _ctrlParent displayCtrl INVENTORY_IDC_COMBOPAGE;
 private _selectedAmountText = ctrlText _amountEditbox;
 private _selectedItemIndex = lbCurSel _itemListBox;
 private _selectedPageIndex = lbCurSel _pageCombo;

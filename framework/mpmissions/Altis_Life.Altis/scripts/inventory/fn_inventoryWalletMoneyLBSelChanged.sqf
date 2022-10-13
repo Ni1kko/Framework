@@ -16,10 +16,10 @@ params [
 hint format ["fn_inventoryWalletMoneyLBSelChanged\n%1", str _this];
 
 private _ctrlParent = ctrlParent _control;
-private _dropButton = _ctrlParent displayCtrl 77708;
-private _amountEditbox = _ctrlParent displayCtrl 77709;
-private _playerListCombo = _ctrlParent displayCtrl 77710;
-private _giveButton = _ctrlParent displayCtrl 77711;
+private _dropButton = _ctrlParent displayCtrl INVENTORY_IDC_DROP;
+private _amountEditbox = _ctrlParent displayCtrl INVENTORY_IDC_EDIT;
+private _playerListCombo = _ctrlParent displayCtrl INVENTORY_IDC_COMBOPLAYERS;
+private _giveButton = _ctrlParent displayCtrl INVENTORY_IDC_GIVE;
 private _nearPlayerList = _ctrlParent setVariable ["RscDisplayInventory_NearPlayerList", []];
 
 //-- 
