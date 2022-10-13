@@ -35,6 +35,14 @@
 #define BASE_CONFIG(CFG,CLASS) inheritsFrom(configFile >> CFG >> CLASS)
 #define CFG_MASTER(TYPE,SETTING) TYPE(missionConfigFile >> "cfgMaster" >> SETTING)
 
+//
+#define GROUP_COLOR_BLACK "GroupColor1"
+#define GROUP_COLOR_RED "GroupColor2"
+#define GROUP_COLOR_GREEN "GroupColor3"
+#define GROUP_COLOR_BLUE "GroupColor4"
+#define GROUP_COLOR_YELLOW "GroupColor5"
+#define GROUP_COLOR_ORANGE "GroupColor6"
+#define GROUP_COLOR_PINK "GroupColor7"
 
 //Database Conversion Macros
 #define SIDE_TARGET_COP -100
@@ -75,3 +83,4 @@
 #define GET_BEGUID_S64(var) ('BEGuid' callExtension (["get", var] joinString ":"))
 #define GET_BEGUID(obj) GET_BEGUID_S64(getPlayerUID obj)
 
+#define RPT_FILE_LB diag_log ((format["%1 %2",__FILE__,__LINE__]) + endl)

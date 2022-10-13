@@ -2,9 +2,8 @@
 	## Nikko Renolds
 	## https://github.com/Ni1kko/FrameworkV2
 */
-
+#define DIK_INCLUDES 1
 #include "..\..\clientDefines.hpp"
-#include "\a3\ui_f\hpp\definedikcodes.inc"
 
 disableSerialization;
 

@@ -52,7 +52,7 @@ private _moneyClient = switch (_type) do {
 //-- Server values don't match client values (Hacker?)
 if(_moneyClient > _moneyBefore)then{
 	_moneyAfter = _moneyClient;
-	diag_log format["Money hack detected -> %1",getPlayerUID _target];
+	[format["Money hack detected -> %1",getPlayerUID _target]]call MPServer_fnc_log;
 	["Hack Detected", "Money client does not match server money", "Antihack"] remoteExecCall ["MPClient_fnc_endMission",_senderOwnerID];
 };
 

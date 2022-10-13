@@ -15,7 +15,8 @@ params [
 disableSerialization;
 
 if(not((toUpper _vehicleType) in ["CAR","AIR","SHIP"])) exitWith {
-    diag_log format ["Invalid Vehicle Type: %2 | Trader GridPos: %1",mapGridPosition _building,_vehicleType];
+    RPT_FILE_LB;
+    [format ["Invalid Vehicle Type: %2 | Trader GridPos: %1",mapGridPosition _building,_vehicleType]]call MPClient_fnc_log;
     false
 };
 
@@ -23,7 +24,8 @@ private _className = typeOf _building;
 private _config = [missionConfigFile >> "cfgHouses" >> worldName >> _className, missionConfigFile >> "cfgGarages" >> worldName >> _className] select {isClass _x};
 
 if (count _config isEqualTo 0) exitWith {
-    diag_log format ["Garage Config Not Found For Classname: %2 | Trader GridPos: %1",mapGridPosition _building,_className];
+    RPT_FILE_LB;
+    [format ["Garage Config Not Found For Classname: %2 | Trader GridPos: %1",mapGridPosition _building,_className]]call MPClient_fnc_log;
     false
 };
 

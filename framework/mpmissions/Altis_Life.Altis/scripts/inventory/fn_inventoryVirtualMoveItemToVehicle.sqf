@@ -54,8 +54,37 @@ if(_selectedAmount < 1)exitWith{
 private _returnControl = _ctrlParent getVariable ["RscDisplayInventory_ReturnControl", controlNull];
 private _mainPageIndex = _ctrlParent getVariable ["RscDisplayInventory_mainPageIndex", 0];
 private _selectedItemName = ITEM_DISPLAYNAME(_selectedItem);
+private _targetObject = _ctrlParent setVariable ["RscDisplayInventory_targetObject", objNull];
+private _allowedTypes = [];
 
-if not(["TAKE", _selectedItem, _selectedAmount] call MPClient_fnc_handleVitrualItem) exitWith {
+if(isNull _targetObject)exitWith {
+    hint "Error: No target object found!";
+	false
+};
+
+if(_targetObject isEqualTo player)exitWith {
+    hint "Error: Items already in your inventory!";
+	false
+};
+
+if(_object isKindOf "CAManBase")exitWith {
+    hint "Error: Can store items into other player inventorys\nuse the give or drop option!";
+	false
+};
+
+//-- Vehicle types
+_allowedTypes append ["Car","Air","Ship","Armored","Submarine"];
+//-- House types
+_allowedTypes append ["Box_IND_Grenades_F","B_supplyCrate_F"];
+//-- Tent types
+_allowedTypes append ["Land_Campfire_F", "Campfire_burning_F","Land_TentA_F","Land_TentDome_F"];
+
+if not(typeOf _targetObject in _allowedTypes)exitWith {
+    hint "Error: Can only store vitems into vehicles, houses and tents!";
+	false
+};
+
+if not(["PUT", _selectedItem, _selectedAmount] call MPClient_fnc_handleVitrualItem) exitWith {
     hint format["You do not have enough %1 to move",toLower _selectedItemName];
 	false
 };

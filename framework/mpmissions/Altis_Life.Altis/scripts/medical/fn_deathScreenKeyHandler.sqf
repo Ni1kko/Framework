@@ -6,8 +6,8 @@
 	Github:		https://github.com/Ni1kko/FrameworkV2
 	
 */
-
-#include "\a3\ui_f\hpp\definedikcodes.inc"
+#define DIK_INCLUDES 1
+#include "..\..\clientDefines.hpp"
 
 params ["_ctrl","_code","_shift","_ctrlKey","_alt"];
 

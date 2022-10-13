@@ -7,13 +7,15 @@
 params ["_serverName","_missionName","_worldName","_worldSize"];
 
 //-- Handle file runing before preInit (Ban hacker)
-if (!isFinal "life_var_preInitTime")exitWith{ 
+if (!isFinal "life_var_preInitTime")exitWith{
+    RPT_FILE_LB;
     ["Hack Detected", "MPClient_fnc_init ran before preInit hacker detected", "Antihack"] call MPClient_fnc_endMission;
     false;
 };
 
 //-- Handle file runing after init (Ban hacker)
 if (isFinal "life_var_initTime")exitWith{
+    RPT_FILE_LB;
     ["Hack Detected", "`life_var_initTime` already final, Hacker detected", "Antihack"] call MPClient_fnc_endMission;
     false;
 };

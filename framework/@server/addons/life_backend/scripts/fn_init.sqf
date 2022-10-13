@@ -35,7 +35,7 @@ cleanupFSM = [] call MPServerFSM_fnc_cleanup;
 
 life_var_animalTypesRestricted append (getArray(missionConfigFile >> "cfgMaster" >> "animaltypes_fish") select {not(_x in life_var_animalTypesRestricted)});
 life_var_animalTypesRestricted append (getArray(missionConfigFile >> "cfgMaster" >> "animaltypes_hunting") select {not(_x in life_var_animalTypesRestricted)});
-life_var_animalTypesRestricted append ((getArray(configFile >> "CfgEnviroment" >> "wildLife" >> "animaltypes")#0) select {not(_x in life_var_animalTypesRestricted)});
+life_var_animalTypesRestricted append ((getArray(configFile >> "CfgEnviroment" >> "wildLife" >> "animaltypes") apply {_x#0}) select {not(_x in life_var_animalTypesRestricted)});
 
 private _severSchedulerStartUpQueue = [ 
 	//--- Every 5 seconds

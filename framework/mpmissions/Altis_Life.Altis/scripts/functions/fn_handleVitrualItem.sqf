@@ -111,32 +111,27 @@ if(_inventoryType isEqualTo "Player")then
                 };
             };
         };
-    };
-}else{
-    private _selectedObject = param [4,objNull,[objNull]];
-    
-    if not(isNull _selectedObject)then
-    {
-        (_selectedObject getVariable ["virtualInventory",[]]) params [
-            ["_invArray",[],[[]]],
-            ["_invWeight",0,[0]]
-        ];
-
-        ([_selectedObject] call MPClient_fnc_vehicleWeight) params [
-            ["_actualWeight",-1,[0]],
-            ["_maxWeight",0,[0]]
-        ];
-
-        //-- Dafuq happened? item added manual and weight not tracked...
-        if(_invWeight isNotEqualTo _actualWeight)then {
-            _invWeight = _actualWeight;
-        };
-
-        switch _mode do
+        //-- Put item from player virtualItems to (vehicle\house\ground\tent) virtualItems
+        case "PUT": 
         {
-            //-- Put item from player virtualItems to (vehicle\house\ground\tent) virtualItems
-            case "PUT": 
+            private _selectedObject = param [4,objNull,[objNull]];
+    
+            if not(isNull _selectedObject)then
             {
+                (_selectedObject getVariable ["virtualInventory",[]]) params [
+                    ["_invArray",[],[[]]],
+                    ["_invWeight",0,[0]]
+                ];
+
+                ([_selectedObject] call MPClient_fnc_vehicleWeight) params [
+                    ["_maxWeight",0,[0]],
+                    ["_actualWeight",-1,[0]]
+                ];
+
+                //-- Dafuq happened? item added manual and weight not tracked...
+                if(_invWeight isNotEqualTo _actualWeight)then {
+                    _invWeight = _actualWeight;
+                };
                 private _arrayIndex = _invArray find _selectedItem;
                 private _selectedArray = [_invArray param [_arrayIndex,["",-1]], ["",-1]] select (_arrayIndex isEqualTo -1);
                 private _currentValue = _selectedArray param [1,0];
@@ -168,6 +163,30 @@ if(_inventoryType isEqualTo "Player")then
                     };
                 };
             };
+        }; 
+    };
+}else{
+    private _selectedObject = param [4,objNull,[objNull]];
+    
+    if not(isNull _selectedObject)then
+    {
+        (_selectedObject getVariable ["virtualInventory",[]]) params [
+            ["_invArray",[],[[]]],
+            ["_invWeight",0,[0]]
+        ];
+
+        ([_selectedObject] call MPClient_fnc_vehicleWeight) params [
+            ["_maxWeight",0,[0]],
+            ["_actualWeight",-1,[0]]
+        ];
+
+        //-- Dafuq happened? item added manual and weight not tracked...
+        if(_invWeight isNotEqualTo _actualWeight)then {
+            _invWeight = _actualWeight;
+        };
+
+        switch _mode do
+        {
             //-- Take item from (vehicle\house\ground\tent) virtualItems to player virtualItems
             case "TAKE": 
             {

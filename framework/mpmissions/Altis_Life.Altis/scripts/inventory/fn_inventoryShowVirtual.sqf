@@ -26,8 +26,8 @@ private _storageUser = (([_object,player] select {not(isNull _x)}) param [0, obj
 private _isNotBeingUsed = (isNull(_storageUser) OR (_storageUser isEqualTo player));
 
 ([_object] call MPClient_fnc_vehicleWeight) params [
-    ["_objectWeight",0],
-    ["_objectMaxWeight",0]
+    ["_objectMaxWeight",0],
+    ["_objectWeight",0]
 ];
 
 //-- check for other inventorys
@@ -54,6 +54,7 @@ private _allvitems = virtualNamespace getVariable ["allvitems",[]];
 private _nearVitems = (_allvitems select {((objectFromNetId _x) distance2D player) <= 15});
 
 //-- 
+_ctrlParent setVariable ["RscDisplayInventory_targetObject", [_object,player] select (isNull _object)];
 _ctrlParent setVariable ["RscDisplayInventory_nearVitems", _nearVitems];
 
 //-- 
@@ -143,6 +144,7 @@ _ctrlParent setVariable ["RscDisplayInventory_nearVitems", _nearVitems];
                                     //-- Menu list
                                     _control ctrlRemoveAllEventHandlers "LBSelChanged";
                                     lbClear _control;
+                                    private _items = _vehicleVirtualItems param [0,[]];
                                     if(count [] > 0)then{
                                         { 
                                             private _amountOwned = ITEM_VALUE(_x);
@@ -153,7 +155,7 @@ _ctrlParent setVariable ["RscDisplayInventory_nearVitems", _nearVitems];
                                             if (count _icon > 0) then {
                                                 _control lbSetPicture [_forEachIndex,_icon];
                                             };
-                                        } forEach _vehicleVirtualItems;
+                                        } forEach _items;
                                     };
                                     _control ctrlAddEventHandler ["LBSelChanged", "_this call MPClient_fnc_inventoryVirtualLBSelChanged"];
                                     _control lbSetCurSel 0;

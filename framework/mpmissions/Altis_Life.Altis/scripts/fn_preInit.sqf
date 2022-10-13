@@ -396,16 +396,19 @@ private _functionGroups = [/*DON'T EDIT*/];
 
 //-- Check RemoteExec Functions whitelist mode
 if(getNumber(missionConfigFile >> "CfgRemoteExec" >> "Functions" >> "mode") >= 2)then{
+    RPT_FILE_LB;
     ["Warning RemoteExec Functions whitelist disabled, Major Security Risk!",false,true] call MPClient_fnc_log;
 };
 
 //-- Check RemoteExec Functions whitelist mode
 if(getNumber(missionConfigFile >> "CfgRemoteExec" >> "Commands" >> "mode") >= 2)then{
+    RPT_FILE_LB;
     ["Warning RemoteExec Commands whitelist disabled, Major Security Risk!",false,true] call MPClient_fnc_log;
 };
 
 //-- flagged variable found. TODO: handle this through anticheat on server once detected
-if(count _variablesFlagged > 0)exitWith{ 
+if(count _variablesFlagged > 0)exitWith{
+    RPT_FILE_LB;
     [0,format["[Antihack] Hacker Detected %1 Variables flagged",getPlayerUID player],true,[profileNameSteam, profileName]] remoteExecCall ["MPClient_fnc_broadcast",-2];
     [format ["[LIFE] %1 Variables flagged",count _variablesFlagged]] call MPClient_fnc_log;
     {[format ["[LIFE] %1 = %2;",_x#0,_x#1]] call MPClient_fnc_log; uiSleep 0.6}forEach _variablesFlagged;

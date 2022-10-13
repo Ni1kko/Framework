@@ -39,6 +39,18 @@
 	#define GUI_GRID_CENTER_H        (GUI_GRID_CENTER_HAbs / 25)
 	#define GUI_GRID_CENTER_X        (safezoneX + (safezoneW - GUI_GRID_CENTER_WAbs)/2)
 	#define GUI_GRID_CENTER_Y        (safezoneY + (safezoneH - GUI_GRID_CENTER_HAbs)/2)
+
+	#undef RE_CLIENT
+	#define RE_CLIENT 1
+	
+    #define REWhitelist(NAME,TARGET) class NAME { \
+        allowedTargets = TARGET; \
+    };
+    #define REWhitelistJIP(NAME,TARGET) class NAME { \
+        allowedTargets = TARGET; \
+        jip = 1; \
+    };
+    
 #else
 	//--- Databse related helpers
 	#define MAX_SECS_TOO_WAIT_FOR_SERVER 30
@@ -153,8 +165,17 @@
 	#define PVAR_CLIENT(var,id) id publicVariableClient var
 
 	//-- Debug
-	#define DIAG_LOG diag_log format["%1 %2",__FILE__,__LINE__];
+	#define RPT_FILE_LB(a) diag_log (format["%1 %2" + endl + "%3",__FILE__,__LINE__, ##a])
 #endif
+
+//
+#define GROUP_COLOR_BLACK "GroupColor1"
+#define GROUP_COLOR_RED "GroupColor2"
+#define GROUP_COLOR_GREEN "GroupColor3"
+#define GROUP_COLOR_BLUE "GroupColor4"
+#define GROUP_COLOR_YELLOW "GroupColor5"
+#define GROUP_COLOR_ORANGE "GroupColor6"
+#define GROUP_COLOR_PINK "GroupColor7"
 
 //--- RscDisplay macros
 #define INVENTORY_IDD 602
@@ -175,7 +196,7 @@
 
 
 //--- RscTitle macros
-#define NameTagBaseIDC 78000
+#define NAMETAG_IDC_BASE 78000
 
 //-- Misc
 #define OWNER_STEAMID "76561199109931625"

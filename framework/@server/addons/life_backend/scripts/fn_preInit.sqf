@@ -77,6 +77,11 @@ private _bankVariables = [
     
 ];
 
+private _masterGroup = group(missionNamespace getVariable ["mastergroup",objNull]);
+private _nameTagCount = (count(missionConfigFile >> "RscTitles" >> "RscTitleNameTags" >> "controls") - 1);
+private _playableSlots = (playableSlotsNumber west + playableSlotsNumber east + playableSlotsNumber independent + playableSlotsNumber civilian);
+private _variablesFlagged = [/*DON'T EDIT*/];
+
 //-- setup sides
 serverSide = createcenter sidelogic;
 clientSide = sideEmpty;
@@ -91,11 +96,11 @@ AIGroup = creategroup [AISide,false];
 wildLifeGroup = creategroup [wildLifeSide,false];
 
 //-- Setup GroupIDs
-serverGroup setgroupid ["Server", "GroupColor2"];
-clientGroup setgroupid ["Client", "GroupColor2"];
-wildLifeGroup setgroupid ["wildLife", "GroupColor3"];
-AIGroup setgroupid ["Traders", "GroupColor3"];
-bankGroup setgroupid ["Bank", "GroupColor4"];
+serverGroup setGroupIdGlobal ["Server", GROUP_COLOR_BLACK];
+clientGroup setGroupIdGlobal ["Client", GROUP_COLOR_BLACK];
+wildLifeGroup setGroupIdGlobal ["wildLife", GROUP_COLOR_YELLOW];
+AIGroup setGroupIdGlobal ["Traders", GROUP_COLOR_GREEN];
+bankGroup setGroupIdGlobal ["Bank", GROUP_COLOR_GREEN];
 
 //-- setup logic
 serverLogicNameSpace =  serverGroup createunit ["Logic",[0,0,0],[],0,"none"];
@@ -114,7 +119,6 @@ wildlifeNameSpace attachTo[serverLogicNameSpace,[0,0,0]];
 virtualNamespace attachTo[serverLogicNameSpace,[0,0,0]];
 
 //-- Transfer NPC group
-private _masterGroup = group(missionNamespace getVariable ["mastergroup",objNull]);
 if not(isNull _masterGroup) then {
     (units _masterGroup) joinSilent AIGroup;
     deleteGroup _masterGroup;
@@ -139,8 +143,6 @@ serverLogicNameSpace setvariable ["TrustedTraders",units serverGroup, true];
 //-- Setup vitual inventory
 virtualNamespace setvariable ["allvitems",[],true];
 virtualNamespace setvariable ["maxspace",1000,true];
-
-private _variablesFlagged = [/*DON'T EDIT*/];
 
 //-- init Variables
 {
@@ -204,7 +206,8 @@ private _variablesFlagged = [/*DON'T EDIT*/];
 
 //-- flagged variable found. TODO: handle this through anticheat on server once detected
 if(count _variablesFlagged > 0)exitWith{ 
-   [format ["[LIFE] %1 Variables flagged during preInit",count _variablesFlagged]] call MPServer_fnc_log;
+    RPT_FILE_LB;
+    [format ["[LIFE] %1 Variables flagged during preInit",count _variablesFlagged]] call MPServer_fnc_log;
     {[format ["[LIFE] %1 = %2;",_x#0,_x#1]] call MPServer_fnc_log; uiSleep 0.6}forEach _variablesFlagged;
 	life_var_endMissionServerJIP = ["","","Antihack"] remoteExec ["MPClient_fnc_endMission", -2, true];
 	life_var_endMissionClientJIP = ["Antihack"] remoteExec ["BIS_fnc_endMissionServer", 2, true];
@@ -226,6 +229,12 @@ if(count _profileVariables > 0)then{
 //-- save mission proflie vars
 if(count _missionProfileVariables > 0)then{
     saveMissionProfileNamespace;
+};
+
+//-- setup name tags
+if(_playableSlots > _nameTagCount)then{
+    RPT_FILE_LB;
+    [format ["[LIFE] %1 playable slots detected. But only %2 name tags available. Please add name tags in config",_playableSlots,_nameTagCount]] call MPServer_fnc_log;
 };
 
 private _initThread = [serverName,missionName,worldName,worldSize] spawn MPServer_fnc_init;
