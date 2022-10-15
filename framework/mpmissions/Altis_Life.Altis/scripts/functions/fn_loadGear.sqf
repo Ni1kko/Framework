@@ -18,18 +18,30 @@ _gear params [
 //--- Remove all gear
 [_player,_isDead] call MPClient_fnc_stripDownPlayer;
 
-//--- Loadout
-if(count _loadout > 0)then{
-    _player setUnitLoadout _loadout;
-}else{
+//--- Carry Weight
+life_maxWeight = CFG_MASTER(getNumber,"total_maxWeight");
+
+//--- Get New Loadout
+if(count _loadout isEqualTo 0)exitWith{
+    systemChat "Geting Deafult Gear...";
     [] call MPClient_fnc_startLoadout;
+    true
 };
 
-//--- Carry Weight
-life_maxWeight = if (backpack _player isEqualTo "") then {CFG_MASTER(getNumber,"total_maxWeight")} else {CFG_MASTER(getNumber,"total_maxWeight") + round(FETCH_CONFIG2(getNumber,"CfgVehicles",(backpack _player),"maximumload") / 4)};
+systemChat "Loading Gear...";
 
-//--- VirtualItems
+//--- Set last Loadout
+_player setUnitLoadout _loadout;
+
+//--- Adjust Carry Weight
+if (count(backpack _player) > 0) then {
+    life_maxWeight =  CFG_MASTER(getNumber,"total_maxWeight") + round(FETCH_CONFIG2(getNumber,"CfgVehicles",(backpack _player),"maximumload") / 4)
+};
+
+//--- Set last virtualItems
 if(count _vitems > 0)then{
+    systemChat "Loading Virtual Items...";
+    systemChat format["_vitems => %1",str _vitems];
     {["ADD",_x#0,_x#1] call MPClient_fnc_handleVitrualItem} forEach _vitems;
 };
 

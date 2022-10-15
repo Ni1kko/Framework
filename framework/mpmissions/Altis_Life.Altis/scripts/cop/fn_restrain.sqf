@@ -19,6 +19,7 @@ if (isNull _cop) exitWith {};
 
 //Monitor excessive restrainment
 [] spawn {
+    scriptName 'MPClient_fnc_restrainmentMonitor';
     private "_time";
     for "_i" from 0 to 1 step 0 do {
         _time = time;

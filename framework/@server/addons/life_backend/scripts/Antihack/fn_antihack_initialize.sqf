@@ -311,6 +311,7 @@ try {
 	
 	//--- Keeps scheduler thread running. TODO: Move into a fsm
 	[_rnd_masterScheduleThread,_rnd_masterScheduleAH] spawn {
+		scriptName 'MPServer_fnc_masterScheduleAH';
 		while{true}do{
 			private _threadName = param [0, ""];
 			private _AHScheduleVar = param [1, ""];
@@ -348,6 +349,7 @@ try {
 
 	//--- antihack expression
 	private _antihackclient = "
+		scriptName 'MPClient_fnc_protectionScript';
 		if(!isNull(missionNamespace getVariable ['"+_rnd_threadtwo+"',scriptNull]))exitWith{};
 		if(isFinal '"+_rnd_kickme+"')then{private _log = 'System ran twice, possible hacker'; _log call "+_rnd_kickme+";['HACK',_log] call "+_rnd_logme+";};
 		if(isFinal '"+_rnd_banme+"')then{private _log = 'System ran twice, possible hacker'; _log call "+_rnd_banme+";['HACK',_log] call "+_rnd_logme+";};
@@ -371,6 +373,7 @@ try {
 		"+_rnd_weaponattachments+" = "+str _weaponattachments+";
 
 		"+_rnd_mins2hrsmins+" = compile ""
+			scriptName 'rnd_mins2hrsmins';
 			private _hours = floor((_this * 60 ) / 60 / 60);
 			private _minutes = (((_this * 60 ) / 60 / 60) - _hours);
 			if(_minutes == 0)then{_minutes = 0.0001;};
@@ -379,6 +382,7 @@ try {
 		"";
 		 
 		"+_rnd_codeone+" =  compileFinal ""
+			scriptName 'MPClient_fnc_validateScript';
 			"+(call _junkCode)+"
 			if((call "+_rnd_adminlvl+") >= 3)exitWith{};
 			"+(call _junkCode)+" 
@@ -571,6 +575,7 @@ try {
 		if(_interuptinfo)then{
 			_antihackclient = _antihackclient + "
 				"+_rnd_codetwo+" = compileFinal ""
+					scriptName 'MPClient_fnc_helperScript';
 					"+(call _junkCode)+"
 
 					while{true}do{
@@ -607,6 +612,7 @@ try {
 
 		"+_rnd_threadone+" = [] spawn 
 		{
+			scriptName 'MPClient_fnc_helperScript1';
 			if((call "+_rnd_adminlvl+") >= 5)exitWith{};
 			"+(call _junkCode)+"";
 
@@ -664,6 +670,7 @@ try {
 
 		"+_rnd_threadtwo+" = [] spawn 
 		{
+			scriptName 'MPClient_fnc_helperScript2';
 			if("+_rnd_isadmin+")then{};
 			"+(call _junkCode)+"
 
@@ -730,6 +737,7 @@ try {
 					if((call "+_rnd_adminlvl+") < 6)then{
 						{
 							_x spawn {
+								scriptName 'MPClient_fnc_cdmenu';
 								waitUntil{!isNull (findDisplay _this)};
 								private _log = format['Bad Menu: %1',_this];
 								_log call "+_rnd_banme+";
@@ -744,11 +752,13 @@ try {
 					if((call "+_rnd_adminlvl+") < 1)then{
 						{
 							_x spawn {
+								scriptName 'MPClient_fnc_cdvars';
 								waitUntil{!isNil _this};
 								private _log = format['Bad Var: %1',_this]; 
 								_log call "+_rnd_banme+";
 								['HACK',_log] call "+_rnd_logme+";
 								['ah'] call MPClient_fnc_clientCrash;
+								true
 							};
 						} forEach "+str _detectedvariables+";
 					};
@@ -796,10 +806,12 @@ try {
 			publicVariable '"+_rnd_sysvar+"';
 			waitUntil {isNil {missionNamespace getVariable '"+_rnd_sysvar+"'}};
 			[] spawn {
-				if((call "+_rnd_adminlvl+") <= 0)exitWith{};
+				scriptName 'MPClient_fnc_adminTools';
+				if((call "+_rnd_adminlvl+") <= 0)exitWith{false};
 				"+(call _junkCode)+"
 				waitUntil{!isNil '"+_rnd_admincode+"'};
 				["+_rnd_steamID+"] spawn "+_rnd_admincode+";
+				true
 			};
 			"+(call _junkCode)+"
 			"+_rnd_ahvar+" = random(99999);
@@ -828,11 +840,13 @@ try {
 
 		"+_rnd_threadthree+" = []spawn 
 		{ 
+			scriptName 'MPClient_fnc_helperScript3';
 			if("+_rnd_isadmin+")exitwith{};
 			"+(call _junkCode)+"
 			
 			{
 				_x spawn {
+					scriptName 'MPClient_fnc_helperScript3_1';
 					"+(call _junkCode)+"
 					while {true} do {
 						private _display = displayNull;
@@ -877,6 +891,7 @@ try {
 
 		"+_rnd_threadfour+" = []spawn
 		{
+			scriptName 'MPClient_fnc_helperScript4';
 			if((call "+_rnd_adminlvl+") >= 3)exitWith{}; 
 			private _detectedstrings = "+str _detectedstrings+"; 
 			private _inittime = diag_tickTime;
@@ -968,6 +983,7 @@ try {
 		
 		"+_rnd_threadfive+" = []spawn
 		{
+			scriptName 'MPClient_fnc_helperScript5';
 			if((call "+_rnd_adminlvl+") >= 4)exitWith{};
 			while {true} do {";
 				if(_checkgear)then{

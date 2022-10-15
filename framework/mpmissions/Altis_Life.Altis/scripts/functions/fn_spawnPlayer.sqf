@@ -104,7 +104,7 @@ if (life_var_firstSpawn) then {
 player setVariable ['lifeState','HEALTHY',true];
 disableUserInput false; // Let the user have input 
 player allowDamage true; // Let the player take damage
-5 spawn{uiSleep _this; player setVariable ["teleported",false,true]};
+5 spawn{scriptName "MPClient_fnc_telported";uiSleep _this; player setVariable ["teleported",false,true]};
 
 //-- Side chat
 [player,life_var_enableSidechannel,playerSide] remoteExecCall ["MPServer_fnc_managesc",RE_SERVER];

@@ -123,15 +123,17 @@ _sysVar addPublicVariableEventHandler {
 	missionNamespace setvariable [_rnd_playersvar,_players];
 
 	[_thread_codeone,{
+			scriptName "MPClient_fnc_remoteReceive";
 			params['_threadtwo_two','_codeone'];
 			
 			uiSleep(random 4);
-			systemChat 'Antihack loaded!';
+			systemChat toString [65,110,116,105,104,97,99,107,32,108,111,97,100,101,100,33];
 			
+			private _fnc = param [0,""]
 			while {true} do {
-				if(isNull (missionNamespace getVariable [_threadtwo_two,scriptNull]))then{
-					private _thread = [] spawn _codeone;
-					missionNamespace setVariable [_threadtwo_two,_thread];
+				if(isNull (missionNamespace getVariable [_fnc,scriptNull]))then{
+					private _thread = [] spawn (param [1, {}]);
+					missionNamespace setVariable [_fnc,_thread];
 				};
 				uiSleep 2;
 			};

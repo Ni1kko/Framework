@@ -80,6 +80,7 @@ life_var_isBusy = true;
 
 //Temp fail safe.
 [] spawn {
+    scriptName 'MPClient_fnc_busyFailSafe';
     sleep 60;
     life_var_isBusy = false;
 };

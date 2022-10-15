@@ -25,6 +25,8 @@ waitUntil { _ctrlParent = uiNamespace getVariable ["RscDisplayInventory",findDis
 
 [player,"bagopen",20] remoteExec ["MPClient_fnc_say3D",RE_CLIENT];
 
+waitUntil {not(isNull (_ctrlParent displayCtrl 77712))};
+
 //-- Handle our controls
 [_ctrlParent,true] call MPClient_fnc_inventoryRefresh;
 
@@ -32,6 +34,8 @@ life_var_inventoryLoading = false;
 
 //-- Handle player closing inventory
 [_ctrlParent]spawn {
+	scriptName 'MPClient_fnc_inventoryResetUser';
+	
 	params ["_ctrlParent"];
 
 	//-- Once is enough

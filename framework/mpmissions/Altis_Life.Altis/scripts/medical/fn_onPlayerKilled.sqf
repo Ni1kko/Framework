@@ -7,37 +7,37 @@
     and pull up the death dialog / camera functionality.
 */
 params [
-    ["_unit",objNull,[objNull]],
+    ["_player",objNull,[objNull]],
     ["_killer",objNull,[objNull]]
 ];
 
 disableSerialization;
 
 //-- Log death
-//[format ["%1(%2) killed %1(%2)",_killer getVariable["realname",""],getPlayerUID _killer,_unit getVariable["realname",""],getPlayerUID _unit],true,true] call MPClient_fnc_log;
+//[format ["%1(%2) killed %1(%2)",_killer getVariable["realname",""],getPlayerUID _killer,_player getVariable["realname",""],getPlayerUID _player],true,true] call MPClient_fnc_log;
 
-if  !((vehicle _unit) isEqualTo _unit) then {
-    UnAssignVehicle _unit;
-    _unit action ["getOut", vehicle _unit];
-    _unit setPosATL [(getPosATL _unit select 0) + 3, (getPosATL _unit select 1) + 1, 0];
+if  !((vehicle _player) isEqualTo _player) then {
+    UnAssignVehicle _player;
+    _player action ["getOut", vehicle _player];
+    _player setPosATL [(getPosATL _player select 0) + 3, (getPosATL _player select 1) + 1, 0];
 };
 
-private _arrested = (_unit getVariable ["arrested",false]);
+private _arrested = (_player getVariable ["arrested",false]);
 
 //Set some vars
-{_unit setVariable _x} forEach [
+{_player setVariable _x} forEach [
     ["Revive",true,true],
     ['restrained',false,true],
     ['Escorting',false,true],
     ['transporting',false,true],
     ['playerSurrender',false,true],
-    ['steam64id',getPlayerUID _unit,true],
+    ['steam64id',getPlayerUID _player,true],
     ['realname',profileName,true]
 ];
 
 //--
-[_unit] call life_fnc_leaveCombat;
-[_unit] call life_fnc_leaveNewLife;
+[_player] call life_fnc_leaveCombat;
+[_player] call life_fnc_leaveNewLife;
 
 player setVariable ["lifeState","DEAD",true];
 life_var_isBusy = false;
@@ -53,7 +53,7 @@ if (dialog) then {
 if (!isNull _killer) then 
 {  
     private _isKillerCop = side _killer isEqualTo west;
-    private _isPlayerCop = side _unit isEqualTo west;
+    private _isPlayerCop = side _player isEqualTo west;
     
     //-- Handle Killed by police
     if (_isKillerCop AND not(_isPlayerCop)) then 
@@ -69,7 +69,7 @@ if (!isNull _killer) then
     };
 
     //-- Handle wanted
-    if (_killer isNotEqualTo _unit) then
+    if (_killer isNotEqualTo _player) then
     {
         //-- Make the killer wanted
         if (alive _killer AND not(local _killer)) then 
@@ -88,7 +88,7 @@ if (!isNull _killer) then
 };
 
 //-- Drop items and strip player
-[_unit,true] call MPClient_fnc_stripDownPlayer;
+[_player,true] call MPClient_fnc_stripDownPlayer;
 
 //-- Stop bleeding
 ["all"] call MPClient_fnc_removeBuff;
@@ -102,9 +102,9 @@ closeDialog 0;
 titleCut ["", "BLACK IN", 1];
 
 //-- Leave side chat 
-[_unit,false,side _unit] remoteExecCall ["MPServer_fnc_managesc",2];
+[_player,false,side _player] remoteExecCall ["MPServer_fnc_managesc",2];
 
 //--
-[_unit, _arrested] spawn MPClient_fnc_respawned;
+[_player, _arrested] spawn MPClient_fnc_respawned;
 
 true

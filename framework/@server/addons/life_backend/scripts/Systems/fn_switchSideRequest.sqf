@@ -104,7 +104,7 @@ if (_newside in [east,west,independent] AND _rank <= 0)exitWith {
 		_newplayerObject setUnitLoadout _loadout;
 
 		//-- Setup event handlers 
-		[] call MPClient_fnc_setupEVH;
+		["player",_newplayerObject] call MPClient_fnc_setupEventHandlers;
 
 		//--- Join side chat for new side
 		[_newplayerObject, life_var_enableSidechannel, playerSide] remoteExecCall ["MPServer_fnc_managesc", 2];
@@ -143,6 +143,7 @@ publicVariable "life_var_playtimeValuesRequest";
 //--- Delete old character
 if _deleteOLD then{
 	[_playerObject] spawn {
+		scriptName 'MPClient_fnc_deleteOldCharacter';
 		params [
 			["_playerObject",objNull,[objNull]]
 		];

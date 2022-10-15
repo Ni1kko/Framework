@@ -31,7 +31,7 @@ private _isNotBeingUsed = (isNull(_storageUser) OR (_storageUser isEqualTo playe
 ];
 
 //-- check for other inventorys
-switch (true) do 
+switch (true) do
 {
     //-- Add vehicle inventory to combo selection
     case (_isKindOfVehicle AND (_inVehicle OR _isCloseEnough)): {_pages pushBackUnique "Vehicle"};
@@ -263,6 +263,10 @@ _ctrlParent setVariable ["RscDisplayInventory_nearVitems", _nearVitems];
                                 {
                                     private _totalWeight = 0;
                                     private _maxWeight = virtualNamespace getVariable ["maxspace",0];
+                                    if(_totalWeight < 0)then{_totalWeight = 0};
+                                    if(_maxWeight < 0)then{_maxWeight = 0};
+                                    if(_totalWeight > 999)then{_totalWeight = 999};
+                                    if(_maxWeight > 999)then{_maxWeight = 999};
 
                                     {
                                         private _itemData = (objectFromNetId _x) getVariable ["item",[]];
@@ -280,7 +284,10 @@ _ctrlParent setVariable ["RscDisplayInventory_nearVitems", _nearVitems];
                                         //-- Weight (droped items / max weight)
                                         case INVENTORY_IDC_WEIGHT: 
                                         { 
+                                            if(_totalWeight < 0)then{_totalWeight = 0};
+                                            if(_maxWeight < 0)then{_maxWeight = 0};
                                             if(_totalWeight > 999)then{_totalWeight = 999};
+                                            if(_maxWeight > 999)then{_maxWeight = 999};
                                             _control ctrlSetText format ["Weight: %1 / %2", _totalWeight, _maxWeight];
                                         };
                                         //-- Menu list (droped items)

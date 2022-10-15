@@ -14,8 +14,19 @@ params [
 
 //-- Check valid input
 if (count _selectedItem isEqualTo 0 OR _selectedAmount isEqualTo 0) exitWith {false};
-if not(isClass(missionConfigFile >> "cfgVirtualItems" >> _selectedItem)) exitWith {false};
 if not(_mode in ["ADD","USE","GIVE","PUT","DROP"]) exitWith {false};
+
+if(count (_selectedItem splitString "_") >= 2) then {
+    {
+        private _classname = configName _x;
+        
+        if(toLower _selectedItem in [toLower _classname,toLower(ITEM_VARNAME(_selectedItem))])exitWith{
+            _selectedItem = _classname;
+        };
+    }forEach ("true" configClasses (missionConfigFile >> "cfgVirtualItems"));
+};
+
+if not(isClass(missionConfigFile >> "cfgVirtualItems" >> _selectedItem)) exitWith {false};
 
 private _itemVarName = ITEM_VARNAME(_selectedItem);
 private _itemWeight = ([_selectedItem] call MPClient_fnc_itemWeight) * _selectedAmount;
@@ -204,10 +215,6 @@ if(_inventoryType isEqualTo "Player")then
                     _return = true;
                 
                 }; 
-            };
-            case "USE":
-            {
-
             };
         };
     };

@@ -187,6 +187,8 @@ class CfgFunctions : CfgFsms
             class numberText {};
             class onFired {};
             class onTakeItem {};
+            class missionEvents {};
+            class playerEvents {};
             class playerTextures {};
             class playerTags {};
             class postNewsBroadcast {};
@@ -213,7 +215,7 @@ class CfgFunctions : CfgFsms
             class spawnPlayer {};
             class handleMoney {};
             class setupActions {};
-            class setupEVH {};
+            class setupEventHandlers {};
             class survival {};
             class briefing {};
             class setupStationService {};

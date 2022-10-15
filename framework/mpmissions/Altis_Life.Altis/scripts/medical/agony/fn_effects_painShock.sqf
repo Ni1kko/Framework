@@ -5,6 +5,10 @@
 	Author:     Merrick, Nikko, Affect & IceEagle132
 	
 */
+params [
+	["_section","",[""]],
+	["_time",0,[0]]
+];
 
 if(life_var_painShockRunning) exitWith{false};
 life_var_painShockRunning = true;

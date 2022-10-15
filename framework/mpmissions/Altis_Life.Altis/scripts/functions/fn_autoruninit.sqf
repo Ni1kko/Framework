@@ -5,6 +5,7 @@
 while {true} do {
 	waitUntil{life_var_autorun}; 
 	life_var_autorun_thread = [] spawn {
+		scriptName 'MPClient_fnc_autorunScript';
 		while {life_var_autorun} do { 
 			if (call MPClient_fnc_util_canautorun) then {
 				private _gradient = player call MPClient_fnc_util_getTerrainGradient;

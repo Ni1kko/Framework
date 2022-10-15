@@ -23,6 +23,7 @@ hint format["Eww Gross\n%1 spat on you", name _shooter];
 
 //remove effect
 [7] spawn {
+    scriptName 'MPClient_fnc_spitEffects';
 	params [
 		["_delay",0,[0]]
 	];

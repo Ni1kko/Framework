@@ -20,6 +20,7 @@ ctrlSetText[3501,(localize "STR_Civ_SafeInv")];
 life_safeObj setVariable ["inUse",true,true];
 
 [life_safeObj] spawn {
+    scriptName 'MPClient_fnc_viewSafeContents';
     waitUntil {isNull (findDisplay 3500)};
     (_this select 0) setVariable ["inUse",false,true];
 };

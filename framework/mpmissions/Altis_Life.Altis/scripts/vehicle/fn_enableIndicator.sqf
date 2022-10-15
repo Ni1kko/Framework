@@ -102,6 +102,7 @@ if(isClass(_cfgVehicleIndicator))then{
 
 // Script to power lights
 life_var_typeicatorsThread = [_vehicle, _lights, _blinkInterval,_flashLimit] spawn {
+	scriptName 'MPClient_fnc_typeicatorsThread';
 	params ["_vehicle", "_lights", "_interval","_flashLimit"];
 
 	private _flashIndex = 0;

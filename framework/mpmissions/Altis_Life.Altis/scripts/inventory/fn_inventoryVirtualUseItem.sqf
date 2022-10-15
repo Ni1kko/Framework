@@ -188,6 +188,7 @@ switch _selectedItem do
 		if (_itemRemoved AND CFG_MASTER(getNumber, "enable_fatigue") isEqualTo 1) then {
 			_itemUsed = true;
 			[] spawn {
+				scriptName 'MPClient_fnc_redGullEffect';
 				life_var_effectEnergyDrink = time;
 				titleText [localize "STR_ISTR_RedGullEffect", "PLAIN"];
 				player enableFatigue false;

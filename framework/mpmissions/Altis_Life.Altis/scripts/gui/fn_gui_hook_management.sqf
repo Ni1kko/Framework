@@ -73,6 +73,7 @@ life_var_hud_threads = compileFinal str(systemTimeUTC);
 
 //-- AutoHide
 []spawn {
+	scriptName 'MPClient_fnc_guiHookAutohide';
     while {true} do { 
         //Hide
         waitUntil {true in (life_var_hud_layer_autohide_displays apply {if(typeName _x isEqualTo "STRING")then{!isNull(uiNamespace getVariable [_x,displayNull])}else{if(_x isEqualTo 12)then{visibleMap}else{!isNull(findDisplay _x)}}})};

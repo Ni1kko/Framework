@@ -132,6 +132,7 @@ switch _type do
 				life_var_bankruptTime = diag_tickTime;
 				life_var_bankrupt = true;
 				_bankruptTimer spawn {
+					scriptName 'MPClient_fnc_bankruptTime';
 					if(!isNil "life_var_bankruptTime")exitWith{true};
 					waitUntil {
 						uiSleep 2;

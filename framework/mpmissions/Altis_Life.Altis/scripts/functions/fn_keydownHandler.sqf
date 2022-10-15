@@ -30,6 +30,7 @@ if(_keyCode isEqualTo DIK_I) exitWith
 			INVENTORY_INDEX_VIRTUALITEMS_PLAYER, 
 			life_var_autorun
 		] spawn {//-- Bit messy but it works
+			scriptName 'MPClient_fnc_inventoryOpenScript';
 			params ["_idc", "_pageIndex", "_autorun"];
 			private _control = {((findDisplay INVENTORY_IDD) displayCtrl _idc)}; 
 			private _controlParent = {ctrlParent (call _control)};

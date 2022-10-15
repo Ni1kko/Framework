@@ -28,6 +28,7 @@ if !(_ret isEqualTo []) then {
 };
 
 [_bad] spawn {
+    scriptName 'MPClient_fnc_canAffordBail';
     life_var_canAffordBail = false;
     if (_this select 0) then {
         sleep (10 * 60);

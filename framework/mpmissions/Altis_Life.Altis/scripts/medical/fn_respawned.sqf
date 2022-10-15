@@ -8,7 +8,8 @@ params [
     ["_arrested",false,[false]]
 ];
 
-waitUntil {sleep 0.1; _unit isNotEqualTo player};
+//-- Disable waitUntil due to noticing script hanging at line 11 with diag_activeSQFScripts... output was: (["MPClient_fnc_deathScreen", "mpmissions\__CUR_MP.Altis\scripts\medical\fn_respawned.sqf", true, 11])
+//waitUntil {sleep 0.1; _unit isNotEqualTo player};
 
 //--- Reset our player vars
 life_var_ATMEnabled = true;

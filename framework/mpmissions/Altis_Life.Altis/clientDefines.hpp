@@ -166,6 +166,22 @@
 
 	//-- Debug
 	#define RPT_FILE_LB(a) diag_log (format["%1 %2" + endl + "%3",__FILE__,__LINE__, ##a])
+	
+	#define PLAYER_EVENT_TYPES  [ \
+		"AnimChanged","AnimDone","AnimStateChanged","ContainerOpened","ContainerClosed", \
+		"Dammaged","Deleted","EpeContactStart","EpeContact","EpeContactEnd", \
+		"Explosion","Fired","FiredMan","FiredNear","GestureChanged","GestureDone", \
+		"HandleDamage","HandleHeal","HandleRating","HandleScore","Hit","HitPart","IncomingMissile", \
+		"InventoryOpened","InventoryClosed","Killed","Local","OpticsModeChanged","OpticsSwitch", \
+		"Put","Reloaded","Respawn","SeatSwitchedMan","SoundPlayed","Take","TaskSetAsCurrent", \
+		"VisionModeChanged","WeaponDeployed","WeaponRested" \
+	]
+
+	#define MISSION_EVENT_TYPES [ \
+		"Map", \
+		"MapSingleClick" \
+	]
+
 #endif
 
 //

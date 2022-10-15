@@ -23,6 +23,7 @@ private _soundObject = _object say3D [_sound,_distance,_pitch];
 
 if(_time > 0)then{
     [_soundObject, _time] spawn {
+        scriptName 'MPClient_fnc_say3DTimer';
         params ["_soundObject","_time"];
         uiSleep _time;
         if(not(isNull _soundObject))then{
@@ -33,6 +34,7 @@ if(_time > 0)then{
 
 if(_object getVariable ["endSoundPending",false])then{
     [_object,_soundObject, _time] spawn {
+        scriptName 'MPClient_fnc_say3DVar';
         params ["_object","_soundObject"];
         waitUntil {isNull _soundObject OR {not(_object getVariable ["endSoundPending",true])}};
         if(not(isNull _soundObject))then{

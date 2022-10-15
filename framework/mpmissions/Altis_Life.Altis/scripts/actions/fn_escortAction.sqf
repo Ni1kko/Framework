@@ -21,6 +21,7 @@ _unit setVariable ["Escorting",true,true];
 player reveal _unit;
 
 [_unit] spawn {
+    scriptName 'MPClient_fnc_escorting';
     _unit = _this select 0;
     waitUntil {(!(_unit getVariable ["Escorting",false]))};
     player setVariable ["escortingPlayer",nil];

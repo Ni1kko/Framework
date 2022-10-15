@@ -42,6 +42,7 @@ disableRemoteSensors true; //--- Raycasting
 
 //-- Wildlife client patch
 []spawn {
+    scriptName 'MPClient_fnc_wildlifePatch';
     waitUntil {not(isNil "life_var_animalTypesRestricted")}; 
     while {not(isNull(uiNamespace getVariable ["RscDisplayMission",findDisplay 46]))} do
     {

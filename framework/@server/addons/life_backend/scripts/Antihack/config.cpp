@@ -24,7 +24,7 @@ class CfgAntiHack
     };
 
     //--- options
-    checklanguage = 1;           //check for language                        Notes: (admin lvl 1 and above excluded)
+    checklanguage = 0;           //check for language                        Notes: (admin lvl 1 and above excluded)
     checknamebadchars = 1;       //check for bad chars in players names      Notes: (admin lvl 1 and above excluded, bad chars can break BattleEye, Database, and many more things in arma)
     checknameblacklist = 1;      //check for blacklisted profile name        Notes: (admin lvl 1 and above excluded)
     checkteleport = 1;           //check for teleportion hack                Notes: (admin lvl 1 and above excluded)
@@ -138,7 +138,8 @@ class CfgAntiHack
         "BIGM","Does_Tonic_Like_to_take_Turtle_penis_in_the_ass_LODESTARS","Does_Tonic_Like_to_take_Turtle_penis_in_the_ass_LODESTAR1","GMod","No_No_No_Tonic_likes_A_Big_Fat_Sheep_Cock_Right_in_the_bum_G0d_Mode","Sload","aKFerm","aKMMenu","aKTitans","aKLikeaG0d","riasgremory_G0d_Mode","aKCarG0d","riasgremory_Car_Jesus","aKE5p","riasgremory_isseilol","aKPMark","l33tMapESPLunsear",
         "riasgremory_Noobs","riasgremory_Bitches","riasgremory_Map_Markers","aKUnMmo","jenesuispasuncheateur_unamo","aKVoit","Loljesaispasquoiecriremdr","isseigremory","gremorysama","aKTaCu","aKCardetroy","aKGetKey","aKKillcursor",
         "aKNoEscort","aKEscort","aKtroll","aKTPall","aKUnrestrain","aKNoEscortMe","aKNoTaze","aKJailplayer","aKLisense","riasgremory_titans_shit_reold","Tonic_merde","jaimepaslepoisin_HLEAL","TTTT_IIII___TTTTTTT_RAP_FR","TTTT_IIII___TTTTTTT_REPGA",
-        "TTTT_IIII___TTTTTTT_REPGAs","jaimepaslepoisin_HLEAL","Root_Main4","Root_Pistol4","Root_Rifle4","Root_Machinegun4","Root_Sniper4","Root_Launcher4","Root_Attachement4","VAR56401668319_secret","myPubVar","XXMMWW_boxquad","Init_Menu_Fury","A3RANDVARrpv1tpv","fnc_nestf","XXMMWW_keybinds","smissles","wooden_velo","vabox","bis_fnc_camera_target"
+        "TTTT_IIII___TTTTTTT_REPGAs","jaimepaslepoisin_HLEAL","Root_Main4","Root_Pistol4","Root_Rifle4","Root_Machinegun4","Root_Sniper4","Root_Launcher4","Root_Attachement4","VAR56401668319_secret","myPubVar","XXMMWW_boxquad","Init_Menu_Fury","A3RANDVARrpv1tpv","fnc_nestf","XXMMWW_keybinds","smissles","wooden_velo","vabox","bis_fnc_camera_target",
+        "life_var_cash", "life_var_bank"
     };
 
     //--- bad strings

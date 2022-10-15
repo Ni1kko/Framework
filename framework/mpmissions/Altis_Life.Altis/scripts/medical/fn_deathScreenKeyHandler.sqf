@@ -44,6 +44,7 @@ switch _code do {
 		if(_shift) then {
 			_handled = true;
 			[] spawn {
+				scriptName 'MPClient_fnc_Frozen';
 				hint "You are frozen for 15 seconds for Shift minus";
 				disableUserInput true;
 				uiSleep 15;

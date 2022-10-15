@@ -326,6 +326,7 @@ switch (_keyCode) do
 	{
         if (playerSide in [west,independent] && {vehicle player != player} && {!life_var_sirenActive} && {((driver vehicle player) == player)}) then {
             [] spawn {
+                scriptName 'MPClient_fnc_sirenActive';
                 life_var_sirenActive = true;
                 sleep 4.7;
                 life_var_sirenActive = false;

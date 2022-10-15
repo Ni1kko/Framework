@@ -5,6 +5,11 @@
 	Author:     Merrick, Nikko, Affect & IceEagle132
 	
 */
+params [
+	["_section","",[""]],
+	["_time",0,[0]]
+];
+
 if(life_var_critHitRunning) exitWith{false};
 life_var_critHitRunning = true;
 

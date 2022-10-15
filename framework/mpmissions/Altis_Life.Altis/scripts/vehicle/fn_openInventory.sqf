@@ -32,6 +32,7 @@ ctrlSetText[3504,format [(localize "STR_MISC_Weight")+ " %1/%2",_veh_data select
 life_var_vehicleTrunk = _vehicle;
 
 _vehicle spawn {
+    scriptName 'MPClient_fnc_vehicleHouseUpdate';
     waitUntil {isNull (findDisplay 3500)};
     _this setVariable ["trunk_in_use",false,true];
     if (_this isKindOf "Box_IND_Grenades_F" || _this isKindOf "B_supplyCrate_F") then {
@@ -45,6 +46,7 @@ _vehicle spawn {
 };
 
 _vehicle spawn {
+    scriptName 'MPClient_fnc_vehicleTrunkUpdate';
     waitUntil {isNull (findDisplay 3500)};
     _this setVariable ["trunk_in_use",false,true];
     if ((_this isKindOf "Car") || (_this isKindOf "Air") || (_this isKindOf "Ship")) then {

@@ -43,6 +43,7 @@ if (life_shop_type isEqualTo "drugdealer") then {
 
 if (life_shop_type isEqualTo "gold" && (CFG_MASTER(getNumber,"federalReserve_atmRestrictionTimer")) > 0) then {
     [] spawn {
+        scriptName 'MPClient_fnc_ATMEnabled';
         life_var_ATMEnabled = false;
         sleep ((CFG_MASTER(getNumber,"federalReserve_atmRestrictionTimer")) * 60);
         life_var_ATMEnabled = true;

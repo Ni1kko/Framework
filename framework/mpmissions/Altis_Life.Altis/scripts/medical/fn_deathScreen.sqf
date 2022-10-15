@@ -66,6 +66,7 @@ LIFE_PPE_DEATH_BLOOD ppEffectCommit 5;
 
 //-- start bleedout timer
 _txtBottomLeft spawn {
+	scriptName 'MPClient_fnc_bleedoutTimer';
 	disableSerialization;
 	private _maxTime = time + ([missionConfigFile >> "cfgTimers", "bleedout", 0]  call BIS_fnc_returnConfigEntry);
 	life_deathScreen_canRespawn = false;

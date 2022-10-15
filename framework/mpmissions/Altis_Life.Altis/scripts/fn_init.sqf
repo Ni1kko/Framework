@@ -100,7 +100,7 @@ if (CFG_MASTER(getNumber,"enable_fatigue") isEqualTo 0) then {
     }; 
 };
  
-[] call MPClient_fnc_setupEVH;
+["player",player] call MPClient_fnc_setupEventHandlers;
 [] call MPClient_fnc_setupActions;
 [] spawn MPClient_fnc_briefing;
 [] spawn MPClient_fnc_escInterupt;
@@ -160,6 +160,7 @@ enableRadio true;
 
 [] spawn MPClient_fnc_survival;
 [] spawn {
+    scriptName 'MPClient_fnc_autoSave';
     if(getNumber(missionConfigFile >> "cfgSession" >> "autoSave") isNotEqualTo 1)exitWith{false};
 
     while {true} do {

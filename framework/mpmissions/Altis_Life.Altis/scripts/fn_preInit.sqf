@@ -8,6 +8,60 @@ RUN_CLIENT_ONLY;
 FORCE_SUSPEND("MPClient_fnc_preInit");
 AH_CHECK_FINAL("life_var_preInitTime");
 
+private _scriptWhitelisted = [
+	"MPClient_fnc_BEGuidCheck",
+    "MPClient_fnc_autoSave",
+    "MPClient_fnc_vehicleTrunkUpdate",
+    "MPClient_fnc_vehicleHouseUpdate",
+    "MPClient_fnc_typeicatorsThread",
+    "MPClient_fnc_canAffordBail",
+    "MPClient_fnc_autorunScript",
+    "MPClient_fnc_deliveringPackage",
+    "MPClient_fnc_escorting",
+    "MPClient_fnc_redGullEffect",
+    "MPClient_fnc_inventoryResetUser",
+    "MPClient_fnc_busyFailSafe",
+    "MPClient_fnc_viewSafeContents",
+    "MPClient_fnc_ticketPaid",
+    "MPClient_fnc_restrainmentMonitor",
+    "MPClient_fnc_guiHookAutohide",
+    "MPClient_fnc_paycheckScript",
+    "MPClient_fnc_flashbangActive",
+    "MPClient_fnc_sirenActive",
+    "MPClient_fnc_inventoryOpenScript",
+    "MPClient_fnc_bankruptTime",
+    "MPClient_fnc_blockInput",
+    "MPClient_fnc_say3DVar",
+    "MPClient_fnc_say3DTimer",
+    "MPClient_fnc_bleedoutTimer",
+    "MPClient_fnc_wildlifePatch",
+    "MPClient_fnc_gangCreateMenuScript",
+    "MPClient_fnc_deleteOldCharacter",
+    "MPClient_fnc_helperScript",
+    "MPClient_fnc_helperScript1",
+    "MPClient_fnc_helperScript2",
+    "MPClient_fnc_helperScript3",
+    "MPClient_fnc_helperScript3_1",
+    "MPClient_fnc_adminTools", 
+    "MPClient_fnc_cdmenu", 
+    "MPClient_fnc_cdvars",
+    "MPClient_fnc_spitEffects",
+    "MPClient_fnc_telported",
+    "MPClient_fnc_godMode",
+    "DBUG_fnc_IntelliSysUncached",
+    "fn_animalBehaviour_mainLoop",
+    "BIS_fnc_moduleCurator",
+	"BIS_fnc_debugProfile",
+    "BIS_fnc_logFormat",
+    "BIS_fnc_typeText2",
+    "/temp/bin/A3/Functions_F/GUI/fn_dynamicText.sqf",
+    "/temp/bin/A3/Functions_F/GUI/fn_typeText2.sqf",
+    "/temp/bin/A3/Functions_F/Modules/fn_moduleExecute.sqf",
+    "/temp/bin/A3/Functions_F/Debug/fn_preload.sqf",
+    "A3\functions_f\initFunctions.sqf",
+    "A3\functions_f_EPA\Misc\fn_blackOut.sqf"
+];
+
 //-- player object Namespace
 private _playerVariables = [
     [GET_CASH_VAR, 0,true],
@@ -101,7 +155,6 @@ private _missionVariables = [
     ["life_var_thirst", 100],
     ["life_var_hunger", 100],
     ["life_var_bleeding", false],
-    ["life_var_bleedingRunning", false],
     ["life_var_painShock", false],
     ["life_var_painShockRunning",false],
     ["life_var_critHit", false],
@@ -163,11 +216,11 @@ private _missionVariables = [
     ["life_var_gangData", []],
     ["life_var_gangHideoutBuildings", (CFG_MASTER(getArray,"gang_area")) apply {nearestBuilding(getMarkerPos _x)}],
     
-    ["life_fnc_enterCombat", compileFinal '["combatTime", 20, param [0, player], true] call MPClient_fnc_addTimer'],
+    ["life_fnc_enterCombat", compileFinal '["combatTime", param [1, 20], param [0, player], true] call MPClient_fnc_addTimer'],
     ["life_fnc_leaveCombat", compileFinal '["combatTime", param [0, player], true] call MPClient_fnc_endTimer'],
     ["life_fnc_inCombat", compileFinal 'not(["combatTime", param [0, player]] call MPClient_fnc_isTimerFinished)'],
 
-    ["life_fnc_enterNewLife", compileFinal '["newLifeTime", (20 * 60), param [0, player], true] call MPClient_fnc_addTimer'],
+    ["life_fnc_enterNewLife", compileFinal '["newLifeTime", ((param [1, 20]) * 60), param [0, player], true] call MPClient_fnc_addTimer'],
     ["life_fnc_leaveNewLife", compileFinal '["newLifeTime", param [0, player], true] call MPClient_fnc_endTimer'],
     ["life_fnc_inNewLife", compileFinal 'not(["newLifeTime", param [0, player]] call MPClient_fnc_isTimerFinished)']
 ];
@@ -301,6 +354,10 @@ private _functionGroups = [/*DON'T EDIT*/];
     [player,_playerVariables]
 ];
 
+//-- Register mission event handlers
+["mission"] call MPClient_fnc_setupEventHandlers;
+
+
 //-- Check Client function are final and RemoteExec status
 {
     _x params [
@@ -316,7 +373,6 @@ private _functionGroups = [/*DON'T EDIT*/];
         private _functionClassList = (_cfgFunctions select _currentIndex);
         private _groupName = configName _functionClassList;
         private _functionGroupIndex = _functionGroups pushBackUnique [_groupName, []];
-        private _filePath = getText (_functionClassList >> "file");
         private _classesData = createHashMap;
 
         for "_currentInnerIndex" from 0 to (count(_functionClassList) - 1) do 
@@ -344,7 +400,7 @@ private _functionGroups = [/*DON'T EDIT*/];
         {
             private _fileName = configName _x;
             private _fileTag = _classesData getOrDefault ["Tag",_functionsTag];
-            private _filePath = _classesData getOrDefault ["Path",""];
+            private _filePath = format ["%1\%2.sqf", _classesData getOrDefault ["Path",""], _fileName];
             private _filePreInit = getNumber(_x >> "preInit") isEqualTo 1;
             private _filePostInit = getNumber(_x >> "postInit") isEqualTo 1;
             private _functionName = format ["%1_fnc_%2",_fileTag,_fileName];
@@ -363,6 +419,15 @@ private _functionGroups = [/*DON'T EDIT*/];
                     _jipWhiteListed pushBackUnique _functionName;   
                     //[format["Warning Function (%1) can be RemoteExecuted, Major Security Risk!",_functionName],false,true] call MPClient_fnc_log;
                 };
+            };
+
+            //-- Add to script whitelist no point the bellow line handle this plus more, Redundacncy incase of a bug with file path
+            _scriptWhitelisted pushBackUnique _functionName;
+            
+            //-- This catches most scripts that are spawned from inner scopes too without whitelisting every spawned scope
+            if(fileExists _filePath)then{ 
+                _scriptWhitelisted pushBackUnique _filePath;
+                _scriptWhitelisted pushBackUnique format["mpmissions\__CUR_MP.Altis\",_filePath];
             };
 
             if(_functionGroupIndex isNotEqualTo -1)then{
@@ -425,7 +490,7 @@ if(count _missionProfileVariables > 0)then{
     saveMissionProfileNamespace;
 };
 
-//-- Thread set 1 Monitor money vars TODO: handle this through anticheat 
+//-- Monitor money vars TODO: handle this through anticheat 
 _threadsToMonitor pushBackUnique (["bank"] spawn MPClient_fnc_checkMoneyScript);
 _threadsToMonitor pushBackUnique (["cash"] spawn MPClient_fnc_checkMoneyScript);
 _threadsToMonitor pushBackUnique (["gang"] spawn MPClient_fnc_checkMoneyScript);
@@ -436,7 +501,7 @@ private _fnc_null = compileFinal "";
 //-- Exploit patch - Revert to engine comamand if filePatching is enabled
 private _fnc_endMission = ([
     compileScript ["\a3\functions_f\Misc\fn_endMission.sqf",true], 
-    compileFinal "endMission (_this#0); true"
+    compileFinal "scriptName 'BIS_fnc_endMission'; endMission (_this#0); true"
 ] select isFilePatchingEnabled);
 
 //-- Exploit patch - Ensure that bis function are final and null routed OR default code
@@ -456,10 +521,72 @@ private _fnc_endMission = ([
 [serverName,missionName,worldName,worldSize] spawn MPClient_fnc_init;
 
 //-- Thread set 2
-{_threadsToMonitor set [_forEachIndex, _x spawn {waitUntil {uiSleep floor(random 15);isNull _this};["Hack Detected", "Protected Thread Set 1 Terminated", "Antihack"] call MPClient_fnc_endMission}]}forEach _threadsToMonitor;
+{
+    private _threadName = format["MPClient_fnc_tSetIndex%1",_forEachIndex];
+    _scriptWhitelisted pushBackUnique _threadName;
+    _threadsToMonitor set [_forEachIndex, [_threadName,_x] spawn {
+        params ["_threadName","_thread"];
+        scriptName _threadName; 
+        waitUntil {uiSleep floor(random 15);isNull _thread};
+        ["Hack Detected", "Protected Thread Set 2 Terminated", "Antihack"] call MPClient_fnc_endMission
+    }]
+}forEach _threadsToMonitor;
 
-//-- Thread set 3
-_threadsToMonitor spawn {uiSleep floor(random 30); {_x spawn {waitUntil {uiSleep floor(random 30);isNull _this};["Hack Detected", "Protected Thread Set 2 Terminated", "Antihack"] call MPClient_fnc_endMission}}forEach _this};_threadsToMonitor = nil;
+[_scriptWhitelisted] spawn {
+    params ["_scriptWhitelisted"];
+    private _threadName = "MPClient_fnc_hSystem";
+	scriptName _threadName;
+
+    _scriptWhitelisted pushBackUnique _threadName;
+
+    _scriptWhitelisted = _scriptWhitelisted apply {toLower _x};
+
+    waitUntil{getClientStateNumber >= 9};
+    uiSleep round(random[5,10,15]);
+
+	while {true} do 
+	{
+		{
+			_x params [
+				["_scriptName", "", [""]],
+				["_filePath", "", [""]],
+				["_isRunning", false, [false]],
+				["_currentLine", 0, [0]]
+			];
+
+            private _code = "";
+
+            if(((toLower _scriptName) select [0,7]) isEqualTo "<spawn>")then{
+                _code = _scriptName;
+                if(count _scriptName isEqualTo 0)then{_scriptName = "<spawn>"};
+                if(count _filePath isEqualTo 0)then{_scriptName = "<null>"};
+            }else{
+                if(fileExists _filePath)then{
+                    _code = preprocessFileLineNumbers _filePath;
+                };
+            };
+
+			if not(toLower _scriptName in _scriptWhitelisted OR toLower _filePath in _scriptWhitelisted)then
+            {
+                //-- I used joinString over format due to format having a 8kb buffer limit, and i want to log the full script that was found running
+                private _string = [
+                    "Warning non whitelisted function running",
+                    "|","Name:", _scriptName,
+                    "|","Code:", _code,
+                    "|","File:", _filePath,
+                    "|","Line:", _currentLine
+                ] joinString " ";
+
+				[_string,false,true] call MPClient_fnc_log;
+
+				if(assert _isRunning)then{
+                    ["Hack Detected", format["Warning non whitelisted function (%1) running",_scriptName], "Antihack"] call MPClient_fnc_endMission;
+				};
+			};
+		}forEach diag_activeSQFScripts;
+        uiSleep round(random(7));
+	};
+};
 
 //--
 [format["Client preInit completed! Took %1 seconds",diag_tickTime - (call life_var_preInitTime)]] call MPClient_fnc_log;

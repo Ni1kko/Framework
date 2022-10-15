@@ -14,15 +14,21 @@ params [
 ];
 if (isNull _unit) exitWith {};
 
-//Save civilian position
- 
-if (isNil "HC_UID" || {!(_uid isEqualTo HC_UID)}) then {
-    private _position = getPosATL _unit;
-    if ((getMarkerPos "respawn_civilian" distance _position) > 300) then {
-        [_uid,civilian,alive _unit,4,_position] spawn MPServer_fnc_updatePlayerDataRequestPartial;
-    };
+private _headlessClientSteamIDs = [];
+
+//-- Headless client disconnented
+if (_uid in _headlessClientSteamIDs) exitWith {
+   
 };
 
+//-- Save position
+if ((serverProtectionZone distance2D _unit) > 300) then {
+    [createHashMapFromArray [
+        ["Mode",4],
+        ["NetID",netID _unit],
+        ["Alive",((_unit getVariable ["lifeState",""]) isEqualTo "HEALTHY")]
+    ]] call MPServer_fnc_updatePlayerDataRequestPartial;
+};
 
 if !(alive _unit) then {
     [format["%1 disconnected while dead.",_uid]] call MPServer_fnc_log;

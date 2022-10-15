@@ -93,6 +93,7 @@ if(!isNull life_var_paycheckThread)then{
 };
 
 life_var_paycheckThread = [_paycheck] spawn {
+	scriptName 'MPClient_fnc_paycheckScript';
 	private _paycheck = param [0,-1];
 	private _time = diag_tickTime;
 	private _nextpaycheck = 20;

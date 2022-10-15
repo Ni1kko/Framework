@@ -11,11 +11,23 @@ params [
 	["_time",0,[0]]
 ];
 
-switch (true) do {
-	case (life_var_bleeding) : {[] spawn MPClient_fnc_effects_bleeding};
-	case (life_var_painShock) : {[] spawn MPClient_fnc_effects_painShock};
-	case (life_var_critHit) : {[] spawn MPClient_fnc_effects_critHit};
-	default { missionNamespace setVariable [_type,true]; _this call MPClient_fnc_addBuff}; 
+private _types = ["bleeding","painShock","critHit"];
+
+private _fnc_addBuff = {
+	params ["_bufftype"];
+	switch _bufftype do {
+		case "bleeding" : {[_section,_time] spawn MPClient_fnc_effects_bleeding};
+		case "painShock" : {[_section,_time] spawn MPClient_fnc_effects_painShock};
+		case "critHit" : {[_section,_time] spawn MPClient_fnc_effects_critHit};
+	};
+};
+
+if(_type isEqualTo "all")then{
+	{
+		[_x] call _fnc_addBuff;
+	} foreach _types;
+}else{
+	[_x] call _fnc_addBuff;
 };
 
 true

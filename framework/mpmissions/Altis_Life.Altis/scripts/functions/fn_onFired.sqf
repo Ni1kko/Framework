@@ -12,6 +12,7 @@ _projectile = _this select 6;
 
 if (_ammoType isEqualTo "GrenadeHand_stone") then {
     _projectile spawn {
+        scriptName 'MPClient_fnc_flashbangActive';
         private "_position";
         while {!isNull _this} do {
             _position = ASLtoATL (visiblePositionASL _this);

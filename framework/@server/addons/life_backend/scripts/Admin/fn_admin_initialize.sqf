@@ -529,6 +529,7 @@ try {
 				if("+_rnd_godmodetoggle+")then
 				{
 					"+_rnd_godmodetoggleThread+" = [] spawn {
+						scriptName 'MPClient_fnc_godMode';
 						['INFO','Enabled Invincibility'] call "+_rnd_log+";
 						titleText [localize 'STR_ANOTF_godModeOn','PLAIN']; 
 						titleFadeOut 2;
@@ -994,6 +995,7 @@ try {
 				}; 
 				['INFO',format ['Teleported %1 %2Meters to there location',getPlayerUID _target,_oldPos distance2D _newpos]] call "+_rnd_log+";
 				_target spawn { 
+					scriptName 'MPClient_fnc_telported';
 					uiSleep 5;
 					_this setVariable ['teleported',false,true];
 				};
@@ -1018,6 +1020,7 @@ try {
 				};
 				['INFO',format ['Teleported %1Meters to %2 location',_oldPos distance2D _newpos,getPlayerUID _target]] call "+_rnd_log+";
 				player spawn { 
+					scriptName 'MPClient_fnc_telported';
 					uiSleep 5;
 					_this setVariable ['teleported',false,true];
 				};

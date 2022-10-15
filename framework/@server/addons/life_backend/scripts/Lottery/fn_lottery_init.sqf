@@ -73,8 +73,6 @@ if(count _ticketDrawTimes > 0)then
 			(_timeInfo#0) > 0
 		};
 	};
-}else{ 
-	[format["[Life Lottery System] Winners Will Be Picked on %1!",_ticketDrawDay]] call MPServer_fnc_log;
 };
 
 true

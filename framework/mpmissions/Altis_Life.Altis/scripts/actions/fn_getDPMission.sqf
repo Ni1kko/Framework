@@ -35,6 +35,7 @@ player setCurrentTask life_cur_task;
 ["DeliveryAssigned",[format [localize "STR_NOTF_DPTask",_dp]]] call bis_fnc_showNotification;
 
 [] spawn {
+    scriptName 'MPClient_fnc_deliveringPackage';
     waitUntil {!life_var_deliveringPackage || !alive player};
     if (!alive player) then {
         life_cur_task setTaskState "Failed";

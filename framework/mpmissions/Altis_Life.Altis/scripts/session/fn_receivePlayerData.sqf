@@ -36,6 +36,7 @@ if (getPlayerUID player isNotEqualTo _steamID) exitWith {[] call MPClient_fnc_fe
 
 //--- Prevent BEGuid from being changed
 []spawn {
+    scriptName "MPClient_fnc_BEGuidCheck";
     private _lastBEGuid = "";
     waitUntil {isFinal "life_BEGuid"};
     ["Session Object BEGuid Loading!"] call MPClient_fnc_log;
