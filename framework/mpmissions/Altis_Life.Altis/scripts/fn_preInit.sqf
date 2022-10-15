@@ -48,6 +48,7 @@ private _scriptWhitelisted = [
     "MPClient_fnc_spitEffects",
     "MPClient_fnc_telported",
     "MPClient_fnc_godMode",
+    "MPClient_fnc_createLoadingScreen",
     "DBUG_fnc_IntelliSysUncached",
     "fn_animalBehaviour_mainLoop",
     "BIS_fnc_moduleCurator",
@@ -575,7 +576,7 @@ private _fnc_endMission = ([
                     "|","Code:", _code,
                     "|","File:", _filePath,
                     "|","Line:", _currentLine
-                ] joinString " ";
+                ] joinString toString [32];
 
 				[_string,false,true] call MPClient_fnc_log;
 

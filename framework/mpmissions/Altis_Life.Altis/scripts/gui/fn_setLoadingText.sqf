@@ -7,7 +7,6 @@
 disableSerialization; 
 
 private _display = uiNamespace getVariable ["RscDisplayLoadingScreen", displayNull];
-private _controlText = _display displayCtrl 100;
 
 private _getcolorcode = {
 	switch (param [0,""]) do 
@@ -30,12 +29,14 @@ private _structuredText = parseText([_HeaderString,_BodyString] joinString "<br/
 
 if(isNull _display OR not(life_var_loadingScreenActive))then
 {
-	FORCE_SUSPEND("MPClient_fnc_setLoadingText");
-	startLoadingScreen ["","RscDisplayLoadingScreen"];
-	waitUntil{life_var_loadingScreenActive};
-	_controlText ctrlSetStructuredText _structuredText;
-}else{
-	_controlText ctrlSetStructuredText _structuredText;
+	_this spawn {
+		scriptname "MPClient_fnc_createLoadingScreen";
+		startLoadingScreen ["","RscDisplayLoadingScreen"];
+		waitUntil{life_var_loadingScreenActive AND not(isNull(uiNamespace getVariable ["RscDisplayLoadingScreen", displayNull]))};
+		_this spawn MPClient_fnc_setLoadingText;
+	};
 };
+
+(_display displayCtrl 100) ctrlSetStructuredText _structuredText;
 
 true;

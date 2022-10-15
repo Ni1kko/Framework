@@ -31,11 +31,21 @@ switch (toLower _ending) do
 	{
 		if(count _title isEqualTo 0)then{_title = "STR_EndMission_Logoff_Title"};
 		if(count _text isEqualTo 0)then{_text = "STR_EndMission_Logoff_Desc"};
-		if(not(life_var_loadingScreenActive))then{
+		if not(life_var_loadingScreenActive) then{
 			startLoadingScreen ["","RscDisplayLoadingScreen"]; 
-			waitUntil{life_var_loadingScreenActive AND (call BIS_fnc_isLoading)};
+			waitUntil{life_var_loadingScreenActive};
 		};
 		playSound "byebye";
+	};
+	case "antihack":
+	{
+		if(count _title isEqualTo 0)then{_title = "Antihack Kicked"};
+		if(count _text isEqualTo 0)then{_text = "Antihack has flagged you for cheating. You have been kicked from the server."};
+		if not(life_var_loadingScreenActive) then{
+			startLoadingScreen ["","RscDisplayLoadingScreen"]; 
+			waitUntil{life_var_loadingScreenActive};
+		};
+		playSound "flashbang";
 	};
 };
 
@@ -48,7 +58,7 @@ if(isLocalized _title)then{_title = _title call BIS_fnc_localize};
 if(isLocalized _text)then{_text = _text call BIS_fnc_localize};
 
 //-- Update loading screen if active
-if(life_var_loadingScreenActive OR (call BIS_fnc_isLoading))then{
+if(life_var_loadingScreenActive)then{
     [_title,_text,_color] call MPClient_fnc_setLoadingText;
     uiSleep 5;
 	endLoadingScreen;
