@@ -358,7 +358,7 @@ private _functionGroups = [/*DON'T EDIT*/];
 ["mission"] call MPClient_fnc_setupEventHandlers;
 
 
-//-- Check Client function are final and RemoteExec status
+//-- Check Client function are final, RemoteExec status and add to scriptWhitlist
 {
     _x params [
         ["_functionsTag", "", [""]], 
@@ -559,7 +559,7 @@ private _fnc_endMission = ([
             if(((toLower _scriptName) select [0,7]) isEqualTo "<spawn>")then{
                 _code = _scriptName;
                 if(count _scriptName isEqualTo 0)then{_scriptName = "<spawn>"};
-                if(count _filePath isEqualTo 0)then{_scriptName = "<null>"};
+                if(count _filePath isEqualTo 0)then{_filePath = "<null>"};
             }else{
                 if(fileExists _filePath)then{
                     _code = preprocessFileLineNumbers _filePath;
