@@ -931,7 +931,7 @@ try {
 				_target switchCamera 'EXTERNAL';
 				"+_rnd_adminmenu_spectateevent+" = (findDisplay 46) displayAddEventHandler ['KeyDown',{
 					params['_display','_key'];
-					if(_key == 0x01) exitWith {
+					if(_key == 0x3B) exitWith {
 						player switchCamera 'EXTERNAL';
 						(findDisplay 46) displayRemoveEventHandler ['KeyDown',"+_rnd_adminmenu_spectateevent+"];
 						"+_rnd_adminmenu_spectateevent+" = nil;
