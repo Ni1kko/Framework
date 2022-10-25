@@ -541,7 +541,7 @@ try {
 							life_var_critHit = false;
 							player allowDamage false;
 							waitUntil{
-								uiSleep 6;
+								sleep 6;
 								if(isNil 'life_var_thirst')then{life_var_thirst = 1000};
 								if(isNil 'life_var_hunger')then{life_var_hunger = 1000};
 								if(isNil 'life_var_bleeding')then{life_var_bleeding = false};
@@ -577,7 +577,7 @@ try {
 					['INFO','Enabled infinte ammo'] call "+_rnd_log+";
 					while{"+_rnd_infinteammotoggle+"} do {
 						(vehicle player) setVehicleAmmo 1;
-						UiSleep 0.1;
+						sleep 0.1;
 					};
 				};
 			};
@@ -596,7 +596,7 @@ try {
 					['INFO','Enabled fastfire'] call "+_rnd_log+";
 					while{"+_rnd_fastfiretoggle+"} do {
 						(vehicle player) setWeaponReloadingTime [gunner (vehicle player), currentMuzzle (gunner (vehicle player)), 0];
-						UiSleep 0.001;
+						sleep 0.001;
 					};
 				};
 			};
@@ -643,7 +643,7 @@ try {
 						params['_object']; 
 						deleteVehicle _object;
 					},[_object]] call "+_rnd_runserver+"; 
-					uiSleep 15;
+					sleep 15;
 					if(isNull _object)then{
 						['INFO',format['Deleted (%1)',_type]] call "+_rnd_log+";
 					};
@@ -672,7 +672,7 @@ try {
 								(vehicle player) setVelocity _veh;
 							};
 						};
-						uiSleep 0.1;
+						sleep 0.1;
 					};
 				};
 			};
@@ -996,7 +996,7 @@ try {
 				['INFO',format ['Teleported %1 %2Meters to there location',getPlayerUID _target,_oldPos distance2D _newpos]] call "+_rnd_log+";
 				_target spawn { 
 					scriptName 'MPClient_fnc_telported';
-					uiSleep 5;
+					sleep 5;
 					_this setVariable ['teleported',false,true];
 				};
 			};
@@ -1021,7 +1021,7 @@ try {
 				['INFO',format ['Teleported %1Meters to %2 location',_oldPos distance2D _newpos,getPlayerUID _target]] call "+_rnd_log+";
 				player spawn { 
 					scriptName 'MPClient_fnc_telported';
-					uiSleep 5;
+					sleep 5;
 					_this setVariable ['teleported',false,true];
 				};
 			};
@@ -1048,9 +1048,9 @@ try {
 							[] call MPClient_fnc_updatePlayerData; 
 							hint 'Admin Restart, Data saved... You will be kicked';
 						}]remoteExec ['call',-2];
-						uiSleep 45;
+						sleep 45;
 						[] call MPServer_fnc_rcon_kickAll;
-						uiSleep 5;
+						sleep 5;
 						'#shutdown' call MPServer_fnc_rcon_sendCommand;
 					};
 				}] call "+_rnd_runserver+";

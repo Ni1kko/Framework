@@ -101,7 +101,7 @@ while{true} do
 	};
 	
 	_runtime = _runtime + 1;
-	uiSleep 1;
+	sleep 1;
 };
 
 true

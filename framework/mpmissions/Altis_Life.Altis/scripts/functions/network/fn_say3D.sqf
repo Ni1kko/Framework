@@ -25,7 +25,7 @@ if(_time > 0)then{
     [_soundObject, _time] spawn {
         scriptName 'MPClient_fnc_say3DTimer';
         params ["_soundObject","_time"];
-        uiSleep _time;
+        sleep _time;
         if(not(isNull _soundObject))then{
             deleteVehicle _soundObject;
         };

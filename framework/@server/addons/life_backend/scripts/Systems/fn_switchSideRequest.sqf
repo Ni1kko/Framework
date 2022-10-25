@@ -154,7 +154,7 @@ if _deleteOLD then{
 		//-- loop too delete object incase it don't delete on first request
 		while {!isNull _playerObject} do {
 			deleteVehicle _playerObject;
-			uiSleep 3;
+			sleep 3;
 		};
 	};
 };

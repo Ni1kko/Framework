@@ -33,7 +33,7 @@ _display displayAddEventHandler ["KeyDown", {
         disableUserInput true;
         [] spawn {
             scriptName 'MPClient_fnc_blockInput';
-            uiSleep 0.5;
+            sleep 0.5;
             disableUserInput false;
         };
         true

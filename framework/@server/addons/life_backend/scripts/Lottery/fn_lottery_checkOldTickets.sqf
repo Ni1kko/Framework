@@ -21,7 +21,7 @@ while {count _queryTickets > 0} do {
 	private _allPlayers = playableUnits;
 
 	waitUntil {
-		uiSleep 10;
+		sleep 10;
 		count _allPlayers isNotEqualTo count playableUnits
 	};
 
@@ -66,7 +66,7 @@ while {count _queryTickets > 0} do {
 			};
 		}forEach _allPlayers;
 
-		uiSleep 2; 
+		sleep 2; 
 
 	}forEach _queryTickets;
 
@@ -86,7 +86,7 @@ while {count _queryTickets > 0} do {
 		}forEach _claimedTickets;
 	};
 
-	uiSleep 10;
+	sleep 10;
 
 	["CALL", "deleteClaimedLotteryTickets"] call MPServer_fnc_database_request;
 };

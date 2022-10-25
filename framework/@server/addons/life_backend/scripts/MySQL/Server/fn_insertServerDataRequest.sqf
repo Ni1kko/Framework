@@ -56,7 +56,7 @@ if (count _serverQueryResult isEqualTo 0) then {
             _checking = false;
         };
        
-        uiSleep 3;
+        sleep 3;
     };
 };
 

@@ -50,7 +50,7 @@ for "_i" from 0 to 1 step 0 do
         player playMoveNow "AinvPknlMstpSnonWnonDnon_medic_1";
     };
 
-    uiSleep 0.26;
+    sleep 0.26;
 
     if (isNull _ui) then {
         "progressBar" cutRsc ["RscTitleProgressBar","PLAIN"];

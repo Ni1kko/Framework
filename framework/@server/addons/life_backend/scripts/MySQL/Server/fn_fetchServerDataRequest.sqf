@@ -62,6 +62,6 @@ life_var_runtime_thread = []spawn{
                 [1] call MPServer_fnc_updateServerDataRequestPartial;
             };
         };
-        uiSleep 60;
+        sleep 60;
     };
 };

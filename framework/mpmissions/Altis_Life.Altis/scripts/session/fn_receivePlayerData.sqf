@@ -17,7 +17,7 @@ if (life_var_sessionDone) exitWith {
 };
 
 //---
-["Received request from server", "Validating..."] call MPClient_fnc_setLoadingText; uiSleep(random[0.5,3,6]);
+["Received request from server", "Validating..."] call MPClient_fnc_setLoadingText; sleep(random[0.5,3,6]);
 
 //--- Timeout sanity check
 life_var_sessionAttempts = life_var_sessionAttempts + 1;
@@ -42,7 +42,7 @@ if (getPlayerUID player isNotEqualTo _steamID) exitWith {[] call MPClient_fnc_fe
     ["Session Object BEGuid Loading!"] call MPClient_fnc_log;
     while{true}do{
         waitUntil {
-            uiSleep round(random 3);
+            sleep round(random 3);
             (player getVariable ["BEGUID",{""}]) isNotEqualTo life_BEGuid
         };
         player setVariable ["BEGUID",life_BEGuid,true];
@@ -104,7 +104,7 @@ if ((player getVariable ["lifeState",""]) isNotEqualTo "HEALTHY") then {
 };
 
 //--- Houses
-["Loading houses", "Please wait..."] call MPClient_fnc_setLoadingText; uiSleep(random[0.5,3,6]);
+["Loading houses", "Please wait..."] call MPClient_fnc_setLoadingText; sleep(random[0.5,3,6]);
 life_houses = _playerData getOrDefault ["HouseData",[]];
 {
     private _house = nearestObject [(call compile format ["%1",(_x select 0)]), "House"];
@@ -113,14 +113,14 @@ life_houses = _playerData getOrDefault ["HouseData",[]];
 [] spawn MPClient_fnc_initHouses;
 
 //--- Gang
-["Loading gangs", "Please wait..."] call MPClient_fnc_setLoadingText; uiSleep(random[0.5,3,6]);
+["Loading gangs", "Please wait..."] call MPClient_fnc_setLoadingText; sleep(random[0.5,3,6]);
 life_var_gangData = _playerData getOrDefault ["GangData",[]];
 if (count life_var_gangData > 0) then {
     [] spawn MPClient_fnc_initGang;
 };
 
 //--- Tents
-["Loading tents", "Please wait..."] call MPClient_fnc_setLoadingText; uiSleep(random[0.5,3,6]);
+["Loading tents", "Please wait..."] call MPClient_fnc_setLoadingText; sleep(random[0.5,3,6]);
 life_tents = _playerData getOrDefault ["TentData",[]];
 if (count life_tents > 0) then {
     //[] spawn MPClient_fnc_initTents;

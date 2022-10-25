@@ -25,7 +25,7 @@ if (isFinal "life_var_initTime")exitWith{
 endLoadingScreen;
 
 // -- Arma likes to be a prick and sometimes, this is a workaround for it
-waitUntil{uiSleep 0.2;not(call BIS_fnc_isLoading) AND (getClientState isEqualTo "BRIEFING READ") AND not(isNull findDisplay 46)};
+waitUntil{sleep 0.2;not(call BIS_fnc_isLoading) AND (getClientState isEqualTo "BRIEFING READ") AND not(isNull findDisplay 46)};
 
 private _name = profileName;
 private _side = side player;
@@ -47,13 +47,13 @@ if(isNil "life_var_serverLoaded" OR isNil "extdb_var_database_error")then{
     waitUntil {
         if(life_var_clientTimeout > MAX_SECS_TOO_WAIT_FOR_SERVER) exitWith {["Server failed to load", "Please try again"] call MPClient_fnc_endMission};
         ["Setting up client", "Please wait"] call MPClient_fnc_setLoadingText; 
-        uiSleep 0.2;
+        sleep 0.2;
         ["Setting up client", "Please wait."] call MPClient_fnc_setLoadingText; 
-        uiSleep 0.2;
+        sleep 0.2;
         ["Setting up client", "Please wait.."] call MPClient_fnc_setLoadingText;  
-        uiSleep 0.2;
+        sleep 0.2;
         ["Setting up client", "Please wait..."] call MPClient_fnc_setLoadingText;
-        uiSleep 0.4;
+        sleep 0.4;
         life_var_clientTimeout = life_var_clientTimeout + 1;
         ({isNil {missionNamespace getVariable _x}} count ["life_var_serverLoaded", "extdb_var_database_error"]) isEqualTo 0
     };
@@ -65,13 +65,13 @@ if !life_var_serverLoaded then {
     waitUntil {
         if(life_var_serverTimeout > MAX_SECS_TOO_WAIT_FOR_SERVER) exitWith {["Server failed to load", "Please try again"] call MPClient_fnc_endMission};
         ["Waiting for the server to be ready", "Please wait"] call MPClient_fnc_setLoadingText; 
-        uiSleep 0.2;
+        sleep 0.2;
         ["Waiting for the server to be ready", "Please wait."] call MPClient_fnc_setLoadingText; 
-        uiSleep 0.2;
+        sleep 0.2;
         ["Waiting for the server to be ready", "Please wait.."] call MPClient_fnc_setLoadingText;  
-        uiSleep 0.2;
+        sleep 0.2;
         ["Waiting for the server to be ready", "Please wait..."] call MPClient_fnc_setLoadingText;
-        uiSleep 0.4;
+        sleep 0.4;
         life_var_serverTimeout = life_var_serverTimeout + 1;
         life_var_serverLoaded
     }; 
@@ -87,7 +87,7 @@ private _factionInit = format["MPClient_fnc_init%1",_sideVar];
 [] spawn MPClient_fnc_fetchPlayerData;
 waitUntil {
     if(life_var_sessionAttempts > MAX_ATTEMPTS_TOO_QUERY_DATA) exitWith {["Unable to load player data", "Please try again"] call MPClient_fnc_endMission};
-    uiSleep 1;    
+    sleep 1;    
     life_var_sessionDone
 };
 
@@ -129,7 +129,7 @@ if(count _factionsWithBuildingSpawns > 0)then
 };
 
 //-- Init faction
-["Setting up factions", "Please wait..."] call MPClient_fnc_setLoadingText; uiSleep(random[0.5,3,6]);
+["Setting up factions", "Please wait..."] call MPClient_fnc_setLoadingText; sleep(random[0.5,3,6]);
 private _sideCode = currentNamespace getVariable [_factionInit,{}];
 if(_sideCode isNotEqualTo {})then{
     ["Loading faction init!"] call MPClient_fnc_log;
@@ -137,11 +137,11 @@ if(_sideCode isNotEqualTo {})then{
 };
 
 //-- Input handlers
-["Setting up inputhandlers", "Please wait..."] call MPClient_fnc_setLoadingText; uiSleep(random[0.5,3,6]);
+["Setting up inputhandlers", "Please wait..."] call MPClient_fnc_setLoadingText; sleep(random[0.5,3,6]);
 (findDisplay 46) displayAddEventHandler ["KeyDown", "_this call MPClient_fnc_keydownHandler"];
 (findDisplay 46) displayAddEventHandler ["KeyUp", "_this call MPClient_fnc_keyupHandler"];
 
-[("Welcome " + _name),"Have Fun And Respect The Rules!..."] call MPClient_fnc_setLoadingText; uiSleep(5);
+[("Welcome " + _name),"Have Fun And Respect The Rules!..."] call MPClient_fnc_setLoadingText; sleep(5);
 ["Life_var_initBlackout"] call BIS_fnc_blackIn;//fail safe for loading screen
 private _alive = ((player getVariable ['lifeState','DEAD']) isEqualTo 'HEALTHY');
 private _spawnPlayerThread = [_alive,life_var_position] spawn MPClient_fnc_spawnPlayer;
@@ -166,7 +166,7 @@ enableRadio true;
     while {true} do {
 
         waitUntil{  
-            uiSleep 30;
+            sleep 30;
             ((time - life_var_lastSynced) > (getNumber(missionConfigFile >> "cfgSession" >> "autoSaveInterval") * 60))
         };
 

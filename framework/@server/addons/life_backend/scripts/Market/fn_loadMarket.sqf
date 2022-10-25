@@ -12,7 +12,7 @@ life_var_marketConfig = createHashMap;
 //-- Get market values or create them
 for "_currentIndex" from 0 to (count(missionConfigFile >> "cfgVirtualItems") - 1) do {
 	[_currentIndex,true] call MPServer_fnc_getMarketDataValue;
-	uiSleep 0.2;
+	sleep 0.2;
 };
 
 //-- Update market prices
@@ -54,7 +54,7 @@ for "_currentIndex" from 0 to (count(missionConfigFile >> "cfgVirtualItems") - 1
 		["illegal",_illegal],
 		["stock",_stock]
 	]] call MPServer_fnc_setMarketDataValue;
-	uiSleep 0.2;
+	sleep 0.2;
  
 }forEach life_var_marketConfig;
  

@@ -37,7 +37,7 @@ for "_i" from 0 to 1 step 0 do {
         player switchMove "AinvPknlMstpSnonWnonDnon_medic_1";
         player playMoveNow "AinvPknlMstpSnonWnonDnon_medic_1";
     };
-    uiSleep 0.2;
+    sleep 0.2;
     if (isNull _ui) then {
         "progressBar" cutRsc ["RscTitleProgressBar","PLAIN"];
         _ui = uiNamespace getVariable "RscTitleProgressBar";

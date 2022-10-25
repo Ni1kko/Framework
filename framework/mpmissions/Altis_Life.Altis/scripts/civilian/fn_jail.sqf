@@ -63,6 +63,6 @@ if (count extdb_var_database_headless_clients > 0) then {
 
 [5] call MPClient_fnc_updatePlayerDataPartial;
 []spawn{
-    uiSleep 5;
+    sleep 5;
     player setVariable ["teleported",false,true];
 };

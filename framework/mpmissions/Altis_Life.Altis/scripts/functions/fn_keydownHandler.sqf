@@ -42,7 +42,7 @@ if(_keyCode isEqualTo DIK_I) exitWith
 			waitUntil {scriptDone _inventoryShowVirtualTabThread AND {not(life_var_inventoryLoading AND _autorun) OR isNull(call _controlParent)}};
 			life_var_inventoryLoading = true;
 			if _autorun then {["continue"] call MPClient_fnc_autoruntoggle};
-			uisleep 1;
+			sleep 1;
 			life_var_inventoryLoading = false;
 			true
 		};

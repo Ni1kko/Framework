@@ -61,7 +61,7 @@ if(!isNil {_player getVariable "sideswitch_error"})exitWith{
 	if(typeName _error isEqualTo "STRING")then{
 		systemChat format ["Error: %1",_error];
 		["An Error Occured!",_error] call MPClient_fnc_setLoadingText; 
-		uiSleep 6;
+		sleep 6;
 	};
 
 	endLoadingScreen;
@@ -78,7 +78,7 @@ if(_newside isEqualTo playerSide)then
 	[_newside] call MPClient_fnc_paychecks;
 
 	//--
-	["Side Switched", "Please Wait..."] call MPClient_fnc_setLoadingText; uiSleep(random[0.5,3,6]);
+	["Side Switched", "Please Wait..."] call MPClient_fnc_setLoadingText; sleep(random[0.5,3,6]);
 
 	//--
 	_return = true;
@@ -86,7 +86,7 @@ if(_newside isEqualTo playerSide)then
 
 
 ["Please Wait..."] call MPClient_fnc_setLoadingText; 
-uiSleep(random[0.5,3,6]);
+sleep(random[0.5,3,6]);
 endLoadingScreen;
 
 _return

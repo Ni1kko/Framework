@@ -15,7 +15,7 @@ life_var_critHitRunning = true;
 
 while {life_var_critHit} do 
 {
-    uiSleep (15*60);
+    sleep (15*60);
     if (life_var_critHit && alive(player) && player == vehicle player) then 
     {
         private _critColorEffect = ppEffectCreate ["colorCorrections", 2008];
@@ -27,7 +27,7 @@ while {life_var_critHit} do
         player say3D _sound;
         for "_i" from 1 to 20 do {
             titleText[format["You have a traumatic shock caused by a serious injury! You will wake up in %1 sec.", (21 - _i)],"PLAIN"];
-            uiSleep 1;
+            sleep 1;
             if (!alive(player) OR !life_var_critHit) exitWith {};
         };
         switch (true) do {

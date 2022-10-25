@@ -20,7 +20,7 @@ if(not(_type in ["lock","unlock"])) exitWith {false};
 
 //--- Disable sound
 _vehicle setVariable ["AlarmState","Disarming",true];
-uiSleep 0.5;
+sleep 0.5;
 
 //---
 if _chirp then  {[_vehicle,"car_lock_bleep",50,1] remoteExec ["MPClient_fnc_say3D",0]};

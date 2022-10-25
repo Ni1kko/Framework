@@ -23,7 +23,7 @@ if(playerSide in [civilian,east]) then
 		{
 			if(life_var_loadingScreenActive) then {
 				["Prisioner detected!","You logged off in prision, you will be returned back to jail!"] call MPClient_fnc_setLoadingText; 
-				uiSleep(2);
+				sleep(2);
 			};  
 			player setVariable ["arrested",false,true];
 			[player,true] spawn MPClient_fnc_jail;
@@ -35,7 +35,7 @@ if(playerSide in [civilian,east]) then
 			if (CFG_MASTER(getNumber,"save_civilian_positionStrict") isEqualTo 1) then {
 				if(life_var_loadingScreenActive) then {
 					["Combat logged detected!","Your gear and cash have been reset"] call MPClient_fnc_setLoadingText; 
-					uiSleep(2);
+					sleep(2);
 				};
 				[] call MPClient_fnc_startLoadout;
 				["ZERO","CASH"] call MPClient_fnc_handleMoney;
@@ -66,7 +66,7 @@ if _openSpawnMenu then
 { 
 	if(life_var_loadingScreenActive) then {
 		[format["%1 Life",worldName],"Loading spawn selection"] call MPClient_fnc_setLoadingText; 
-		uiSleep(2);
+		sleep(2);
 	};
 	private _display = [] call MPClient_fnc_spawnMenu;
 	if(life_var_loadingScreenActive) then {endLoadingScreen};
@@ -77,7 +77,7 @@ if _openSpawnMenu then
 		
 		if(life_var_loadingScreenActive) then {
 			[format["%1 Life",worldName],"Returning player to last known position"] call MPClient_fnc_setLoadingText; 
-			uiSleep(2);
+			sleep(2);
 			endLoadingScreen;//Terminate Loading Screen  
 		};
 	};
@@ -104,7 +104,7 @@ if (life_var_firstSpawn) then {
 player setVariable ['lifeState','HEALTHY',true];
 disableUserInput false; // Let the user have input 
 player allowDamage true; // Let the player take damage
-5 spawn{scriptName "MPClient_fnc_telported";uiSleep _this; player setVariable ["teleported",false,true]};
+5 spawn{scriptName "MPClient_fnc_telported";sleep _this; player setVariable ["teleported",false,true]};
 
 //-- Side chat
 [player,life_var_enableSidechannel,playerSide] remoteExecCall ["MPServer_fnc_managesc",RE_SERVER];

@@ -31,7 +31,7 @@ _vehicle setVariable ["AlarmState","Active",true];
 	while {not(isNull _vehicle) AND {alive _vehicle AND {(_vehicle getVariable ["AlarmState","Disarmed"]) isEqualTo "Active"}}} do 
 	{
 		[_vehicle,_soundClass,_soundDistance,1,_soundLength] remoteExec ["MPClient_fnc_say3D",0];
-		uiSleep _soundLength;
+		sleep _soundLength;
 	};
 
 	if(not(isNull _vehicle) AND {alive _vehicle AND {(_vehicle getVariable ["AlarmState","Active"]) isNotEqualTo "Disarmed"}})then

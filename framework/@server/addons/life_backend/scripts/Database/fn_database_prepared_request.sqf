@@ -15,7 +15,7 @@ if !(call extdb_var_database_prepared)exitWith{
 
 if(life_var_rcon_RestartMode > 0)exitWith{false};
 
-waitUntil {uiSleep (random .25); !extdb_var_database_preparedAsync};
+waitUntil {sleep (random .25); !extdb_var_database_preparedAsync};
 
 extdb_var_database_preparedAsync = true;
 
@@ -30,7 +30,7 @@ if(_mode isEqualTo 1) exitWith {extdb_var_database_preparedAsync = false; true};
 _key = call compile format["%1",_key];
 _key = _key select 1;
 
-waitUntil{uisleep (random .25); !extdb_var_database_prepared_asynclock};
+waitUntil{sleep (random .25); !extdb_var_database_prepared_asynclock};
 extdb_var_database_prepared_asynclock = true;
 
 // Get Result via 4:x (single message return)  v19 and later
@@ -54,8 +54,8 @@ while{_loop} do
 	{
 		if (_queryResult isEqualTo "[3]") then
 		{
-    		[format ["uisleep [4]: %1", diag_tickTime]] call MPServer_fnc_database_systemlog;
-			uisleep 0.25;
+    		[format ["sleep [4]: %1", diag_tickTime]] call MPServer_fnc_database_systemlog;
+			sleep 0.25;
 		} else {
 			_loop = false;
 		};

@@ -48,6 +48,7 @@ private _scriptWhitelisted = [
     "MPClient_fnc_spitEffects",
     "MPClient_fnc_telported",
     "MPClient_fnc_godMode",
+    "MPClient_fnc_cefSystem",
     "MPClient_fnc_createLoadingScreen",
     "DBUG_fnc_IntelliSysUncached",
     "fn_animalBehaviour_mainLoop",
@@ -60,7 +61,8 @@ private _scriptWhitelisted = [
     "/temp/bin/A3/Functions_F/Modules/fn_moduleExecute.sqf",
     "/temp/bin/A3/Functions_F/Debug/fn_preload.sqf",
     "A3\functions_f\initFunctions.sqf",
-    "A3\functions_f_EPA\Misc\fn_blackOut.sqf"
+    "A3\functions_f_EPA\Misc\fn_blackOut.sqf",
+    "A3\ui_f\scripts\gui\RscRespawnControls.sqf"
 ];
 
 //-- player object Namespace
@@ -358,7 +360,6 @@ private _functionGroups = [/*DON'T EDIT*/];
 //-- Register mission event handlers
 ["mission"] call MPClient_fnc_setupEventHandlers;
 
-
 //-- Check Client function are final, RemoteExec status and add to scriptWhitlist
 {
     _x params [
@@ -452,7 +453,7 @@ private _functionGroups = [/*DON'T EDIT*/];
     //-- Check all client function are final
     if (_totalFunctions isNotEqualTo _totalFinalFunctions AND _totalNonFinalFunctions > 0)then{
         {
-            uiSleep 0.2;
+            sleep 0.2;
             [format["Warning Client Function (%1) Is Not Final, Major Security Risk!",_x],false,true] call MPClient_fnc_log;
         }forEach _nonFinalFunctions;
     };
@@ -477,7 +478,7 @@ if(count _variablesFlagged > 0)exitWith{
     RPT_FILE_LB;
     [0,format["[Antihack] Hacker Detected %1 Variables flagged",getPlayerUID player],true,[profileNameSteam, profileName]] remoteExecCall ["MPClient_fnc_broadcast",-2];
     [format ["[LIFE] %1 Variables flagged",count _variablesFlagged]] call MPClient_fnc_log;
-    {[format ["[LIFE] %1 = %2;",_x#0,_x#1]] call MPClient_fnc_log; uiSleep 0.6}forEach _variablesFlagged;
+    {[format ["[LIFE] %1 = %2;",_x#0,_x#1]] call MPClient_fnc_log; sleep 0.6}forEach _variablesFlagged;
     ["Hack Detected", "Variables flagged", "Antihack"] call MPClient_fnc_endMission;
 };
 
@@ -528,11 +529,12 @@ private _fnc_endMission = ([
     _threadsToMonitor set [_forEachIndex, [_threadName,_x] spawn {
         params ["_threadName","_thread"];
         scriptName _threadName; 
-        waitUntil {uiSleep floor(random 15);isNull _thread};
+        waitUntil {sleep floor(random 15);isNull _thread};
         ["Hack Detected", "Protected Thread Set 2 Terminated", "Antihack"] call MPClient_fnc_endMission
     }]
 }forEach _threadsToMonitor;
 
+/*
 [_scriptWhitelisted] spawn {
     params ["_scriptWhitelisted"];
     private _threadName = "MPClient_fnc_hSystem";
@@ -540,54 +542,98 @@ private _fnc_endMission = ([
 
     _scriptWhitelisted pushBackUnique _threadName;
 
-    _scriptWhitelisted = _scriptWhitelisted apply {toLower _x};
-
     waitUntil{getClientStateNumber >= 9};
-    uiSleep round(random[5,10,15]);
+    sleep 15;
+    
+    private _eventID = "life_var_checkActiveSQFScripts";
 
-	while {true} do 
-	{
-		{
-			_x params [
-				["_scriptName", "", [""]],
-				["_filePath", "", [""]],
-				["_isRunning", false, [false]],
-				["_currentLine", 0, [0]]
-			];
+    life_var_activeSQFScripts = [];
 
-            private _code = "";
+    //-- Capture active scripts on Every 3rd Frame
+    [_eventID, "onEachFrame", {
+        params ["_scriptWhitelisted"];
 
-            if(((toLower _scriptName) select [0,7]) isEqualTo "<spawn>")then{
-                _code = _scriptName;
-                if(count _scriptName isEqualTo 0)then{_scriptName = "<spawn>"};
-                if(count _filePath isEqualTo 0)then{_filePath = "<null>"};
-            }else{
-                if(fileExists _filePath)then{
-                    _code = preprocessFileLineNumbers _filePath;
+        switch (true) do 
+        {
+            case (diag_frameNo mod 3 isEqualTo 0 AND count life_var_activeSQFScripts isEqualTo 0): 
+            {
+                life_var_activeSQFScripts = diag_activeSQFScripts;
+            };
+            case (diag_frameNo mod 5 isEqualTo 0 AND count life_var_activeSQFScripts > 0): 
+            {
+                //-- Send captured scripts into a seprate new thread
+                [life_var_activeSQFScripts, _scriptWhitelisted] spawn {
+                    params ["_scripts","_whitelist"];
+
+                    private _threadName = "MPClient_fnc_cSystem";
+                    scriptName _threadName;
+                    _whitelist pushBackUnique _threadName;
+
+                    //-- Now there captured we can slow down the check
+                    sleep round(random[5,10,15]);// this sleep is very imporant to prevent false positives
+
+                    //-- Convert to lower case for checking
+                    _whitelist = _whitelist apply {toLower _x};
+
+                    {
+                        _x params [
+                            ["_scriptName", "", [""]],
+                            ["_filePath", "", [""]],
+                            ["_isRunning", false, [false]],
+                            ["_currentLine", 0, [0]]
+                        ];
+
+                        private _code = "";
+
+                        if(((toLower _scriptName) select [0,7]) isEqualTo "<spawn>")then{
+                            _code = _scriptName;
+                            _scriptName = "<spawn>"
+                            if(count _filePath isEqualTo 0)then{_filePath = "<null>"};
+                        }else{
+                            if(fileExists _filePath)then{
+                                _code = preprocessFileLineNumbers _filePath;
+                            };
+                        };
+
+                        if not(toLower _scriptName in _whitelist OR toLower _filePath in _whitelist)then
+                        {
+                            //-- I used joinString over format due to format having a 8kb buffer limit, and i want to log the full script that was found running
+                            private _string = [
+                                "Warning non whitelisted function",
+                                "|","Name:", _scriptName,
+                                "|","Code:", _code,
+                                "|","File:", _filePath,
+                                "|","Running:", _isRunning,
+                                "|","Line:", _currentLine
+                            ] joinString toString [32];
+
+                            [_string,false,true] call MPClient_fnc_log;
+
+                            if(assert _isRunning)then{
+                                ["Hack Detected", format["Non whitelisted script (%1)",_scriptName], "Antihack"] call MPClient_fnc_endMission;
+                            }else{
+                                systemChat format["Hack Detected: Non whitelisted script (%1)",_scriptName];
+                                //["Hack Detected", format["Non whitelisted script (%1)",_scriptName], "Antihack"] call MPClient_fnc_endMission;
+                            };
+                        };
+                    }forEach _scripts;
                 };
             };
+        };
+	},[_scriptWhitelisted]] call BIS_fnc_addStackedEventHandler;
 
-			if not(toLower _scriptName in _scriptWhitelisted OR toLower _filePath in _scriptWhitelisted)then
-            {
-                //-- I used joinString over format due to format having a 8kb buffer limit, and i want to log the full script that was found running
-                private _string = [
-                    "Warning non whitelisted function running",
-                    "|","Name:", _scriptName,
-                    "|","Code:", _code,
-                    "|","File:", _filePath,
-                    "|","Line:", _currentLine
-                ] joinString toString [32];
-
-				[_string,false,true] call MPClient_fnc_log;
-
-				if(assert _isRunning)then{
-                    ["Hack Detected", format["Warning non whitelisted function (%1) running",_scriptName], "Antihack"] call MPClient_fnc_endMission;
-				};
-			};
-		}forEach diag_activeSQFScripts;
-        uiSleep round(random(7));
-	};
+    //-- Monitor event handler
+    [_eventID]spawn {
+        scriptName "MPClient_fnc_cefSystem";
+        params ["_eventID"];
+        waitUntil {
+            sleep round(random 7);
+            not(_eventID in (missionNamespace getVariable ["BIS_stackedEventHandlers_OnEachFrame", []]))
+        };
+        //["Hack Detected", "Stacked Eventhandler removed", "Antihack"] call MPClient_fnc_endMission;
+    };
 };
+*/
 
 //--
 [format["Client preInit completed! Took %1 seconds",diag_tickTime - (call life_var_preInitTime)]] call MPClient_fnc_log;

@@ -113,6 +113,6 @@ switch (true) do {
 
 player forceWalk false; // Enable running & jumping
 []spawn{
-    uiSleep 5;
+    sleep 5;
     player setVariable ["teleported",false,true];
 };

@@ -17,7 +17,7 @@ _housePos = getPosATL _house;
 
 [format ["INSERT INTO houses (pid, pos, owned) VALUES('%1', '%2', '1')",_uid,_housePos],1] call MPServer_fnc_database_rawasync_request;
 
-uiSleep 0.3;
+sleep 0.3;
 
 _query = format ["SELECT id FROM houses WHERE pos='%1' AND pid='%2' AND owned='1'",_housePos,_uid];
 _queryResult = [_query,2] call MPServer_fnc_database_rawasync_request;

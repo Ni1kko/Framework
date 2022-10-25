@@ -32,13 +32,13 @@ while {true} do {
 	
 	//-- Wait for a change to the player money
 	waitUntil {
-		uiSleep 1.2;
+		sleep 1.2;
 		_actualPlayerBalance = life_var_lastBalance select _moneyIndex; 
 		_actualPlayerBalance != _playerBalance
 	};
 	
 	//-- Sleep for a few secs before checking it against the last balance
-	uiSleep 2;
+	sleep 2;
 	
 	_actualPlayerBalance = life_var_lastBalance select _moneyIndex;
 
@@ -63,11 +63,11 @@ while {true} do {
 
 		for "_i" from 1 to 10 do {
 			systemChat "Your money has been changed by another script!";
-			uiSleep 1;
+			sleep 1;
 		};
 		private _log = format ["You should have $%1 instead of $%2",_actualPlayerBalance,_currentBalance];
 		systemChat _log;
-		uiSleep 2;
+		sleep 2;
 		["Hack Detected", _log, "Antihack"] call MPClient_fnc_endMission;
 	}else{
 		_playerBalance = _currentBalance;

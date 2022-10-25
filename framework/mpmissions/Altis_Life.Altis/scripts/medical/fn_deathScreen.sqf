@@ -92,7 +92,7 @@ waitUntil {
 	};
 	private _medicsOnlineTxt = format[localize "STR_Medic_Online",playersNumber east];
 	_txtBottomRight ctrlSetStructuredText parseText format ["<t size='0.8' align='center' valign='middle'>%1<br/><br/><br/>%2</t>",_medicsOnlineTxt,_statusText];
-	uiSleep 3;
+	sleep 3;
 	isNull (uiNamespace getVariable ["RscTitleDeathScreen",displayNull])
 };
 

@@ -51,12 +51,12 @@ for "_idd" from (_RscDisplayMissionIDD + 10000) to _RscDisplayMissionIDD step -1
             //-- Sync player data to server
             [] call MPClient_fnc_updatePlayerData;
             _script = ["Syncing your data", "Please wait...", "red"] spawn MPClient_fnc_setLoadingText;
-            waitUntil {uiSleep 2; scriptDone _script};
+            waitUntil {sleep 2; scriptDone _script};
             
             //--- Request server to clean up player
             [player] remoteExec ["MPServer_fnc_cleanupRequest",2];
             _script = ["Server Cleanup", "Please wait...", "red"] spawn MPClient_fnc_setLoadingText;
-            waitUntil {uiSleep 2; scriptDone _script};
+            waitUntil {sleep 2; scriptDone _script};
 
             //-- Close any other open displays as IDD 46 is the mission end screen
             {([_x] param [0, displayNull]) closeDisplay 2}forEach (allDisplays - [
@@ -69,7 +69,7 @@ for "_idd" from (_RscDisplayMissionIDD + 10000) to _RscDisplayMissionIDD step -1
 
             //-- Kick player out server    
             _script = ["STR_EndMission_Logoff_Title", "STR_EndMission_Logoff_Desc", "Logoff"] spawn MPClient_fnc_endMission;
-            waitUntil {uiSleep 1.2; scriptDone _script};
+            waitUntil {sleep 1.2; scriptDone _script};
         };
         //-- Close the display
         default {_display closeDisplay 2};

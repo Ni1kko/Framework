@@ -72,14 +72,15 @@ switch (_mode) do {
 			};
 			case "ENUM": //Int => (MYSQL enum)
 			{
-				if !(typeName _val isEqualTo "STRING")then{
+				if (typeName _val isNotEqualTo "STRING")then{
 					_val = str _val;
 				};
 			};
 			case "A2NET": //A2NET Money => (MYSQL int)
 			{ 
-				if(typeName _val isEqualTo "STRING")then{
-					_val = parseNumber _val;
+				if(typeName _val isEqualTo "STRING")then {
+					if(count _val isEqualTo 0)then{_val = "0"};
+					_val = call compile _val;
 				};
 				_val = _val call bis_fnc_numberDigits;
 				private _a = "";
@@ -107,6 +108,7 @@ switch (_mode) do {
 				_val = toString _val;
 
 				while {typeName _val isEqualTo "STRING"} do {
+					if(count _val isEqualTo 0)then{_val = "[]"};
 					_val = call compile _val;	
 				};
 			};
@@ -119,7 +121,8 @@ switch (_mode) do {
 			case "POSITION": //Position => (MYSQL Position safe)
 			{
 				while {typeName _val isEqualTo "STRING"} do {
-					_val = call compile _val;	
+					if(count _val isEqualTo 0)then{_val = "[0,0,0]"};
+					_val = call compile _val;
 				};
 			};
 			case "STRING": //MYSQL Real-Escape => (String)
@@ -146,14 +149,15 @@ switch (_mode) do {
 			};
 			case "ENUM": //MYSQL enum => (int)
 			{
-				if(typeName _val isEqualTo "STRING")then{
-					_val = parseNumber _val;
+				while {typeName _val isEqualTo "STRING" AND count _val > 0} do {
+					_val = call compile _val;	
 				};
 			};
 			case "A2NET": //MYSQL int => (A2NET int)
 			{
-				if(typeName _val isEqualTo "STRING")then{
-					_val = parseNumber _val;
+				while {typeName _val isEqualTo "STRING"} do {
+					if(count _val isEqualTo 0)then{_val = "0"};
+					_val = call compile _val;	
 				};
 			};
 		};

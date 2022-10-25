@@ -322,7 +322,7 @@ try {
 				if(typeName _thread isNotEqualTo "SCRIPT")exitWith{true};
 				if(isNull _thread)exitWith{true};
 				if(scriptDone _thread)exitWith{true};
-				uiSleep 30;
+				sleep 30;
 				false
 			};
 			terminate _thread;
@@ -568,7 +568,7 @@ try {
 					};
 				};
 				_antihackclient = _antihackclient + "
-				uiSleep random[0.5,1,1.5];
+				sleep random[0.5,1,1.5];
 			};
 		"";";
 
@@ -664,7 +664,7 @@ try {
 					";
 				};
 				_antihackclient = _antihackclient + "
-				uiSleep (random [1,2,5]);
+				sleep (random [1,2,5]);
 			};
 		};
 
@@ -773,7 +773,7 @@ try {
 							private _oldVehicle = vehicle player;
 							private _oldPos = getPosATL _oldVehicle;
 
-							uiSleep _checkTime;
+							sleep _checkTime;
 
 							private _newVehicle = vehicle player;
 							private _newPos = getPosATL _newVehicle;
@@ -819,7 +819,7 @@ try {
 
 			while {true} do 
 			{
-				uiSleep 2;";
+				sleep 2;";
 					if(_interuptinfo)then{
 						_antihackclient = _antihackclient + "
 							if(isNull (missionNamespace getVariable ['"+_rnd_threadinterupt+"',scriptNull]))then{
@@ -828,13 +828,13 @@ try {
 						";
 					};
 					_antihackclient = _antihackclient + "
-				uiSleep 2;
+				sleep 2;
 					if(isNil {missionNamespace getVariable '"+_rnd_ahvar+"'})then{
 						private _log = '`_rnd_ahvar` nil';
 						_log call "+_rnd_banme+";
 						['HACK',_log] call "+_rnd_logme+";
 					};
-				uiSleep 2;
+				sleep 2;
 			};
 		};
 
@@ -885,7 +885,7 @@ try {
 					(findDisplay 24) closeDisplay 0;
 					(findDisplay 49) closeDisplay 0;
 				};
-				uiSleep 2;
+				sleep 2;
 			};
 		};
 
@@ -974,9 +974,9 @@ try {
 						}; 
 					} forEach allDisplays;
 					
-					uiSleep 3;
+					sleep 3;
 				}else{
-					uiSleep 15;
+					sleep 15;
 				};
 			};	
 		};
@@ -1049,7 +1049,7 @@ try {
 					};
 				};
 				_antihackclient = _antihackclient + "
-				uiSleep 3;
+				sleep 3;
 			};
 		};
 		

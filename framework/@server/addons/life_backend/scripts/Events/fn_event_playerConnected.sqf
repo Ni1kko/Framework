@@ -31,7 +31,7 @@ if(life_var_rcon_serverLocked)exitWith{
 //--- Fucking arma... player isn't registered as player yet. FML
 private _player = objNull;
 waitUntil{
-	uiSleep 0.2;
+	sleep 0.2;
 	_player = [selectRandom [_ownerID,_steamID]] call MPServer_fnc_util_getPlayerObject;
 	!isNull _player
 };

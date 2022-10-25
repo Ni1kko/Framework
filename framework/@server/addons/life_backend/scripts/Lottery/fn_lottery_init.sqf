@@ -59,7 +59,7 @@ if(count _ticketDrawTimes > 0)then
 	while {true} do
 	{
 		waitUntil {
-			uiSleep 30;
+			sleep 30;
 			private _timeInfo = [] call MPServer_fnc_lottery_getTimeInfo;
 			_timeInfo params ["_timeRemaining","_configIndex","_configIndexValid"];
 			_timeRemaining <= 0 AND _configIndexValid
@@ -68,7 +68,7 @@ if(count _ticketDrawTimes > 0)then
 		[_vaultObject] spawn MPServer_fnc_lottery_pickwinners;
 
 		waitUntil {
-			uiSleep (5 * 60);
+			sleep (5 * 60);
 			private _timeInfo = [] call MPServer_fnc_lottery_getTimeInfo; 
 			(_timeInfo#0) > 0
 		};

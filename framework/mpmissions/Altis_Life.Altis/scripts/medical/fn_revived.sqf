@@ -33,7 +33,7 @@ systemChat "You have been revived, Dont forget to pick up any dropped items!";
 
 //-- Animate
 player playMoveNow "amovpercmstpsnonwnondnon";
-uiSleep 3;
+sleep 3;
 
 private _reviversName = _reviver getVariable ["realname",name _reviver];
 private _message = format ["%1 has revived you",_reviversName];

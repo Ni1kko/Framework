@@ -29,7 +29,7 @@ while{true}do
 {
 	//-- Wait for change
 	waitUntil {
-		uiSleep 0.2;
+		sleep 0.2;
 		playerSide isNotEqualTo _lastPlayerSide 
 		OR {(uniform player) isNotEqualTo _lastUniform
 		OR {(getObjectTextures(player)) isNotEqualTo _lastUniformTextures 

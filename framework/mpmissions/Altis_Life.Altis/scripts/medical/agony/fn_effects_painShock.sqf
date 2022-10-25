@@ -14,7 +14,7 @@ if(life_var_painShockRunning) exitWith{false};
 life_var_painShockRunning = true;
 
 while {life_var_painShock && alive(player)} do {
-	uiSleep 60;
+	sleep 60;
 	if (life_var_painShock && alive(player)) then {
 		player enableFatigue true;
 		player setFatigue (getFatigue player + 0.1);

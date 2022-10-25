@@ -208,7 +208,7 @@ virtualNamespace setvariable ["maxspace",1000,true];
 if(count _variablesFlagged > 0)exitWith{ 
     RPT_FILE_LB;
     [format ["[LIFE] %1 Variables flagged during preInit",count _variablesFlagged]] call MPServer_fnc_log;
-    {[format ["[LIFE] %1 = %2;",_x#0,_x#1]] call MPServer_fnc_log; uiSleep 0.6}forEach _variablesFlagged;
+    {[format ["[LIFE] %1 = %2;",_x#0,_x#1]] call MPServer_fnc_log; sleep 0.6}forEach _variablesFlagged;
 	life_var_endMissionServerJIP = ["","","Antihack"] remoteExec ["MPClient_fnc_endMission", -2, true];
 	life_var_endMissionClientJIP = ["Antihack"] remoteExec ["BIS_fnc_endMissionServer", 2, true];
 	false

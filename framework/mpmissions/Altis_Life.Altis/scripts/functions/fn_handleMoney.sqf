@@ -135,7 +135,7 @@ switch _type do
 					scriptName 'MPClient_fnc_bankruptTime';
 					if(!isNil "life_var_bankruptTime")exitWith{true};
 					waitUntil {
-						uiSleep 2;
+						sleep 2;
 						if (MONEY_CASH > 0)then{SET_MONEY_CASH(player, 0)};
 						if (MONEY_BANK > 0)then{SET_MONEY_BANK(player, 0)};
 						if (MONEY_DEBT > 0)then{SET_MONEY_DEBT(player, 0)};

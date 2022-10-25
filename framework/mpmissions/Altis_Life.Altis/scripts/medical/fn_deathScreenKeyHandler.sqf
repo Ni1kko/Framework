@@ -47,7 +47,7 @@ switch _code do {
 				scriptName 'MPClient_fnc_Frozen';
 				hint "You are frozen for 15 seconds for Shift minus";
 				disableUserInput true;
-				uiSleep 15;
+				sleep 15;
 				disableUserInput false;
 				hint "You are thawed";
 			};

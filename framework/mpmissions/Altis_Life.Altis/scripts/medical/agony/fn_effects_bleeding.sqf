@@ -44,7 +44,7 @@ while {call _loopConditions} do
 		};
 	}else{
 		[INFINTE] call BIS_fnc_bloodEffect;
-		uiSleep _time;
+		sleep _time;
 	};
 };
 

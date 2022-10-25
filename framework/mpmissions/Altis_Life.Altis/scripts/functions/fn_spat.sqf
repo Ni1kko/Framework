@@ -35,7 +35,7 @@ hint format["Eww Gross\n%1 spat on you", name _shooter];
 	private _timestamp = time + _delay;
 
 	waitUntil{
-		uiSleep 1;
+		sleep 1;
 		time > _timestamp
 	};
 

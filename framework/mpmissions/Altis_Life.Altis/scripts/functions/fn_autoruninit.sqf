@@ -27,7 +27,7 @@ while {true} do {
 				_mode call MPClient_fnc_autorunswitch;
 
 				//loop after 1
-				uiSleep 1;
+				sleep 1;
 			} else {
 				life_var_autorun = false;
 			};

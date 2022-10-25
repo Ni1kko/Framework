@@ -33,7 +33,7 @@ _cP = 0.01;
 _cpRate = 0.0075;
 
 for "_i" from 0 to 1 step 0 do {
-    uiSleep 0.26;
+    sleep 0.26;
     if (isNull _ui) then {
         "progressBar" cutRsc ["RscTitleProgressBar","PLAIN"];
         _ui = uiNamespace getVariable "RscTitleProgressBar";

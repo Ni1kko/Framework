@@ -43,7 +43,7 @@ if ((MONEY_CASH - (_fueltoput * _fuelCost)) > 0) then {
     _progress progressSetPosition 0.01;
     private _cP = 0.01;
     for "_i" from 0 to 1 step 0 do {
-        uiSleep  _timer;
+        sleep  _timer;
         _cP = _cP + 0.01;
         _progress progressSetPosition _cP;
         _pgText ctrlSetText format ["%3 (%1%2)...",round(_cP * 100),"%","Refuel:"];

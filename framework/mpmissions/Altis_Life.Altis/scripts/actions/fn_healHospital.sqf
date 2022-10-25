@@ -26,7 +26,7 @@ _action = [
 if (_action) then {
     titleText[localize "STR_NOTF_HS_Healing","PLAIN"];
     closeDialog 0;
-    uiSleep 8;
+    sleep 8;
     if (player distance (_this select 0) > 5) exitWith {life_var_isBusy = false; titleText[localize "STR_NOTF_HS_ToFar","PLAIN"]};
     titleText[localize "STR_NOTF_HS_Healed","PLAIN"];
     player setDamage 0;

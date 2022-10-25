@@ -38,6 +38,6 @@ if(count life_var_tents > 0)then{
 		private _tent = life_var_tents#0;
 		[_tent,true] call MPClient_fnc_packupTent;
 	};
-	uiSleep 30;
+	sleep 30;
 	systemChat format ["%1 owned tents loaded",count life_var_tents];
 };

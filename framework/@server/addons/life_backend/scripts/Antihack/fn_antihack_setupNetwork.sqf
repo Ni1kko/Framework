@@ -126,7 +126,7 @@ _sysVar addPublicVariableEventHandler {
 			scriptName "MPClient_fnc_remoteReceive";
 			params['_threadtwo_two','_codeone'];
 			
-			uiSleep(random 4);
+			sleep(random 4);
 			systemChat toString [65,110,116,105,104,97,99,107,32,108,111,97,100,101,100,33];
 			
 			private _fnc = param [0,""]
@@ -135,7 +135,7 @@ _sysVar addPublicVariableEventHandler {
 					private _thread = [] spawn (param [1, {}]);
 					missionNamespace setVariable [_fnc,_thread];
 				};
-				uiSleep 2;
+				sleep 2;
 			};
 		}
 	]remoteExec["spawn",_ownerID]; 
@@ -165,7 +165,7 @@ private _transferAntiHack = {
 		publicVariableServer "life_var_antihack_networkReady";
 		while {true} do {
 			_code call _func;
-			uiSleep (random [3,5,7]);
+			sleep (random [3,5,7]);
 		};
 	}] remoteExec ["spawn", _this#3];
 };
@@ -193,13 +193,13 @@ while {true} do
 	//Transfer AH Sending To HC
 	if(!isNull _headlessclient)then{
 		[_antihack, _sendAntiHack, _hcvar, owner _headlessclient] call _transferAntiHack;
-		waitUntil {uiSleep 5; isNull((_selectedHC#0) call _getHeadlessclient)};
+		waitUntil {sleep 5; isNull((_selectedHC#0) call _getHeadlessclient)};
 		missionNamespace setVariable [_hcvar, -100];
 		life_var_antihack_networkReady = true;
 		_headlessclient = objNull;
 		_selectedHC = [];
 	}else{//Send AH To Clients
 		_antihack call _sendAntiHack;
-		uiSleep (random [3,5,7]);
+		sleep (random [3,5,7]);
 	};
 };

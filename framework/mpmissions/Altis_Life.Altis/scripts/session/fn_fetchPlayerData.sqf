@@ -14,7 +14,7 @@ if (life_var_sessionDone) exitWith {
 
 if(life_var_loadingScreenActive)then{
     ["Data Request", "Sending request to server for your data...."] call MPClient_fnc_setLoadingText; 
-    uiSleep(random[0.5,3,6]);
+    sleep(random[0.5,3,6]);
 };
 
 ["Session sending request to server for data!"] call MPClient_fnc_log;

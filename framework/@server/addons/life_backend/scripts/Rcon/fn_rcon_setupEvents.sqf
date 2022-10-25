@@ -109,7 +109,7 @@ while {true} do
 						"Server locked, You will be kicked soon" call MPServer_fnc_rcon_sendBroadcast;
 						life_var_rcon_RestartMode = 0.5;
 						[]spawn{
-							uiSleep 45;
+							sleep 45;
 							life_var_rcon_RestartMode = 1;
 							publicVariable "life_var_rcon_RestartMode";
 						};
@@ -173,5 +173,5 @@ while {true} do
 	};
  
 	
-	uiSleep 60;
+	sleep 60;
 };

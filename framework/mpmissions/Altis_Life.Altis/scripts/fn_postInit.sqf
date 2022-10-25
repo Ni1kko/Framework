@@ -60,7 +60,7 @@ disableRemoteSensors true; //--- Raycasting
                     };
                 };
             }forEach agents;
-            uiSleep 3;
+            sleep 3;
             count agents == 0
         };
     };

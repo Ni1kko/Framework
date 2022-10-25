@@ -53,7 +53,7 @@ _group setVariable ["gang_maxMembers",8,true];
 _group setVariable ["gang_members",[_steamID],true];
 [_group] remoteExecCall ["MPClient_fnc_gangCreated",remoteExecutedOwner];
 
-uiSleep 0.35;
+sleep 0.35;
 
 _queryResult = [format ["SELECT id FROM gangs WHERE owner='%1' AND active='1'",_steamID],2] call MPServer_fnc_database_rawasync_request;
 

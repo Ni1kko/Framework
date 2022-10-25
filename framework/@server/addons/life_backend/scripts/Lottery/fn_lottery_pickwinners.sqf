@@ -27,7 +27,7 @@ private _queryTickets = ["READ", "lotteryTickets",
 	]
 ] call MPServer_fnc_database_request;
 
-uiSleep 5;
+sleep 5;
 
 private _Winners = [];
 private _jackpotRollover = _vaultObject getVariable ["safe",0];
