@@ -38,7 +38,7 @@ if (EXTDB_SETTING(getNumber,"HeadlessSupport") isEqualTo 1) then {
 //--
 private _databaseLoaded = false;
 
-//--- Gen random strings
+//--- Random strings
 private _keyLength = random [6,9,12];
 private _protocolName = uiNamespace getVariable ["life_protocolName",""];
 private _databaseLock = uiNamespace getVariable ["life_databaseLock",""];
@@ -52,7 +52,7 @@ if (_protocolName isEqualTo "") then {
         //--- Version
         if(parseNumber(getDatabaseVersion) < 1.001) throw "Error plugin is outdated!";
 
-        //--- Gen Random protocolname
+        //--- Gen Random strings
         _protocolName = getDatabaseRandomString _keyLength;
         _databaseLock = getDatabaseRandomString _keyLength;
 
@@ -89,7 +89,7 @@ if (_protocolName isEqualTo "") then {
 if(not(_databaseLoaded)) exitWith {false};
 if(not(isFinal "life_sql_id"))then{life_sql_id = compileFinal str(_protocolName)};
 if(not(isFinal "life_db_lock"))then{life_db_lock = compileFinal str(_databaseLock)};
-diag_log "extDB3: Connected to Database";
+diag_log "extDB4: Connected to Database";
 life_server_extDB_notLoaded = false;
 publicVariable "life_server_extDB_notLoaded";
 
