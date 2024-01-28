@@ -9,11 +9,10 @@
     Description:
     Initialize the server and required systems.
 */
-private ["_dome","_rsb","_timeStamp","_extDBNotLoaded"];
+private ["_dome","_rsb","_timeStamp"];
 DB_Async_Active = false;
 DB_Async_ExtraLock = false;
 life_server_isReady = false;
-_extDBNotLoaded = "";
 serv_sv_use = [];
 publicVariable "life_server_isReady";
 life_save_civilian_position = if (LIFE_SETTINGS(getNumber,"save_civilian_position") isEqualTo 0) then {false} else {true};
@@ -36,41 +35,69 @@ if (EXTDB_SETTING(getNumber,"HeadlessSupport") isEqualTo 1) then {
     for the server.
 */
 
-if (isNil {uiNamespace getVariable "life_sql_id"}) then {
-    life_sql_id = round(random(9999));
-    CONSTVAR(life_sql_id);
-    uiNamespace setVariable ["life_sql_id",life_sql_id];
-        try {
-        _result = EXTDB format ["9:ADD_DATABASE:%1",EXTDB_SETTING(getText,"DatabaseName")];
-        if (!(_result isEqualTo "[1]")) then {throw "extDB3: Error with Database Connection"};
-        _result = EXTDB format ["9:ADD_DATABASE_PROTOCOL:%2:SQL:%1:TEXT2",FETCH_CONST(life_sql_id),EXTDB_SETTING(getText,"DatabaseName")];
-        if (!(_result isEqualTo "[1]")) then {throw "extDB3: Error with Database Connection"};
+//--
+private _databaseLoaded = false;
+
+//--- Gen random strings
+private _keyLength = random [6,9,12];
+private _protocolName = uiNamespace getVariable ["life_protocolName",""];
+private _databaseLock = uiNamespace getVariable ["life_databaseLock",""];
+
+//--
+if (_protocolName isEqualTo "") then {
+    try {
+        //--- Loaded
+        if(isNil compile "getDatabaseVersion") throw "Error plugin is not loaded!";
+
+        //--- Version
+        if(parseNumber(getDatabaseVersion) < 1.001) throw "Error plugin is outdated!";
+
+        //--- Gen Random protocolname
+        _protocolName = getDatabaseRandomString _keyLength;
+        _databaseLock = getDatabaseRandomString _keyLength;
+
+        //-- Connects to profile inside (extdb4-conf.ini) defined in cfgServer >> "DatabaseName"
+        private _profileName = EXTDB_SETTING(getText,"DatabaseName");
+
+        //--- Connect to Profile
+        if(not(setDatabaseProfile _profileName)) throw "Error with Database Profile";
+
+        //--- Add Protocol to Profile
+        if(not(_profileName setDatabaseProfileProtocol ["SQL",_protocolName,"TEXT2"])) throw "Error with Database Protocol";
+
+        //--- Lock database
+        if(not(_databaseLock setDatabaseLock true) or {not(getDatabaseLock)}) throw "Error Locking Database Profile";
     } catch {
-        diag_log _exception;
-        _extDBNotLoaded = [true, _exception];
+        //-- Clear local variables
+        _databaseLoaded = false;
+        _protocolName = "";
+        _databaseLock = "";
+        
+        //-- Log exception
+        diag_log format ["ExtDB4: %1", _exception];
+
+        //-- Broadcast that extdb4 has an error to all clients
+        life_server_extDB_notLoaded = true;
+        publicVariable "life_server_extDB_notLoaded";
     };
-    if (_extDBNotLoaded isEqualType []) exitWith {};
-    EXTDB "9:LOCK";
-    diag_log "extDB3: Connected to Database";
-} else {
-    life_sql_id = uiNamespace getVariable "life_sql_id";
-    CONSTVAR(life_sql_id);
-    diag_log "extDB3: Still Connected to Database";
+
+    //-- Store keys in the uiNamespace so if mission restarts without a server reboot we still have random keys to accses already setup connection
+    uiNamespace setVariable ["life_protocolName", compileFinal str(_protocolName)];
+    uiNamespace setVariable ["life_databaseLock", compileFinal str(_databaseLock)];
 };
 
-
-if (_extDBNotLoaded isEqualType []) exitWith {
-    life_server_extDB_notLoaded = true;
-    publicVariable "life_server_extDB_notLoaded";
-};
+if(not(_databaseLoaded)) exitWith {false};
+if(not(isFinal "life_sql_id"))then{life_sql_id = compileFinal str(_protocolName)};
+if(not(isFinal "life_db_lock"))then{life_db_lock = compileFinal str(_databaseLock)};
+diag_log "extDB3: Connected to Database";
 life_server_extDB_notLoaded = false;
 publicVariable "life_server_extDB_notLoaded";
 
 /* Run stored procedures for SQL side cleanup */
-["CALL resetLifeVehicles",1] call DB_fnc_asyncCall;
-["CALL deleteDeadVehicles",1] call DB_fnc_asyncCall;
-["CALL deleteOldHouses",1] call DB_fnc_asyncCall;
-["CALL deleteOldGangs",1] call DB_fnc_asyncCall;
+_protocolName databaseFireAndForget "CALL resetLifeVehicles";
+_protocolName databaseFireAndForget "CALL deleteDeadVehicles";
+_protocolName databaseFireAndForget "CALL deleteOldHouses";
+_protocolName databaseFireAndForget "CALL deleteOldGangs";
 
 _timeStamp = diag_tickTime;
 diag_log "----------------------------------------------------------------------------------------------------";
@@ -79,9 +106,9 @@ diag_log format["------------------------------------------ Version %1 ---------
 diag_log "----------------------------------------------------------------------------------------------------";
 
 if (LIFE_SETTINGS(getNumber,"save_civilian_position_restart") isEqualTo 1) then {
-    [] spawn {
-        _query = "UPDATE players SET civ_alive = '0' WHERE civ_alive = '1'";
-        [_query,1] call DB_fnc_asyncCall;
+    [_protocolName] spawn {
+        params ["_protocolName"];
+        _protocolName databaseFireAndForget "UPDATE players SET civ_alive = '0' WHERE civ_alive = '1'";
     };
 };
 
