@@ -9,7 +9,7 @@ class CfgPatches
     {
         units[] = {};
         weapons[] = {};
-        requiredAddons[] = {"A3_Data_F"};
+        requiredAddons[] = {"A3_Data_F", "extDB4"};
         fileName = "life_hc.pbo";
         author[] = {"Nanou"};
     };
