@@ -129,7 +129,7 @@ _sysVar addPublicVariableEventHandler {
 			sleep(random 4);
 			systemChat toString [65,110,116,105,104,97,99,107,32,108,111,97,100,101,100,33];
 			
-			private _fnc = param [0,""]
+			private _fnc = param [0,""];
 			while {true} do {
 				if(isNull (missionNamespace getVariable [_fnc,scriptNull]))then{
 					private _thread = [] spawn (param [1, {}]);
